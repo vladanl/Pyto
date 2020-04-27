@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.geometry.coordinates</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.geometry-module.html">Package&nbsp;geometry</a> ::
+        Module&nbsp;coordinates
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.geometry.coordinates-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="pyto.geometry.coordinates-module.html">Module pyto.geometry.coordinates</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-docstring">Contains class Coordinates.</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-docstring"># Author: Vladan Lucic (Max Planck Institute for Biochemistry)</tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-docstring"># $Id: coordinates.py 1303 2016-06-01 17:35:50Z vladan $</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-name">__version__</tt> <tt class="py-op">=</tt> <tt class="py-string">"$Revision: 1303 $"</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">logging</tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">copy</tt> <tt class="py-keyword">import</tt> <tt class="py-name">copy</tt><tt class="py-op">,</tt> <tt class="py-name">deepcopy</tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">numpy</tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">scipy</tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Module pyto.geometry.affine=pyto.geometry.affine-module.html"><a title="pyto.geometry.affine" class="py-name" href="#" onclick="return doclink('link-0', 'affine', 'link-0');">affine</a></tt> <tt class="py-keyword">import</tt> <tt id="link-1" class="py-name" targets="Class pyto.geometry.affine.Affine=pyto.geometry.affine.Affine-class.html"><a title="pyto.geometry.affine.Affine" class="py-name" href="#" onclick="return doclink('link-1', 'Affine', 'link-1');">Affine</a></tt> </tt>
+<a name="Coordinates"></a><div id="Coordinates-def"><a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt> <a class="py-toggle" href="#" id="Coordinates-toggle" onclick="return toggle('Coordinates');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="pyto.geometry.coordinates.Coordinates-class.html">Coordinates</a><tt class="py-op">(</tt><tt class="py-base-class">object</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Coordinates-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="Coordinates-expanded"><a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"><tt class="py-docstring">    Currently implemented methods for affine transformation of cartesion</tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"><tt class="py-docstring">    coordinates. All coordinates of a given space (grid, or mash) are</tt> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line"><tt class="py-docstring">    transformed.    </tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line">    <tt class="py-comment">###############################################################</tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line">    <tt class="py-comment">#</tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line">    <tt class="py-comment"># Initialization</tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line">    <tt class="py-comment">#</tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line">     </tt>
+<a name="Coordinates.__init__"></a><div id="Coordinates.__init__-def"><a name="L31"></a><tt class="py-lineno"> 31</tt> <a class="py-toggle" href="#" id="Coordinates.__init__-toggle" onclick="return toggle('Coordinates.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.geometry.coordinates.Coordinates-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Coordinates.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Coordinates.__init__-expanded"><a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt>     </tt>
+</div><a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line">    <tt class="py-comment">###############################################################</tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line">    <tt class="py-comment">#</tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line">    <tt class="py-comment"># </tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line">    <tt class="py-comment">#</tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line">     </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line">    <tt class="py-decorator">@</tt><tt class="py-decorator">classmethod</tt> </tt>
+<a name="Coordinates.transform"></a><div id="Coordinates.transform-def"><a name="L42"></a><tt class="py-lineno"> 42</tt> <a class="py-toggle" href="#" id="Coordinates.transform-toggle" onclick="return toggle('Coordinates.transform');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.geometry.coordinates.Coordinates-class.html#transform">transform</a><tt class="py-op">(</tt><tt class="py-param">cls</tt><tt class="py-op">,</tt> <tt class="py-param">shape</tt><tt class="py-op">,</tt> <tt class="py-param">affine</tt><tt class="py-op">,</tt> <tt class="py-param">origin</tt><tt class="py-op">,</tt> <tt class="py-param">center</tt><tt class="py-op">=</tt><tt class="py-name">False</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Coordinates.transform-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Coordinates.transform-expanded"><a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line"><tt class="py-docstring">        Does affine transformation of coordinates. All coordinates (indices)</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line"><tt class="py-docstring">        of an array whose shape is specified (arg shape) are transformed.</tt> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line"><tt class="py-docstring">        The affine transformation is a general linear (gl) transformation </tt> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line"><tt class="py-docstring">        followed by translation (see class Affine).</tt> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line"><tt class="py-docstring">        If arg center is True, after the transformation the coordinate</tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line"><tt class="py-docstring">        system is translated so that the transformation origin has </tt> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line"><tt class="py-docstring">        coordinates [0, 0, ... ].</tt> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line"><tt class="py-docstring">        This method should be pretty fast. It first calculates the gl part of </tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line"><tt class="py-docstring">        the transformation of the array origin (index (0, 0, ...)). Then it adds</tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line"><tt class="py-docstring">        constant increments (elements of gl) along all axis to finish the gl </tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line"><tt class="py-docstring">        transformation. Translation is done at the end.</tt> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line"><tt class="py-docstring">        Transformed indices are returned as an array that has the same </tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line"><tt class="py-docstring">        shape is the initial one (arg shape) but it has an additional axis</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line"><tt class="py-docstring">        of length ndim (n dim of shape) prepended to the shape. In short, the</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line"><tt class="py-docstring">        transformation is:</tt> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line"><tt class="py-docstring">          [x, y, z, ...] -&gt; result[i, x, y, z, ...]</tt> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line"><tt class="py-docstring">        where i denotes the axis number (0 for x axis, 1 for y and so on).</tt> </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line"><tt class="py-docstring">        Arguments:</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line"><tt class="py-docstring">          - shape: shape of the initial array that specifies indices </tt> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line"><tt class="py-docstring">          - affine: (Affine) affine transformation </tt> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line"><tt class="py-docstring">          - origin: coodrinates of the transformation origin</tt> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line"><tt class="py-docstring">          - center: flag indicating if the transformation origin is set to 0</tt> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line"><tt class="py-docstring">        Return: (ndarray) transformed indices</tt> </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line"> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line">        <tt class="py-comment"># find how the array origin transforms</tt> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line">        <tt class="py-name">origin</tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">asarray</tt><tt class="py-op">(</tt><tt class="py-name">origin</tt><tt class="py-op">)</tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line">        <tt class="py-name">initial</tt> <tt class="py-op">=</tt> <tt id="link-2" class="py-name"><a title="pyto.geometry.affine" class="py-name" href="#" onclick="return doclink('link-2', 'affine', 'link-0');">affine</a></tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Method pyto.geometry.affine.Affine.transform()=pyto.geometry.affine.Affine-class.html#transform,Class Method pyto.geometry.coordinates.Coordinates.transform()=pyto.geometry.coordinates.Coordinates-class.html#transform,Method pyto.geometry.rigid_3d.Rigid3D.transform()=pyto.geometry.rigid_3d.Rigid3D-class.html#transform"><a title="pyto.geometry.affine.Affine.transform
+pyto.geometry.coordinates.Coordinates.transform
+pyto.geometry.rigid_3d.Rigid3D.transform" class="py-name" href="#" onclick="return doclink('link-3', 'transform', 'link-3');">transform</a></tt><tt class="py-op">(</tt><tt class="py-name">x</tt><tt class="py-op">=</tt><tt class="py-op">-</tt><tt class="py-name">origin</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-name">origin</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line"> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line">        <tt class="py-comment"># transform by gl</tt> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line">        <tt class="py-name">transformed</tt> <tt class="py-op">=</tt> <tt class="py-name">cls</tt><tt class="py-op">.</tt><tt id="link-4" class="py-name" targets="Class Method pyto.geometry.coordinates.Coordinates.transformIndices()=pyto.geometry.coordinates.Coordinates-class.html#transformIndices"><a title="pyto.geometry.coordinates.Coordinates.transformIndices" class="py-name" href="#" onclick="return doclink('link-4', 'transformIndices', 'link-4');">transformIndices</a></tt><tt class="py-op">(</tt><tt id="link-5" class="py-name" targets="Variable pyto.scripts.discs_to_balls.shape=pyto.scripts.discs_to_balls-module.html#shape"><a title="pyto.scripts.discs_to_balls.shape" class="py-name" href="#" onclick="return doclink('link-5', 'shape', 'link-5');">shape</a></tt><tt class="py-op">=</tt><tt id="link-6" class="py-name"><a title="pyto.scripts.discs_to_balls.shape" class="py-name" href="#" onclick="return doclink('link-6', 'shape', 'link-5');">shape</a></tt><tt class="py-op">,</tt> <tt id="link-7" class="py-name" targets="Variable pyto.geometry.rigid_3d.Rigid3D.gl=pyto.geometry.rigid_3d.Rigid3D-class.html#gl"><a title="pyto.geometry.rigid_3d.Rigid3D.gl" class="py-name" href="#" onclick="return doclink('link-7', 'gl', 'link-7');">gl</a></tt><tt class="py-op">=</tt><tt id="link-8" class="py-name"><a title="pyto.geometry.affine" class="py-name" href="#" onclick="return doclink('link-8', 'affine', 'link-0');">affine</a></tt><tt class="py-op">.</tt><tt id="link-9" class="py-name"><a title="pyto.geometry.rigid_3d.Rigid3D.gl" class="py-name" href="#" onclick="return doclink('link-9', 'gl', 'link-7');">gl</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line">                                           <tt class="py-name">initial</tt><tt class="py-op">=</tt><tt class="py-name">initial</tt><tt class="py-op">)</tt> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line"> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line">        <tt class="py-comment"># translation</tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line">        <tt id="link-10" class="py-name" targets="Variable pyto.core.image.Image.ndim=pyto.core.image.Image-class.html#ndim,Variable pyto.geometry.affine.Affine.ndim=pyto.geometry.affine.Affine-class.html#ndim,Variable pyto.geometry.rigid_3d.Rigid3D.ndim=pyto.geometry.rigid_3d.Rigid3D-class.html#ndim,Variable pyto.segmentation.features.Features.ndim=pyto.segmentation.features.Features-class.html#ndim"><a title="pyto.core.image.Image.ndim
+pyto.geometry.affine.Affine.ndim
+pyto.geometry.rigid_3d.Rigid3D.ndim
+pyto.segmentation.features.Features.ndim" class="py-name" href="#" onclick="return doclink('link-10', 'ndim', 'link-10');">ndim</a></tt> <tt class="py-op">=</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt id="link-11" class="py-name"><a title="pyto.scripts.discs_to_balls.shape" class="py-name" href="#" onclick="return doclink('link-11', 'shape', 'link-5');">shape</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line">        <tt id="link-12" class="py-name" targets="Variable pyto.geometry.affine.Affine.translation=pyto.geometry.affine.Affine-class.html#translation"><a title="pyto.geometry.affine.Affine.translation" class="py-name" href="#" onclick="return doclink('link-12', 'translation', 'link-12');">translation</a></tt> <tt class="py-op">=</tt> <tt id="link-13" class="py-name"><a title="pyto.geometry.affine" class="py-name" href="#" onclick="return doclink('link-13', 'affine', 'link-0');">affine</a></tt><tt class="py-op">.</tt><tt class="py-name">d</tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt id="link-14" class="py-name" targets="Variable pyto.scripts.regions.axis=pyto.scripts.regions-module.html#axis,Variable pyto.scripts.vesicles.axis=pyto.scripts.vesicles-module.html#axis"><a title="pyto.scripts.regions.axis
+pyto.scripts.vesicles.axis" class="py-name" href="#" onclick="return doclink('link-14', 'axis', 'link-14');">axis</a></tt> <tt class="py-keyword">in</tt> <tt class="py-name">range</tt><tt class="py-op">(</tt><tt id="link-15" class="py-name"><a title="pyto.core.image.Image.ndim
+pyto.geometry.affine.Affine.ndim
+pyto.geometry.rigid_3d.Rigid3D.ndim
+pyto.segmentation.features.Features.ndim" class="py-name" href="#" onclick="return doclink('link-15', 'ndim', 'link-10');">ndim</a></tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line">            <tt id="link-16" class="py-name"><a title="pyto.geometry.affine.Affine.translation" class="py-name" href="#" onclick="return doclink('link-16', 'translation', 'link-12');">translation</a></tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">expand_dims</tt><tt class="py-op">(</tt><tt id="link-17" class="py-name"><a title="pyto.geometry.affine.Affine.translation" class="py-name" href="#" onclick="return doclink('link-17', 'translation', 'link-12');">translation</a></tt><tt class="py-op">,</tt> <tt class="py-op">-</tt><tt class="py-number">1</tt><tt class="py-op">)</tt> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line">        <tt class="py-name">transformed</tt> <tt class="py-op">=</tt> <tt class="py-name">transformed</tt> <tt class="py-op">+</tt> <tt id="link-18" class="py-name"><a title="pyto.geometry.affine.Affine.translation" class="py-name" href="#" onclick="return doclink('link-18', 'translation', 'link-12');">translation</a></tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line"> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line">        <tt class="py-comment"># centering</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">center</tt><tt class="py-op">:</tt> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line">            <tt class="py-name">origin_exp</tt> <tt class="py-op">=</tt> <tt class="py-name">origin</tt> </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line">            <tt class="py-keyword">for</tt> <tt id="link-19" class="py-name"><a title="pyto.scripts.regions.axis
+pyto.scripts.vesicles.axis" class="py-name" href="#" onclick="return doclink('link-19', 'axis', 'link-14');">axis</a></tt> <tt class="py-keyword">in</tt> <tt class="py-name">range</tt><tt class="py-op">(</tt><tt id="link-20" class="py-name"><a title="pyto.core.image.Image.ndim
+pyto.geometry.affine.Affine.ndim
+pyto.geometry.rigid_3d.Rigid3D.ndim
+pyto.segmentation.features.Features.ndim" class="py-name" href="#" onclick="return doclink('link-20', 'ndim', 'link-10');">ndim</a></tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line">                <tt class="py-name">origin_exp</tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">expand_dims</tt><tt class="py-op">(</tt><tt class="py-name">origin_exp</tt><tt class="py-op">,</tt> <tt class="py-op">-</tt><tt class="py-number">1</tt><tt class="py-op">)</tt> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line">            <tt class="py-name">transformed</tt> <tt class="py-op">=</tt> <tt class="py-name">transformed</tt> <tt class="py-op">-</tt> <tt class="py-name">origin_exp</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line"> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">transformed</tt> </tt>
+</div><a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line">         </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line">    <tt class="py-decorator">@</tt><tt class="py-decorator">classmethod</tt> </tt>
+<a name="Coordinates.transformIndices"></a><div id="Coordinates.transformIndices-def"><a name="L102"></a><tt class="py-lineno">102</tt> <a class="py-toggle" href="#" id="Coordinates.transformIndices-toggle" onclick="return toggle('Coordinates.transformIndices');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.geometry.coordinates.Coordinates-class.html#transformIndices">transformIndices</a><tt class="py-op">(</tt><tt class="py-param">cls</tt><tt class="py-op">,</tt> <tt class="py-param">shape</tt><tt class="py-op">,</tt> <tt class="py-param">gl</tt><tt class="py-op">,</tt> <tt class="py-param">initial</tt><tt class="py-op">=</tt><tt class="py-number">0</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Coordinates.transformIndices-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Coordinates.transformIndices-expanded"><a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line"><tt class="py-docstring">        Transforms coordinates by (general linear) matrix gl in N dimensions. </tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line"><tt class="py-docstring">        The coordinates are specified as indices of an array specified by its</tt> </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line"><tt class="py-docstring">        shape.</tt> </tt>
+<a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line"><tt class="py-docstring">        This method should be pretty fast. It assigns the value specified</tt> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line"><tt class="py-docstring">        by arg initial to its origin (index (0, 0, ...)) and then adds</tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line"><tt class="py-docstring">        constant increments (elements of gl) along all axis.</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line"><tt class="py-docstring">        Transformed indices are retrurned as an array that has the same </tt> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line"><tt class="py-docstring">        shape is the initial one (arg shape) but it has an additional axis</tt> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line"><tt class="py-docstring">        of length ndim (n dim of shape) prepended to the shape. In short, the</tt> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line"><tt class="py-docstring">        transformation is:</tt> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line"><tt class="py-docstring">          [x, y, z, ...] -&gt; result[i, x, y, z, ...]</tt> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line"><tt class="py-docstring">        where i denotes the axis number (0 for x axis, 1 for y and so on).</tt> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line"><tt class="py-docstring">        Arguments:</tt> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line"><tt class="py-docstring">          - shape: shape of the initial array that specifies indices </tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line"><tt class="py-docstring">          - gl: (ndim x ndim ndarray) general linear transformation matrix</tt> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line"><tt class="py-docstring">          - initial: (array of length ndim) origin values for all axes</tt> </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line"><tt class="py-docstring">        Return: (ndarray) transformed indices</tt> </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line"> </tt>
+<a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line">        <tt class="py-comment"># initialize array to hold transformed coordinates</tt> </tt>
+<a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line">        <tt id="link-21" class="py-name"><a title="pyto.core.image.Image.ndim
+pyto.geometry.affine.Affine.ndim
+pyto.geometry.rigid_3d.Rigid3D.ndim
+pyto.segmentation.features.Features.ndim" class="py-name" href="#" onclick="return doclink('link-21', 'ndim', 'link-10');">ndim</a></tt> <tt class="py-op">=</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt id="link-22" class="py-name"><a title="pyto.scripts.discs_to_balls.shape" class="py-name" href="#" onclick="return doclink('link-22', 'shape', 'link-5');">shape</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line">        <tt class="py-name">new_shape</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt id="link-23" class="py-name"><a title="pyto.core.image.Image.ndim
+pyto.geometry.affine.Affine.ndim
+pyto.geometry.rigid_3d.Rigid3D.ndim
+pyto.segmentation.features.Features.ndim" class="py-name" href="#" onclick="return doclink('link-23', 'ndim', 'link-10');">ndim</a></tt><tt class="py-op">]</tt> <tt class="py-op">+</tt> <tt class="py-name">list</tt><tt class="py-op">(</tt><tt id="link-24" class="py-name"><a title="pyto.scripts.discs_to_balls.shape" class="py-name" href="#" onclick="return doclink('link-24', 'shape', 'link-5');">shape</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line">        <tt class="py-name">new_ndim</tt> <tt class="py-op">=</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">new_shape</tt><tt class="py-op">)</tt> </tt>
+<a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line">        <tt class="py-name">transformed</tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">zeros</tt><tt class="py-op">(</tt><tt id="link-25" class="py-name"><a title="pyto.scripts.discs_to_balls.shape" class="py-name" href="#" onclick="return doclink('link-25', 'shape', 'link-5');">shape</a></tt><tt class="py-op">=</tt><tt class="py-name">new_shape</tt><tt class="py-op">,</tt> <tt id="link-26" class="py-name" targets="Variable pyto.scripts.correlation_3d_2d.dtype=pyto.scripts.correlation_3d_2d-module.html#dtype"><a title="pyto.scripts.correlation_3d_2d.dtype" class="py-name" href="#" onclick="return doclink('link-26', 'dtype', 'link-26');">dtype</a></tt><tt class="py-op">=</tt><tt class="py-name">float</tt><tt class="py-op">)</tt> </tt>
+<a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line"> </tt>
+<a name="L135"></a><tt class="py-lineno">135</tt>  <tt class="py-line">        <tt class="py-comment"># set element at 0,0, ... position</tt> </tt>
+<a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line">        <tt class="py-name">zero_coord</tt> <tt class="py-op">=</tt> <tt class="py-name">tuple</tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-name">slice</tt><tt class="py-op">(</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> <tt class="py-op">+</tt> <tt id="link-27" class="py-name"><a title="pyto.core.image.Image.ndim
+pyto.geometry.affine.Affine.ndim
+pyto.geometry.rigid_3d.Rigid3D.ndim
+pyto.segmentation.features.Features.ndim" class="py-name" href="#" onclick="return doclink('link-27', 'ndim', 'link-10');">ndim</a></tt> <tt class="py-op">*</tt> <tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-keyword">not</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt class="py-name">initial</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-name">list</tt><tt class="py-op">,</tt> <tt class="py-name">tuple</tt><tt class="py-op">,</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">ndarray</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt>  </tt>
+<a name="L138"></a><tt class="py-lineno">138</tt>  <tt class="py-line">            <tt class="py-keyword">and</tt> <tt class="py-op">(</tt><tt class="py-name">initial</tt> <tt class="py-op">==</tt> <tt class="py-number">0</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line">            <tt class="py-name">initial</tt> <tt class="py-op">=</tt> <tt id="link-28" class="py-name"><a title="pyto.core.image.Image.ndim
+pyto.geometry.affine.Affine.ndim
+pyto.geometry.rigid_3d.Rigid3D.ndim
+pyto.segmentation.features.Features.ndim" class="py-name" href="#" onclick="return doclink('link-28', 'ndim', 'link-10');">ndim</a></tt> <tt class="py-op">*</tt> <tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt> </tt>
+<a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line">        <tt class="py-name">transformed</tt><tt class="py-op">[</tt><tt class="py-name">zero_coord</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">initial</tt> </tt>
+<a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line"> </tt>
+<a name="L142"></a><tt class="py-lineno">142</tt>  <tt class="py-line">        <tt class="py-comment"># set values on 1d subarrays emanating from the array origin</tt> </tt>
+<a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt id="link-29" class="py-name"><a title="pyto.scripts.regions.axis
+pyto.scripts.vesicles.axis" class="py-name" href="#" onclick="return doclink('link-29', 'axis', 'link-14');">axis</a></tt> <tt class="py-keyword">in</tt> <tt class="py-name">range</tt><tt class="py-op">(</tt><tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-name">new_ndim</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L144"></a><tt class="py-lineno">144</tt>  <tt class="py-line">            <tt class="py-name">coord</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-name">slice</tt><tt class="py-op">(</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> <tt class="py-op">+</tt> <tt id="link-30" class="py-name"><a title="pyto.core.image.Image.ndim
+pyto.geometry.affine.Affine.ndim
+pyto.geometry.rigid_3d.Rigid3D.ndim
+pyto.segmentation.features.Features.ndim" class="py-name" href="#" onclick="return doclink('link-30', 'ndim', 'link-10');">ndim</a></tt> <tt class="py-op">*</tt> <tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt> </tt>
+<a name="L145"></a><tt class="py-lineno">145</tt>  <tt class="py-line">            <tt class="py-name">coord</tt><tt class="py-op">[</tt><tt id="link-31" class="py-name"><a title="pyto.scripts.regions.axis
+pyto.scripts.vesicles.axis" class="py-name" href="#" onclick="return doclink('link-31', 'axis', 'link-14');">axis</a></tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">slice</tt><tt class="py-op">(</tt><tt class="py-number">1</tt><tt class="py-op">,</tt><tt class="py-name">None</tt><tt class="py-op">)</tt> </tt>
+<a name="L146"></a><tt class="py-lineno">146</tt>  <tt class="py-line">            <tt class="py-name">gl_column</tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">expand_dims</tt><tt class="py-op">(</tt><tt id="link-32" class="py-name"><a title="pyto.geometry.rigid_3d.Rigid3D.gl" class="py-name" href="#" onclick="return doclink('link-32', 'gl', 'link-7');">gl</a></tt><tt class="py-op">[</tt><tt class="py-op">:</tt><tt class="py-op">,</tt> <tt id="link-33" class="py-name"><a title="pyto.scripts.regions.axis
+pyto.scripts.vesicles.axis" class="py-name" href="#" onclick="return doclink('link-33', 'axis', 'link-14');">axis</a></tt><tt class="py-op">-</tt><tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt id="link-34" class="py-name"><a title="pyto.scripts.regions.axis
+pyto.scripts.vesicles.axis" class="py-name" href="#" onclick="return doclink('link-34', 'axis', 'link-14');">axis</a></tt><tt class="py-op">=</tt><tt class="py-number">1</tt><tt class="py-op">)</tt> </tt>
+<a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line">            <tt class="py-name">transformed</tt><tt class="py-op">[</tt><tt class="py-name">tuple</tt><tt class="py-op">(</tt><tt class="py-name">coord</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">gl_column</tt> </tt>
+<a name="L148"></a><tt class="py-lineno">148</tt>  <tt class="py-line"> </tt>
+<a name="L149"></a><tt class="py-lineno">149</tt>  <tt class="py-line">        <tt class="py-comment"># make transformation </tt> </tt>
+<a name="L150"></a><tt class="py-lineno">150</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt id="link-35" class="py-name"><a title="pyto.scripts.regions.axis
+pyto.scripts.vesicles.axis" class="py-name" href="#" onclick="return doclink('link-35', 'axis', 'link-14');">axis</a></tt> <tt class="py-keyword">in</tt> <tt class="py-name">range</tt><tt class="py-op">(</tt><tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-name">new_ndim</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line">            <tt class="py-name">transformed</tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt id="link-36" class="py-name" targets="Method pyto.analysis.catalog.Catalog.add()=pyto.analysis.catalog.Catalog-class.html#add,Method pyto.segmentation.contact.Contact.add()=pyto.segmentation.contact.Contact-class.html#add,Method pyto.segmentation.features.Features.add()=pyto.segmentation.features.Features-class.html#add,Method pyto.segmentation.segment.Segment.add()=pyto.segmentation.segment.Segment-class.html#add,Function pyto.util.nested.add()=pyto.util.nested-module.html#add"><a title="pyto.analysis.catalog.Catalog.add
+pyto.segmentation.contact.Contact.add
+pyto.segmentation.features.Features.add
+pyto.segmentation.segment.Segment.add
+pyto.util.nested.add" class="py-name" href="#" onclick="return doclink('link-36', 'add', 'link-36');">add</a></tt><tt class="py-op">.</tt><tt class="py-name">accumulate</tt><tt class="py-op">(</tt><tt class="py-name">transformed</tt><tt class="py-op">,</tt> <tt id="link-37" class="py-name"><a title="pyto.scripts.regions.axis
+pyto.scripts.vesicles.axis" class="py-name" href="#" onclick="return doclink('link-37', 'axis', 'link-14');">axis</a></tt><tt class="py-op">=</tt><tt id="link-38" class="py-name"><a title="pyto.scripts.regions.axis
+pyto.scripts.vesicles.axis" class="py-name" href="#" onclick="return doclink('link-38', 'axis', 'link-14');">axis</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L152"></a><tt class="py-lineno">152</tt>  <tt class="py-line">             </tt>
+<a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">transformed</tt> </tt>
+</div></div><a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

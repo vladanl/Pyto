@@ -1,0 +1,923 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.tomo.series.Series</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.tomo-module.html">Package&nbsp;tomo</a> ::
+        <a href="pyto.tomo.series-module.html">Module&nbsp;series</a> ::
+        Class&nbsp;Series
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.tomo.series.Series-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Series</h1><p class="nomargin-top"><span class="codelink"><a href="pyto.tomo.series-pysrc.html#Series">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_pyto_tom_4" name="uml_class_diagram_for_pyto_tom_4">
+<area shape="rect" id="node1_11" href="pyto.tomo.series.Series-class.html#__init__" title="Sets path and mode that determine the series." alt="" coords="17,37,913,57"/>
+<area shape="rect" id="node1_12" href="pyto.tomo.series.Series-class.html#sort" title="Sorts series, fixes image headers, corrects the data and writes the sorted and corrected images." alt="" coords="17,57,913,77"/>
+<area shape="rect" id="node1_13" href="pyto.tomo.series.Series-class.html#fix" title="Fixes wrong data in headers." alt="" coords="17,77,913,97"/>
+<area shape="rect" id="node1_14" href="pyto.tomo.series.Series-class.html#getDose" title="Calculates dose for the whole series (in e/A^2) and the average counts per pixel.." alt="" coords="17,97,913,117"/>
+<area shape="rect" id="node1_15" href="pyto.tomo.series.Series-class.html#images" title="Generator that (when instantiated) yields paths for files that match path." alt="" coords="17,117,913,137"/>
+<area shape="rect" id="node1_16" href="pyto.tomo.series.Series-class.html#sortPaths" title="Sorts list of file path and returns it." alt="" coords="17,137,913,157"/>
+<area shape="rect" id="node1_17" href="pyto.tomo.series.Series-class.html#makeReg" title="pyto.tomo.series.Series.makeReg" alt="" coords="17,157,913,177"/>
+<area shape="rect" id="node1_18" href="pyto.tomo.series.Series-class.html#convertBase" title="pyto.tomo.series.Series.convertBase" alt="" coords="17,177,913,197"/>
+<area shape="rect" id="node1_19" href="pyto.tomo.series.Series-class.html#splitBase" title="Splits base of a file name into three parts and returns them." alt="" coords="17,197,913,217"/>
+<area shape="rect" id="node1_20" href="pyto.tomo.series.Series-class.html#setOutMode" title="Sets attributes" alt="" coords="17,217,913,237"/>
+<area shape="rect" id="node1_21" href="pyto.tomo.series.Series-class.html#readTiltAngles" title="Reads angles from a SerialEm type tilt angles file (one angle per line, &#160;ordered like the corresponding projections in a stack)." alt="" coords="17,237,913,257"/>
+<area shape="rect" id="node1" href="pyto.tomo.series.Series-class.html" title="Methods for manipulations of a series of images." alt="" coords="5,5,925,264"/>
+</map>
+  <img src="uml_class_diagram_for_pyto_tom_4.gif" alt='' usemap="#uml_class_diagram_for_pyto_tom_4" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<pre class="literalblock">
+
+Methods for manipulations of a series of images. 
+
+Meant for but not limited to a tomographic series. Images can be saved in 
+separate files or as a single stack.
+
+Important methods:
+  - self.sort: sorts series, fixes file headers and limits the data
+  (only for separate images)
+  - self.fix: fix headers (only for separate images)
+  - self.getDose: calculated the total (series) dose 
+  - self.images: generator that yields names of all files of a series
+  (only for separate images)
+
+Common usage:
+
+  myseries = Series(files='dir/base.em')
+  myseries.sort(out='new_directory')
+  myseries.fix(mode='polara_fei-tomo', microscope='polara-1_01-09')
+
+</pre>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.tomo.series.Series-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">path</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">stack</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">tilt_file</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Sets path and mode that determine the series.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.tomo.series-pysrc.html#Series.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.tomo.series.Series-class.html#sort" class="summary-sig-name">sort</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">seq</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">out</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">pad</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">start</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">fix_mode</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">microscope</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">limit</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">limit_mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">std</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">size</span>=<span class="summary-sig-default">5</span>,
+        <span class="summary-sig-arg">byte_order</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">test</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Sorts series, fixes image headers, corrects the data and writes the
+sorted and corrected images.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.tomo.series-pysrc.html#Series.sort">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.tomo.series.Series-class.html#fix" class="summary-sig-name">fix</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">microscope</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">out</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">pad</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">start</span>=<span class="summary-sig-default">1</span>)</span><br />
+      Fixes wrong data in headers.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.tomo.series-pysrc.html#Series.fix">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.tomo.series.Series-class.html#getDose" class="summary-sig-name">getDose</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">conversion</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">pixel_size</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">projection_dose</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Calculates dose for the whole series (in e/A^2) and the average counts
+per pixel..</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.tomo.series-pysrc.html#Series.getDose">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.tomo.series.Series-class.html#images" class="summary-sig-name">images</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">path</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">out</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">pad</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">start</span>=<span class="summary-sig-default">1</span>)</span><br />
+      Generator that (when instantiated) yields paths for files that match
+path.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.tomo.series-pysrc.html#Series.images">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.tomo.series.Series-class.html#sortPaths" class="summary-sig-name">sortPaths</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">paths</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">num</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">sequence</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Sorts list of file path and returns it.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.tomo.series-pysrc.html#Series.sortPaths">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="makeReg"></a><span class="summary-sig-name">makeReg</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">path</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default">None</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.tomo.series-pysrc.html#Series.makeReg">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="convertBase"></a><span class="summary-sig-name">convertBase</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">in_base</span>,
+        <span class="summary-sig-arg">out_base</span>,
+        <span class="summary-sig-arg">index</span>,
+        <span class="summary-sig-arg">pad</span>=<span class="summary-sig-default">0</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.tomo.series-pysrc.html#Series.convertBase">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.tomo.series.Series-class.html#splitBase" class="summary-sig-name">splitBase</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">base</span>)</span><br />
+      Splits base of a file name into three parts and returns them.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.tomo.series-pysrc.html#Series.splitBase">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="setOutMode"></a><span class="summary-sig-name">setOutMode</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">start</span>=<span class="summary-sig-default">1</span>)</span><br />
+      Sets attributes</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.tomo.series-pysrc.html#Series.setOutMode">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.tomo.series.Series-class.html#readTiltAngles" class="summary-sig-name">readTiltAngles</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">file_</span>)</span><br />
+      Reads angles from a SerialEm type tilt angles file (one angle per 
+      line, ordered like the corresponding projections in a stack).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.tomo.series-pysrc.html#Series.readTiltAngles">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">path</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">stack</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">tilt_file</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.tomo.series-pysrc.html#Series.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets path and mode that determine the series.</p>
+  <p>A series contains all files that match path. Path cosists of a 
+  directory and a file name, where the file name is taken to be a regular 
+  expression.</p>
+  <p>Mode determines how the pattern match is performed. The options 
+  are:</p>
+  <ul>
+    <li>
+      search: (like re.search) pattern somewhere in the target string
+    </li>
+    <li>
+      match: (like re.match) target string begins with the pattern
+    </li>
+    <li>
+      exact: whole target string is mathed (both the beginning and the end 
+      of the file name are anchored)
+    </li>
+  </ul>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      paths: full file path in the form dir/file or just file, where file 
+      is a regular expression
+    </li>
+    <li>
+      mode: pattern matching mode
+    </li>
+    <li>
+      stack: flag indicating if the series is in a single stack
+    </li>
+    <li>
+      tilt_file: name of the SerialEM type tilt angles file
+    </li>
+  </ul>
+  <p>Sets:</p>
+  <ul>
+    <li>
+      self.path
+    </li>
+    <li>
+      self.mode
+    </li>
+    <li>
+      self.stack
+    </li>
+    <li>
+      self.tiltAngles: tilt angles read from tilt_file
+    </li>
+  </ul>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="sort"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">sort</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">seq</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">out</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">pad</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">start</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">fix_mode</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">microscope</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">limit</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">limit_mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">std</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">size</span>=<span class="sig-default">5</span>,
+        <span class="sig-arg">byte_order</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">test</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.tomo.series-pysrc.html#Series.sort">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Sorts series, fixes image headers, corrects the data and writes the
+sorted and corrected images. 
+
+A series is sorted by tilt angle that is read from each image, or by the
+elements of seq (not necessarily angles) if given.
+
+Sorted images names have the form:
+  directory/name + number + extension.
+where out is: directory/name_.extension and numbers start with start
+argument and are padded with pad (argument) number of zeros (see
+self.images).
+
+Argument fix_mode detemines how the headers are fixed:
+  - None: no fixing
+  - 'polara_fei-tomo': for series obtained on polara with the FEI tomo
+  software
+  - 'krios_fei-tomo': for series obtained on krios with the FEI tomo
+  software
+  - 'cm300': for series from CM300
+(see pyto.io.image_io). 
+
+If fix_mode is 'polara_fei-tomo', then arg microscope has to be 
+specified. The allowed values are specified in microscope_db.py. 
+Currently (r564) these are: 'polara-1_01-07', 'polara-1_01-09' and 
+'polara-2_01-09'.
+
+If fix_mode is None, microscope does nor need to be specified.
+Series recorded by SerialEM typically do not need fixing.
+
+Works for individual images only (not for stacks).
+
+Arguments:
+  - seq: if specified this sequence used for sorting projection,
+  otherwise tilt angles are used
+  - out: sorted series path
+  - pad: number of digits of a projection number in the sorted 
+  series file name
+  - start: start number for sorted series file names 
+  - fix_mode: determined if and how headers are fixed
+  - microscope: microscope type, see pyto.io.microscope_db
+  - limit_mode: 'abs' or 'std'
+  - limit: absolute greyscale limit if limit_mode is 'abs', or the 
+  number of stds above and below the mean 
+  - size: size of the subarray used to find the replacement value 
+  for a voxel that's out of the limits 
+  - byte_order: '&lt;' or '&gt;', default is the byte order of the machine
+  - test: if True all steps are done except writing corrected images
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="fix"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">fix</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">microscope</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">out</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">pad</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">start</span>=<span class="sig-default">1</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.tomo.series-pysrc.html#Series.fix">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Fixes wrong data in headers.</p>
+  <p>Mode determines which values are fixed. Currently defined modes 
+  are:</p>
+  <ul>
+    <li>
+      'polara_fei-tomo': images obtained on Polara (at MPI of Biochemistry)
+      using FEI tomography package and saved in EM format.
+    </li>
+    <li>
+      'krios_fei-tomo': images obtained on Krios (at MPI of Biochemistry) 
+      using FEI tomography package and saved in EM format.
+    </li>
+    <li>
+      'cm300': images from cm300 in EM format
+    </li>
+    <li>
+      None: doesn't do anyhing
+    </li>
+  </ul>
+  <p>If mode is 'polara_fei-tomo', then arg microscope has to be specified.
+  The allowed values are specified in microscope_db.py. Currently (r564) 
+  these are: 'polara-1_01-07', 'polara-1_01-09' and 'polara-2_01-09'.</p>
+  <p>Works for individual images only (not for stacks), because stacks are 
+  typically recorded by SerialEM and do not need fixing.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      out: directory where the fixed images are written. The fixed and the 
+      original images have the same base names.
+    </li>
+    <li>
+      mode: fix mode
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getDose"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getDose</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">conversion</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">pixel_size</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">projection_dose</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.tomo.series-pysrc.html#Series.getDose">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Calculates dose for the whole series (in e/A^2) and the average counts
+per pixel..
+
+Logs average, std, min and max counts for each image to INFO.
+
+Mode determines how the pixels are converted to A^2:
+- 'pixel_size': use pixelsize from the image header (default)
+- 'cm300_fix': use only for cm300 series with headers that were not
+corrected
+
+Arguments:
+  - conversion: number of electrons per pixel (if known microscope use
+  pyto.io.microscope_db.conversion[microscope]).
+  - mode: 'pixel_size' should be used, other moders were used in
+  special cases
+  - projection_dose: flag indicating if dose [e/A^2] for each 
+  projection is returned
+
+Returns total_dose, mean_count:
+  - total dose in e/A^2
+  - mean count in counts/pixel
+  - projection_dose (if projection_dose=True) 2D ndarray containing
+  tilt angle and projection dose for all projections 
+  (shape n_projections x 2)
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="images"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">images</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">path</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">out</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">pad</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">start</span>=<span class="sig-default">1</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.tomo.series-pysrc.html#Series.images">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Generator that (when instantiated) yields paths for files that match
+path. If out is not None, a path for the corresponding output file is
+also returned for each matched (input) file.
+
+Mode determines how the pattern match is performed. The options are:
+  - search: (like re.search)
+  - match: (like re.match)
+  - exact: both the beginning and the end of the file name are anchored
+
+Each path is separated into: directory, clean root, number and
+extension. For example, mydir/myfile_002.em gives: 'mydir', 'myfile_',
+'002', '.em'. If not given in argument out, directory file and
+extension are taken from a corresponding (mached, or input) file.
+Output files are numbered starting from start and the pading
+determined if leading zeros are present in these numbers. Values None
+for pad and start mean that the form and the number of the input file
+is retained.
+
+Works for individual images only (not for stacks).
+
+For example:
+
+  images(path='indir/infile', out=outdir/outfile, pad=2, start=1)
+
+yields the following input and output files:
+
+  indir/infile_000.em, outdir/outfile_01.em
+  indir/infile_001.em, outdir/outfile_02.em
+  ...
+
+Arguments:
+  - path: pattern that matches input files
+  - mode: determines how the file names are matched
+  - out: output path
+  - pad: number of digits (paded by zeros if needed) of the number
+  pard of out file names
+  - start: output files are number starting with this argument
+
+Yields:
+  - in_path (if out is None)
+  - in_path, out_path (if out is not None)
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="sortPaths"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">sortPaths</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">paths</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">num</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">sequence</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.tomo.series-pysrc.html#Series.sortPaths">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sorts list of file path and returns it.</p>
+  <p>If arg mode is 'num', paths are sorted by series number, which are 
+  expected to be between the rightmost '_' and '.' in the file names.</p>
+  <p>If arg mode is 'tilt_angle', paths are sorted by tilt angle.</p>
+  <p>If arg mode is 'sequence', paths are sorted by arg sequence that has 
+  to have the same length as paths.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      paths: list of file paths (with or without directory)
+    </li>
+    <li>
+      mode: sorting mode, 'num', 'tilt_angle', or 'sequence'
+    </li>
+    <li>
+      sequence: sequence of values corresponding to paths
+    </li>
+  </ul>
+  <p>Returns sorted list of paths.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="splitBase"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">splitBase</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">base</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.tomo.series-pysrc.html#Series.splitBase">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Splits base of a file name into three parts and returns them. 
+
+The last '_' before the extension separates the first two parts, while
+the last '.' separates the last two. The idea is that the second part
+is a number. 
+
+For example:
+
+  &gt; series.splitBase('neu-2_gfp_23.mrc') 
+  &gt; 'neu-2_gfp_', '23', '.mrc'
+
+Argument:
+  - base: file base, that is a file name with of without directory/ies
+
+Returns tuple of three strings
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="readTiltAngles"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">readTiltAngles</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">file_</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.tomo.series-pysrc.html#Series.readTiltAngles">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Reads angles from a SerialEm type tilt angles file (one angle per 
+  line, ordered like the corresponding projections in a stack).</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      file_: tilt file name
+    </li>
+  </ul>
+  <p>Returns ndarray of tilt angles</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

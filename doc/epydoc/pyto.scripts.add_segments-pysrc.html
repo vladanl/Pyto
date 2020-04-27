@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.scripts.add_segments</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.scripts-module.html">Package&nbsp;scripts</a> ::
+        Module&nbsp;add_segments
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.scripts.add_segments-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="pyto.scripts.add_segments-module.html">Module pyto.scripts.add_segments</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-comment">#!/usr/bin/env python</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-docstring">Adds segments form different segment (labels) files.</tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-docstring">The segment ids in the resulting file are calculated as follows:</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-docstring">  - segment ids of the first label file are left unchanged </tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-docstring">  - segment ids of the second label file are increased by the specified</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-docstring">    value of variable shift</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-docstring">  - segment ids of the third label file are increased by 2*shift</tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-docstring">    ...</tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-docstring">Typically used to combine multiple boundary files into one. The resulting </tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt class="py-docstring">boundary file is then used for the segmentation and analysis procedures.  </tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"><tt class="py-docstring">This script may be placed anywhere in the directory tree.</tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"><tt class="py-docstring">$Id: add_segments.py 1393 2017-03-14 10:00:45Z vladan $</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"><tt class="py-docstring">Author: Vladan Lucic </tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"><tt class="py-name">__version__</tt> <tt class="py-op">=</tt> <tt class="py-string">"$Revision: 1393 $"</tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">numpy</tt> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt id="link-0" class="py-name" targets="Package pyto=pyto-module.html"><a title="pyto" class="py-name" href="#" onclick="return doclink('link-0', 'pyto', 'link-0');">pyto</a></tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line"> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"><tt class="py-comment">##############################################################</tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"><tt class="py-comment"># Parameters</tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"><tt class="py-comment">##############################################################</tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line"><tt class="py-comment">############################################################</tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line"><tt class="py-comment"># Segment (labels) files related.</tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line"> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line"><tt class="py-comment"># segment (labels) file names, order may be important (see remove_overlap)</tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line"><tt id="link-1" class="py-name" targets="Variable pyto.scripts.add_segments.labels_file_names=pyto.scripts.add_segments-module.html#labels_file_names"><a title="pyto.scripts.add_segments.labels_file_names" class="py-name" href="#" onclick="return doclink('link-1', 'labels_file_names', 'link-1');">labels_file_names</a></tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt><tt class="py-string">"labels_1.dat"</tt><tt class="py-op">,</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line">                     <tt class="py-string">"labels_2.dat"</tt><tt class="py-op">,</tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line">                     <tt class="py-string">"labels_3,dat"</tt><tt class="py-op">)</tt> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line"> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line"><tt class="py-comment"># labels file dimensions</tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line"><tt id="link-2" class="py-name" targets="Variable pyto.scripts.add_segments.labels_shape=pyto.scripts.add_segments-module.html#labels_shape,Variable pyto.scripts.cleft.labels_shape=pyto.scripts.cleft-module.html#labels_shape,Variable pyto.scripts.connections.labels_shape=pyto.scripts.connections-module.html#labels_shape,Variable pyto.scripts.connectors.labels_shape=pyto.scripts.connectors-module.html#labels_shape,Variable pyto.scripts.regions.labels_shape=pyto.scripts.regions-module.html#labels_shape,Variable pyto.scripts.vesicles.labels_shape=pyto.scripts.vesicles-module.html#labels_shape"><a title="pyto.scripts.add_segments.labels_shape
+pyto.scripts.cleft.labels_shape
+pyto.scripts.connections.labels_shape
+pyto.scripts.connectors.labels_shape
+pyto.scripts.regions.labels_shape
+pyto.scripts.vesicles.labels_shape" class="py-name" href="#" onclick="return doclink('link-2', 'labels_shape', 'link-2');">labels_shape</a></tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt><tt class="py-number">100</tt><tt class="py-op">,</tt> <tt class="py-number">120</tt><tt class="py-op">,</tt> <tt class="py-number">90</tt><tt class="py-op">)</tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line"> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line"><tt class="py-comment"># labels file data type (e.g. 'int8', 'int16', 'int32', 'float16', 'float64') </tt> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line"><tt id="link-3" class="py-name" targets="Variable pyto.scripts.add_segments.labels_data_type=pyto.scripts.add_segments-module.html#labels_data_type,Variable pyto.scripts.cleft.labels_data_type=pyto.scripts.cleft-module.html#labels_data_type,Variable pyto.scripts.connections.labels_data_type=pyto.scripts.connections-module.html#labels_data_type,Variable pyto.scripts.tomo_info.labels_data_type=pyto.scripts.tomo_info-module.html#labels_data_type"><a title="pyto.scripts.add_segments.labels_data_type
+pyto.scripts.cleft.labels_data_type
+pyto.scripts.connections.labels_data_type
+pyto.scripts.tomo_info.labels_data_type" class="py-name" href="#" onclick="return doclink('link-3', 'labels_data_type', 'link-3');">labels_data_type</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'int8'</tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line"> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line"><tt class="py-comment"># labels file byte order ('&lt;' for little-endian, '&gt;' for big-endian)</tt> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line"><tt id="link-4" class="py-name" targets="Variable pyto.scripts.add_segments.labels_byte_order=pyto.scripts.add_segments-module.html#labels_byte_order,Variable pyto.scripts.cleft.labels_byte_order=pyto.scripts.cleft-module.html#labels_byte_order,Variable pyto.scripts.connections.labels_byte_order=pyto.scripts.connections-module.html#labels_byte_order,Variable pyto.scripts.connectors.labels_byte_order=pyto.scripts.connectors-module.html#labels_byte_order,Variable pyto.scripts.regions.labels_byte_order=pyto.scripts.regions-module.html#labels_byte_order,Variable pyto.scripts.vesicles.labels_byte_order=pyto.scripts.vesicles-module.html#labels_byte_order"><a title="pyto.scripts.add_segments.labels_byte_order
+pyto.scripts.cleft.labels_byte_order
+pyto.scripts.connections.labels_byte_order
+pyto.scripts.connectors.labels_byte_order
+pyto.scripts.regions.labels_byte_order
+pyto.scripts.vesicles.labels_byte_order" class="py-name" href="#" onclick="return doclink('link-4', 'labels_byte_order', 'link-4');">labels_byte_order</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'&lt;'</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line"> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line"><tt class="py-comment"># labels file array order ('FORTRAN' for x-axis fastest, 'C' for z-axis fastest)</tt> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line"><tt id="link-5" class="py-name" targets="Variable pyto.scripts.add_segments.labels_array_order=pyto.scripts.add_segments-module.html#labels_array_order,Variable pyto.scripts.cleft.labels_array_order=pyto.scripts.cleft-module.html#labels_array_order,Variable pyto.scripts.connections.labels_array_order=pyto.scripts.connections-module.html#labels_array_order,Variable pyto.scripts.connectors.labels_array_order=pyto.scripts.connectors-module.html#labels_array_order,Variable pyto.scripts.regions.labels_array_order=pyto.scripts.regions-module.html#labels_array_order,Variable pyto.scripts.vesicles.labels_array_order=pyto.scripts.vesicles-module.html#labels_array_order"><a title="pyto.scripts.add_segments.labels_array_order
+pyto.scripts.cleft.labels_array_order
+pyto.scripts.connections.labels_array_order
+pyto.scripts.connectors.labels_array_order
+pyto.scripts.regions.labels_array_order
+pyto.scripts.vesicles.labels_array_order" class="py-name" href="#" onclick="return doclink('link-5', 'labels_array_order', 'link-5');">labels_array_order</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'FORTRAN'</tt> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line"> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line"><tt class="py-comment">#################################################################</tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line"><tt class="py-comment"># Ids related</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line"> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line"><tt class="py-comment"># ids of the segments that need to be added, one entry for each labels file</tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line"><tt id="link-6" class="py-name" targets="Variable pyto.scene.segmentation_analysis.SegmentationAnalysis.ids=pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#ids,Variable pyto.scripts.add_segments.ids=pyto.scripts.add_segments-module.html#ids,Variable pyto.scripts.blank.ids=pyto.scripts.blank-module.html#ids,Variable pyto.scripts.extract_points.ids=pyto.scripts.extract_points-module.html#ids,Variable pyto.segmentation.cluster.Cluster.ids=pyto.segmentation.cluster.Cluster-class.html#ids,Variable pyto.segmentation.features.Features.ids=pyto.segmentation.features.Features-class.html#ids"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-6', 'ids', 'link-6');">ids</a></tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-number">3</tt><tt class="py-op">,</tt><tt class="py-number">5</tt><tt class="py-op">,</tt><tt class="py-number">7</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line">       <tt class="py-name">range</tt><tt class="py-op">(</tt><tt class="py-number">2</tt><tt class="py-op">,</tt><tt class="py-number">8</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-op">[</tt><tt class="py-number">4</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line">       <tt class="py-name">range</tt><tt class="py-op">(</tt><tt class="py-number">3</tt><tt class="py-op">,</tt><tt class="py-number">5</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-name">range</tt><tt class="py-op">(</tt><tt class="py-number">6</tt><tt class="py-op">,</tt><tt class="py-number">10</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line"> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line"><tt class="py-comment"># id shift in each subsequent labels (in case of multiple labels files).</tt> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line"><tt class="py-comment"># Important: Shift has to be larger than the largest id (of all labels file) </tt> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line"><tt class="py-comment">#shift = None     # shift is determined automatically</tt> </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line"><tt id="link-7" class="py-name" targets="Variable pyto.scripts.add_segments.shift=pyto.scripts.add_segments-module.html#shift,Variable pyto.scripts.classify_connections.shift=pyto.scripts.classify_connections-module.html#shift,Variable pyto.scripts.cluster.shift=pyto.scripts.cluster-module.html#shift,Variable pyto.scripts.connections.shift=pyto.scripts.connections-module.html#shift,Variable pyto.scripts.connectors.shift=pyto.scripts.connectors-module.html#shift,Variable pyto.scripts.regions.shift=pyto.scripts.regions-module.html#shift,Variable pyto.scripts.vesicles.shift=pyto.scripts.vesicles-module.html#shift"><a title="pyto.scripts.add_segments.shift
+pyto.scripts.classify_connections.shift
+pyto.scripts.cluster.shift
+pyto.scripts.connections.shift
+pyto.scripts.connectors.shift
+pyto.scripts.regions.shift
+pyto.scripts.vesicles.shift" class="py-name" href="#" onclick="return doclink('link-7', 'shift', 'link-7');">shift</a></tt> <tt class="py-op">=</tt> <tt class="py-number">300</tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line"> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line"><tt class="py-comment"># removes segments (from the earlier file) if it intersects with a segment</tt> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line"><tt class="py-comment"># from a later file.</tt> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line"><tt id="link-8" class="py-name" targets="Variable pyto.scripts.add_segments.remove_overlap=pyto.scripts.add_segments-module.html#remove_overlap"><a title="pyto.scripts.add_segments.remove_overlap" class="py-name" href="#" onclick="return doclink('link-8', 'remove_overlap', 'link-8');">remove_overlap</a></tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line"> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line"><tt class="py-comment"># renumbers ids after the files are added</tt> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line"><tt id="link-9" class="py-name" targets="Method pyto.scene.segmentation_analysis.SegmentationAnalysis.relabel()=pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#relabel,Variable pyto.scripts.add_segments.relabel=pyto.scripts.add_segments-module.html#relabel"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.relabel
+pyto.scripts.add_segments.relabel" class="py-name" href="#" onclick="return doclink('link-9', 'relabel', 'link-9');">relabel</a></tt> <tt class="py-op">=</tt> <tt class="py-name">False</tt> </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line"> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line"><tt class="py-comment">#####################################################################</tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line"><tt class="py-comment"># Output file related</tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line"> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line"><tt class="py-comment"># output file name</tt> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line"><tt id="link-10" class="py-name" targets="Variable pyto.scripts.add_segments.out_labels_file_name=pyto.scripts.add_segments-module.html#out_labels_file_name"><a title="pyto.scripts.add_segments.out_labels_file_name" class="py-name" href="#" onclick="return doclink('link-10', 'out_labels_file_name', 'link-10');">out_labels_file_name</a></tt> <tt class="py-op">=</tt> <tt class="py-string">"combined_labels.dat"</tt> </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line"> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line"><tt class="py-comment"># data type of combined labels, should be chosen so that the max id is still</tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line"><tt class="py-comment"># below the data type limit (e.g. 'uint8', 'uint16', 'uint32' for an em file)</tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line"><tt id="link-11" class="py-name" targets="Variable pyto.scripts.add_segments.out_labels_data_type=pyto.scripts.add_segments-module.html#out_labels_data_type"><a title="pyto.scripts.add_segments.out_labels_data_type" class="py-name" href="#" onclick="return doclink('link-11', 'out_labels_data_type', 'link-11');">out_labels_data_type</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'uint16'</tt> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line"> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line"> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line"><tt class="py-comment">################################################################</tt> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line"><tt class="py-comment"># Work</tt> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line"><tt class="py-comment">################################################################</tt> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line"> </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line"><tt class="py-comment"># initialize</tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line"><tt id="link-12" class="py-name" targets="Variable pyto.scripts.add_segments.result=pyto.scripts.add_segments-module.html#result"><a title="pyto.scripts.add_segments.result" class="py-name" href="#" onclick="return doclink('link-12', 'result', 'link-12');">result</a></tt> <tt class="py-op">=</tt> <tt id="link-13" class="py-name"><a title="pyto" class="py-name" href="#" onclick="return doclink('link-13', 'pyto', 'link-0');">pyto</a></tt><tt class="py-op">.</tt><tt id="link-14" class="py-name" targets="Package pyto.segmentation=pyto.segmentation-module.html"><a title="pyto.segmentation" class="py-name" href="#" onclick="return doclink('link-14', 'segmentation', 'link-14');">segmentation</a></tt><tt class="py-op">.</tt><tt id="link-15" class="py-name" targets="Class pyto.segmentation.segment.Segment=pyto.segmentation.segment.Segment-class.html"><a title="pyto.segmentation.segment.Segment" class="py-name" href="#" onclick="return doclink('link-15', 'Segment', 'link-15');">Segment</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line"><tt id="link-16" class="py-name" targets="Variable pyto.scripts.add_segments.curr_shift=pyto.scripts.add_segments-module.html#curr_shift"><a title="pyto.scripts.add_segments.curr_shift" class="py-name" href="#" onclick="return doclink('link-16', 'curr_shift', 'link-16');">curr_shift</a></tt> <tt class="py-op">=</tt> <tt class="py-number">0</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line"> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line"><tt class="py-comment"># loop over labels files</tt> </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line"><tt class="py-keyword">for</tt> <tt class="py-op">(</tt><tt class="py-name">single_file</tt><tt class="py-op">,</tt> <tt class="py-name">single_ids</tt><tt class="py-op">)</tt> <tt class="py-keyword">in</tt> <tt class="py-name">zip</tt><tt class="py-op">(</tt><tt id="link-17" class="py-name"><a title="pyto.scripts.add_segments.labels_file_names" class="py-name" href="#" onclick="return doclink('link-17', 'labels_file_names', 'link-1');">labels_file_names</a></tt><tt class="py-op">,</tt> <tt id="link-18" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-18', 'ids', 'link-6');">ids</a></tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line"> </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line">    <tt class="py-comment"># read current labels file</tt> </tt>
+<a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line">    <tt class="py-name">labels_file</tt> <tt class="py-op">=</tt> <tt id="link-19" class="py-name"><a title="pyto" class="py-name" href="#" onclick="return doclink('link-19', 'pyto', 'link-0');">pyto</a></tt><tt class="py-op">.</tt><tt id="link-20" class="py-name" targets="Package pyto.io=pyto.io-module.html"><a title="pyto.io" class="py-name" href="#" onclick="return doclink('link-20', 'io', 'link-20');">io</a></tt><tt class="py-op">.</tt><tt id="link-21" class="py-name" targets="Class pyto.io.image_io.ImageIO=pyto.io.image_io.ImageIO-class.html"><a title="pyto.io.image_io.ImageIO" class="py-name" href="#" onclick="return doclink('link-21', 'ImageIO', 'link-21');">ImageIO</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line">    <tt class="py-name">labels_file</tt><tt class="py-op">.</tt><tt id="link-22" class="py-name" targets="Method pyto.analysis.catalog.Catalog.read()=pyto.analysis.catalog.Catalog-class.html#read,Class Method pyto.analysis.cleft_regions.CleftRegions.read()=pyto.analysis.cleft_regions.CleftRegions-class.html#read,Class Method pyto.analysis.clusters.Clusters.read()=pyto.analysis.clusters.Clusters-class.html#read,Class Method pyto.analysis.connections.Connections.read()=pyto.analysis.connections.Connections-class.html#read,Class Method pyto.analysis.layers.Layers.read()=pyto.analysis.layers.Layers-class.html#read,Class Method pyto.analysis.vesicles.Vesicles.read()=pyto.analysis.vesicles.Vesicles-class.html#read,Class Method pyto.core.image.Image.read()=pyto.core.image.Image-class.html#read,Method pyto.io.connections.Connections.read()=pyto.io.connections.Connections-class.html#read,Method pyto.io.image_io.ImageIO.read()=pyto.io.image_io.ImageIO-class.html#read,Method pyto.io.results.Results.read()=pyto.io.results.Results-class.html#read,Class Method pyto.segmentation.cleft.Cleft.read()=pyto.segmentation.cleft.Cleft-class.html#read,Class Method pyto.segmentation.segment.Segment.read()=pyto.segmentation.segment.Segment-class.html#read"><a title="pyto.analysis.catalog.Catalog.read
+pyto.analysis.cleft_regions.CleftRegions.read
+pyto.analysis.clusters.Clusters.read
+pyto.analysis.connections.Connections.read
+pyto.analysis.layers.Layers.read
+pyto.analysis.vesicles.Vesicles.read
+pyto.core.image.Image.read
+pyto.io.connections.Connections.read
+pyto.io.image_io.ImageIO.read
+pyto.io.results.Results.read
+pyto.segmentation.cleft.Cleft.read
+pyto.segmentation.segment.Segment.read" class="py-name" href="#" onclick="return doclink('link-22', 'read', 'link-22');">read</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line">        <tt class="py-name">file</tt><tt class="py-op">=</tt><tt class="py-name">single_file</tt><tt class="py-op">,</tt> <tt class="py-name">byteOrder</tt><tt class="py-op">=</tt><tt id="link-23" class="py-name"><a title="pyto.scripts.add_segments.labels_byte_order
+pyto.scripts.cleft.labels_byte_order
+pyto.scripts.connections.labels_byte_order
+pyto.scripts.connectors.labels_byte_order
+pyto.scripts.regions.labels_byte_order
+pyto.scripts.vesicles.labels_byte_order" class="py-name" href="#" onclick="return doclink('link-23', 'labels_byte_order', 'link-4');">labels_byte_order</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line">        <tt class="py-name">dataType</tt><tt class="py-op">=</tt><tt id="link-24" class="py-name"><a title="pyto.scripts.add_segments.labels_data_type
+pyto.scripts.cleft.labels_data_type
+pyto.scripts.connections.labels_data_type
+pyto.scripts.tomo_info.labels_data_type" class="py-name" href="#" onclick="return doclink('link-24', 'labels_data_type', 'link-3');">labels_data_type</a></tt><tt class="py-op">,</tt> <tt class="py-name">arrayOrder</tt><tt class="py-op">=</tt><tt id="link-25" class="py-name"><a title="pyto.scripts.add_segments.labels_array_order
+pyto.scripts.cleft.labels_array_order
+pyto.scripts.connections.labels_array_order
+pyto.scripts.connectors.labels_array_order
+pyto.scripts.regions.labels_array_order
+pyto.scripts.vesicles.labels_array_order" class="py-name" href="#" onclick="return doclink('link-25', 'labels_array_order', 'link-5');">labels_array_order</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line">        <tt id="link-26" class="py-name" targets="Variable pyto.scripts.discs_to_balls.shape=pyto.scripts.discs_to_balls-module.html#shape"><a title="pyto.scripts.discs_to_balls.shape" class="py-name" href="#" onclick="return doclink('link-26', 'shape', 'link-26');">shape</a></tt><tt class="py-op">=</tt><tt id="link-27" class="py-name"><a title="pyto.scripts.add_segments.labels_shape
+pyto.scripts.cleft.labels_shape
+pyto.scripts.connections.labels_shape
+pyto.scripts.connectors.labels_shape
+pyto.scripts.regions.labels_shape
+pyto.scripts.vesicles.labels_shape" class="py-name" href="#" onclick="return doclink('link-27', 'labels_shape', 'link-2');">labels_shape</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line">    <tt id="link-28" class="py-name" targets="Variable pyto.scene.segmentation_analysis.SegmentationAnalysis.labels=pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#labels,Variable pyto.scripts.blank.labels=pyto.scripts.blank-module.html#labels,Module pyto.segmentation.labels=pyto.segmentation.labels-module.html"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.labels
+pyto.scripts.blank.labels
+pyto.segmentation.labels" class="py-name" href="#" onclick="return doclink('link-28', 'labels', 'link-28');">labels</a></tt> <tt class="py-op">=</tt> <tt id="link-29" class="py-name"><a title="pyto" class="py-name" href="#" onclick="return doclink('link-29', 'pyto', 'link-0');">pyto</a></tt><tt class="py-op">.</tt><tt id="link-30" class="py-name"><a title="pyto.segmentation" class="py-name" href="#" onclick="return doclink('link-30', 'segmentation', 'link-14');">segmentation</a></tt><tt class="py-op">.</tt><tt id="link-31" class="py-name"><a title="pyto.segmentation.segment.Segment" class="py-name" href="#" onclick="return doclink('link-31', 'Segment', 'link-15');">Segment</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line">        <tt id="link-32" class="py-name" targets="Variable pyto.geometry.vector.Vector.data=pyto.geometry.vector.Vector-class.html#data,Method pyto.io.multi_data.MultiData.data()=pyto.io.multi_data.MultiData-class.html#data"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-32', 'data', 'link-32');">data</a></tt><tt class="py-op">=</tt><tt class="py-name">labels_file</tt><tt class="py-op">.</tt><tt id="link-33" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-33', 'data', 'link-32');">data</a></tt><tt class="py-op">,</tt> <tt class="py-name">copy</tt><tt class="py-op">=</tt><tt class="py-name">False</tt><tt class="py-op">,</tt> <tt id="link-34" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-34', 'ids', 'link-6');">ids</a></tt><tt class="py-op">=</tt><tt class="py-name">single_ids</tt><tt class="py-op">)</tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line"> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line">    <tt class="py-comment"># add current segments</tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line">    <tt id="link-35" class="py-name"><a title="pyto.scripts.add_segments.result" class="py-name" href="#" onclick="return doclink('link-35', 'result', 'link-12');">result</a></tt><tt class="py-op">.</tt><tt id="link-36" class="py-name" targets="Method pyto.analysis.catalog.Catalog.add()=pyto.analysis.catalog.Catalog-class.html#add,Method pyto.segmentation.contact.Contact.add()=pyto.segmentation.contact.Contact-class.html#add,Method pyto.segmentation.features.Features.add()=pyto.segmentation.features.Features-class.html#add,Method pyto.segmentation.segment.Segment.add()=pyto.segmentation.segment.Segment-class.html#add,Function pyto.util.nested.add()=pyto.util.nested-module.html#add"><a title="pyto.analysis.catalog.Catalog.add
+pyto.segmentation.contact.Contact.add
+pyto.segmentation.features.Features.add
+pyto.segmentation.segment.Segment.add
+pyto.util.nested.add" class="py-name" href="#" onclick="return doclink('link-36', 'add', 'link-36');">add</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line">        <tt class="py-name">new</tt><tt class="py-op">=</tt><tt id="link-37" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.labels
+pyto.scripts.blank.labels
+pyto.segmentation.labels" class="py-name" href="#" onclick="return doclink('link-37', 'labels', 'link-28');">labels</a></tt><tt class="py-op">,</tt> <tt id="link-38" class="py-name"><a title="pyto.scripts.add_segments.shift
+pyto.scripts.classify_connections.shift
+pyto.scripts.cluster.shift
+pyto.scripts.connections.shift
+pyto.scripts.connectors.shift
+pyto.scripts.regions.shift
+pyto.scripts.vesicles.shift" class="py-name" href="#" onclick="return doclink('link-38', 'shift', 'link-7');">shift</a></tt><tt class="py-op">=</tt><tt id="link-39" class="py-name"><a title="pyto.scripts.add_segments.curr_shift" class="py-name" href="#" onclick="return doclink('link-39', 'curr_shift', 'link-16');">curr_shift</a></tt><tt class="py-op">,</tt> <tt id="link-40" class="py-name"><a title="pyto.scripts.add_segments.remove_overlap" class="py-name" href="#" onclick="return doclink('link-40', 'remove_overlap', 'link-8');">remove_overlap</a></tt><tt class="py-op">=</tt><tt id="link-41" class="py-name"><a title="pyto.scripts.add_segments.remove_overlap" class="py-name" href="#" onclick="return doclink('link-41', 'remove_overlap', 'link-8');">remove_overlap</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line">        <tt id="link-42" class="py-name" targets="Variable pyto.scripts.correlation_3d_2d.dtype=pyto.scripts.correlation_3d_2d-module.html#dtype"><a title="pyto.scripts.correlation_3d_2d.dtype" class="py-name" href="#" onclick="return doclink('link-42', 'dtype', 'link-42');">dtype</a></tt><tt class="py-op">=</tt><tt id="link-43" class="py-name"><a title="pyto.scripts.add_segments.out_labels_data_type" class="py-name" href="#" onclick="return doclink('link-43', 'out_labels_data_type', 'link-11');">out_labels_data_type</a></tt><tt class="py-op">,</tt> <tt id="link-44" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.relabel
+pyto.scripts.add_segments.relabel" class="py-name" href="#" onclick="return doclink('link-44', 'relabel', 'link-9');">relabel</a></tt><tt class="py-op">=</tt><tt id="link-45" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.relabel
+pyto.scripts.add_segments.relabel" class="py-name" href="#" onclick="return doclink('link-45', 'relabel', 'link-9');">relabel</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt id="link-46" class="py-name"><a title="pyto.scripts.add_segments.shift
+pyto.scripts.classify_connections.shift
+pyto.scripts.cluster.shift
+pyto.scripts.connections.shift
+pyto.scripts.connectors.shift
+pyto.scripts.regions.shift
+pyto.scripts.vesicles.shift" class="py-name" href="#" onclick="return doclink('link-46', 'shift', 'link-7');">shift</a></tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line">        <tt id="link-47" class="py-name"><a title="pyto.scripts.add_segments.curr_shift" class="py-name" href="#" onclick="return doclink('link-47', 'curr_shift', 'link-16');">curr_shift</a></tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line">    <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line">        <tt id="link-48" class="py-name"><a title="pyto.scripts.add_segments.curr_shift" class="py-name" href="#" onclick="return doclink('link-48', 'curr_shift', 'link-16');">curr_shift</a></tt> <tt class="py-op">+=</tt> <tt id="link-49" class="py-name"><a title="pyto.scripts.add_segments.shift
+pyto.scripts.classify_connections.shift
+pyto.scripts.cluster.shift
+pyto.scripts.connections.shift
+pyto.scripts.connectors.shift
+pyto.scripts.regions.shift
+pyto.scripts.vesicles.shift" class="py-name" href="#" onclick="return doclink('link-49', 'shift', 'link-7');">shift</a></tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line"> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line"><tt class="py-comment"># write output file</tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line"><tt id="link-50" class="py-name" targets="Variable pyto.scripts.add_segments.out_file=pyto.scripts.add_segments-module.html#out_file"><a title="pyto.scripts.add_segments.out_file" class="py-name" href="#" onclick="return doclink('link-50', 'out_file', 'link-50');">out_file</a></tt> <tt class="py-op">=</tt> <tt id="link-51" class="py-name"><a title="pyto" class="py-name" href="#" onclick="return doclink('link-51', 'pyto', 'link-0');">pyto</a></tt><tt class="py-op">.</tt><tt id="link-52" class="py-name"><a title="pyto.io" class="py-name" href="#" onclick="return doclink('link-52', 'io', 'link-20');">io</a></tt><tt class="py-op">.</tt><tt id="link-53" class="py-name"><a title="pyto.io.image_io.ImageIO" class="py-name" href="#" onclick="return doclink('link-53', 'ImageIO', 'link-21');">ImageIO</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line"><tt id="link-54" class="py-name"><a title="pyto.scripts.add_segments.out_file" class="py-name" href="#" onclick="return doclink('link-54', 'out_file', 'link-50');">out_file</a></tt><tt class="py-op">.</tt><tt id="link-55" class="py-name" targets="Method pyto.core.image.Image.write()=pyto.core.image.Image-class.html#write,Method pyto.io.image_io.ImageIO.write()=pyto.io.image_io.ImageIO-class.html#write"><a title="pyto.core.image.Image.write
+pyto.io.image_io.ImageIO.write" class="py-name" href="#" onclick="return doclink('link-55', 'write', 'link-55');">write</a></tt><tt class="py-op">(</tt><tt class="py-name">file</tt><tt class="py-op">=</tt><tt id="link-56" class="py-name"><a title="pyto.scripts.add_segments.out_labels_file_name" class="py-name" href="#" onclick="return doclink('link-56', 'out_labels_file_name', 'link-10');">out_labels_file_name</a></tt><tt class="py-op">,</tt> <tt id="link-57" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-57', 'data', 'link-32');">data</a></tt><tt class="py-op">=</tt><tt id="link-58" class="py-name"><a title="pyto.scripts.add_segments.result" class="py-name" href="#" onclick="return doclink('link-58', 'result', 'link-12');">result</a></tt><tt class="py-op">.</tt><tt id="link-59" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-59', 'data', 'link-32');">data</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.scripts.correlation_3d_2d</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.scripts-module.html">Package&nbsp;scripts</a> ::
+        Module&nbsp;correlation_3d_2d
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.scripts.correlation_3d_2d-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="pyto.scripts.correlation_3d_2d-module.html">Module pyto.scripts.correlation_3d_2d</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-comment">#!/usr/bin/env python</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-docstring">Establishes a correlation between 3D and 2D coordinate systems (e.g. images) </tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-docstring">and correlate the position of objects of interest from the 3D to the 2D system. </tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-docstring">Typically the initial (3D) system is a light micrroscopy (confocal) image</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-docstring">and the final (2D) is a ion beam image. The correlation procedure used in this </tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-docstring">script is direct, meaning there are no intermediary systems. </tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-docstring">Conceptually, the correlation procedure consists of two steps:</tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-docstring">  1) Establish a correlation between the two systems (initial and final), </tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-docstring">that is find a coordinate transformation between the two systems.</tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt class="py-docstring">  2) Correlate positions of obects of interest from one system to the other.</tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"><tt class="py-docstring">Marker points are needed to determine the transformation  (step 1). That is, </tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"><tt class="py-docstring">one needs to identify one set of features that are visible in both systems.</tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"><tt class="py-docstring">The coordinate transformation between the two systems is based on the full 3D </tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"><tt class="py-docstring">rigid body transformation (rotation, scale and translation). Marker positions </tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"><tt class="py-docstring">are specified as 3D coordinates in the initial system and 2D coordinates </tt> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"><tt class="py-docstring">(z component is missing) in the final system.</tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"><tt class="py-docstring">Requires the following coordinates:</tt> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line"><tt class="py-docstring">  - marker coordinates in the initial (3D) system</tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line"><tt class="py-docstring">  - corresponding marker coordinates in the final (2D) system</tt> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"><tt class="py-docstring">  - coordinates of objects of interest in the initial system</tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line"><tt class="py-docstring">These coordinates have to be saved in a file, in a table where rows represent</tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"><tt class="py-docstring">individual points (markers and objects of interest) and (some of) columns</tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line"><tt class="py-docstring">contain x, y and z coordinates.</tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"><tt class="py-docstring">It is not necessary, but it is recommended to use ImageJ / Fuji to generate</tt> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line"><tt class="py-docstring">these coordinates. What follows is the procedure which is compatible with</tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"><tt class="py-docstring">the default values in the File format sectin of the Parameters (below):</tt> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"><tt class="py-docstring">  1) (optional) Set to pixels: ImageJ / Image / Properties: Units = pix; </tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line"><tt class="py-docstring">     x width = y width = 1</tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line"><tt class="py-docstring">  2) Open measurement options by Analyze / Set measurements</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line"><tt class="py-docstring">  3) Set measurements: mean grey and stack position are sufficient; </tt> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line"><tt class="py-docstring">     display label, add to overlay, decimal places=1 are useful</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line"><tt class="py-docstring">  4) To store selected points to ROI (useful): Edit / Options / Point tool </tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line"><tt class="py-docstring">     (or double click on point tool): Auto measure, add to ROI, label</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line"><tt class="py-docstring">  5) Activate point tool</tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line"><tt class="py-docstring">  6) For each point (markers in both systems and objects of interest): Click </tt> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line"><tt class="py-docstring">     on a point (if auto measure was not set need Ctrl-M to put it in </tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line"><tt class="py-docstring">     the results; shift-click might also work)</tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line"><tt class="py-docstring">  7) When ROI manager opens or Analyze / Tools / ROI manager check </tt> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line"><tt class="py-docstring">     ROI manager / More / Options / Associate ... with slices in order that </tt> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line"><tt class="py-docstring">     points are shown only on the corresponding slices </tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line"><tt class="py-docstring">  8) Save results: Results / File / Save as. The name of this file</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line"><tt class="py-docstring">  9) Save ROIs (in zip format) : ROI manager / More / Save</tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line"><tt class="py-docstring">Steps 4, 7 and 9 are useful because they allow saving ROIs and retrieving </tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line"><tt class="py-docstring">them at alater point, but are not strictly necessary. Picks saved at ROIs </tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line"><tt class="py-docstring">can be displayed on the image at a later point but it's hard to read the </tt> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line"><tt class="py-docstring">pick coordinates. On the contrary, the coordinates are easily accessible </tt> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line"><tt class="py-docstring">in the results file, but it is difficult to display the picks on</tt> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line"><tt class="py-docstring">the same or on another image.</tt> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line"><tt class="py-docstring"> </tt> </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line"><tt class="py-docstring">Standard usage:</tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line"><tt class="py-docstring">1) Edit this file to enter the desired parameters (coordinates of markers </tt> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line"><tt class="py-docstring">and objects of interest, and the transformation type)</tt> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line"><tt class="py-docstring">2) Import and run this file (in IPython or another python shell):</tt> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line"><tt class="py-docstring">  &gt;&gt;&gt; import correlation_3d_2d</tt> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line"><tt class="py-docstring">  &gt;&gt;&gt; correlation_3d_2d.main()</tt> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line"><tt class="py-docstring">Advanced usage:</tt> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line"><tt class="py-docstring">1) As in the standard usage.</tt> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line"><tt class="py-docstring">2) Import this file and execute commands from main() one by one. Check values </tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line"><tt class="py-docstring">of variables as needed:</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line"><tt class="py-docstring">  &gt;&gt;&gt; import correlation_3d_2d</tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line"><tt class="py-docstring">  &gt;&gt;&gt; from correlation_3d_2d import *</tt> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line"><tt class="py-docstring">The main object (transf) is an instance of pyto.geometry.Rigid3D. Please </tt> </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line"><tt class="py-docstring">check docs for these classes for attributes and methods. </tt> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line"><tt class="py-docstring">If you use this script, please consider citing: </tt> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line"><tt class="py-docstring">  Arnold, J., J. Mahamid, V. Lucic, A. d. Marco, J.-J. Fernandez, Laugks, </tt> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line"><tt class="py-docstring">  H.-A. Mayer, Tobias, W. Baumeister, and J. Plitzko. Site-specific </tt> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line"><tt class="py-docstring">  cryo-focused ion beam sample preparation guided by 3-dimensional </tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line"><tt class="py-docstring">  correlative microscopy. Biophysical Journal accepted. </tt> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line"><tt class="py-docstring"># Author: Vladan Lucic (Max Planck Institute for Biochemistry)</tt> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line"><tt class="py-docstring"># $Id: correlation_3d_2d.py 1244 2015-11-04 14:21:30Z vladan $</tt> </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line"> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line"><tt class="py-name">__version__</tt> <tt class="py-op">=</tt> <tt class="py-string">"$Revision: 1244 $"</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line"> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line"> </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">os</tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">numpy</tt> <tt class="py-keyword">as</tt> <tt class="py-name">np</tt> </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">scipy</tt> <tt class="py-keyword">as</tt> <tt class="py-name">sp</tt> </tt>
+<a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line"> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt id="link-0" class="py-name" targets="Package pyto=pyto-module.html"><a title="pyto" class="py-name" href="#" onclick="return doclink('link-0', 'pyto', 'link-0');">pyto</a></tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt id="link-1" class="py-name"><a title="pyto" class="py-name" href="#" onclick="return doclink('link-1', 'pyto', 'link-0');">pyto</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Package pyto.scripts=pyto.scripts-module.html,Variable pyto.scripts.bulk_analysis.scripts=pyto.scripts.bulk_analysis-module.html#scripts"><a title="pyto.scripts
+pyto.scripts.bulk_analysis.scripts" class="py-name" href="#" onclick="return doclink('link-2', 'scripts', 'link-2');">scripts</a></tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Module pyto.analysis.test.common=pyto.analysis.test.common-module.html,Module pyto.scene.test.common=pyto.scene.test.common-module.html,Module pyto.scripts.common=pyto.scripts.common-module.html,Module pyto.segmentation.test.common=pyto.segmentation.test.common-module.html"><a title="pyto.analysis.test.common
+pyto.scene.test.common
+pyto.scripts.common
+pyto.segmentation.test.common" class="py-name" href="#" onclick="return doclink('link-3', 'common', 'link-3');">common</a></tt> <tt class="py-keyword">as</tt> <tt id="link-4" class="py-name"><a title="pyto.analysis.test.common
+pyto.scene.test.common
+pyto.scripts.common
+pyto.segmentation.test.common" class="py-name" href="#" onclick="return doclink('link-4', 'common', 'link-3');">common</a></tt> </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-5" class="py-name"><a title="pyto" class="py-name" href="#" onclick="return doclink('link-5', 'pyto', 'link-0');">pyto</a></tt><tt class="py-op">.</tt><tt id="link-6" class="py-name" targets="Package pyto.geometry=pyto.geometry-module.html"><a title="pyto.geometry" class="py-name" href="#" onclick="return doclink('link-6', 'geometry', 'link-6');">geometry</a></tt><tt class="py-op">.</tt><tt id="link-7" class="py-name" targets="Module pyto.geometry.rigid_3d=pyto.geometry.rigid_3d-module.html"><a title="pyto.geometry.rigid_3d" class="py-name" href="#" onclick="return doclink('link-7', 'rigid_3d', 'link-7');">rigid_3d</a></tt> <tt class="py-keyword">import</tt> <tt id="link-8" class="py-name" targets="Class pyto.geometry.rigid_3d.Rigid3D=pyto.geometry.rigid_3d.Rigid3D-class.html"><a title="pyto.geometry.rigid_3d.Rigid3D" class="py-name" href="#" onclick="return doclink('link-8', 'Rigid3D', 'link-8');">Rigid3D</a></tt> </tt>
+<a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line"> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line"> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line"><tt class="py-comment">##################################################################</tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line"><tt class="py-comment"># Parameters</tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line"><tt class="py-comment">#################################################################</tt> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line"> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line"><tt class="py-comment">##################################################################</tt> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line"><tt class="py-comment"># Markers</tt> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line"> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line"><tt class="py-comment"># initial (3D) markers file name </tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line"><tt id="link-9" class="py-name" targets="Variable pyto.scripts.correlation_3d_2d.markers_3d_file=pyto.scripts.correlation_3d_2d-module.html#markers_3d_file"><a title="pyto.scripts.correlation_3d_2d.markers_3d_file" class="py-name" href="#" onclick="return doclink('link-9', 'markers_3d_file', 'link-9');">markers_3d_file</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'picks.dat'</tt> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line"> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line"><tt class="py-comment"># rows where 3D markers are; rows numbered from 0, top (info) row skipped</tt> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line"><tt class="py-comment">#marker_3d_rows = [3, 7, 10, 11, 12, 17, 20, 21]</tt> </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line"><tt id="link-10" class="py-name" targets="Variable pyto.scripts.correlation_3d_2d.marker_3d_rows=pyto.scripts.correlation_3d_2d-module.html#marker_3d_rows"><a title="pyto.scripts.correlation_3d_2d.marker_3d_rows" class="py-name" href="#" onclick="return doclink('link-10', 'marker_3d_rows', 'link-10');">marker_3d_rows</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-number">3</tt><tt class="py-op">,</tt> <tt class="py-number">7</tt><tt class="py-op">,</tt> <tt class="py-number">10</tt><tt class="py-op">,</tt> <tt class="py-number">11</tt><tt class="py-op">,</tt> <tt class="py-number">12</tt><tt class="py-op">,</tt> <tt class="py-number">17</tt><tt class="py-op">,</tt> <tt class="py-number">21</tt><tt class="py-op">]</tt> </tt>
+<a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line"> </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line"><tt class="py-comment"># final (2D) markers file name</tt> </tt>
+<a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line"><tt id="link-11" class="py-name" targets="Variable pyto.scripts.correlation_3d_2d.markers_2d_file=pyto.scripts.correlation_3d_2d-module.html#markers_2d_file"><a title="pyto.scripts.correlation_3d_2d.markers_2d_file" class="py-name" href="#" onclick="return doclink('link-11', 'markers_2d_file', 'link-11');">markers_2d_file</a></tt> <tt class="py-op">=</tt> <tt id="link-12" class="py-name"><a title="pyto.scripts.correlation_3d_2d.markers_3d_file" class="py-name" href="#" onclick="return doclink('link-12', 'markers_3d_file', 'link-9');">markers_3d_file</a></tt> </tt>
+<a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line"> </tt>
+<a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line"><tt class="py-comment"># rows where 2D markers are, rows numbered from 0, top (info) row skipped</tt> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line"><tt class="py-comment">#marker_2d_rows = [6, 8, 9, 13, 14, 16, 18, 19]</tt> </tt>
+<a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line"><tt id="link-13" class="py-name" targets="Variable pyto.scripts.correlation_3d_2d.marker_2d_rows=pyto.scripts.correlation_3d_2d-module.html#marker_2d_rows"><a title="pyto.scripts.correlation_3d_2d.marker_2d_rows" class="py-name" href="#" onclick="return doclink('link-13', 'marker_2d_rows', 'link-13');">marker_2d_rows</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-number">6</tt><tt class="py-op">,</tt> <tt class="py-number">8</tt><tt class="py-op">,</tt> <tt class="py-number">9</tt><tt class="py-op">,</tt> <tt class="py-number">13</tt><tt class="py-op">,</tt> <tt class="py-number">14</tt><tt class="py-op">,</tt> <tt class="py-number">16</tt><tt class="py-op">,</tt> <tt class="py-number">19</tt><tt class="py-op">]</tt> </tt>
+<a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line"> </tt>
+<a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line"><tt class="py-comment">##################################################################</tt> </tt>
+<a name="L135"></a><tt class="py-lineno">135</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line"><tt class="py-comment"># Spots to be correlated</tt> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L138"></a><tt class="py-lineno">138</tt>  <tt class="py-line"> </tt>
+<a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line"><tt class="py-comment"># spots (3D) file name</tt> </tt>
+<a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line"><tt id="link-14" class="py-name" targets="Variable pyto.scripts.correlation_3d_2d.spots_3d_file=pyto.scripts.correlation_3d_2d-module.html#spots_3d_file"><a title="pyto.scripts.correlation_3d_2d.spots_3d_file" class="py-name" href="#" onclick="return doclink('link-14', 'spots_3d_file', 'link-14');">spots_3d_file</a></tt> <tt class="py-op">=</tt> <tt id="link-15" class="py-name"><a title="pyto.scripts.correlation_3d_2d.markers_3d_file" class="py-name" href="#" onclick="return doclink('link-15', 'markers_3d_file', 'link-9');">markers_3d_file</a></tt> </tt>
+<a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line"> </tt>
+<a name="L142"></a><tt class="py-lineno">142</tt>  <tt class="py-line"><tt class="py-comment"># rows where spots are, rows numbered from 0, top (info) row skipped</tt> </tt>
+<a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line"><tt id="link-16" class="py-name" targets="Variable pyto.scripts.correlation_3d_2d.spot_3d_rows=pyto.scripts.correlation_3d_2d-module.html#spot_3d_rows"><a title="pyto.scripts.correlation_3d_2d.spot_3d_rows" class="py-name" href="#" onclick="return doclink('link-16', 'spot_3d_rows', 'link-16');">spot_3d_rows</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-number">20</tt><tt class="py-op">]</tt> </tt>
+<a name="L144"></a><tt class="py-lineno">144</tt>  <tt class="py-line"> </tt>
+<a name="L145"></a><tt class="py-lineno">145</tt>  <tt class="py-line"><tt class="py-comment">##################################################################</tt> </tt>
+<a name="L146"></a><tt class="py-lineno">146</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line"><tt class="py-comment"># Results</tt> </tt>
+<a name="L148"></a><tt class="py-lineno">148</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L149"></a><tt class="py-lineno">149</tt>  <tt class="py-line"> </tt>
+<a name="L150"></a><tt class="py-lineno">150</tt>  <tt class="py-line"><tt class="py-comment"># results file name</tt> </tt>
+<a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line"><tt id="link-17" class="py-name" targets="Variable pyto.scripts.correlation_3d_2d.results_file=pyto.scripts.correlation_3d_2d-module.html#results_file,Variable pyto.scripts.correlation_simple_fileio.results_file=pyto.scripts.correlation_simple_fileio-module.html#results_file,Variable pyto.scripts.correlation_two_step_lm_em.results_file=pyto.scripts.correlation_two_step_lm_em-module.html#results_file"><a title="pyto.scripts.correlation_3d_2d.results_file
+pyto.scripts.correlation_simple_fileio.results_file
+pyto.scripts.correlation_two_step_lm_em.results_file" class="py-name" href="#" onclick="return doclink('link-17', 'results_file', 'link-17');">results_file</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'correlation.dat'</tt> </tt>
+<a name="L152"></a><tt class="py-lineno">152</tt>  <tt class="py-line"> </tt>
+<a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line"><tt class="py-comment">##################################################################</tt> </tt>
+<a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L155"></a><tt class="py-lineno">155</tt>  <tt class="py-line"><tt class="py-comment"># Initial conditions and optimization</tt> </tt>
+<a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L157"></a><tt class="py-lineno">157</tt>  <tt class="py-line"> </tt>
+<a name="L158"></a><tt class="py-lineno">158</tt>  <tt class="py-line"><tt class="py-comment"># do multiple optimization runs with different initial rotation (True / False)</tt> </tt>
+<a name="L159"></a><tt class="py-lineno">159</tt>  <tt class="py-line"><tt id="link-18" class="py-name" targets="Variable pyto.scripts.correlation_3d_2d.random_rotations=pyto.scripts.correlation_3d_2d-module.html#random_rotations"><a title="pyto.scripts.correlation_3d_2d.random_rotations" class="py-name" href="#" onclick="return doclink('link-18', 'random_rotations', 'link-18');">random_rotations</a></tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt> </tt>
+<a name="L160"></a><tt class="py-lineno">160</tt>  <tt class="py-line"> </tt>
+<a name="L161"></a><tt class="py-lineno">161</tt>  <tt class="py-line"><tt class="py-comment"># initial rotation specified by Euler angles:</tt> </tt>
+<a name="L162"></a><tt class="py-lineno">162</tt>  <tt class="py-line"><tt class="py-comment">#   phi, theta, psi, extrinsic, 'X' or 'ZXZ' mode in degrees</tt> </tt>
+<a name="L163"></a><tt class="py-lineno">163</tt>  <tt class="py-line"><tt class="py-comment"># uncomment one of the following</tt> </tt>
+<a name="L164"></a><tt class="py-lineno">164</tt>  <tt class="py-line"><tt class="py-comment">#rotation_init = None            # use default rotation</tt> </tt>
+<a name="L165"></a><tt class="py-lineno">165</tt>  <tt class="py-line"><tt class="py-comment">#rotation_init = [23, 45, 67]   # specified rotation angles</tt> </tt>
+<a name="L166"></a><tt class="py-lineno">166</tt>  <tt class="py-line"><tt id="link-19" class="py-name" targets="Variable pyto.scripts.correlation_3d_2d.rotation_init=pyto.scripts.correlation_3d_2d-module.html#rotation_init"><a title="pyto.scripts.correlation_3d_2d.rotation_init" class="py-name" href="#" onclick="return doclink('link-19', 'rotation_init', 'link-19');">rotation_init</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'gl2'</tt>            <tt class="py-comment"># use 2d affine to get initial rotation</tt> </tt>
+<a name="L167"></a><tt class="py-lineno">167</tt>  <tt class="py-line"> </tt>
+<a name="L168"></a><tt class="py-lineno">168</tt>  <tt class="py-line"><tt class="py-comment"># restrict random initial rotations to a neighborhood of the initial rotation</tt> </tt>
+<a name="L169"></a><tt class="py-lineno">169</tt>  <tt class="py-line"><tt class="py-comment"># used if rotation_init is is specified by angles or it is '2d'</tt> </tt>
+<a name="L170"></a><tt class="py-lineno">170</tt>  <tt class="py-line"><tt class="py-comment"># should be &lt; 0.5, value 0.1 roughly corresponds to 15 deg</tt> </tt>
+<a name="L171"></a><tt class="py-lineno">171</tt>  <tt class="py-line"><tt id="link-20" class="py-name" targets="Variable pyto.scripts.correlation_3d_2d.restrict_rotations=pyto.scripts.correlation_3d_2d-module.html#restrict_rotations"><a title="pyto.scripts.correlation_3d_2d.restrict_rotations" class="py-name" href="#" onclick="return doclink('link-20', 'restrict_rotations', 'link-20');">restrict_rotations</a></tt> <tt class="py-op">=</tt> <tt class="py-number">0.1</tt>    </tt>
+<a name="L172"></a><tt class="py-lineno">172</tt>  <tt class="py-line"> </tt>
+<a name="L173"></a><tt class="py-lineno">173</tt>  <tt class="py-line"><tt class="py-comment"># optimze of fix fluorescence to ib magnification </tt> </tt>
+<a name="L174"></a><tt class="py-lineno">174</tt>  <tt class="py-line"><tt class="py-comment"># uncomment one of the following</tt> </tt>
+<a name="L175"></a><tt class="py-lineno">175</tt>  <tt class="py-line"><tt id="link-21" class="py-name" targets="Variable pyto.geometry.affine.Affine.scale=pyto.geometry.affine.Affine-class.html#scale,Variable pyto.scripts.correlation_3d_2d.scale=pyto.scripts.correlation_3d_2d-module.html#scale"><a title="pyto.geometry.affine.Affine.scale
+pyto.scripts.correlation_3d_2d.scale" class="py-name" href="#" onclick="return doclink('link-21', 'scale', 'link-21');">scale</a></tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt>    <tt class="py-comment"># optimize </tt> </tt>
+<a name="L176"></a><tt class="py-lineno">176</tt>  <tt class="py-line"><tt class="py-comment">#scale = 150.   # fixed scale, no optimization</tt> </tt>
+<a name="L177"></a><tt class="py-lineno">177</tt>  <tt class="py-line"> </tt>
+<a name="L178"></a><tt class="py-lineno">178</tt>  <tt class="py-line"><tt class="py-comment"># do multiple optimization runs with different initial scale (True / False)</tt> </tt>
+<a name="L179"></a><tt class="py-lineno">179</tt>  <tt class="py-line"><tt id="link-22" class="py-name" targets="Variable pyto.scripts.correlation_3d_2d.random_scale=pyto.scripts.correlation_3d_2d-module.html#random_scale"><a title="pyto.scripts.correlation_3d_2d.random_scale" class="py-name" href="#" onclick="return doclink('link-22', 'random_scale', 'link-22');">random_scale</a></tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt> </tt>
+<a name="L180"></a><tt class="py-lineno">180</tt>  <tt class="py-line"> </tt>
+<a name="L181"></a><tt class="py-lineno">181</tt>  <tt class="py-line"><tt class="py-comment"># initial value for fluorescence to ib magnification, used only if scale=None</tt> </tt>
+<a name="L182"></a><tt class="py-lineno">182</tt>  <tt class="py-line"><tt class="py-comment">#scale_init = 1.               # specified value</tt> </tt>
+<a name="L183"></a><tt class="py-lineno">183</tt>  <tt class="py-line"><tt id="link-23" class="py-name" targets="Variable pyto.scripts.correlation_3d_2d.scale_init=pyto.scripts.correlation_3d_2d-module.html#scale_init"><a title="pyto.scripts.correlation_3d_2d.scale_init" class="py-name" href="#" onclick="return doclink('link-23', 'scale_init', 'link-23');">scale_init</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'gl2'</tt>            <tt class="py-comment"># use 2d transform to get init scale</tt> </tt>
+<a name="L184"></a><tt class="py-lineno">184</tt>  <tt class="py-line"> </tt>
+<a name="L185"></a><tt class="py-lineno">185</tt>  <tt class="py-line"><tt class="py-comment"># number of optimization runs, each run has different initial values;</tt> </tt>
+<a name="L186"></a><tt class="py-lineno">186</tt>  <tt class="py-line"><tt class="py-comment"># first run has initial conditions specified by rotation_init and scale_init</tt> </tt>
+<a name="L187"></a><tt class="py-lineno">187</tt>  <tt class="py-line"><tt class="py-comment"># (uncomment one of the following)</tt> </tt>
+<a name="L188"></a><tt class="py-lineno">188</tt>  <tt class="py-line"><tt class="py-comment">#ninit = 1    # one run only (two runs if rotation_init is '2d') </tt> </tt>
+<a name="L189"></a><tt class="py-lineno">189</tt>  <tt class="py-line"><tt id="link-24" class="py-name" targets="Variable pyto.scripts.correlation_3d_2d.ninit=pyto.scripts.correlation_3d_2d-module.html#ninit"><a title="pyto.scripts.correlation_3d_2d.ninit" class="py-name" href="#" onclick="return doclink('link-24', 'ninit', 'link-24');">ninit</a></tt> <tt class="py-op">=</tt> <tt class="py-number">10</tt>    <tt class="py-comment"># multiple runs, random_rotations or random_scale should be True</tt> </tt>
+<a name="L190"></a><tt class="py-lineno">190</tt>  <tt class="py-line"> </tt>
+<a name="L191"></a><tt class="py-lineno">191</tt>  <tt class="py-line"><tt class="py-comment">##################################################################</tt> </tt>
+<a name="L192"></a><tt class="py-lineno">192</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L193"></a><tt class="py-lineno">193</tt>  <tt class="py-line"><tt class="py-comment"># File format related</tt> </tt>
+<a name="L194"></a><tt class="py-lineno">194</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L195"></a><tt class="py-lineno">195</tt>  <tt class="py-line"> </tt>
+<a name="L196"></a><tt class="py-lineno">196</tt>  <tt class="py-line"><tt class="py-comment"># comment symbol</tt> </tt>
+<a name="L197"></a><tt class="py-lineno">197</tt>  <tt class="py-line"><tt id="link-25" class="py-name" targets="Variable pyto.scripts.correlation_3d_2d.comments=pyto.scripts.correlation_3d_2d-module.html#comments,Variable pyto.scripts.correlation_simple_fileio.comments=pyto.scripts.correlation_simple_fileio-module.html#comments"><a title="pyto.scripts.correlation_3d_2d.comments
+pyto.scripts.correlation_simple_fileio.comments" class="py-name" href="#" onclick="return doclink('link-25', 'comments', 'link-25');">comments</a></tt><tt class="py-op">=</tt><tt class="py-name">None</tt> </tt>
+<a name="L198"></a><tt class="py-lineno">198</tt>  <tt class="py-line"> </tt>
+<a name="L199"></a><tt class="py-lineno">199</tt>  <tt class="py-line"><tt class="py-comment"># number of top rows to skip</tt> </tt>
+<a name="L200"></a><tt class="py-lineno">200</tt>  <tt class="py-line"><tt id="link-26" class="py-name" targets="Variable pyto.scripts.correlation_3d_2d.skiprows=pyto.scripts.correlation_3d_2d-module.html#skiprows,Variable pyto.scripts.correlation_simple_fileio.skiprows=pyto.scripts.correlation_simple_fileio-module.html#skiprows"><a title="pyto.scripts.correlation_3d_2d.skiprows
+pyto.scripts.correlation_simple_fileio.skiprows" class="py-name" href="#" onclick="return doclink('link-26', 'skiprows', 'link-26');">skiprows</a></tt><tt class="py-op">=</tt><tt class="py-number">1</tt> </tt>
+<a name="L201"></a><tt class="py-lineno">201</tt>  <tt class="py-line"> </tt>
+<a name="L202"></a><tt class="py-lineno">202</tt>  <tt class="py-line"><tt class="py-comment"># field delimiter</tt> </tt>
+<a name="L203"></a><tt class="py-lineno">203</tt>  <tt class="py-line"><tt id="link-27" class="py-name" targets="Variable pyto.scripts.correlation_3d_2d.delimiter=pyto.scripts.correlation_3d_2d-module.html#delimiter,Variable pyto.scripts.correlation_simple_fileio.delimiter=pyto.scripts.correlation_simple_fileio-module.html#delimiter"><a title="pyto.scripts.correlation_3d_2d.delimiter
+pyto.scripts.correlation_simple_fileio.delimiter" class="py-name" href="#" onclick="return doclink('link-27', 'delimiter', 'link-27');">delimiter</a></tt><tt class="py-op">=</tt><tt class="py-string">'\t'</tt> </tt>
+<a name="L204"></a><tt class="py-lineno">204</tt>  <tt class="py-line"> </tt>
+<a name="L205"></a><tt class="py-lineno">205</tt>  <tt class="py-line"><tt class="py-comment"># x, y and z coordinate columns, in this order</tt> </tt>
+<a name="L206"></a><tt class="py-lineno">206</tt>  <tt class="py-line"><tt id="link-28" class="py-name" targets="Variable pyto.scripts.correlation_3d_2d.usecols=pyto.scripts.correlation_3d_2d-module.html#usecols"><a title="pyto.scripts.correlation_3d_2d.usecols" class="py-name" href="#" onclick="return doclink('link-28', 'usecols', 'link-28');">usecols</a></tt><tt class="py-op">=</tt><tt class="py-op">[</tt><tt class="py-number">3</tt><tt class="py-op">,</tt> <tt class="py-number">4</tt><tt class="py-op">,</tt> <tt class="py-number">5</tt><tt class="py-op">]</tt> </tt>
+<a name="L207"></a><tt class="py-lineno">207</tt>  <tt class="py-line"> </tt>
+<a name="L208"></a><tt class="py-lineno">208</tt>  <tt class="py-line"><tt class="py-comment"># alternative (more flexible) form to specify columns</tt> </tt>
+<a name="L209"></a><tt class="py-lineno">209</tt>  <tt class="py-line"><tt class="py-comment"># not implemented yet</tt> </tt>
+<a name="L210"></a><tt class="py-lineno">210</tt>  <tt class="py-line"><tt id="link-29" class="py-name" targets="Variable pyto.scripts.correlation_3d_2d.dtype=pyto.scripts.correlation_3d_2d-module.html#dtype"><a title="pyto.scripts.correlation_3d_2d.dtype" class="py-name" href="#" onclick="return doclink('link-29', 'dtype', 'link-29');">dtype</a></tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt> </tt>
+<a name="L211"></a><tt class="py-lineno">211</tt>  <tt class="py-line">    <tt class="py-string">'names'</tt> <tt class="py-op">:</tt> <tt class="py-op">(</tt><tt class="py-string">'id'</tt><tt class="py-op">,</tt> <tt class="py-string">'label'</tt><tt class="py-op">,</tt> <tt class="py-string">'density'</tt><tt class="py-op">,</tt> <tt class="py-string">'x'</tt><tt class="py-op">,</tt> <tt class="py-string">'y'</tt><tt class="py-op">,</tt> <tt class="py-string">'z'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt>  </tt>
+<a name="L212"></a><tt class="py-lineno">212</tt>  <tt class="py-line">    <tt class="py-string">'formats'</tt> <tt class="py-op">:</tt> <tt class="py-op">(</tt><tt class="py-string">'i'</tt><tt class="py-op">,</tt> <tt class="py-string">'a40'</tt><tt class="py-op">,</tt> <tt class="py-string">'f'</tt><tt class="py-op">,</tt> <tt class="py-string">'f'</tt><tt class="py-op">,</tt> <tt class="py-string">'f'</tt><tt class="py-op">,</tt> <tt class="py-string">'i'</tt><tt class="py-op">)</tt><tt class="py-op">}</tt> </tt>
+<a name="L213"></a><tt class="py-lineno">213</tt>  <tt class="py-line"><tt id="link-30" class="py-name" targets="Variable pyto.scripts.correlation_3d_2d.fmt=pyto.scripts.correlation_3d_2d-module.html#fmt"><a title="pyto.scripts.correlation_3d_2d.fmt" class="py-name" href="#" onclick="return doclink('link-30', 'fmt', 'link-30');">fmt</a></tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt><tt class="py-string">'%4i'</tt><tt class="py-op">,</tt> <tt class="py-string">'%s'</tt><tt class="py-op">,</tt> <tt class="py-string">'%9.3f'</tt><tt class="py-op">,</tt> <tt class="py-string">'%7.1f'</tt><tt class="py-op">,</tt> <tt class="py-string">'%7.1f'</tt><tt class="py-op">,</tt> <tt class="py-string">'%7.1f'</tt><tt class="py-op">)</tt> </tt>
+<a name="L214"></a><tt class="py-lineno">214</tt>  <tt class="py-line"> </tt>
+<a name="L215"></a><tt class="py-lineno">215</tt>  <tt class="py-line"> </tt>
+<a name="L216"></a><tt class="py-lineno">216</tt>  <tt class="py-line"><tt class="py-comment">#####################################################################</tt> </tt>
+<a name="L217"></a><tt class="py-lineno">217</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L218"></a><tt class="py-lineno">218</tt>  <tt class="py-line"><tt class="py-comment"># Functions</tt> </tt>
+<a name="L219"></a><tt class="py-lineno">219</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L220"></a><tt class="py-lineno">220</tt>  <tt class="py-line"><tt class="py-comment">#####################################################################</tt> </tt>
+<a name="L221"></a><tt class="py-lineno">221</tt>  <tt class="py-line"> </tt>
+<a name="L222"></a><tt class="py-lineno">222</tt>  <tt class="py-line"><tt class="py-comment"># ToDo pick rows by order or by index</tt> </tt>
+<a name="L223"></a><tt class="py-lineno">223</tt>  <tt class="py-line"> </tt>
+<a name="L224"></a><tt class="py-lineno">224</tt>  <tt class="py-line"><tt class="py-comment"># print transformation params</tt> </tt>
+<a name="write_results"></a><div id="write_results-def"><a name="L225"></a><tt class="py-lineno">225</tt> <a class="py-toggle" href="#" id="write_results-toggle" onclick="return toggle('write_results');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.scripts.correlation_3d_2d-module.html#write_results">write_results</a><tt class="py-op">(</tt> </tt>
+<a name="L226"></a><tt class="py-lineno">226</tt>  <tt class="py-line">        <tt class="py-param">transf</tt><tt class="py-op">,</tt> <tt class="py-param">res_file_name</tt><tt class="py-op">,</tt> <tt class="py-param">spots_3d</tt><tt class="py-op">,</tt> <tt class="py-param">spots_2d</tt><tt class="py-op">,</tt>  </tt>
+<a name="L227"></a><tt class="py-lineno">227</tt>  <tt class="py-line">        <tt class="py-param">markers_3d</tt><tt class="py-op">,</tt> <tt class="py-param">transformed_3d</tt><tt class="py-op">,</tt> <tt class="py-param">markers_2d</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="write_results-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="write_results-expanded"><a name="L228"></a><tt class="py-lineno">228</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L229"></a><tt class="py-lineno">229</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L230"></a><tt class="py-lineno">230</tt>  <tt class="py-line"> </tt>
+<a name="L231"></a><tt class="py-lineno">231</tt>  <tt class="py-line">    <tt class="py-comment"># open results file</tt> </tt>
+<a name="L232"></a><tt class="py-lineno">232</tt>  <tt class="py-line">    <tt class="py-name">res_file</tt> <tt class="py-op">=</tt> <tt class="py-name">open</tt><tt class="py-op">(</tt><tt class="py-name">res_file_name</tt><tt class="py-op">,</tt> <tt class="py-string">'w'</tt><tt class="py-op">)</tt> </tt>
+<a name="L233"></a><tt class="py-lineno">233</tt>  <tt class="py-line">     </tt>
+<a name="L234"></a><tt class="py-lineno">234</tt>  <tt class="py-line">    <tt class="py-comment"># header top</tt> </tt>
+<a name="L235"></a><tt class="py-lineno">235</tt>  <tt class="py-line">    <tt class="py-name">header</tt> <tt class="py-op">=</tt> <tt id="link-31" class="py-name"><a title="pyto.analysis.test.common
+pyto.scene.test.common
+pyto.scripts.common
+pyto.segmentation.test.common" class="py-name" href="#" onclick="return doclink('link-31', 'common', 'link-3');">common</a></tt><tt class="py-op">.</tt><tt id="link-32" class="py-name" targets="Function pyto.scripts.cleft.make_top_header()=pyto.scripts.cleft-module.html#make_top_header,Function pyto.scripts.common.make_top_header()=pyto.scripts.common-module.html#make_top_header,Function pyto.scripts.connectors.make_top_header()=pyto.scripts.connectors-module.html#make_top_header"><a title="pyto.scripts.cleft.make_top_header
+pyto.scripts.common.make_top_header
+pyto.scripts.connectors.make_top_header" class="py-name" href="#" onclick="return doclink('link-32', 'make_top_header', 'link-32');">make_top_header</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L236"></a><tt class="py-lineno">236</tt>  <tt class="py-line"> </tt>
+<a name="L237"></a><tt class="py-lineno">237</tt>  <tt class="py-line">    <tt class="py-comment"># extract eulers in degrees</tt> </tt>
+<a name="L238"></a><tt class="py-lineno">238</tt>  <tt class="py-line">    <tt class="py-name">eulers</tt> <tt class="py-op">=</tt> <tt class="py-name">transf</tt><tt class="py-op">.</tt><tt id="link-33" class="py-name" targets="Class Method pyto.geometry.rigid_3d.Rigid3D.extract_euler()=pyto.geometry.rigid_3d.Rigid3D-class.html#extract_euler"><a title="pyto.geometry.rigid_3d.Rigid3D.extract_euler" class="py-name" href="#" onclick="return doclink('link-33', 'extract_euler', 'link-33');">extract_euler</a></tt><tt class="py-op">(</tt><tt id="link-34" class="py-name" targets="Variable pyto.geometry.vector.Vector.r=pyto.geometry.vector.Vector-class.html#r"><a title="pyto.geometry.vector.Vector.r" class="py-name" href="#" onclick="return doclink('link-34', 'r', 'link-34');">r</a></tt><tt class="py-op">=</tt><tt class="py-name">transf</tt><tt class="py-op">.</tt><tt class="py-name">q</tt><tt class="py-op">,</tt> <tt id="link-35" class="py-name" targets="Variable pyto.scripts.extract_points.mode=pyto.scripts.extract_points-module.html#mode,Variable pyto.scripts.sort_series.mode=pyto.scripts.sort_series-module.html#mode"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-35', 'mode', 'link-35');">mode</a></tt><tt class="py-op">=</tt><tt class="py-string">'x'</tt><tt class="py-op">,</tt> <tt class="py-name">ret</tt><tt class="py-op">=</tt><tt class="py-string">'one'</tt><tt class="py-op">)</tt>  </tt>
+<a name="L239"></a><tt class="py-lineno">239</tt>  <tt class="py-line">    <tt class="py-name">eulers</tt> <tt class="py-op">=</tt> <tt class="py-name">eulers</tt> <tt class="py-op">*</tt> <tt class="py-number">180</tt> <tt class="py-op">/</tt> <tt class="py-name">np</tt><tt class="py-op">.</tt><tt class="py-name">pi</tt> </tt>
+<a name="L240"></a><tt class="py-lineno">240</tt>  <tt class="py-line"> </tt>
+<a name="L241"></a><tt class="py-lineno">241</tt>  <tt class="py-line">    <tt class="py-comment"># correlation parameters</tt> </tt>
+<a name="L242"></a><tt class="py-lineno">242</tt>  <tt class="py-line">    <tt class="py-name">header</tt><tt class="py-op">.</tt><tt id="link-36" class="py-name" targets="Method pyto.segmentation.bound_distance.BoundDistance.extend()=pyto.segmentation.bound_distance.BoundDistance-class.html#extend"><a title="pyto.segmentation.bound_distance.BoundDistance.extend" class="py-name" href="#" onclick="return doclink('link-36', 'extend', 'link-36');">extend</a></tt><tt class="py-op">(</tt><tt class="py-op">[</tt> </tt>
+<a name="L243"></a><tt class="py-lineno">243</tt>  <tt class="py-line">        <tt class="py-string">"#"</tt><tt class="py-op">,</tt> </tt>
+<a name="L244"></a><tt class="py-lineno">244</tt>  <tt class="py-line">        <tt class="py-string">"# Transformation parameters"</tt><tt class="py-op">,</tt> </tt>
+<a name="L245"></a><tt class="py-lineno">245</tt>  <tt class="py-line">        <tt class="py-string">"#"</tt><tt class="py-op">,</tt> </tt>
+<a name="L246"></a><tt class="py-lineno">246</tt>  <tt class="py-line">        <tt class="py-string">"#   - rotation (Euler phi, theta psi): [%6.3f, %6.3f, %6.3f]"</tt> \ </tt>
+<a name="L247"></a><tt class="py-lineno">247</tt>  <tt class="py-line">            <tt class="py-op">%</tt> <tt class="py-op">(</tt><tt class="py-name">eulers</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">eulers</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">eulers</tt><tt class="py-op">[</tt><tt class="py-number">2</tt><tt class="py-op">]</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L248"></a><tt class="py-lineno">248</tt>  <tt class="py-line">        <tt class="py-string">"#   - scale = %6.3f"</tt> <tt class="py-op">%</tt> <tt class="py-name">transf</tt><tt class="py-op">.</tt><tt class="py-name">s_scalar</tt><tt class="py-op">,</tt> </tt>
+<a name="L249"></a><tt class="py-lineno">249</tt>  <tt class="py-line">        <tt class="py-string">"#   - translation = [%6.3f, %6.3f, %6.3f]"</tt> \ </tt>
+<a name="L250"></a><tt class="py-lineno">250</tt>  <tt class="py-line">             <tt class="py-op">%</tt> <tt class="py-op">(</tt><tt class="py-name">transf</tt><tt class="py-op">.</tt><tt class="py-name">d</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">transf</tt><tt class="py-op">.</tt><tt class="py-name">d</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">transf</tt><tt class="py-op">.</tt><tt class="py-name">d</tt><tt class="py-op">[</tt><tt class="py-number">2</tt><tt class="py-op">]</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L251"></a><tt class="py-lineno">251</tt>  <tt class="py-line">        <tt class="py-string">"#   - rms error (in 2d pixels) = %6.2f"</tt> <tt class="py-op">%</tt> <tt class="py-name">transf</tt><tt class="py-op">.</tt><tt id="link-37" class="py-name" targets="Variable pyto.geometry.affine.Affine.rmsError=pyto.geometry.affine.Affine-class.html#rmsError"><a title="pyto.geometry.affine.Affine.rmsError" class="py-name" href="#" onclick="return doclink('link-37', 'rmsError', 'link-37');">rmsError</a></tt> </tt>
+<a name="L252"></a><tt class="py-lineno">252</tt>  <tt class="py-line">        <tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L253"></a><tt class="py-lineno">253</tt>  <tt class="py-line"> </tt>
+<a name="L254"></a><tt class="py-lineno">254</tt>  <tt class="py-line">    <tt class="py-comment"># check success</tt> </tt>
+<a name="L255"></a><tt class="py-lineno">255</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">transf</tt><tt class="py-op">.</tt><tt class="py-name">optimizeResult</tt><tt class="py-op">[</tt><tt class="py-string">'success'</tt><tt class="py-op">]</tt><tt class="py-op">:</tt> </tt>
+<a name="L256"></a><tt class="py-lineno">256</tt>  <tt class="py-line">        <tt class="py-name">header</tt><tt class="py-op">.</tt><tt id="link-38" class="py-name"><a title="pyto.segmentation.bound_distance.BoundDistance.extend" class="py-name" href="#" onclick="return doclink('link-38', 'extend', 'link-36');">extend</a></tt><tt class="py-op">(</tt><tt class="py-op">[</tt> </tt>
+<a name="L257"></a><tt class="py-lineno">257</tt>  <tt class="py-line">            <tt class="py-string">"#   - optimization successful"</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L258"></a><tt class="py-lineno">258</tt>  <tt class="py-line">    <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L259"></a><tt class="py-lineno">259</tt>  <tt class="py-line">        <tt class="py-name">header</tt><tt class="py-op">.</tt><tt id="link-39" class="py-name"><a title="pyto.segmentation.bound_distance.BoundDistance.extend" class="py-name" href="#" onclick="return doclink('link-39', 'extend', 'link-36');">extend</a></tt><tt class="py-op">(</tt><tt class="py-op">[</tt> </tt>
+<a name="L260"></a><tt class="py-lineno">260</tt>  <tt class="py-line">            <tt class="py-string">"#"</tt><tt class="py-op">,</tt> </tt>
+<a name="L261"></a><tt class="py-lineno">261</tt>  <tt class="py-line">            <tt class="py-string">"# ERROR: Optimization failed (status %d)"</tt> \ </tt>
+<a name="L262"></a><tt class="py-lineno">262</tt>  <tt class="py-line">                <tt class="py-op">%</tt> <tt class="py-name">transf</tt><tt class="py-op">.</tt><tt class="py-name">optimizeResult</tt><tt class="py-op">[</tt><tt class="py-string">'status'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L263"></a><tt class="py-lineno">263</tt>  <tt class="py-line">            <tt class="py-string">"#   Repeat run with changed initial values and / or "</tt> </tt>
+<a name="L264"></a><tt class="py-lineno">264</tt>  <tt class="py-line">            <tt class="py-op">+</tt> <tt class="py-string">"increased ninit"</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L265"></a><tt class="py-lineno">265</tt>  <tt class="py-line"> </tt>
+<a name="L266"></a><tt class="py-lineno">266</tt>  <tt class="py-line">    <tt class="py-comment"># write header</tt> </tt>
+<a name="L267"></a><tt class="py-lineno">267</tt>  <tt class="py-line">    <tt class="py-keyword">for</tt> <tt class="py-name">line</tt> <tt class="py-keyword">in</tt> <tt class="py-name">header</tt><tt class="py-op">:</tt> </tt>
+<a name="L268"></a><tt class="py-lineno">268</tt>  <tt class="py-line">        <tt class="py-name">res_file</tt><tt class="py-op">.</tt><tt id="link-40" class="py-name" targets="Method pyto.core.image.Image.write()=pyto.core.image.Image-class.html#write,Method pyto.io.image_io.ImageIO.write()=pyto.io.image_io.ImageIO-class.html#write"><a title="pyto.core.image.Image.write
+pyto.io.image_io.ImageIO.write" class="py-name" href="#" onclick="return doclink('link-40', 'write', 'link-40');">write</a></tt><tt class="py-op">(</tt><tt class="py-name">line</tt> <tt class="py-op">+</tt> <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">linesep</tt><tt class="py-op">)</tt> </tt>
+<a name="L269"></a><tt class="py-lineno">269</tt>  <tt class="py-line"> </tt>
+<a name="L270"></a><tt class="py-lineno">270</tt>  <tt class="py-line">    <tt class="py-comment"># prepare marker lines</tt> </tt>
+<a name="L271"></a><tt class="py-lineno">271</tt>  <tt class="py-line">    <tt id="link-41" class="py-name" targets="Module pyto.io.table=pyto.io.table-module.html"><a title="pyto.io.table" class="py-name" href="#" onclick="return doclink('link-41', 'table', 'link-41');">table</a></tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt><tt class="py-op">[</tt> </tt>
+<a name="L272"></a><tt class="py-lineno">272</tt>  <tt class="py-line">        <tt class="py-string">"#"</tt><tt class="py-op">,</tt> </tt>
+<a name="L273"></a><tt class="py-lineno">273</tt>  <tt class="py-line">        <tt class="py-string">"#"</tt><tt class="py-op">,</tt> </tt>
+<a name="L274"></a><tt class="py-lineno">274</tt>  <tt class="py-line">        <tt class="py-string">"# Transformation of initial (3D) markers"</tt><tt class="py-op">,</tt> </tt>
+<a name="L275"></a><tt class="py-lineno">275</tt>  <tt class="py-line">        <tt class="py-string">"#"</tt><tt class="py-op">,</tt> </tt>
+<a name="L276"></a><tt class="py-lineno">276</tt>  <tt class="py-line">        <tt class="py-string">"#  Initial (3D) markers      Transformed initial"</tt> </tt>
+<a name="L277"></a><tt class="py-lineno">277</tt>  <tt class="py-line">         <tt class="py-op">+</tt> <tt class="py-string">"     Final (2D) markers "</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L278"></a><tt class="py-lineno">278</tt>  <tt class="py-line">    <tt class="py-name">out_vars</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-name">markers_3d</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">,</tt><tt class="py-op">:</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">markers_3d</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">,</tt><tt class="py-op">:</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">markers_3d</tt><tt class="py-op">[</tt><tt class="py-number">2</tt><tt class="py-op">,</tt><tt class="py-op">:</tt><tt class="py-op">]</tt><tt class="py-op">,</tt>  </tt>
+<a name="L279"></a><tt class="py-lineno">279</tt>  <tt class="py-line">                <tt class="py-name">transformed_3d</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">,</tt><tt class="py-op">:</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">transformed_3d</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">,</tt><tt class="py-op">:</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">transformed_3d</tt><tt class="py-op">[</tt><tt class="py-number">2</tt><tt class="py-op">,</tt><tt class="py-op">:</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L280"></a><tt class="py-lineno">280</tt>  <tt class="py-line">                <tt class="py-name">markers_2d</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">,</tt><tt class="py-op">:</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">markers_2d</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">,</tt><tt class="py-op">:</tt><tt class="py-op">]</tt><tt class="py-op">]</tt> </tt>
+<a name="L281"></a><tt class="py-lineno">281</tt>  <tt class="py-line">    <tt class="py-name">out_format</tt> <tt class="py-op">=</tt> <tt class="py-string">'  %6.0f %6.0f %6.0f     %7.2f %7.2f %7.2f     %7.2f %7.2f  '</tt> </tt>
+<a name="L282"></a><tt class="py-lineno">282</tt>  <tt class="py-line">    <tt id="link-42" class="py-name" targets="Variable pyto.scene.segmentation_analysis.SegmentationAnalysis.ids=pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#ids,Variable pyto.scripts.add_segments.ids=pyto.scripts.add_segments-module.html#ids,Variable pyto.scripts.blank.ids=pyto.scripts.blank-module.html#ids,Variable pyto.scripts.extract_points.ids=pyto.scripts.extract_points-module.html#ids,Variable pyto.segmentation.cluster.Cluster.ids=pyto.segmentation.cluster.Cluster-class.html#ids,Variable pyto.segmentation.features.Features.ids=pyto.segmentation.features.Features-class.html#ids"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-42', 'ids', 'link-42');">ids</a></tt> <tt class="py-op">=</tt> <tt class="py-name">range</tt><tt class="py-op">(</tt><tt class="py-name">markers_3d</tt><tt class="py-op">.</tt><tt id="link-43" class="py-name" targets="Variable pyto.scripts.discs_to_balls.shape=pyto.scripts.discs_to_balls-module.html#shape"><a title="pyto.scripts.discs_to_balls.shape" class="py-name" href="#" onclick="return doclink('link-43', 'shape', 'link-43');">shape</a></tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L283"></a><tt class="py-lineno">283</tt>  <tt class="py-line">    <tt class="py-name">res_tab_markers</tt> <tt class="py-op">=</tt> <tt id="link-44" class="py-name"><a title="pyto" class="py-name" href="#" onclick="return doclink('link-44', 'pyto', 'link-0');">pyto</a></tt><tt class="py-op">.</tt><tt id="link-45" class="py-name" targets="Package pyto.io=pyto.io-module.html"><a title="pyto.io" class="py-name" href="#" onclick="return doclink('link-45', 'io', 'link-45');">io</a></tt><tt class="py-op">.</tt><tt id="link-46" class="py-name" targets="Module pyto.io.util=pyto.io.util-module.html,Package pyto.util=pyto.util-module.html"><a title="pyto.io.util
+pyto.util" class="py-name" href="#" onclick="return doclink('link-46', 'util', 'link-46');">util</a></tt><tt class="py-op">.</tt><tt id="link-47" class="py-name" targets="Function pyto.io.util.arrayFormat()=pyto.io.util-module.html#arrayFormat"><a title="pyto.io.util.arrayFormat" class="py-name" href="#" onclick="return doclink('link-47', 'arrayFormat', 'link-47');">arrayFormat</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L284"></a><tt class="py-lineno">284</tt>  <tt class="py-line">        <tt class="py-name">arrays</tt><tt class="py-op">=</tt><tt class="py-name">out_vars</tt><tt class="py-op">,</tt> <tt class="py-name">format</tt><tt class="py-op">=</tt><tt class="py-name">out_format</tt><tt class="py-op">,</tt> <tt class="py-name">indices</tt><tt class="py-op">=</tt><tt id="link-48" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-48', 'ids', 'link-42');">ids</a></tt><tt class="py-op">,</tt> <tt class="py-name">prependIndex</tt><tt class="py-op">=</tt><tt class="py-name">False</tt><tt class="py-op">)</tt> </tt>
+<a name="L285"></a><tt class="py-lineno">285</tt>  <tt class="py-line">    <tt id="link-49" class="py-name"><a title="pyto.io.table" class="py-name" href="#" onclick="return doclink('link-49', 'table', 'link-41');">table</a></tt><tt class="py-op">.</tt><tt id="link-50" class="py-name"><a title="pyto.segmentation.bound_distance.BoundDistance.extend" class="py-name" href="#" onclick="return doclink('link-50', 'extend', 'link-36');">extend</a></tt><tt class="py-op">(</tt><tt class="py-name">res_tab_markers</tt><tt class="py-op">)</tt> </tt>
+<a name="L286"></a><tt class="py-lineno">286</tt>  <tt class="py-line"> </tt>
+<a name="L287"></a><tt class="py-lineno">287</tt>  <tt class="py-line">    <tt class="py-comment"># prepare data lines</tt> </tt>
+<a name="L288"></a><tt class="py-lineno">288</tt>  <tt class="py-line">    <tt id="link-51" class="py-name"><a title="pyto.io.table" class="py-name" href="#" onclick="return doclink('link-51', 'table', 'link-41');">table</a></tt><tt class="py-op">.</tt><tt id="link-52" class="py-name"><a title="pyto.segmentation.bound_distance.BoundDistance.extend" class="py-name" href="#" onclick="return doclink('link-52', 'extend', 'link-36');">extend</a></tt><tt class="py-op">(</tt><tt class="py-op">[</tt> </tt>
+<a name="L289"></a><tt class="py-lineno">289</tt>  <tt class="py-line">        <tt class="py-string">"#"</tt><tt class="py-op">,</tt> </tt>
+<a name="L290"></a><tt class="py-lineno">290</tt>  <tt class="py-line">        <tt class="py-string">"#"</tt><tt class="py-op">,</tt> </tt>
+<a name="L291"></a><tt class="py-lineno">291</tt>  <tt class="py-line">        <tt class="py-string">"# Correlation of 3D spots to 2D"</tt><tt class="py-op">,</tt> </tt>
+<a name="L292"></a><tt class="py-lineno">292</tt>  <tt class="py-line">        <tt class="py-string">"#"</tt><tt class="py-op">,</tt> </tt>
+<a name="L293"></a><tt class="py-lineno">293</tt>  <tt class="py-line">        <tt class="py-string">"#       Spots (3D)             Correlated spots"</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L294"></a><tt class="py-lineno">294</tt>  <tt class="py-line">    <tt class="py-name">out_vars</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-name">spots_3d</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">,</tt><tt class="py-op">:</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">spots_3d</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">,</tt><tt class="py-op">:</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">spots_3d</tt><tt class="py-op">[</tt><tt class="py-number">2</tt><tt class="py-op">,</tt><tt class="py-op">:</tt><tt class="py-op">]</tt><tt class="py-op">,</tt>  </tt>
+<a name="L295"></a><tt class="py-lineno">295</tt>  <tt class="py-line">                <tt class="py-name">spots_2d</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">,</tt><tt class="py-op">:</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">spots_2d</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">,</tt><tt class="py-op">:</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">spots_2d</tt><tt class="py-op">[</tt><tt class="py-number">2</tt><tt class="py-op">,</tt><tt class="py-op">:</tt><tt class="py-op">]</tt><tt class="py-op">]</tt> </tt>
+<a name="L296"></a><tt class="py-lineno">296</tt>  <tt class="py-line">    <tt class="py-name">out_format</tt> <tt class="py-op">=</tt> <tt class="py-string">'  %6.0f %6.0f %6.0f     %7.2f %7.2f %7.2f '</tt> </tt>
+<a name="L297"></a><tt class="py-lineno">297</tt>  <tt class="py-line">    <tt id="link-53" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-53', 'ids', 'link-42');">ids</a></tt> <tt class="py-op">=</tt> <tt class="py-name">range</tt><tt class="py-op">(</tt><tt class="py-name">spots_3d</tt><tt class="py-op">.</tt><tt id="link-54" class="py-name"><a title="pyto.scripts.discs_to_balls.shape" class="py-name" href="#" onclick="return doclink('link-54', 'shape', 'link-43');">shape</a></tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L298"></a><tt class="py-lineno">298</tt>  <tt class="py-line">    <tt class="py-name">res_tab_spots</tt> <tt class="py-op">=</tt> <tt id="link-55" class="py-name"><a title="pyto" class="py-name" href="#" onclick="return doclink('link-55', 'pyto', 'link-0');">pyto</a></tt><tt class="py-op">.</tt><tt id="link-56" class="py-name"><a title="pyto.io" class="py-name" href="#" onclick="return doclink('link-56', 'io', 'link-45');">io</a></tt><tt class="py-op">.</tt><tt id="link-57" class="py-name"><a title="pyto.io.util
+pyto.util" class="py-name" href="#" onclick="return doclink('link-57', 'util', 'link-46');">util</a></tt><tt class="py-op">.</tt><tt id="link-58" class="py-name"><a title="pyto.io.util.arrayFormat" class="py-name" href="#" onclick="return doclink('link-58', 'arrayFormat', 'link-47');">arrayFormat</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L299"></a><tt class="py-lineno">299</tt>  <tt class="py-line">        <tt class="py-name">arrays</tt><tt class="py-op">=</tt><tt class="py-name">out_vars</tt><tt class="py-op">,</tt> <tt class="py-name">format</tt><tt class="py-op">=</tt><tt class="py-name">out_format</tt><tt class="py-op">,</tt> <tt class="py-name">indices</tt><tt class="py-op">=</tt><tt id="link-59" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-59', 'ids', 'link-42');">ids</a></tt><tt class="py-op">,</tt> <tt class="py-name">prependIndex</tt><tt class="py-op">=</tt><tt class="py-name">False</tt><tt class="py-op">)</tt> </tt>
+<a name="L300"></a><tt class="py-lineno">300</tt>  <tt class="py-line">    <tt id="link-60" class="py-name"><a title="pyto.io.table" class="py-name" href="#" onclick="return doclink('link-60', 'table', 'link-41');">table</a></tt><tt class="py-op">.</tt><tt id="link-61" class="py-name"><a title="pyto.segmentation.bound_distance.BoundDistance.extend" class="py-name" href="#" onclick="return doclink('link-61', 'extend', 'link-36');">extend</a></tt><tt class="py-op">(</tt><tt class="py-name">res_tab_spots</tt><tt class="py-op">)</tt> </tt>
+<a name="L301"></a><tt class="py-lineno">301</tt>  <tt class="py-line"> </tt>
+<a name="L302"></a><tt class="py-lineno">302</tt>  <tt class="py-line">    <tt class="py-comment"># write data table</tt> </tt>
+<a name="L303"></a><tt class="py-lineno">303</tt>  <tt class="py-line">    <tt class="py-keyword">for</tt> <tt class="py-name">line</tt> <tt class="py-keyword">in</tt> <tt id="link-62" class="py-name"><a title="pyto.io.table" class="py-name" href="#" onclick="return doclink('link-62', 'table', 'link-41');">table</a></tt><tt class="py-op">:</tt> </tt>
+<a name="L304"></a><tt class="py-lineno">304</tt>  <tt class="py-line">        <tt class="py-name">res_file</tt><tt class="py-op">.</tt><tt id="link-63" class="py-name"><a title="pyto.core.image.Image.write
+pyto.io.image_io.ImageIO.write" class="py-name" href="#" onclick="return doclink('link-63', 'write', 'link-40');">write</a></tt><tt class="py-op">(</tt><tt class="py-name">line</tt> <tt class="py-op">+</tt> <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">linesep</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L305"></a><tt class="py-lineno">305</tt>  <tt class="py-line"> </tt>
+<a name="L306"></a><tt class="py-lineno">306</tt>  <tt class="py-line"> </tt>
+<a name="L307"></a><tt class="py-lineno">307</tt>  <tt class="py-line"><tt class="py-comment">#####################################################################</tt> </tt>
+<a name="L308"></a><tt class="py-lineno">308</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L309"></a><tt class="py-lineno">309</tt>  <tt class="py-line"><tt class="py-comment"># Main</tt> </tt>
+<a name="L310"></a><tt class="py-lineno">310</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L311"></a><tt class="py-lineno">311</tt>  <tt class="py-line"><tt class="py-comment">#####################################################################</tt> </tt>
+<a name="L312"></a><tt class="py-lineno">312</tt>  <tt class="py-line"> </tt>
+<a name="L313"></a><tt class="py-lineno">313</tt>  <tt class="py-line"> </tt>
+<a name="main"></a><div id="main-def"><a name="L314"></a><tt class="py-lineno">314</tt> <a class="py-toggle" href="#" id="main-toggle" onclick="return toggle('main');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.scripts.correlation_3d_2d-module.html#main">main</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="main-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="main-expanded"><a name="L315"></a><tt class="py-lineno">315</tt>  <tt class="py-line"> </tt>
+<a name="L316"></a><tt class="py-lineno">316</tt>  <tt class="py-line">    <tt class="py-comment"># read fluo markers </tt> </tt>
+<a name="L317"></a><tt class="py-lineno">317</tt>  <tt class="py-line">    <tt class="py-name">mark_3d_all</tt> <tt class="py-op">=</tt> <tt class="py-name">np</tt><tt class="py-op">.</tt><tt class="py-name">loadtxt</tt><tt class="py-op">(</tt> </tt>
+<a name="L318"></a><tt class="py-lineno">318</tt>  <tt class="py-line">        <tt id="link-64" class="py-name"><a title="pyto.scripts.correlation_3d_2d.markers_3d_file" class="py-name" href="#" onclick="return doclink('link-64', 'markers_3d_file', 'link-9');">markers_3d_file</a></tt><tt class="py-op">,</tt> <tt id="link-65" class="py-name"><a title="pyto.scripts.correlation_3d_2d.delimiter
+pyto.scripts.correlation_simple_fileio.delimiter" class="py-name" href="#" onclick="return doclink('link-65', 'delimiter', 'link-27');">delimiter</a></tt><tt class="py-op">=</tt><tt id="link-66" class="py-name"><a title="pyto.scripts.correlation_3d_2d.delimiter
+pyto.scripts.correlation_simple_fileio.delimiter" class="py-name" href="#" onclick="return doclink('link-66', 'delimiter', 'link-27');">delimiter</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L319"></a><tt class="py-lineno">319</tt>  <tt class="py-line">        <tt id="link-67" class="py-name"><a title="pyto.scripts.correlation_3d_2d.comments
+pyto.scripts.correlation_simple_fileio.comments" class="py-name" href="#" onclick="return doclink('link-67', 'comments', 'link-25');">comments</a></tt><tt class="py-op">=</tt><tt id="link-68" class="py-name"><a title="pyto.scripts.correlation_3d_2d.comments
+pyto.scripts.correlation_simple_fileio.comments" class="py-name" href="#" onclick="return doclink('link-68', 'comments', 'link-25');">comments</a></tt><tt class="py-op">,</tt> <tt id="link-69" class="py-name"><a title="pyto.scripts.correlation_3d_2d.skiprows
+pyto.scripts.correlation_simple_fileio.skiprows" class="py-name" href="#" onclick="return doclink('link-69', 'skiprows', 'link-26');">skiprows</a></tt><tt class="py-op">=</tt><tt id="link-70" class="py-name"><a title="pyto.scripts.correlation_3d_2d.skiprows
+pyto.scripts.correlation_simple_fileio.skiprows" class="py-name" href="#" onclick="return doclink('link-70', 'skiprows', 'link-26');">skiprows</a></tt><tt class="py-op">,</tt> <tt id="link-71" class="py-name"><a title="pyto.scripts.correlation_3d_2d.usecols" class="py-name" href="#" onclick="return doclink('link-71', 'usecols', 'link-28');">usecols</a></tt><tt class="py-op">=</tt><tt id="link-72" class="py-name"><a title="pyto.scripts.correlation_3d_2d.usecols" class="py-name" href="#" onclick="return doclink('link-72', 'usecols', 'link-28');">usecols</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L320"></a><tt class="py-lineno">320</tt>  <tt class="py-line">    <tt class="py-name">mark_3d</tt> <tt class="py-op">=</tt> <tt class="py-name">mark_3d_all</tt><tt class="py-op">[</tt><tt id="link-73" class="py-name"><a title="pyto.scripts.correlation_3d_2d.marker_3d_rows" class="py-name" href="#" onclick="return doclink('link-73', 'marker_3d_rows', 'link-10');">marker_3d_rows</a></tt><tt class="py-op">]</tt><tt class="py-op">.</tt><tt id="link-74" class="py-name" targets="Method pyto.analysis.groups.Groups.transpose()=pyto.analysis.groups.Groups-class.html#transpose,Method pyto.analysis.observations.Observations.transpose()=pyto.analysis.observations.Observations-class.html#transpose"><a title="pyto.analysis.groups.Groups.transpose
+pyto.analysis.observations.Observations.transpose" class="py-name" href="#" onclick="return doclink('link-74', 'transpose', 'link-74');">transpose</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L321"></a><tt class="py-lineno">321</tt>  <tt class="py-line"> </tt>
+<a name="L322"></a><tt class="py-lineno">322</tt>  <tt class="py-line">    <tt class="py-comment"># alternative </tt> </tt>
+<a name="L323"></a><tt class="py-lineno">323</tt>  <tt class="py-line">    <tt class="py-comment">#mark_3d = np.loadtxt(</tt> </tt>
+<a name="L324"></a><tt class="py-lineno">324</tt>  <tt class="py-line">    <tt class="py-comment">#    markers_3d_file, delimiter=delimiter, comments=comments, </tt> </tt>
+<a name="L325"></a><tt class="py-lineno">325</tt>  <tt class="py-line">    <tt class="py-comment">#    skiprows=skiprows, usecols=usecols, dtype=dtype)</tt> </tt>
+<a name="L326"></a><tt class="py-lineno">326</tt>  <tt class="py-line">     </tt>
+<a name="L327"></a><tt class="py-lineno">327</tt>  <tt class="py-line">    <tt class="py-comment"># read ib markers </tt> </tt>
+<a name="L328"></a><tt class="py-lineno">328</tt>  <tt class="py-line">    <tt class="py-name">mark_2d_whole</tt> <tt class="py-op">=</tt> <tt class="py-name">np</tt><tt class="py-op">.</tt><tt class="py-name">loadtxt</tt><tt class="py-op">(</tt> </tt>
+<a name="L329"></a><tt class="py-lineno">329</tt>  <tt class="py-line">        <tt id="link-75" class="py-name"><a title="pyto.scripts.correlation_3d_2d.markers_2d_file" class="py-name" href="#" onclick="return doclink('link-75', 'markers_2d_file', 'link-11');">markers_2d_file</a></tt><tt class="py-op">,</tt> <tt id="link-76" class="py-name"><a title="pyto.scripts.correlation_3d_2d.delimiter
+pyto.scripts.correlation_simple_fileio.delimiter" class="py-name" href="#" onclick="return doclink('link-76', 'delimiter', 'link-27');">delimiter</a></tt><tt class="py-op">=</tt><tt id="link-77" class="py-name"><a title="pyto.scripts.correlation_3d_2d.delimiter
+pyto.scripts.correlation_simple_fileio.delimiter" class="py-name" href="#" onclick="return doclink('link-77', 'delimiter', 'link-27');">delimiter</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L330"></a><tt class="py-lineno">330</tt>  <tt class="py-line">        <tt id="link-78" class="py-name"><a title="pyto.scripts.correlation_3d_2d.comments
+pyto.scripts.correlation_simple_fileio.comments" class="py-name" href="#" onclick="return doclink('link-78', 'comments', 'link-25');">comments</a></tt><tt class="py-op">=</tt><tt id="link-79" class="py-name"><a title="pyto.scripts.correlation_3d_2d.comments
+pyto.scripts.correlation_simple_fileio.comments" class="py-name" href="#" onclick="return doclink('link-79', 'comments', 'link-25');">comments</a></tt><tt class="py-op">,</tt> <tt id="link-80" class="py-name"><a title="pyto.scripts.correlation_3d_2d.skiprows
+pyto.scripts.correlation_simple_fileio.skiprows" class="py-name" href="#" onclick="return doclink('link-80', 'skiprows', 'link-26');">skiprows</a></tt><tt class="py-op">=</tt><tt id="link-81" class="py-name"><a title="pyto.scripts.correlation_3d_2d.skiprows
+pyto.scripts.correlation_simple_fileio.skiprows" class="py-name" href="#" onclick="return doclink('link-81', 'skiprows', 'link-26');">skiprows</a></tt><tt class="py-op">,</tt> <tt id="link-82" class="py-name"><a title="pyto.scripts.correlation_3d_2d.usecols" class="py-name" href="#" onclick="return doclink('link-82', 'usecols', 'link-28');">usecols</a></tt><tt class="py-op">=</tt><tt id="link-83" class="py-name"><a title="pyto.scripts.correlation_3d_2d.usecols" class="py-name" href="#" onclick="return doclink('link-83', 'usecols', 'link-28');">usecols</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L331"></a><tt class="py-lineno">331</tt>  <tt class="py-line">    <tt class="py-name">mark_2d</tt> <tt class="py-op">=</tt> <tt class="py-name">mark_2d_whole</tt><tt class="py-op">[</tt><tt id="link-84" class="py-name"><a title="pyto.scripts.correlation_3d_2d.marker_2d_rows" class="py-name" href="#" onclick="return doclink('link-84', 'marker_2d_rows', 'link-13');">marker_2d_rows</a></tt><tt class="py-op">]</tt><tt class="py-op">[</tt><tt class="py-op">:</tt><tt class="py-op">,</tt><tt class="py-op">:</tt><tt class="py-number">2</tt><tt class="py-op">]</tt><tt class="py-op">.</tt><tt id="link-85" class="py-name"><a title="pyto.analysis.groups.Groups.transpose
+pyto.analysis.observations.Observations.transpose" class="py-name" href="#" onclick="return doclink('link-85', 'transpose', 'link-74');">transpose</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L332"></a><tt class="py-lineno">332</tt>  <tt class="py-line"> </tt>
+<a name="L333"></a><tt class="py-lineno">333</tt>  <tt class="py-line">    <tt class="py-comment"># convert Eulers in degrees to Caley-Klein params</tt> </tt>
+<a name="L334"></a><tt class="py-lineno">334</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-op">(</tt><tt id="link-86" class="py-name"><a title="pyto.scripts.correlation_3d_2d.rotation_init" class="py-name" href="#" onclick="return doclink('link-86', 'rotation_init', 'link-19');">rotation_init</a></tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">)</tt> <tt class="py-keyword">and</tt> <tt class="py-op">(</tt><tt id="link-87" class="py-name"><a title="pyto.scripts.correlation_3d_2d.rotation_init" class="py-name" href="#" onclick="return doclink('link-87', 'rotation_init', 'link-19');">rotation_init</a></tt> <tt class="py-op">!=</tt> <tt class="py-string">'gl2'</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L335"></a><tt class="py-lineno">335</tt>  <tt class="py-line">        <tt class="py-name">rotation_init_rad</tt> <tt class="py-op">=</tt> <tt id="link-88" class="py-name"><a title="pyto.scripts.correlation_3d_2d.rotation_init" class="py-name" href="#" onclick="return doclink('link-88', 'rotation_init', 'link-19');">rotation_init</a></tt> <tt class="py-op">*</tt> <tt class="py-name">np</tt><tt class="py-op">.</tt><tt class="py-name">pi</tt> <tt class="py-op">/</tt> <tt class="py-number">180</tt> </tt>
+<a name="L336"></a><tt class="py-lineno">336</tt>  <tt class="py-line">        <tt class="py-name">einit</tt> <tt class="py-op">=</tt> <tt id="link-89" class="py-name"><a title="pyto.geometry.rigid_3d.Rigid3D" class="py-name" href="#" onclick="return doclink('link-89', 'Rigid3D', 'link-8');">Rigid3D</a></tt><tt class="py-op">.</tt><tt id="link-90" class="py-name" targets="Class Method pyto.geometry.rigid_3d.Rigid3D.euler_to_ck()=pyto.geometry.rigid_3d.Rigid3D-class.html#euler_to_ck"><a title="pyto.geometry.rigid_3d.Rigid3D.euler_to_ck" class="py-name" href="#" onclick="return doclink('link-90', 'euler_to_ck', 'link-90');">euler_to_ck</a></tt><tt class="py-op">(</tt><tt class="py-name">angles</tt><tt class="py-op">=</tt><tt class="py-name">rotation_init_rad</tt><tt class="py-op">,</tt> <tt id="link-91" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-91', 'mode', 'link-35');">mode</a></tt><tt class="py-op">=</tt><tt class="py-string">'x'</tt><tt class="py-op">)</tt> </tt>
+<a name="L337"></a><tt class="py-lineno">337</tt>  <tt class="py-line">    <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L338"></a><tt class="py-lineno">338</tt>  <tt class="py-line">        <tt class="py-name">einit</tt> <tt class="py-op">=</tt> <tt id="link-92" class="py-name"><a title="pyto.scripts.correlation_3d_2d.rotation_init" class="py-name" href="#" onclick="return doclink('link-92', 'rotation_init', 'link-19');">rotation_init</a></tt> </tt>
+<a name="L339"></a><tt class="py-lineno">339</tt>  <tt class="py-line"> </tt>
+<a name="L340"></a><tt class="py-lineno">340</tt>  <tt class="py-line">    <tt class="py-comment"># establish correlation</tt> </tt>
+<a name="L341"></a><tt class="py-lineno">341</tt>  <tt class="py-line">    <tt class="py-name">transf</tt> <tt class="py-op">=</tt> <tt id="link-93" class="py-name"><a title="pyto" class="py-name" href="#" onclick="return doclink('link-93', 'pyto', 'link-0');">pyto</a></tt><tt class="py-op">.</tt><tt id="link-94" class="py-name"><a title="pyto.geometry" class="py-name" href="#" onclick="return doclink('link-94', 'geometry', 'link-6');">geometry</a></tt><tt class="py-op">.</tt><tt id="link-95" class="py-name"><a title="pyto.geometry.rigid_3d.Rigid3D" class="py-name" href="#" onclick="return doclink('link-95', 'Rigid3D', 'link-8');">Rigid3D</a></tt><tt class="py-op">.</tt><tt id="link-96" class="py-name" targets="Class Method pyto.geometry.rigid_3d.Rigid3D.find_32()=pyto.geometry.rigid_3d.Rigid3D-class.html#find_32"><a title="pyto.geometry.rigid_3d.Rigid3D.find_32" class="py-name" href="#" onclick="return doclink('link-96', 'find_32', 'link-96');">find_32</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L342"></a><tt class="py-lineno">342</tt>  <tt class="py-line">        <tt class="py-name">x</tt><tt class="py-op">=</tt><tt class="py-name">mark_3d</tt><tt class="py-op">,</tt> <tt class="py-name">y</tt><tt class="py-op">=</tt><tt class="py-name">mark_2d</tt><tt class="py-op">,</tt> <tt id="link-97" class="py-name"><a title="pyto.geometry.affine.Affine.scale
+pyto.scripts.correlation_3d_2d.scale" class="py-name" href="#" onclick="return doclink('link-97', 'scale', 'link-21');">scale</a></tt><tt class="py-op">=</tt><tt id="link-98" class="py-name"><a title="pyto.geometry.affine.Affine.scale
+pyto.scripts.correlation_3d_2d.scale" class="py-name" href="#" onclick="return doclink('link-98', 'scale', 'link-21');">scale</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L343"></a><tt class="py-lineno">343</tt>  <tt class="py-line">        <tt class="py-name">randome</tt><tt class="py-op">=</tt><tt id="link-99" class="py-name"><a title="pyto.scripts.correlation_3d_2d.random_rotations" class="py-name" href="#" onclick="return doclink('link-99', 'random_rotations', 'link-18');">random_rotations</a></tt><tt class="py-op">,</tt> <tt class="py-name">einit</tt><tt class="py-op">=</tt><tt class="py-name">einit</tt><tt class="py-op">,</tt> <tt class="py-name">einit_dist</tt><tt class="py-op">=</tt><tt id="link-100" class="py-name"><a title="pyto.scripts.correlation_3d_2d.restrict_rotations" class="py-name" href="#" onclick="return doclink('link-100', 'restrict_rotations', 'link-20');">restrict_rotations</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L344"></a><tt class="py-lineno">344</tt>  <tt class="py-line">        <tt class="py-name">randoms</tt><tt class="py-op">=</tt><tt id="link-101" class="py-name"><a title="pyto.scripts.correlation_3d_2d.random_scale" class="py-name" href="#" onclick="return doclink('link-101', 'random_scale', 'link-22');">random_scale</a></tt><tt class="py-op">,</tt> <tt class="py-name">sinit</tt><tt class="py-op">=</tt><tt id="link-102" class="py-name"><a title="pyto.scripts.correlation_3d_2d.scale_init" class="py-name" href="#" onclick="return doclink('link-102', 'scale_init', 'link-23');">scale_init</a></tt><tt class="py-op">,</tt> <tt id="link-103" class="py-name"><a title="pyto.scripts.correlation_3d_2d.ninit" class="py-name" href="#" onclick="return doclink('link-103', 'ninit', 'link-24');">ninit</a></tt><tt class="py-op">=</tt><tt id="link-104" class="py-name"><a title="pyto.scripts.correlation_3d_2d.ninit" class="py-name" href="#" onclick="return doclink('link-104', 'ninit', 'link-24');">ninit</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L345"></a><tt class="py-lineno">345</tt>  <tt class="py-line"> </tt>
+<a name="L346"></a><tt class="py-lineno">346</tt>  <tt class="py-line">    <tt class="py-comment"># read fluo spots </tt> </tt>
+<a name="L347"></a><tt class="py-lineno">347</tt>  <tt class="py-line">    <tt class="py-name">spots_3d</tt> <tt class="py-op">=</tt> <tt class="py-name">np</tt><tt class="py-op">.</tt><tt class="py-name">loadtxt</tt><tt class="py-op">(</tt> </tt>
+<a name="L348"></a><tt class="py-lineno">348</tt>  <tt class="py-line">        <tt id="link-105" class="py-name"><a title="pyto.scripts.correlation_3d_2d.spots_3d_file" class="py-name" href="#" onclick="return doclink('link-105', 'spots_3d_file', 'link-14');">spots_3d_file</a></tt><tt class="py-op">,</tt> <tt id="link-106" class="py-name"><a title="pyto.scripts.correlation_3d_2d.delimiter
+pyto.scripts.correlation_simple_fileio.delimiter" class="py-name" href="#" onclick="return doclink('link-106', 'delimiter', 'link-27');">delimiter</a></tt><tt class="py-op">=</tt><tt id="link-107" class="py-name"><a title="pyto.scripts.correlation_3d_2d.delimiter
+pyto.scripts.correlation_simple_fileio.delimiter" class="py-name" href="#" onclick="return doclink('link-107', 'delimiter', 'link-27');">delimiter</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L349"></a><tt class="py-lineno">349</tt>  <tt class="py-line">        <tt id="link-108" class="py-name"><a title="pyto.scripts.correlation_3d_2d.comments
+pyto.scripts.correlation_simple_fileio.comments" class="py-name" href="#" onclick="return doclink('link-108', 'comments', 'link-25');">comments</a></tt><tt class="py-op">=</tt><tt id="link-109" class="py-name"><a title="pyto.scripts.correlation_3d_2d.comments
+pyto.scripts.correlation_simple_fileio.comments" class="py-name" href="#" onclick="return doclink('link-109', 'comments', 'link-25');">comments</a></tt><tt class="py-op">,</tt> <tt id="link-110" class="py-name"><a title="pyto.scripts.correlation_3d_2d.skiprows
+pyto.scripts.correlation_simple_fileio.skiprows" class="py-name" href="#" onclick="return doclink('link-110', 'skiprows', 'link-26');">skiprows</a></tt><tt class="py-op">=</tt><tt id="link-111" class="py-name"><a title="pyto.scripts.correlation_3d_2d.skiprows
+pyto.scripts.correlation_simple_fileio.skiprows" class="py-name" href="#" onclick="return doclink('link-111', 'skiprows', 'link-26');">skiprows</a></tt><tt class="py-op">,</tt> <tt id="link-112" class="py-name"><a title="pyto.scripts.correlation_3d_2d.usecols" class="py-name" href="#" onclick="return doclink('link-112', 'usecols', 'link-28');">usecols</a></tt><tt class="py-op">=</tt><tt id="link-113" class="py-name"><a title="pyto.scripts.correlation_3d_2d.usecols" class="py-name" href="#" onclick="return doclink('link-113', 'usecols', 'link-28');">usecols</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L350"></a><tt class="py-lineno">350</tt>  <tt class="py-line">    <tt class="py-name">spots_3d</tt> <tt class="py-op">=</tt> <tt class="py-name">spots_3d</tt><tt class="py-op">[</tt><tt id="link-114" class="py-name"><a title="pyto.scripts.correlation_3d_2d.spot_3d_rows" class="py-name" href="#" onclick="return doclink('link-114', 'spot_3d_rows', 'link-16');">spot_3d_rows</a></tt><tt class="py-op">]</tt><tt class="py-op">.</tt><tt id="link-115" class="py-name"><a title="pyto.analysis.groups.Groups.transpose
+pyto.analysis.observations.Observations.transpose" class="py-name" href="#" onclick="return doclink('link-115', 'transpose', 'link-74');">transpose</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L351"></a><tt class="py-lineno">351</tt>  <tt class="py-line"> </tt>
+<a name="L352"></a><tt class="py-lineno">352</tt>  <tt class="py-line">    <tt class="py-comment"># correlate spots</tt> </tt>
+<a name="L353"></a><tt class="py-lineno">353</tt>  <tt class="py-line">    <tt class="py-name">spots_2d</tt> <tt class="py-op">=</tt> <tt class="py-name">transf</tt><tt class="py-op">.</tt><tt id="link-116" class="py-name" targets="Method pyto.geometry.affine.Affine.transform()=pyto.geometry.affine.Affine-class.html#transform,Class Method pyto.geometry.coordinates.Coordinates.transform()=pyto.geometry.coordinates.Coordinates-class.html#transform,Method pyto.geometry.rigid_3d.Rigid3D.transform()=pyto.geometry.rigid_3d.Rigid3D-class.html#transform"><a title="pyto.geometry.affine.Affine.transform
+pyto.geometry.coordinates.Coordinates.transform
+pyto.geometry.rigid_3d.Rigid3D.transform" class="py-name" href="#" onclick="return doclink('link-116', 'transform', 'link-116');">transform</a></tt><tt class="py-op">(</tt><tt class="py-name">x</tt><tt class="py-op">=</tt><tt class="py-name">spots_3d</tt><tt class="py-op">)</tt> </tt>
+<a name="L354"></a><tt class="py-lineno">354</tt>  <tt class="py-line"> </tt>
+<a name="L355"></a><tt class="py-lineno">355</tt>  <tt class="py-line">    <tt class="py-comment"># transform markers</tt> </tt>
+<a name="L356"></a><tt class="py-lineno">356</tt>  <tt class="py-line">    <tt class="py-name">transf_3d</tt> <tt class="py-op">=</tt> <tt class="py-name">transf</tt><tt class="py-op">.</tt><tt id="link-117" class="py-name"><a title="pyto.geometry.affine.Affine.transform
+pyto.geometry.coordinates.Coordinates.transform
+pyto.geometry.rigid_3d.Rigid3D.transform" class="py-name" href="#" onclick="return doclink('link-117', 'transform', 'link-116');">transform</a></tt><tt class="py-op">(</tt><tt class="py-name">x</tt><tt class="py-op">=</tt><tt class="py-name">mark_3d</tt><tt class="py-op">)</tt> </tt>
+<a name="L357"></a><tt class="py-lineno">357</tt>  <tt class="py-line"> </tt>
+<a name="L358"></a><tt class="py-lineno">358</tt>  <tt class="py-line">    <tt class="py-comment"># calculate translation if rotation center is not at (0,0,0)</tt> </tt>
+<a name="L359"></a><tt class="py-lineno">359</tt>  <tt class="py-line">    <tt class="py-name">rotation_center</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-number">2</tt><tt class="py-op">,</tt> <tt class="py-number">3</tt><tt class="py-op">,</tt> <tt class="py-number">4</tt><tt class="py-op">]</tt> </tt>
+<a name="L360"></a><tt class="py-lineno">360</tt>  <tt class="py-line">    <tt class="py-name">modified_translation</tt> <tt class="py-op">=</tt> <tt class="py-name">transf</tt><tt class="py-op">.</tt><tt id="link-118" class="py-name" targets="Method pyto.geometry.rigid_3d.Rigid3D.recalculate_translation()=pyto.geometry.rigid_3d.Rigid3D-class.html#recalculate_translation"><a title="pyto.geometry.rigid_3d.Rigid3D.recalculate_translation" class="py-name" href="#" onclick="return doclink('link-118', 'recalculate_translation', 'link-118');">recalculate_translation</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L361"></a><tt class="py-lineno">361</tt>  <tt class="py-line">        <tt class="py-name">rotation_center</tt><tt class="py-op">=</tt><tt class="py-name">rotation_center</tt><tt class="py-op">)</tt> </tt>
+<a name="L362"></a><tt class="py-lineno">362</tt>  <tt class="py-line">    <tt class="py-comment">#print 'modified_translation: ', modified_translation</tt> </tt>
+<a name="L363"></a><tt class="py-lineno">363</tt>  <tt class="py-line"> </tt>
+<a name="L364"></a><tt class="py-lineno">364</tt>  <tt class="py-line">    <tt class="py-comment"># write transformation params and correlation</tt> </tt>
+<a name="L365"></a><tt class="py-lineno">365</tt>  <tt class="py-line">    <tt id="link-119" class="py-name" targets="Function pyto.scripts.cleft.write_results()=pyto.scripts.cleft-module.html#write_results,Variable pyto.scripts.connections.write_results=pyto.scripts.connections-module.html#write_results,Function pyto.scripts.connectors.write_results()=pyto.scripts.connectors-module.html#write_results,Function pyto.scripts.correlation_3d_2d.write_results()=pyto.scripts.correlation_3d_2d-module.html#write_results,Function pyto.scripts.correlation_simple_fileio.write_results()=pyto.scripts.correlation_simple_fileio-module.html#write_results,Function pyto.scripts.correlation_two_step_lm_em.write_results()=pyto.scripts.correlation_two_step_lm_em-module.html#write_results,Function pyto.scripts.layers.write_results()=pyto.scripts.layers-module.html#write_results,Function pyto.scripts.neighborhood_grey.write_results()=pyto.scripts.neighborhood_grey-module.html#write_results"><a title="pyto.scripts.cleft.write_results
+pyto.scripts.connections.write_results
+pyto.scripts.connectors.write_results
+pyto.scripts.correlation_3d_2d.write_results
+pyto.scripts.correlation_simple_fileio.write_results
+pyto.scripts.correlation_two_step_lm_em.write_results
+pyto.scripts.layers.write_results
+pyto.scripts.neighborhood_grey.write_results" class="py-name" href="#" onclick="return doclink('link-119', 'write_results', 'link-119');">write_results</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L366"></a><tt class="py-lineno">366</tt>  <tt class="py-line">        <tt class="py-name">transf</tt><tt class="py-op">=</tt><tt class="py-name">transf</tt><tt class="py-op">,</tt> <tt class="py-name">res_file_name</tt><tt class="py-op">=</tt><tt id="link-120" class="py-name"><a title="pyto.scripts.correlation_3d_2d.results_file
+pyto.scripts.correlation_simple_fileio.results_file
+pyto.scripts.correlation_two_step_lm_em.results_file" class="py-name" href="#" onclick="return doclink('link-120', 'results_file', 'link-17');">results_file</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L367"></a><tt class="py-lineno">367</tt>  <tt class="py-line">        <tt class="py-name">spots_3d</tt><tt class="py-op">=</tt><tt class="py-name">spots_3d</tt><tt class="py-op">,</tt> <tt class="py-name">spots_2d</tt><tt class="py-op">=</tt><tt class="py-name">spots_2d</tt><tt class="py-op">,</tt> </tt>
+<a name="L368"></a><tt class="py-lineno">368</tt>  <tt class="py-line">        <tt class="py-name">markers_3d</tt><tt class="py-op">=</tt><tt class="py-name">mark_3d</tt><tt class="py-op">,</tt> <tt class="py-name">transformed_3d</tt><tt class="py-op">=</tt><tt class="py-name">transf_3d</tt><tt class="py-op">,</tt> <tt class="py-name">markers_2d</tt><tt class="py-op">=</tt><tt class="py-name">mark_2d</tt><tt class="py-op">)</tt> </tt>
+<a name="L369"></a><tt class="py-lineno">369</tt>  <tt class="py-line"> </tt>
+<a name="L370"></a><tt class="py-lineno">370</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">transf</tt> </tt>
+</div><a name="L371"></a><tt class="py-lineno">371</tt>  <tt class="py-line"> </tt>
+<a name="L372"></a><tt class="py-lineno">372</tt>  <tt class="py-line"> </tt>
+<a name="L373"></a><tt class="py-lineno">373</tt>  <tt class="py-line"><tt class="py-comment"># run if standalone</tt> </tt>
+<a name="L374"></a><tt class="py-lineno">374</tt>  <tt class="py-line"><tt class="py-keyword">if</tt> <tt class="py-name">__name__</tt> <tt class="py-op">==</tt> <tt class="py-string">'__main__'</tt><tt class="py-op">:</tt> </tt>
+<a name="L375"></a><tt class="py-lineno">375</tt>  <tt class="py-line">    <tt id="link-121" class="py-name" targets="Function pyto.scripts.bulk_analysis.main()=pyto.scripts.bulk_analysis-module.html#main,Function pyto.scripts.classify_connections.main()=pyto.scripts.classify_connections-module.html#main,Function pyto.scripts.cleft.main()=pyto.scripts.cleft-module.html#main,Function pyto.scripts.cleft_stats.main()=pyto.scripts.cleft_stats-module.html#main,Function pyto.scripts.cluster.main()=pyto.scripts.cluster-module.html#main,Function pyto.scripts.connections.main()=pyto.scripts.connections-module.html#main,Function pyto.scripts.connectors.main()=pyto.scripts.connectors-module.html#main,Function pyto.scripts.correlation_3d_2d.main()=pyto.scripts.correlation_3d_2d-module.html#main,Function pyto.scripts.correlation_simple.main()=pyto.scripts.correlation_simple-module.html#main,Function pyto.scripts.correlation_simple_fileio.main()=pyto.scripts.correlation_simple_fileio-module.html#main,Function pyto.scripts.correlation_two_step_lm_em.main()=pyto.scripts.correlation_two_step_lm_em-module.html#main,Function pyto.scripts.discs_to_balls.main()=pyto.scripts.discs_to_balls-module.html#main,Function pyto.scripts.extract_particles.main()=pyto.scripts.extract_particles-module.html#main,Function pyto.scripts.extract_points.main()=pyto.scripts.extract_points-module.html#main,Function pyto.scripts.layers.main()=pyto.scripts.layers-module.html#main,Function pyto.scripts.neighborhood_grey.main()=pyto.scripts.neighborhood_grey-module.html#main,Function pyto.scripts.presynaptic_stats.main()=pyto.scripts.presynaptic_stats-module.html#main,Function pyto.scripts.regions.main()=pyto.scripts.regions-module.html#main,Function pyto.scripts.sort_series.main()=pyto.scripts.sort_series-module.html#main,Function pyto.scripts.vesicles.main()=pyto.scripts.vesicles-module.html#main"><a title="pyto.scripts.bulk_analysis.main
+pyto.scripts.classify_connections.main
+pyto.scripts.cleft.main
+pyto.scripts.cleft_stats.main
+pyto.scripts.cluster.main
+pyto.scripts.connections.main
+pyto.scripts.connectors.main
+pyto.scripts.correlation_3d_2d.main
+pyto.scripts.correlation_simple.main
+pyto.scripts.correlation_simple_fileio.main
+pyto.scripts.correlation_two_step_lm_em.main
+pyto.scripts.discs_to_balls.main
+pyto.scripts.extract_particles.main
+pyto.scripts.extract_points.main
+pyto.scripts.layers.main
+pyto.scripts.neighborhood_grey.main
+pyto.scripts.presynaptic_stats.main
+pyto.scripts.regions.main
+pyto.scripts.sort_series.main
+pyto.scripts.vesicles.main" class="py-name" href="#" onclick="return doclink('link-121', 'main', 'link-121');">main</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L376"></a><tt class="py-lineno">376</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

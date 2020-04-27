@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.grey.image</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.grey-module.html">Package&nbsp;grey</a> ::
+        Module&nbsp;image
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.grey.image-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="pyto.grey.image-module.html">Module pyto.grey.image</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-docstring">Contains class Image for manipulations of grey-scale images.</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-docstring"># Author: Vladan Lucic (Max Planck Institute for Biochemistry)</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-docstring"># $Id: image.py 1103 2014-12-29 11:36:27Z vladan $</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-name">__version__</tt> <tt class="py-op">=</tt> <tt class="py-string">"$Revision: 1103 $"</tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">logging</tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">numpy</tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">scipy</tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">scipy</tt><tt class="py-op">.</tt><tt class="py-name">ndimage</tt> <tt class="py-keyword">as</tt> <tt class="py-name">ndimage</tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package pyto=pyto-module.html"><a title="pyto" class="py-name" href="#" onclick="return doclink('link-0', 'pyto', 'link-0');">pyto</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package pyto.core=pyto.core-module.html"><a title="pyto.core" class="py-name" href="#" onclick="return doclink('link-1', 'core', 'link-1');">core</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Module pyto.core.image=pyto.core.image-module.html,Module pyto.grey.image=pyto.grey.image-module.html,Variable pyto.segmentation.test_hierarchy.image=pyto.segmentation.test_hierarchy-module.html#image"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-2', 'image', 'link-2');">image</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name" targets="Class pyto.core.image.Image=pyto.core.image.Image-class.html,Class pyto.grey.image.Image=pyto.grey.image.Image-class.html"><a title="pyto.core.image.Image
+pyto.grey.image.Image" class="py-name" href="#" onclick="return doclink('link-3', 'Image', 'link-3');">Image</a></tt> <tt class="py-keyword">as</tt> <tt class="py-name">BaseImage</tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"> </tt>
+<a name="Image"></a><div id="Image-def"><a name="L18"></a><tt class="py-lineno"> 18</tt> <a class="py-toggle" href="#" id="Image-toggle" onclick="return toggle('Image');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="pyto.grey.image.Image-class.html">Image</a><tt class="py-op">(</tt><tt class="py-base-class">BaseImage</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Image-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="Image-expanded"><a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"><tt class="py-docstring">    Manipulation of greyscale images.</tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line">    <tt class="py-comment">#############################################################</tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line">    <tt class="py-comment">#</tt> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line">    <tt class="py-comment"># Initialization</tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line">    <tt class="py-comment">#</tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line">    <tt class="py-comment">############################################################</tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"> </tt>
+<a name="Image.__init__"></a><div id="Image.__init__-def"><a name="L29"></a><tt class="py-lineno"> 29</tt> <a class="py-toggle" href="#" id="Image.__init__-toggle" onclick="return toggle('Image.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.grey.image.Image-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">data</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Image.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Image.__init__-expanded"><a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"><tt class="py-docstring">        Saves data (image)</tt> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"><tt class="py-docstring">        Argument:</tt> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line"><tt class="py-docstring">          - data: (ndarray) image</tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line">        <tt class="py-name">super</tt><tt class="py-op">(</tt><tt id="link-4" class="py-name"><a title="pyto.core.image.Image
+pyto.grey.image.Image" class="py-name" href="#" onclick="return doclink('link-4', 'Image', 'link-3');">Image</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-5" class="py-name" targets="Method pyto.analysis.catalog.Catalog.__init__()=pyto.analysis.catalog.Catalog-class.html#__init__,Method pyto.analysis.cleft_regions.CleftRegions.__init__()=pyto.analysis.cleft_regions.CleftRegions-class.html#__init__,Method pyto.analysis.clusters.Clusters.__init__()=pyto.analysis.clusters.Clusters-class.html#__init__,Method pyto.analysis.connections.Connections.__init__()=pyto.analysis.connections.Connections-class.html#__init__,Method pyto.analysis.experiment.Experiment.__init__()=pyto.analysis.experiment.Experiment-class.html#__init__,Method pyto.analysis.groups.Groups.__init__()=pyto.analysis.groups.Groups-class.html#__init__,Method pyto.analysis.layers.Layers.__init__()=pyto.analysis.layers.Layers-class.html#__init__,Method pyto.analysis.observations.Observations.__init__()=pyto.analysis.observations.Observations-class.html#__init__,Method pyto.analysis.vesicles.Vesicles.__init__()=pyto.analysis.vesicles.Vesicles-class.html#__init__,Method pyto.core.image.Image.__init__()=pyto.core.image.Image-class.html#__init__,Method pyto.correlative.basic.Basic.__init__()=pyto.correlative.basic.Basic-class.html#__init__,Method pyto.geometry.affine.Affine.__init__()=pyto.geometry.affine.Affine-class.html#__init__,Method pyto.geometry.affine_2d.Affine2D.__init__()=pyto.geometry.affine_2d.Affine2D-class.html#__init__,Method pyto.geometry.affine_3d.Affine3D.__init__()=pyto.geometry.affine_3d.Affine3D-class.html#__init__,Method pyto.geometry.coordinates.Coordinates.__init__()=pyto.geometry.coordinates.Coordinates-class.html#__init__,Method pyto.geometry.points.Points.__init__()=pyto.geometry.points.Points-class.html#__init__,Method pyto.geometry.rigid_3d.Rigid3D.__init__()=pyto.geometry.rigid_3d.Rigid3D-class.html#__init__,Method pyto.geometry.vector.Vector.__init__()=pyto.geometry.vector.Vector-class.html#__init__,Method pyto.grey.image.Image.__init__()=pyto.grey.image.Image-class.html#__init__,Method pyto.io.connections.Connections.__init__()=pyto.io.connections.Connections-class.html#__init__,Method pyto.io.image_io.ImageIO.__init__()=pyto.io.image_io.ImageIO-class.html#__init__,Method pyto.io.local_exceptions.FileTypeError.__init__()=pyto.io.local_exceptions.FileTypeError-class.html#__init__,Method pyto.io.multi_data.MultiData.__init__()=pyto.io.multi_data.MultiData-class.html#__init__,Method pyto.io.pickled.Pickled.__init__()=pyto.io.pickled.Pickled-class.html#__init__,Method pyto.io.results.Results.__init__()=pyto.io.results.Results-class.html#__init__,Method pyto.io.table.Table.__init__()=pyto.io.table.Table-class.html#__init__,Method pyto.io.vesicles.Vesicles.__init__()=pyto.io.vesicles.Vesicles-class.html#__init__,Method pyto.particles.multimer.Multimer.__init__()=pyto.particles.multimer.Multimer-class.html#__init__,Method pyto.particles.phantom.Phantom.__init__()=pyto.particles.phantom.Phantom-class.html#__init__,Method pyto.scene.cleft_regions.CleftRegions.__init__()=pyto.scene.cleft_regions.CleftRegions-class.html#__init__,Method pyto.scene.em_lm_correlation.EmLmCorrelation.__init__()=pyto.scene.em_lm_correlation.EmLmCorrelation-class.html#__init__,Method pyto.scene.multi_cluster.MultiCluster.__init__()=pyto.scene.multi_cluster.MultiCluster-class.html#__init__,Method pyto.scene.neighborhood.Neighborhood.__init__()=pyto.scene.neighborhood.Neighborhood-class.html#__init__,Method pyto.scene.segmentation_analysis.SegmentationAnalysis.__init__()=pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#__init__,Method pyto.segmentation.ball.Ball.__init__()=pyto.segmentation.ball.Ball-class.html#__init__,Method pyto.segmentation.bound_distance.BoundDistance.__init__()=pyto.segmentation.bound_distance.BoundDistance-class.html#__init__,Method pyto.segmentation.cleft.Cleft.__init__()=pyto.segmentation.cleft.Cleft-class.html#__init__,Method pyto.segmentation.cluster.Cluster.__init__()=pyto.segmentation.cluster.Cluster-class.html#__init__,Method pyto.segmentation.connected.Connected.__init__()=pyto.segmentation.connected.Connected-class.html#__init__,Method pyto.segmentation.contact.Contact.__init__()=pyto.segmentation.contact.Contact-class.html#__init__,Method pyto.segmentation.density.Density.__init__()=pyto.segmentation.density.Density-class.html#__init__,Method pyto.segmentation.distance.Distance.__init__()=pyto.segmentation.distance.Distance-class.html#__init__,Method pyto.segmentation.distance_to.DistanceTo.__init__()=pyto.segmentation.distance_to.DistanceTo-class.html#__init__,Method pyto.segmentation.features.Features.__init__()=pyto.segmentation.features.Features-class.html#__init__,Method pyto.segmentation.grey.Grey.__init__()=pyto.segmentation.grey.Grey-class.html#__init__,Method pyto.segmentation.hierarchy.Hierarchy.__init__()=pyto.segmentation.hierarchy.Hierarchy-class.html#__init__,Method pyto.segmentation.labels.Labels.__init__()=pyto.segmentation.labels.Labels-class.html#__init__,Method pyto.segmentation.morphology.Morphology.__init__()=pyto.segmentation.morphology.Morphology-class.html#__init__,Method pyto.segmentation.plane.Plane.__init__()=pyto.segmentation.plane.Plane-class.html#__init__,Method pyto.segmentation.segment.Segment.__init__()=pyto.segmentation.segment.Segment-class.html#__init__,Method pyto.segmentation.shapes.Shapes.__init__()=pyto.segmentation.shapes.Shapes-class.html#__init__,Method pyto.segmentation.sphere.Sphere.__init__()=pyto.segmentation.sphere.Sphere-class.html#__init__,Method pyto.segmentation.statistics.Statistics.__init__()=pyto.segmentation.statistics.Statistics-class.html#__init__,Method pyto.segmentation.struct_el.StructEl.__init__()=pyto.segmentation.struct_el.StructEl-class.html#__init__,Method pyto.segmentation.thresh_conn.ThreshConn.__init__()=pyto.segmentation.thresh_conn.ThreshConn-class.html#__init__,Method pyto.segmentation.topology.Topology.__init__()=pyto.segmentation.topology.Topology-class.html#__init__,Method pyto.tomo.ctf.Ctf.__init__()=pyto.tomo.ctf.Ctf-class.html#__init__,Method pyto.tomo.frame_series.FrameSeries.__init__()=pyto.tomo.frame_series.FrameSeries-class.html#__init__,Method pyto.tomo.serial_em.SerialEM.__init__()=pyto.tomo.serial_em.SerialEM-class.html#__init__,Method pyto.tomo.series.Series.__init__()=pyto.tomo.series.Series-class.html#__init__"><a title="pyto.analysis.catalog.Catalog.__init__
+pyto.analysis.cleft_regions.CleftRegions.__init__
+pyto.analysis.clusters.Clusters.__init__
+pyto.analysis.connections.Connections.__init__
+pyto.analysis.experiment.Experiment.__init__
+pyto.analysis.groups.Groups.__init__
+pyto.analysis.layers.Layers.__init__
+pyto.analysis.observations.Observations.__init__
+pyto.analysis.vesicles.Vesicles.__init__
+pyto.core.image.Image.__init__
+pyto.correlative.basic.Basic.__init__
+pyto.geometry.affine.Affine.__init__
+pyto.geometry.affine_2d.Affine2D.__init__
+pyto.geometry.affine_3d.Affine3D.__init__
+pyto.geometry.coordinates.Coordinates.__init__
+pyto.geometry.points.Points.__init__
+pyto.geometry.rigid_3d.Rigid3D.__init__
+pyto.geometry.vector.Vector.__init__
+pyto.grey.image.Image.__init__
+pyto.io.connections.Connections.__init__
+pyto.io.image_io.ImageIO.__init__
+pyto.io.local_exceptions.FileTypeError.__init__
+pyto.io.multi_data.MultiData.__init__
+pyto.io.pickled.Pickled.__init__
+pyto.io.results.Results.__init__
+pyto.io.table.Table.__init__
+pyto.io.vesicles.Vesicles.__init__
+pyto.particles.multimer.Multimer.__init__
+pyto.particles.phantom.Phantom.__init__
+pyto.scene.cleft_regions.CleftRegions.__init__
+pyto.scene.em_lm_correlation.EmLmCorrelation.__init__
+pyto.scene.multi_cluster.MultiCluster.__init__
+pyto.scene.neighborhood.Neighborhood.__init__
+pyto.scene.segmentation_analysis.SegmentationAnalysis.__init__
+pyto.segmentation.ball.Ball.__init__
+pyto.segmentation.bound_distance.BoundDistance.__init__
+pyto.segmentation.cleft.Cleft.__init__
+pyto.segmentation.cluster.Cluster.__init__
+pyto.segmentation.connected.Connected.__init__
+pyto.segmentation.contact.Contact.__init__
+pyto.segmentation.density.Density.__init__
+pyto.segmentation.distance.Distance.__init__
+pyto.segmentation.distance_to.DistanceTo.__init__
+pyto.segmentation.features.Features.__init__
+pyto.segmentation.grey.Grey.__init__
+pyto.segmentation.hierarchy.Hierarchy.__init__
+pyto.segmentation.labels.Labels.__init__
+pyto.segmentation.morphology.Morphology.__init__
+pyto.segmentation.plane.Plane.__init__
+pyto.segmentation.segment.Segment.__init__
+pyto.segmentation.shapes.Shapes.__init__
+pyto.segmentation.sphere.Sphere.__init__
+pyto.segmentation.statistics.Statistics.__init__
+pyto.segmentation.struct_el.StructEl.__init__
+pyto.segmentation.thresh_conn.ThreshConn.__init__
+pyto.segmentation.topology.Topology.__init__
+pyto.tomo.ctf.Ctf.__init__
+pyto.tomo.frame_series.FrameSeries.__init__
+pyto.tomo.serial_em.SerialEM.__init__
+pyto.tomo.series.Series.__init__" class="py-name" href="#" onclick="return doclink('link-5', '__init__', 'link-5');">__init__</a></tt><tt class="py-op">(</tt><tt id="link-6" class="py-name" targets="Variable pyto.geometry.vector.Vector.data=pyto.geometry.vector.Vector-class.html#data,Method pyto.io.multi_data.MultiData.data()=pyto.io.multi_data.MultiData-class.html#data"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-6', 'data', 'link-6');">data</a></tt><tt class="py-op">)</tt> </tt>
+</div><a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line">         </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line"> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line">    <tt class="py-comment">#############################################################</tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line">    <tt class="py-comment">#</tt> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line">    <tt class="py-comment"># Image manipulations</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line">    <tt class="py-comment">#</tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line">    <tt class="py-comment">############################################################</tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line"> </tt>
+<a name="Image.limit"></a><div id="Image.limit-def"><a name="L45"></a><tt class="py-lineno"> 45</tt> <a class="py-toggle" href="#" id="Image.limit-toggle" onclick="return toggle('Image.limit');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.grey.image.Image-class.html#limit">limit</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">limit</tt><tt class="py-op">,</tt> <tt class="py-param">mode</tt><tt class="py-op">,</tt> <tt class="py-param">size</tt><tt class="py-op">=</tt><tt class="py-number">3</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Image.limit-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Image.limit-expanded"><a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line"><tt class="py-docstring">        Limits image data.</tt> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line"><tt class="py-docstring">        Elements of self.data that are outside the limits (see below) are</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line"><tt class="py-docstring">        replaced by corrected values. A corrected value is obtained as a mean</tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line"><tt class="py-docstring">        value of within-limits elements of a subarray of size given by argument</tt> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line"><tt class="py-docstring">        size centered at the element to be corrected. For elements near the</tt> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line"><tt class="py-docstring">        edges the subarray is shifted so that it does it still has the required</tt> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line"><tt class="py-docstring">        size. If size is even the subarray is shifted towards higher indices</tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line"><tt class="py-docstring">        in respect to the element to be corrected. </tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line"><tt class="py-docstring">        The low and high limit values are determined from limit and mode. If</tt> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line"><tt class="py-docstring">        mode is 'abs', the limiting value(s) is (are) given in argument limit.</tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line"><tt class="py-docstring">        If mode is is 'std', the limits are set to limit times image std</tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line"><tt class="py-docstring">        away from the image mean.</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line"><tt class="py-docstring">        If limit is a single value, it is ised for both low and ligh limits.</tt> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line"><tt class="py-docstring">        Alternatively, if a list of two elements is given for limits, it</tt> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line"><tt class="py-docstring">        specifies the low and high limits.</tt> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line"><tt class="py-docstring">        Arguments:</tt> </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line"><tt class="py-docstring">          - limit: used to determine the upper and the lower limits on image</tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line"><tt class="py-docstring">          values</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line"><tt class="py-docstring">          - mode: mode used for the determination of the limits</tt> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line"><tt class="py-docstring">          - size: size of the subarray used to determine the corrected values</tt> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line"><tt class="py-docstring">        Updates self.data, that is overwerites the uncorrected image.</tt> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line"> </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line">        <tt class="py-comment"># Note: only marginal speedup with data.squeeze() </tt> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line"> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line">        <tt class="py-comment"># determine low and high limits</tt> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-7" class="py-name" targets="Variable pyto.scripts.extract_points.mode=pyto.scripts.extract_points-module.html#mode,Variable pyto.scripts.sort_series.mode=pyto.scripts.sort_series-module.html#mode"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-7', 'mode', 'link-7');">mode</a></tt> <tt class="py-op">==</tt> <tt class="py-string">'std'</tt><tt class="py-op">:</tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line"> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">            <tt class="py-comment"># limits expressed as std factors</tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line">            <tt class="py-name">mean</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-8" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-8', 'data', 'link-6');">data</a></tt><tt class="py-op">.</tt><tt class="py-name">mean</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line">            <tt class="py-name">std</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-9" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-9', 'data', 'link-6');">data</a></tt><tt class="py-op">.</tt><tt class="py-name">std</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt id="link-10" class="py-name" targets="Method pyto.grey.image.Image.limit()=pyto.grey.image.Image-class.html#limit,Variable pyto.scripts.sort_series.limit=pyto.scripts.sort_series-module.html#limit"><a title="pyto.grey.image.Image.limit
+pyto.scripts.sort_series.limit" class="py-name" href="#" onclick="return doclink('link-10', 'limit', 'link-10');">limit</a></tt><tt class="py-op">,</tt> <tt class="py-name">list</tt><tt class="py-op">)</tt> <tt class="py-keyword">or</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt id="link-11" class="py-name"><a title="pyto.grey.image.Image.limit
+pyto.scripts.sort_series.limit" class="py-name" href="#" onclick="return doclink('link-11', 'limit', 'link-10');">limit</a></tt><tt class="py-op">,</tt> <tt class="py-name">tuple</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line">                <tt class="py-name">low_limit</tt> <tt class="py-op">=</tt> <tt class="py-name">mean</tt> <tt class="py-op">-</tt> <tt id="link-12" class="py-name"><a title="pyto.grey.image.Image.limit
+pyto.scripts.sort_series.limit" class="py-name" href="#" onclick="return doclink('link-12', 'limit', 'link-10');">limit</a></tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt> <tt class="py-op">*</tt> <tt class="py-name">std</tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line">                <tt class="py-name">high_limit</tt> <tt class="py-op">=</tt> <tt class="py-name">mean</tt> <tt class="py-op">+</tt> <tt id="link-13" class="py-name"><a title="pyto.grey.image.Image.limit
+pyto.scripts.sort_series.limit" class="py-name" href="#" onclick="return doclink('link-13', 'limit', 'link-10');">limit</a></tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt> <tt class="py-op">*</tt> <tt class="py-name">std</tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line">            <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line">                <tt class="py-name">low_limit</tt> <tt class="py-op">=</tt> <tt class="py-name">mean</tt> <tt class="py-op">-</tt> <tt id="link-14" class="py-name"><a title="pyto.grey.image.Image.limit
+pyto.scripts.sort_series.limit" class="py-name" href="#" onclick="return doclink('link-14', 'limit', 'link-10');">limit</a></tt> <tt class="py-op">*</tt> <tt class="py-name">std</tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line">                <tt class="py-name">high_limit</tt> <tt class="py-op">=</tt> <tt class="py-name">mean</tt> <tt class="py-op">+</tt> <tt id="link-15" class="py-name"><a title="pyto.grey.image.Image.limit
+pyto.scripts.sort_series.limit" class="py-name" href="#" onclick="return doclink('link-15', 'limit', 'link-10');">limit</a></tt> <tt class="py-op">*</tt> <tt class="py-name">std</tt> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line"> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line">        <tt class="py-keyword">elif</tt> <tt id="link-16" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-16', 'mode', 'link-7');">mode</a></tt> <tt class="py-op">==</tt> <tt class="py-string">'abs'</tt><tt class="py-op">:</tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line"> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line">            <tt class="py-comment"># absolute limits</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt id="link-17" class="py-name"><a title="pyto.grey.image.Image.limit
+pyto.scripts.sort_series.limit" class="py-name" href="#" onclick="return doclink('link-17', 'limit', 'link-10');">limit</a></tt><tt class="py-op">,</tt> <tt class="py-name">list</tt><tt class="py-op">)</tt> <tt class="py-keyword">or</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt id="link-18" class="py-name"><a title="pyto.grey.image.Image.limit
+pyto.scripts.sort_series.limit" class="py-name" href="#" onclick="return doclink('link-18', 'limit', 'link-10');">limit</a></tt><tt class="py-op">,</tt> <tt class="py-name">tuple</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line">                <tt class="py-name">low_limit</tt><tt class="py-op">,</tt> <tt class="py-name">high_limit</tt> <tt class="py-op">=</tt> <tt id="link-19" class="py-name"><a title="pyto.grey.image.Image.limit
+pyto.scripts.sort_series.limit" class="py-name" href="#" onclick="return doclink('link-19', 'limit', 'link-10');">limit</a></tt> </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line">            <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line">                <tt class="py-keyword">raise</tt> <tt class="py-name">TypeError</tt><tt class="py-op">(</tt><tt class="py-string">"Argument limit: "</tt> <tt class="py-op">+</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt id="link-20" class="py-name"><a title="pyto.grey.image.Image.limit
+pyto.scripts.sort_series.limit" class="py-name" href="#" onclick="return doclink('link-20', 'limit', 'link-10');">limit</a></tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-string">" has to be "</tt>\ </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line">                                <tt class="py-op">+</tt> <tt class="py-string">"a list or a tuple in mode: "</tt> <tt class="py-op">+</tt> <tt id="link-21" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-21', 'mode', 'link-7');">mode</a></tt> <tt class="py-op">+</tt> <tt class="py-string">"."</tt><tt class="py-op">)</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line"> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line">            <tt class="py-keyword">raise</tt> <tt class="py-name">ValueError</tt><tt class="py-op">(</tt><tt class="py-string">"Mode: "</tt> <tt class="py-op">+</tt> <tt id="link-22" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-22', 'mode', 'link-7');">mode</a></tt> <tt class="py-op">+</tt> <tt class="py-string">" is not recognized."</tt><tt class="py-op">)</tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line">                 </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line">        <tt class="py-comment"># find array elements that are outside of the limits</tt> </tt>
+<a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line">        <tt class="py-name">bad</tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">zeros</tt><tt class="py-op">(</tt><tt id="link-23" class="py-name" targets="Variable pyto.scripts.discs_to_balls.shape=pyto.scripts.discs_to_balls-module.html#shape"><a title="pyto.scripts.discs_to_balls.shape" class="py-name" href="#" onclick="return doclink('link-23', 'shape', 'link-23');">shape</a></tt><tt class="py-op">=</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-24" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-24', 'data', 'link-6');">data</a></tt><tt class="py-op">.</tt><tt id="link-25" class="py-name"><a title="pyto.scripts.discs_to_balls.shape" class="py-name" href="#" onclick="return doclink('link-25', 'shape', 'link-23');">shape</a></tt><tt class="py-op">,</tt> <tt id="link-26" class="py-name" targets="Variable pyto.scripts.correlation_3d_2d.dtype=pyto.scripts.correlation_3d_2d-module.html#dtype"><a title="pyto.scripts.correlation_3d_2d.dtype" class="py-name" href="#" onclick="return doclink('link-26', 'dtype', 'link-26');">dtype</a></tt><tt class="py-op">=</tt><tt class="py-string">'bool'</tt><tt class="py-op">)</tt> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">low_limit</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line">            <tt class="py-name">bad</tt> <tt class="py-op">=</tt> <tt class="py-name">bad</tt> <tt class="py-op">|</tt> <tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-27" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-27', 'data', 'link-6');">data</a></tt> <tt class="py-op">&lt;</tt> <tt class="py-name">low_limit</tt><tt class="py-op">)</tt> </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">high_limit</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line">            <tt class="py-name">bad</tt> <tt class="py-op">=</tt> <tt class="py-name">bad</tt> <tt class="py-op">|</tt> <tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-28" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-28', 'data', 'link-6');">data</a></tt> <tt class="py-op">&gt;</tt> <tt class="py-name">high_limit</tt><tt class="py-op">)</tt> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line"> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line">        <tt class="py-comment"># correct the outsiders</tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line">        <tt class="py-name">n_corr</tt> <tt class="py-op">=</tt> <tt class="py-number">0</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line">        <tt class="py-name">n_uncorr</tt> <tt class="py-op">=</tt> <tt class="py-number">0</tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line">        <tt class="py-name">new</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-29" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-29', 'data', 'link-6');">data</a></tt><tt class="py-op">.</tt><tt class="py-name">copy</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line">        <tt class="py-name">bad_ind</tt> <tt class="py-op">=</tt> <tt class="py-name">bad</tt><tt class="py-op">.</tt><tt class="py-name">nonzero</tt><tt class="py-op">(</tt><tt class="py-op">)</tt>           <tt class="py-comment"># much faster than ndenumerate </tt> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt id="link-30" class="py-name" targets="Variable pyto.scripts.bulk_analysis.ind=pyto.scripts.bulk_analysis-module.html#ind,Variable pyto.scripts.cleft_stats.ind=pyto.scripts.cleft_stats-module.html#ind"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-30', 'ind', 'link-30');">ind</a></tt> <tt class="py-keyword">in</tt> <tt class="py-name">zip</tt><tt class="py-op">(</tt><tt class="py-op">*</tt><tt class="py-name">bad_ind</tt><tt class="py-op">)</tt><tt class="py-op">:</tt>         <tt class="py-comment"># followed by if val != 0</tt> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line"> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line">            <tt class="py-comment"># find index limits so they don't extend outside data</tt> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line">            <tt class="py-name">aind</tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">array</tt><tt class="py-op">(</tt><tt id="link-31" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-31', 'ind', 'link-30');">ind</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line">            <tt id="link-32" class="py-name"><a title="pyto.scripts.discs_to_balls.shape" class="py-name" href="#" onclick="return doclink('link-32', 'shape', 'link-23');">shape</a></tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">array</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-33" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-33', 'data', 'link-6');">data</a></tt><tt class="py-op">.</tt><tt id="link-34" class="py-name"><a title="pyto.scripts.discs_to_balls.shape" class="py-name" href="#" onclick="return doclink('link-34', 'shape', 'link-23');">shape</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line">            <tt class="py-name">low_ind</tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">maximum</tt><tt class="py-op">(</tt><tt class="py-name">aind</tt> <tt class="py-op">-</tt> <tt class="py-op">(</tt><tt id="link-35" class="py-name" targets="Variable pyto.scripts.extract_particles.size=pyto.scripts.extract_particles-module.html#size,Variable pyto.scripts.sort_series.size=pyto.scripts.sort_series-module.html#size"><a title="pyto.scripts.extract_particles.size
+pyto.scripts.sort_series.size" class="py-name" href="#" onclick="return doclink('link-35', 'size', 'link-35');">size</a></tt> <tt class="py-op">-</tt> <tt class="py-number">1</tt><tt class="py-op">)</tt> <tt class="py-op">/</tt> <tt class="py-number">2</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">)</tt> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line">            <tt class="py-name">high_ind</tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">minimum</tt><tt class="py-op">(</tt><tt class="py-name">low_ind</tt> <tt class="py-op">+</tt> <tt id="link-36" class="py-name"><a title="pyto.scripts.extract_particles.size
+pyto.scripts.sort_series.size" class="py-name" href="#" onclick="return doclink('link-36', 'size', 'link-35');">size</a></tt><tt class="py-op">,</tt> <tt id="link-37" class="py-name"><a title="pyto.scripts.discs_to_balls.shape" class="py-name" href="#" onclick="return doclink('link-37', 'shape', 'link-23');">shape</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line"> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line">            <tt class="py-comment"># enlarge limits on edges (needed?)</tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line">            <tt class="py-name">correction</tt> <tt class="py-op">=</tt> <tt id="link-38" class="py-name"><a title="pyto.scripts.extract_particles.size
+pyto.scripts.sort_series.size" class="py-name" href="#" onclick="return doclink('link-38', 'size', 'link-35');">size</a></tt> <tt class="py-op">-</tt> <tt class="py-op">(</tt><tt class="py-name">high_ind</tt> <tt class="py-op">-</tt> <tt class="py-name">low_ind</tt><tt class="py-op">)</tt> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line">            <tt class="py-name">low_ind</tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">where</tt><tt class="py-op">(</tt><tt class="py-name">high_ind</tt> <tt class="py-op">&lt;</tt> <tt id="link-39" class="py-name"><a title="pyto.scripts.discs_to_balls.shape" class="py-name" href="#" onclick="return doclink('link-39', 'shape', 'link-23');">shape</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line">                                  <tt class="py-name">low_ind</tt><tt class="py-op">,</tt> <tt class="py-name">low_ind</tt> <tt class="py-op">-</tt> <tt class="py-name">correction</tt><tt class="py-op">)</tt> </tt>
+<a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line">            <tt class="py-name">high_ind</tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">where</tt><tt class="py-op">(</tt><tt class="py-name">low_ind</tt> <tt class="py-op">&gt;</tt> <tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-name">high_ind</tt><tt class="py-op">,</tt>  </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line">                                   <tt class="py-name">high_ind</tt> <tt class="py-op">+</tt> <tt class="py-name">correction</tt><tt class="py-op">)</tt> </tt>
+<a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line"> </tt>
+<a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line">            <tt class="py-comment"># make index limit slices</tt> </tt>
+<a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line">            <tt class="py-name">sl</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-name">slice</tt><tt class="py-op">(</tt><tt class="py-name">l</tt><tt class="py-op">,</tt> <tt class="py-name">h</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-op">(</tt><tt class="py-name">l</tt><tt class="py-op">,</tt> <tt class="py-name">h</tt><tt class="py-op">)</tt> <tt class="py-keyword">in</tt> <tt class="py-name">zip</tt><tt class="py-op">(</tt><tt class="py-name">low_ind</tt><tt class="py-op">,</tt> <tt class="py-name">high_ind</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line"> </tt>
+<a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line">            <tt class="py-comment"># correct data</tt> </tt>
+<a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">logical_not</tt><tt class="py-op">(</tt><tt class="py-name">bad</tt><tt class="py-op">[</tt><tt class="py-name">sl</tt><tt class="py-op">]</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">sum</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-op">&lt;=</tt> <tt class="py-number">0</tt><tt class="py-op">:</tt> </tt>
+<a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line">                <tt class="py-name">logging</tt><tt class="py-op">.</tt><tt id="link-40" class="py-name" targets="Variable pyto.segmentation.morphology.Morphology.debug=pyto.segmentation.morphology.Morphology-class.html#debug"><a title="pyto.segmentation.morphology.Morphology.debug" class="py-name" href="#" onclick="return doclink('link-40', 'debug', 'link-40');">debug</a></tt><tt class="py-op">(</tt><tt class="py-string">"Element "</tt> <tt class="py-op">+</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt id="link-41" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-41', 'ind', 'link-30');">ind</a></tt><tt class="py-op">)</tt> <tt class="py-op">+</tt>  </tt>
+<a name="L135"></a><tt class="py-lineno">135</tt>  <tt class="py-line">                              <tt class="py-string">" could not be corrected."</tt><tt class="py-op">)</tt> </tt>
+<a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line">                <tt class="py-name">n_uncorr</tt> <tt class="py-op">+=</tt> <tt class="py-number">1</tt> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line">            <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L138"></a><tt class="py-lineno">138</tt>  <tt class="py-line">                <tt class="py-name">mean</tt> <tt class="py-op">=</tt> <tt class="py-name">ndimage</tt><tt class="py-op">.</tt><tt class="py-name">mean</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-42" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-42', 'data', 'link-6');">data</a></tt><tt class="py-op">[</tt><tt class="py-name">sl</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">bad</tt><tt class="py-op">[</tt><tt class="py-name">sl</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt id="link-43" class="py-name" targets="Method pyto.io.results.Results.index()=pyto.io.results.Results-class.html#index"><a title="pyto.io.results.Results.index" class="py-name" href="#" onclick="return doclink('link-43', 'index', 'link-43');">index</a></tt><tt class="py-op">=</tt><tt class="py-number">0</tt><tt class="py-op">)</tt> </tt>
+<a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line">                <tt class="py-name">new</tt><tt class="py-op">[</tt><tt id="link-44" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-44', 'ind', 'link-30');">ind</a></tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">mean</tt> </tt>
+<a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line">                <tt class="py-name">n_corr</tt> <tt class="py-op">+=</tt> <tt class="py-number">1</tt> </tt>
+<a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line"> </tt>
+<a name="L142"></a><tt class="py-lineno">142</tt>  <tt class="py-line">        <tt class="py-comment"># update self.data</tt> </tt>
+<a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-45" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-45', 'data', 'link-6');">data</a></tt> <tt class="py-op">=</tt> <tt class="py-name">new</tt> </tt>
+<a name="L144"></a><tt class="py-lineno">144</tt>  <tt class="py-line"> </tt>
+<a name="L145"></a><tt class="py-lineno">145</tt>  <tt class="py-line">        <tt class="py-comment"># log</tt> </tt>
+<a name="L146"></a><tt class="py-lineno">146</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">n_corr</tt> <tt class="py-op">&gt;</tt> <tt class="py-number">0</tt><tt class="py-op">:</tt> </tt>
+<a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line">            <tt class="py-name">logging</tt><tt class="py-op">.</tt><tt class="py-name">info</tt><tt class="py-op">(</tt><tt class="py-string">"Corrected "</tt> <tt class="py-op">+</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">n_corr</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-string">" image elements."</tt><tt class="py-op">)</tt> </tt>
+<a name="L148"></a><tt class="py-lineno">148</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">n_uncorr</tt> <tt class="py-op">&gt;</tt> <tt class="py-number">0</tt><tt class="py-op">:</tt> </tt>
+<a name="L149"></a><tt class="py-lineno">149</tt>  <tt class="py-line">            <tt class="py-name">logging</tt><tt class="py-op">.</tt><tt class="py-name">info</tt><tt class="py-op">(</tt><tt class="py-string">"Could not correct "</tt> <tt class="py-op">+</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">n_uncorr</tt><tt class="py-op">)</tt>  </tt>
+<a name="L150"></a><tt class="py-lineno">150</tt>  <tt class="py-line">                         <tt class="py-op">+</tt> <tt class="py-string">" image elements."</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line"> </tt>
+<a name="Image.getStats"></a><div id="Image.getStats-def"><a name="L152"></a><tt class="py-lineno">152</tt> <a class="py-toggle" href="#" id="Image.getStats-toggle" onclick="return toggle('Image.getStats');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.grey.image.Image-class.html#getStats">getStats</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">apixel</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">counte</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Image.getStats-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Image.getStats-expanded"><a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line"><tt class="py-docstring">        Calculates basic statistics for the data.</tt> </tt>
+<a name="L155"></a><tt class="py-lineno">155</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line"><tt class="py-docstring">        If args apix and counte are specified also calculates mean electrons </tt> </tt>
+<a name="L157"></a><tt class="py-lineno">157</tt>  <tt class="py-line"><tt class="py-docstring">        per A^2.</tt> </tt>
+<a name="L158"></a><tt class="py-lineno">158</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L159"></a><tt class="py-lineno">159</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">mean</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-46" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-46', 'data', 'link-6');">data</a></tt><tt class="py-op">.</tt><tt class="py-name">mean</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L160"></a><tt class="py-lineno">160</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-47" class="py-name" targets="Method pyto.analysis.groups.Groups.min()=pyto.analysis.groups.Groups-class.html#min"><a title="pyto.analysis.groups.Groups.min" class="py-name" href="#" onclick="return doclink('link-47', 'min', 'link-47');">min</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-48" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-48', 'data', 'link-6');">data</a></tt><tt class="py-op">.</tt><tt id="link-49" class="py-name"><a title="pyto.analysis.groups.Groups.min" class="py-name" href="#" onclick="return doclink('link-49', 'min', 'link-47');">min</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L161"></a><tt class="py-lineno">161</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-50" class="py-name" targets="Method pyto.analysis.groups.Groups.max()=pyto.analysis.groups.Groups-class.html#max"><a title="pyto.analysis.groups.Groups.max" class="py-name" href="#" onclick="return doclink('link-50', 'max', 'link-50');">max</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-51" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-51', 'data', 'link-6');">data</a></tt><tt class="py-op">.</tt><tt id="link-52" class="py-name"><a title="pyto.analysis.groups.Groups.max" class="py-name" href="#" onclick="return doclink('link-52', 'max', 'link-50');">max</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L162"></a><tt class="py-lineno">162</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">var</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-53" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-53', 'data', 'link-6');">data</a></tt><tt class="py-op">.</tt><tt class="py-name">var</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L163"></a><tt class="py-lineno">163</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">std</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-54" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-54', 'data', 'link-6');">data</a></tt><tt class="py-op">.</tt><tt class="py-name">std</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L164"></a><tt class="py-lineno">164</tt>  <tt class="py-line"> </tt>
+<a name="L165"></a><tt class="py-lineno">165</tt>  <tt class="py-line">        <tt class="py-comment"># calculate mean electrons per A^2</tt> </tt>
+<a name="L166"></a><tt class="py-lineno">166</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-op">(</tt><tt class="py-name">apixel</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">)</tt> <tt class="py-keyword">and</tt> <tt class="py-op">(</tt><tt class="py-name">counte</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L167"></a><tt class="py-lineno">167</tt>  <tt class="py-line">            <tt id="link-55" class="py-name" targets="Variable pyto.io.microscope_db.conversion=pyto.io.microscope_db-module.html#conversion"><a title="pyto.io.microscope_db.conversion" class="py-name" href="#" onclick="return doclink('link-55', 'conversion', 'link-55');">conversion</a></tt> <tt class="py-op">=</tt> <tt class="py-name">apixel</tt> <tt class="py-op">*</tt> <tt class="py-name">apixel</tt> <tt class="py-op">*</tt> <tt class="py-name">counte</tt> </tt>
+<a name="L168"></a><tt class="py-lineno">168</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">mean_ea</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">mean</tt> <tt class="py-op">/</tt> <tt class="py-name">float</tt><tt class="py-op">(</tt><tt id="link-56" class="py-name"><a title="pyto.io.microscope_db.conversion" class="py-name" href="#" onclick="return doclink('link-56', 'conversion', 'link-55');">conversion</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L169"></a><tt class="py-lineno">169</tt>  <tt class="py-line"> </tt>
+<a name="L170"></a><tt class="py-lineno">170</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> </tt>
+</div></div><a name="L171"></a><tt class="py-lineno">171</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

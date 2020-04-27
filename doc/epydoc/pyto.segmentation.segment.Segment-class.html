@@ -1,0 +1,2850 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.segmentation.segment.Segment</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.segmentation-module.html">Package&nbsp;segmentation</a> ::
+        <a href="pyto.segmentation.segment-module.html">Module&nbsp;segment</a> ::
+        Class&nbsp;Segment
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.segmentation.segment.Segment-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Segment</h1><p class="nomargin-top"><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_pyto_seg_18" name="uml_class_diagram_for_pyto_seg_18">
+<area shape="rect" id="node1" href="pyto.segmentation.sphere.Sphere-class.html" title="pyto.segmentation.sphere.Sphere" alt="" coords="81,1287,201,1325"/>
+<area shape="rect" id="node2_53" href="pyto.segmentation.labels.Labels-class.html#maxId" title="Maximum id" alt="" coords="142,502,805,522"/>
+<area shape="rect" id="node2_54" href="pyto.segmentation.labels.Labels-class.html#contactStructElConn" title="Contact structuring element connectivity, default 1" alt="" coords="142,522,805,542"/>
+<area shape="rect" id="node2_55" href="pyto.segmentation.labels.Labels-class.html#contactStructEl" title="Contact structuring element, default connectivity 1" alt="" coords="142,542,805,562"/>
+<area shape="rect" id="node2_56" href="pyto.segmentation.labels.Labels-class.html#countStructElConn" title="Count structuring element connectivity, default ndim" alt="" coords="142,562,805,582"/>
+<area shape="rect" id="node2_57" href="pyto.segmentation.labels.Labels-class.html#countStructEl" title="Count structuring element, default connectivity ndim" alt="" coords="142,582,805,602"/>
+<area shape="rect" id="node2_58" href="pyto.segmentation.labels.Labels-class.html#makeInset" title="Finds the smallest inset that contains all elements of self.data labeled by ids (or self.ids if ids is None)." alt="" coords="142,605,805,625"/>
+<area shape="rect" id="node2_59" href="pyto.segmentation.labels.Labels-class.html#findInset" title="Returns the smallest inset (list of slice objects of length self.ndim) that contains all elements of self.data labeled by ids (or self.ids if ids is &#160;None)." alt="" coords="142,625,805,645"/>
+<area shape="rect" id="node2_60" href="pyto.segmentation.labels.Labels-class.html#setIds" title="Sets id and related attributes: self.ids (ndarray of flattened ids), &#160;self.originalIds (self.maxId, self.nextId and self.n)." alt="" coords="142,645,805,665"/>
+<area shape="rect" id="node2_61" href="pyto.segmentation.labels.Labels-class.html#extractIds" title="Finds segment ids, that is positive unique elements of data array." alt="" coords="142,665,805,685"/>
+<area shape="rect" id="node2_62" href="pyto.segmentation.labels.Labels-class.html#getMaxId" title="Maximum id" alt="" coords="142,685,805,705"/>
+<area shape="rect" id="node2_63" href="pyto.segmentation.labels.Labels-class.html#setMaxId" title="Doesn&#39;t do anything, needed for compatibility with super." alt="" coords="142,705,805,725"/>
+<area shape="rect" id="node2_64" href="pyto.segmentation.labels.Labels-class.html#restrict" title="Removes (sets to 0) data elements of this instance that have one of the &#160;specified ids and where mask.data is 0 (if arg update is True)." alt="" coords="142,725,805,745"/>
+<area shape="rect" id="node2_65" href="pyto.segmentation.labels.Labels-class.html#orderByBoundaries" title="Orders segments both here and in the contacts object by ids of contacted &#160;boundaries." alt="" coords="142,745,805,765"/>
+<area shape="rect" id="node2_66" href="pyto.segmentation.labels.Labels-class.html#orderIdsByBoundaries" title="Orders self.ids according to the ids of contacted boundaries." alt="" coords="142,765,805,785"/>
+<area shape="rect" id="node2_67" href="pyto.segmentation.labels.Labels-class.html#orderByValues" title="Orders segments, that is changes their ids according to values." alt="" coords="142,785,805,805"/>
+<area shape="rect" id="node2_68" href="pyto.segmentation.labels.Labels-class.html#orderIdsByValues" title="Orders ids by values." alt="" coords="142,805,805,825"/>
+<area shape="rect" id="node2_69" href="pyto.segmentation.labels.Labels-class.html#setStructEl" title="Sets or updates structuring element (self.structEl)." alt="" coords="142,825,805,845"/>
+<area shape="rect" id="node2_70" href="pyto.segmentation.labels.Labels-class.html#setContactStructElConn" title="Sets self._contactStructElConn." alt="" coords="142,845,805,865"/>
+<area shape="rect" id="node2_71" href="pyto.segmentation.labels.Labels-class.html#magnify" title="Magnifies (increases the size of) the data array (self.data) by an int &#160;factor." alt="" coords="142,885,805,905"/>
+<area shape="rect" id="node2" href="pyto.segmentation.labels.Labels-class.html" title="This class concerns an integer&#45;labeled image that contains one or more segments." alt="" coords="129,477,816,911"/>
+<area shape="rect" id="node5_72" href="pyto.segmentation.segment.Segment-class.html#__init__" title="Sets data, data&#45;related and id&#45;related attributes." alt="" coords="117,961,831,981"/>
+<area shape="rect" id="node5_73" href="pyto.segmentation.segment.Segment-class.html#setData" title="Sets data and the attributes determined from data." alt="" coords="117,981,831,1001"/>
+<area shape="rect" id="node5_74" href="pyto.segmentation.segment.Segment-class.html#setDefaults" title="Sets structure elements and _labelMask attributes derived from (the shape &#160;and the type of) data that haven&#39;t been set already to their default &#160;values." alt="" coords="117,1001,831,1021"/>
+<area shape="rect" id="node5_75" href="pyto.segmentation.segment.Segment-class.html#setSurfaceStructEl" title="Not used anymore." alt="" coords="117,1021,831,1041"/>
+<area shape="rect" id="node5_76" href="pyto.segmentation.segment.Segment-class.html#parseInput" title="Returns data, ids and update." alt="" coords="117,1041,831,1061"/>
+<area shape="rect" id="node5_77" href="pyto.segmentation.segment.Segment-class.html#removeIdFromBound" title="Removes ids from boundaryIds, freeIds and _free." alt="" coords="117,1061,831,1081"/>
+<area shape="rect" id="node5_78" href="pyto.segmentation.segment.Segment-class.html#setProperties" title="Sets attributes of this instance from (arg) properties." alt="" coords="117,1081,831,1101"/>
+<area shape="rect" id="node5_79" href="pyto.segmentation.segment.Segment-class.html#findNonUnique" title="Finds segments that are disconnected and segments that do not exist (id in &#160;self.ids but have no elements) and returns their ids." alt="" coords="117,1101,831,1121"/>
+<area shape="rect" id="node5_80" href="pyto.segmentation.segment.Segment-class.html#clean" title="Makes self.data and self.ids consistent by removing segments self.data that are not in self.ids, and removing ids from self.ids corresponding to &#160;non&#45;existing segments." alt="" coords="117,1121,831,1141"/>
+<area shape="rect" id="node5_81" href="pyto.segmentation.segment.Segment-class.html#remove" title="Removes segments labeled by (elements of) ids, by replacing the &#160;corresponding elements of data by value." alt="" coords="117,1141,831,1161"/>
+<area shape="rect" id="node5_82" href="pyto.segmentation.segment.Segment-class.html#keep" title="Keeps only the segments labeled by elements of ids." alt="" coords="117,1161,831,1181"/>
+<area shape="rect" id="node5_83" href="pyto.segmentation.segment.Segment-class.html#add" title="Adds new segments to the existing data." alt="" coords="117,1181,831,1201"/>
+<area shape="rect" id="node5_84" href="pyto.segmentation.segment.Segment-class.html#reorder" title="Changes ids of segments according to the order, or orderes ids from 1 up &#160;without gaps if order is not given." alt="" coords="117,1201,831,1221"/>
+<area shape="rect" id="node5_85" href="pyto.segmentation.segment.Segment-class.html#read" title="Reads segmented image (label filed) from a file." alt="" coords="117,1241,831,1261"/>
+<area shape="rect" id="node5" href="pyto.segmentation.segment.Segment-class.html" title="Manipulations and analysis of segmented images (label fields)." alt="" coords="105,929,843,1268"/>
+<area shape="rect" id="node3" href="pyto.segmentation.ball.Ball-class.html" title="pyto.segmentation.ball.Ball" alt="" coords="231,1287,312,1325"/>
+<area shape="rect" id="node4" href="pyto.segmentation.shapes.Shapes-class.html" title="Provides methods for crating and manipulating geometrical shapes, in addition to methods defined in its base class Segment." alt="" coords="342,1287,467,1325"/>
+<area shape="rect" id="node7" href="pyto.segmentation.cleft.Cleft-class.html" title="Important attributes:" alt="" coords="497,1287,589,1325"/>
+<area shape="rect" id="node8" href="pyto.segmentation.plane.Plane-class.html" title="pyto.segmentation.plane.Plane" alt="" coords="619,1287,723,1325"/>
+<area shape="rect" id="node9" href="pyto.segmentation.connected.Connected-class.html" title="pyto.segmentation.connected.Connected" alt="" coords="753,1287,915,1325"/>
+<area shape="rect" id="node6_86" href="pyto.core.image.Image-class.html#ndim" title="Dimensionality of data" alt="" coords="18,29,929,49"/>
+<area shape="rect" id="node6_87" href="pyto.core.image.Image-class.html#offset" title="Position of the origin in respect to some reference" alt="" coords="18,49,929,69"/>
+<area shape="rect" id="node6_88" href="pyto.core.image.Image-class.html#totalOffset" title="Total offset, that is a sum of self.offset and the start positions of &#160;self.inset." alt="" coords="18,69,929,89"/>
+<area shape="rect" id="node6_89" href="pyto.core.image.Image-class.html#inset" title="(list of slice objects) a current view of self.data array in respect to the underlying base reference array." alt="" coords="18,89,929,109"/>
+<area shape="rect" id="node6_90" href="pyto.core.image.Image-class.html#fullInset" title="Full inset that underlies current self.data." alt="" coords="18,109,929,129"/>
+<area shape="rect" id="node6_91" href="pyto.core.image.Image-class.html#fullData" title="Full size data array" alt="" coords="18,129,929,149"/>
+<area shape="rect" id="node6_92" href="pyto.core.image.Image-class.html#tile" title="Use the current instance (image) as a tile (pattern) to make a (bigger) &#160;image in arbitrary dimensions." alt="" coords="18,152,929,172"/>
+<area shape="rect" id="node6_93" href="pyto.core.image.Image-class.html#getNdim" title="Gets ndim from self.data, or if the data does not exists returns &#160;self._ndim." alt="" coords="18,172,929,192"/>
+<area shape="rect" id="node6_94" href="pyto.core.image.Image-class.html#setNdim" title="Sets self._ndim." alt="" coords="18,192,929,212"/>
+<area shape="rect" id="node6_95" href="pyto.core.image.Image-class.html#setOffset" title="Sets offset of &#160;(ndarray) self.offset." alt="" coords="18,212,929,232"/>
+<area shape="rect" id="node6_96" href="pyto.core.image.Image-class.html#getOffset" title="Returns current offset value." alt="" coords="18,232,929,252"/>
+<area shape="rect" id="node6_97" href="pyto.core.image.Image-class.html#getTotalOffset" title="Returns total offset, which is a sum of self.offset and the start positions of self.inset." alt="" coords="18,252,929,272"/>
+<area shape="rect" id="node6_98" href="pyto.core.image.Image-class.html#setInset" title="Sets inset for self.data (does not modify self.data)." alt="" coords="18,272,929,292"/>
+<area shape="rect" id="node6_99" href="pyto.core.image.Image-class.html#getInset" title="Returns inset position as a list of slice objects." alt="" coords="18,292,929,312"/>
+<area shape="rect" id="node6_100" href="pyto.core.image.Image-class.html#relativeToAbsoluteInset" title="Converts relative inset (in respect to the current inset (self.inset)) to &#160;an absolute inset." alt="" coords="18,312,929,332"/>
+<area shape="rect" id="node6_101" href="pyto.core.image.Image-class.html#absoluteToRelativeInset" title="Converts given absolute inset into inset relative to the current inset &#160;(self.inset)." alt="" coords="18,332,929,352"/>
+<area shape="rect" id="node6_102" href="pyto.core.image.Image-class.html#setFullInset" title="Sets full inset for self.data (does not modify self.data)." alt="" coords="18,352,929,372"/>
+<area shape="rect" id="node6_103" href="pyto.core.image.Image-class.html#getFullInset" title="Returns a previously defined inset (list of slice objects) of a full&#45;size &#160;array underlying (the current view) of self.data." alt="" coords="18,372,929,392"/>
+<area shape="rect" id="node6_104" href="pyto.core.image.Image-class.html#getFullData" title="Returns a previously defined full&#45;size array underlying (the current view &#160;of) self.data." alt="" coords="18,392,929,412"/>
+<area shape="rect" id="node6_105" href="pyto.core.image.Image-class.html#write" title="Writes image to a file in em, mrc or raw format." alt="" coords="18,432,929,452"/>
+<area shape="rect" id="node6" href="pyto.core.image.Image-class.html" title="Methods for creating new images: &#45; tile: tile current image to get a bigger one" alt="" coords="5,5,940,459"/>
+</map>
+  <img src="uml_class_diagram_for_pyto_seg_18.gif" alt='' usemap="#uml_class_diagram_for_pyto_seg_18" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<p>Manipulations and analysis of segmented images (label fields).</p>
+  <p>All segments are expected to be spatially separated, that is they 
+  should not touch each other.</p>
+  <p>Important instance attributes:</p>
+  <ul>
+    <li>
+      data (ndarray): segmented image data. Read-only, use setData() to 
+      write new data.
+    </li>
+    <li>
+      ids (ndarray): all ids. Read-only, use setIds method to set new ids.
+    </li>
+    <li>
+      offset: offset of data in respect to the inputData used to make 
+      segments (depreciated)
+    </li>
+    <li>
+      boundaryIds: list of all boundaries (boundary ids) (remove?)
+    </li>
+    <li>
+      freeIds: list of all free region ids
+    </li>
+    <li>
+      _free: dictionary where each key is a list of boundaries used to make
+      a free region and a corresponding value is the free region id
+    </li>
+    <li>
+      structEl: instance of StructEl, structuring element used for the 
+      connectivity of segments
+    </li>
+    <li>
+      contactStructEl: SE used to find segement - boundary contacts
+    </li>
+    <li>
+      countContactStructEl: SE used to count contacts
+    </li>
+    <li>
+      fillStructEl: SE used to fill interior af a segment
+    </li>
+    <li>
+      contact: instance describing contacts
+    </li>
+  </ul>
+  <p>Methods that set the data:</p>
+  <ul>
+    <li>
+      setData
+    </li>
+    <li>
+      setOffset (depreciated)
+    </li>
+    <li>
+      setDefaults
+    </li>
+  </ul>
+  <p>Methods that affect segment ids:</p>
+  <ul>
+    <li>
+      setIds
+    </li>
+    <li>
+      extractIds
+    </li>
+    <li>
+      reorder
+    </li>
+  </ul>
+  <p>Mathods for basic manipulation of segments:</p>
+  <ul>
+    <li>
+      add
+    </li>
+    <li>
+      remove
+    </li>
+    <li>
+      keep
+    </li>
+  </ul>
+  <p>Methods that change shape of segments:</p>
+  <ul>
+    <li>
+      makeFree
+    </li>
+    <li>
+      makeLayersBetween
+    </li>
+    <li>
+      makeLayersFrom
+    </li>
+    <li>
+      makeSurfaces
+    </li>
+    <li>
+      fillSegments
+    </li>
+    <li>
+      markDistance
+    </li>
+    <li>
+      generateNeighborhoods
+    </li>
+  </ul>
+  <p>Segmentation methods:</p>
+  <ul>
+    <li>
+      label
+    </li>
+    <li>
+      connectivity
+    </li>
+  </ul>
+  <p>Distance between segments:</p>
+  <ul>
+    <li>
+      markDistance()
+    </li>
+    <li>
+      distanceToRegion()
+    </li>
+    <li>
+      pairwiseDistance()
+    </li>
+  </ul>
+  <p>Individual distances between elements of a segment and another region 
+  (segment):</p>
+  <ul>
+    <li>
+      elementDistanceToRegion()
+    </li>
+    <li>
+      elementGeodesicDistanceToRegion()
+    </li>
+    <li>
+      elementDistanceToRim()
+    </li>
+  </ul>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">copy</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">clean</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Sets data, data-related and id-related attributes.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#setData" class="summary-sig-name">setData</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">copy</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">clean</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Sets data and the attributes determined from data.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.setData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#setDefaults" class="summary-sig-name">setDefaults</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Sets structure elements and _labelMask attributes derived from (the 
+      shape and the type of) data that haven't been set already to their 
+      default values.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.setDefaults">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#setSurfaceStructEl" class="summary-sig-name">setSurfaceStructEl</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">connectivity</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Not used anymore.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.setSurfaceStructEl">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#parseInput" class="summary-sig-name">parseInput</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns data, ids and update.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.parseInput">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="removeIdFromBound"></a><span class="summary-sig-name">removeIdFromBound</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>)</span><br />
+      Removes ids from boundaryIds, freeIds and _free.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.removeIdFromBound">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#setProperties" class="summary-sig-name">setProperties</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">props</span>)</span><br />
+      Sets attributes of this instance from (arg) properties.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.setProperties">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#findNonUnique" class="summary-sig-name">findNonUnique</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Finds segments that are disconnected and segments that do not exist 
+      (id in self.ids but have no elements) and returns their ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.findNonUnique">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#clean" class="summary-sig-name">clean</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">value</span>=<span class="summary-sig-default">0</span>)</span><br />
+      Makes self.data and self.ids consistent by removing segments 
+      self.data that are not in self.ids, and removing ids from self.ids 
+      corresponding to non-existing segments.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.clean">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#remove" class="summary-sig-name">remove</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">all</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">value</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">auto</code><code class="variable-quote">'</code></span>)</span><br />
+      Removes segments labeled by (elements of) ids, by replacing the 
+      corresponding elements of data by value.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.remove">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#keep" class="summary-sig-name">keep</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">all</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">value</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">auto</code><code class="variable-quote">'</code></span>)</span><br />
+      Keeps only the segments labeled by elements of ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.keep">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#add" class="summary-sig-name">add</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">new</span>,
+        <span class="summary-sig-arg">shift</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">remove_overlap</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">dtype</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">relabel</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">clean</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Adds new segments to the existing data.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.add">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#reorder" class="summary-sig-name">reorder</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">order</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">clean</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Changes ids of segments according to the order, or orderes ids from 1
+      up without gaps if order is not given.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.reorder">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#shiftIds" class="summary-sig-name">shiftIds</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">shift</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Shifts all (positive) ids of segments by (arg) shift.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.shiftIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#makeFree" class="summary-sig-name">makeFree</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>,
+        <span class="summary-sig-arg">size</span>,
+        <span class="summary-sig-arg">mask</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">intersect</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">update</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Makes a free region between segments of this instance.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.makeFree">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#makeLayersBetween" class="summary-sig-name">makeLayersBetween</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">bound_1</span>,
+        <span class="summary-sig-arg">bound_2</span>,
+        <span class="summary-sig-arg">mask</span>,
+        <span class="summary-sig-arg">nLayers</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">width</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">offset</span>=<span class="summary-sig-default">0.5</span>,
+        <span class="summary-sig-arg">between</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">median</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">maxDistance</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">fill</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">nExtraLayers</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">extra_1</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">extra_2</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Makes layers between boundaries labeled by bound_1 and bound_2 and 
+      calculates the width between boundaries.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.makeLayersBetween">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#makeLayersFrom" class="summary-sig-name">makeLayersFrom</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">bound</span>,
+        <span class="summary-sig-arg">thick</span>,
+        <span class="summary-sig-arg">nLayers</span>,
+        <span class="summary-sig-arg">mask</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">offset</span>=<span class="summary-sig-default">0.5</span>,
+        <span class="summary-sig-arg">nExtraLayers</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">extra</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Makes layers starting from a boundary (one or more segments specified 
+by argument bound) on a region specified by arg mask and returns them 
+as an object of this class.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.makeLayersFrom">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#makeSurfaces" class="summary-sig-name">makeSurfaces</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">size</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Creates surfaces of thickness given by size of all segments specified
+      by ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.makeSurfaces">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#labelInteriors" class="summary-sig-name">labelInteriors</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">surfaces</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">surfaceSize</span>=<span class="summary-sig-default">1</span>)</span><br />
+      Labels segment interiors.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.labelInteriors">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#fillSegments" class="summary-sig-name">fillSegments</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">size</span>,
+        <span class="summary-sig-arg">ids</span>,
+        <span class="summary-sig-arg">update</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Fill interior of segments whose ids are given in ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.fillSegments">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#markDistance" class="summary-sig-name">markDistance</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">size</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">slices</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Generator that returns distances to individual segments.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.markDistance">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#distanceToRegion" class="summary-sig-name">distanceToRegion</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">region</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">regionId</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">surface</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">center</code><code class="variable-quote">'</code></span>)</span><br />
+      Calculates distance of all segments specified by ids to a given 
+      region.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.distanceToRegion">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#pairwiseDistance" class="summary-sig-name">pairwiseDistance</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">min</code><code class="variable-quote">'</code></span>)</span><br />
+      Calculate pairwise distances between segments with ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.pairwiseDistance">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#generateNeighborhoods" class="summary-sig-name">generateNeighborhoods</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">regions</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">regionIds</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">size</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">maxDistance</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">distanceMode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">min</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">removeOverlap</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Generates neighborhoods of each specified region on each of the 
+      segments.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.generateNeighborhoods">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#elementDistanceToRegion" class="summary-sig-name">elementDistanceToRegion</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>,
+        <span class="summary-sig-arg">region</span>,
+        <span class="summary-sig-arg">metric</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">euclidean</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">connectivity</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">noDistance</span>=<span class="summary-sig-default">-1</span>)</span><br />
+      Calculates distances between each element of segments (specified by 
+      arg ids) to a given region (arg region).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.elementDistanceToRegion">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#elementGeodesicDistanceToRegion" class="summary-sig-name">elementGeodesicDistanceToRegion</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>,
+        <span class="summary-sig-arg">region</span>,
+        <span class="summary-sig-arg">structure</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">footprint</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">connectivity</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">noDistance</span>=<span class="summary-sig-default">-1</span>)</span><br />
+      Calculates geodesic distances between each element of segments 
+      (specified by arg ids) to a given region (arg region).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.elementGeodesicDistanceToRegion">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#getStructureFootprint" class="summary-sig-name">getStructureFootprint</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">connectivity</span>)</span><br />
+      Returns special (non-flat) forms of structuring element and 
+      footprint.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.getStructureFootprint">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#elementDistanceToRim" class="summary-sig-name">elementDistanceToRim</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>,
+        <span class="summary-sig-arg">metric</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">euclidean</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">connectivity</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">rimId</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">rimLocation</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">out</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">rimConnectivity</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">noDistance</span>=<span class="summary-sig-default">-1</span>)</span><br />
+      For each element of specified segments (arg ids) calculates minimal 
+      distance to the bounding rim of the segment the element belongs to.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.elementDistanceToRim">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#distanceFromOrigin" class="summary-sig-name">distanceFromOrigin</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">origins</span>,
+        <span class="summary-sig-arg">metric</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">euclidean</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">connectivity</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">noDistance</span>=<span class="summary-sig-default">-1</span>)</span><br />
+      For each element of specified segments (keys of arg origins) 
+      calculates distance from the origin of the segment the element 
+      belongs to.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.distanceFromOrigin">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.segmentation.labels.Labels-class.html">labels.Labels</a></code></b>:
+      <code><a href="pyto.segmentation.labels.Labels-class.html#extractIds">extractIds</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#findInset">findInset</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#getContactStructEl">getContactStructEl</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#getContactStructElConn">getContactStructElConn</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#getCountStructEl">getCountStructEl</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#getCountStructElConn">getCountStructElConn</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#getMaxId">getMaxId</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#getPoints">getPoints</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#getPointsGeodesic">getPointsGeodesic</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#magnify">magnify</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#makeInset">makeInset</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#orderByBoundaries">orderByBoundaries</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#orderByValues">orderByValues</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#orderIdsByBoundaries">orderIdsByBoundaries</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#orderIdsByValues">orderIdsByValues</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#restrict">restrict</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#setContactStructElConn">setContactStructElConn</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#setCountStructElConn">setCountStructElConn</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#setIds">setIds</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#setMaxId">setMaxId</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#setStructEl">setStructEl</a></code>
+      </p>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.segmentation.labels.Labels-class.html">labels.Labels</a></code></b> (private):
+      <code><a href="pyto.segmentation.labels.Labels-class.html#_remove" onclick="show_private();">_remove</a></code>
+      </p></div>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.core.image.Image-class.html">core.image.Image</a></code></b>:
+      <code><a href="pyto.core.image.Image-class.html#absoluteToRelativeInset">absoluteToRelativeInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#clearFull">clearFull</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#copyPositioning">copyPositioning</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#expandInset">expandInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#findEnclosingInset">findEnclosingInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#findIntersectingInset">findIntersectingInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getDataInset">getDataInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getDeepBase">getDeepBase</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getFullData">getFullData</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getFullInset">getFullInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getInset">getInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getNdim">getNdim</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getOffset">getOffset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getTotalOffset">getTotalOffset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#hasOverlap">hasOverlap</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#isInside">isInside</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#newFromInset">newFromInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#recoverFull">recoverFull</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#relativeToAbsoluteInset">relativeToAbsoluteInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#saveFull">saveFull</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#setDataInset">setDataInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#setFullData">setFullData</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#setFullInset">setFullInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#setInset">setInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#setNdim">setNdim</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#setOffset">setOffset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#tile">tile</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#useInset">useInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#usePositioning">usePositioning</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#write">write</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.segment.Segment-class.html#read" class="summary-sig-name">read</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">file</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">clean</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">byteOrder</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">dataType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">arrayOrder</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">shape</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">memmap</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Reads segmented image (label filed) from a file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.read">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_remove_or_keep_factor"></a><span class="summary-name">_remove_or_keep_factor</span> = <code title="0.55">0.55</code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.segmentation.labels.Labels-class.html">labels.Labels</a></code></b>:
+      <code><a href="pyto.segmentation.labels.Labels-class.html#contactStructEl">contactStructEl</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#contactStructElConn">contactStructElConn</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#countStructEl">countStructEl</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#countStructElConn">countStructElConn</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#maxId">maxId</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.core.image.Image-class.html">core.image.Image</a></code></b>:
+      <code><a href="pyto.core.image.Image-class.html#fullData">fullData</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#fullInset">fullInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#inset">inset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#ndim">ndim</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#offset">offset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#totalOffset">totalOffset</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">copy</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">clean</span>=<span class="sig-default">False</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets data, data-related and id-related attributes.</p>
+  <p>If copy is True data is copied so that (the original) data can not be 
+  changed in this class. Otherwise only a reference is passed saving 
+  memory, but there is no guarantee that the data would not be changed.</p>
+  <p>Data-related attributes: structure elements and _labelMask are derived
+  from the shape and the type of data, or self.data.</p>
+  <p>The id-related attributes: ids (list containing all ids), maxId, 
+  nextId and n (number of ids) are determined in the following order: from 
+  ids, data, or self.data.</p>
+  <p>If clean is True, all segments having ids that are not in the argument
+  ids are removed.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      data: (ndarray) segments (labels)
+    </li>
+    <li>
+      copy: if True makes a copy of data
+    </li>
+    <li>
+      ids: list of ids
+    </li>
+    <li>
+      clean: if True only the segments given in ids are retained in
+    </li>
+  </ul>
+  <p>self.data</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setData"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setData</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">copy</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">clean</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.setData">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets data and the attributes determined from data.</p>
+  <p>If copy is True data is copied so that (the original) data can not be 
+  changed in this class. Otherwise only a reference is passed saving 
+  memory, but there is no guarantee that the data would not be changed.</p>
+  <p>The id-related attributes: ids (list containing all ids), maxId, 
+  nextId and n (number of ids) are determined in the following order: from 
+  ids, data, or self.data.</p>
+  <p>If clean is True, all segments heving ids that are not in the argument
+  ids are removed.</p>
+  <p>Data should always be set using this method (not by the assignment to 
+  self.data).</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      data: (ndarray) segments (labels)
+    </li>
+    <li>
+      copy: flag indication if data is copied to self.data.
+    </li>
+    <li>
+      ids: list of ids
+    </li>
+    <li>
+      clean: flag indicating if only the segments given in ids are retained
+    </li>
+  </ul>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="pyto.segmentation.labels.Labels-class.html#setData">labels.Labels.setData</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setDefaults"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setDefaults</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.setDefaults">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets structure elements and _labelMask attributes derived from (the 
+  shape and the type of) data that haven't been set already to their 
+  default values. Does not set self.data.</p>
+  <p>Data has to be provided as an argument, or self.data has to be set, or
+  self.ndim has to be set.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      data: (ndarray) segment (labels) array.
+    </li>
+  </ul>
+  <p>Sets:</p>
+  <ul>
+    <li>
+      all structuring element related stuff
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setSurfaceStructEl"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setSurfaceStructEl</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">connectivity</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.setSurfaceStructEl">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Not used anymore.</p>
+  <p>Sets the structuring element used for surface determination 
+  (self.surfaceStructEl) and its connectivity 
+  (self.surfaceStructElConn).</p>
+  <p>Default connectivity is ndim (of the data), that is 26 neighbors in 
+  3d. In this case, a surface is connected in the default self.structEl 
+  sense.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      connectivity: maximum distance squared between the center and the 
+      elements of the structuring element
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="parseInput"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">parseInput</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.parseInput">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns data, ids and update. If data is not given returns self.data. 
+  If ids is not given tries self.ids (if data was not given), or extracts 
+  ids from data (or self.data).</p>
+  <p>Update is True if self.data is used.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      data: (ndarray) containing segments
+    </li>
+    <li>
+      ids: array of segment ids
+    </li>
+  </ul>
+  <p>Returns data, ids, update</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setProperties"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setProperties</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">props</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.setProperties">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets attributes of this instance from (arg) properties. The attribute 
+  names are given as keys and attribute valus are determined from values of
+  dictionary (arg) props.</p>
+  <p>Each of the props.values() has to be an array (or list) with elements 
+  directly corresponding to elements of self.ids (that is the lengths of 
+  these arrays have to be the same as the length of self.ids). The 
+  attributes are then set to ndarray indexed by ids (that is attr[3] is a 
+  value correspoinding to id = 3).</p>
+  <p>Only property with name 'contacts' is expected to be an instance of 
+  Contacts</p>
+  <p>Also sets attribute indexed, that contains the names of all indexed 
+  properties (all properties except 'contacts').</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      props: distionary of properties
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="findNonUnique"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">findNonUnique</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.findNonUnique">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Finds segments that are disconnected and segments that do not exist 
+  (id in self.ids but have no elements) and returns their ids.</p>
+  <p>Returns dictionary with the following key value pairs:</p>
+  <ul>
+    <li>
+      'many' : (list) ids of disconnected segments
+    </li>
+    <li>
+      'empty' : (list) ids of non-existing segments
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="clean"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">clean</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">value</span>=<span class="sig-default">0</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.clean">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Makes self.data and self.ids consistent by removing segments self.data
+  that are not in self.ids, and removing ids from self.ids corresponding to
+  non-existing segments.</p>
+  <p>Prints logging.INFO message for removed ids.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      value: segments that are removed are replaced by this value
+    </li>
+  </ul>
+  <p>Sets self.data and self.ids</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="remove"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">remove</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">all</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">value</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">auto</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.remove">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes segments labeled by (elements of) ids, by replacing the 
+  corresponding elements of data by value.</p>
+  <p>If data is None, specified segments are removed from self.data. In 
+  addition id related and boundary related attributes are updated. If data 
+  is given a modified segment ndarray is returned. The original data array 
+  may be changed.</p>
+  <p>If argument all is None, all ids are determined from data. If all is 
+  provided it may increase the speed a bit.</p>
+  <p>Argument mode determines the method used. If mode is 'remove' the 
+  segments are removed from the array. If it is 'keep', the segments with 
+  ids that are not in the argument ids are kept. Finally, the mode 'auto' 
+  finds the better strategy between the two, based on the numbers  of ids 
+  that should be removed or kept. See self._remove for details.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      ids: ids of segments to be removed (int or list/array)
+    </li>
+    <li>
+      data: segment ndarray
+    </li>
+    <li>
+      all: all ids (determined from data if not given)
+    </li>
+    <li>
+      value: value denoting background (no segments)
+    </li>
+    <li>
+      mode: determines the method used, 'auto' is recommended
+    </li>
+  </ul>
+  <p>Returns:</p>
+  <ul>
+    <li>
+      modified array if data is given
+    </li>
+  </ul>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="pyto.segmentation.labels.Labels-class.html#remove">labels.Labels.remove</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="keep"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">keep</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">all</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">value</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">auto</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.keep">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Keeps only the segments labeled by elements of ids. Elements of other 
+  segments are replaced by value.</p>
+  <p>If data is None, self.data is modified. In addition, the id related 
+  and boundary related attributes are updated. If data is given a modified 
+  segment ndarray is returned (may change the original data array).</p>
+  <p>If argument all is None, all ids are determined from data. If all is 
+  provided it may increase the speed a bit.</p>
+  <p>Argument mode determines the method used. If mode is 'remove' the 
+  segments are removed from the array. If it is 'keep', the segments with 
+  ids that are not in the argument ids are kept. Finally, the mode 'auto' 
+  finds the better strategy between the two, based on the numbers  of ids 
+  that should be removed or kept. See self._remove for details.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      ids: ids of segments to be removed (int or list/array)
+    </li>
+    <li>
+      data: segment ndarray
+    </li>
+    <li>
+      all: all segment ids (determined if not given)
+    </li>
+    <li>
+      value: value denoting background (no segments)
+    </li>
+    <li>
+      mode: determines the method used, 'auto' is recommended
+    </li>
+  </ul>
+  <p>Returns:</p>
+  <ul>
+    <li>
+      modified array if data is given
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="add"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">new</span>,
+        <span class="sig-arg">shift</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">remove_overlap</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">dtype</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">relabel</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">clean</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.add">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds new segments to the existing data.</p>
+  <p>Ids of new segments are increased by shift (or self.maxId if shift is 
+  None) so they do not collide with the existing segemnts self.data. All 
+  existing segments of self.data whose ids are not in self.ids are removed,
+  to avoid possible confusion with the new segments. If clean is true and 
+  new is an instance of this class all segments from new that are not in 
+  new.ids are also removed. Finally, id-related attributes (maxId, nextId, 
+  ids and n) of this instance are updated.</p>
+  <p>If an id from the added segments do is above the limit of the 
+  self.data data type an exception is raised.</p>
+  <p>If the new and old labels overlap, the new labels are used. If this 
+  happens, the the old labels may become disconnected.</p>
+  <p>If remove_overlap is True, segments from self.data that overlap (have 
+  at least one element in common with the new segments) are completely 
+  removed.</p>
+  <p>If relabel is True, the existing and the new segments are put together
+  and relabeled (renumbered) from scratch. In this case all segments are 
+  properly distinguished, but their ids are most likely changed.</p>
+  <p>Data in new are copied to self.data, so new is not modified, nor it is
+  referenced by this instance.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      new: instance of Segment, or array whose positive elements define new
+      segments
+    </li>
+    <li>
+      shift: new segments ids are increased by this amount, default 
+      self.maxId
+    </li>
+    <li>
+      remove_overlap: if True, segments from self.data that overlap (have 
+      at least one element in common with the new segments) are removed
+    </li>
+    <li>
+      dtype: current and new data arrays are converted to this dtype
+    </li>
+    <li>
+      relabel: flag indicating what to do when new and old segments overlap
+    </li>
+    <li>
+      clean: if True segments from new.data that are not listed in new.ids 
+      are removed
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="reorder"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">reorder</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">order</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">clean</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.reorder">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Changes ids of segments according to the order, or orderes ids from 1 
+  up without gaps if order is not given.</p>
+  <p>Returns (dictionary) order if argument order is None.</p>
+  <p>If data is None segments in self.data are reordered and nothing is 
+  returned. Otherwise, segments in data are reordered and the resulting 
+  array is returned (data is not modified).</p>
+  <p>If clean is True, the segments whose ids are not in order.keys() are 
+  removed. This option does have any effect if order is None.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      data: labels array
+    </li>
+    <li>
+      order: dictionary with old (keys) and new ids (values), where keys 
+      and values have to be nonnegative integers
+    </li>
+    <li>
+      clean: flag indicating if ids that are not in order.keys are removed 
+      or kept.
+    </li>
+  </ul>
+  <p>Sets: self.data, self.ids and related if data is None.</p>
+  <p>Returns:</p>
+  <ul>
+    <li>
+      (dictionary) order, if data is None and order is None
+    </li>
+    <li>
+      nothing, if data is None and order is not None
+    </li>
+    <li>
+      reordered_array, order, if data is not None and order is None
+    </li>
+    <li>
+      reordered_array, if data is not None and order is not None
+    </li>
+  </ul>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="pyto.segmentation.labels.Labels-class.html#reorder">labels.Labels.reorder</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="shiftIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">shiftIds</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">shift</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.shiftIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Shifts all (positive) ids of segments by (arg) shift.</p>
+  <p>If data is None segments in self.data are reordered, self.ids is 
+  adjusted and nothing is returned. Otherwise, segments in data are 
+  reordered and the resulting array is returned (data is modified).</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      shift: value by which ids are increased
+    </li>
+    <li>
+      data: labels array
+    </li>
+  </ul>
+  <p>Sets: self.data, self.ids and related if data is None.</p>
+  <p>Returns:</p>
+  <ul>
+    <li>
+      nothing, if data is None and order is not None
+    </li>
+    <li>
+      reordered array, if data is not None and order is not None
+    </li>
+  </ul>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="pyto.segmentation.labels.Labels-class.html#shiftIds">labels.Labels.shiftIds</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="makeFree"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">makeFree</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>,
+        <span class="sig-arg">size</span>,
+        <span class="sig-arg">mask</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">intersect</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">update</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.makeFree">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Makes a free region between segments of this instance.</p>
+  <p>The free region can be formed where mask &gt; 0 only. The main idea 
+  behind mask is to set it so that the existing boundaries are off-limits 
+  to the formation of free regions. If mask is a Label it's positioning 
+  (inset) is adjusted and it may be expanded to match self.data. If mask is
+  a ndarray it is applied to self.data directly. Finally, if mask is an 
+  int, or a list of ints the free region is formed where self.data equals 
+  any of the values of mask.</p>
+  <p>If mode is 'add' and size is an int, finds all elements of self.data 
+  whose Euclidean distance to a nearest boundary defined by ids is smaller 
+  or equal to size (the fastest variant, calls 
+  ndimage.distance_transform_edt once). If size is an array, all elements 
+  of self.data whose Euclidian distance to any of the boundaries is smaller
+  or equal to the corresponding size (calls ndimage.distance_transform_edt 
+  once for each id). In both cases the selected elements of self.data form 
+  a free region.</p>
+  <p>If mode is 'intersect', the free region is obtained by the 
+  intersection of regions (of self.data) surrounding each boundary (given 
+  by ids). Each element of these surrounding regions can have at most size 
+  (for the corresponding id) Euclidean distance to the boundary (calls 
+  ndimage.distance_transform_edt once for each id).</p>
+  <p>If size is a single number &lt;= 0, the free region is formed based on
+  mask only.</p>
+  <p>If update is True, adds the free region to self.data, and puts the id 
+  of the free region to self.freeIds, make a corresponding entry in 
+  self._free and returns the id or the free region. If update is false 
+  returns a Labels object that contains the free region, and has the same 
+  positioning attributes (offset, inset) as this instance.</p>
+  <p>Note: does not make an entry in self._free, because not sure if that's
+  needed for anything.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      ids: list of boundaryIds, or a single int
+    </li>
+    <li>
+      size: list (or ndarray) of maximum distances to each boundary. If 
+      single number then it's used for all boundaries. If it is &lt;= 0 
+      free region is obtained from mask only.
+    </li>
+    <li>
+      mask: (ndarray, int, list or Label) Positive elements of mask define 
+      a region where a free region is allowed to be created. Alternatively,
+      if mask is an int (list of ints), then the free region can be formed 
+      where elements of self.data equal (any of the ids from) the mask.
+    </li>
+    <li>
+      mode: 'intersect' or 'add' determines how the new region is formed
+    </li>
+    <li>
+      update: flag that determines if a free region is added to this 
+      instance.
+    </li>
+  </ul>
+  <p>Returns: Labels object whose data attribute is a ndarray (of the same 
+  shape and position as self.data) defining the free region.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="makeLayersBetween"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">makeLayersBetween</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">bound_1</span>,
+        <span class="sig-arg">bound_2</span>,
+        <span class="sig-arg">mask</span>,
+        <span class="sig-arg">nLayers</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">width</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">offset</span>=<span class="sig-default">0.5</span>,
+        <span class="sig-arg">between</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">median</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">maxDistance</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">fill</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">nExtraLayers</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">extra_1</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">extra_2</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.makeLayersBetween">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Makes layers between boundaries labeled by bound_1 and bound_2 and 
+  calculates the width between boundaries.</p>
+  <p>The layers are made on a region specified by mask (layers region). If 
+  mask is an int (or a list of int's) it denotes id(s) of segment(s) of 
+  this instance that make a mask. Alternatively, if it is a ndarray 
+  positive elements definem the region where layers are made.</p>
+  <p>If arg maxDistance is specified, the mask is adjusted so that the 
+  elements that have sum of distances to both boundaries larger than 
+  maxDistance are discarded.</p>
+  <p>If fill is True, holes in the mask that were created by adjusting the 
+  maxDistance (see paragraph above) are filled. In order to detect holes 
+  both layer region and boundaries are taken into account, and the default 
+  structuring element (see scipy.ndimage.binary_fill_holes) is used.</p>
+  <p>If the arument width is None, first the distance between boundaries is
+  calculated as the mean/min/max/median (see arg between) value of the 
+  distance from each element of boundary 2 that touches the adjusted mask 
+  region to boundary 1. Then the width is calculated as the distance 
+  between boundaries minus 1. Note: Cleft.getWidth() uses a bit nicer way 
+  to calculate this distance.</p>
+  <p>Array elements are assigned to layers based on their eucliden 
+  distances to (the closest element of) both segments bound_1 and bound_2. 
+  In total nLayers are made between the boundaries. If nLayers is not given
+  it is set to the rounded (int) value of the width.</p>
+  <p>In case nExtraLayers is 0, layers are numbered from 1 (closest to 
+  bound_1) to nLayers (closest to bound_2). Numerical parameter offset 
+  determines the distribution of layers. It should be larger than 0 and 
+  smaller than 1. The bigger this parameter the more elements are included 
+  in the outside layers. The formula used to calculate the layer position 
+  is:</p>
+  <p>layer_no = floor{(d_1-offset) * nLayers / (d_1+d_2-2*offset) + 1}</p>
+  <p>where d_1 and d_2 are the shortest distances to segments bound_1 and 
+  bound_2.</p>
+  <p>In case nExtraLayers is &gt; 0, extra layers are formed in addition to
+  the layers between the boundaries (explained above). The extra layers are
+  formed on the boundaries and the extra regions (args extra_1 and 
+  extra_2). The extra layers are formed based on their euclidean distance 
+  to the closest 'between' layer, and they have the same thickness as the 
+  'between' layers. This is done using self.makeLayersFrom() method. The 
+  additional layers over the first boundary and the first extra region are 
+  numbered from 1 to nExtraLayers, the ids of the 'between' layers are 
+  shifted by nExtraLayers and the layers over the second boundary and the 
+  second extra region go from nLayers_nExtraLayers+1 to 
+  nLayers+2*nExtraLayers.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      bound_1, bound_2: (int, list or ndarray) id(s) of boundaries list of 
+      ints
+    </li>
+    <li>
+      mask: (ndarray, int or a list of int's) region where layers are 
+      formed
+    </li>
+    <li>
+      nLayers: number of layers between the boundaries
+    </li>
+    <li>
+      width: distance between boundaries
+    </li>
+    <li>
+      between: denotes how the distance between segments is calculated. It 
+      can 'mean', 'min', 'max', median', the same as the mode argument in 
+      distanceToRegion() method.
+    </li>
+    <li>
+      nExtraLayers: number of additional layers formed over each boundary.
+    </li>
+    <li>
+      extra_1, extra_2: (int, list or ndarray of int's) ids of extra 
+      regions 1 and 2
+    </li>
+    <li>
+      maxDistance: highest allowed sum of distances to segments bound_1 and
+      bound_2
+    </li>
+    <li>
+      fill: flag indicating if holes created by maxDistance procedure are 
+      filled (used only if maxDistance is not None)
+    </li>
+    <li>
+      offset: numerical parameter that compensates for the discrete 
+      positions in an array and so determins the exact position of layers, 
+      has to be 0 - 1, default 0.5 makes the positions symmetrical
+    </li>
+  </ul>
+  <p>Returns layer_obj, dist_between:</p>
+  <ul>
+    <li>
+      layer_obj: instance of this class containing layers. The data array 
+      of the this instance has the smallest shape that contains all layers 
+      and boundaries (to speed up calculations and decrease memory usage), 
+      and the inset attribute is set to define the position of the returned
+      data.
+    </li>
+    <li>
+      width: width of the region between the boundaries calculated from 
+      edge to edge (for example, if the bounaries touch each other the 
+      width is 0)
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="makeLayersFrom"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">makeLayersFrom</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">bound</span>,
+        <span class="sig-arg">thick</span>,
+        <span class="sig-arg">nLayers</span>,
+        <span class="sig-arg">mask</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">offset</span>=<span class="sig-default">0.5</span>,
+        <span class="sig-arg">nExtraLayers</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">extra</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.makeLayersFrom">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Makes layers starting from a boundary (one or more segments specified 
+by argument bound) on a region specified by arg mask and returns them 
+as an object of this class.
+
+Array elements are assigned to layers based on their euclidean distance 
+to (the closest element) of segment bound. The thickness of each layer 
+is given by argument thick. In total nLayers are made.
+
+Layers are numbered from 1 (closest to bound) to nLayers. Numerical
+parameter offset determines the distribution of layers. It should
+be larger than 0 and smaller than 1. The bigger this parameter the more
+elements are included in the first layer. The formula used to calculate
+the layer position is:
+
+layer_no = rint{(d - offset) / thick + offset} + 1
+
+where d is the shortest distance to segment bound. For example, if 
+thick = 1 the layer assignment for different distances are:
+
+               layer 1  layer 2  layer 3  ...
+  offset=0       1-2      2-3      3-4
+  offset=0.5   0.5-1.5  1.5-2.5  2.5-3.5
+
+The layers are made on a region specified by mask. If mask is an int (or
+a list of int's) it denotes id(s) of segment(s) of this instance that 
+make a mask. Alternatively, if it is a ndarray positive elements define 
+the region where layers are made.
+
+In case nExtraLayers is &gt; 0, extra layers are formed on the boundary 
+and the extra region (arg extra). The extra layers are formed based on 
+their euclidean distance to the closest 'normal' layer, with the same
+thickness. The extra layers are numbered from 1 to nExtraLayers, while
+the ids of the 'normal' layers are shifted by nExtraLayers.
+
+Arguments:
+  - bound: (int, list or ndarray) segment id(s) or the boundary used 
+  to start making layers
+  - thick: thickness of each layer
+  - mask: (ndarray, int or a list of int's) region where layers are
+  formed
+  - nLayers: number of layers
+  - nExtraLayers: number of additional layers
+  - extra_1: (int, list or ndarray of int's) id(s) of the extra region
+  - offset: numerical parameter that compensates for the discrete 
+  positions in an array and so determins the exact position of layers,
+  has to be 0 - 1, default 0.5 makes the positions symmetrical
+
+Returns (Segment) instance containing layers. The data array of the 
+returned instance might have smaller shape than self.data (reduced to
+use less memory), but the inset attribute is set to define the position
+of the returned data. 
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="makeSurfaces"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">makeSurfaces</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">size</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.makeSurfaces">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Creates surfaces of thickness given by size of all segments specified 
+  by ids.</p>
+  <p>Segements are specified by data, or by self.data if data is not given.
+  In both cases the segment arrays are modified to contain only the 
+  segments with given ids (uses self.keep).</p>
+  <p>The surfacess of segments specifed by ids are labeled. If ids is not 
+  given, self.ids is used if self.data specifes the segments (data not 
+  given). If data is given and ids are not, all the surfaces of all 
+  segments are determined.</p>
+  <p>Surface elements are those whose Euclidian distance to a nearest 
+  background element is &lt;= size (size &lt; 1 does not give any surface).
+  Consequently, elements that lie on edges of data array are not considered
+  surface elements (unless they happen to have a backround element for a 
+  neighbor. Also, segments should not touch each other. Ids of surfaces are
+  the same as the ids of corresponding segments.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      size: thickness of surfaces, as defined by the number of erosions 
+      needed to remove surface from a segment
+    </li>
+    <li>
+      data: array containing segments
+    </li>
+    <li>
+      ids: ids of segments whose surfaces are to be created
+    </li>
+  </ul>
+  <p>Returns:</p>
+  <ul>
+    <li>
+      surfaces if data was given
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="labelInteriors"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">labelInteriors</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">surfaces</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">surfaceSize</span>=<span class="sig-default">1</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.labelInteriors">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Labels segment interiors.</p>
+  <p>Segements are specified by data, or by self.data if data is not given.
+  In both cases the segment arrays are modified to contain only the 
+  segments with given ids (uses self.keep).</p>
+  <p>The interiors of segments specifed by ids are labeled. If ids is not 
+  given, self.ids is used in case self.data was used (data not given). If 
+  data is given and ids is not given interiors of all segments are 
+  determined.</p>
+  <p>If surfaces are not given uses self.makeSurfaces to label surfaces 
+  first. In both case the interiors are determined by subtraction of the 
+  surfaces from segments.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      data: segments array
+    </li>
+    <li>
+      ids: ids of segments
+    </li>
+    <li>
+      surfaces: surfaces array
+    </li>
+    <li>
+      surfaceSize: thickness of surfaces (the same as size argument in 
+      self.makeSurfaces)
+    </li>
+  </ul>
+  <p>Returns:</p>
+  <ul>
+    <li>
+      surfaces if data was given
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="fillSegments"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">fillSegments</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">size</span>,
+        <span class="sig-arg">ids</span>,
+        <span class="sig-arg">update</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.fillSegments">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Fill interior of segments whose ids are given in ids.</p>
+  <p>Dne by closing with self.fillStructEl (connectivity=1). Perhaps more 
+  precise than rank=connectivity.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      size: holes &lt;= size will be filled
+    </li>
+    <li>
+      ids: segments to be filled
+    </li>
+    <li>
+      update: if True updates self.data
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="markDistance"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">markDistance</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">size</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">slices</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.markDistance">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Generator that returns distances to individual segments.
+
+Makes subarrays that extend around the minimal subarrays containing each
+segment (as given by ndimage.find_objects, for example) by size along
+all coordinate axes in both directions. The distances of all non-segment
+array elements to a given segment are returned, together with slices
+defining the subarrays.
+
+Can be used for iterations:
+
+  for subarray, slice in seg_instance.markDistance(...):
+      ...
+
+If data is not given uses self.data. If ids is not given uses self.ids,
+or extracts all ids from data.
+
+Uses slices as the minimal segment subarrays. If slices is not given
+they are generated using ndimage.find_objects method.
+
+Arguments:
+  - size: distance by which the segment subarrays are expanded
+  - data: ndarray containig segments
+  - ids: ids of segment for which the distances are calculated  
+  - slices: array of slices containing segments
+
+Yields distances, extended_slices for each id in ids:
+  - distances: size-extended subarray containing the segment
+  - extended_slices: slice defining the position of distances
+  - ids: segment ids
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="distanceToRegion"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">distanceToRegion</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">region</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">regionId</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">surface</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">center</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.distanceToRegion">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates distance of all segments specified by ids to a given 
+  region.</p>
+  <p>If mode is 'min'/'max'/'mean'/'median', the shortest distance between 
+  each (surface, if arg surface is not None) element of segments and the 
+  region are calculated first, and then the min/max/mean/median of these 
+  values is found for each segment separately.</p>
+  <p>If mode is 'center', shortest distances between the region and segment
+  centers (note that center may lay outside the segment) are 
+  calculated.</p>
+  <p>The region is specified by (Image or ndarray) region and regionId. If 
+  (arg) region is not specifed this instance is used. If regionId is not 
+  given, the region is defined as all positive elements of region 
+  array.</p>
+  <p>If surfaces &gt; 0, only the surfaces (of thickness given by arg 
+  surface) of the segments are considered. Otherwise whole segments are 
+  taken into account. In any case the full region is used.</p>
+  <p>If ids are not given, distances to all ids are calculated.</p>
+  <p>If the distance to a segment can not be calculated (if the segments 
+  does not exist, for example) the result for that segment is set to 
+  numpy.nan.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      ids: segment ids
+    </li>
+    <li>
+      region: (core.Image or ndarray) instance specifying a region
+    </li>
+    <li>
+      regionId: (single int, list, tuple or ndarray) id(s) of the region
+    </li>
+    <li>
+      mode: 'center', 'min', 'max', 'mean' or 'median'
+    </li>
+    <li>
+      surface: thickness of segment surfaces
+    </li>
+  </ul>
+  <p>Returns: 1d array of distances to segments indexed by segment ids if 
+  regionId is a single int, 2d array of distances indexed by region id and 
+  segment id if regionId is a list, tuple or array, or None if there i s no
+  ids.</p>
+  <p>ToDo:</p>
+  <ul>
+    <li>
+      see about using insets (see Density.calculateNeighborhoods)
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="pairwiseDistance"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">pairwiseDistance</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">min</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.pairwiseDistance">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculate pairwise distances between segments with ids.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      ids: (list or ndarray) segment ids (default self.ids)
+    </li>
+    <li>
+      mode: currently only 'min' implemented
+    </li>
+  </ul>
+  <p>Return:</p>
+  <ul>
+    <li>
+      ndarray (length n*(n-1)/2, where n = len(ids)) of distances, where 
+      the first n-1 elements are distances between ids[0] and each of 
+      ids[1:], the next n-2 elements are distances between ids[1] and each 
+      of ids[2:], and so on.
+    </li>
+    <li>
+      None if ids is None or contain no elements
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="generateNeighborhoods"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">generateNeighborhoods</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">regions</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">regionIds</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">size</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">maxDistance</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">distanceMode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">min</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">removeOverlap</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.generateNeighborhoods">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Generates neighborhoods of each specified region on each of the 
+  segments.</p>
+  <p>Regions are specified by args region and regionIds, and segments by 
+  ids. A neighborhood of a given region on a segment is defined as a subset
+  of the segment that contains elements that are at most (arg) size/2 away 
+  from the closest segment element to the region, as long as the distance 
+  to the region is not above (arg) maxDistance.</p>
+  <p>The distance between a region and segments is calculated according to 
+  the arg distanceMode. First the (min) distance between segments and each 
+  point of regions is calculated. Then the min/max/mean/median of the 
+  calculated distances, or the (min) distance between the region center and
+  the segments is used.</p>
+  <p>If removeOverlap is True, parts of segments that overlap with regions 
+  are removed from the calculated neighborhoods.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      ids: segment ids
+    </li>
+    <li>
+      regions: (Segment) regions
+    </li>
+    <li>
+      regionIds: region ids
+    </li>
+    <li>
+      size: size of a neighborhood in the direction perpendicular to the 
+      direction towards the corresponding region (diameter-like)
+    </li>
+    <li>
+      maxDistance: max distance between segments and a given region
+    </li>
+    <li>
+      distanceMode: how a distance between layers and a region is 
+      calculated (min/max/mean/median)
+    </li>
+    <li>
+      removeOverlap: if True a neighbor can not contain a part of a region
+    </li>
+  </ul>
+  <p>Yields:</p>
+  <ul>
+    <li>
+      region id: id of current neighborhood
+    </li>
+    <li>
+      neighborhoods: (Segment) neighborhood corresponing to region id
+    </li>
+    <li>
+      all neighborhoods: (Segment) all neighborhoods together
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="elementDistanceToRegion"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">elementDistanceToRegion</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>,
+        <span class="sig-arg">region</span>,
+        <span class="sig-arg">metric</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">euclidean</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">connectivity</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">noDistance</span>=<span class="sig-default">-1</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.elementDistanceToRegion">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates distances between each element of segments (specified by 
+  arg ids) to a given region (arg region).</p>
+  <p>If arg metric is 'euclidean', the Euclidean distance is 
+  calculated.</p>
+  <p>If arg metric is 'geodesic', the geodesic distance is calculated, 
+  using the structure element defined by arg connectivity.</p>
+  <p>If arg metric is 'euclidean-geodesic', something like the geodesic 
+  distance is calculated. Specifically, the distance between two 
+  neighboring elements in N dim that share an N-i dim surface is i. The 
+  distance between two elements that are further apart is obtained by 
+  adding the distance between neighbors for the shortest path between the 
+  two elements.</p>
+  <p>All array elements for which distance was not calculated (because 
+  their ids are not in arg ids) are set to the value of arg noDistance.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      ids: ids of segments for which the distance is calculated
+    </li>
+    <li>
+      region: (ndarray) True, or values &gt;1 define region to which 
+      distances are calculated. Has to have the same shape as self.data
+    </li>
+    <li>
+      metric: distance metric, can be 'euclidean', 'geodesic' or 
+      'euclidean-geodesic'
+    </li>
+    <li>
+      connectivity: connectivity of the structure element (as in
+    </li>
+  </ul>
+  <p>scipy.ndimage.generate_binary_structure() where rank is self.ndim) for
+  geodesic distance calculation (int).</p>
+  <ul>
+    <li>
+      noDistance: value used for array elements where the distance is not 
+      calculated
+    </li>
+  </ul>
+  <p>Returns: (ndarray, shape the same as self.data) distances to the 
+  region.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="elementGeodesicDistanceToRegion"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">elementGeodesicDistanceToRegion</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>,
+        <span class="sig-arg">region</span>,
+        <span class="sig-arg">structure</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">footprint</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">connectivity</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">noDistance</span>=<span class="sig-default">-1</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.elementGeodesicDistanceToRegion">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates geodesic distances between each element of segments 
+  (specified by arg ids) to a given region (arg region).</p>
+  <p>If args structure and footprint are specified, they are used directly 
+  to calculate distances. The calculations are based on 
+  scipy.ndimage.grey_dilation().</p>
+  <p>If arg connectivity is an int, the standard geodesic distance for the 
+  specified connectivity is calculated. Specifically, the structuring 
+  element and the footprint are determined from it using rank that equals 
+  the dimensionality of self.data (see self.getStructureFootprint()).</p>
+  <p>If arg connectivity is a list of ints, the structuring element and the
+  footprint are determined using self.getStructureFootprint(). This is 
+  useful for calculation Euclidean distance within a geodesic mask.</p>
+  <p>All array elements for which distance was not calculated (because 
+  their ids are not in arg ids) are set to the value of arg noDistance.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      ids: ids of segments for which the distance is calculated
+    </li>
+    <li>
+      region: (ndarray) True, or values &gt;1 define region to which 
+      distances are calculated. Has to have the same shape as self.data
+    </li>
+    <li>
+      structure: (ndarray of size ndim x ndim) structuring element
+    </li>
+    <li>
+      footprint: (ndarray of size ndim x ndim, type bool) footprint of the 
+      structuring element
+    </li>
+    <li>
+      connectivity: connectivity of the structure element (as in
+    </li>
+  </ul>
+  <p>scipy.ndimage.generate_binary_structure() where rank is self.ndim)</p>
+  <ul>
+    <li>
+      noDistance: value used for array elements where the distance is not 
+      calculated
+    </li>
+  </ul>
+  <p>Returns: (ndarray, shape the same as self.data) distances to the 
+  region.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getStructureFootprint"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getStructureFootprint</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">connectivity</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.getStructureFootprint">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns special (non-flat) forms of structuring element and 
+  footprint.</p>
+  <p>The length of each dimesnion is 3, the origin is at position 
+  [1,1,...].</p>
+  <p>If connectivity is a single int, the footprint is just the binary 
+  structuring element corresponding to self.data.ndim and the specified 
+  connectivity. The structure is the same as the footprint except that it 
+  has int type and the origin is set to 0.</p>
+  <p>If connectivity is a list (of one or more ints), the footprint is the 
+  binary structuring element corresponding to self.data.ndim and the max of
+  the specified connectivities. Each element of structure has value that 
+  equals its Euclidean distance to the origin, except that those that 
+  correspond to False elements of footprint are set to 0. The type of 
+  connectivity is float.</p>
+  <p>Used for the calculation of geodesic distance 
+  (self.elementGeodesicDistanceToRegion and related).</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      connectivity: connectivity
+    </li>
+  </ul>
+  <p>Returns: (structure, footprint)</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="elementDistanceToRim"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">elementDistanceToRim</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>,
+        <span class="sig-arg">metric</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">euclidean</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">connectivity</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">rimId</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">rimLocation</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">out</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">rimConnectivity</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">noDistance</span>=<span class="sig-default">-1</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.elementDistanceToRim">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>For each element of specified segments (arg ids) calculates minimal 
+  distance to the bounding rim of the segment the element belongs to.</p>
+  <p>The bounding rim of a segment consists of all elements or rim region 
+  (id given by arg rimId) that contact the layer (in the sense of the 
+  structure element specified by arg rimConnectivity) if arg rimLocation is
+  'out'. If it's 'in', the boundary rim consists of the segment elements 
+  that contact the rim region.</p>
+  <p>If arg metric is 'euclidean', the Euclidean distance is 
+  calculated.</p>
+  <p>If arg metric is 'geodesic', the geodesic distance is specified, using
+  the structure element defined by arg connectivity.</p>
+  <p>If arg metric is 'euclidean-geodesic', something like the geodesic 
+  distance is calculated (see self.elementDistanceToRegion()).</p>
+  <p>All array elements for which distance was not calculated (because 
+  their ids are not in arg ids) are set to the value of arg noDistance.</p>
+  <p>Uses self.elementDistanceToRegion() for distance calculations.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      ids: ids of segments for which the distance to rim is calculated
+    </li>
+    <li>
+      metric: distance metric, can be 'euclidean', 'geodesic' or 
+      'euclidean-geodesic'
+    </li>
+    <li>
+      connectivity: connectivity of the structure element (as in
+    </li>
+  </ul>
+  <p>scipy.ndimage.generate_binary_structure() where rank is self.ndim) for
+  geodesic distance calculation (int). Not used for euclidean.</p>
+  <ul>
+    <li>
+      rimId: id or rim region
+    </li>
+    <li>
+      rimLocation: specifies if the rim is just outside of segments ('out')
+      or on the segment boundary ('in')
+    </li>
+    <li>
+      rimConnectivity: (int) connectivity of the structure element that 
+      defines contact elements between a segment and the rim region.
+    </li>
+    <li>
+      noDistance: value used for array elements where the distance is not 
+      calculated
+    </li>
+  </ul>
+  <p>Returns: (ndarray, shape the same as self.data) distances to the 
+  region.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="distanceFromOrigin"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">distanceFromOrigin</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">origins</span>,
+        <span class="sig-arg">metric</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">euclidean</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">connectivity</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">noDistance</span>=<span class="sig-default">-1</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.distanceFromOrigin">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>For each element of specified segments (keys of arg origins) 
+  calculates distance from the origin of the segment the element belongs 
+  to.</p>
+  <p>If arg metric is 'euclidean', the Euclidean distance is 
+  calculated.</p>
+  <p>If arg metric is 'geodesic', the geodesic distance is specified, using
+  the structure element defined by arg connectivity.</p>
+  <p>If arg metric is 'euclidean-geodesic', something like the geodesic 
+  distance is calculated (see self.elementDistanceToRegion()).</p>
+  <p>Uses self.elementDistanceToRegion() for distance calculations.</p>
+  <p>All array elements for which distance was not calculated (because 
+  their ids are not in arg ids) are set to the value of arg noDistance.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      origins: dictionary where ids are keys and origin coordinates are 
+      values
+    </li>
+    <li>
+      metric: distance metric, can be 'euclidean', 'geodesic' or 
+      'euclidean-geodesic'
+    </li>
+    <li>
+      connectivity: connectivity of the structure element (as in
+    </li>
+  </ul>
+  <p>scipy.ndimage.generate_binary_structure() where rank is self.ndim) for
+  geodesic distance calculation (int). Not used for euclidean.</p>
+  <ul>
+    <li>
+      noDistance: value used for array elements where the distance is not 
+      calculated
+    </li>
+  </ul>
+  <p>Returns: (ndarray, shape the same as self.data) distances to the 
+  respective origins.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="read"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">read</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">file</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">clean</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">byteOrder</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">dataType</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">arrayOrder</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">shape</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">memmap</span>=<span class="sig-default">False</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.segment-pysrc.html#Segment.read">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Reads segmented image (label filed) from a file.</p>
+  <p>If file is in em or mrc format (file extension em or mrc) only the 
+  file argument is needed. If the file is in the raw data format (file 
+  extension raw) all arguments are required.</p>
+  <p>If arg memmap is True, instead into a nparray, the data is read to a 
+  memory map. That means that the complete data is not read into the 
+  memory, but the required parts are read on demand. This is useful when 
+  working with large images, but might not always work properly because the
+  memory map is not quite properly a subclass of numpy.ndarray (from Numpy 
+  doc).</p>
+  <p>Sets attributes:</p>
+  <ul>
+    <li>
+      data: (ndarray) image data
+    </li>
+    <li>
+      pixelsize: (float or list of floats) pixel size in nm, 1 if pixel 
+      size not known
+    </li>
+    <li>
+      length: (list or ndarray) length in each dimension in nm
+    </li>
+    <li>
+      fileFormat: file format ('em', 'mrc', or 'raw')
+    </li>
+    <li>
+      memmap: from the argument
+    </li>
+  </ul>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      file: file name
+    </li>
+    <li>
+      ids: list of segment ids
+    </li>
+    <li>
+      clean: if true, only the segments corresponding to ids are kept
+    </li>
+    <li>
+      byteOrder: '&lt;' (little-endian), '&gt;' (big-endian)
+    </li>
+    <li>
+      dataType: any of the numpy types, e.g.: 'int8', 'int16', 'int32', 
+      'float32', 'float64'
+    </li>
+    <li>
+      arrayOrder: 'C' (z-axis fastest), or 'FORTRAN' (x-axis fastest)
+    </li>
+    <li>
+      shape: (x_dim, y_dim, z_dim)
+    </li>
+    <li>
+      memmap: Flag indicating if the data is read to a memory map, instead 
+      of reading it into a ndarray
+    </li>
+  </ul>
+  <p>Returns:</p>
+  <ul>
+    <li>
+      instance of Segment
+    </li>
+  </ul>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="pyto.core.image.Image-class.html#read">core.image.Image.read</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

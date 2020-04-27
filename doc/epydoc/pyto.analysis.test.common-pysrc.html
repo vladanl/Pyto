@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.analysis.test.common</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.analysis-module.html">Package&nbsp;analysis</a> ::
+        <a href="pyto.analysis.test-module.html">Package&nbsp;test</a> ::
+        Module&nbsp;common
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.analysis.test.common-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="pyto.analysis.test.common-module.html">Module pyto.analysis.test.common</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-docstring">Common stuff for tests</tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-docstring"># Author: Vladan Lucic</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-docstring"># $Id: common.py 988 2013-09-27 07:50:48Z vladan $</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-name">__version__</tt> <tt class="py-op">=</tt> <tt class="py-string">"$Revision: 988 $"</tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">pickle</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">numpy</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">scipy</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt id="link-0" class="py-name" targets="Package pyto=pyto-module.html"><a title="pyto" class="py-name" href="#" onclick="return doclink('link-0', 'pyto', 'link-0');">pyto</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package pyto.scene=pyto.scene-module.html"><a title="pyto.scene" class="py-name" href="#" onclick="return doclink('link-1', 'scene', 'link-1');">scene</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Package pyto.analysis.test=pyto.analysis.test-module.html,Package pyto.core.test=pyto.core.test-module.html,Package pyto.geometry.test=pyto.geometry.test-module.html,Package pyto.grey.test=pyto.grey.test-module.html,Package pyto.io.test=pyto.io.test-module.html,Package pyto.particles.test=pyto.particles.test-module.html,Package pyto.scene.test=pyto.scene.test-module.html,Package pyto.segmentation.test=pyto.segmentation.test-module.html,Package pyto.tomo.test=pyto.tomo.test-module.html,Package pyto.util.test=pyto.util.test-module.html"><a title="pyto.analysis.test
+pyto.core.test
+pyto.geometry.test
+pyto.grey.test
+pyto.io.test
+pyto.particles.test
+pyto.scene.test
+pyto.segmentation.test
+pyto.tomo.test
+pyto.util.test" class="py-name" href="#" onclick="return doclink('link-2', 'test', 'link-2');">test</a></tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Module pyto.analysis.test.common=pyto.analysis.test.common-module.html,Module pyto.scene.test.common=pyto.scene.test.common-module.html,Module pyto.scripts.common=pyto.scripts.common-module.html,Module pyto.segmentation.test.common=pyto.segmentation.test.common-module.html"><a title="pyto.analysis.test.common
+pyto.scene.test.common
+pyto.scripts.common
+pyto.segmentation.test.common" class="py-name" href="#" onclick="return doclink('link-3', 'common', 'link-3');">common</a></tt> <tt class="py-keyword">as</tt> <tt class="py-name">scene_cmn</tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-4" class="py-name"><a title="pyto" class="py-name" href="#" onclick="return doclink('link-4', 'pyto', 'link-0');">pyto</a></tt><tt class="py-op">.</tt><tt id="link-5" class="py-name"><a title="pyto.scene" class="py-name" href="#" onclick="return doclink('link-5', 'scene', 'link-1');">scene</a></tt><tt class="py-op">.</tt><tt id="link-6" class="py-name" targets="Module pyto.analysis.cleft_regions=pyto.analysis.cleft_regions-module.html,Module pyto.scene.cleft_regions=pyto.scene.cleft_regions-module.html"><a title="pyto.analysis.cleft_regions
+pyto.scene.cleft_regions" class="py-name" href="#" onclick="return doclink('link-6', 'cleft_regions', 'link-6');">cleft_regions</a></tt> <tt class="py-keyword">import</tt> <tt id="link-7" class="py-name" targets="Class pyto.analysis.cleft_regions.CleftRegions=pyto.analysis.cleft_regions.CleftRegions-class.html,Class pyto.scene.cleft_regions.CleftRegions=pyto.scene.cleft_regions.CleftRegions-class.html"><a title="pyto.analysis.cleft_regions.CleftRegions
+pyto.scene.cleft_regions.CleftRegions" class="py-name" href="#" onclick="return doclink('link-7', 'CleftRegions', 'link-7');">CleftRegions</a></tt> <tt class="py-keyword">as</tt> <tt class="py-name">SceneCleftRegions</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"><tt class="py-comment"># catalogs directory, relative to this </tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt id="link-8" class="py-name" targets="Variable pyto.analysis.test.common.rel_catalogs_dir=pyto.analysis.test.common-module.html#rel_catalogs_dir"><a title="pyto.analysis.test.common.rel_catalogs_dir" class="py-name" href="#" onclick="return doclink('link-8', 'rel_catalogs_dir', 'link-8');">rel_catalogs_dir</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'all_catalogs'</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"> </tt>
+<a name="make_and_pickle"></a><div id="make_and_pickle-def"><a name="L22"></a><tt class="py-lineno">22</tt> <a class="py-toggle" href="#" id="make_and_pickle-toggle" onclick="return toggle('make_and_pickle');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.analysis.test.common-module.html#make_and_pickle">make_and_pickle</a><tt class="py-op">(</tt><tt class="py-param">file_</tt><tt class="py-op">,</tt> <tt class="py-param">data</tt><tt class="py-op">=</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-param">mode</tt><tt class="py-op">=</tt><tt class="py-string">'layers'</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="make_and_pickle-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="make_and_pickle-expanded"><a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"><tt class="py-docstring">    Makes cleft layers (scene.CleftRegions) objects and pickles them. Needed </tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"><tt class="py-docstring">    for testing methods that read and analyze these pickles.</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"><tt class="py-docstring">    Arguments:</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"><tt class="py-docstring">      - file_: pickle file name </tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"><tt class="py-docstring">      - data: adds this number to the image data </tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">    <tt class="py-comment"># make cleft and image</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">    <tt id="link-9" class="py-name" targets="Module pyto.scripts.cleft=pyto.scripts.cleft-module.html,Module pyto.segmentation.cleft=pyto.segmentation.cleft-module.html"><a title="pyto.scripts.cleft
+pyto.segmentation.cleft" class="py-name" href="#" onclick="return doclink('link-9', 'cleft', 'link-9');">cleft</a></tt><tt class="py-op">,</tt> <tt id="link-10" class="py-name" targets="Module pyto.core.image=pyto.core.image-module.html,Module pyto.grey.image=pyto.grey.image-module.html,Variable pyto.segmentation.test_hierarchy.image=pyto.segmentation.test_hierarchy-module.html#image"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-10', 'image', 'link-10');">image</a></tt> <tt class="py-op">=</tt> <tt class="py-name">scene_cmn</tt><tt class="py-op">.</tt><tt id="link-11" class="py-name" targets="Function pyto.scene.test.common.make_cleft_layers_example()=pyto.scene.test.common-module.html#make_cleft_layers_example"><a title="pyto.scene.test.common.make_cleft_layers_example" class="py-name" href="#" onclick="return doclink('link-11', 'make_cleft_layers_example', 'link-11');">make_cleft_layers_example</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">    <tt class="py-comment"># change image data</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">    <tt id="link-12" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-12', 'image', 'link-10');">image</a></tt><tt class="py-op">.</tt><tt id="link-13" class="py-name" targets="Variable pyto.geometry.vector.Vector.data=pyto.geometry.vector.Vector-class.html#data,Method pyto.io.multi_data.MultiData.data()=pyto.io.multi_data.MultiData-class.html#data"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-13', 'data', 'link-13');">data</a></tt> <tt class="py-op">+=</tt> <tt id="link-14" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-14', 'data', 'link-13');">data</a></tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line">    <tt class="py-comment"># make layers or columns (scene.CleftRegions) </tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">    <tt class="py-name">clayers</tt> <tt class="py-op">=</tt> <tt class="py-name">SceneCleftRegions</tt><tt class="py-op">(</tt><tt id="link-15" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-15', 'image', 'link-10');">image</a></tt><tt class="py-op">=</tt><tt id="link-16" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-16', 'image', 'link-10');">image</a></tt><tt class="py-op">,</tt> <tt id="link-17" class="py-name"><a title="pyto.scripts.cleft
+pyto.segmentation.cleft" class="py-name" href="#" onclick="return doclink('link-17', 'cleft', 'link-9');">cleft</a></tt><tt class="py-op">=</tt><tt id="link-18" class="py-name"><a title="pyto.scripts.cleft
+pyto.segmentation.cleft" class="py-name" href="#" onclick="return doclink('link-18', 'cleft', 'link-9');">cleft</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt id="link-19" class="py-name" targets="Variable pyto.scripts.extract_points.mode=pyto.scripts.extract_points-module.html#mode,Variable pyto.scripts.sort_series.mode=pyto.scripts.sort_series-module.html#mode"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-19', 'mode', 'link-19');">mode</a></tt> <tt class="py-op">==</tt> <tt class="py-string">'layers'</tt><tt class="py-op">:</tt> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line">        <tt class="py-name">clayers</tt><tt class="py-op">.</tt><tt id="link-20" class="py-name" targets="Method pyto.scene.cleft_regions.CleftRegions.makeLayers()=pyto.scene.cleft_regions.CleftRegions-class.html#makeLayers,Method pyto.segmentation.cleft.Cleft.makeLayers()=pyto.segmentation.cleft.Cleft-class.html#makeLayers"><a title="pyto.scene.cleft_regions.CleftRegions.makeLayers
+pyto.segmentation.cleft.Cleft.makeLayers" class="py-name" href="#" onclick="return doclink('link-20', 'makeLayers', 'link-20');">makeLayers</a></tt><tt class="py-op">(</tt><tt class="py-name">nBoundLayers</tt><tt class="py-op">=</tt><tt class="py-number">2</tt><tt class="py-op">)</tt> </tt>
+<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line">        <tt class="py-name">cregions</tt> <tt class="py-op">=</tt> <tt class="py-name">clayers</tt> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">    <tt class="py-keyword">elif</tt> <tt id="link-21" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-21', 'mode', 'link-19');">mode</a></tt> <tt class="py-op">==</tt> <tt class="py-string">'columns'</tt><tt class="py-op">:</tt> </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line">        <tt class="py-name">clayers</tt><tt class="py-op">.</tt><tt id="link-22" class="py-name"><a title="pyto.scene.cleft_regions.CleftRegions.makeLayers
+pyto.segmentation.cleft.Cleft.makeLayers" class="py-name" href="#" onclick="return doclink('link-22', 'makeLayers', 'link-20');">makeLayers</a></tt><tt class="py-op">(</tt><tt class="py-name">nBoundLayers</tt><tt class="py-op">=</tt><tt class="py-number">2</tt><tt class="py-op">)</tt> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line">        <tt class="py-name">cregions</tt> <tt class="py-op">=</tt> <tt class="py-name">clayers</tt><tt class="py-op">.</tt><tt id="link-23" class="py-name" targets="Method pyto.scene.cleft_regions.CleftRegions.makeColumns()=pyto.scene.cleft_regions.CleftRegions-class.html#makeColumns,Method pyto.segmentation.cleft.Cleft.makeColumns()=pyto.segmentation.cleft.Cleft-class.html#makeColumns"><a title="pyto.scene.cleft_regions.CleftRegions.makeColumns
+pyto.segmentation.cleft.Cleft.makeColumns" class="py-name" href="#" onclick="return doclink('link-23', 'makeColumns', 'link-23');">makeColumns</a></tt><tt class="py-op">(</tt><tt class="py-name">bins</tt><tt class="py-op">=</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-number">0.5</tt><tt class="py-op">,</tt> <tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">normalize</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line">    <tt class="py-name">cregions</tt><tt class="py-op">.</tt><tt id="link-24" class="py-name" targets="Method pyto.scene.cleft_regions.CleftRegions.findDensity()=pyto.scene.cleft_regions.CleftRegions-class.html#findDensity"><a title="pyto.scene.cleft_regions.CleftRegions.findDensity" class="py-name" href="#" onclick="return doclink('link-24', 'findDensity', 'link-24');">findDensity</a></tt><tt class="py-op">(</tt><tt id="link-25" class="py-name" targets="Module pyto.scripts.regions=pyto.scripts.regions-module.html"><a title="pyto.scripts.regions" class="py-name" href="#" onclick="return doclink('link-25', 'regions', 'link-25');">regions</a></tt><tt class="py-op">=</tt><tt class="py-name">cregions</tt><tt class="py-op">.</tt><tt id="link-26" class="py-name"><a title="pyto.scripts.regions" class="py-name" href="#" onclick="return doclink('link-26', 'regions', 'link-25');">regions</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line"> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line">    <tt class="py-comment"># pickle it</tt> </tt>
+<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line">    <tt class="py-name">fd</tt> <tt class="py-op">=</tt> <tt class="py-name">open</tt><tt class="py-op">(</tt><tt class="py-name">file_</tt><tt class="py-op">,</tt> <tt class="py-string">'wb'</tt><tt class="py-op">)</tt> </tt>
+<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line">    <tt class="py-name">pickle</tt><tt class="py-op">.</tt><tt class="py-name">dump</tt><tt class="py-op">(</tt><tt class="py-name">cregions</tt><tt class="py-op">,</tt> <tt class="py-name">fd</tt><tt class="py-op">,</tt> <tt class="py-op">-</tt><tt class="py-number">1</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line"> </tt>
+<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line"><tt class="py-comment"># expected</tt> </tt>
+<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line"><tt class="py-comment">#cleft_layers_density_mean = numpy.array([5, 10, 3, 4, 5, 6, 7, 12, 6])</tt> </tt>
+<a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line"><tt id="link-27" class="py-name" targets="Variable pyto.analysis.test.common.cleft_layers_density_mean=pyto.analysis.test.common-module.html#cleft_layers_density_mean,Variable pyto.scene.test.common.cleft_layers_density_mean=pyto.scene.test.common-module.html#cleft_layers_density_mean"><a title="pyto.analysis.test.common.cleft_layers_density_mean
+pyto.scene.test.common.cleft_layers_density_mean" class="py-name" href="#" onclick="return doclink('link-27', 'cleft_layers_density_mean', 'link-27');">cleft_layers_density_mean</a></tt> <tt class="py-op">=</tt> <tt class="py-name">scene_cmn</tt><tt class="py-op">.</tt><tt id="link-28" class="py-name"><a title="pyto.analysis.test.common.cleft_layers_density_mean
+pyto.scene.test.common.cleft_layers_density_mean" class="py-name" href="#" onclick="return doclink('link-28', 'cleft_layers_density_mean', 'link-27');">cleft_layers_density_mean</a></tt> </tt>
+<a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line"><tt id="link-29" class="py-name" targets="Variable pyto.analysis.test.common.cleft_layers_density_volume=pyto.analysis.test.common-module.html#cleft_layers_density_volume,Variable pyto.scene.test.common.cleft_layers_density_volume=pyto.scene.test.common-module.html#cleft_layers_density_volume"><a title="pyto.analysis.test.common.cleft_layers_density_volume
+pyto.scene.test.common.cleft_layers_density_volume" class="py-name" href="#" onclick="return doclink('link-29', 'cleft_layers_density_volume', 'link-29');">cleft_layers_density_volume</a></tt> <tt class="py-op">=</tt> <tt class="py-name">scene_cmn</tt><tt class="py-op">.</tt><tt id="link-30" class="py-name"><a title="pyto.analysis.test.common.cleft_layers_density_volume
+pyto.scene.test.common.cleft_layers_density_volume" class="py-name" href="#" onclick="return doclink('link-30', 'cleft_layers_density_volume', 'link-29');">cleft_layers_density_volume</a></tt> </tt>
+<a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line"><tt class="py-comment">#cleft_layers_width = 5.</tt> </tt>
+<a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line"><tt id="link-31" class="py-name" targets="Variable pyto.analysis.test.common.cleft_layers_width=pyto.analysis.test.common-module.html#cleft_layers_width,Variable pyto.scene.test.common.cleft_layers_width=pyto.scene.test.common-module.html#cleft_layers_width"><a title="pyto.analysis.test.common.cleft_layers_width
+pyto.scene.test.common.cleft_layers_width" class="py-name" href="#" onclick="return doclink('link-31', 'cleft_layers_width', 'link-31');">cleft_layers_width</a></tt> <tt class="py-op">=</tt> <tt class="py-name">scene_cmn</tt><tt class="py-op">.</tt><tt id="link-32" class="py-name"><a title="pyto.analysis.test.common.cleft_layers_width
+pyto.scene.test.common.cleft_layers_width" class="py-name" href="#" onclick="return doclink('link-32', 'cleft_layers_width', 'link-31');">cleft_layers_width</a></tt> </tt>
+<a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line"> </tt>
+<a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line"><tt id="link-33" class="py-name" targets="Variable pyto.analysis.test.common.cleft_columns_density_mean=pyto.analysis.test.common-module.html#cleft_columns_density_mean"><a title="pyto.analysis.test.common.cleft_columns_density_mean" class="py-name" href="#" onclick="return doclink('link-33', 'cleft_columns_density_mean', 'link-33');">cleft_columns_density_mean</a></tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">array</tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-number">5</tt><tt class="py-op">,</tt> <tt class="py-number">5</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line"><tt id="link-34" class="py-name" targets="Variable pyto.analysis.test.common.cleft_columns_volume=pyto.analysis.test.common-module.html#cleft_columns_volume"><a title="pyto.analysis.test.common.cleft_columns_volume" class="py-name" href="#" onclick="return doclink('link-34', 'cleft_columns_volume', 'link-34');">cleft_columns_volume</a></tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">array</tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-number">15</tt><tt class="py-op">,</tt> <tt class="py-number">15</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

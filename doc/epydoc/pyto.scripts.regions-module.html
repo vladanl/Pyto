@@ -1,0 +1,806 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.scripts.regions</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.scripts-module.html">Package&nbsp;scripts</a> ::
+        Module&nbsp;regions
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.scripts.regions-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module regions</h1><p class="nomargin-top"><span class="codelink"><a href="pyto.scripts.regions-pysrc.html">source&nbsp;code</a></span></p>
+<pre class="literalblock">
+
+Basic greyscale density and morphology analysis of any kind of segments. 
+Typically used regions / boundaries that are manually / Amira segmented. 
+
+Calculates:
+  - greyscale density statistics
+  - surface (membrane) and lumen greyscale density statistics 
+  - distance to a specified region
+  - center and radius (for spherical segments)
+
+This script may be placed anywhere in the directory tree.
+
+Important notes:
+
+    - This script is essentially the same as vesicles.py (greyscale and 
+morphology of vesicles), only without vesicle-specific calculations. 
+Consequently many variables names are derived from 'vesicle' and many comments
+talk about vesicles. All these should be understood as regions.
+
+  - In order to make setting up multiple scripts easier, parameters common 
+to these scripts are expected to be read from tomo_info.py file. The location 
+of this file is given as argument path of common.__import__(). These parameters
+are set in this script in lines having the following form:
+
+  if tomo_info is not None: labels_file_name = tomo_info.labels_file_name
+
+Specifiying another value for the same parameter (here labels_file_name) 
+overrides the value from tomo_info.
+
+  - Incorrect id specification accounts for a majority of problems encountered 
+while running this script. In case an exception is thrown, please check the ids
+carefully first.
+
+  - For many variables more than one option is given. Uncomment the desired one
+and adjust the value if needed, and comment out the other options.
+
+  - Currently (r997) division by 0 warnings are printed. These might be ignored
+because they most likely arise from calculating denisty of a 0-volume segment
+and are also a consequence of the changed behavior of scipy. 
+
+$Id: regions.py 1490 2018-11-08 16:11:29Z vladan $
+Author: Vladan Lucic 
+
+</pre>
+
+<hr />
+<div class="fields">      <p><strong>Version:</strong>
+        $Revision: 1490 $
+      </p>
+</div><!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Functions</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Functions"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="analyze_vesicles"></a><span class="summary-sig-name">analyze_vesicles</span>(<span class="summary-sig-arg">image</span>,
+        <span class="summary-sig-arg">ves</span>,
+        <span class="summary-sig-arg">ves_ids</span>)</span><br />
+      Analyzes whole regions (vesicles), membranes and lumens</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.regions-pysrc.html#analyze_vesicles">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="analyze_membranes_lumens"></a><span class="summary-sig-name">analyze_membranes_lumens</span>(<span class="summary-sig-arg">image</span>,
+        <span class="summary-sig-arg">ves</span>,
+        <span class="summary-sig-arg">ves_ids</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.regions-pysrc.html#analyze_membranes_lumens">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scripts.regions-module.html#read_image" class="summary-sig-name">read_image</a>()</span><br />
+      Reads image file and returns an segmentation.Image object</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.regions-pysrc.html#read_image">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scripts.regions-module.html#read_boundaries" class="summary-sig-name">read_boundaries</a>(<span class="summary-sig-arg">check</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">suggest_shape</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Reads labels file(s), makes (Segment) boundaries and makes inset.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.regions-pysrc.html#read_boundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="is_multi_boundaries"></a><span class="summary-sig-name">is_multi_boundaries</span>()</span><br />
+      Returns True if maultiple boundaries (labels) files are given.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.regions-pysrc.html#is_multi_boundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scripts.regions-module.html#read_single_boundaries" class="summary-sig-name">read_single_boundaries</a>(<span class="summary-sig-arg">suggest_shape</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Reads and initializes boundaries form a sigle labels file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.regions-pysrc.html#read_single_boundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scripts.regions-module.html#read_multi_boundaries" class="summary-sig-name">read_multi_boundaries</a>(<span class="summary-sig-arg">suggest_shape</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Reads and initializes boundaries form a sigle labels file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.regions-pysrc.html#read_multi_boundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_out_pickle_name"></a><span class="summary-sig-name">get_out_pickle_name</span>(<span class="summary-sig-arg">name</span>=<span class="summary-sig-default">''</span>)</span><br />
+      Returns output pickle file name</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.regions-pysrc.html#get_out_pickle_name">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="write_pickle"></a><span class="summary-sig-name">write_pickle</span>(<span class="summary-sig-arg">segment</span>,
+        <span class="summary-sig-arg">name</span>=<span class="summary-sig-default">''</span>)</span><br />
+      Writes (pickles) a Segment object</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.regions-pysrc.html#write_pickle">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_image_base"></a><span class="summary-sig-name">get_image_base</span>()</span><br />
+      Returns base and root of the image file name</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.regions-pysrc.html#get_image_base">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_labels_base"></a><span class="summary-sig-name">get_labels_base</span>()</span><br />
+      Returns base and root of the labels file name</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.regions-pysrc.html#get_labels_base">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="open_results"></a><span class="summary-sig-name">open_results</span>()</span><br />
+      Opens a results file name and returns it.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.regions-pysrc.html#open_results">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="machine_info"></a><span class="summary-sig-name">machine_info</span>()</span><br />
+      Returns machine name and machine architecture strings</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.regions-pysrc.html#machine_info">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="write_res"></a><span class="summary-sig-name">write_res</span>(<span class="summary-sig-arg">ves</span>,
+        <span class="summary-sig-arg">dist</span>,
+        <span class="summary-sig-arg">mem</span>,
+        <span class="summary-sig-arg">lum</span>,
+        <span class="summary-sig-arg">file_name</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">multi_ves_ids</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Writes results</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.regions-pysrc.html#write_res">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="main"></a><span class="summary-sig-name">main</span>()</span><br />
+      Main function</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.regions-pysrc.html#main">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.scripts.regions-module.html#tomo_info" class="summary-name">tomo_info</a> = <code title="common.__import__(name= 'tomo_info', path= '../common')">common.__import__(name= 'tomo_info', path= '../com<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="labels_shape"></a><span class="summary-name">labels_shape</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="labels_byte_order"></a><span class="summary-name">labels_byte_order</span> = <code title="'&lt;'">'&lt;'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="labels_array_order"></a><span class="summary-name">labels_array_order</span> = <code title="'FORTRAN'">'FORTRAN'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="labels_offset"></a><span class="summary-name">labels_offset</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="check_regions"></a><span class="summary-name">check_regions</span> = <code title="True">True</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="shift"></a><span class="summary-name">shift</span> = <code title="256">256</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="distance_id"></a><span class="summary-name">distance_id</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="distance_mode"></a><span class="summary-name">distance_mode</span> = <code title="'min'">'min'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="do_radius"></a><span class="summary-name">do_radius</span> = <code title="False">False</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="do_slices"></a><span class="summary-name">do_slices</span> = <code title="False">False</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="axis"></a><span class="summary-name">axis</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="membrane_thick"></a><span class="summary-name">membrane_thick</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="pkl_directory"></a><span class="summary-name">pkl_directory</span> = <code title="''">''</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="pkl_prefix"></a><span class="summary-name">pkl_prefix</span> = <code title="''">''</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="pkl_suffix"></a><span class="summary-name">pkl_suffix</span> = <code title="&quot;.pkl&quot;">&quot;.pkl&quot;</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="results_directory"></a><span class="summary-name">results_directory</span> = <code title="''">''</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="results_prefix"></a><span class="summary-name">results_prefix</span> = <code title="''">''</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="results_suffix"></a><span class="summary-name">results_suffix</span> = <code title="'_regions.dat'">'_regions.dat'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="results_file_name"></a><span class="summary-name">results_file_name</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="include_total"></a><span class="summary-name">include_total</span> = <code title="True">True</code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="read_image"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">read_image</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scripts.regions-pysrc.html#read_image">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Reads image file and returns an segmentation.Image object</p>
+  <p>Depreciated</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="read_boundaries"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">read_boundaries</span>(<span class="sig-arg">check</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">suggest_shape</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scripts.regions-pysrc.html#read_boundaries">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Reads labels file(s), makes (Segment) boundaries and makes inset.</p>
+  <p>Works on single and multiple boundaries files. In the latter case, ids
+  are shifted so that they do not overlap and the boundaries from different
+  files are merged.</p>
+  <p>The label file shape is determined using the first found of the 
+  following:</p>
+  <ul>
+    <li>
+      variable labels_shape
+    </li>
+    <li>
+      shape given in the labels file header (em im or mrc format)
+    </li>
+    <li>
+      argument suggest_shape
+    </li>
+  </ul>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      check: if True checks if there are ids without a boundary (data 
+      elements), or disconnected boundaries
+    </li>
+    <li>
+      suggest_shape: suggested image shape (see above)
+    </li>
+  </ul>
+  <p>Returns (bound, shifted_boundary_ids) where:</p>
+  <ul>
+    <li>
+      bound: (Segment) boundaries, from single file or merged
+    </li>
+    <li>
+      boundary_ids: (list of ndarrays) boundry ids, each list element 
+      contains ids from one boundary file (shifted in case of multiple 
+      files)
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="read_single_boundaries"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">read_single_boundaries</span>(<span class="sig-arg">suggest_shape</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scripts.regions-pysrc.html#read_single_boundaries">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Reads and initializes boundaries form a sigle labels file.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      suggest_shape: suggested image shape, used only of variable 
+      labels_shape is None and boundaries file is neither em nor mrc
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="read_multi_boundaries"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">read_multi_boundaries</span>(<span class="sig-arg">suggest_shape</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scripts.regions-pysrc.html#read_multi_boundaries">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Reads and initializes boundaries form a sigle labels file.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      suggest_shape: suggested image shape, used only of variable 
+      labels_shape is None and boundaries file is neither em nor mrc
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-VariablesDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="tomo_info"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">tomo_info</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+common.__import__(name= 'tomo_info', path= '../common')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

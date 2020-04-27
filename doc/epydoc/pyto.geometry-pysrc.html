@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.geometry</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        Package&nbsp;geometry
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.geometry-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="pyto.geometry-module.html">Package pyto.geometry</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-docstring">Geometry related.</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-docstring"># Author: Vladan Lucic (Max Planck Institute for Biochemistry)</tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-docstring"># $Id: __init__.py 1152 2015-05-26 08:53:37Z vladan $</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-name">__version__</tt> <tt class="py-op">=</tt> <tt class="py-string">"$Revision: 1152 $"</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Module pyto.geometry.vector=pyto.geometry.vector-module.html"><a title="pyto.geometry.vector" class="py-name" href="#" onclick="return doclink('link-0', 'vector', 'link-0');">vector</a></tt> <tt class="py-keyword">import</tt> <tt id="link-1" class="py-name" targets="Class pyto.geometry.vector.Vector=pyto.geometry.vector.Vector-class.html"><a title="pyto.geometry.vector.Vector" class="py-name" href="#" onclick="return doclink('link-1', 'Vector', 'link-1');">Vector</a></tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-2" class="py-name" targets="Module pyto.geometry.points=pyto.geometry.points-module.html"><a title="pyto.geometry.points" class="py-name" href="#" onclick="return doclink('link-2', 'points', 'link-2');">points</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name" targets="Class pyto.geometry.points.Points=pyto.geometry.points.Points-class.html"><a title="pyto.geometry.points.Points" class="py-name" href="#" onclick="return doclink('link-3', 'Points', 'link-3');">Points</a></tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-4" class="py-name" targets="Module pyto.geometry.affine=pyto.geometry.affine-module.html"><a title="pyto.geometry.affine" class="py-name" href="#" onclick="return doclink('link-4', 'affine', 'link-4');">affine</a></tt> <tt class="py-keyword">import</tt> <tt id="link-5" class="py-name" targets="Class pyto.geometry.affine.Affine=pyto.geometry.affine.Affine-class.html"><a title="pyto.geometry.affine.Affine" class="py-name" href="#" onclick="return doclink('link-5', 'Affine', 'link-5');">Affine</a></tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-6" class="py-name" targets="Module pyto.geometry.affine_2d=pyto.geometry.affine_2d-module.html"><a title="pyto.geometry.affine_2d" class="py-name" href="#" onclick="return doclink('link-6', 'affine_2d', 'link-6');">affine_2d</a></tt> <tt class="py-keyword">import</tt> <tt id="link-7" class="py-name" targets="Class pyto.geometry.affine_2d.Affine2D=pyto.geometry.affine_2d.Affine2D-class.html"><a title="pyto.geometry.affine_2d.Affine2D" class="py-name" href="#" onclick="return doclink('link-7', 'Affine2D', 'link-7');">Affine2D</a></tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-8" class="py-name" targets="Module pyto.geometry.affine_3d=pyto.geometry.affine_3d-module.html"><a title="pyto.geometry.affine_3d" class="py-name" href="#" onclick="return doclink('link-8', 'affine_3d', 'link-8');">affine_3d</a></tt> <tt class="py-keyword">import</tt> <tt id="link-9" class="py-name" targets="Class pyto.geometry.affine_3d.Affine3D=pyto.geometry.affine_3d.Affine3D-class.html"><a title="pyto.geometry.affine_3d.Affine3D" class="py-name" href="#" onclick="return doclink('link-9', 'Affine3D', 'link-9');">Affine3D</a></tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-10" class="py-name" targets="Module pyto.geometry.rigid_3d=pyto.geometry.rigid_3d-module.html"><a title="pyto.geometry.rigid_3d" class="py-name" href="#" onclick="return doclink('link-10', 'rigid_3d', 'link-10');">rigid_3d</a></tt> <tt class="py-keyword">import</tt> <tt id="link-11" class="py-name" targets="Class pyto.geometry.rigid_3d.Rigid3D=pyto.geometry.rigid_3d.Rigid3D-class.html"><a title="pyto.geometry.rigid_3d.Rigid3D" class="py-name" href="#" onclick="return doclink('link-11', 'Rigid3D', 'link-11');">Rigid3D</a></tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-12" class="py-name" targets="Module pyto.geometry.coordinates=pyto.geometry.coordinates-module.html"><a title="pyto.geometry.coordinates" class="py-name" href="#" onclick="return doclink('link-12', 'coordinates', 'link-12');">coordinates</a></tt> <tt class="py-keyword">import</tt> <tt id="link-13" class="py-name" targets="Class pyto.geometry.coordinates.Coordinates=pyto.geometry.coordinates.Coordinates-class.html"><a title="pyto.geometry.coordinates.Coordinates" class="py-name" href="#" onclick="return doclink('link-13', 'Coordinates', 'link-13');">Coordinates</a></tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt id="link-14" class="py-name" targets="Package pyto.analysis.test=pyto.analysis.test-module.html,Package pyto.core.test=pyto.core.test-module.html,Package pyto.geometry.test=pyto.geometry.test-module.html,Package pyto.grey.test=pyto.grey.test-module.html,Package pyto.io.test=pyto.io.test-module.html,Package pyto.particles.test=pyto.particles.test-module.html,Package pyto.scene.test=pyto.scene.test-module.html,Package pyto.segmentation.test=pyto.segmentation.test-module.html,Package pyto.tomo.test=pyto.tomo.test-module.html,Package pyto.util.test=pyto.util.test-module.html"><a title="pyto.analysis.test
+pyto.core.test
+pyto.geometry.test
+pyto.grey.test
+pyto.io.test
+pyto.particles.test
+pyto.scene.test
+pyto.segmentation.test
+pyto.tomo.test
+pyto.util.test" class="py-name" href="#" onclick="return doclink('link-14', 'test', 'link-14');">test</a></tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

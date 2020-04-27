@@ -1,0 +1,2396 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.scene.segmentation_analysis.SegmentationAnalysis</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.scene-module.html">Package&nbsp;scene</a> ::
+        <a href="pyto.scene.segmentation_analysis-module.html">Module&nbsp;segmentation_analysis</a> ::
+        Class&nbsp;SegmentationAnalysis
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class SegmentationAnalysis</h1><p class="nomargin-top"><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_pyto_sce_5" name="uml_class_diagram_for_pyto_sce_5">
+<area shape="rect" id="node1_17" href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#labels" title="Labels object" alt="" coords="18,30,1403,50"/>
+<area shape="rect" id="node1_18" href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#ids" title="Segment ids" alt="" coords="18,50,1403,70"/>
+<area shape="rect" id="node1_19" href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#nSegments" title="Number of segments" alt="" coords="18,70,1403,90"/>
+<area shape="rect" id="node1_20" href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#__init__" title="Initializes attributes." alt="" coords="18,93,1403,113"/>
+<area shape="rect" id="node1_21" href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#getLabels" title="Returns labels, that is self.hierarchy if it exists, or self.segments." alt="" coords="18,113,1403,133"/>
+<area shape="rect" id="node1_22" href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#getIds" title="Returns segment ids." alt="" coords="18,133,1403,153"/>
+<area shape="rect" id="node1_23" href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#getNSegments" title="Number of segments" alt="" coords="18,153,1403,173"/>
+<area shape="rect" id="node1_24" href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#tcSegmentAnalyze" title="Segment using thresholding and connectivity and analyze segments." alt="" coords="18,173,1403,193"/>
+<area shape="rect" id="node1_25" href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#classifyAnalyze" title="Classifies and analyzes a hierarchical segmentation specified by arg &#160;hierarchy." alt="" coords="18,193,1403,213"/>
+<area shape="rect" id="node1_26" href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#setSegmentationParameters" title="Sets segmentation parameters." alt="" coords="18,213,1403,233"/>
+<area shape="rect" id="node1_27" href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#setAnalysisParameters" title="Sets analysis parameters." alt="" coords="18,233,1403,253"/>
+<area shape="rect" id="node1_28" href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#analyzeSegments" title="Analyze segments specified by arg (Segment) segments." alt="" coords="18,253,1403,273"/>
+<area shape="rect" id="node1_29" href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#getDensity" title="Returns basic density (grey&#45;value) statistics (mean, std, min, max and &#160;volume for each segment." alt="" coords="18,273,1403,293"/>
+<area shape="rect" id="node1_30" href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#getOtherDensity" title="Calculates basic stats for background (non&#45;segmented parts) and for the &#160;whole segmentation region." alt="" coords="18,293,1403,313"/>
+<area shape="rect" id="node1_31" href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#getMorphology" title="Calculates basic morphological properties: volume, surface and length (if &#160;arg doLength is True)." alt="" coords="18,313,1403,333"/>
+<area shape="rect" id="node1_32" href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#getTopology" title="Calculates segment topology." alt="" coords="18,333,1403,353"/>
+<area shape="rect" id="node1_33" href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#relabel" title="Relabels ids." alt="" coords="18,373,1403,393"/>
+<area shape="rect" id="node1" href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html" title="Segmentation and morphological, topological and grey&#45;scale (density) analysis of segments." alt="" coords="5,5,1415,399"/>
+</map>
+  <img src="uml_class_diagram_for_pyto_sce_5.gif" alt='' usemap="#uml_class_diagram_for_pyto_sce_5" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<pre class="literalblock">
+
+Segmentation and morphological, topological and grey-scale (density) 
+analysis of segments.
+
+Segmentation and analysis example:
+
+  se = SegmentationAnalysis(...)
+  se.setSegmentationParameters(...)
+  se.setAnalysisParameters(...)
+  se.tcSegmentAnalyze(...)
+
+Important attributes set by the above procedure:
+  - labels: hieararchy or segments, whichever one is set (see below)
+  - hierarchy: set if hierarchical segmentation
+  - segments: set if sigle threshold segmentation
+   - density: (Density) density stats for all segments
+  - regionDensity: (Density, non-array form) density stats for
+  the segmentation region
+  - morphology: (Morphology) morphology for all segments, includes
+  length at self.morphology.length
+  - topology: (Topology) topology for all segments
+  - distance: (DistanceTo) distance to a specified region. The name of this
+  attribute can be different if it's specified as argument distanceName of
+  setAnalysisParameter(). Also, there can be more than one distance if the
+  distanceName argument is a list of names.
+  - boundDistance: (boundDistance) distances between the boundries 
+  contacting segments (for segments with exactly two boundaries)
+  - self.nContacts, self.surfaceDensityContacts, 
+  self.surfaceDensitySegments: (ndarrays of length 3), the array 
+  elements correspond to both boundaries together, boundary 1 and 
+  boundary 2. Meant for cleft-like segmentation regions.
+
+Classification and analysis of an existing segmentation:
+
+  se = SegmentationAnalysis()
+  se.addClassificationParameters(...) # one or more times
+  se.setAnalysisParameters(...)
+  for new, name in se.classifyAnalyze(...):
+      new ...
+
+</pre>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">image</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">boundary</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">segments</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">hierarchy</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Initializes attributes.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#getLabels" class="summary-sig-name">getLabels</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns labels, that is self.hierarchy if it exists, or 
+      self.segments.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.getLabels">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getIds"></a><span class="summary-sig-name">getIds</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns segment ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.getIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getNSegments"></a><span class="summary-sig-name">getNSegments</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Number of segments</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.getNSegments">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#tcSegmentAnalyze" class="summary-sig-name">tcSegmentAnalyze</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">thresh</span>,
+        <span class="summary-sig-arg">order</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">&gt;</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">image</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">boundary</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">count</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">doDensity</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">doMorphology</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">doLength</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">doTopology</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">doDistanceTo</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">doBoundDistance</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">doCleftContacts</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Segment using thresholding and connectivity and analyze segments.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.tcSegmentAnalyze">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#classifyAnalyze" class="summary-sig-name">classifyAnalyze</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">hierarchy</span>,
+        <span class="summary-sig-arg">image</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">doDensity</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">doMorphology</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">doLength</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">doTopology</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">doDistanceTo</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">doBoundDistance</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">doCleftContacts</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Classifies and analyzes a hierarchical segmentation specified by arg 
+      hierarchy.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.classifyAnalyze">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#setSegmentationParameters" class="summary-sig-name">setSegmentationParameters</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">nBoundary</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">boundCount</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">exact</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">boundaryIds</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mask</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">freeSize</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">freeMode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">add</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">structElConn</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">contactStructElConn</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">countStructElConn</span>=<span class="summary-sig-default">1</span>)</span><br />
+      Sets segmentation parameters.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.setSegmentationParameters">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#setAnalysisParameters" class="summary-sig-name">setAnalysisParameters</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">segmentRegion</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">lengthContact</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">c2c</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">lengthLine</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">mid</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">distanceRegion</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">distanceId</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">distanceMode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">mean</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">distanceName</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">distance</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">cleftLayers</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Sets analysis parameters.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.setAnalysisParameters">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#analyzeSegments" class="summary-sig-name">analyzeSegments</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">segments</span>,
+        <span class="summary-sig-arg">image</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">boundary</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">doDensity</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">doMorphology</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">doLength</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">doTopology</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">doDistanceTo</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">doBoundDistance</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">doCleftContacts</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Analyze segments specified by arg (Segment) segments.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.analyzeSegments">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#getDensity" class="summary-sig-name">getDensity</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">segments</span>,
+        <span class="summary-sig-arg">image</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns basic density (grey-value) statistics (mean, std, min, max 
+      and volume for each segment.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.getDensity">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#getOtherDensity" class="summary-sig-name">getOtherDensity</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">segments</span>,
+        <span class="summary-sig-arg">segmentRegion</span>,
+        <span class="summary-sig-arg">image</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">boundary</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Calculates basic stats for background (non-segmented parts) and for 
+      the whole segmentation region.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.getOtherDensity">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#getMorphology" class="summary-sig-name">getMorphology</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">segments</span>,
+        <span class="summary-sig-arg">contacts</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">boundary</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">doLength</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">lengthContact</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">lengthLine</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Calculates basic morphological properties: volume, surface and length
+      (if arg doLength is True).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.getMorphology">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#getTopology" class="summary-sig-name">getTopology</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">segments</span>)</span><br />
+      Calculates segment topology.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.getTopology">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#getDistanceToRegion" class="summary-sig-name">getDistanceToRegion</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">segments</span>,
+        <span class="summary-sig-arg">regions</span>,
+        <span class="summary-sig-arg">distanceId</span>,
+        <span class="summary-sig-arg">mode</span>)</span><br />
+      Calculates distance between each segment and its closest distance 
+      region.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.getDistanceToRegion">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#getBoundDistance" class="summary-sig-name">getBoundDistance</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">segments</span>,
+        <span class="summary-sig-arg">contacts</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">boundary</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">min</code><code class="variable-quote">'</code></span>)</span><br />
+      Calculates distance between boundaries contacting segments.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.getBoundDistance">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getNContacted"></a><span class="summary-sig-name">getNContacted</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">contacts</span>,
+        <span class="summary-sig-arg">boundary</span>)</span><br />
+      Calculates number of contacted segments for each boundary</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.getNContacted">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#countCleftContacts" class="summary-sig-name">countCleftContacts</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">layers</span>,
+        <span class="summary-sig-arg">labels</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Calculates and returns number of contacts, surface density of 
+      contacts and surface density of segments.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.countCleftContacts">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#classify" class="summary-sig-name">classify</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">hierarchy</span>,
+        <span class="summary-sig-arg">classifications</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">name</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span><br />
+      Generator for classification of segments from a hierarchical 
+      segmentation.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.classify">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#addClassificationParameters" class="summary-sig-name">addClassificationParameters</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">type</span>,
+        <span class="summary-sig-arg">args</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>)</span><br />
+      Adds (parameters for) a classification.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.addClassificationParameters">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="removeClassificationParameters"></a><span class="summary-sig-name">removeClassificationParameters</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Removes all defined classifications (from self.classifications)</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.removeClassificationParameters">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#keepSegments" class="summary-sig-name">keepSegments</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">hierarchy</span>,
+        <span class="summary-sig-arg">mode</span>,
+        <span class="summary-sig-arg">threshold</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">name</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Yields (hierarchy) object obtained by keeping only some segments from
+      those in (arg) hierarchy.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.keepSegments">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#classByVolume" class="summary-sig-name">classByVolume</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">hierarchy</span>,
+        <span class="summary-sig-arg">volumes</span>,
+        <span class="summary-sig-arg">names</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Classifies segments of arg hierarchy according to their volume and 
+      yields the corresponding classes.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.classByVolume">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#classByContactedIds" class="summary-sig-name">classByContactedIds</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">hierarchy</span>,
+        <span class="summary-sig-arg">ids</span>,
+        <span class="summary-sig-arg">contacts</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">rest</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">names</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Classifies segments of arg hierarchy according to the ids of 
+      boundaries they contact and yields the corresponding classes.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.classByContactedIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#classByNContacted" class="summary-sig-name">classByNContacted</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">hierarchy</span>,
+        <span class="summary-sig-arg">nContacted</span>,
+        <span class="summary-sig-arg">contacts</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">names</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Classifies segments of arg hierarchy according to the number of 
+      contacted boundaries and yields the corresponding classes.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.classByNContacted">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#initializeAnalysis" class="summary-sig-name">initializeAnalysis</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">doDensity</span>,
+        <span class="summary-sig-arg">doMorphology</span>,
+        <span class="summary-sig-arg">doLength</span>,
+        <span class="summary-sig-arg">doTopology</span>,
+        <span class="summary-sig-arg">doDistanceTo</span>,
+        <span class="summary-sig-arg">doBoundDistance</span>,
+        <span class="summary-sig-arg">doCleftContacts</span>)</span><br />
+      Initializes objects to hold analysis results.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.initializeAnalysis">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#mergeAnalysis" class="summary-sig-name">mergeAnalysis</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">doDensity</span>,
+        <span class="summary-sig-arg">doMorphology</span>,
+        <span class="summary-sig-arg">doLength</span>,
+        <span class="summary-sig-arg">doTopology</span>,
+        <span class="summary-sig-arg">doDistanceTo</span>,
+        <span class="summary-sig-arg">doBoundDistance</span>,
+        <span class="summary-sig-arg">doCleftContacts</span>)</span><br />
+      Merges analysis results for the current level segments with the 
+      already existing results.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.mergeAnalysis">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#restrict" class="summary-sig-name">restrict</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">hierarchy</span>,
+        <span class="summary-sig-arg">avoid</span>=<span class="summary-sig-default"><code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">regionDensity</code><code class="variable-quote">'</code><code class="variable-group">]</code></span>)</span><br />
+      Copies (deep) this object and restricts the analysis results of the 
+      new object to segments existing in arg hierarchy.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.restrict">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#copyResults" class="summary-sig-name">copyResults</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">segments</span>)</span><br />
+      Makes and returns new instance of this class that contains only the 
+      new analysis results (deepcopied) and attribute segment (by 
+      reference) pointing to the arg segments.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.copyResults">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#copyAnalysisParameters" class="summary-sig-name">copyAnalysisParameters</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">obj</span>)</span><br />
+      Copies attributes corresponding to analysis parameters 
+      (lengthContact, lengthLine, nBoundary, boundCount, structElConn, 
+      contactStructElConn, countStructElConn, distanceId and distanceMode) 
+      from obj to this instance.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.copyAnalysisParameters">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#relabel" class="summary-sig-name">relabel</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>)</span><br />
+      Relabels ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.relabel">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#labels" class="summary-name">labels</a><br />
+      Labels object
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#ids" class="summary-name">ids</a><br />
+      Segment ids
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#nSegments" class="summary-name">nSegments</a><br />
+      Number of segments
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">image</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">boundary</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">segments</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">hierarchy</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Initializes attributes.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      image: () grey-scale image
+    </li>
+    <li>
+      boundary: (Segment) boundaries
+    </li>
+    <li>
+      segments: (Segment) segmented image (non-hierarchical)
+    </li>
+    <li>
+      hierarchy: (Hierarchy) hierarchical segmentation
+    </li>
+  </ul>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getLabels"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getLabels</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.getLabels">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns labels, that is self.hierarchy if it exists, or self.segments.
+  If neither of the two exists returns None.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="tcSegmentAnalyze"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">tcSegmentAnalyze</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">thresh</span>,
+        <span class="sig-arg">order</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">&gt;</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">image</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">boundary</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">count</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">doDensity</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">doMorphology</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">doLength</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">doTopology</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">doDistanceTo</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">doBoundDistance</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">doCleftContacts</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.tcSegmentAnalyze">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Segment using thresholding and connectivity and analyze segments.</p>
+  <p>Segmentation and analysis parameters need to be set in advance (see 
+  setSegmentationParameters() and setAnalysisParameters()).</p>
+  <p>Makes threshold and connectivity segmentations at each level, analyzes
+  the segments and yields the segmentation. After the segmentation is done 
+  at all required levels, yields a (complete) hierarchical 
+  segmentation.</p>
+  <p>The (complete) analysis results are saved as attributes of this object
+  that may include (these attributes are listed in self.resultNames):</p>
+  <ul>
+    <li>
+      self.density: (Density) density stats for all segments
+    </li>
+    <li>
+      self.regionDensity: (Density, non-array form) density stats for the 
+      segmentation region
+    </li>
+    <li>
+      self.morphology: (Morphology) morphology for all segments, includes 
+      length at self.morphology.length
+    </li>
+    <li>
+      self.topology: (Topology) topology for all segments
+    </li>
+    <li>
+      self.distance: (DistanceTo) distance to a specified region. The name 
+      of this attribute can be different if it's specified as argument 
+      distanceName of setAnalysisParameter(). Also, there can be more than 
+      one distance if the distanceName argument is a list of names.
+    </li>
+    <li>
+      self.boundDistance: (boundDistance) distances between the boundries 
+      contacting segments (for segments with exactly two boundaries)
+    </li>
+    <li>
+      self.nContacts, self.surfaceDensityContacts, 
+      self.surfaceDensitySegments: (ndarrays of length 3), the array 
+      elements correspond to both boundaries together, boundary 1 and 
+      boundary 2. Meant for cleft-like segmentation regions.
+    </li>
+  </ul>
+  <p>Note: if doLength is True, doMorphology is effectivly set to True 
+  also.</p>
+  <p>Yields a new instance of this class at each threshold, that contains 
+  the analysis results for the current level only and backgroundDensity 
+  attribut. In addition, the yielded instance also has several segmentation
+  parameters (lengthContact, lengthLine, nBoundary, boundCount, 
+  structElConn, contactStructElConn, countStructElConn, distanceId and 
+  distanceMode).</p>
+  <p>After the segmentation is completed, yields the hierarchical 
+  segmentation. This instance has all analysis results as attributes whose 
+  names are listed in self.resultNames.</p>
+  <p>Analysis results for an individual level can also be read at the time 
+  the segmentation for that level is yielded, from attributes that have the
+  same names (as the complete analysis result attributes) but with a 
+  preceeding underscore (self._density, self._morphology, ...). Furthermore
+  the basic density stats for background is in self._backgroundDensity 
+  (Density, non-array form).</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      thresh: all thresholds (saved as self.thresholds)
+    </li>
+    <li>
+      order: threshold order: '&gt;' or 'descend' for descending, '&lt;' or
+      'ascend' for ascending, None to keep the order of thresh
+    </li>
+    <li>
+      image: (Image) image
+    </li>
+    <li>
+      boundary: (Segment) boundaries
+    </li>
+    <li>
+      do*: flags indicating if particular analysis should be done
+    </li>
+  </ul>
+  <p>Yields at each level: new_inst, level, threshold</p>
+  <ul>
+    <li>
+      new_instance: new instance of this class containing:
+      <ul>
+        <li>
+          segments: the current (flat) segmentation (by reference, that is 
+          not copied)
+        </li>
+        <li>
+          all analysis results at the current level (deepcopied)
+        </li>
+      </ul>
+    </li>
+    <li>
+      level: current level (valid for the final segmentation only if arg 
+      thresholds are in ascending order)
+    </li>
+    <li>
+      threshold: current threshold
+    </li>
+  </ul>
+  <p>Yields, after segmentation is finished for all levels:</p>
+  <ul>
+    <li>
+      tc: (ThreshConn) containing:
+      <ul>
+        <li>
+          hierarchy: hierarchical segmentation
+        </li>
+        <li>
+          analysis of all segments
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <p>ToDo: include ThreshConn.makeByNew() (or makeByNewGen()).</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="classifyAnalyze"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">classifyAnalyze</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">hierarchy</span>,
+        <span class="sig-arg">image</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">doDensity</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">doMorphology</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">doLength</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">doTopology</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">doDistanceTo</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">doBoundDistance</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">doCleftContacts</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.classifyAnalyze">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Classifies and analyzes a hierarchical segmentation specified by arg 
+  hierarchy. For each class generated, yields an instance of this class 
+  that contains a subset of the original hierarchical segmentation (a class
+  of segments) and analysis results for that class.</p>
+  <p>One or more classifications are defined by arg self.classifications 
+  (set by addClassificationParameters()). Preforms classifications in the 
+  order they appear in self.classifications. The classifications are done 
+  recursively.</p>
+  <p>Each class generated according to one classification is then 
+  classified according to the next one. In order to minimize memory usage 
+  classes are generated on demand. This means that after the first class of
+  the first classification is generated, this class is then classified 
+  according to the second classification (before the second class of the 
+  first classification is generated) and so on. Consequently, the classes 
+  generated by the last classification 'change' the fastest.</p>
+  <p>For example, if classification 1 generates classes a and b, and 
+  classification 2 p, q and r, the classes are generated in the order: ap, 
+  aq, ar, bp, bq, br.</p>
+  <p>May modify arg hierarchy. See methods preforming individual 
+  classifications (keepSegments, classByVolume, classByContactedIds, 
+  classByNContacted) for details.</p>
+  <p>Depending on the arguments, may perform analysis of (grey-scale) 
+  density, morphology, topology, distance to region and boundary distance. 
+  See the attributes of the yielded object and the docs for the analysis 
+  methods.</p>
+  <p>If the current instance already contains analysis results and the 
+  analysis flags (args do*) are False, the results are retained in the 
+  classes but restricted to the segments (ids) that exist in that 
+  class.</p>
+  <p>Note that even if the current instance already contains nContacted and
+  surfaceDensity*, they are recalculated. In this case arg doCleftContacts 
+  doesn't matter, because it is internaly set to True.</p>
+  <p>Alternatively, if the analysis flags are True, the analysis is 
+  preformed only for segments existing in the classes, and the analysis 
+  results of the current instance are not used.</p>
+  <p>Note: if doLength is True, doMorphology is effectivly set to True 
+  also.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      hierarchy: (Hierarchy) hierarchy of segments
+    </li>
+    <li>
+      image: (Image) image
+    </li>
+    <li>
+      do*: flags indicating if particular analysis should be done
+    </li>
+  </ul>
+  <p>Yields: class, name</p>
+  <ul>
+    <li>
+      class: (SegmentationAnalysis) contans segmentation and analysis 
+      attributes:
+      <ul>
+        <li>
+          hierarchy: (Hierarchy) contains a class (subset) of original 
+          segmentation
+        </li>
+        <li>
+          density: (Density) density stats for all segments
+        </li>
+        <li>
+          regionDensity: (Density, non-array form) density stats for the 
+          segmentation region
+        </li>
+        <li>
+          morphology: (Morphology) morphology for all segments
+        </li>
+        <li>
+          topology: (Topology) topology for all segments
+        </li>
+        <li>
+          distance: (DistanceTo) distance to a specified region. The name 
+          of this attribute can be different if it's specified as argument 
+          distanceName of setAnalysisParameter(). Also, there can be more 
+          than one distance if the distanceName argument is a list of 
+          names.
+        </li>
+        <li>
+          boundDistance: (boundDistance) distances between the boundries 
+          contacting segments (for segments with exactly two boundaries)
+        </li>
+        <li>
+          nContacts, surfaceDensityContacts, surfaceDensitySegments: 
+          (ndarrays of length 3), the array elements correspond to both 
+          boundaries together, boundary 1 and boundary 2. Meant for 
+          cleft-like segmentation regions.
+        </li>
+      </ul>
+    </li>
+    <li>
+      name: class name
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setSegmentationParameters"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setSegmentationParameters</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">nBoundary</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">boundCount</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">exact</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">boundaryIds</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">mask</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">freeSize</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">freeMode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">add</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">structElConn</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">contactStructElConn</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">countStructElConn</span>=<span class="sig-default">1</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.setSegmentationParameters">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets segmentation parameters.</p>
+  <p>Arguments are saved as attributes of this class under the same names, 
+  except that mask is renamed to segmentRegion (segmentation region).</p>
+  <p>Arguments are sent directly to segmentation.ThreshConn.setConnParam() 
+  and from there to segmentation.Connected.make(), see those for 
+  details.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      nBoundary: number of boundaries contacted
+    </li>
+    <li>
+      boundCount: 'exact' for contacting exactly nBoundaries, or 'at_least'
+      for contacting &gt;= nBoundaries
+    </li>
+    <li>
+      boundaryIds: ids of boundries in the boundary object
+    </li>
+    <li>
+      mask: (int, list, ndarray or Label) if mask is an int or a list of 
+      ints, then the segments of self.boundaries having this (those) id(s) 
+      form the segmentation region. Otherwise, positive elements of mask 
+      array define the segmentation region
+    </li>
+    <li>
+      free size: restrict segmentation region to the distance given by this
+      arg from boundaries (0 for no restriction)
+    </li>
+    <li>
+      free mode: 'add' to add regions around boundaries specified above, 
+      'intersect' to intersect them
+    </li>
+    <li>
+      *structEl*: structuring elements, should better not be changed
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setAnalysisParameters"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setAnalysisParameters</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">segmentRegion</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">lengthContact</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">c2c</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">lengthLine</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">mid</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">distanceRegion</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">distanceId</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">distanceMode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">mean</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">distanceName</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">distance</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">cleftLayers</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.setAnalysisParameters">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets analysis parameters.</p>
+  <p>Arguments are saved as attributes of this class under the same 
+  names.</p>
+  <p>Arguments distanceName, distanceId and distanceMode have to be either 
+  single values, or they have to be lists (or tuples) with the same number 
+  of elements.</p>
+  <p>See segmentation.Morphology.getLength() and 
+  segmentationDistanceTo.calculate() for more details</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      segmentRegions: segmentation region, if None the value set by 
+      self.setSegmentationParameters() is used
+    </li>
+    <li>
+      lengthContact: mode of calculating a segment length, 'b2b' (or 
+      'boundary') for distance between boundaries, or 'c2c' (or 'contact') 
+      for distances between contact points on segments for the two boundary
+      case, or 'b-max' and 'c-max' for the one boundary case (same as arg 
+      distance of segmentation.Morphology.getLength())
+    </li>
+    <li>
+      distanceRegion: (Segment) segmented image containig regions to which 
+      distances are calculated
+    </li>
+    <li>
+      distanceId: id(s) of distance regions
+    </li>
+    <li>
+      distanceMode: one or more of 'center', 'min', 'max', 'mean' and 
+      'median'
+    </li>
+    <li>
+      distanceName: attribute name(s) where the distance results are saved
+    </li>
+    <li>
+      cleftLayers: (CleftRegions) cleft layers, used to provide boundary 
+      edge surfaces
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="analyzeSegments"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">analyzeSegments</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">segments</span>,
+        <span class="sig-arg">image</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">boundary</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">doDensity</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">doMorphology</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">doLength</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">doTopology</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">doDistanceTo</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">doBoundDistance</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">doCleftContacts</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.analyzeSegments">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Analyze segments specified by arg (Segment) segments.</p>
+  <p>The results are saved as attributes starting with '_' (see below). 
+  Previous results (attributes without leading '_') are left unchanged. The
+  new analysis results can be merged with the previous ones using 
+  mergeAnalysus().</p>
+  <p>Note: if doLength is True, doMorphology is effectivly set to True 
+  also.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      segments: (Segments) segmented image
+    </li>
+    <li>
+      image: image
+    </li>
+    <li>
+      boundaries: (Segments) boundaries
+    </li>
+    <li>
+      do*: flags indicating if the corresponding analysis is done
+    </li>
+  </ul>
+  <p>Sets:</p>
+  <ul>
+    <li>
+      self._density
+    </li>
+    <li>
+      self._backgroundDensity
+    </li>
+    <li>
+      self._regionDensity
+    </li>
+    <li>
+      self._morphology
+    </li>
+    <li>
+      self._topology
+    </li>
+    <li>
+      self._distanceTo: can have other name depending on distanceName 
+      attribute of setAnalysisParameters()
+    </li>
+    <li>
+      self._boundDistance
+    </li>
+    <li>
+      self._nContacts, self._surfaceDensityContacts
+    </li>
+    <li>
+      self._surfaceDensitySegments
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getDensity"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getDensity</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">segments</span>,
+        <span class="sig-arg">image</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.getDensity">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns basic density (grey-value) statistics (mean, std, min, max and
+  volume for each segment.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      segments: (Segments) segmented image
+    </li>
+    <li>
+      image: image
+    </li>
+  </ul>
+  <p>Returns: (Density) density</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getOtherDensity"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getOtherDensity</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">segments</span>,
+        <span class="sig-arg">segmentRegion</span>,
+        <span class="sig-arg">image</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">boundary</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.getOtherDensity">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates basic stats for background (non-segmented parts) and for 
+  the whole segmentation region.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      segments: (Segment) segmented image
+    </li>
+    <li>
+      segmentRegion: (single int or list) id(s) of segmentation region(s)
+    </li>
+    <li>
+      image: image
+    </li>
+    <li>
+      boundaries: boundaries
+    </li>
+  </ul>
+  <p>Returns:</p>
+  <ul>
+    <li>
+      background_density: (Density, non-array form) background density
+    </li>
+    <li>
+      segmentation_region_density: (Density, non-array form) segmentation 
+      region density
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getMorphology"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getMorphology</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">segments</span>,
+        <span class="sig-arg">contacts</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">boundary</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">doLength</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">lengthContact</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">lengthLine</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.getMorphology">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates basic morphological properties: volume, surface and length 
+  (if arg doLength is True).</p>
+  <p>For length calculation lengthContacts and lengthLine have to be either
+  given as arguments of this method, or already set as attributes.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      segments: (Segment) segmented image
+    </li>
+    <li>
+      contacts: (Contacts) contacts, if None segments.contacts is used
+    </li>
+    <li>
+      boundary: boundary
+    </li>
+    <li>
+      doLength: flag indicating if length is calculated
+    </li>
+    <li>
+      lengthContact: mode of calculating length (same as distance argument 
+      of Morphology.getLength)
+    </li>
+    <li>
+      lengthLine: mode of calculating length (same as line argument of 
+      Morphology.getLength)
+    </li>
+  </ul>
+  <p>Returns (Morphology) morphology</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getTopology"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getTopology</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">segments</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.getTopology">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates segment topology.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      segments: (Segment) segmented image
+    </li>
+  </ul>
+  <p>Returns (Topology) topology</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getDistanceToRegion"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getDistanceToRegion</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">segments</span>,
+        <span class="sig-arg">regions</span>,
+        <span class="sig-arg">distanceId</span>,
+        <span class="sig-arg">mode</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.getDistanceToRegion">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates distance between each segment and its closest distance 
+  region.</p>
+  <p>Distance regions are specified in self.boundary</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      segments: (Segment) segmented image
+    </li>
+    <li>
+      regions: (Segments) regions
+    </li>
+    <li>
+      distanceId: (int or list of ints) ids of regions used for distance 
+      calculations
+    </li>
+    <li>
+      mode: distance calculation mode, 'center', 'min', 'max', 'mean' or 
+      'median' as in distanceTo.calculate()
+    </li>
+  </ul>
+  <p>Returns distance: (ndarray) distance of each segment to its closest 
+  distance region</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getBoundDistance"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getBoundDistance</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">segments</span>,
+        <span class="sig-arg">contacts</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">boundary</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">min</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.getBoundDistance">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates distance between boundaries contacting segments. Calculated
+  only for segments that contact exactly two boundaries.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      segments: (Segment) segmented image
+    </li>
+    <li>
+      contacts: (Contacts) contacts, if None segments.contacts is used
+    </li>
+    <li>
+      boundary: (Segment) boundary
+    </li>
+    <li>
+      mode: distance mode, can be 'min', 'max', 'mean' or 'median' or 
+      'center'
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="countCleftContacts"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">countCleftContacts</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">layers</span>,
+        <span class="sig-arg">labels</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.countCleftContacts">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates and returns number of contacts, surface density of contacts
+  and surface density of segments. Meant for cleft-like segmentation 
+  regions only.</p>
+  <p>The two surface densitites are calculated in respect to surface of the
+  edge layer of the two boundaries. An edge layer is the part of a boundary
+  that directly contacts cleft region. Consequently, boundaries as defined 
+  in segmentation.Cleft may not be the best choice, because they are often 
+  larger than the cleft. Instead, a CleftLayers objects is used here.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      layers: (CleftLayers) cleft layers defining a cleft
+    </li>
+    <li>
+      labels: (segmentation.Labels) used to provide ids and contacts 
+      (Contacts) as attributes. If not specified self.labels is used 
+      instead.
+    </li>
+  </ul>
+  <p>Returns: (n_contacts, surface_density_contacts, 
+  surface_density_segments):</p>
+  <ul>
+    <li>
+      n_contacts: (ndarray: axis 0 total, boundary 1, boundary 2, axis 1 
+      indexed by segment id) number of contacts
+    </li>
+    <li>
+      surface_density_contacts: (1-d ndarray, length 3) density of contacts
+      on both boundaries / boundary 1 / boundary 2
+    </li>
+    <li>
+      surface_density_segments: (1-d ndarray, length 3) density of segments
+      on average boundary area / boundary 1 / boundar 2
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="classify"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">classify</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">hierarchy</span>,
+        <span class="sig-arg">classifications</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">name</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.classify">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Generator for classification of segments from a hierarchical 
+  segmentation.</p>
+  <p>Reads classification parameters for classifications defined in arg or 
+  self.classifications (set by addClassificationParameters()). Preforms 
+  classifications in the order they appear in (self.)classifications. The 
+  classifications are done recursively.</p>
+  <p>Classifications are given by a list where each element is a dict that 
+  defines one classification. Each dictionary needs to have in item with 
+  name 'type', which determines the method used for classification. 
+  Currently, the names: 'keep', 'volume', 'connected_ids' or 'n_contacted' 
+  specify classification methods keepSegments(), classByVolume(), 
+  classByContactedIds() and classByNContacted(), respectively. All other 
+  items of a classification dictionary are passed as (dict) arguments to 
+  the corresponding classification method. See the docs for the individual 
+  classification methods for their arguments.</p>
+  <p>Each class generated according to one classification is then 
+  classified according to the next one. In order to minimize memory usage 
+  classes are generated on demand. Tha means that after the first class of 
+  the first classification is generated, this class is then classified 
+  according to the second classification (before the second class of the 
+  first classification is generated) and so on. Consequently, the classes 
+  generated by the last classification 'change' the fastest.</p>
+  <p>For example, if classification 1 generates classes a and b, and 
+  classification 2 p, q and r, the classes are generated in the order: ap, 
+  aq, ar, bp, bq, br.</p>
+  <p>May modify arg hierarchy. See methods preforming individual 
+  classifications (keepSegments, classByVolume, classByContactedIds, 
+  classByNContacted) for details.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      hierarchy: (Hierarchy) hierarchy of segments
+    </li>
+    <li>
+      classifications: (list of dicts) each element of this list defines 
+      one classification. classification
+    </li>
+    <li>
+      name: prefix of the class names generated by this method (the main 
+      parts of the class names are generated by classification methods)
+    </li>
+  </ul>
+  <p>Yields:</p>
+  <ul>
+    <li>
+      (Hierarchy) a flat hierarchy of segments
+    </li>
+    <li>
+      class name
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="addClassificationParameters"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addClassificationParameters</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">type</span>,
+        <span class="sig-arg">args</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.addClassificationParameters">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds (parameters for) a classification.</p>
+  <p>Arg type specifies the classification type, that is determines the 
+  classification method. Possible values are:</p>
+  <ul>
+    <li>
+      'keep': keepSegments()
+    </li>
+    <li>
+      'volume': classByVolume()
+    </li>
+    <li>
+      'contacted_ids': classByContacted()
+    </li>
+    <li>
+      'n_contacted': classByNContacted()
+    </li>
+  </ul>
+  <p>All arguments for the method chosen, except for hierarchy, need to be 
+  given in args (see individual methods).</p>
+  <p>Appends the values specified to self._classifications.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      type: classification type
+    </li>
+    <li>
+      args: (dict) classification method parameters, where keys are 
+      argument names and values are argument values
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="keepSegments"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">keepSegments</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">hierarchy</span>,
+        <span class="sig-arg">mode</span>,
+        <span class="sig-arg">threshold</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">name</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.keepSegments">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Yields (hierarchy) object obtained by keeping only some segments from 
+  those in (arg) hierarchy.</p>
+  <p>If mode is 'new' (or 'leaf') only 'new segments' (or 'leafs'), that is
+  the segments that have no segments below them are kept. If in addition 
+  arg threshold is specifed only the leafs that have higher segments at the
+  given threshold are kept.</p>
+  <p>If mode is 'new_branch_tops' or 'leaf_branch_tops' only the segments 
+  that are the branch tops of the leaf segments, that is the highest 
+  segment above each of the leafs that did not merge with any other segment
+  is kept.</p>
+  <p>In both cases a flat hierarchy is yelded and the hierarchy object is 
+  modified.</p>
+  <p>Class name is either specified in arg name, or the default value is 
+  used (same as mode).</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      hierarchy: (Hierarchy) hierarchy of segments
+    </li>
+    <li>
+      mode: determines which segments to keep
+    </li>
+    <li>
+      threshold: threshold used only if mode is 'new' (same as 'leaf')
+    </li>
+    <li>
+      name: name of the class generated by this method
+    </li>
+  </ul>
+  <p>Yields:</p>
+  <ul>
+    <li>
+      (Hierarchy) a flat hierarchy of segments
+    </li>
+    <li>
+      class name
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="classByVolume"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">classByVolume</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">hierarchy</span>,
+        <span class="sig-arg">volumes</span>,
+        <span class="sig-arg">names</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.classByVolume">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Classifies segments of arg hierarchy according to their volume and 
+  yields the corresponding classes.</p>
+  <p>Each class is a Hierarchy objects that contains segments having volume
+  between volumes[i] (inclusive) and volumes[i+1] (exclusive).</p>
+  <p>Arg hierarchy is modified so that it contain only segments where 
+  volumes[0] &lt;= segment_volume &lt; volumes[-1].</p>
+  <p>Class names are either specified in arg names, or the default values 
+  are used (bound-id, and bound-rest if arg rest is True).</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      hierarchy: (Hierarchy) hierarchy of segments
+    </li>
+    <li>
+      volumes: list of volumes
+    </li>
+    <li>
+      names: list of class names, directly corresponding to the volume 
+      intervals (len(volumes) - 1 in total)
+    </li>
+  </ul>
+  <p>Yields:</p>
+  <ul>
+    <li>
+      (Hierarchy) a hierarchy of segments
+    </li>
+    <li>
+      class name
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="classByContactedIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">classByContactedIds</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">hierarchy</span>,
+        <span class="sig-arg">ids</span>,
+        <span class="sig-arg">contacts</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">rest</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">names</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.classByContactedIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Classifies segments of arg hierarchy according to the ids of 
+  boundaries they contact and yields the corresponding classes.</p>
+  <p>Each element of arg ids (can contain one or more boundary ids) 
+  determines a class. This class contain all segments that contact (at 
+  least one of the) id(s). Note that, a segment may apear in more than one 
+  class. If arg rest is True, the last class is formed by segments that do 
+  not appear in any of the previous classes.</p>
+  <p>Class names are either specified in arg names, or the default values 
+  are used (bound-id, and bound-rest if arg rest is True).</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      hierarchy: (Hierarchy) hierarchy of segments
+    </li>
+    <li>
+      contacts: (Contacts) contacts between segments and boundaries, if 
+      None hierarchy.contacts is used
+    </li>
+    <li>
+      ids: list where each element is an boundary id or a list (or tuple) 
+      of boundary ids
+    </li>
+    <li>
+      rest: flag indicating if the class containing segments that do not 
+      belong to any other class as put in a (last) class also.
+    </li>
+    <li>
+      names: list of names, directly corresponding to elements of arg 
+      contacts. If rest is True, there has to be an additional name that 
+      correspond to the 'rest' class.
+    </li>
+  </ul>
+  <p>Yields:</p>
+  <ul>
+    <li>
+      (Hierarchy) a hierarchy of segments
+    </li>
+    <li>
+      class name
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="classByNContacted"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">classByNContacted</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">hierarchy</span>,
+        <span class="sig-arg">nContacted</span>,
+        <span class="sig-arg">contacts</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">names</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.classByNContacted">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Classifies segments of arg hierarchy according to the number of 
+  contacted boundaries and yields the corresponding classes.</p>
+  <p>Each element of arg ids determines a class. This class contain all 
+  segments that contact the specified number of boundaries.</p>
+  <p>Class names are either specified in arg names, or the default values 
+  are used (n-bound-num).</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      hierarchy: (Hierarchy) hierarchy of segments
+    </li>
+    <li>
+      contacts: (Contacts) contacts between segments and boundaries, if 
+      None hierarchy.contacts is used
+    </li>
+    <li>
+      nContacted: (list of ints) number of contacted boundaries
+    </li>
+    <li>
+      names: list of class names directly corresponding to arg nContacted
+    </li>
+  </ul>
+  <p>Yields:</p>
+  <ul>
+    <li>
+      (Hierarchy) a hierarchy of segments
+    </li>
+    <li>
+      class name
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="initializeAnalysis"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">initializeAnalysis</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">doDensity</span>,
+        <span class="sig-arg">doMorphology</span>,
+        <span class="sig-arg">doLength</span>,
+        <span class="sig-arg">doTopology</span>,
+        <span class="sig-arg">doDistanceTo</span>,
+        <span class="sig-arg">doBoundDistance</span>,
+        <span class="sig-arg">doCleftContacts</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.initializeAnalysis">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Initializes objects to hold analysis results.</p>
+  <p>Sets attributes of this class to objects corresponding to each of the 
+  analysis tasks. These may include: density, morphology, distance (or 
+  whatever specified in self.distanceName), boundDistance, nContacts, 
+  surfaceDensityContacts, surfaceDensitySegments. However, only those 
+  related to the analysis specified by the do* arguments are actually 
+  set.</p>
+  <p>Each of objects for the analysis tasks is initialized.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      do*: Flags indicating id specific analysis should be done
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="mergeAnalysis"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">mergeAnalysis</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">doDensity</span>,
+        <span class="sig-arg">doMorphology</span>,
+        <span class="sig-arg">doLength</span>,
+        <span class="sig-arg">doTopology</span>,
+        <span class="sig-arg">doDistanceTo</span>,
+        <span class="sig-arg">doBoundDistance</span>,
+        <span class="sig-arg">doCleftContacts</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.mergeAnalysis">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Merges analysis results for the current level segments with the 
+  already existing results.</p>
+  <p>Also sets the following attributes in this objects to the 
+  corresponding values of the already existing results:</p>
+  <ul>
+    <li>
+      morphology.lengthLine
+    </li>
+    <li>
+      morphology.contactMode
+    </li>
+    <li>
+      distance.mode
+    </li>
+    <li>
+      distance.regionIds
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="restrict"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">restrict</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">hierarchy</span>,
+        <span class="sig-arg">avoid</span>=<span class="sig-default"><code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">regionDensity</code><code class="variable-quote">'</code><code class="variable-group">]</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.restrict">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Copies (deep) this object and restricts the analysis results of the 
+  new object to segments existing in arg hierarchy.</p>
+  <p>Acts on analysis results whose names are specified in 
+  self.resultNames, except on those listed in arg avoid</p>
+  <p>Sets:</p>
+  <ul>
+    <li>
+      new.hierarchy to arg hierarchy
+    </li>
+  </ul>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      hierarchy: (Hierarchy) hierarchical segmentation
+    </li>
+    <li>
+      avoid: list of attribute names
+    </li>
+  </ul>
+  <p>Returns:</p>
+  <ul>
+    <li>
+      new: restricted deepcopy of this object
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="copyResults"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">copyResults</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">segments</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.copyResults">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Makes and returns new instance of this class that contains only the 
+  new analysis results (deepcopied) and attribute segment (by reference) 
+  pointing to the arg segments.</p>
+  <p>The new results are those saved in attributes that have names listed 
+  in self.resultNames but with a leading '_'. In addition, 
+  '_backgroundDensity' is added.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      segments: (Segments) flat segmentation that was analyzed
+    </li>
+  </ul>
+  <p>Returns: new instance of this class</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="copyAnalysisParameters"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">copyAnalysisParameters</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">obj</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.copyAnalysisParameters">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Copies attributes corresponding to analysis parameters (lengthContact,
+  lengthLine, nBoundary, boundCount, structElConn, contactStructElConn, 
+  countStructElConn, distanceId and distanceMode) from obj to this 
+  instance.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      obj: object of this class
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="relabel"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">relabel</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.segmentation_analysis-pysrc.html#SegmentationAnalysis.relabel">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Relabels ids.</p>
+  <p>Needed for classify_connection script?</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== PROPERTY DETAILS ==================== -->
+<a name="section-PropertyDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Property Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-PropertyDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="labels"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">labels</h3>
+  <p>Labels object</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#getLabels" class="summary-sig-name">getLabels</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Returns labels, that is self.hierarchy if it exists, or 
+      self.segments.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="ids"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">ids</h3>
+  <p>Segment ids</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#getIds" class="summary-sig-name">getIds</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Returns segment ids.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="nSegments"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">nSegments</h3>
+  <p>Number of segments</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#getNSegments" class="summary-sig-name">getNSegments</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Number of segments
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

@@ -1,0 +1,971 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.tomo.series</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.tomo-module.html">Package&nbsp;tomo</a> ::
+        Module&nbsp;series
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.tomo.series-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="pyto.tomo.series-module.html">Module pyto.tomo.series</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-docstring">Class Series contains methods for manipulations of a series of images.</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-docstring">Meant for but limited to a tomographic series.</tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-docstring"># Author: Vladan Lucic (Max Planck Institute for Biochemistry)</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-docstring"># $Id: series.py 1446 2017-04-12 15:46:43Z vladan $</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-name">__version__</tt> <tt class="py-op">=</tt> <tt class="py-string">"$Revision: 1446 $"</tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">re</tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">os</tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">path</tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">logging</tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">numpy</tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package pyto=pyto-module.html"><a title="pyto" class="py-name" href="#" onclick="return doclink('link-0', 'pyto', 'link-0');">pyto</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package pyto.io=pyto.io-module.html"><a title="pyto.io" class="py-name" href="#" onclick="return doclink('link-1', 'io', 'link-1');">io</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Module pyto.io.image_io=pyto.io.image_io-module.html"><a title="pyto.io.image_io" class="py-name" href="#" onclick="return doclink('link-2', 'image_io', 'link-2');">image_io</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name" targets="Class pyto.io.image_io.ImageIO=pyto.io.image_io.ImageIO-class.html"><a title="pyto.io.image_io.ImageIO" class="py-name" href="#" onclick="return doclink('link-3', 'ImageIO', 'link-3');">ImageIO</a></tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-4" class="py-name"><a title="pyto" class="py-name" href="#" onclick="return doclink('link-4', 'pyto', 'link-0');">pyto</a></tt><tt class="py-op">.</tt><tt id="link-5" class="py-name" targets="Package pyto.grey=pyto.grey-module.html,Module pyto.segmentation.grey=pyto.segmentation.grey-module.html"><a title="pyto.grey
+pyto.segmentation.grey" class="py-name" href="#" onclick="return doclink('link-5', 'grey', 'link-5');">grey</a></tt><tt class="py-op">.</tt><tt id="link-6" class="py-name" targets="Module pyto.core.image=pyto.core.image-module.html,Module pyto.grey.image=pyto.grey.image-module.html,Variable pyto.segmentation.test_hierarchy.image=pyto.segmentation.test_hierarchy-module.html#image"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-6', 'image', 'link-6');">image</a></tt> <tt class="py-keyword">import</tt> <tt id="link-7" class="py-name" targets="Class pyto.core.image.Image=pyto.core.image.Image-class.html,Class pyto.grey.image.Image=pyto.grey.image.Image-class.html"><a title="pyto.core.image.Image
+pyto.grey.image.Image" class="py-name" href="#" onclick="return doclink('link-7', 'Image', 'link-7');">Image</a></tt> </tt>
+<a name="Series"></a><div id="Series-def"><a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt> <a class="py-toggle" href="#" id="Series-toggle" onclick="return toggle('Series');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="pyto.tomo.series.Series-class.html">Series</a><tt class="py-op">(</tt><tt class="py-base-class">object</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Series-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="Series-expanded"><a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line"><tt class="py-docstring">    Methods for manipulations of a series of images. </tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"><tt class="py-docstring">    Meant for but not limited to a tomographic series. Images can be saved in </tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"><tt class="py-docstring">    separate files or as a single stack.</tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"><tt class="py-docstring">    Important methods:</tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line"><tt class="py-docstring">      - self.sort: sorts series, fixes file headers and limits the data</tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"><tt class="py-docstring">      (only for separate images)</tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"><tt class="py-docstring">      - self.fix: fix headers (only for separate images)</tt> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line"><tt class="py-docstring">      - self.getDose: calculated the total (series) dose </tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"><tt class="py-docstring">      - self.images: generator that yields names of all files of a series</tt> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line"><tt class="py-docstring">      (only for separate images)</tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"><tt class="py-docstring">    </tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line"><tt class="py-docstring">    Common usage:</tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line"><tt class="py-docstring">      myseries = Series(files='dir/base.em')</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line"><tt class="py-docstring">      myseries.sort(out='new_directory')</tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line"><tt class="py-docstring">      myseries.fix(mode='polara_fei-tomo', microscope='polara-1_01-09')</tt> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line"> </tt>
+<a name="Series.__init__"></a><div id="Series.__init__-def"><a name="L43"></a><tt class="py-lineno"> 43</tt> <a class="py-toggle" href="#" id="Series.__init__-toggle" onclick="return toggle('Series.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.tomo.series.Series-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">path</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">mode</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">stack</tt><tt class="py-op">=</tt><tt class="py-name">False</tt><tt class="py-op">,</tt> <tt class="py-param">tilt_file</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Series.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Series.__init__-expanded"><a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line"><tt class="py-docstring">        Sets path and mode that determine the series.</tt> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line"><tt class="py-docstring">        A series contains all files that match path. Path cosists of a </tt> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line"><tt class="py-docstring">        directory and a file name, where the file name is taken to be a </tt> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line"><tt class="py-docstring">        regular expression.</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line"><tt class="py-docstring">        Mode determines how the pattern match is performed. The options are:</tt> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line"><tt class="py-docstring">          - search: (like re.search) pattern somewhere in the target string</tt> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line"><tt class="py-docstring">          - match: (like re.match) target string begins with the pattern</tt> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line"><tt class="py-docstring">          - exact: whole target string is mathed (both the beginning and the</tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line"><tt class="py-docstring">          end of the file name are anchored)</tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line"><tt class="py-docstring">        Arguments:</tt> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line"><tt class="py-docstring">          - paths: full file path in the form dir/file or just file, where file </tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line"><tt class="py-docstring">          is a regular expression </tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line"><tt class="py-docstring">          - mode: pattern matching mode</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line"><tt class="py-docstring">          - stack: flag indicating if the series is in a single stack</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line"><tt class="py-docstring">          - tilt_file: name of the SerialEM type tilt angles file</tt> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line"><tt class="py-docstring">        Sets:</tt> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line"><tt class="py-docstring">          - self.path</tt> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line"><tt class="py-docstring">          - self.mode</tt> </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line"><tt class="py-docstring">          - self.stack</tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line"><tt class="py-docstring">          - self.tiltAngles: tilt angles read from tilt_file</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line"> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line">        <tt class="py-comment"># set attributes</tt> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">path</tt> <tt class="py-op">=</tt> <tt class="py-name">path</tt> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-8" class="py-name" targets="Variable pyto.scripts.extract_points.mode=pyto.scripts.extract_points-module.html#mode,Variable pyto.scripts.sort_series.mode=pyto.scripts.sort_series-module.html#mode"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-8', 'mode', 'link-8');">mode</a></tt> <tt class="py-op">=</tt> <tt id="link-9" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-9', 'mode', 'link-8');">mode</a></tt> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">stack</tt> <tt class="py-op">=</tt> <tt class="py-name">stack</tt> </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line"> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">stack</tt> <tt class="py-keyword">and</tt> <tt class="py-op">(</tt><tt class="py-name">tilt_file</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt>  </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">tiltAngles</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-10" class="py-name" targets="Class Method pyto.tomo.series.Series.readTiltAngles()=pyto.tomo.series.Series-class.html#readTiltAngles"><a title="pyto.tomo.series.Series.readTiltAngles" class="py-name" href="#" onclick="return doclink('link-10', 'readTiltAngles', 'link-10');">readTiltAngles</a></tt><tt class="py-op">(</tt><tt class="py-name">file_</tt><tt class="py-op">=</tt><tt class="py-name">tilt_file</tt><tt class="py-op">)</tt> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">tiltAngles</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line"> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line">        <tt class="py-comment"># initialize out (write-related) attributes</tt> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-11" class="py-name" targets="Method pyto.tomo.series.Series.setOutMode()=pyto.tomo.series.Series-class.html#setOutMode"><a title="pyto.tomo.series.Series.setOutMode" class="py-name" href="#" onclick="return doclink('link-11', 'setOutMode', 'link-11');">setOutMode</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line"> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line">    <tt class="py-comment">######################################################</tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line">    <tt class="py-comment"># </tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line">    <tt class="py-comment"># Methods that manipulte whole series.</tt> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line">    <tt class="py-comment">#</tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line">    <tt class="py-comment">######################################################</tt> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line"> </tt>
+<a name="Series.sort"></a><div id="Series.sort-def"><a name="L90"></a><tt class="py-lineno"> 90</tt> <a class="py-toggle" href="#" id="Series.sort-toggle" onclick="return toggle('Series.sort');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.tomo.series.Series-class.html#sort">sort</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">seq</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">out</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">pad</tt><tt class="py-op">=</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-param">start</tt><tt class="py-op">=</tt><tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-param">fix_mode</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt>  </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line">             <tt class="py-param">microscope</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">limit</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">limit_mode</tt><tt class="py-op">=</tt><tt class="py-string">'std'</tt><tt class="py-op">,</tt> <tt class="py-param">size</tt><tt class="py-op">=</tt><tt class="py-number">5</tt><tt class="py-op">,</tt>  </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line">             <tt class="py-param">byte_order</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">test</tt><tt class="py-op">=</tt><tt class="py-name">False</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Series.sort-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Series.sort-expanded"><a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line"><tt class="py-docstring">        Sorts series, fixes image headers, corrects the data and writes the</tt> </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line"><tt class="py-docstring">        sorted and corrected images. </tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line"><tt class="py-docstring">        A series is sorted by tilt angle that is read from each image, or by the</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line"><tt class="py-docstring">        elements of seq (not necessarily angles) if given.</tt> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line"><tt class="py-docstring">        Sorted images names have the form:</tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line"><tt class="py-docstring">          directory/name + number + extension.</tt> </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line"><tt class="py-docstring">        where out is: directory/name_.extension and numbers start with start</tt> </tt>
+<a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line"><tt class="py-docstring">        argument and are padded with pad (argument) number of zeros (see</tt> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line"><tt class="py-docstring">        self.images).</tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line"><tt class="py-docstring">        Argument fix_mode detemines how the headers are fixed:</tt> </tt>
+<a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line"><tt class="py-docstring">          - None: no fixing</tt> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line"><tt class="py-docstring">          - 'polara_fei-tomo': for series obtained on polara with the FEI tomo</tt> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line"><tt class="py-docstring">          software</tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line"><tt class="py-docstring">          - 'krios_fei-tomo': for series obtained on krios with the FEI tomo</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line"><tt class="py-docstring">          software</tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line"><tt class="py-docstring">          - 'cm300': for series from CM300</tt> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line"><tt class="py-docstring">        (see pyto.io.image_io). </tt> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line"><tt class="py-docstring">        If fix_mode is 'polara_fei-tomo', then arg microscope has to be </tt> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line"><tt class="py-docstring">        specified. The allowed values are specified in microscope_db.py. </tt> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line"><tt class="py-docstring">        Currently (r564) these are: 'polara-1_01-07', 'polara-1_01-09' and </tt> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line"><tt class="py-docstring">        'polara-2_01-09'.</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line"><tt class="py-docstring">        If fix_mode is None, microscope does nor need to be specified.</tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line"><tt class="py-docstring">        Series recorded by SerialEM typically do not need fixing.</tt> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line"><tt class="py-docstring">        Works for individual images only (not for stacks).</tt> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line"><tt class="py-docstring">        Arguments:</tt> </tt>
+<a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line"><tt class="py-docstring">          - seq: if specified this sequence used for sorting projection,</tt> </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line"><tt class="py-docstring">          otherwise tilt angles are used</tt> </tt>
+<a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line"><tt class="py-docstring">          - out: sorted series path</tt> </tt>
+<a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line"><tt class="py-docstring">          - pad: number of digits of a projection number in the sorted </tt> </tt>
+<a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line"><tt class="py-docstring">          series file name</tt> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line"><tt class="py-docstring">          - start: start number for sorted series file names </tt> </tt>
+<a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line"><tt class="py-docstring">          - fix_mode: determined if and how headers are fixed</tt> </tt>
+<a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line"><tt class="py-docstring">          - microscope: microscope type, see pyto.io.microscope_db</tt> </tt>
+<a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line"><tt class="py-docstring">          - limit_mode: 'abs' or 'std'</tt> </tt>
+<a name="L135"></a><tt class="py-lineno">135</tt>  <tt class="py-line"><tt class="py-docstring">          - limit: absolute greyscale limit if limit_mode is 'abs', or the </tt> </tt>
+<a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line"><tt class="py-docstring">          number of stds above and below the mean </tt> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line"><tt class="py-docstring">          - size: size of the subarray used to find the replacement value </tt> </tt>
+<a name="L138"></a><tt class="py-lineno">138</tt>  <tt class="py-line"><tt class="py-docstring">          for a voxel that's out of the limits </tt> </tt>
+<a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line"><tt class="py-docstring">          - byte_order: '&lt;' or '&gt;', default is the byte order of the machine</tt> </tt>
+<a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line"><tt class="py-docstring">          - test: if True all steps are done except writing corrected images</tt> </tt>
+<a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line"><tt class="py-docstring">        </tt> </tt>
+<a name="L142"></a><tt class="py-lineno">142</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line"> </tt>
+<a name="L144"></a><tt class="py-lineno">144</tt>  <tt class="py-line">        <tt class="py-comment"># shortcuts</tt> </tt>
+<a name="L145"></a><tt class="py-lineno">145</tt>  <tt class="py-line">        <tt class="py-name">path</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">path</tt> </tt>
+<a name="L146"></a><tt class="py-lineno">146</tt>  <tt class="py-line">        <tt class="py-name">match_mode</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-12" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-12', 'mode', 'link-8');">mode</a></tt> </tt>
+<a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line"> </tt>
+<a name="L148"></a><tt class="py-lineno">148</tt>  <tt class="py-line">        <tt class="py-comment"># make tilt angles - file names dictionary</tt> </tt>
+<a name="L149"></a><tt class="py-lineno">149</tt>  <tt class="py-line">        <tt class="py-comment"># ToDo: use self.sortPath() instead</tt> </tt>
+<a name="L150"></a><tt class="py-lineno">150</tt>  <tt class="py-line">        <tt class="py-name">in_paths</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
+<a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line">        <tt class="py-name">images_iter</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-13" class="py-name" targets="Method pyto.tomo.series.Series.images()=pyto.tomo.series.Series-class.html#images"><a title="pyto.tomo.series.Series.images" class="py-name" href="#" onclick="return doclink('link-13', 'images', 'link-13');">images</a></tt><tt class="py-op">(</tt><tt id="link-14" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-14', 'mode', 'link-8');">mode</a></tt><tt class="py-op">=</tt><tt class="py-name">match_mode</tt><tt class="py-op">)</tt> </tt>
+<a name="L152"></a><tt class="py-lineno">152</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">seq</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line">            <tt class="py-name">seq</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
+<a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line"> </tt>
+<a name="L155"></a><tt class="py-lineno">155</tt>  <tt class="py-line">            <tt class="py-comment"># get tilt angles from file headers</tt> </tt>
+<a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line">            <tt class="py-keyword">for</tt> <tt id="link-15" class="py-name" targets="Variable pyto.scripts.sort_series.in_path=pyto.scripts.sort_series-module.html#in_path"><a title="pyto.scripts.sort_series.in_path" class="py-name" href="#" onclick="return doclink('link-15', 'in_path', 'link-15');">in_path</a></tt> <tt class="py-keyword">in</tt> <tt class="py-name">images_iter</tt><tt class="py-op">:</tt> </tt>
+<a name="L157"></a><tt class="py-lineno">157</tt>  <tt class="py-line">                <tt id="link-16" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-16', 'image', 'link-6');">image</a></tt> <tt class="py-op">=</tt> <tt id="link-17" class="py-name"><a title="pyto.io.image_io.ImageIO" class="py-name" href="#" onclick="return doclink('link-17', 'ImageIO', 'link-3');">ImageIO</a></tt><tt class="py-op">(</tt><tt class="py-name">file</tt><tt class="py-op">=</tt><tt id="link-18" class="py-name"><a title="pyto.scripts.sort_series.in_path" class="py-name" href="#" onclick="return doclink('link-18', 'in_path', 'link-15');">in_path</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L158"></a><tt class="py-lineno">158</tt>  <tt class="py-line">                <tt id="link-19" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-19', 'image', 'link-6');">image</a></tt><tt class="py-op">.</tt><tt id="link-20" class="py-name" targets="Method pyto.io.image_io.ImageIO.readHeader()=pyto.io.image_io.ImageIO-class.html#readHeader"><a title="pyto.io.image_io.ImageIO.readHeader" class="py-name" href="#" onclick="return doclink('link-20', 'readHeader', 'link-20');">readHeader</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L159"></a><tt class="py-lineno">159</tt>  <tt class="py-line">                <tt class="py-name">seq</tt><tt class="py-op">.</tt><tt class="py-name">append</tt><tt class="py-op">(</tt><tt id="link-21" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-21', 'image', 'link-6');">image</a></tt><tt class="py-op">.</tt><tt id="link-22" class="py-name" targets="Variable pyto.io.image_io.ImageIO.tiltAngle=pyto.io.image_io.ImageIO-class.html#tiltAngle"><a title="pyto.io.image_io.ImageIO.tiltAngle" class="py-name" href="#" onclick="return doclink('link-22', 'tiltAngle', 'link-22');">tiltAngle</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L160"></a><tt class="py-lineno">160</tt>  <tt class="py-line">                <tt class="py-name">in_paths</tt><tt class="py-op">.</tt><tt class="py-name">append</tt><tt class="py-op">(</tt><tt id="link-23" class="py-name"><a title="pyto.scripts.sort_series.in_path" class="py-name" href="#" onclick="return doclink('link-23', 'in_path', 'link-15');">in_path</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L161"></a><tt class="py-lineno">161</tt>  <tt class="py-line">                <tt id="link-24" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-24', 'image', 'link-6');">image</a></tt><tt class="py-op">.</tt><tt class="py-name">file_</tt><tt class="py-op">.</tt><tt class="py-name">close</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L162"></a><tt class="py-lineno">162</tt>  <tt class="py-line"> </tt>
+<a name="L163"></a><tt class="py-lineno">163</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L164"></a><tt class="py-lineno">164</tt>  <tt class="py-line"> </tt>
+<a name="L165"></a><tt class="py-lineno">165</tt>  <tt class="py-line">            <tt class="py-comment"># use seq to sort</tt> </tt>
+<a name="L166"></a><tt class="py-lineno">166</tt>  <tt class="py-line">            <tt class="py-keyword">for</tt> <tt id="link-25" class="py-name"><a title="pyto.scripts.sort_series.in_path" class="py-name" href="#" onclick="return doclink('link-25', 'in_path', 'link-15');">in_path</a></tt> <tt class="py-keyword">in</tt> <tt class="py-name">images_iter</tt><tt class="py-op">:</tt> </tt>
+<a name="L167"></a><tt class="py-lineno">167</tt>  <tt class="py-line">                <tt class="py-name">in_paths</tt><tt class="py-op">.</tt><tt class="py-name">append</tt><tt class="py-op">(</tt><tt id="link-26" class="py-name"><a title="pyto.scripts.sort_series.in_path" class="py-name" href="#" onclick="return doclink('link-26', 'in_path', 'link-15');">in_path</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L168"></a><tt class="py-lineno">168</tt>  <tt class="py-line"> </tt>
+<a name="L169"></a><tt class="py-lineno">169</tt>  <tt class="py-line">        <tt class="py-comment"># sort (note: dictionary angle:in_path fails for multiple files with</tt> </tt>
+<a name="L170"></a><tt class="py-lineno">170</tt>  <tt class="py-line">        <tt class="py-comment"># same angles)</tt> </tt>
+<a name="L171"></a><tt class="py-lineno">171</tt>  <tt class="py-line">        <tt class="py-name">seq_arr</tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">array</tt><tt class="py-op">(</tt><tt class="py-name">seq</tt><tt class="py-op">)</tt> </tt>
+<a name="L172"></a><tt class="py-lineno">172</tt>  <tt class="py-line">        <tt class="py-name">in_paths_arr</tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">array</tt><tt class="py-op">(</tt><tt class="py-name">in_paths</tt><tt class="py-op">)</tt> </tt>
+<a name="L173"></a><tt class="py-lineno">173</tt>  <tt class="py-line">        <tt class="py-name">sort_ind</tt> <tt class="py-op">=</tt> <tt class="py-name">seq_arr</tt><tt class="py-op">.</tt><tt class="py-name">argsort</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L174"></a><tt class="py-lineno">174</tt>  <tt class="py-line">        <tt class="py-name">sorted_seq</tt> <tt class="py-op">=</tt> <tt class="py-name">seq_arr</tt><tt class="py-op">[</tt><tt class="py-name">sort_ind</tt><tt class="py-op">]</tt> </tt>
+<a name="L175"></a><tt class="py-lineno">175</tt>  <tt class="py-line">        <tt class="py-name">sorted_in_paths</tt> <tt class="py-op">=</tt> <tt class="py-name">in_paths_arr</tt><tt class="py-op">[</tt><tt class="py-name">sort_ind</tt><tt class="py-op">]</tt> </tt>
+<a name="L176"></a><tt class="py-lineno">176</tt>  <tt class="py-line"> </tt>
+<a name="L177"></a><tt class="py-lineno">177</tt>  <tt class="py-line">        <tt class="py-comment"># parse out and make out directory if it doesn't exists</tt> </tt>
+<a name="L178"></a><tt class="py-lineno">178</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-27" class="py-name" targets="Variable pyto.analysis.test.test_groups.out=pyto.analysis.test.test_groups-module.html#out,Variable pyto.analysis.test.test_observations.out=pyto.analysis.test.test_observations-module.html#out"><a title="pyto.analysis.test.test_groups.out
+pyto.analysis.test.test_observations.out" class="py-name" href="#" onclick="return doclink('link-27', 'out', 'link-27');">out</a></tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L179"></a><tt class="py-lineno">179</tt>  <tt class="py-line">            <tt class="py-name">out_dir</tt><tt class="py-op">,</tt> <tt class="py-name">out_base_pat</tt> <tt class="py-op">=</tt> <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">path</tt><tt class="py-op">.</tt><tt id="link-28" class="py-name" targets="Method pyto.analysis.groups.Groups.split()=pyto.analysis.groups.Groups-class.html#split,Method pyto.analysis.observations.Observations.split()=pyto.analysis.observations.Observations-class.html#split"><a title="pyto.analysis.groups.Groups.split
+pyto.analysis.observations.Observations.split" class="py-name" href="#" onclick="return doclink('link-28', 'split', 'link-28');">split</a></tt><tt class="py-op">(</tt><tt id="link-29" class="py-name"><a title="pyto.analysis.test.test_groups.out
+pyto.analysis.test.test_observations.out" class="py-name" href="#" onclick="return doclink('link-29', 'out', 'link-27');">out</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L180"></a><tt class="py-lineno">180</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-name">out_dir</tt> <tt class="py-op">==</tt> <tt class="py-string">''</tt><tt class="py-op">:</tt> </tt>
+<a name="L181"></a><tt class="py-lineno">181</tt>  <tt class="py-line">                <tt class="py-name">out_dir</tt> <tt class="py-op">=</tt> <tt class="py-string">'.'</tt> </tt>
+<a name="L182"></a><tt class="py-lineno">182</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-op">(</tt><tt class="py-keyword">not</tt> <tt id="link-30" class="py-name" targets="Package pyto.analysis.test=pyto.analysis.test-module.html,Package pyto.core.test=pyto.core.test-module.html,Package pyto.geometry.test=pyto.geometry.test-module.html,Package pyto.grey.test=pyto.grey.test-module.html,Package pyto.io.test=pyto.io.test-module.html,Package pyto.particles.test=pyto.particles.test-module.html,Package pyto.scene.test=pyto.scene.test-module.html,Package pyto.segmentation.test=pyto.segmentation.test-module.html,Package pyto.tomo.test=pyto.tomo.test-module.html,Package pyto.util.test=pyto.util.test-module.html"><a title="pyto.analysis.test
+pyto.core.test
+pyto.geometry.test
+pyto.grey.test
+pyto.io.test
+pyto.particles.test
+pyto.scene.test
+pyto.segmentation.test
+pyto.tomo.test
+pyto.util.test" class="py-name" href="#" onclick="return doclink('link-30', 'test', 'link-30');">test</a></tt><tt class="py-op">)</tt> <tt class="py-keyword">and</tt> <tt class="py-op">(</tt><tt class="py-keyword">not</tt> <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">path</tt><tt class="py-op">.</tt><tt class="py-name">isdir</tt><tt class="py-op">(</tt><tt class="py-name">out_dir</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L183"></a><tt class="py-lineno">183</tt>  <tt class="py-line">                <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">makedirs</tt><tt class="py-op">(</tt><tt class="py-name">out_dir</tt><tt class="py-op">)</tt> </tt>
+<a name="L184"></a><tt class="py-lineno">184</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L185"></a><tt class="py-lineno">185</tt>  <tt class="py-line">            <tt id="link-31" class="py-name" targets="Variable pyto.scripts.sort_series.out_path=pyto.scripts.sort_series-module.html#out_path"><a title="pyto.scripts.sort_series.out_path" class="py-name" href="#" onclick="return doclink('link-31', 'out_path', 'link-31');">out_path</a></tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L186"></a><tt class="py-lineno">186</tt>  <tt class="py-line"> </tt>
+<a name="L187"></a><tt class="py-lineno">187</tt>  <tt class="py-line">        <tt class="py-comment"># initialize file counter</tt> </tt>
+<a name="L188"></a><tt class="py-lineno">188</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">start</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L189"></a><tt class="py-lineno">189</tt>  <tt class="py-line">            <tt id="link-32" class="py-name" targets="Variable pyto.scripts.bulk_analysis.ind=pyto.scripts.bulk_analysis-module.html#ind,Variable pyto.scripts.cleft_stats.ind=pyto.scripts.cleft_stats-module.html#ind"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-32', 'ind', 'link-32');">ind</a></tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L190"></a><tt class="py-lineno">190</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L191"></a><tt class="py-lineno">191</tt>  <tt class="py-line">            <tt id="link-33" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-33', 'ind', 'link-32');">ind</a></tt> <tt class="py-op">=</tt> <tt class="py-name">start</tt> <tt class="py-op">-</tt> <tt class="py-number">1</tt> </tt>
+<a name="L192"></a><tt class="py-lineno">192</tt>  <tt class="py-line"> </tt>
+<a name="L193"></a><tt class="py-lineno">193</tt>  <tt class="py-line">        <tt class="py-comment"># loop over sorted in files</tt> </tt>
+<a name="L194"></a><tt class="py-lineno">194</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-op">(</tt><tt class="py-name">item</tt><tt class="py-op">,</tt> <tt id="link-34" class="py-name"><a title="pyto.scripts.sort_series.in_path" class="py-name" href="#" onclick="return doclink('link-34', 'in_path', 'link-15');">in_path</a></tt><tt class="py-op">)</tt> <tt class="py-keyword">in</tt> <tt class="py-name">zip</tt><tt class="py-op">(</tt><tt class="py-name">sorted_seq</tt><tt class="py-op">,</tt> <tt class="py-name">sorted_in_paths</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L195"></a><tt class="py-lineno">195</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt id="link-35" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-35', 'ind', 'link-32');">ind</a></tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> <tt id="link-36" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-36', 'ind', 'link-32');">ind</a></tt> <tt class="py-op">+=</tt> <tt class="py-number">1</tt> </tt>
+<a name="L196"></a><tt class="py-lineno">196</tt>  <tt class="py-line"> </tt>
+<a name="L197"></a><tt class="py-lineno">197</tt>  <tt class="py-line">            <tt class="py-comment"># parse in file path</tt> </tt>
+<a name="L198"></a><tt class="py-lineno">198</tt>  <tt class="py-line">            <tt class="py-name">in_dir</tt><tt class="py-op">,</tt> <tt class="py-name">in_base</tt> <tt class="py-op">=</tt> <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">path</tt><tt class="py-op">.</tt><tt id="link-37" class="py-name"><a title="pyto.analysis.groups.Groups.split
+pyto.analysis.observations.Observations.split" class="py-name" href="#" onclick="return doclink('link-37', 'split', 'link-28');">split</a></tt><tt class="py-op">(</tt><tt id="link-38" class="py-name"><a title="pyto.scripts.sort_series.in_path" class="py-name" href="#" onclick="return doclink('link-38', 'in_path', 'link-15');">in_path</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L199"></a><tt class="py-lineno">199</tt>  <tt class="py-line"> </tt>
+<a name="L200"></a><tt class="py-lineno">200</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt id="link-39" class="py-name"><a title="pyto.analysis.test.test_groups.out
+pyto.analysis.test.test_observations.out" class="py-name" href="#" onclick="return doclink('link-39', 'out', 'link-27');">out</a></tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L201"></a><tt class="py-lineno">201</tt>  <tt class="py-line"> </tt>
+<a name="L202"></a><tt class="py-lineno">202</tt>  <tt class="py-line">                <tt class="py-comment"># make out file path</tt> </tt>
+<a name="L203"></a><tt class="py-lineno">203</tt>  <tt class="py-line">                <tt class="py-name">out_base</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-40" class="py-name" targets="Method pyto.tomo.series.Series.convertBase()=pyto.tomo.series.Series-class.html#convertBase"><a title="pyto.tomo.series.Series.convertBase" class="py-name" href="#" onclick="return doclink('link-40', 'convertBase', 'link-40');">convertBase</a></tt><tt class="py-op">(</tt><tt class="py-name">in_base</tt><tt class="py-op">=</tt><tt class="py-name">in_base</tt><tt class="py-op">,</tt> </tt>
+<a name="L204"></a><tt class="py-lineno">204</tt>  <tt class="py-line">                                     <tt class="py-name">out_base</tt><tt class="py-op">=</tt><tt class="py-name">out_base_pat</tt><tt class="py-op">,</tt> <tt class="py-name">pad</tt><tt class="py-op">=</tt><tt class="py-name">pad</tt><tt class="py-op">,</tt> <tt id="link-41" class="py-name" targets="Method pyto.io.results.Results.index()=pyto.io.results.Results-class.html#index"><a title="pyto.io.results.Results.index" class="py-name" href="#" onclick="return doclink('link-41', 'index', 'link-41');">index</a></tt><tt class="py-op">=</tt><tt id="link-42" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-42', 'ind', 'link-32');">ind</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L205"></a><tt class="py-lineno">205</tt>  <tt class="py-line">                <tt id="link-43" class="py-name"><a title="pyto.scripts.sort_series.out_path" class="py-name" href="#" onclick="return doclink('link-43', 'out_path', 'link-31');">out_path</a></tt> <tt class="py-op">=</tt> <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">path</tt><tt class="py-op">.</tt><tt id="link-44" class="py-name" targets="Method pyto.analysis.observations.Observations.join()=pyto.analysis.observations.Observations-class.html#join"><a title="pyto.analysis.observations.Observations.join" class="py-name" href="#" onclick="return doclink('link-44', 'join', 'link-44');">join</a></tt><tt class="py-op">(</tt><tt class="py-name">out_dir</tt><tt class="py-op">,</tt> <tt class="py-name">out_base</tt><tt class="py-op">)</tt> </tt>
+<a name="L206"></a><tt class="py-lineno">206</tt>  <tt class="py-line"> </tt>
+<a name="L207"></a><tt class="py-lineno">207</tt>  <tt class="py-line">                <tt class="py-comment"># read files</tt> </tt>
+<a name="L208"></a><tt class="py-lineno">208</tt>  <tt class="py-line">                <tt class="py-name">im_io</tt> <tt class="py-op">=</tt> <tt id="link-45" class="py-name"><a title="pyto.io.image_io.ImageIO" class="py-name" href="#" onclick="return doclink('link-45', 'ImageIO', 'link-3');">ImageIO</a></tt><tt class="py-op">(</tt><tt class="py-name">file</tt><tt class="py-op">=</tt><tt id="link-46" class="py-name"><a title="pyto.scripts.sort_series.in_path" class="py-name" href="#" onclick="return doclink('link-46', 'in_path', 'link-15');">in_path</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L209"></a><tt class="py-lineno">209</tt>  <tt class="py-line">                <tt class="py-name">im_io</tt><tt class="py-op">.</tt><tt id="link-47" class="py-name" targets="Method pyto.analysis.catalog.Catalog.read()=pyto.analysis.catalog.Catalog-class.html#read,Class Method pyto.analysis.cleft_regions.CleftRegions.read()=pyto.analysis.cleft_regions.CleftRegions-class.html#read,Class Method pyto.analysis.clusters.Clusters.read()=pyto.analysis.clusters.Clusters-class.html#read,Class Method pyto.analysis.connections.Connections.read()=pyto.analysis.connections.Connections-class.html#read,Class Method pyto.analysis.layers.Layers.read()=pyto.analysis.layers.Layers-class.html#read,Class Method pyto.analysis.vesicles.Vesicles.read()=pyto.analysis.vesicles.Vesicles-class.html#read,Class Method pyto.core.image.Image.read()=pyto.core.image.Image-class.html#read,Method pyto.io.connections.Connections.read()=pyto.io.connections.Connections-class.html#read,Method pyto.io.image_io.ImageIO.read()=pyto.io.image_io.ImageIO-class.html#read,Method pyto.io.results.Results.read()=pyto.io.results.Results-class.html#read,Class Method pyto.segmentation.cleft.Cleft.read()=pyto.segmentation.cleft.Cleft-class.html#read,Class Method pyto.segmentation.segment.Segment.read()=pyto.segmentation.segment.Segment-class.html#read"><a title="pyto.analysis.catalog.Catalog.read
+pyto.analysis.cleft_regions.CleftRegions.read
+pyto.analysis.clusters.Clusters.read
+pyto.analysis.connections.Connections.read
+pyto.analysis.layers.Layers.read
+pyto.analysis.vesicles.Vesicles.read
+pyto.core.image.Image.read
+pyto.io.connections.Connections.read
+pyto.io.image_io.ImageIO.read
+pyto.io.results.Results.read
+pyto.segmentation.cleft.Cleft.read
+pyto.segmentation.segment.Segment.read" class="py-name" href="#" onclick="return doclink('link-47', 'read', 'link-47');">read</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L210"></a><tt class="py-lineno">210</tt>  <tt class="py-line"> </tt>
+<a name="L211"></a><tt class="py-lineno">211</tt>  <tt class="py-line">                <tt class="py-comment"># log</tt> </tt>
+<a name="L212"></a><tt class="py-lineno">212</tt>  <tt class="py-line">                <tt class="py-name">logging</tt><tt class="py-op">.</tt><tt class="py-name">info</tt><tt class="py-op">(</tt><tt class="py-string">"%5.1f: %s -&gt; %s  %6.1f %6.1f"</tt> \ </tt>
+<a name="L213"></a><tt class="py-lineno">213</tt>  <tt class="py-line">                                 <tt class="py-op">%</tt> <tt class="py-op">(</tt><tt class="py-name">item</tt><tt class="py-op">,</tt> <tt id="link-48" class="py-name"><a title="pyto.scripts.sort_series.in_path" class="py-name" href="#" onclick="return doclink('link-48', 'in_path', 'link-15');">in_path</a></tt><tt class="py-op">,</tt> <tt id="link-49" class="py-name"><a title="pyto.scripts.sort_series.out_path" class="py-name" href="#" onclick="return doclink('link-49', 'out_path', 'link-31');">out_path</a></tt><tt class="py-op">,</tt> \ </tt>
+<a name="L214"></a><tt class="py-lineno">214</tt>  <tt class="py-line">                                        <tt class="py-name">im_io</tt><tt class="py-op">.</tt><tt id="link-50" class="py-name" targets="Variable pyto.geometry.vector.Vector.data=pyto.geometry.vector.Vector-class.html#data,Method pyto.io.multi_data.MultiData.data()=pyto.io.multi_data.MultiData-class.html#data"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-50', 'data', 'link-50');">data</a></tt><tt class="py-op">.</tt><tt class="py-name">mean</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-name">im_io</tt><tt class="py-op">.</tt><tt id="link-51" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-51', 'data', 'link-50');">data</a></tt><tt class="py-op">.</tt><tt class="py-name">std</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L215"></a><tt class="py-lineno">215</tt>  <tt class="py-line"> </tt>
+<a name="L216"></a><tt class="py-lineno">216</tt>  <tt class="py-line">                <tt class="py-comment"># fix</tt> </tt>
+<a name="L217"></a><tt class="py-lineno">217</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">fix_mode</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L218"></a><tt class="py-lineno">218</tt>  <tt class="py-line">                    <tt class="py-name">im_io</tt><tt class="py-op">.</tt><tt id="link-52" class="py-name" targets="Method pyto.io.image_io.ImageIO.fix()=pyto.io.image_io.ImageIO-class.html#fix,Method pyto.tomo.series.Series.fix()=pyto.tomo.series.Series-class.html#fix"><a title="pyto.io.image_io.ImageIO.fix
+pyto.tomo.series.Series.fix" class="py-name" href="#" onclick="return doclink('link-52', 'fix', 'link-52');">fix</a></tt><tt class="py-op">(</tt><tt id="link-53" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-53', 'mode', 'link-8');">mode</a></tt><tt class="py-op">=</tt><tt class="py-name">fix_mode</tt><tt class="py-op">,</tt> <tt id="link-54" class="py-name" targets="Variable pyto.scripts.presynaptic_catalog.microscope=pyto.scripts.presynaptic_catalog-module.html#microscope,Variable pyto.scripts.sort_series.microscope=pyto.scripts.sort_series-module.html#microscope"><a title="pyto.scripts.presynaptic_catalog.microscope
+pyto.scripts.sort_series.microscope" class="py-name" href="#" onclick="return doclink('link-54', 'microscope', 'link-54');">microscope</a></tt><tt class="py-op">=</tt><tt id="link-55" class="py-name"><a title="pyto.scripts.presynaptic_catalog.microscope
+pyto.scripts.sort_series.microscope" class="py-name" href="#" onclick="return doclink('link-55', 'microscope', 'link-54');">microscope</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L219"></a><tt class="py-lineno">219</tt>  <tt class="py-line"> </tt>
+<a name="L220"></a><tt class="py-lineno">220</tt>  <tt class="py-line">                <tt class="py-comment"># limit</tt> </tt>
+<a name="L221"></a><tt class="py-lineno">221</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt id="link-56" class="py-name" targets="Method pyto.grey.image.Image.limit()=pyto.grey.image.Image-class.html#limit,Variable pyto.scripts.sort_series.limit=pyto.scripts.sort_series-module.html#limit"><a title="pyto.grey.image.Image.limit
+pyto.scripts.sort_series.limit" class="py-name" href="#" onclick="return doclink('link-56', 'limit', 'link-56');">limit</a></tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L222"></a><tt class="py-lineno">222</tt>  <tt class="py-line">                    <tt id="link-57" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-57', 'image', 'link-6');">image</a></tt> <tt class="py-op">=</tt> <tt id="link-58" class="py-name"><a title="pyto.core.image.Image
+pyto.grey.image.Image" class="py-name" href="#" onclick="return doclink('link-58', 'Image', 'link-7');">Image</a></tt><tt class="py-op">(</tt><tt class="py-name">im_io</tt><tt class="py-op">.</tt><tt id="link-59" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-59', 'data', 'link-50');">data</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L223"></a><tt class="py-lineno">223</tt>  <tt class="py-line">                    <tt id="link-60" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-60', 'image', 'link-6');">image</a></tt><tt class="py-op">.</tt><tt id="link-61" class="py-name"><a title="pyto.grey.image.Image.limit
+pyto.scripts.sort_series.limit" class="py-name" href="#" onclick="return doclink('link-61', 'limit', 'link-56');">limit</a></tt><tt class="py-op">(</tt><tt id="link-62" class="py-name"><a title="pyto.grey.image.Image.limit
+pyto.scripts.sort_series.limit" class="py-name" href="#" onclick="return doclink('link-62', 'limit', 'link-56');">limit</a></tt><tt class="py-op">=</tt><tt id="link-63" class="py-name"><a title="pyto.grey.image.Image.limit
+pyto.scripts.sort_series.limit" class="py-name" href="#" onclick="return doclink('link-63', 'limit', 'link-56');">limit</a></tt><tt class="py-op">,</tt> <tt id="link-64" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-64', 'mode', 'link-8');">mode</a></tt><tt class="py-op">=</tt><tt class="py-name">limit_mode</tt><tt class="py-op">,</tt> <tt id="link-65" class="py-name" targets="Variable pyto.scripts.extract_particles.size=pyto.scripts.extract_particles-module.html#size,Variable pyto.scripts.sort_series.size=pyto.scripts.sort_series-module.html#size"><a title="pyto.scripts.extract_particles.size
+pyto.scripts.sort_series.size" class="py-name" href="#" onclick="return doclink('link-65', 'size', 'link-65');">size</a></tt><tt class="py-op">=</tt><tt id="link-66" class="py-name"><a title="pyto.scripts.extract_particles.size
+pyto.scripts.sort_series.size" class="py-name" href="#" onclick="return doclink('link-66', 'size', 'link-65');">size</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L224"></a><tt class="py-lineno">224</tt>  <tt class="py-line"> </tt>
+<a name="L225"></a><tt class="py-lineno">225</tt>  <tt class="py-line">                <tt class="py-comment"># write fixed file</tt> </tt>
+<a name="L226"></a><tt class="py-lineno">226</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt id="link-67" class="py-name"><a title="pyto.analysis.test
+pyto.core.test
+pyto.geometry.test
+pyto.grey.test
+pyto.io.test
+pyto.particles.test
+pyto.scene.test
+pyto.segmentation.test
+pyto.tomo.test
+pyto.util.test" class="py-name" href="#" onclick="return doclink('link-67', 'test', 'link-30');">test</a></tt><tt class="py-op">:</tt> </tt>
+<a name="L227"></a><tt class="py-lineno">227</tt>  <tt class="py-line">                    <tt class="py-keyword">if</tt> <tt id="link-68" class="py-name" targets="Variable pyto.io.image_io.ImageIO.byte_order=pyto.io.image_io.ImageIO-class.html#byte_order,Variable pyto.scripts.discs_to_balls.byte_order=pyto.scripts.discs_to_balls-module.html#byte_order"><a title="pyto.io.image_io.ImageIO.byte_order
+pyto.scripts.discs_to_balls.byte_order" class="py-name" href="#" onclick="return doclink('link-68', 'byte_order', 'link-68');">byte_order</a></tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L228"></a><tt class="py-lineno">228</tt>  <tt class="py-line">                        <tt id="link-69" class="py-name"><a title="pyto.io.image_io.ImageIO.byte_order
+pyto.scripts.discs_to_balls.byte_order" class="py-name" href="#" onclick="return doclink('link-69', 'byte_order', 'link-68');">byte_order</a></tt> <tt class="py-op">=</tt> <tt class="py-name">im_io</tt><tt class="py-op">.</tt><tt id="link-70" class="py-name" targets="Variable pyto.io.image_io.ImageIO.machineByteOrder=pyto.io.image_io.ImageIO-class.html#machineByteOrder"><a title="pyto.io.image_io.ImageIO.machineByteOrder" class="py-name" href="#" onclick="return doclink('link-70', 'machineByteOrder', 'link-70');">machineByteOrder</a></tt> </tt>
+<a name="L229"></a><tt class="py-lineno">229</tt>  <tt class="py-line">                    <tt class="py-name">im_io</tt><tt class="py-op">.</tt><tt id="link-71" class="py-name" targets="Method pyto.core.image.Image.write()=pyto.core.image.Image-class.html#write,Method pyto.io.image_io.ImageIO.write()=pyto.io.image_io.ImageIO-class.html#write"><a title="pyto.core.image.Image.write
+pyto.io.image_io.ImageIO.write" class="py-name" href="#" onclick="return doclink('link-71', 'write', 'link-71');">write</a></tt><tt class="py-op">(</tt><tt class="py-name">file</tt><tt class="py-op">=</tt><tt id="link-72" class="py-name"><a title="pyto.scripts.sort_series.out_path" class="py-name" href="#" onclick="return doclink('link-72', 'out_path', 'link-31');">out_path</a></tt><tt class="py-op">,</tt> <tt class="py-name">byteOrder</tt><tt class="py-op">=</tt><tt id="link-73" class="py-name"><a title="pyto.io.image_io.ImageIO.byte_order
+pyto.scripts.discs_to_balls.byte_order" class="py-name" href="#" onclick="return doclink('link-73', 'byte_order', 'link-68');">byte_order</a></tt><tt class="py-op">,</tt> </tt>
+<a name="L230"></a><tt class="py-lineno">230</tt>  <tt class="py-line">                                <tt id="link-74" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-74', 'data', 'link-50');">data</a></tt><tt class="py-op">=</tt><tt id="link-75" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-75', 'image', 'link-6');">image</a></tt><tt class="py-op">.</tt><tt id="link-76" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-76', 'data', 'link-50');">data</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L231"></a><tt class="py-lineno">231</tt>  <tt class="py-line"> </tt>
+<a name="L232"></a><tt class="py-lineno">232</tt>  <tt class="py-line">            <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L233"></a><tt class="py-lineno">233</tt>  <tt class="py-line"> </tt>
+<a name="L234"></a><tt class="py-lineno">234</tt>  <tt class="py-line">                <tt class="py-name">logging</tt><tt class="py-op">.</tt><tt class="py-name">info</tt><tt class="py-op">(</tt><tt class="py-string">" "</tt> <tt class="py-op">+</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">item</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-string">": "</tt> <tt class="py-op">+</tt> <tt id="link-77" class="py-name"><a title="pyto.scripts.sort_series.in_path" class="py-name" href="#" onclick="return doclink('link-77', 'in_path', 'link-15');">in_path</a></tt> <tt class="py-op">+</tt> <tt class="py-string">" -&gt; "</tt>\ </tt>
+<a name="L235"></a><tt class="py-lineno">235</tt>  <tt class="py-line">                             <tt class="py-op">+</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt id="link-78" class="py-name"><a title="pyto.scripts.sort_series.out_path" class="py-name" href="#" onclick="return doclink('link-78', 'out_path', 'link-31');">out_path</a></tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L236"></a><tt class="py-lineno">236</tt>  <tt class="py-line"> </tt>
+<a name="Series.fix"></a><div id="Series.fix-def"><a name="L237"></a><tt class="py-lineno">237</tt> <a class="py-toggle" href="#" id="Series.fix-toggle" onclick="return toggle('Series.fix');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.tomo.series.Series-class.html#fix">fix</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">mode</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">microscope</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">out</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">pad</tt><tt class="py-op">=</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-param">start</tt><tt class="py-op">=</tt><tt class="py-number">1</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Series.fix-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Series.fix-expanded"><a name="L238"></a><tt class="py-lineno">238</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L239"></a><tt class="py-lineno">239</tt>  <tt class="py-line"><tt class="py-docstring">        Fixes wrong data in headers.</tt> </tt>
+<a name="L240"></a><tt class="py-lineno">240</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L241"></a><tt class="py-lineno">241</tt>  <tt class="py-line"><tt class="py-docstring">        Mode determines which values are fixed. Currently defined modes are:</tt> </tt>
+<a name="L242"></a><tt class="py-lineno">242</tt>  <tt class="py-line"><tt class="py-docstring">          - 'polara_fei-tomo': images obtained on Polara (at MPI of </tt> </tt>
+<a name="L243"></a><tt class="py-lineno">243</tt>  <tt class="py-line"><tt class="py-docstring">          Biochemistry) using FEI tomography package and saved in EM </tt> </tt>
+<a name="L244"></a><tt class="py-lineno">244</tt>  <tt class="py-line"><tt class="py-docstring">          format.</tt> </tt>
+<a name="L245"></a><tt class="py-lineno">245</tt>  <tt class="py-line"><tt class="py-docstring">          - 'krios_fei-tomo': images obtained on Krios (at MPI of </tt> </tt>
+<a name="L246"></a><tt class="py-lineno">246</tt>  <tt class="py-line"><tt class="py-docstring">          Biochemistry) using FEI tomography package and saved in EM </tt> </tt>
+<a name="L247"></a><tt class="py-lineno">247</tt>  <tt class="py-line"><tt class="py-docstring">          format.</tt> </tt>
+<a name="L248"></a><tt class="py-lineno">248</tt>  <tt class="py-line"><tt class="py-docstring">          - 'cm300': images from cm300 in EM format</tt> </tt>
+<a name="L249"></a><tt class="py-lineno">249</tt>  <tt class="py-line"><tt class="py-docstring">          - None: doesn't do anyhing</tt> </tt>
+<a name="L250"></a><tt class="py-lineno">250</tt>  <tt class="py-line"><tt class="py-docstring">          </tt> </tt>
+<a name="L251"></a><tt class="py-lineno">251</tt>  <tt class="py-line"><tt class="py-docstring">        If mode is 'polara_fei-tomo', then arg microscope has to be specified. </tt> </tt>
+<a name="L252"></a><tt class="py-lineno">252</tt>  <tt class="py-line"><tt class="py-docstring">        The allowed values are specified in microscope_db.py. Currently (r564)</tt> </tt>
+<a name="L253"></a><tt class="py-lineno">253</tt>  <tt class="py-line"><tt class="py-docstring">        these are: 'polara-1_01-07', 'polara-1_01-09' and 'polara-2_01-09'.</tt> </tt>
+<a name="L254"></a><tt class="py-lineno">254</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L255"></a><tt class="py-lineno">255</tt>  <tt class="py-line"><tt class="py-docstring">        Works for individual images only (not for stacks), because stacks</tt> </tt>
+<a name="L256"></a><tt class="py-lineno">256</tt>  <tt class="py-line"><tt class="py-docstring">        are typically recorded by SerialEM and do not need fixing.</tt> </tt>
+<a name="L257"></a><tt class="py-lineno">257</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L258"></a><tt class="py-lineno">258</tt>  <tt class="py-line"><tt class="py-docstring">        Arguments:</tt> </tt>
+<a name="L259"></a><tt class="py-lineno">259</tt>  <tt class="py-line"><tt class="py-docstring">          - out: directory where the fixed images are written. The fixed and</tt> </tt>
+<a name="L260"></a><tt class="py-lineno">260</tt>  <tt class="py-line"><tt class="py-docstring">          the original images have the same base names.</tt> </tt>
+<a name="L261"></a><tt class="py-lineno">261</tt>  <tt class="py-line"><tt class="py-docstring">          - mode: fix mode</tt> </tt>
+<a name="L262"></a><tt class="py-lineno">262</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L263"></a><tt class="py-lineno">263</tt>  <tt class="py-line"> </tt>
+<a name="L264"></a><tt class="py-lineno">264</tt>  <tt class="py-line">        <tt class="py-comment"># parse arguments</tt> </tt>
+<a name="L265"></a><tt class="py-lineno">265</tt>  <tt class="py-line">        <tt class="py-comment">#if path is None: path = self.path</tt> </tt>
+<a name="L266"></a><tt class="py-lineno">266</tt>  <tt class="py-line">        <tt class="py-comment">#if mode is None: mode = self.mode</tt> </tt>
+<a name="L267"></a><tt class="py-lineno">267</tt>  <tt class="py-line"> </tt>
+<a name="L268"></a><tt class="py-lineno">268</tt>  <tt class="py-line">        <tt class="py-comment"># check for out, pad and start also?</tt> </tt>
+<a name="L269"></a><tt class="py-lineno">269</tt>  <tt class="py-line">         </tt>
+<a name="L270"></a><tt class="py-lineno">270</tt>  <tt class="py-line">        <tt class="py-comment"># make out directory if it doesn't exists</tt> </tt>
+<a name="L271"></a><tt class="py-lineno">271</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-op">(</tt><tt id="link-79" class="py-name"><a title="pyto.analysis.test.test_groups.out
+pyto.analysis.test.test_observations.out" class="py-name" href="#" onclick="return doclink('link-79', 'out', 'link-27');">out</a></tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">)</tt> <tt class="py-keyword">and</tt> <tt class="py-op">(</tt><tt class="py-keyword">not</tt> <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">path</tt><tt class="py-op">.</tt><tt class="py-name">isdir</tt><tt class="py-op">(</tt><tt id="link-80" class="py-name"><a title="pyto.analysis.test.test_groups.out
+pyto.analysis.test.test_observations.out" class="py-name" href="#" onclick="return doclink('link-80', 'out', 'link-27');">out</a></tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L272"></a><tt class="py-lineno">272</tt>  <tt class="py-line">            <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">makedirs</tt><tt class="py-op">(</tt><tt id="link-81" class="py-name"><a title="pyto.analysis.test.test_groups.out
+pyto.analysis.test.test_observations.out" class="py-name" href="#" onclick="return doclink('link-81', 'out', 'link-27');">out</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L273"></a><tt class="py-lineno">273</tt>  <tt class="py-line"> </tt>
+<a name="L274"></a><tt class="py-lineno">274</tt>  <tt class="py-line">        <tt class="py-comment"># loop over images</tt> </tt>
+<a name="L275"></a><tt class="py-lineno">275</tt>  <tt class="py-line">        <tt class="py-name">images_iter</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-82" class="py-name"><a title="pyto.tomo.series.Series.images" class="py-name" href="#" onclick="return doclink('link-82', 'images', 'link-13');">images</a></tt><tt class="py-op">(</tt><tt id="link-83" class="py-name"><a title="pyto.analysis.test.test_groups.out
+pyto.analysis.test.test_observations.out" class="py-name" href="#" onclick="return doclink('link-83', 'out', 'link-27');">out</a></tt><tt class="py-op">=</tt><tt id="link-84" class="py-name"><a title="pyto.analysis.test.test_groups.out
+pyto.analysis.test.test_observations.out" class="py-name" href="#" onclick="return doclink('link-84', 'out', 'link-27');">out</a></tt><tt class="py-op">,</tt> <tt class="py-name">pad</tt><tt class="py-op">=</tt><tt class="py-name">pad</tt><tt class="py-op">,</tt> <tt class="py-name">start</tt><tt class="py-op">=</tt><tt class="py-name">start</tt><tt class="py-op">)</tt> </tt>
+<a name="L276"></a><tt class="py-lineno">276</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-op">(</tt><tt id="link-85" class="py-name"><a title="pyto.scripts.sort_series.in_path" class="py-name" href="#" onclick="return doclink('link-85', 'in_path', 'link-15');">in_path</a></tt><tt class="py-op">,</tt> <tt id="link-86" class="py-name"><a title="pyto.scripts.sort_series.out_path" class="py-name" href="#" onclick="return doclink('link-86', 'out_path', 'link-31');">out_path</a></tt><tt class="py-op">)</tt> <tt class="py-keyword">in</tt> <tt class="py-name">images_iter</tt><tt class="py-op">:</tt> </tt>
+<a name="L277"></a><tt class="py-lineno">277</tt>  <tt class="py-line"> </tt>
+<a name="L278"></a><tt class="py-lineno">278</tt>  <tt class="py-line">            <tt class="py-comment"># read image file</tt> </tt>
+<a name="L279"></a><tt class="py-lineno">279</tt>  <tt class="py-line">            <tt id="link-87" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-87', 'image', 'link-6');">image</a></tt> <tt class="py-op">=</tt> <tt id="link-88" class="py-name"><a title="pyto.io.image_io.ImageIO" class="py-name" href="#" onclick="return doclink('link-88', 'ImageIO', 'link-3');">ImageIO</a></tt><tt class="py-op">(</tt><tt class="py-name">file</tt><tt class="py-op">=</tt><tt id="link-89" class="py-name"><a title="pyto.scripts.sort_series.in_path" class="py-name" href="#" onclick="return doclink('link-89', 'in_path', 'link-15');">in_path</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L280"></a><tt class="py-lineno">280</tt>  <tt class="py-line">            <tt id="link-90" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-90', 'image', 'link-6');">image</a></tt><tt class="py-op">.</tt><tt id="link-91" class="py-name"><a title="pyto.analysis.catalog.Catalog.read
+pyto.analysis.cleft_regions.CleftRegions.read
+pyto.analysis.clusters.Clusters.read
+pyto.analysis.connections.Connections.read
+pyto.analysis.layers.Layers.read
+pyto.analysis.vesicles.Vesicles.read
+pyto.core.image.Image.read
+pyto.io.connections.Connections.read
+pyto.io.image_io.ImageIO.read
+pyto.io.results.Results.read
+pyto.segmentation.cleft.Cleft.read
+pyto.segmentation.segment.Segment.read" class="py-name" href="#" onclick="return doclink('link-91', 'read', 'link-47');">read</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L281"></a><tt class="py-lineno">281</tt>  <tt class="py-line"> </tt>
+<a name="L282"></a><tt class="py-lineno">282</tt>  <tt class="py-line">            <tt class="py-comment"># fix</tt> </tt>
+<a name="L283"></a><tt class="py-lineno">283</tt>  <tt class="py-line">            <tt id="link-92" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-92', 'image', 'link-6');">image</a></tt><tt class="py-op">.</tt><tt id="link-93" class="py-name"><a title="pyto.io.image_io.ImageIO.fix
+pyto.tomo.series.Series.fix" class="py-name" href="#" onclick="return doclink('link-93', 'fix', 'link-52');">fix</a></tt><tt class="py-op">(</tt><tt id="link-94" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-94', 'mode', 'link-8');">mode</a></tt><tt class="py-op">=</tt><tt id="link-95" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-95', 'mode', 'link-8');">mode</a></tt><tt class="py-op">,</tt> <tt id="link-96" class="py-name"><a title="pyto.scripts.presynaptic_catalog.microscope
+pyto.scripts.sort_series.microscope" class="py-name" href="#" onclick="return doclink('link-96', 'microscope', 'link-54');">microscope</a></tt><tt class="py-op">=</tt><tt id="link-97" class="py-name"><a title="pyto.scripts.presynaptic_catalog.microscope
+pyto.scripts.sort_series.microscope" class="py-name" href="#" onclick="return doclink('link-97', 'microscope', 'link-54');">microscope</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L284"></a><tt class="py-lineno">284</tt>  <tt class="py-line"> </tt>
+<a name="L285"></a><tt class="py-lineno">285</tt>  <tt class="py-line">            <tt class="py-comment"># write fixed files</tt> </tt>
+<a name="L286"></a><tt class="py-lineno">286</tt>  <tt class="py-line">            <tt id="link-98" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-98', 'image', 'link-6');">image</a></tt><tt class="py-op">.</tt><tt id="link-99" class="py-name"><a title="pyto.core.image.Image.write
+pyto.io.image_io.ImageIO.write" class="py-name" href="#" onclick="return doclink('link-99', 'write', 'link-71');">write</a></tt><tt class="py-op">(</tt><tt class="py-name">file</tt><tt class="py-op">=</tt><tt id="link-100" class="py-name"><a title="pyto.scripts.sort_series.out_path" class="py-name" href="#" onclick="return doclink('link-100', 'out_path', 'link-31');">out_path</a></tt><tt class="py-op">)</tt> </tt>
+</div><a name="L287"></a><tt class="py-lineno">287</tt>  <tt class="py-line"> </tt>
+<a name="Series.getDose"></a><div id="Series.getDose-def"><a name="L288"></a><tt class="py-lineno">288</tt> <a class="py-toggle" href="#" id="Series.getDose-toggle" onclick="return toggle('Series.getDose');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.tomo.series.Series-class.html#getDose">getDose</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">conversion</tt><tt class="py-op">=</tt><tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-param">mode</tt><tt class="py-op">=</tt><tt class="py-string">'pixel_size'</tt><tt class="py-op">,</tt> <tt class="py-param">projection_dose</tt><tt class="py-op">=</tt><tt class="py-name">False</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Series.getDose-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Series.getDose-expanded"><a name="L289"></a><tt class="py-lineno">289</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L290"></a><tt class="py-lineno">290</tt>  <tt class="py-line"><tt class="py-docstring">        Calculates dose for the whole series (in e/A^2) and the average counts</tt> </tt>
+<a name="L291"></a><tt class="py-lineno">291</tt>  <tt class="py-line"><tt class="py-docstring">        per pixel..</tt> </tt>
+<a name="L292"></a><tt class="py-lineno">292</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L293"></a><tt class="py-lineno">293</tt>  <tt class="py-line"><tt class="py-docstring">        Logs average, std, min and max counts for each image to INFO.</tt> </tt>
+<a name="L294"></a><tt class="py-lineno">294</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L295"></a><tt class="py-lineno">295</tt>  <tt class="py-line"><tt class="py-docstring">        Mode determines how the pixels are converted to A^2:</tt> </tt>
+<a name="L296"></a><tt class="py-lineno">296</tt>  <tt class="py-line"><tt class="py-docstring">        - 'pixel_size': use pixelsize from the image header (default)</tt> </tt>
+<a name="L297"></a><tt class="py-lineno">297</tt>  <tt class="py-line"><tt class="py-docstring">        - 'cm300_fix': use only for cm300 series with headers that were not</tt> </tt>
+<a name="L298"></a><tt class="py-lineno">298</tt>  <tt class="py-line"><tt class="py-docstring">        corrected</tt> </tt>
+<a name="L299"></a><tt class="py-lineno">299</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L300"></a><tt class="py-lineno">300</tt>  <tt class="py-line"><tt class="py-docstring">        Arguments:</tt> </tt>
+<a name="L301"></a><tt class="py-lineno">301</tt>  <tt class="py-line"><tt class="py-docstring">          - conversion: number of electrons per pixel (if known microscope use</tt> </tt>
+<a name="L302"></a><tt class="py-lineno">302</tt>  <tt class="py-line"><tt class="py-docstring">          pyto.io.microscope_db.conversion[microscope]).</tt> </tt>
+<a name="L303"></a><tt class="py-lineno">303</tt>  <tt class="py-line"><tt class="py-docstring">          - mode: 'pixel_size' should be used, other moders were used in</tt> </tt>
+<a name="L304"></a><tt class="py-lineno">304</tt>  <tt class="py-line"><tt class="py-docstring">          special cases</tt> </tt>
+<a name="L305"></a><tt class="py-lineno">305</tt>  <tt class="py-line"><tt class="py-docstring">          - projection_dose: flag indicating if dose [e/A^2] for each </tt> </tt>
+<a name="L306"></a><tt class="py-lineno">306</tt>  <tt class="py-line"><tt class="py-docstring">          projection is returned</tt> </tt>
+<a name="L307"></a><tt class="py-lineno">307</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L308"></a><tt class="py-lineno">308</tt>  <tt class="py-line"><tt class="py-docstring">        Returns total_dose, mean_count:</tt> </tt>
+<a name="L309"></a><tt class="py-lineno">309</tt>  <tt class="py-line"><tt class="py-docstring">          - total dose in e/A^2</tt> </tt>
+<a name="L310"></a><tt class="py-lineno">310</tt>  <tt class="py-line"><tt class="py-docstring">          - mean count in counts/pixel</tt> </tt>
+<a name="L311"></a><tt class="py-lineno">311</tt>  <tt class="py-line"><tt class="py-docstring">          - projection_dose (if projection_dose=True) 2D ndarray containing</tt> </tt>
+<a name="L312"></a><tt class="py-lineno">312</tt>  <tt class="py-line"><tt class="py-docstring">          tilt angle and projection dose for all projections </tt> </tt>
+<a name="L313"></a><tt class="py-lineno">313</tt>  <tt class="py-line"><tt class="py-docstring">          (shape n_projections x 2)</tt> </tt>
+<a name="L314"></a><tt class="py-lineno">314</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L315"></a><tt class="py-lineno">315</tt>  <tt class="py-line"> </tt>
+<a name="L316"></a><tt class="py-lineno">316</tt>  <tt class="py-line">        <tt class="py-comment"># set images to z positions if projections are in a stack, or</tt> </tt>
+<a name="L317"></a><tt class="py-lineno">317</tt>  <tt class="py-line">        <tt class="py-comment"># to projection file names if individual projection files</tt> </tt>
+<a name="L318"></a><tt class="py-lineno">318</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">stack</tt><tt class="py-op">:</tt> </tt>
+<a name="L319"></a><tt class="py-lineno">319</tt>  <tt class="py-line">            <tt class="py-name">image_stack</tt> <tt class="py-op">=</tt> <tt id="link-101" class="py-name"><a title="pyto.core.image.Image
+pyto.grey.image.Image" class="py-name" href="#" onclick="return doclink('link-101', 'Image', 'link-7');">Image</a></tt><tt class="py-op">.</tt><tt id="link-102" class="py-name"><a title="pyto.analysis.catalog.Catalog.read
+pyto.analysis.cleft_regions.CleftRegions.read
+pyto.analysis.clusters.Clusters.read
+pyto.analysis.connections.Connections.read
+pyto.analysis.layers.Layers.read
+pyto.analysis.vesicles.Vesicles.read
+pyto.core.image.Image.read
+pyto.io.connections.Connections.read
+pyto.io.image_io.ImageIO.read
+pyto.io.results.Results.read
+pyto.segmentation.cleft.Cleft.read
+pyto.segmentation.segment.Segment.read" class="py-name" href="#" onclick="return doclink('link-102', 'read', 'link-47');">read</a></tt><tt class="py-op">(</tt><tt class="py-name">file</tt><tt class="py-op">=</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">path</tt><tt class="py-op">,</tt> <tt class="py-name">memmap</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L320"></a><tt class="py-lineno">320</tt>  <tt class="py-line">            <tt id="link-103" class="py-name"><a title="pyto.tomo.series.Series.images" class="py-name" href="#" onclick="return doclink('link-103', 'images', 'link-13');">images</a></tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">array</tt><tt class="py-op">(</tt><tt class="py-name">range</tt><tt class="py-op">(</tt><tt class="py-name">image_stack</tt><tt class="py-op">.</tt><tt id="link-104" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-104', 'data', 'link-50');">data</a></tt><tt class="py-op">.</tt><tt id="link-105" class="py-name" targets="Variable pyto.scripts.discs_to_balls.shape=pyto.scripts.discs_to_balls-module.html#shape"><a title="pyto.scripts.discs_to_balls.shape" class="py-name" href="#" onclick="return doclink('link-105', 'shape', 'link-105');">shape</a></tt><tt class="py-op">[</tt><tt class="py-number">2</tt><tt class="py-op">]</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L321"></a><tt class="py-lineno">321</tt>  <tt class="py-line">            <tt id="link-106" class="py-name"><a title="pyto.tomo.series.Series.images" class="py-name" href="#" onclick="return doclink('link-106', 'images', 'link-13');">images</a></tt> <tt class="py-op">=</tt> <tt id="link-107" class="py-name"><a title="pyto.tomo.series.Series.images" class="py-name" href="#" onclick="return doclink('link-107', 'images', 'link-13');">images</a></tt><tt class="py-op">[</tt><tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">argsort</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">tiltAngles</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> </tt>
+<a name="L322"></a><tt class="py-lineno">322</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L323"></a><tt class="py-lineno">323</tt>  <tt class="py-line">            <tt id="link-108" class="py-name"><a title="pyto.tomo.series.Series.images" class="py-name" href="#" onclick="return doclink('link-108', 'images', 'link-13');">images</a></tt> <tt class="py-op">=</tt> <tt class="py-name">list</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-109" class="py-name"><a title="pyto.tomo.series.Series.images" class="py-name" href="#" onclick="return doclink('link-109', 'images', 'link-13');">images</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L324"></a><tt class="py-lineno">324</tt>  <tt class="py-line">            <tt id="link-110" class="py-name"><a title="pyto.tomo.series.Series.images" class="py-name" href="#" onclick="return doclink('link-110', 'images', 'link-13');">images</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-111" class="py-name" targets="Method pyto.tomo.series.Series.sortPaths()=pyto.tomo.series.Series-class.html#sortPaths"><a title="pyto.tomo.series.Series.sortPaths" class="py-name" href="#" onclick="return doclink('link-111', 'sortPaths', 'link-111');">sortPaths</a></tt><tt class="py-op">(</tt><tt class="py-name">paths</tt><tt class="py-op">=</tt><tt id="link-112" class="py-name"><a title="pyto.tomo.series.Series.images" class="py-name" href="#" onclick="return doclink('link-112', 'images', 'link-13');">images</a></tt><tt class="py-op">,</tt> <tt id="link-113" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-113', 'mode', 'link-8');">mode</a></tt><tt class="py-op">=</tt><tt class="py-string">'tilt_angle'</tt><tt class="py-op">)</tt> </tt>
+<a name="L325"></a><tt class="py-lineno">325</tt>  <tt class="py-line"> </tt>
+<a name="L326"></a><tt class="py-lineno">326</tt>  <tt class="py-line">        <tt class="py-name">tot_dose</tt> <tt class="py-op">=</tt> <tt class="py-number">0</tt> </tt>
+<a name="L327"></a><tt class="py-lineno">327</tt>  <tt class="py-line">        <tt class="py-name">tot_count</tt> <tt class="py-op">=</tt> <tt class="py-number">0</tt> </tt>
+<a name="L328"></a><tt class="py-lineno">328</tt>  <tt class="py-line">        <tt class="py-name">num</tt> <tt class="py-op">=</tt> <tt class="py-number">0.</tt> </tt>
+<a name="L329"></a><tt class="py-lineno">329</tt>  <tt class="py-line">        <tt class="py-name">proj_dose</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
+<a name="L330"></a><tt class="py-lineno">330</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-name">fi</tt> <tt class="py-keyword">in</tt> <tt id="link-114" class="py-name"><a title="pyto.tomo.series.Series.images" class="py-name" href="#" onclick="return doclink('link-114', 'images', 'link-13');">images</a></tt><tt class="py-op">:</tt> </tt>
+<a name="L331"></a><tt class="py-lineno">331</tt>  <tt class="py-line"> </tt>
+<a name="L332"></a><tt class="py-lineno">332</tt>  <tt class="py-line">            <tt class="py-comment"># read single projection file</tt> </tt>
+<a name="L333"></a><tt class="py-lineno">333</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">stack</tt><tt class="py-op">:</tt> </tt>
+<a name="L334"></a><tt class="py-lineno">334</tt>  <tt class="py-line">                <tt id="link-115" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-115', 'image', 'link-6');">image</a></tt> <tt class="py-op">=</tt> <tt id="link-116" class="py-name"><a title="pyto.core.image.Image
+pyto.grey.image.Image" class="py-name" href="#" onclick="return doclink('link-116', 'Image', 'link-7');">Image</a></tt><tt class="py-op">(</tt><tt id="link-117" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-117', 'data', 'link-50');">data</a></tt><tt class="py-op">=</tt><tt class="py-name">image_stack</tt><tt class="py-op">.</tt><tt id="link-118" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-118', 'data', 'link-50');">data</a></tt><tt class="py-op">[</tt><tt class="py-op">:</tt><tt class="py-op">,</tt><tt class="py-op">:</tt><tt class="py-op">,</tt><tt class="py-name">fi</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L335"></a><tt class="py-lineno">335</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt class="py-name">image_stack</tt><tt class="py-op">.</tt><tt id="link-119" class="py-name" targets="Variable pyto.io.image_io.ImageIO.pixelsize=pyto.io.image_io.ImageIO-class.html#pixelsize,Variable pyto.io.microscope_db.pixelsize=pyto.io.microscope_db-module.html#pixelsize"><a title="pyto.io.image_io.ImageIO.pixelsize
+pyto.io.microscope_db.pixelsize" class="py-name" href="#" onclick="return doclink('link-119', 'pixelsize', 'link-119');">pixelsize</a></tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">ndarray</tt><tt class="py-op">,</tt> <tt class="py-name">list</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L336"></a><tt class="py-lineno">336</tt>  <tt class="py-line">                    <tt id="link-120" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-120', 'image', 'link-6');">image</a></tt><tt class="py-op">.</tt><tt id="link-121" class="py-name"><a title="pyto.io.image_io.ImageIO.pixelsize
+pyto.io.microscope_db.pixelsize" class="py-name" href="#" onclick="return doclink('link-121', 'pixelsize', 'link-119');">pixelsize</a></tt> <tt class="py-op">=</tt> <tt class="py-name">image_stack</tt><tt class="py-op">.</tt><tt id="link-122" class="py-name"><a title="pyto.io.image_io.ImageIO.pixelsize
+pyto.io.microscope_db.pixelsize" class="py-name" href="#" onclick="return doclink('link-122', 'pixelsize', 'link-119');">pixelsize</a></tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt> </tt>
+<a name="L337"></a><tt class="py-lineno">337</tt>  <tt class="py-line">                <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L338"></a><tt class="py-lineno">338</tt>  <tt class="py-line">                    <tt id="link-123" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-123', 'image', 'link-6');">image</a></tt><tt class="py-op">.</tt><tt id="link-124" class="py-name"><a title="pyto.io.image_io.ImageIO.pixelsize
+pyto.io.microscope_db.pixelsize" class="py-name" href="#" onclick="return doclink('link-124', 'pixelsize', 'link-119');">pixelsize</a></tt> <tt class="py-op">=</tt> <tt class="py-name">image_stack</tt><tt class="py-op">.</tt><tt id="link-125" class="py-name"><a title="pyto.io.image_io.ImageIO.pixelsize
+pyto.io.microscope_db.pixelsize" class="py-name" href="#" onclick="return doclink('link-125', 'pixelsize', 'link-119');">pixelsize</a></tt> </tt>
+<a name="L339"></a><tt class="py-lineno">339</tt>  <tt class="py-line">                <tt id="link-126" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-126', 'image', 'link-6');">image</a></tt><tt class="py-op">.</tt><tt id="link-127" class="py-name"><a title="pyto.io.image_io.ImageIO.tiltAngle" class="py-name" href="#" onclick="return doclink('link-127', 'tiltAngle', 'link-22');">tiltAngle</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">tiltAngles</tt><tt class="py-op">[</tt><tt class="py-name">fi</tt><tt class="py-op">]</tt> </tt>
+<a name="L340"></a><tt class="py-lineno">340</tt>  <tt class="py-line">            <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L341"></a><tt class="py-lineno">341</tt>  <tt class="py-line">                <tt id="link-128" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-128', 'image', 'link-6');">image</a></tt> <tt class="py-op">=</tt> <tt id="link-129" class="py-name"><a title="pyto.io.image_io.ImageIO" class="py-name" href="#" onclick="return doclink('link-129', 'ImageIO', 'link-3');">ImageIO</a></tt><tt class="py-op">(</tt><tt class="py-name">file</tt><tt class="py-op">=</tt><tt class="py-name">fi</tt><tt class="py-op">)</tt> </tt>
+<a name="L342"></a><tt class="py-lineno">342</tt>  <tt class="py-line">                <tt id="link-130" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-130', 'image', 'link-6');">image</a></tt><tt class="py-op">.</tt><tt id="link-131" class="py-name"><a title="pyto.analysis.catalog.Catalog.read
+pyto.analysis.cleft_regions.CleftRegions.read
+pyto.analysis.clusters.Clusters.read
+pyto.analysis.connections.Connections.read
+pyto.analysis.layers.Layers.read
+pyto.analysis.vesicles.Vesicles.read
+pyto.core.image.Image.read
+pyto.io.connections.Connections.read
+pyto.io.image_io.ImageIO.read
+pyto.io.results.Results.read
+pyto.segmentation.cleft.Cleft.read
+pyto.segmentation.segment.Segment.read" class="py-name" href="#" onclick="return doclink('link-131', 'read', 'link-47');">read</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L343"></a><tt class="py-lineno">343</tt>  <tt class="py-line"> </tt>
+<a name="L344"></a><tt class="py-lineno">344</tt>  <tt class="py-line">            <tt class="py-comment"># calculate</tt> </tt>
+<a name="L345"></a><tt class="py-lineno">345</tt>  <tt class="py-line">            <tt class="py-name">mean</tt> <tt class="py-op">=</tt> <tt id="link-132" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-132', 'image', 'link-6');">image</a></tt><tt class="py-op">.</tt><tt id="link-133" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-133', 'data', 'link-50');">data</a></tt><tt class="py-op">.</tt><tt class="py-name">mean</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L346"></a><tt class="py-lineno">346</tt>  <tt class="py-line">            <tt class="py-name">tot_count</tt> <tt class="py-op">+=</tt> <tt class="py-name">mean</tt> </tt>
+<a name="L347"></a><tt class="py-lineno">347</tt>  <tt class="py-line">            <tt class="py-name">num</tt> <tt class="py-op">+=</tt> <tt class="py-number">1</tt> </tt>
+<a name="L348"></a><tt class="py-lineno">348</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt id="link-134" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-134', 'mode', 'link-8');">mode</a></tt> <tt class="py-op">==</tt> <tt class="py-string">'pixel_size'</tt><tt class="py-op">:</tt> </tt>
+<a name="L349"></a><tt class="py-lineno">349</tt>  <tt class="py-line">                <tt class="py-name">loc_dose</tt> <tt class="py-op">=</tt> <tt class="py-name">mean</tt> <tt class="py-op">/</tt> <tt class="py-op">(</tt><tt id="link-135" class="py-name" targets="Variable pyto.io.microscope_db.conversion=pyto.io.microscope_db-module.html#conversion"><a title="pyto.io.microscope_db.conversion" class="py-name" href="#" onclick="return doclink('link-135', 'conversion', 'link-135');">conversion</a></tt> <tt class="py-op">*</tt> <tt id="link-136" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-136', 'image', 'link-6');">image</a></tt><tt class="py-op">.</tt><tt id="link-137" class="py-name"><a title="pyto.io.image_io.ImageIO.pixelsize
+pyto.io.microscope_db.pixelsize" class="py-name" href="#" onclick="return doclink('link-137', 'pixelsize', 'link-119');">pixelsize</a></tt><tt class="py-op">**</tt><tt class="py-number">2</tt><tt class="py-op">)</tt> </tt>
+<a name="L350"></a><tt class="py-lineno">350</tt>  <tt class="py-line">            <tt class="py-keyword">elif</tt> <tt class="py-op">(</tt><tt id="link-138" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-138', 'mode', 'link-8');">mode</a></tt> <tt class="py-op">==</tt> <tt class="py-string">'cm300_fix'</tt><tt class="py-op">)</tt> <tt class="py-keyword">or</tt> <tt class="py-op">(</tt><tt id="link-139" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-139', 'image', 'link-6');">image</a></tt><tt class="py-op">.</tt><tt id="link-140" class="py-name"><a title="pyto.io.image_io.ImageIO.pixelsize
+pyto.io.microscope_db.pixelsize" class="py-name" href="#" onclick="return doclink('link-140', 'pixelsize', 'link-119');">pixelsize</a></tt> <tt class="py-op">==</tt> <tt class="py-number">2.048</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L351"></a><tt class="py-lineno">351</tt>  <tt class="py-line">                <tt id="link-141" class="py-name" targets="Variable pyto.io.microscope_db.ccd_pixelsize=pyto.io.microscope_db-module.html#ccd_pixelsize"><a title="pyto.io.microscope_db.ccd_pixelsize" class="py-name" href="#" onclick="return doclink('link-141', 'ccd_pixelsize', 'link-141');">ccd_pixelsize</a></tt> <tt class="py-op">=</tt> <tt class="py-number">30000</tt> </tt>
+<a name="L352"></a><tt class="py-lineno">352</tt>  <tt class="py-line">                <tt id="link-142" class="py-name"><a title="pyto.io.image_io.ImageIO.pixelsize
+pyto.io.microscope_db.pixelsize" class="py-name" href="#" onclick="return doclink('link-142', 'pixelsize', 'link-119');">pixelsize</a></tt> <tt class="py-op">=</tt> <tt id="link-143" class="py-name"><a title="pyto.io.microscope_db.ccd_pixelsize" class="py-name" href="#" onclick="return doclink('link-143', 'ccd_pixelsize', 'link-141');">ccd_pixelsize</a></tt> <tt class="py-op">/</tt> <tt id="link-144" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-144', 'image', 'link-6');">image</a></tt><tt class="py-op">.</tt><tt class="py-name">magnification</tt> </tt>
+<a name="L353"></a><tt class="py-lineno">353</tt>  <tt class="py-line">                <tt class="py-name">loc_dose</tt> <tt class="py-op">=</tt> <tt class="py-name">mean</tt> <tt class="py-op">/</tt> <tt class="py-op">(</tt><tt id="link-145" class="py-name"><a title="pyto.io.microscope_db.conversion" class="py-name" href="#" onclick="return doclink('link-145', 'conversion', 'link-135');">conversion</a></tt> <tt class="py-op">*</tt> <tt id="link-146" class="py-name"><a title="pyto.io.image_io.ImageIO.pixelsize
+pyto.io.microscope_db.pixelsize" class="py-name" href="#" onclick="return doclink('link-146', 'pixelsize', 'link-119');">pixelsize</a></tt><tt class="py-op">**</tt><tt class="py-number">2</tt><tt class="py-op">)</tt> </tt>
+<a name="L354"></a><tt class="py-lineno">354</tt>  <tt class="py-line">            <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L355"></a><tt class="py-lineno">355</tt>  <tt class="py-line">                <tt class="py-keyword">raise</tt> <tt class="py-name">ValueError</tt><tt class="py-op">(</tt><tt class="py-string">"Sorry, dose calculation mode: "</tt> <tt class="py-op">+</tt> <tt id="link-147" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-147', 'mode', 'link-8');">mode</a></tt> <tt class="py-op">+</tt>  </tt>
+<a name="L356"></a><tt class="py-lineno">356</tt>  <tt class="py-line">                                 <tt class="py-string">" is not recognized."</tt><tt class="py-op">)</tt>   </tt>
+<a name="L357"></a><tt class="py-lineno">357</tt>  <tt class="py-line">            <tt class="py-name">tot_dose</tt> <tt class="py-op">+=</tt> <tt class="py-name">loc_dose</tt> </tt>
+<a name="L358"></a><tt class="py-lineno">358</tt>  <tt class="py-line"> </tt>
+<a name="L359"></a><tt class="py-lineno">359</tt>  <tt class="py-line">            <tt class="py-comment"># save and print stats for an individual image</tt> </tt>
+<a name="L360"></a><tt class="py-lineno">360</tt>  <tt class="py-line">            <tt class="py-name">proj_dose</tt><tt class="py-op">.</tt><tt class="py-name">append</tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt id="link-148" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-148', 'image', 'link-6');">image</a></tt><tt class="py-op">.</tt><tt id="link-149" class="py-name"><a title="pyto.io.image_io.ImageIO.tiltAngle" class="py-name" href="#" onclick="return doclink('link-149', 'tiltAngle', 'link-22');">tiltAngle</a></tt><tt class="py-op">,</tt> <tt class="py-name">loc_dose</tt><tt class="py-op">/</tt><tt class="py-number">100.</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L361"></a><tt class="py-lineno">361</tt>  <tt class="py-line">            <tt class="py-name">logging</tt><tt class="py-op">.</tt><tt class="py-name">info</tt><tt class="py-op">(</tt><tt class="py-string">'%s, (%5.1f): mean=%6.1f, std=%6.1f, min=%d, max=%d'</tt>  </tt>
+<a name="L362"></a><tt class="py-lineno">362</tt>  <tt class="py-line">                         <tt class="py-op">%</tt> <tt class="py-op">(</tt><tt class="py-name">fi</tt><tt class="py-op">,</tt> <tt id="link-150" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-150', 'image', 'link-6');">image</a></tt><tt class="py-op">.</tt><tt id="link-151" class="py-name"><a title="pyto.io.image_io.ImageIO.tiltAngle" class="py-name" href="#" onclick="return doclink('link-151', 'tiltAngle', 'link-22');">tiltAngle</a></tt><tt class="py-op">,</tt> <tt class="py-name">mean</tt><tt class="py-op">,</tt> <tt id="link-152" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-152', 'image', 'link-6');">image</a></tt><tt class="py-op">.</tt><tt id="link-153" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-153', 'data', 'link-50');">data</a></tt><tt class="py-op">.</tt><tt class="py-name">std</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">,</tt>  </tt>
+<a name="L363"></a><tt class="py-lineno">363</tt>  <tt class="py-line">                            <tt id="link-154" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-154', 'image', 'link-6');">image</a></tt><tt class="py-op">.</tt><tt id="link-155" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-155', 'data', 'link-50');">data</a></tt><tt class="py-op">.</tt><tt id="link-156" class="py-name" targets="Method pyto.analysis.groups.Groups.min()=pyto.analysis.groups.Groups-class.html#min"><a title="pyto.analysis.groups.Groups.min" class="py-name" href="#" onclick="return doclink('link-156', 'min', 'link-156');">min</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt id="link-157" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-157', 'image', 'link-6');">image</a></tt><tt class="py-op">.</tt><tt id="link-158" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-158', 'data', 'link-50');">data</a></tt><tt class="py-op">.</tt><tt id="link-159" class="py-name" targets="Method pyto.analysis.groups.Groups.max()=pyto.analysis.groups.Groups-class.html#max"><a title="pyto.analysis.groups.Groups.max" class="py-name" href="#" onclick="return doclink('link-159', 'max', 'link-159');">max</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L364"></a><tt class="py-lineno">364</tt>  <tt class="py-line"> </tt>
+<a name="L365"></a><tt class="py-lineno">365</tt>  <tt class="py-line">        <tt class="py-comment"># mean counts</tt> </tt>
+<a name="L366"></a><tt class="py-lineno">366</tt>  <tt class="py-line">        <tt class="py-name">mean_count</tt> <tt class="py-op">=</tt> <tt class="py-name">tot_count</tt> <tt class="py-op">/</tt> <tt class="py-name">num</tt> </tt>
+<a name="L367"></a><tt class="py-lineno">367</tt>  <tt class="py-line"> </tt>
+<a name="L368"></a><tt class="py-lineno">368</tt>  <tt class="py-line">        <tt class="py-comment"># total dose per A^2</tt> </tt>
+<a name="L369"></a><tt class="py-lineno">369</tt>  <tt class="py-line">        <tt class="py-name">tot_dose</tt> <tt class="py-op">=</tt> <tt class="py-name">tot_dose</tt> <tt class="py-op">/</tt> <tt class="py-number">100</tt> </tt>
+<a name="L370"></a><tt class="py-lineno">370</tt>  <tt class="py-line"> </tt>
+<a name="L371"></a><tt class="py-lineno">371</tt>  <tt class="py-line">        <tt class="py-comment"># print total values</tt> </tt>
+<a name="L372"></a><tt class="py-lineno">372</tt>  <tt class="py-line">        <tt class="py-name">logging</tt><tt class="py-op">.</tt><tt class="py-name">info</tt><tt class="py-op">(</tt><tt class="py-string">"Mean count per pixel: %6.1f"</tt> <tt class="py-op">%</tt> <tt class="py-name">mean_count</tt><tt class="py-op">)</tt> </tt>
+<a name="L373"></a><tt class="py-lineno">373</tt>  <tt class="py-line">        <tt class="py-name">logging</tt><tt class="py-op">.</tt><tt class="py-name">info</tt><tt class="py-op">(</tt><tt class="py-string">"Total electron dose per A^2: %6.1f"</tt> <tt class="py-op">%</tt> <tt class="py-name">tot_dose</tt><tt class="py-op">)</tt>  </tt>
+<a name="L374"></a><tt class="py-lineno">374</tt>  <tt class="py-line">         </tt>
+<a name="L375"></a><tt class="py-lineno">375</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">projection_dose</tt><tt class="py-op">:</tt> </tt>
+<a name="L376"></a><tt class="py-lineno">376</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">tot_dose</tt><tt class="py-op">,</tt> <tt class="py-name">mean_count</tt><tt class="py-op">,</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">asarray</tt><tt class="py-op">(</tt><tt class="py-name">proj_dose</tt><tt class="py-op">)</tt> </tt>
+<a name="L377"></a><tt class="py-lineno">377</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L378"></a><tt class="py-lineno">378</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">tot_dose</tt><tt class="py-op">,</tt> <tt class="py-name">mean_count</tt> </tt>
+</div><a name="L379"></a><tt class="py-lineno">379</tt>  <tt class="py-line"> </tt>
+<a name="L380"></a><tt class="py-lineno">380</tt>  <tt class="py-line"> </tt>
+<a name="L381"></a><tt class="py-lineno">381</tt>  <tt class="py-line">    <tt class="py-comment">######################################################</tt> </tt>
+<a name="L382"></a><tt class="py-lineno">382</tt>  <tt class="py-line">    <tt class="py-comment"># </tt> </tt>
+<a name="L383"></a><tt class="py-lineno">383</tt>  <tt class="py-line">    <tt class="py-comment"># Other methods</tt> </tt>
+<a name="L384"></a><tt class="py-lineno">384</tt>  <tt class="py-line">    <tt class="py-comment">#</tt> </tt>
+<a name="L385"></a><tt class="py-lineno">385</tt>  <tt class="py-line">    <tt class="py-comment">######################################################</tt> </tt>
+<a name="L386"></a><tt class="py-lineno">386</tt>  <tt class="py-line"> </tt>
+<a name="Series.images"></a><div id="Series.images-def"><a name="L387"></a><tt class="py-lineno">387</tt> <a class="py-toggle" href="#" id="Series.images-toggle" onclick="return toggle('Series.images');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.tomo.series.Series-class.html#images">images</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">path</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">mode</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">out</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">pad</tt><tt class="py-op">=</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-param">start</tt><tt class="py-op">=</tt><tt class="py-number">1</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Series.images-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Series.images-expanded"><a name="L388"></a><tt class="py-lineno">388</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L389"></a><tt class="py-lineno">389</tt>  <tt class="py-line"><tt class="py-docstring">        Generator that (when instantiated) yields paths for files that match</tt> </tt>
+<a name="L390"></a><tt class="py-lineno">390</tt>  <tt class="py-line"><tt class="py-docstring">        path. If out is not None, a path for the corresponding output file is</tt> </tt>
+<a name="L391"></a><tt class="py-lineno">391</tt>  <tt class="py-line"><tt class="py-docstring">        also returned for each matched (input) file.</tt> </tt>
+<a name="L392"></a><tt class="py-lineno">392</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L393"></a><tt class="py-lineno">393</tt>  <tt class="py-line"><tt class="py-docstring">        Mode determines how the pattern match is performed. The options are:</tt> </tt>
+<a name="L394"></a><tt class="py-lineno">394</tt>  <tt class="py-line"><tt class="py-docstring">          - search: (like re.search)</tt> </tt>
+<a name="L395"></a><tt class="py-lineno">395</tt>  <tt class="py-line"><tt class="py-docstring">          - match: (like re.match)</tt> </tt>
+<a name="L396"></a><tt class="py-lineno">396</tt>  <tt class="py-line"><tt class="py-docstring">          - exact: both the beginning and the end of the file name are anchored</tt> </tt>
+<a name="L397"></a><tt class="py-lineno">397</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L398"></a><tt class="py-lineno">398</tt>  <tt class="py-line"><tt class="py-docstring">        Each path is separated into: directory, clean root, number and</tt> </tt>
+<a name="L399"></a><tt class="py-lineno">399</tt>  <tt class="py-line"><tt class="py-docstring">        extension. For example, mydir/myfile_002.em gives: 'mydir', 'myfile_',</tt> </tt>
+<a name="L400"></a><tt class="py-lineno">400</tt>  <tt class="py-line"><tt class="py-docstring">        '002', '.em'. If not given in argument out, directory file and</tt> </tt>
+<a name="L401"></a><tt class="py-lineno">401</tt>  <tt class="py-line"><tt class="py-docstring">        extension are taken from a corresponding (mached, or input) file.</tt> </tt>
+<a name="L402"></a><tt class="py-lineno">402</tt>  <tt class="py-line"><tt class="py-docstring">        Output files are numbered starting from start and the pading</tt> </tt>
+<a name="L403"></a><tt class="py-lineno">403</tt>  <tt class="py-line"><tt class="py-docstring">        determined if leading zeros are present in these numbers. Values None</tt> </tt>
+<a name="L404"></a><tt class="py-lineno">404</tt>  <tt class="py-line"><tt class="py-docstring">        for pad and start mean that the form and the number of the input file</tt> </tt>
+<a name="L405"></a><tt class="py-lineno">405</tt>  <tt class="py-line"><tt class="py-docstring">        is retained.</tt> </tt>
+<a name="L406"></a><tt class="py-lineno">406</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L407"></a><tt class="py-lineno">407</tt>  <tt class="py-line"><tt class="py-docstring">        Works for individual images only (not for stacks).</tt> </tt>
+<a name="L408"></a><tt class="py-lineno">408</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L409"></a><tt class="py-lineno">409</tt>  <tt class="py-line"><tt class="py-docstring">        For example:</tt> </tt>
+<a name="L410"></a><tt class="py-lineno">410</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L411"></a><tt class="py-lineno">411</tt>  <tt class="py-line"><tt class="py-docstring">          images(path='indir/infile', out=outdir/outfile, pad=2, start=1)</tt> </tt>
+<a name="L412"></a><tt class="py-lineno">412</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L413"></a><tt class="py-lineno">413</tt>  <tt class="py-line"><tt class="py-docstring">        yields the following input and output files:</tt> </tt>
+<a name="L414"></a><tt class="py-lineno">414</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L415"></a><tt class="py-lineno">415</tt>  <tt class="py-line"><tt class="py-docstring">          indir/infile_000.em, outdir/outfile_01.em</tt> </tt>
+<a name="L416"></a><tt class="py-lineno">416</tt>  <tt class="py-line"><tt class="py-docstring">          indir/infile_001.em, outdir/outfile_02.em</tt> </tt>
+<a name="L417"></a><tt class="py-lineno">417</tt>  <tt class="py-line"><tt class="py-docstring">          ...</tt> </tt>
+<a name="L418"></a><tt class="py-lineno">418</tt>  <tt class="py-line"><tt class="py-docstring">        </tt> </tt>
+<a name="L419"></a><tt class="py-lineno">419</tt>  <tt class="py-line"><tt class="py-docstring">        Arguments:</tt> </tt>
+<a name="L420"></a><tt class="py-lineno">420</tt>  <tt class="py-line"><tt class="py-docstring">          - path: pattern that matches input files</tt> </tt>
+<a name="L421"></a><tt class="py-lineno">421</tt>  <tt class="py-line"><tt class="py-docstring">          - mode: determines how the file names are matched</tt> </tt>
+<a name="L422"></a><tt class="py-lineno">422</tt>  <tt class="py-line"><tt class="py-docstring">          - out: output path</tt> </tt>
+<a name="L423"></a><tt class="py-lineno">423</tt>  <tt class="py-line"><tt class="py-docstring">          - pad: number of digits (paded by zeros if needed) of the number</tt> </tt>
+<a name="L424"></a><tt class="py-lineno">424</tt>  <tt class="py-line"><tt class="py-docstring">          pard of out file names</tt> </tt>
+<a name="L425"></a><tt class="py-lineno">425</tt>  <tt class="py-line"><tt class="py-docstring">          - start: output files are number starting with this argument</tt> </tt>
+<a name="L426"></a><tt class="py-lineno">426</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L427"></a><tt class="py-lineno">427</tt>  <tt class="py-line"><tt class="py-docstring">        Yields:</tt> </tt>
+<a name="L428"></a><tt class="py-lineno">428</tt>  <tt class="py-line"><tt class="py-docstring">          - in_path (if out is None)</tt> </tt>
+<a name="L429"></a><tt class="py-lineno">429</tt>  <tt class="py-line"><tt class="py-docstring">          - in_path, out_path (if out is not None)</tt> </tt>
+<a name="L430"></a><tt class="py-lineno">430</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L431"></a><tt class="py-lineno">431</tt>  <tt class="py-line"> </tt>
+<a name="L432"></a><tt class="py-lineno">432</tt>  <tt class="py-line">        <tt class="py-comment"># parse arguments</tt> </tt>
+<a name="L433"></a><tt class="py-lineno">433</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">path</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> <tt class="py-name">path</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">path</tt> </tt>
+<a name="L434"></a><tt class="py-lineno">434</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-160" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-160', 'mode', 'link-8');">mode</a></tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> <tt id="link-161" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-161', 'mode', 'link-8');">mode</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-162" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-162', 'mode', 'link-8');">mode</a></tt> </tt>
+<a name="L435"></a><tt class="py-lineno">435</tt>  <tt class="py-line"> </tt>
+<a name="L436"></a><tt class="py-lineno">436</tt>  <tt class="py-line">        <tt class="py-comment"># check for out, pad and start also?</tt> </tt>
+<a name="L437"></a><tt class="py-lineno">437</tt>  <tt class="py-line">         </tt>
+<a name="L438"></a><tt class="py-lineno">438</tt>  <tt class="py-line">        <tt class="py-comment"># extract directory and make re for base</tt> </tt>
+<a name="L439"></a><tt class="py-lineno">439</tt>  <tt class="py-line">        <tt class="py-name">dir_</tt><tt class="py-op">,</tt> <tt class="py-name">base_re</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-163" class="py-name" targets="Method pyto.tomo.series.Series.makeReg()=pyto.tomo.series.Series-class.html#makeReg"><a title="pyto.tomo.series.Series.makeReg" class="py-name" href="#" onclick="return doclink('link-163', 'makeReg', 'link-163');">makeReg</a></tt><tt class="py-op">(</tt><tt class="py-name">path</tt><tt class="py-op">=</tt><tt class="py-name">path</tt><tt class="py-op">,</tt> <tt id="link-164" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-164', 'mode', 'link-8');">mode</a></tt><tt class="py-op">=</tt><tt id="link-165" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-165', 'mode', 'link-8');">mode</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L440"></a><tt class="py-lineno">440</tt>  <tt class="py-line"> </tt>
+<a name="L441"></a><tt class="py-lineno">441</tt>  <tt class="py-line">        <tt class="py-comment">#  split out</tt> </tt>
+<a name="L442"></a><tt class="py-lineno">442</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-166" class="py-name"><a title="pyto.analysis.test.test_groups.out
+pyto.analysis.test.test_observations.out" class="py-name" href="#" onclick="return doclink('link-166', 'out', 'link-27');">out</a></tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L443"></a><tt class="py-lineno">443</tt>  <tt class="py-line">            <tt class="py-name">out_dir</tt><tt class="py-op">,</tt> <tt class="py-name">out_base</tt> <tt class="py-op">=</tt> <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">path</tt><tt class="py-op">.</tt><tt id="link-167" class="py-name"><a title="pyto.analysis.groups.Groups.split
+pyto.analysis.observations.Observations.split" class="py-name" href="#" onclick="return doclink('link-167', 'split', 'link-28');">split</a></tt><tt class="py-op">(</tt><tt id="link-168" class="py-name"><a title="pyto.analysis.test.test_groups.out
+pyto.analysis.test.test_observations.out" class="py-name" href="#" onclick="return doclink('link-168', 'out', 'link-27');">out</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L444"></a><tt class="py-lineno">444</tt>  <tt class="py-line"> </tt>
+<a name="L445"></a><tt class="py-lineno">445</tt>  <tt class="py-line">        <tt class="py-comment"># find all files</tt> </tt>
+<a name="L446"></a><tt class="py-lineno">446</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">start</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L447"></a><tt class="py-lineno">447</tt>  <tt class="py-line">            <tt id="link-169" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-169', 'ind', 'link-32');">ind</a></tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L448"></a><tt class="py-lineno">448</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L449"></a><tt class="py-lineno">449</tt>  <tt class="py-line">            <tt id="link-170" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-170', 'ind', 'link-32');">ind</a></tt> <tt class="py-op">=</tt> <tt class="py-name">start</tt> <tt class="py-op">-</tt> <tt class="py-number">1</tt> </tt>
+<a name="L450"></a><tt class="py-lineno">450</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-name">fi</tt> <tt class="py-keyword">in</tt> <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">listdir</tt><tt class="py-op">(</tt><tt class="py-name">dir_</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L451"></a><tt class="py-lineno">451</tt>  <tt class="py-line"> </tt>
+<a name="L452"></a><tt class="py-lineno">452</tt>  <tt class="py-line">            <tt class="py-comment"># find files that match fi</tt> </tt>
+<a name="L453"></a><tt class="py-lineno">453</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-name">base_re</tt><tt class="py-op">.</tt><tt class="py-name">search</tt><tt class="py-op">(</tt><tt class="py-name">fi</tt><tt class="py-op">)</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L454"></a><tt class="py-lineno">454</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt id="link-171" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-171', 'ind', 'link-32');">ind</a></tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> <tt id="link-172" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-172', 'ind', 'link-32');">ind</a></tt> <tt class="py-op">+=</tt> <tt class="py-number">1</tt> </tt>
+<a name="L455"></a><tt class="py-lineno">455</tt>  <tt class="py-line"> </tt>
+<a name="L456"></a><tt class="py-lineno">456</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt id="link-173" class="py-name"><a title="pyto.analysis.test.test_groups.out
+pyto.analysis.test.test_observations.out" class="py-name" href="#" onclick="return doclink('link-173', 'out', 'link-27');">out</a></tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L457"></a><tt class="py-lineno">457</tt>  <tt class="py-line"> </tt>
+<a name="L458"></a><tt class="py-lineno">458</tt>  <tt class="py-line">                    <tt class="py-comment"># yield only in file path</tt> </tt>
+<a name="L459"></a><tt class="py-lineno">459</tt>  <tt class="py-line">                    <tt class="py-keyword">yield</tt> <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">path</tt><tt class="py-op">.</tt><tt id="link-174" class="py-name"><a title="pyto.analysis.observations.Observations.join" class="py-name" href="#" onclick="return doclink('link-174', 'join', 'link-44');">join</a></tt><tt class="py-op">(</tt><tt class="py-name">dir_</tt><tt class="py-op">,</tt> <tt class="py-name">fi</tt><tt class="py-op">)</tt> </tt>
+<a name="L460"></a><tt class="py-lineno">460</tt>  <tt class="py-line"> </tt>
+<a name="L461"></a><tt class="py-lineno">461</tt>  <tt class="py-line">                <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L462"></a><tt class="py-lineno">462</tt>  <tt class="py-line"> </tt>
+<a name="L463"></a><tt class="py-lineno">463</tt>  <tt class="py-line">                    <tt class="py-comment"># make output file base from the actual input base </tt> </tt>
+<a name="L464"></a><tt class="py-lineno">464</tt>  <tt class="py-line">                    <tt class="py-name">new_base</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-175" class="py-name"><a title="pyto.tomo.series.Series.convertBase" class="py-name" href="#" onclick="return doclink('link-175', 'convertBase', 'link-40');">convertBase</a></tt><tt class="py-op">(</tt><tt class="py-name">in_base</tt><tt class="py-op">=</tt><tt class="py-name">fi</tt><tt class="py-op">,</tt> <tt class="py-name">out_base</tt><tt class="py-op">=</tt><tt class="py-name">out_base</tt><tt class="py-op">,</tt> </tt>
+<a name="L465"></a><tt class="py-lineno">465</tt>  <tt class="py-line">                                                <tt class="py-name">pad</tt><tt class="py-op">=</tt><tt class="py-name">pad</tt><tt class="py-op">,</tt> <tt id="link-176" class="py-name"><a title="pyto.io.results.Results.index" class="py-name" href="#" onclick="return doclink('link-176', 'index', 'link-41');">index</a></tt><tt class="py-op">=</tt><tt id="link-177" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-177', 'ind', 'link-32');">ind</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L466"></a><tt class="py-lineno">466</tt>  <tt class="py-line"> </tt>
+<a name="L467"></a><tt class="py-lineno">467</tt>  <tt class="py-line">                    <tt class="py-comment"># yield both in and out file paths</tt> </tt>
+<a name="L468"></a><tt class="py-lineno">468</tt>  <tt class="py-line">                    <tt class="py-keyword">yield</tt> <tt class="py-op">(</tt><tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">path</tt><tt class="py-op">.</tt><tt id="link-178" class="py-name"><a title="pyto.analysis.observations.Observations.join" class="py-name" href="#" onclick="return doclink('link-178', 'join', 'link-44');">join</a></tt><tt class="py-op">(</tt><tt class="py-name">dir_</tt><tt class="py-op">,</tt> <tt class="py-name">fi</tt><tt class="py-op">)</tt><tt class="py-op">,</tt>  </tt>
+<a name="L469"></a><tt class="py-lineno">469</tt>  <tt class="py-line">                           <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">path</tt><tt class="py-op">.</tt><tt id="link-179" class="py-name"><a title="pyto.analysis.observations.Observations.join" class="py-name" href="#" onclick="return doclink('link-179', 'join', 'link-44');">join</a></tt><tt class="py-op">(</tt><tt class="py-name">out_dir</tt><tt class="py-op">,</tt> <tt class="py-name">new_base</tt><tt class="py-op">)</tt><tt class="py-op">)</tt>  </tt>
+</div><a name="L470"></a><tt class="py-lineno">470</tt>  <tt class="py-line"> </tt>
+<a name="Series.sortPaths"></a><div id="Series.sortPaths-def"><a name="L471"></a><tt class="py-lineno">471</tt> <a class="py-toggle" href="#" id="Series.sortPaths-toggle" onclick="return toggle('Series.sortPaths');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.tomo.series.Series-class.html#sortPaths">sortPaths</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">paths</tt><tt class="py-op">,</tt> <tt class="py-param">mode</tt><tt class="py-op">=</tt><tt class="py-string">'num'</tt><tt class="py-op">,</tt> <tt class="py-param">sequence</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Series.sortPaths-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Series.sortPaths-expanded"><a name="L472"></a><tt class="py-lineno">472</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L473"></a><tt class="py-lineno">473</tt>  <tt class="py-line"><tt class="py-docstring">        Sorts list of file path and returns it.</tt> </tt>
+<a name="L474"></a><tt class="py-lineno">474</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L475"></a><tt class="py-lineno">475</tt>  <tt class="py-line"><tt class="py-docstring">        If arg mode is 'num', paths are sorted by series number, which are </tt> </tt>
+<a name="L476"></a><tt class="py-lineno">476</tt>  <tt class="py-line"><tt class="py-docstring">        expected to be between the rightmost '_' and '.' in the file names.</tt> </tt>
+<a name="L477"></a><tt class="py-lineno">477</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L478"></a><tt class="py-lineno">478</tt>  <tt class="py-line"><tt class="py-docstring">        If arg mode is 'tilt_angle', paths are sorted by tilt angle. </tt> </tt>
+<a name="L479"></a><tt class="py-lineno">479</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L480"></a><tt class="py-lineno">480</tt>  <tt class="py-line"><tt class="py-docstring">        If arg mode is 'sequence', paths are sorted by arg sequence that has</tt> </tt>
+<a name="L481"></a><tt class="py-lineno">481</tt>  <tt class="py-line"><tt class="py-docstring">        to have the same length as paths.</tt> </tt>
+<a name="L482"></a><tt class="py-lineno">482</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L483"></a><tt class="py-lineno">483</tt>  <tt class="py-line"><tt class="py-docstring">        Arguments:</tt> </tt>
+<a name="L484"></a><tt class="py-lineno">484</tt>  <tt class="py-line"><tt class="py-docstring">          - paths: list of file paths (with or without directory)</tt> </tt>
+<a name="L485"></a><tt class="py-lineno">485</tt>  <tt class="py-line"><tt class="py-docstring">          - mode: sorting mode, 'num', 'tilt_angle', or 'sequence'</tt> </tt>
+<a name="L486"></a><tt class="py-lineno">486</tt>  <tt class="py-line"><tt class="py-docstring">          - sequence: sequence of values corresponding to paths</tt> </tt>
+<a name="L487"></a><tt class="py-lineno">487</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L488"></a><tt class="py-lineno">488</tt>  <tt class="py-line"><tt class="py-docstring">        Returns sorted list of paths. </tt> </tt>
+<a name="L489"></a><tt class="py-lineno">489</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L490"></a><tt class="py-lineno">490</tt>  <tt class="py-line"> </tt>
+<a name="L491"></a><tt class="py-lineno">491</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-180" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-180', 'mode', 'link-8');">mode</a></tt> <tt class="py-op">==</tt> <tt class="py-string">'tilt_angle'</tt><tt class="py-op">:</tt> </tt>
+<a name="L492"></a><tt class="py-lineno">492</tt>  <tt class="py-line"> </tt>
+<a name="L493"></a><tt class="py-lineno">493</tt>  <tt class="py-line">            <tt class="py-comment"># get tilt angles from file headers</tt> </tt>
+<a name="L494"></a><tt class="py-lineno">494</tt>  <tt class="py-line">            <tt class="py-name">unsorted</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
+<a name="L495"></a><tt class="py-lineno">495</tt>  <tt class="py-line">            <tt class="py-keyword">for</tt> <tt class="py-name">file_</tt> <tt class="py-keyword">in</tt> <tt class="py-name">paths</tt><tt class="py-op">:</tt> </tt>
+<a name="L496"></a><tt class="py-lineno">496</tt>  <tt class="py-line">                <tt id="link-181" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-181', 'image', 'link-6');">image</a></tt> <tt class="py-op">=</tt> <tt id="link-182" class="py-name"><a title="pyto.io.image_io.ImageIO" class="py-name" href="#" onclick="return doclink('link-182', 'ImageIO', 'link-3');">ImageIO</a></tt><tt class="py-op">(</tt><tt class="py-name">file</tt><tt class="py-op">=</tt><tt class="py-name">file_</tt><tt class="py-op">)</tt> </tt>
+<a name="L497"></a><tt class="py-lineno">497</tt>  <tt class="py-line">                <tt id="link-183" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-183', 'image', 'link-6');">image</a></tt><tt class="py-op">.</tt><tt id="link-184" class="py-name"><a title="pyto.io.image_io.ImageIO.readHeader" class="py-name" href="#" onclick="return doclink('link-184', 'readHeader', 'link-20');">readHeader</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L498"></a><tt class="py-lineno">498</tt>  <tt class="py-line">                <tt class="py-name">unsorted</tt><tt class="py-op">.</tt><tt class="py-name">append</tt><tt class="py-op">(</tt><tt id="link-185" class="py-name"><a title="pyto.core.image
+pyto.grey.image
+pyto.segmentation.test_hierarchy.image" class="py-name" href="#" onclick="return doclink('link-185', 'image', 'link-6');">image</a></tt><tt class="py-op">.</tt><tt id="link-186" class="py-name"><a title="pyto.io.image_io.ImageIO.tiltAngle" class="py-name" href="#" onclick="return doclink('link-186', 'tiltAngle', 'link-22');">tiltAngle</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L499"></a><tt class="py-lineno">499</tt>  <tt class="py-line"> </tt>
+<a name="L500"></a><tt class="py-lineno">500</tt>  <tt class="py-line">        <tt class="py-keyword">elif</tt> <tt id="link-187" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-187', 'mode', 'link-8');">mode</a></tt> <tt class="py-op">==</tt> <tt class="py-string">'num'</tt><tt class="py-op">:</tt> </tt>
+<a name="L501"></a><tt class="py-lineno">501</tt>  <tt class="py-line"> </tt>
+<a name="L502"></a><tt class="py-lineno">502</tt>  <tt class="py-line">            <tt class="py-comment"># get file numbers</tt> </tt>
+<a name="L503"></a><tt class="py-lineno">503</tt>  <tt class="py-line">            <tt class="py-name">unsorted</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-name">int</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-188" class="py-name" targets="Method pyto.tomo.series.Series.splitBase()=pyto.tomo.series.Series-class.html#splitBase"><a title="pyto.tomo.series.Series.splitBase" class="py-name" href="#" onclick="return doclink('link-188', 'splitBase', 'link-188');">splitBase</a></tt><tt class="py-op">(</tt><tt class="py-name">base</tt><tt class="py-op">=</tt><tt class="py-name">file_</tt><tt class="py-op">)</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-name">file_</tt> <tt class="py-keyword">in</tt> <tt class="py-name">paths</tt><tt class="py-op">]</tt> </tt>
+<a name="L504"></a><tt class="py-lineno">504</tt>  <tt class="py-line"> </tt>
+<a name="L505"></a><tt class="py-lineno">505</tt>  <tt class="py-line">        <tt class="py-keyword">elif</tt> <tt id="link-189" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-189', 'mode', 'link-8');">mode</a></tt> <tt class="py-op">==</tt> <tt class="py-string">'sequence'</tt><tt class="py-op">:</tt> </tt>
+<a name="L506"></a><tt class="py-lineno">506</tt>  <tt class="py-line"> </tt>
+<a name="L507"></a><tt class="py-lineno">507</tt>  <tt class="py-line">            <tt class="py-name">unsorted</tt> <tt class="py-op">=</tt> <tt class="py-name">sequence</tt> </tt>
+<a name="L508"></a><tt class="py-lineno">508</tt>  <tt class="py-line"> </tt>
+<a name="L509"></a><tt class="py-lineno">509</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L510"></a><tt class="py-lineno">510</tt>  <tt class="py-line">            <tt class="py-keyword">raise</tt> <tt class="py-name">ValueError</tt><tt class="py-op">(</tt><tt class="py-string">'Mode '</tt><tt class="py-op">,</tt> <tt id="link-190" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-190', 'mode', 'link-8');">mode</a></tt><tt class="py-op">,</tt> <tt class="py-string">" not understood. Allowed values "</tt><tt class="py-op">,</tt> </tt>
+<a name="L511"></a><tt class="py-lineno">511</tt>  <tt class="py-line">                             <tt class="py-string">"are 'num', 'tilt_angle' and 'sequence'."</tt><tt class="py-op">)</tt> </tt>
+<a name="L512"></a><tt class="py-lineno">512</tt>  <tt class="py-line"> </tt>
+<a name="L513"></a><tt class="py-lineno">513</tt>  <tt class="py-line">        <tt class="py-comment"># sort file numbers and paths</tt> </tt>
+<a name="L514"></a><tt class="py-lineno">514</tt>  <tt class="py-line">        <tt class="py-name">unsorted</tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">array</tt><tt class="py-op">(</tt><tt class="py-name">unsorted</tt><tt class="py-op">)</tt> </tt>
+<a name="L515"></a><tt class="py-lineno">515</tt>  <tt class="py-line">        <tt class="py-name">sort_ind</tt> <tt class="py-op">=</tt> <tt class="py-name">unsorted</tt><tt class="py-op">.</tt><tt class="py-name">argsort</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L516"></a><tt class="py-lineno">516</tt>  <tt class="py-line">        <tt class="py-name">sorted_paths</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-name">paths</tt><tt class="py-op">[</tt><tt id="link-191" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-191', 'ind', 'link-32');">ind</a></tt><tt class="py-op">]</tt> <tt class="py-keyword">for</tt> <tt id="link-192" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-192', 'ind', 'link-32');">ind</a></tt> <tt class="py-keyword">in</tt> <tt class="py-name">sort_ind</tt><tt class="py-op">]</tt> </tt>
+<a name="L517"></a><tt class="py-lineno">517</tt>  <tt class="py-line"> </tt>
+<a name="L518"></a><tt class="py-lineno">518</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">sorted_paths</tt> </tt>
+</div><a name="L519"></a><tt class="py-lineno">519</tt>  <tt class="py-line"> </tt>
+<a name="Series.makeReg"></a><div id="Series.makeReg-def"><a name="L520"></a><tt class="py-lineno">520</tt> <a class="py-toggle" href="#" id="Series.makeReg-toggle" onclick="return toggle('Series.makeReg');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.tomo.series.Series-class.html#makeReg">makeReg</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">path</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">mode</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Series.makeReg-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Series.makeReg-expanded"><a name="L521"></a><tt class="py-lineno">521</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L522"></a><tt class="py-lineno">522</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L523"></a><tt class="py-lineno">523</tt>  <tt class="py-line">           </tt>
+<a name="L524"></a><tt class="py-lineno">524</tt>  <tt class="py-line">        <tt class="py-comment"># parse path (remove?)</tt> </tt>
+<a name="L525"></a><tt class="py-lineno">525</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">path</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L526"></a><tt class="py-lineno">526</tt>  <tt class="py-line">            <tt class="py-name">path</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">path</tt> </tt>
+<a name="L527"></a><tt class="py-lineno">527</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-193" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-193', 'mode', 'link-8');">mode</a></tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L528"></a><tt class="py-lineno">528</tt>  <tt class="py-line">            <tt id="link-194" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-194', 'mode', 'link-8');">mode</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-195" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-195', 'mode', 'link-8');">mode</a></tt>         </tt>
+<a name="L529"></a><tt class="py-lineno">529</tt>  <tt class="py-line"> </tt>
+<a name="L530"></a><tt class="py-lineno">530</tt>  <tt class="py-line">        <tt class="py-comment"># find directory and base </tt> </tt>
+<a name="L531"></a><tt class="py-lineno">531</tt>  <tt class="py-line">        <tt class="py-op">(</tt><tt class="py-name">dir_</tt><tt class="py-op">,</tt> <tt class="py-name">base</tt><tt class="py-op">)</tt> <tt class="py-op">=</tt> <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">path</tt><tt class="py-op">.</tt><tt id="link-196" class="py-name"><a title="pyto.analysis.groups.Groups.split
+pyto.analysis.observations.Observations.split" class="py-name" href="#" onclick="return doclink('link-196', 'split', 'link-28');">split</a></tt><tt class="py-op">(</tt><tt class="py-name">path</tt><tt class="py-op">)</tt> </tt>
+<a name="L532"></a><tt class="py-lineno">532</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">dir_</tt> <tt class="py-op">==</tt> <tt class="py-string">''</tt><tt class="py-op">:</tt> <tt class="py-name">dir_</tt> <tt class="py-op">=</tt> <tt class="py-string">'.'</tt> </tt>
+<a name="L533"></a><tt class="py-lineno">533</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">base</tt> <tt class="py-op">==</tt> <tt class="py-string">''</tt><tt class="py-op">:</tt> <tt class="py-name">base</tt> <tt class="py-op">=</tt> <tt class="py-string">'.*'</tt> </tt>
+<a name="L534"></a><tt class="py-lineno">534</tt>  <tt class="py-line"> </tt>
+<a name="L535"></a><tt class="py-lineno">535</tt>  <tt class="py-line">        <tt class="py-comment"># add anchors at the beginning and at the end of base if needed </tt> </tt>
+<a name="L536"></a><tt class="py-lineno">536</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-197" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-197', 'mode', 'link-8');">mode</a></tt> <tt class="py-op">==</tt> <tt class="py-string">'exact'</tt><tt class="py-op">:</tt> </tt>
+<a name="L537"></a><tt class="py-lineno">537</tt>  <tt class="py-line">            <tt class="py-name">base</tt> <tt class="py-op">=</tt> <tt class="py-string">'^'</tt> <tt class="py-op">+</tt> <tt class="py-name">base</tt> <tt class="py-op">+</tt> <tt class="py-string">'$'</tt> </tt>
+<a name="L538"></a><tt class="py-lineno">538</tt>  <tt class="py-line">        <tt class="py-keyword">elif</tt> <tt id="link-198" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-198', 'mode', 'link-8');">mode</a></tt> <tt class="py-op">==</tt> <tt class="py-string">'match'</tt><tt class="py-op">:</tt> </tt>
+<a name="L539"></a><tt class="py-lineno">539</tt>  <tt class="py-line">            <tt class="py-name">base</tt> <tt class="py-op">=</tt> <tt class="py-string">'^'</tt> <tt class="py-op">+</tt> <tt class="py-name">base</tt> </tt>
+<a name="L540"></a><tt class="py-lineno">540</tt>  <tt class="py-line"> </tt>
+<a name="L541"></a><tt class="py-lineno">541</tt>  <tt class="py-line">        <tt class="py-comment"># return </tt> </tt>
+<a name="L542"></a><tt class="py-lineno">542</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">dir_</tt><tt class="py-op">,</tt> <tt class="py-name">re</tt><tt class="py-op">.</tt><tt class="py-name">compile</tt><tt class="py-op">(</tt><tt class="py-name">base</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L543"></a><tt class="py-lineno">543</tt>  <tt class="py-line"> </tt>
+<a name="Series.convertBase"></a><div id="Series.convertBase-def"><a name="L544"></a><tt class="py-lineno">544</tt> <a class="py-toggle" href="#" id="Series.convertBase-toggle" onclick="return toggle('Series.convertBase');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.tomo.series.Series-class.html#convertBase">convertBase</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">in_base</tt><tt class="py-op">,</tt> <tt class="py-param">out_base</tt><tt class="py-op">,</tt> <tt class="py-param">index</tt><tt class="py-op">,</tt> <tt class="py-param">pad</tt><tt class="py-op">=</tt><tt class="py-number">0</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Series.convertBase-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Series.convertBase-expanded"><a name="L545"></a><tt class="py-lineno">545</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L546"></a><tt class="py-lineno">546</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L547"></a><tt class="py-lineno">547</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L548"></a><tt class="py-lineno">548</tt>  <tt class="py-line">         </tt>
+<a name="L549"></a><tt class="py-lineno">549</tt>  <tt class="py-line">        <tt class="py-comment">#  parse out_base</tt> </tt>
+<a name="L550"></a><tt class="py-lineno">550</tt>  <tt class="py-line">        <tt class="py-name">out_clean_root</tt><tt class="py-op">,</tt> <tt class="py-name">out_num</tt><tt class="py-op">,</tt> <tt class="py-name">out_ext</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-199" class="py-name"><a title="pyto.tomo.series.Series.splitBase" class="py-name" href="#" onclick="return doclink('link-199', 'splitBase', 'link-188');">splitBase</a></tt><tt class="py-op">(</tt><tt class="py-name">out_base</tt><tt class="py-op">)</tt> </tt>
+<a name="L551"></a><tt class="py-lineno">551</tt>  <tt class="py-line"> </tt>
+<a name="L552"></a><tt class="py-lineno">552</tt>  <tt class="py-line">        <tt class="py-comment"># if output base or extension is not given use input           </tt> </tt>
+<a name="L553"></a><tt class="py-lineno">553</tt>  <tt class="py-line">        <tt class="py-name">in_clean_root</tt><tt class="py-op">,</tt> <tt class="py-name">in_num</tt><tt class="py-op">,</tt> <tt class="py-name">in_ext</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-200" class="py-name"><a title="pyto.tomo.series.Series.splitBase" class="py-name" href="#" onclick="return doclink('link-200', 'splitBase', 'link-188');">splitBase</a></tt><tt class="py-op">(</tt><tt class="py-name">in_base</tt><tt class="py-op">)</tt> </tt>
+<a name="L554"></a><tt class="py-lineno">554</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">out_clean_root</tt> <tt class="py-op">==</tt> <tt class="py-string">''</tt><tt class="py-op">:</tt> </tt>
+<a name="L555"></a><tt class="py-lineno">555</tt>  <tt class="py-line">            <tt class="py-name">out_clean_root</tt> <tt class="py-op">=</tt> <tt class="py-name">in_clean_root</tt> </tt>
+<a name="L556"></a><tt class="py-lineno">556</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">out_ext</tt> <tt class="py-op">==</tt> <tt class="py-string">''</tt><tt class="py-op">:</tt> </tt>
+<a name="L557"></a><tt class="py-lineno">557</tt>  <tt class="py-line">            <tt class="py-name">out_ext</tt> <tt class="py-op">=</tt> <tt class="py-name">in_ext</tt> </tt>
+<a name="L558"></a><tt class="py-lineno">558</tt>  <tt class="py-line"> </tt>
+<a name="L559"></a><tt class="py-lineno">559</tt>  <tt class="py-line">        <tt class="py-comment"># prepare num part</tt> </tt>
+<a name="L560"></a><tt class="py-lineno">560</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-201" class="py-name"><a title="pyto.io.results.Results.index" class="py-name" href="#" onclick="return doclink('link-201', 'index', 'link-41');">index</a></tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L561"></a><tt class="py-lineno">561</tt>  <tt class="py-line">            <tt id="link-202" class="py-name"><a title="pyto.io.results.Results.index" class="py-name" href="#" onclick="return doclink('link-202', 'index', 'link-41');">index</a></tt> <tt class="py-op">=</tt> <tt class="py-name">int</tt><tt class="py-op">(</tt><tt class="py-name">in_num</tt><tt class="py-op">)</tt> </tt>
+<a name="L562"></a><tt class="py-lineno">562</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">pad</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L563"></a><tt class="py-lineno">563</tt>  <tt class="py-line">            <tt class="py-name">out_num</tt> <tt class="py-op">=</tt> <tt class="py-name">in_num</tt> </tt>
+<a name="L564"></a><tt class="py-lineno">564</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L565"></a><tt class="py-lineno">565</tt>  <tt class="py-line">            <tt class="py-name">out_num</tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt><tt class="py-string">'%0'</tt> <tt class="py-op">+</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">pad</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-string">'d'</tt><tt class="py-op">)</tt> <tt class="py-op">%</tt> <tt id="link-203" class="py-name"><a title="pyto.io.results.Results.index" class="py-name" href="#" onclick="return doclink('link-203', 'index', 'link-41');">index</a></tt> </tt>
+<a name="L566"></a><tt class="py-lineno">566</tt>  <tt class="py-line"> </tt>
+<a name="L567"></a><tt class="py-lineno">567</tt>  <tt class="py-line">        <tt class="py-comment"># assemble out base</tt> </tt>
+<a name="L568"></a><tt class="py-lineno">568</tt>  <tt class="py-line">        <tt class="py-name">new_out_base</tt> <tt class="py-op">=</tt> <tt class="py-name">out_clean_root</tt> <tt class="py-op">+</tt> <tt class="py-name">out_num</tt> <tt class="py-op">+</tt> <tt class="py-name">out_ext</tt> </tt>
+<a name="L569"></a><tt class="py-lineno">569</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">new_out_base</tt> </tt>
+</div><a name="L570"></a><tt class="py-lineno">570</tt>  <tt class="py-line"> </tt>
+<a name="Series.splitBase"></a><div id="Series.splitBase-def"><a name="L571"></a><tt class="py-lineno">571</tt> <a class="py-toggle" href="#" id="Series.splitBase-toggle" onclick="return toggle('Series.splitBase');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.tomo.series.Series-class.html#splitBase">splitBase</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">base</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Series.splitBase-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Series.splitBase-expanded"><a name="L572"></a><tt class="py-lineno">572</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L573"></a><tt class="py-lineno">573</tt>  <tt class="py-line"><tt class="py-docstring">        Splits base of a file name into three parts and returns them. </tt> </tt>
+<a name="L574"></a><tt class="py-lineno">574</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L575"></a><tt class="py-lineno">575</tt>  <tt class="py-line"><tt class="py-docstring">        The last '_' before the extension separates the first two parts, while</tt> </tt>
+<a name="L576"></a><tt class="py-lineno">576</tt>  <tt class="py-line"><tt class="py-docstring">        the last '.' separates the last two. The idea is that the second part</tt> </tt>
+<a name="L577"></a><tt class="py-lineno">577</tt>  <tt class="py-line"><tt class="py-docstring">        is a number. </tt> </tt>
+<a name="L578"></a><tt class="py-lineno">578</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L579"></a><tt class="py-lineno">579</tt>  <tt class="py-line"><tt class="py-docstring">        For example:</tt> </tt>
+<a name="L580"></a><tt class="py-lineno">580</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L581"></a><tt class="py-lineno">581</tt>  <tt class="py-line"><tt class="py-docstring">          &gt; series.splitBase('neu-2_gfp_23.mrc') </tt> </tt>
+<a name="L582"></a><tt class="py-lineno">582</tt>  <tt class="py-line"><tt class="py-docstring">          &gt; 'neu-2_gfp_', '23', '.mrc'</tt> </tt>
+<a name="L583"></a><tt class="py-lineno">583</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L584"></a><tt class="py-lineno">584</tt>  <tt class="py-line"><tt class="py-docstring">        Argument:</tt> </tt>
+<a name="L585"></a><tt class="py-lineno">585</tt>  <tt class="py-line"><tt class="py-docstring">          - base: file base, that is a file name with of without directory/ies</tt> </tt>
+<a name="L586"></a><tt class="py-lineno">586</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L587"></a><tt class="py-lineno">587</tt>  <tt class="py-line"><tt class="py-docstring">        Returns tuple of three strings</tt> </tt>
+<a name="L588"></a><tt class="py-lineno">588</tt>  <tt class="py-line"><tt class="py-docstring">        </tt> </tt>
+<a name="L589"></a><tt class="py-lineno">589</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L590"></a><tt class="py-lineno">590</tt>  <tt class="py-line"> </tt>
+<a name="L591"></a><tt class="py-lineno">591</tt>  <tt class="py-line">        <tt class="py-comment"># sanity check</tt> </tt>
+<a name="L592"></a><tt class="py-lineno">592</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-op">(</tt><tt class="py-name">base</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">)</tt> <tt class="py-keyword">or</tt> <tt class="py-op">(</tt><tt class="py-name">base</tt> <tt class="py-op">==</tt> <tt class="py-string">''</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L593"></a><tt class="py-lineno">593</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-string">''</tt><tt class="py-op">,</tt> <tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-string">''</tt> </tt>
+<a name="L594"></a><tt class="py-lineno">594</tt>  <tt class="py-line"> </tt>
+<a name="L595"></a><tt class="py-lineno">595</tt>  <tt class="py-line">        <tt class="py-comment"># split base to root and extension</tt> </tt>
+<a name="L596"></a><tt class="py-lineno">596</tt>  <tt class="py-line">        <tt class="py-name">root</tt><tt class="py-op">,</tt> <tt class="py-name">ext</tt> <tt class="py-op">=</tt> <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">path</tt><tt class="py-op">.</tt><tt class="py-name">splitext</tt><tt class="py-op">(</tt><tt class="py-name">base</tt><tt class="py-op">)</tt> </tt>
+<a name="L597"></a><tt class="py-lineno">597</tt>  <tt class="py-line"> </tt>
+<a name="L598"></a><tt class="py-lineno">598</tt>  <tt class="py-line">        <tt class="py-comment"># split root</tt> </tt>
+<a name="L599"></a><tt class="py-lineno">599</tt>  <tt class="py-line">        <tt class="py-name">num_pos</tt> <tt class="py-op">=</tt> <tt class="py-name">root</tt><tt class="py-op">.</tt><tt class="py-name">rfind</tt><tt class="py-op">(</tt><tt class="py-string">'_'</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-number">1</tt> </tt>
+<a name="L600"></a><tt class="py-lineno">600</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">num_pos</tt> <tt class="py-op">&gt;</tt> <tt class="py-number">0</tt><tt class="py-op">:</tt> </tt>
+<a name="L601"></a><tt class="py-lineno">601</tt>  <tt class="py-line">            <tt class="py-name">clean_root</tt> <tt class="py-op">=</tt> <tt class="py-name">root</tt><tt class="py-op">[</tt><tt class="py-op">:</tt><tt class="py-name">num_pos</tt><tt class="py-op">]</tt> </tt>
+<a name="L602"></a><tt class="py-lineno">602</tt>  <tt class="py-line">            <tt class="py-name">num</tt> <tt class="py-op">=</tt> <tt class="py-name">root</tt><tt class="py-op">[</tt><tt class="py-name">num_pos</tt><tt class="py-op">:</tt><tt class="py-op">]</tt> </tt>
+<a name="L603"></a><tt class="py-lineno">603</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L604"></a><tt class="py-lineno">604</tt>  <tt class="py-line">            <tt class="py-name">clean_root</tt> <tt class="py-op">=</tt> <tt class="py-name">base</tt> </tt>
+<a name="L605"></a><tt class="py-lineno">605</tt>  <tt class="py-line">            <tt class="py-name">num</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L606"></a><tt class="py-lineno">606</tt>  <tt class="py-line"> </tt>
+<a name="L607"></a><tt class="py-lineno">607</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">clean_root</tt><tt class="py-op">,</tt> <tt class="py-name">num</tt><tt class="py-op">,</tt> <tt class="py-name">ext</tt> </tt>
+</div><a name="L608"></a><tt class="py-lineno">608</tt>  <tt class="py-line"> </tt>
+<a name="Series.setOutMode"></a><div id="Series.setOutMode-def"><a name="L609"></a><tt class="py-lineno">609</tt> <a class="py-toggle" href="#" id="Series.setOutMode-toggle" onclick="return toggle('Series.setOutMode');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.tomo.series.Series-class.html#setOutMode">setOutMode</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">mode</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">start</tt><tt class="py-op">=</tt><tt class="py-number">1</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Series.setOutMode-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Series.setOutMode-expanded"><a name="L610"></a><tt class="py-lineno">610</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L611"></a><tt class="py-lineno">611</tt>  <tt class="py-line"><tt class="py-docstring">        Sets attributes</tt> </tt>
+<a name="L612"></a><tt class="py-lineno">612</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L613"></a><tt class="py-lineno">613</tt>  <tt class="py-line"> </tt>
+<a name="L614"></a><tt class="py-lineno">614</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">outMode</tt> <tt class="py-op">=</tt> <tt id="link-204" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-204', 'mode', 'link-8');">mode</a></tt> </tt>
+<a name="L615"></a><tt class="py-lineno">615</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">outStart</tt> <tt class="py-op">=</tt> <tt class="py-name">start</tt> </tt>
+</div><a name="L616"></a><tt class="py-lineno">616</tt>  <tt class="py-line"> </tt>
+<a name="L617"></a><tt class="py-lineno">617</tt>  <tt class="py-line">    <tt class="py-decorator">@</tt><tt class="py-decorator">classmethod</tt> </tt>
+<a name="Series.readTiltAngles"></a><div id="Series.readTiltAngles-def"><a name="L618"></a><tt class="py-lineno">618</tt> <a class="py-toggle" href="#" id="Series.readTiltAngles-toggle" onclick="return toggle('Series.readTiltAngles');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.tomo.series.Series-class.html#readTiltAngles">readTiltAngles</a><tt class="py-op">(</tt><tt class="py-param">cls</tt><tt class="py-op">,</tt> <tt class="py-param">file_</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Series.readTiltAngles-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Series.readTiltAngles-expanded"><a name="L619"></a><tt class="py-lineno">619</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L620"></a><tt class="py-lineno">620</tt>  <tt class="py-line"><tt class="py-docstring">        Reads angles from a SerialEm type tilt angles file (one angle per line,</tt> </tt>
+<a name="L621"></a><tt class="py-lineno">621</tt>  <tt class="py-line"><tt class="py-docstring">        ordered like the corresponding projections in a stack).</tt> </tt>
+<a name="L622"></a><tt class="py-lineno">622</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L623"></a><tt class="py-lineno">623</tt>  <tt class="py-line"><tt class="py-docstring">        Argument:</tt> </tt>
+<a name="L624"></a><tt class="py-lineno">624</tt>  <tt class="py-line"><tt class="py-docstring">          - file_: tilt file name</tt> </tt>
+<a name="L625"></a><tt class="py-lineno">625</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L626"></a><tt class="py-lineno">626</tt>  <tt class="py-line"><tt class="py-docstring">        Returns ndarray of tilt angles</tt> </tt>
+<a name="L627"></a><tt class="py-lineno">627</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L628"></a><tt class="py-lineno">628</tt>  <tt class="py-line">        <tt class="py-name">angles</tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">loadtxt</tt><tt class="py-op">(</tt><tt class="py-name">file_</tt><tt class="py-op">)</tt> </tt>
+<a name="L629"></a><tt class="py-lineno">629</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">angles</tt> </tt>
+</div></div><a name="L630"></a><tt class="py-lineno">630</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

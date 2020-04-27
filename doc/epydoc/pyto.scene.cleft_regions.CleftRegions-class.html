@@ -1,0 +1,1451 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.scene.cleft_regions.CleftRegions</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.scene-module.html">Package&nbsp;scene</a> ::
+        <a href="pyto.scene.cleft_regions-module.html">Module&nbsp;cleft_regions</a> ::
+        Class&nbsp;CleftRegions
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.scene.cleft_regions.CleftRegions-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class CleftRegions</h1><p class="nomargin-top"><span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_pyto_sce" name="uml_class_diagram_for_pyto_sce">
+<area shape="rect" id="node1_19" href="pyto.scene.cleft_regions.CleftRegions-class.html#cleftLayerIds" title="Cleft layer ids" alt="" coords="18,30,1102,50"/>
+<area shape="rect" id="node1_20" href="pyto.scene.cleft_regions.CleftRegions-class.html#boundLayerIds" title="Layer ids of both boundaries" alt="" coords="18,50,1102,70"/>
+<area shape="rect" id="node1_21" href="pyto.scene.cleft_regions.CleftRegions-class.html#bound1LayerIds" title="Layer ids of boundary 1" alt="" coords="18,70,1102,90"/>
+<area shape="rect" id="node1_22" href="pyto.scene.cleft_regions.CleftRegions-class.html#bound2LayerIds" title="Layer ids of boundary 2" alt="" coords="18,90,1102,110"/>
+<area shape="rect" id="node1_23" href="pyto.scene.cleft_regions.CleftRegions-class.html#boundEdgeLayerIds" title="Boundary edge layer ids" alt="" coords="18,110,1102,130"/>
+<area shape="rect" id="node1_24" href="pyto.scene.cleft_regions.CleftRegions-class.html#__init__" title="Initializes attributes." alt="" coords="18,133,1102,153"/>
+<area shape="rect" id="node1_25" href="pyto.scene.cleft_regions.CleftRegions-class.html#getParameterStrings" title="pyto.scene.cleft_regions.CleftRegions.getParameterStrings" alt="" coords="18,153,1102,173"/>
+<area shape="rect" id="node1_26" href="pyto.scene.cleft_regions.CleftRegions-class.html#getBinIdsStrings" title="pyto.scene.cleft_regions.CleftRegions.getBinIdsStrings" alt="" coords="18,173,1102,193"/>
+<area shape="rect" id="node1_27" href="pyto.scene.cleft_regions.CleftRegions-class.html#getCleftLayerIds" title="Returns layer ids corresponding to the cleft." alt="" coords="18,193,1102,213"/>
+<area shape="rect" id="node1_28" href="pyto.scene.cleft_regions.CleftRegions-class.html#getBoundLayerIds" title="Returns all boundary layer ids (ndarray)." alt="" coords="18,213,1102,233"/>
+<area shape="rect" id="node1_29" href="pyto.scene.cleft_regions.CleftRegions-class.html#getBound1LayerIds" title="Returns layer ids corresponding to the boundary 1 (ndarray)." alt="" coords="18,233,1102,253"/>
+<area shape="rect" id="node1_30" href="pyto.scene.cleft_regions.CleftRegions-class.html#getBound2LayerIds" title="Returns layer ids corresponding to the boundary 2 (ndarray)." alt="" coords="18,253,1102,273"/>
+<area shape="rect" id="node1_31" href="pyto.scene.cleft_regions.CleftRegions-class.html#getLayerIds" title="Returns all layer ids" alt="" coords="18,273,1102,293"/>
+<area shape="rect" id="node1_32" href="pyto.scene.cleft_regions.CleftRegions-class.html#getBoundEdgeLayerIds" title="Returns a list containing ids of those boundary1 and boundary2 layers (in &#160;this order) that are right next to (contacting) cleft layers." alt="" coords="18,293,1102,313"/>
+<area shape="rect" id="node1_33" href="pyto.scene.cleft_regions.CleftRegions-class.html#makeLayers" title="Makes layers on the cleft and possibly on the boundary regions of a cleft &#160;(self.cleft) and calculates cleft width." alt="" coords="18,313,1102,333"/>
+<area shape="rect" id="node1_34" href="pyto.scene.cleft_regions.CleftRegions-class.html#makeColumns" title="Segments cleft to columns, that is segments perpendicular to cleft layers." alt="" coords="18,333,1102,353"/>
+<area shape="rect" id="node1_35" href="pyto.scene.cleft_regions.CleftRegions-class.html#adjustCleft" title="Adjusts the data of self.cleft to the data of self.regions." alt="" coords="18,353,1102,373"/>
+<area shape="rect" id="node1_36" href="pyto.scene.cleft_regions.CleftRegions-class.html#findDensity" title="Calculates basic density statistics (mean, std, min, max, volume) of &#160;individual regions and region groups." alt="" coords="18,373,1102,393"/>
+<area shape="rect" id="node1_37" href="pyto.scene.cleft_regions.CleftRegions-class.html#getPoints" title="Returns coordinates of selected elements (points) of cleft regions &#160;identified by by arg ids." alt="" coords="18,413,1102,433"/>
+<area shape="rect" id="node1" href="pyto.scene.cleft_regions.CleftRegions-class.html" title="Formation and analysis of cleft regions." alt="" coords="5,5,1113,439"/>
+</map>
+  <img src="uml_class_diagram_for_pyto_sce.gif" alt='' usemap="#uml_class_diagram_for_pyto_sce" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<pre class="literalblock">
+
+Formation and analysis of cleft regions. A cleft is defined by an 
+greyscale image (self.image) and a corresponding segmentation (self.cleft) 
+that defines two boundaries and cleft proper that is located between the 
+boundaries (self.cleft). 
+
+Cleft regions are segments organized as layers parallel to
+the boundaries or columns perpendicular to the boundaries .
+
+Contains methods for the geometrical analysis of the cleft and for the 
+basic statistical analysis of cleft regions density. 
+
+Important attributes:
+  - self.regions: (..segmentation.Segment) cleft regions
+  - self.image: density (greyscale) image
+  - self.cleft (..segmentation.Cleft): labels main cleft parts (boundaries,
+  cleft proper)
+  - self.nLayers: number of layers (layers)
+  - self.nBoundLayers: number of boundary layers (layers)
+
+Common usage to make layers / columns:
+
+  cl = CleftRegions(image=image, cleft=cleft)
+  cl.makeLayers() / cl.makeColumns()
+  cl.findDensity(regions=cl.regions)
+
+Some of the attributes calculated and set by this example are:
+  - self.regions: (..segmentation.Segment) regions
+  - self.regionDensity (pyto.segmentation.Density) region density
+  - self.width: cleft width (layers)
+  - self.widthVector: average cleft width vector (layers)
+
+All methods respect image inset information.
+
+</pre>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.cleft_regions.CleftRegions-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">image</span>,
+        <span class="summary-sig-arg">cleft</span>)</span><br />
+      Initializes attributes.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getParameterStrings"></a><span class="summary-sig-name">getParameterStrings</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">names</span>=<span class="summary-sig-default">None</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.getParameterStrings">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getBinIdsStrings"></a><span class="summary-sig-name">getBinIdsStrings</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.getBinIdsStrings">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.cleft_regions.CleftRegions-class.html#getCleftLayerIds" class="summary-sig-name">getCleftLayerIds</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">exclude</span>=<span class="summary-sig-default">0</span>)</span><br />
+      Returns layer ids corresponding to the cleft.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.getCleftLayerIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.cleft_regions.CleftRegions-class.html#getBoundLayerIds" class="summary-sig-name">getBoundLayerIds</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">thick</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns all boundary layer ids (ndarray).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.getBoundLayerIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.cleft_regions.CleftRegions-class.html#getBound1LayerIds" class="summary-sig-name">getBound1LayerIds</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">thick</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns layer ids corresponding to the boundary 1 (ndarray).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.getBound1LayerIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.cleft_regions.CleftRegions-class.html#getBound2LayerIds" class="summary-sig-name">getBound2LayerIds</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">thick</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns layer ids corresponding to the boundary 2 (ndarray).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.getBound2LayerIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getLayerIds"></a><span class="summary-sig-name">getLayerIds</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns all layer ids</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.getLayerIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getBoundEdgeLayerIds"></a><span class="summary-sig-name">getBoundEdgeLayerIds</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns a list containing ids of those boundary1 and boundary2 layers
+      (in this order) that are right next to (contacting) cleft layers.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.getBoundEdgeLayerIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.cleft_regions.CleftRegions-class.html#makeLayers" class="summary-sig-name">makeLayers</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">nLayers</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">widthMode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">median</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">nBoundLayers</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">maxDistance</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">fill</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">adjust</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">refine</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Makes layers on the cleft and possibly on the boundary regions of a 
+      cleft (self.cleft) and calculates cleft width.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.makeLayers">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.cleft_regions.CleftRegions-class.html#makeColumns" class="summary-sig-name">makeColumns</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">bins</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">system</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">radial</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">normalize</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">originMode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">one</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">startId</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">metric</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">euclidean</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">connectivity</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">rimId</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">rimLocation</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">out</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">rimConnectivity</span>=<span class="summary-sig-default">1</span>)</span><br />
+      Segments cleft to columns, that is segments perpendicular to cleft 
+      layers.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.makeColumns">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.cleft_regions.CleftRegions-class.html#adjustCleft" class="summary-sig-name">adjustCleft</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">value</span>=<span class="summary-sig-default">0</span>)</span><br />
+      Adjusts the data of self.cleft to the data of self.regions.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.adjustCleft">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.cleft_regions.CleftRegions-class.html#findDensity" class="summary-sig-name">findDensity</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">regions</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">groups</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">exclude</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">boundThick</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Calculates basic density statistics (mean, std, min, max, volume) of 
+      individual regions and region groups.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.findDensity">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.cleft_regions.CleftRegions-class.html#getRegionDensity" class="summary-sig-name">getRegionDensity</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">image</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">regions</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Calculates density (mean, std, min, max, volume) for each region.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.getRegionDensity">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.cleft_regions.CleftRegions-class.html#getGroupDensity" class="summary-sig-name">getGroupDensity</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">regionDensity</span>,
+        <span class="summary-sig-arg">groups</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">boundThick</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">exclude</span>=<span class="summary-sig-default">0</span>)</span><br />
+      Calculates basic density statistics (mean, std, min, max, volume) for
+      grupes of regions.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.getGroupDensity">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.cleft_regions.CleftRegions-class.html#getMinCleftDensity" class="summary-sig-name">getMinCleftDensity</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">layerDensity</span>,
+        <span class="summary-sig-arg">exclude</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">boundThick</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">reference</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Calculates minimum cleft layer density, the layer id of that layer, 
+      its position within the cleft and the relative minimum cleft layer 
+      density in respect to the cleft and reference layer densities.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.getMinCleftDensity">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scene.cleft_regions.CleftRegions-class.html#getPoints" class="summary-sig-name">getPoints</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">all</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">connectivity</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">distance</span>=<span class="summary-sig-default">2</span>,
+        <span class="summary-sig-arg">format_</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">coordinates</code><code class="variable-quote">'</code></span>)</span><br />
+      Returns coordinates of selected elements (points) of cleft regions 
+      identified by by arg ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.getPoints">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.scene.cleft_regions.CleftRegions-class.html#cleftLayerIds" class="summary-name">cleftLayerIds</a><br />
+      Cleft layer ids
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.scene.cleft_regions.CleftRegions-class.html#boundLayerIds" class="summary-name">boundLayerIds</a><br />
+      Layer ids of both boundaries
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.scene.cleft_regions.CleftRegions-class.html#bound1LayerIds" class="summary-name">bound1LayerIds</a><br />
+      Layer ids of boundary 1
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.scene.cleft_regions.CleftRegions-class.html#bound2LayerIds" class="summary-name">bound2LayerIds</a><br />
+      Layer ids of boundary 2
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.scene.cleft_regions.CleftRegions-class.html#boundEdgeLayerIds" class="summary-name">boundEdgeLayerIds</a><br />
+      Boundary edge layer ids
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">image</span>,
+        <span class="sig-arg">cleft</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Initializes attributes.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      image: (core.Image) greyscale image
+    </li>
+    <li>
+      cleft: (segmentation.Cleft) segmented image that defines cleft and 
+      boundaries
+    </li>
+  </ul>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getCleftLayerIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getCleftLayerIds</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">exclude</span>=<span class="sig-default">0</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.getCleftLayerIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns layer ids corresponding to the cleft.</p>
+  <p>If arg exclude is a list (ndarray or tuple) exclude[0] cleft layers 
+  facing boundary1 and exclude[1] layers facing boundary2 are excluded from
+  the returned ids. Otherwise, if arg exclude is a single int, exclude 
+  cleft layers are removed from each side.</p>
+  <p>Requires attributes self.nLayers and self.nBoundLayers to be set.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      exclude: (int, list, tuple, or ndarray) number of layers to exclude 
+      from the cleft
+    </li>
+  </ul>
+  <p>Returns: (ndarray) layer ids</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getBoundLayerIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getBoundLayerIds</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">thick</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.getBoundLayerIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns all boundary layer ids (ndarray).</p>
+  <p>Boundary thickness can be restricted to a certan number of layers. 
+  This can be done by (arg) thick if specified, or by self.boundThick 
+  (provided it's neither None nor [None, None]). If neither of the two is 
+  specified, the boundaries consist of all layers outside the cleft, that 
+  is the boundary thickness is self.nBoundLayers. In this case, only the 
+  specified number of layers are considered for each boundary, starting 
+  from boundary layers facing the cleft.</p>
+  <p>Requires attributes self.nLayers and self.nBoundLayers to be set.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      thick: (single int or list or array of two ints) boundary thickness 
+      in number of layers
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getBound1LayerIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getBound1LayerIds</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">thick</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.getBound1LayerIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns layer ids corresponding to the boundary 1 (ndarray).</p>
+  <p>Boundary thickness can be restricted to a certan number of layers. 
+  This can be done by (arg) thick if specified, or by self.boundThick 
+  (provided it's not None. If neither of the two is specified, the boundary
+  consists of all layers outside the cleft, that is the boundary thickness 
+  is self.nBoundLayers. In this case, only the specified number of layers 
+  are considered for the boundary, starting from boundary layers facing the
+  cleft.</p>
+  <p>Requires attribute self.nBoundLayers to be set.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getBound2LayerIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getBound2LayerIds</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">thick</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.getBound2LayerIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns layer ids corresponding to the boundary 2 (ndarray).</p>
+  <p>Boundary thickness can be restricted to a certan number of layers. 
+  This can be done by (arg) thick if specified, or by self.boundThick 
+  (provided it's not None. If neither of the two is specified, the boundary
+  consists of all layers outside the cleft, that is the boundary thickness 
+  is self.nBoundLayers. In this case, only the specified number of layers 
+  are considered for the boundary, starting from boundary layers facing the
+  cleft.</p>
+  <p>Requires attributes self.nLayers and self.nBoundLayers to be set.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="makeLayers"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">makeLayers</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">nLayers</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">widthMode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">median</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">nBoundLayers</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">maxDistance</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">fill</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">adjust</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">refine</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.makeLayers">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Makes layers on the cleft and possibly on the boundary regions of a 
+  cleft (self.cleft) and calculates cleft width.</p>
+  <p>Width (magnitude and vector) is calculated using 
+  pyto.segmentation.Cleft.getWidth() method, according to arg widthMode 
+  (passed as arg mode), and by combining cleft distances from both 
+  boundaries (Cleft.getWidth() argument toBoundary=0).</p>
+  <p>Layers are formed using pyto.segmentation.Cleft.makeLayers() method. 
+  In short, layers of the same thickness are first made on the cleft region
+  based on the euclidean distance to the cleft boundaries (cleft layers). 
+  Cleft layers are restricted to those elements of the cleft region that 
+  are not further away from the boundaries than arg maxDistance. If arg 
+  fill is True, the holes in the cleft region that are formed by the 
+  maxDistance procedure are filled. Then, if arg nBoundLayers &gt; 0, 
+  additional layers are formed on cleft boundaries based on the euclidean 
+  distance to the cleft layers (boundary layers).</p>
+  <p>If arg nLayers is None, the number of cleft layers is calculated as 
+  the rounded value of cleft width, so that layers are approximately 1 
+  pixel size wide.</p>
+  <p>If arg adjust is True, the cleft and boundary regions (of self.cleft) 
+  are restricted to include only those elements that were assigned to cleft
+  and boundary layers. If in additon arg refine is specified, cleft width 
+  is recalculated using the adjusted cleft and boundary regions. In case 
+  arg nLayers is None and the recalculated cleft width leads to a different
+  number of cleft layers, the layers are recalculated also.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      widthMode: cleft width calculating mode, 'mean', 'median', 'min' or 
+      'max' (actually can be any appropriate numpy function)
+    </li>
+    <li>
+      nLayers: number of layers
+    </li>
+    <li>
+      maxDistance: max allowed sum of (minimal) distances to the two 
+      bounaries, if None no limit is imposed
+    </li>
+    <li>
+      fill: flag indicating if holes created by maxDistance procedure are 
+      filled (used only if maxDistance is not None)
+    </li>
+    <li>
+      nBoundLayers: (int) number of additional layers formed on each side 
+      of the cleft
+    </li>
+    <li>
+      adjust: flag indicating if the self.cleft is adjusted to layers 
+      (self.regions)
+    </li>
+    <li>
+      refine: flag indication if the layers are recalculated after 
+      self.cleft was recalculated (has effect only if arg adjust is True 
+      and arg nLayers is None)
+    </li>
+  </ul>
+  <p>Modifies:</p>
+  <ul>
+    <li>
+      self.cleft: only if arg adjust is True
+    </li>
+  </ul>
+  <p>Sets:</p>
+  <ul>
+    <li>
+      self.widthMode (from arguments)
+    </li>
+    <li>
+      self.nBoundLayers (from arguments)
+    </li>
+    <li>
+      self.maxDistance (from arguments)
+    </li>
+    <li>
+      self.width: cleft width
+    </li>
+    <li>
+      self.widthVector: (..geometry.Vector) cleft width vector
+    </li>
+    <li>
+      self.nLayers: number of layers
+    </li>
+    <li>
+      self.regions: (pyto.segmentation.Segment) layers
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="makeColumns"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">makeColumns</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">bins</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">system</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">radial</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">normalize</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">originMode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">one</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">startId</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">metric</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">euclidean</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">connectivity</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">rimId</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">rimLocation</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">out</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">rimConnectivity</span>=<span class="sig-default">1</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.makeColumns">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Segments cleft to columns, that is segments perpendicular to cleft 
+  layers.</p>
+  <p>This instance needs to contain layers (self.regions), preferably of 
+  thickness 1. This can be done using makeLayers().</p>
+  <p>The columns are generated by makeColumn() method of (Cleft) 
+  self.regions. See Cleft.makeColumns() for details. Returns a new instance
+  of this class that has attribute regions set to the resulting columns 
+  (Segment object). The positioning, image and cleft attributes are the 
+  same as in this instance.</p>
+  <p>Elements outside the current data array are considered to be 0, which 
+  is important if arg rimId is 0 and one or more of layer elements are on 
+  the array boundaries.</p>
+  <p>Saves all parameters as attributes (with the same names) of the 
+  returned object. Also sets:</p>
+  <ul>
+    <li>
+      parameterNames: list of parameter names
+    </li>
+    <li>
+      parameterFormats: dictionary where parameter names are keys and more 
+      descriptive parameter names together with formating strings are 
+      values.
+    </li>
+  </ul>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      bins: binning values
+    </li>
+    <li>
+      ids: ids of layer where columns are made
+    </li>
+    <li>
+      system: coordinate syatem, can be 'radial', 'cartesian' or 'polar'
+    </li>
+    <li>
+      normalize: flag indicating if radial distance is normalized
+    </li>
+    <li>
+      metric: distance metric, can be 'euclidean', 'geodesic' or 
+      'euclidean-geodesic'
+    </li>
+    <li>
+      connectivity: connectivity of the structure element (as in
+    </li>
+  </ul>
+  <p>scipy.ndimage.generate_binary_structure() where rank is self.ndim) for
+  geodesic distance calculation (int). Not used for euclidean.</p>
+  <ul>
+    <li>
+      originMode: determines how centers are determined, currently only 
+      'one' (see self.pickLayerCenters())
+    </li>
+    <li>
+      startId: layer where the center is first determined, used in mode 
+      'one', None means start from the middle (see self.pickLayerCenters())
+    </li>
+    <li>
+      rimId: id or rim region
+    </li>
+    <li>
+      rimLocation: specifies if the rim is just outside of layers ('out') 
+      or on the layer boundary ('in')
+    </li>
+    <li>
+      rimConnectivity: (int) connectivity of the structure element that 
+      defines contact elements between a layer and the rim region.
+    </li>
+  </ul>
+  <p>Returns column-segmented cleft as an instance of this object 
+  where:</p>
+  <ul>
+    <li>
+      column.regions: (Segment) coulumns
+    </li>
+    <li>
+      column.regions.data: (ndarray) labeled array
+    </li>
+    <li>
+      column.regions.binIds: (dict) where each id is a key and the 
+      corresponding value is a list of lower and uper bin limits for each 
+      binning.
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="adjustCleft"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">adjustCleft</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">value</span>=<span class="sig-default">0</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.adjustCleft">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adjusts the data of self.cleft to the data of self.regions.</p>
+  <p>Specifically, sets to arg value all elements of self.cleft.data 
+  specified by arg ids where the corresponding self.region.data elements 
+  are 0.</p>
+  <p>If arg ids is None, any element of self.data can be set to arg 
+  value.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      ids: cleft ids that can be adjusted
+    </li>
+  </ul>
+  <ul>
+    <li>
+      value: value to be adjusted to
+    </li>
+  </ul>
+  <p>Modifies self.cleft.data.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="findDensity"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">findDensity</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">regions</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">groups</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">exclude</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">boundThick</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.findDensity">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates basic density statistics (mean, std, min, max, volume) of 
+  individual regions and region groups.</p>
+  <p>See getRegionDensity(), getGroupdensity() and minCleftDensity() 
+  methods for more detailed explanantion.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      regions: (pyto.segmentation.Segment) regions
+    </li>
+    <li>
+      mode: regions type
+    </li>
+    <li>
+      groups: dictionary with group names (strings) as keys and region ids 
+      (lists or arrays) as values
+    </li>
+    <li>
+      boundThick: (int or list of ints) boundary thickness
+    </li>
+    <li>
+      exclude: number of cleft regions to be excluded
+    </li>
+  </ul>
+  <p>Sets:</p>
+  <ul>
+    <li>
+      self.regionDensity (pyto.segmentation.Density) region density
+    </li>
+    <li>
+      self.groupDensity: (dictionary) in the form {name:density, ...}
+      <ul>
+        <li>
+          name: group name
+        </li>
+        <li>
+          density (pyto.segmentation.Density) group density stats in the 
+          non-array form (e.g. density.mean is a single number)
+        </li>
+      </ul>
+    </li>
+    <li>
+      self.groupIds: dictionary with group names as keys and ids as values
+    </li>
+    <li>
+      self.exclude: from argument
+    </li>
+    <li>
+      self.boundThick: from argument
+    </li>
+    <li>
+      self.minCleftDensity: minimum cleft region density
+    </li>
+    <li>
+      self.relativeMinCleftDensity: relative minimum cleft region density 
+      in respect to the cleft density and membrane density
+    </li>
+    <li>
+      self.minCleftDensityId: (numpy.ndarray) layer id (or ids in case more
+      than one layer has min denisty) of the minimum cleft layer density
+    </li>
+    <li>
+      self.minCleftDensityPosition: (numpy.ndarray) position (or positions 
+      in case more than one layer has min denisty) of the layer with 
+      minimum density in respect to the cleft layers (with excluded)
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getRegionDensity"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getRegionDensity</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">image</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">regions</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.getRegionDensity">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates density (mean, std, min, max, volume) for each region.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      image: (core.Image) grey-scale image, if None self.image used
+    </li>
+    <li>
+      regions: (segmentation.Segment) regions image, if None self.regions 
+      used
+    </li>
+  </ul>
+  <p>Returns: (segmentation.Density) regions density where attributes mean,
+  std, min, max and volume are ndarrays indexed by region number</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getGroupDensity"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getGroupDensity</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">regionDensity</span>,
+        <span class="sig-arg">groups</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">boundThick</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">exclude</span>=<span class="sig-default">0</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.getGroupDensity">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates basic density statistics (mean, std, min, max, volume) for 
+  grupes of regions.</p>
+  <p>Groups of regions are defined by arg groups, a dictionary having group
+  names as kays and lists (arrays) of ids as values. If arg groups is not 
+  specified, the default groups are used. These are: 'cleft' with (arg) 
+  exclude number of regions excluded from each side, 'bound_1' and 
+  'bound_2' (boundary 1 and 2) containing (arg) boundThick regions from the
+  cleft sides.</p>
+  <p>Arguments boundThick and exclude can be specified as lists (arrays) of
+  two ints: first for boundary 1 / cleft regions facing boundary 1 and 
+  second for boundary 2 / cleft regions facing boundary 2, or as sigle ints
+  in which case they're used for both boundaries / cleft sides.</p>
+  <p>Either groups, or boundThick and exclude need to be specifed.</p>
+  <p>Requires self.makeRegions() to be executed earlier, in order to use 
+  attributes set by it.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      regionDensity: (pyto.segmentation.Density): region density
+    </li>
+    <li>
+      groups: dictionary with group names (strings) as keys and region ids 
+      (lists or arrays) as values
+    </li>
+    <li>
+      boundThick: (int or a list of two ints) boundary thicknes
+    </li>
+    <li>
+      exclude: (int or a list of two ints) number of end regions to exclude
+      from the cleft
+    </li>
+  </ul>
+  <p>Returns:</p>
+  <ul>
+    <li>
+      group_density: (dictionary) in the form {name:density, ...}
+      <ul>
+        <li>
+          name: group name
+        </li>
+        <li>
+          density (pyto.segmentation.Density) group density stats in the 
+          non-array form (e.g. density.mean is a single number)
+        </li>
+      </ul>
+    </li>
+    <li>
+      group_ids: dictionary of the same form as the argument groups
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getMinCleftDensity"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getMinCleftDensity</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">layerDensity</span>,
+        <span class="sig-arg">exclude</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">boundThick</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">reference</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.getMinCleftDensity">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates minimum cleft layer density, the layer id of that layer, 
+  its position within the cleft and the relative minimum cleft layer 
+  density in respect to the cleft and reference layer densities.</p>
+  <p>Excluded layers are not taken into account for finding min layer.</p>
+  <p>If reference is not given, cleft density (not including excluded 
+  layers) and boundary density (using up to thick boundaries starting from 
+  those facing the cleft)</p>
+  <p>Returns: (min_density, relative_min_density, min_layer_id, 
+  min_layer_position):</p>
+  <ul>
+    <li>
+      min_density, relative_min_density: mean density of the layer with 
+      lowest mean density, absolute and relative respectivly
+    </li>
+    <li>
+      min_layer_id, min_layer_position: id and relative postion of the min 
+      density layer. Note that these two are arrays that contain more than 
+      one element in case there's more than one layer with min density.
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getPoints"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getPoints</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">all</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">connectivity</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">distance</span>=<span class="sig-default">2</span>,
+        <span class="sig-arg">format_</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">coordinates</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scene.cleft_regions-pysrc.html#CleftRegions.getPoints">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns coordinates of selected elements (points) of cleft regions 
+  identified by by arg ids.</p>
+  <p>Returns coordinates of selected elements (points) of segments labeled 
+  by arg ids.</p>
+  <p>If mode is 'all', coordinates of all points are returned.</p>
+  <p>If mode is 'geodesic', the points are selected so that they are not 
+  closer than the argument distance.</p>
+  <p>Respects inset attribute, that is the returned coordinates are given 
+  for the full size array self.data. In addition, it works internally with 
+  the smallest subarray of self.data that contains all ids.</p>
+  <p>Calls ..segmentation.Labels.getPoints().</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      ids: (list or ndarrays) ids, or a sigle (int) id
+    </li>
+    <li>
+      mode: determines how the points are selected
+    </li>
+    <li>
+      distance: min distance between selected points (needed if mode is 
+      'geodesic')
+    </li>
+    <li>
+      format_: output format; 'numpy' for the format used by 
+      numpy.nonzero(), or 'coordinates' for a 2D array where the first 
+      index denotes different points, and the second the coordinates of the
+      point.
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== PROPERTY DETAILS ==================== -->
+<a name="section-PropertyDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Property Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-PropertyDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="cleftLayerIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">cleftLayerIds</h3>
+  <p>Cleft layer ids</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.scene.cleft_regions.CleftRegions-class.html#getCleftLayerIds" class="summary-sig-name">getCleftLayerIds</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">exclude</span>=<span class="summary-sig-default">0</span>)</span>
+        - Returns layer ids corresponding to the cleft.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="boundLayerIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">boundLayerIds</h3>
+  <p>Layer ids of both boundaries</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.scene.cleft_regions.CleftRegions-class.html#getBoundLayerIds" class="summary-sig-name">getBoundLayerIds</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">thick</span>=<span class="summary-sig-default">None</span>)</span>
+        - Returns all boundary layer ids (ndarray).
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="bound1LayerIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">bound1LayerIds</h3>
+  <p>Layer ids of boundary 1</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.scene.cleft_regions.CleftRegions-class.html#getBound1LayerIds" class="summary-sig-name">getBound1LayerIds</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">thick</span>=<span class="summary-sig-default">None</span>)</span>
+        - Returns layer ids corresponding to the boundary 1 (ndarray).
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="bound2LayerIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">bound2LayerIds</h3>
+  <p>Layer ids of boundary 2</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.scene.cleft_regions.CleftRegions-class.html#getBound2LayerIds" class="summary-sig-name">getBound2LayerIds</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">thick</span>=<span class="summary-sig-default">None</span>)</span>
+        - Returns layer ids corresponding to the boundary 2 (ndarray).
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="boundEdgeLayerIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">boundEdgeLayerIds</h3>
+  <p>Boundary edge layer ids</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.scene.cleft_regions.CleftRegions-class.html#getBoundEdgeLayerIds" class="summary-sig-name">getBoundEdgeLayerIds</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Returns a list containing ids of those boundary1 and boundary2 layers
+      (in this order) that are right next to (contacting) cleft layers.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

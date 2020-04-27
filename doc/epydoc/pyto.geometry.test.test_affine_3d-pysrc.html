@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.geometry.test.test_affine_3d</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.geometry-module.html">Package&nbsp;geometry</a> ::
+        <a href="pyto.geometry.test-module.html">Package&nbsp;test</a> ::
+        Module&nbsp;test_affine_3d
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.geometry.test.test_affine_3d-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="pyto.geometry.test.test_affine_3d-module.html">Module pyto.geometry.test.test_affine_3d</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-docstring">Tests module affine_3d</tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-docstring"># Author: Vladan Lucic</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-docstring"># $Id: test_affine_3d.py 1072 2014-11-06 14:07:58Z vladan $</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-name">__version__</tt> <tt class="py-op">=</tt> <tt class="py-string">"$Revision: 1072 $"</tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">copy</tt> <tt class="py-keyword">import</tt> <tt class="py-name">copy</tt><tt class="py-op">,</tt> <tt class="py-name">deepcopy</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">unittest</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">numpy</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">testing</tt> <tt class="py-keyword">as</tt> <tt class="py-name">np_test</tt>  </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">scipy</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package pyto=pyto-module.html"><a title="pyto" class="py-name" href="#" onclick="return doclink('link-0', 'pyto', 'link-0');">pyto</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package pyto.geometry=pyto.geometry-module.html"><a title="pyto.geometry" class="py-name" href="#" onclick="return doclink('link-1', 'geometry', 'link-1');">geometry</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Module pyto.geometry.affine_3d=pyto.geometry.affine_3d-module.html"><a title="pyto.geometry.affine_3d" class="py-name" href="#" onclick="return doclink('link-2', 'affine_3d', 'link-2');">affine_3d</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name" targets="Class pyto.geometry.affine_3d.Affine3D=pyto.geometry.affine_3d.Affine3D-class.html"><a title="pyto.geometry.affine_3d.Affine3D" class="py-name" href="#" onclick="return doclink('link-3', 'Affine3D', 'link-3');">Affine3D</a></tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"> </tt>
+<a name="TestAffine3D"></a><div id="TestAffine3D-def"><a name="L21"></a><tt class="py-lineno">21</tt> <a class="py-toggle" href="#" id="TestAffine3D-toggle" onclick="return toggle('TestAffine3D');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="pyto.geometry.test.test_affine_3d.TestAffine3D-class.html">TestAffine3D</a><tt class="py-op">(</tt><tt class="py-base-class">np_test</tt><tt class="py-op">.</tt><tt class="py-base-class">TestCase</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TestAffine3D-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="TestAffine3D-expanded"><a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"> </tt>
+<a name="TestAffine3D.setUp"></a><div id="TestAffine3D.setUp-def"><a name="L25"></a><tt class="py-lineno">25</tt> <a class="py-toggle" href="#" id="TestAffine3D.setUp-toggle" onclick="return toggle('TestAffine3D.setUp');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.geometry.test.test_affine_3d.TestAffine3D-class.html#setUp">setUp</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TestAffine3D.setUp-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="TestAffine3D.setUp-expanded"><a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt>         </tt>
+</div><a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"> </tt>
+<a name="TestAffine3D.testGetQ"></a><div id="TestAffine3D.testGetQ-def"><a name="L30"></a><tt class="py-lineno">30</tt> <a class="py-toggle" href="#" id="TestAffine3D.testGetQ-toggle" onclick="return toggle('TestAffine3D.testGetQ');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.geometry.test.test_affine_3d.TestAffine3D-class.html#testGetQ">testGetQ</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TestAffine3D.testGetQ-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="TestAffine3D.testGetQ-expanded"><a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"><tt class="py-docstring">        Tests getQ()</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">        <tt id="link-4" class="py-name" targets="Module pyto.geometry.vector=pyto.geometry.vector-module.html"><a title="pyto.geometry.vector" class="py-name" href="#" onclick="return doclink('link-4', 'vector', 'link-4');">vector</a></tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">array</tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">,</tt><tt class="py-number">2</tt><tt class="py-op">,</tt><tt class="py-number">3</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">        <tt class="py-comment"># rotations around main axes</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line">        <tt class="py-name">aff</tt> <tt class="py-op">=</tt> <tt id="link-5" class="py-name"><a title="pyto.geometry.affine_3d.Affine3D" class="py-name" href="#" onclick="return doclink('link-5', 'Affine3D', 'link-3');">Affine3D</a></tt><tt class="py-op">(</tt><tt id="link-6" class="py-name" targets="Variable pyto.scripts.cleft_stats.alpha=pyto.scripts.cleft_stats-module.html#alpha,Variable pyto.scripts.presynaptic_stats.alpha=pyto.scripts.presynaptic_stats-module.html#alpha"><a title="pyto.scripts.cleft_stats.alpha
+pyto.scripts.presynaptic_stats.alpha" class="py-name" href="#" onclick="return doclink('link-6', 'alpha', 'link-6');">alpha</a></tt><tt class="py-op">=</tt><tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">pi</tt><tt class="py-op">/</tt><tt class="py-number">2</tt><tt class="py-op">,</tt> <tt id="link-7" class="py-name" targets="Variable pyto.scripts.regions.axis=pyto.scripts.regions-module.html#axis,Variable pyto.scripts.vesicles.axis=pyto.scripts.vesicles-module.html#axis"><a title="pyto.scripts.regions.axis
+pyto.scripts.vesicles.axis" class="py-name" href="#" onclick="return doclink('link-7', 'axis', 'link-7');">axis</a></tt><tt class="py-op">=</tt><tt class="py-string">'x'</tt><tt class="py-op">,</tt> <tt class="py-name">d</tt><tt class="py-op">=</tt><tt class="py-number">0</tt><tt class="py-op">)</tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">        <tt class="py-name">trans</tt> <tt class="py-op">=</tt> <tt class="py-name">aff</tt><tt class="py-op">.</tt><tt id="link-8" class="py-name" targets="Method pyto.geometry.affine.Affine.transform()=pyto.geometry.affine.Affine-class.html#transform,Class Method pyto.geometry.coordinates.Coordinates.transform()=pyto.geometry.coordinates.Coordinates-class.html#transform,Method pyto.geometry.rigid_3d.Rigid3D.transform()=pyto.geometry.rigid_3d.Rigid3D-class.html#transform"><a title="pyto.geometry.affine.Affine.transform
+pyto.geometry.coordinates.Coordinates.transform
+pyto.geometry.rigid_3d.Rigid3D.transform" class="py-name" href="#" onclick="return doclink('link-8', 'transform', 'link-8');">transform</a></tt><tt class="py-op">(</tt><tt id="link-9" class="py-name"><a title="pyto.geometry.vector" class="py-name" href="#" onclick="return doclink('link-9', 'vector', 'link-4');">vector</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line">        <tt class="py-name">np_test</tt><tt class="py-op">.</tt><tt class="py-name">assert_almost_equal</tt><tt class="py-op">(</tt><tt class="py-name">trans</tt><tt class="py-op">,</tt> <tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-op">-</tt><tt class="py-number">3</tt><tt class="py-op">,</tt> <tt class="py-number">2</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line">        <tt class="py-name">aff</tt> <tt class="py-op">=</tt> <tt id="link-10" class="py-name"><a title="pyto.geometry.affine_3d.Affine3D" class="py-name" href="#" onclick="return doclink('link-10', 'Affine3D', 'link-3');">Affine3D</a></tt><tt class="py-op">(</tt><tt id="link-11" class="py-name"><a title="pyto.scripts.cleft_stats.alpha
+pyto.scripts.presynaptic_stats.alpha" class="py-name" href="#" onclick="return doclink('link-11', 'alpha', 'link-6');">alpha</a></tt><tt class="py-op">=</tt><tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">pi</tt><tt class="py-op">/</tt><tt class="py-number">2</tt><tt class="py-op">,</tt> <tt id="link-12" class="py-name"><a title="pyto.scripts.regions.axis
+pyto.scripts.vesicles.axis" class="py-name" href="#" onclick="return doclink('link-12', 'axis', 'link-7');">axis</a></tt><tt class="py-op">=</tt><tt class="py-string">'y'</tt><tt class="py-op">)</tt> </tt>
+<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line">        <tt class="py-name">trans</tt> <tt class="py-op">=</tt> <tt class="py-name">aff</tt><tt class="py-op">.</tt><tt id="link-13" class="py-name"><a title="pyto.geometry.affine.Affine.transform
+pyto.geometry.coordinates.Coordinates.transform
+pyto.geometry.rigid_3d.Rigid3D.transform" class="py-name" href="#" onclick="return doclink('link-13', 'transform', 'link-8');">transform</a></tt><tt class="py-op">(</tt><tt id="link-14" class="py-name"><a title="pyto.geometry.vector" class="py-name" href="#" onclick="return doclink('link-14', 'vector', 'link-4');">vector</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">        <tt class="py-name">np_test</tt><tt class="py-op">.</tt><tt class="py-name">assert_almost_equal</tt><tt class="py-op">(</tt><tt class="py-name">trans</tt><tt class="py-op">,</tt> <tt class="py-op">[</tt><tt class="py-number">3</tt><tt class="py-op">,</tt> <tt class="py-number">2</tt><tt class="py-op">,</tt> <tt class="py-op">-</tt><tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line">        <tt class="py-name">aff</tt> <tt class="py-op">=</tt> <tt id="link-15" class="py-name"><a title="pyto.geometry.affine_3d.Affine3D" class="py-name" href="#" onclick="return doclink('link-15', 'Affine3D', 'link-3');">Affine3D</a></tt><tt class="py-op">(</tt><tt id="link-16" class="py-name"><a title="pyto.scripts.cleft_stats.alpha
+pyto.scripts.presynaptic_stats.alpha" class="py-name" href="#" onclick="return doclink('link-16', 'alpha', 'link-6');">alpha</a></tt><tt class="py-op">=</tt><tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">pi</tt><tt class="py-op">/</tt><tt class="py-number">2</tt><tt class="py-op">,</tt> <tt id="link-17" class="py-name"><a title="pyto.scripts.regions.axis
+pyto.scripts.vesicles.axis" class="py-name" href="#" onclick="return doclink('link-17', 'axis', 'link-7');">axis</a></tt><tt class="py-op">=</tt><tt class="py-string">'z'</tt><tt class="py-op">)</tt> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line">        <tt class="py-name">trans</tt> <tt class="py-op">=</tt> <tt class="py-name">aff</tt><tt class="py-op">.</tt><tt id="link-18" class="py-name"><a title="pyto.geometry.affine.Affine.transform
+pyto.geometry.coordinates.Coordinates.transform
+pyto.geometry.rigid_3d.Rigid3D.transform" class="py-name" href="#" onclick="return doclink('link-18', 'transform', 'link-8');">transform</a></tt><tt class="py-op">(</tt><tt id="link-19" class="py-name"><a title="pyto.geometry.vector" class="py-name" href="#" onclick="return doclink('link-19', 'vector', 'link-4');">vector</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line">        <tt class="py-name">np_test</tt><tt class="py-op">.</tt><tt class="py-name">assert_almost_equal</tt><tt class="py-op">(</tt><tt class="py-name">trans</tt><tt class="py-op">,</tt> <tt class="py-op">[</tt><tt class="py-op">-</tt><tt class="py-number">2</tt><tt class="py-op">,</tt> <tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-number">3</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line"> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line">        <tt class="py-comment"># rotations around main axes specified as vectors</tt> </tt>
+<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line">        <tt class="py-name">q</tt> <tt class="py-op">=</tt> <tt id="link-20" class="py-name"><a title="pyto.geometry.affine_3d.Affine3D" class="py-name" href="#" onclick="return doclink('link-20', 'Affine3D', 'link-3');">Affine3D</a></tt><tt class="py-op">.</tt><tt id="link-21" class="py-name" targets="Class Method pyto.geometry.affine_3d.Affine3D.getQ()=pyto.geometry.affine_3d.Affine3D-class.html#getQ"><a title="pyto.geometry.affine_3d.Affine3D.getQ" class="py-name" href="#" onclick="return doclink('link-21', 'getQ', 'link-21');">getQ</a></tt><tt class="py-op">(</tt><tt id="link-22" class="py-name"><a title="pyto.scripts.cleft_stats.alpha
+pyto.scripts.presynaptic_stats.alpha" class="py-name" href="#" onclick="return doclink('link-22', 'alpha', 'link-6');">alpha</a></tt><tt class="py-op">=</tt><tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">pi</tt><tt class="py-op">/</tt><tt class="py-number">2</tt><tt class="py-op">,</tt> <tt id="link-23" class="py-name"><a title="pyto.scripts.regions.axis
+pyto.scripts.vesicles.axis" class="py-name" href="#" onclick="return doclink('link-23', 'axis', 'link-7');">axis</a></tt><tt class="py-op">=</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line">        <tt class="py-name">aff</tt> <tt class="py-op">=</tt> <tt id="link-24" class="py-name"><a title="pyto.geometry.affine_3d.Affine3D" class="py-name" href="#" onclick="return doclink('link-24', 'Affine3D', 'link-3');">Affine3D</a></tt><tt class="py-op">(</tt><tt id="link-25" class="py-name" targets="Variable pyto.geometry.rigid_3d.Rigid3D.gl=pyto.geometry.rigid_3d.Rigid3D-class.html#gl"><a title="pyto.geometry.rigid_3d.Rigid3D.gl" class="py-name" href="#" onclick="return doclink('link-25', 'gl', 'link-25');">gl</a></tt><tt class="py-op">=</tt><tt class="py-name">q</tt><tt class="py-op">,</tt> <tt class="py-name">d</tt><tt class="py-op">=</tt><tt class="py-number">0</tt><tt class="py-op">)</tt> </tt>
+<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line">        <tt class="py-name">trans</tt> <tt class="py-op">=</tt> <tt class="py-name">aff</tt><tt class="py-op">.</tt><tt id="link-26" class="py-name"><a title="pyto.geometry.affine.Affine.transform
+pyto.geometry.coordinates.Coordinates.transform
+pyto.geometry.rigid_3d.Rigid3D.transform" class="py-name" href="#" onclick="return doclink('link-26', 'transform', 'link-8');">transform</a></tt><tt class="py-op">(</tt><tt id="link-27" class="py-name"><a title="pyto.geometry.vector" class="py-name" href="#" onclick="return doclink('link-27', 'vector', 'link-4');">vector</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line">        <tt class="py-name">np_test</tt><tt class="py-op">.</tt><tt class="py-name">assert_almost_equal</tt><tt class="py-op">(</tt><tt class="py-name">trans</tt><tt class="py-op">,</tt> <tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-op">-</tt><tt class="py-number">3</tt><tt class="py-op">,</tt> <tt class="py-number">2</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line">        <tt class="py-name">q</tt> <tt class="py-op">=</tt> <tt id="link-28" class="py-name"><a title="pyto.geometry.affine_3d.Affine3D" class="py-name" href="#" onclick="return doclink('link-28', 'Affine3D', 'link-3');">Affine3D</a></tt><tt class="py-op">.</tt><tt id="link-29" class="py-name"><a title="pyto.geometry.affine_3d.Affine3D.getQ" class="py-name" href="#" onclick="return doclink('link-29', 'getQ', 'link-21');">getQ</a></tt><tt class="py-op">(</tt><tt id="link-30" class="py-name"><a title="pyto.scripts.cleft_stats.alpha
+pyto.scripts.presynaptic_stats.alpha" class="py-name" href="#" onclick="return doclink('link-30', 'alpha', 'link-6');">alpha</a></tt><tt class="py-op">=</tt><tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">pi</tt><tt class="py-op">/</tt><tt class="py-number">2</tt><tt class="py-op">,</tt> <tt id="link-31" class="py-name"><a title="pyto.scripts.regions.axis
+pyto.scripts.vesicles.axis" class="py-name" href="#" onclick="return doclink('link-31', 'axis', 'link-7');">axis</a></tt><tt class="py-op">=</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line">        <tt class="py-name">aff</tt> <tt class="py-op">=</tt> <tt id="link-32" class="py-name"><a title="pyto.geometry.affine_3d.Affine3D" class="py-name" href="#" onclick="return doclink('link-32', 'Affine3D', 'link-3');">Affine3D</a></tt><tt class="py-op">(</tt><tt id="link-33" class="py-name"><a title="pyto.geometry.rigid_3d.Rigid3D.gl" class="py-name" href="#" onclick="return doclink('link-33', 'gl', 'link-25');">gl</a></tt><tt class="py-op">=</tt><tt class="py-name">q</tt><tt class="py-op">)</tt> </tt>
+<a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line">        <tt class="py-name">trans</tt> <tt class="py-op">=</tt> <tt class="py-name">aff</tt><tt class="py-op">.</tt><tt id="link-34" class="py-name"><a title="pyto.geometry.affine.Affine.transform
+pyto.geometry.coordinates.Coordinates.transform
+pyto.geometry.rigid_3d.Rigid3D.transform" class="py-name" href="#" onclick="return doclink('link-34', 'transform', 'link-8');">transform</a></tt><tt class="py-op">(</tt><tt id="link-35" class="py-name"><a title="pyto.geometry.vector" class="py-name" href="#" onclick="return doclink('link-35', 'vector', 'link-4');">vector</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line">        <tt class="py-name">np_test</tt><tt class="py-op">.</tt><tt class="py-name">assert_almost_equal</tt><tt class="py-op">(</tt><tt class="py-name">trans</tt><tt class="py-op">,</tt> <tt class="py-op">[</tt><tt class="py-number">3</tt><tt class="py-op">,</tt> <tt class="py-number">2</tt><tt class="py-op">,</tt> <tt class="py-op">-</tt><tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line">        <tt class="py-name">q</tt> <tt class="py-op">=</tt> <tt id="link-36" class="py-name"><a title="pyto.geometry.affine_3d.Affine3D" class="py-name" href="#" onclick="return doclink('link-36', 'Affine3D', 'link-3');">Affine3D</a></tt><tt class="py-op">.</tt><tt id="link-37" class="py-name"><a title="pyto.geometry.affine_3d.Affine3D.getQ" class="py-name" href="#" onclick="return doclink('link-37', 'getQ', 'link-21');">getQ</a></tt><tt class="py-op">(</tt><tt id="link-38" class="py-name"><a title="pyto.scripts.cleft_stats.alpha
+pyto.scripts.presynaptic_stats.alpha" class="py-name" href="#" onclick="return doclink('link-38', 'alpha', 'link-6');">alpha</a></tt><tt class="py-op">=</tt><tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">pi</tt><tt class="py-op">/</tt><tt class="py-number">2</tt><tt class="py-op">,</tt> <tt id="link-39" class="py-name"><a title="pyto.scripts.regions.axis
+pyto.scripts.vesicles.axis" class="py-name" href="#" onclick="return doclink('link-39', 'axis', 'link-7');">axis</a></tt><tt class="py-op">=</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line">        <tt class="py-name">aff</tt> <tt class="py-op">=</tt> <tt id="link-40" class="py-name"><a title="pyto.geometry.affine_3d.Affine3D" class="py-name" href="#" onclick="return doclink('link-40', 'Affine3D', 'link-3');">Affine3D</a></tt><tt class="py-op">(</tt><tt id="link-41" class="py-name"><a title="pyto.geometry.rigid_3d.Rigid3D.gl" class="py-name" href="#" onclick="return doclink('link-41', 'gl', 'link-25');">gl</a></tt><tt class="py-op">=</tt><tt class="py-name">q</tt><tt class="py-op">)</tt> </tt>
+<a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line">        <tt class="py-name">trans</tt> <tt class="py-op">=</tt> <tt class="py-name">aff</tt><tt class="py-op">.</tt><tt id="link-42" class="py-name"><a title="pyto.geometry.affine.Affine.transform
+pyto.geometry.coordinates.Coordinates.transform
+pyto.geometry.rigid_3d.Rigid3D.transform" class="py-name" href="#" onclick="return doclink('link-42', 'transform', 'link-8');">transform</a></tt><tt class="py-op">(</tt><tt id="link-43" class="py-name"><a title="pyto.geometry.vector" class="py-name" href="#" onclick="return doclink('link-43', 'vector', 'link-4');">vector</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line">        <tt class="py-name">np_test</tt><tt class="py-op">.</tt><tt class="py-name">assert_almost_equal</tt><tt class="py-op">(</tt><tt class="py-name">trans</tt><tt class="py-op">,</tt> <tt class="py-op">[</tt><tt class="py-op">-</tt><tt class="py-number">2</tt><tt class="py-op">,</tt> <tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-number">3</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line"> </tt>
+<a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line">        <tt class="py-comment"># rotations around other axes</tt> </tt>
+<a name="L63"></a><tt class="py-lineno">63</tt>  <tt class="py-line">        <tt id="link-44" class="py-name"><a title="pyto.geometry.vector" class="py-name" href="#" onclick="return doclink('link-44', 'vector', 'link-4');">vector</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">sqrt</tt><tt class="py-op">(</tt><tt class="py-number">3</tt><tt class="py-op">)</tt> <tt class="py-op">/</tt> <tt class="py-number">2</tt><tt class="py-op">,</tt> <tt class="py-number">1</tt><tt class="py-op">/</tt><tt class="py-number">2.</tt><tt class="py-op">]</tt> </tt>
+<a name="L64"></a><tt class="py-lineno">64</tt>  <tt class="py-line">        <tt id="link-45" class="py-name"><a title="pyto.scripts.regions.axis
+pyto.scripts.vesicles.axis" class="py-name" href="#" onclick="return doclink('link-45', 'axis', 'link-7');">axis</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-number">1</tt><tt class="py-op">/</tt><tt class="py-number">2.</tt><tt class="py-op">,</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">sqrt</tt><tt class="py-op">(</tt><tt class="py-number">3</tt><tt class="py-op">)</tt> <tt class="py-op">/</tt> <tt class="py-number">2</tt><tt class="py-op">]</tt> </tt>
+<a name="L65"></a><tt class="py-lineno">65</tt>  <tt class="py-line">        <tt class="py-name">aff</tt> <tt class="py-op">=</tt> <tt id="link-46" class="py-name"><a title="pyto.geometry.affine_3d.Affine3D" class="py-name" href="#" onclick="return doclink('link-46', 'Affine3D', 'link-3');">Affine3D</a></tt><tt class="py-op">(</tt><tt id="link-47" class="py-name"><a title="pyto.scripts.cleft_stats.alpha
+pyto.scripts.presynaptic_stats.alpha" class="py-name" href="#" onclick="return doclink('link-47', 'alpha', 'link-6');">alpha</a></tt><tt class="py-op">=</tt><tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">pi</tt><tt class="py-op">,</tt> <tt id="link-48" class="py-name"><a title="pyto.scripts.regions.axis
+pyto.scripts.vesicles.axis" class="py-name" href="#" onclick="return doclink('link-48', 'axis', 'link-7');">axis</a></tt><tt class="py-op">=</tt><tt id="link-49" class="py-name"><a title="pyto.scripts.regions.axis
+pyto.scripts.vesicles.axis" class="py-name" href="#" onclick="return doclink('link-49', 'axis', 'link-7');">axis</a></tt><tt class="py-op">,</tt> <tt class="py-name">d</tt><tt class="py-op">=</tt><tt class="py-number">0</tt><tt class="py-op">)</tt> </tt>
+<a name="L66"></a><tt class="py-lineno">66</tt>  <tt class="py-line">        <tt class="py-name">trans</tt> <tt class="py-op">=</tt> <tt class="py-name">aff</tt><tt class="py-op">.</tt><tt id="link-50" class="py-name"><a title="pyto.geometry.affine.Affine.transform
+pyto.geometry.coordinates.Coordinates.transform
+pyto.geometry.rigid_3d.Rigid3D.transform" class="py-name" href="#" onclick="return doclink('link-50', 'transform', 'link-8');">transform</a></tt><tt class="py-op">(</tt><tt id="link-51" class="py-name"><a title="pyto.geometry.vector" class="py-name" href="#" onclick="return doclink('link-51', 'vector', 'link-4');">vector</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L67"></a><tt class="py-lineno">67</tt>  <tt class="py-line">        <tt class="py-name">np_test</tt><tt class="py-op">.</tt><tt class="py-name">assert_almost_equal</tt><tt class="py-op">(</tt><tt class="py-name">trans</tt><tt class="py-op">,</tt> <tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-number">1.</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L68"></a><tt class="py-lineno">68</tt>  <tt class="py-line">        <tt class="py-name">aff</tt> <tt class="py-op">=</tt> <tt id="link-52" class="py-name"><a title="pyto.geometry.affine_3d.Affine3D" class="py-name" href="#" onclick="return doclink('link-52', 'Affine3D', 'link-3');">Affine3D</a></tt><tt class="py-op">(</tt><tt id="link-53" class="py-name"><a title="pyto.scripts.cleft_stats.alpha
+pyto.scripts.presynaptic_stats.alpha" class="py-name" href="#" onclick="return doclink('link-53', 'alpha', 'link-6');">alpha</a></tt><tt class="py-op">=</tt><tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">pi</tt><tt class="py-op">/</tt><tt class="py-number">2</tt><tt class="py-op">,</tt> <tt id="link-54" class="py-name"><a title="pyto.scripts.regions.axis
+pyto.scripts.vesicles.axis" class="py-name" href="#" onclick="return doclink('link-54', 'axis', 'link-7');">axis</a></tt><tt class="py-op">=</tt><tt id="link-55" class="py-name"><a title="pyto.scripts.regions.axis
+pyto.scripts.vesicles.axis" class="py-name" href="#" onclick="return doclink('link-55', 'axis', 'link-7');">axis</a></tt><tt class="py-op">,</tt> <tt class="py-name">d</tt><tt class="py-op">=</tt><tt class="py-number">0</tt><tt class="py-op">)</tt> </tt>
+<a name="L69"></a><tt class="py-lineno">69</tt>  <tt class="py-line">        <tt class="py-name">trans</tt> <tt class="py-op">=</tt> <tt class="py-name">aff</tt><tt class="py-op">.</tt><tt id="link-56" class="py-name"><a title="pyto.geometry.affine.Affine.transform
+pyto.geometry.coordinates.Coordinates.transform
+pyto.geometry.rigid_3d.Rigid3D.transform" class="py-name" href="#" onclick="return doclink('link-56', 'transform', 'link-8');">transform</a></tt><tt class="py-op">(</tt><tt id="link-57" class="py-name"><a title="pyto.geometry.vector" class="py-name" href="#" onclick="return doclink('link-57', 'vector', 'link-4');">vector</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L70"></a><tt class="py-lineno">70</tt>  <tt class="py-line">        <tt class="py-name">np_test</tt><tt class="py-op">.</tt><tt class="py-name">assert_almost_equal</tt><tt class="py-op">(</tt><tt class="py-name">trans</tt><tt class="py-op">,</tt> <tt class="py-op">[</tt><tt class="py-op">-</tt><tt class="py-number">0.5</tt><tt class="py-op">,</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">sqrt</tt><tt class="py-op">(</tt><tt class="py-number">3</tt><tt class="py-op">)</tt><tt class="py-op">/</tt><tt class="py-number">4</tt><tt class="py-op">,</tt> <tt class="py-number">3</tt><tt class="py-op">/</tt><tt class="py-number">4.</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L71"></a><tt class="py-lineno">71</tt>  <tt class="py-line">        </tt>
+<a name="TestAffine3D.testCompose"></a><div id="TestAffine3D.testCompose-def"><a name="L72"></a><tt class="py-lineno">72</tt> <a class="py-toggle" href="#" id="TestAffine3D.testCompose-toggle" onclick="return toggle('TestAffine3D.testCompose');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.geometry.test.test_affine_3d.TestAffine3D-class.html#testCompose">testCompose</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TestAffine3D.testCompose-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="TestAffine3D.testCompose-expanded"><a name="L73"></a><tt class="py-lineno">73</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L74"></a><tt class="py-lineno">74</tt>  <tt class="py-line"><tt class="py-docstring">        Tests compose()</tt> </tt>
+<a name="L75"></a><tt class="py-lineno">75</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L76"></a><tt class="py-lineno">76</tt>  <tt class="py-line"> </tt>
+<a name="L77"></a><tt class="py-lineno">77</tt>  <tt class="py-line">        <tt class="py-comment"># make a transform</tt> </tt>
+<a name="L78"></a><tt class="py-lineno">78</tt>  <tt class="py-line">        <tt class="py-name">rot_phi</tt> <tt class="py-op">=</tt> <tt id="link-58" class="py-name"><a title="pyto.geometry.affine_3d.Affine3D" class="py-name" href="#" onclick="return doclink('link-58', 'Affine3D', 'link-3');">Affine3D</a></tt><tt class="py-op">(</tt><tt id="link-59" class="py-name"><a title="pyto.scripts.cleft_stats.alpha
+pyto.scripts.presynaptic_stats.alpha" class="py-name" href="#" onclick="return doclink('link-59', 'alpha', 'link-6');">alpha</a></tt><tt class="py-op">=</tt><tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">pi</tt><tt class="py-op">/</tt><tt class="py-number">2</tt><tt class="py-op">,</tt> <tt id="link-60" class="py-name"><a title="pyto.scripts.regions.axis
+pyto.scripts.vesicles.axis" class="py-name" href="#" onclick="return doclink('link-60', 'axis', 'link-7');">axis</a></tt><tt class="py-op">=</tt><tt class="py-string">'z'</tt><tt class="py-op">)</tt> </tt>
+<a name="L79"></a><tt class="py-lineno">79</tt>  <tt class="py-line">        <tt class="py-name">rot_theta</tt> <tt class="py-op">=</tt> <tt id="link-61" class="py-name"><a title="pyto.geometry.affine_3d.Affine3D" class="py-name" href="#" onclick="return doclink('link-61', 'Affine3D', 'link-3');">Affine3D</a></tt><tt class="py-op">(</tt><tt id="link-62" class="py-name"><a title="pyto.scripts.cleft_stats.alpha
+pyto.scripts.presynaptic_stats.alpha" class="py-name" href="#" onclick="return doclink('link-62', 'alpha', 'link-6');">alpha</a></tt><tt class="py-op">=</tt><tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">pi</tt><tt class="py-op">/</tt><tt class="py-number">3</tt><tt class="py-op">,</tt> <tt id="link-63" class="py-name"><a title="pyto.scripts.regions.axis
+pyto.scripts.vesicles.axis" class="py-name" href="#" onclick="return doclink('link-63', 'axis', 'link-7');">axis</a></tt><tt class="py-op">=</tt><tt class="py-string">'y'</tt><tt class="py-op">)</tt> </tt>
+<a name="L80"></a><tt class="py-lineno">80</tt>  <tt class="py-line">        <tt class="py-name">rot</tt> <tt class="py-op">=</tt> <tt id="link-64" class="py-name"><a title="pyto.geometry.affine_3d.Affine3D" class="py-name" href="#" onclick="return doclink('link-64', 'Affine3D', 'link-3');">Affine3D</a></tt><tt class="py-op">.</tt><tt id="link-65" class="py-name" targets="Class Method pyto.geometry.affine.Affine.compose()=pyto.geometry.affine.Affine-class.html#compose,Class Method pyto.geometry.rigid_3d.Rigid3D.compose()=pyto.geometry.rigid_3d.Rigid3D-class.html#compose"><a title="pyto.geometry.affine.Affine.compose
+pyto.geometry.rigid_3d.Rigid3D.compose" class="py-name" href="#" onclick="return doclink('link-65', 'compose', 'link-65');">compose</a></tt><tt class="py-op">(</tt><tt class="py-name">rot_theta</tt><tt class="py-op">,</tt> <tt class="py-name">rot_phi</tt><tt class="py-op">)</tt> </tt>
+<a name="L81"></a><tt class="py-lineno">81</tt>  <tt class="py-line"> </tt>
+<a name="L82"></a><tt class="py-lineno">82</tt>  <tt class="py-line">        <tt class="py-name">desired</tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">array</tt><tt class="py-op">(</tt> </tt>
+<a name="L83"></a><tt class="py-lineno">83</tt>  <tt class="py-line">            <tt class="py-op">[</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-op">-</tt><tt class="py-number">0.5</tt><tt class="py-op">,</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">sqrt</tt><tt class="py-op">(</tt><tt class="py-number">3</tt><tt class="py-op">)</tt><tt class="py-op">/</tt><tt class="py-number">2</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L84"></a><tt class="py-lineno">84</tt>  <tt class="py-line">             <tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L85"></a><tt class="py-lineno">85</tt>  <tt class="py-line">             <tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">sqrt</tt><tt class="py-op">(</tt><tt class="py-number">3</tt><tt class="py-op">)</tt><tt class="py-op">/</tt><tt class="py-number">2</tt><tt class="py-op">,</tt> <tt class="py-number">0.5</tt><tt class="py-op">]</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L86"></a><tt class="py-lineno">86</tt>  <tt class="py-line">        <tt class="py-name">np_test</tt><tt class="py-op">.</tt><tt class="py-name">assert_almost_equal</tt><tt class="py-op">(</tt><tt class="py-name">desired</tt><tt class="py-op">,</tt> <tt class="py-name">rot</tt><tt class="py-op">.</tt><tt id="link-66" class="py-name"><a title="pyto.geometry.rigid_3d.Rigid3D.gl" class="py-name" href="#" onclick="return doclink('link-66', 'gl', 'link-25');">gl</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L87"></a><tt class="py-lineno">87</tt>  <tt class="py-line">        <tt class="py-name">np_test</tt><tt class="py-op">.</tt><tt class="py-name">assert_almost_equal</tt><tt class="py-op">(</tt><tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-name">rot</tt><tt class="py-op">.</tt><tt id="link-67" class="py-name" targets="Variable pyto.geometry.affine.Affine.scale=pyto.geometry.affine.Affine-class.html#scale,Variable pyto.scripts.correlation_3d_2d.scale=pyto.scripts.correlation_3d_2d-module.html#scale"><a title="pyto.geometry.affine.Affine.scale
+pyto.scripts.correlation_3d_2d.scale" class="py-name" href="#" onclick="return doclink('link-67', 'scale', 'link-67');">scale</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L88"></a><tt class="py-lineno">88</tt>  <tt class="py-line">        <tt class="py-name">np_test</tt><tt class="py-op">.</tt><tt class="py-name">assert_almost_equal</tt><tt class="py-op">(</tt><tt class="py-number">1</tt><tt class="py-op">,</tt> <tt class="py-name">rot</tt><tt class="py-op">.</tt><tt id="link-68" class="py-name" targets="Variable pyto.geometry.affine.Affine.parity=pyto.geometry.affine.Affine-class.html#parity"><a title="pyto.geometry.affine.Affine.parity" class="py-name" href="#" onclick="return doclink('link-68', 'parity', 'link-68');">parity</a></tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L89"></a><tt class="py-lineno">89</tt>  <tt class="py-line">        <tt class="py-comment">#np_test.assert_almost_equal(numpy.pi/2, rot.phi)</tt> </tt>
+<a name="L90"></a><tt class="py-lineno">90</tt>  <tt class="py-line">        <tt class="py-comment">#np_test.assert_almost_equal(numpy.pi/3, rot.theta)</tt> </tt>
+<a name="L91"></a><tt class="py-lineno">91</tt>  <tt class="py-line"> </tt>
+<a name="L92"></a><tt class="py-lineno">92</tt>  <tt class="py-line"> </tt>
+<a name="L93"></a><tt class="py-lineno">93</tt>  <tt class="py-line"><tt class="py-keyword">if</tt> <tt class="py-name">__name__</tt> <tt class="py-op">==</tt> <tt class="py-string">'__main__'</tt><tt class="py-op">:</tt> </tt>
+<a name="L94"></a><tt class="py-lineno">94</tt>  <tt class="py-line">    <tt class="py-name">suite</tt> <tt class="py-op">=</tt> <tt class="py-name">unittest</tt><tt class="py-op">.</tt><tt class="py-name">TestLoader</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">loadTestsFromTestCase</tt><tt class="py-op">(</tt><tt id="link-69" class="py-name" targets="Class pyto.geometry.test.test_affine_3d.TestAffine3D=pyto.geometry.test.test_affine_3d.TestAffine3D-class.html"><a title="pyto.geometry.test.test_affine_3d.TestAffine3D" class="py-name" href="#" onclick="return doclink('link-69', 'TestAffine3D', 'link-69');">TestAffine3D</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L95"></a><tt class="py-lineno">95</tt>  <tt class="py-line">    <tt class="py-name">unittest</tt><tt class="py-op">.</tt><tt class="py-name">TextTestRunner</tt><tt class="py-op">(</tt><tt class="py-name">verbosity</tt><tt class="py-op">=</tt><tt class="py-number">2</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-70" class="py-name" targets="Function pyto.util.test._test_numpy_plus.run()=pyto.util.test._test_numpy_plus-module.html#run"><a title="pyto.util.test._test_numpy_plus.run" class="py-name" href="#" onclick="return doclink('link-70', 'run', 'link-70');">run</a></tt><tt class="py-op">(</tt><tt class="py-name">suite</tt><tt class="py-op">)</tt> </tt>
+<a name="L96"></a><tt class="py-lineno">96</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

@@ -1,0 +1,970 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.scripts.cluster</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.scripts-module.html">Package&nbsp;scripts</a> ::
+        Module&nbsp;cluster
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.scripts.cluster-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module cluster</h1><p class="nomargin-top"><span class="codelink"><a href="pyto.scripts.cluster-pysrc.html">source&nbsp;code</a></span></p>
+<pre class="literalblock">
+
+Makes and analyzes clusters of (already existing) boundaries and segments.
+
+For example, in case of presynaptic terminal, vesicles are boundaries and
+connectors are segments.
+
+Clustering can be done based on connectivity (see &quot;Clustering by connectivity&quot;
+parameter section) or on distance (see &quot;Hierarchical clustering of connections&quot;
+and &quot;Hierarchical clustering of boundaries&quot; parameter sections).
+
+In short, clustering based on connectivity makes:
+  - clusters of boundaries that are connected (linked) by segments 
+  - clusters of segments connected by boundaries. 
+Clustering based on distance (hierarchical clustering) makes:
+  - clusters of boundaries
+  - clusters of segments
+In addition, clusters dual to distance based clusters are also made 
+(experimental feature):
+  - clusters of segments that contact distance boundary clusters (dual to
+  distance boundary clusters)
+  - clusters of boundariess that contact distance segment clusters (dual to
+  distance segment clusters)
+
+For more info how these clusters are made see class pyto.scene.MultiCluster.
+
+Important notes:
+
+  - In order to make setting up multiple scripts easier, parameters common 
+to these scripts are expected to be read from tomo_info.py file. The location 
+of this file is given as argument path of common.__import__(). These parameters
+are set in this script in lines having the following form:
+
+  if tomo_info is not None: labels_file_name = tomo_info.labels_file_name
+
+Specifiying another value for the same parameter (here labels_file_name) 
+overrides the value from tomo_info.
+
+# Author: Vladan Lucic (Max Planck Institute for Biochemistry)
+# $Id: cluster.py 1376 2016-12-23 15:09:33Z vladan $
+
+</pre>
+
+<hr />
+<div class="fields">      <p><strong>Version:</strong>
+        $Revision: 1376 $
+      </p>
+</div><!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Functions</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Functions"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="clean_ids"></a><span class="summary-sig-name">clean_ids</span>(<span class="summary-sig-arg">include</span>,
+        <span class="summary-sig-arg">exclude</span>)</span><br />
+      Removes exclude ids from include ids</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.cluster-pysrc.html#clean_ids">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scripts.cluster-module.html#read_segments" class="summary-sig-name">read_segments</a>(<span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">bound_ids</span>,
+        <span class="summary-sig-arg">inset</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Reads segments from Hierarchy pickle.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.cluster-pysrc.html#read_segments">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="read_boundaries"></a><span class="summary-sig-name">read_boundaries</span>(<span class="summary-sig-arg">boundary_ids</span>)</span><br />
+      Reads boundaries file(s) and makes (Segment) boundaries.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.cluster-pysrc.html#read_boundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="is_multi_boundaries"></a><span class="summary-sig-name">is_multi_boundaries</span>()</span><br />
+      Returns True if maultiple boundaries files are given.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.cluster-pysrc.html#is_multi_boundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="read_single_boundaries"></a><span class="summary-sig-name">read_single_boundaries</span>(<span class="summary-sig-arg">boundary_ids</span>)</span><br />
+      Reads and initializes boundaries form a sigle file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.cluster-pysrc.html#read_single_boundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="read_multi_boundaries"></a><span class="summary-sig-name">read_multi_boundaries</span>(<span class="summary-sig-arg">boundary_ids</span>)</span><br />
+      Reads and initializes boundaries form a sigle file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.cluster-pysrc.html#read_multi_boundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_base"></a><span class="summary-sig-name">get_base</span>(<span class="summary-sig-arg">file_name</span>)</span><br />
+      Returns base and root of the given file name</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.cluster-pysrc.html#get_base">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_clusters_file_name"></a><span class="summary-sig-name">get_clusters_file_name</span>(<span class="summary-sig-arg">base_file</span>,
+        <span class="summary-sig-arg">cluster_directory</span>,
+        <span class="summary-sig-arg">cluster_suffix</span>)</span><br />
+      Returns the clusters file name</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.cluster-pysrc.html#get_clusters_file_name">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scripts.cluster-module.html#get_file_name" class="summary-sig-name">get_file_name</a>(<span class="summary-sig-arg">base_file</span>,
+        <span class="summary-sig-arg">directory</span>,
+        <span class="summary-sig-arg">prefix</span>,
+        <span class="summary-sig-arg">suffix</span>)</span><br />
+      Returns file name in the form:</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.cluster-pysrc.html#get_file_name">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scripts.cluster-module.html#find_distances" class="summary-sig-name">find_distances</a>(<span class="summary-sig-arg">file_</span>,
+        <span class="summary-sig-arg">read</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">segments</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Read distances from a pickle file, or calculate them if the file does
+      not exist or if arg read is False.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.cluster-pysrc.html#find_distances">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="write_cluster_image"></a><span class="summary-sig-name">write_cluster_image</span>(<span class="summary-sig-arg">clusters</span>,
+        <span class="summary-sig-arg">labels</span>,
+        <span class="summary-sig-arg">base_file</span>,
+        <span class="summary-sig-arg">cluster_directory</span>,
+        <span class="summary-sig-arg">cluster_suffix</span>,
+        <span class="summary-sig-arg">clusters_data_type</span>)</span><br />
+      Writes clusters image</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.cluster-pysrc.html#write_cluster_image">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="pickle_all_clusters"></a><span class="summary-sig-name">pickle_all_clusters</span>(<span class="summary-sig-arg">multi_clust</span>,
+        <span class="summary-sig-arg">base_file</span>,
+        <span class="summary-sig-arg">directory</span>,
+        <span class="summary-sig-arg">suffix</span>,
+        <span class="summary-sig-arg">contacts</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Pickles multi cluster.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.cluster-pysrc.html#pickle_all_clusters">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="write_cluster_results"></a><span class="summary-sig-name">write_cluster_results</span>(<span class="summary-sig-arg">multi_cluster</span>,
+        <span class="summary-sig-arg">multi_cluster_name</span>,
+        <span class="summary-sig-arg">segments</span>,
+        <span class="summary-sig-arg">bound</span>,
+        <span class="summary-sig-arg">multi_bound_ids</span>,
+        <span class="summary-sig-arg">contacts</span>,
+        <span class="summary-sig-arg">base_file</span>,
+        <span class="summary-sig-arg">cluster_directory</span>,
+        <span class="summary-sig-arg">result_bound_suffix</span>,
+        <span class="summary-sig-arg">result_conn_suffix</span>,
+        <span class="summary-sig-arg">cluster_files</span>,
+        <span class="summary-sig-arg">hi_bound_thr</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">hi_conn_thr</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">distance_files</span>=<span class="summary-sig-default">{}</span>)</span><br />
+      Writes cluster results file</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.cluster-pysrc.html#write_cluster_results">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="write_boundary_cluster_table"></a><span class="summary-sig-name">write_boundary_cluster_table</span>(<span class="summary-sig-arg">file_</span>,
+        <span class="summary-sig-arg">multi_cluster</span>,
+        <span class="summary-sig-arg">bound</span>,
+        <span class="summary-sig-arg">contacts</span>)</span><br />
+      Writes data table for boundary clusters.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.cluster-pysrc.html#write_boundary_cluster_table">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="write_connection_cluster_table"></a><span class="summary-sig-name">write_connection_cluster_table</span>(<span class="summary-sig-arg">file_</span>,
+        <span class="summary-sig-arg">multi_cluster</span>,
+        <span class="summary-sig-arg">conn</span>,
+        <span class="summary-sig-arg">contacts</span>)</span><br />
+      Writes data table for connection clusters.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.cluster-pysrc.html#write_connection_cluster_table">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="write_connectivity_cluster_table"></a><span class="summary-sig-name">write_connectivity_cluster_table</span>(<span class="summary-sig-arg">file_</span>,
+        <span class="summary-sig-arg">multi_cluster</span>)</span><br />
+      Writes data table for connectivity-based clustering</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.cluster-pysrc.html#write_connectivity_cluster_table">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="main"></a><span class="summary-sig-name">main</span>()</span><br />
+      Main function</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.cluster-pysrc.html#main">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.scripts.cluster-module.html#tomo_info" class="summary-name">tomo_info</a> = <code title="common.__import__(name= 'tomo_info', path= '../common')">common.__import__(name= 'tomo_info', path= '../com<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="cluster_by_connectivity"></a><span class="summary-name">cluster_by_connectivity</span> = <code title="True">True</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="hi_cluster_boundaries"></a><span class="summary-name">hi_cluster_boundaries</span> = <code title="True">True</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="hi_bound_linkage"></a><span class="summary-name">hi_bound_linkage</span> = <code title="'single'">'single'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="hi_bound_criter"></a><span class="summary-name">hi_bound_criter</span> = <code title="'distance'">'distance'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="hi_bound_depth"></a><span class="summary-name">hi_bound_depth</span> = <code title="2">2</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="hi_bound_thresh"></a><span class="summary-name">hi_bound_thresh</span> = <code title="range(6, 15)">range(6, 15)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="hi_bound_similarity"></a><span class="summary-name">hi_bound_similarity</span> = <code title="'b-flat'">'b-flat'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="hi_bound_single"></a><span class="summary-name">hi_bound_single</span> = <code title="True">True</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="hi_cluster_connections"></a><span class="summary-name">hi_cluster_connections</span> = <code title="True">True</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="hi_conn_linkage"></a><span class="summary-name">hi_conn_linkage</span> = <code title="'single'">'single'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="hi_conn_criter"></a><span class="summary-name">hi_conn_criter</span> = <code title="'distance'">'distance'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="hi_conn_depth"></a><span class="summary-name">hi_conn_depth</span> = <code title="2">2</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="hi_conn_thresh"></a><span class="summary-name">hi_conn_thresh</span> = <code title="range(10, 30, 2)">range(10, 30, 2)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="hi_conn_similarity"></a><span class="summary-name">hi_conn_similarity</span> = <code title="'rand'">'rand'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="hi_conn_single"></a><span class="summary-name">hi_conn_single</span> = <code title="True">True</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="in_seg_file_name"></a><span class="summary-name">in_seg_file_name</span> = <code title="'thresh_conn.pkl'">'thresh_conn.pkl'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="boundary_shape"></a><span class="summary-name">boundary_shape</span> = <code title="512, 512, 200">512, 512, 200</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="boundary_byte_order"></a><span class="summary-name">boundary_byte_order</span> = <code title="'&lt;'">'&lt;'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="boundary_array_order"></a><span class="summary-name">boundary_array_order</span> = <code title="'FORTRAN'">'FORTRAN'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="boundary_offset"></a><span class="summary-name">boundary_offset</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="in_boundary_ids"></a><span class="summary-name">in_boundary_ids</span> = <code title="range(2, 64)">range(2, 64)</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="ex_boundary_ids"></a><span class="summary-name">ex_boundary_ids</span> = <code title="[20, 21]">[20, 21]</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="shift"></a><span class="summary-name">shift</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="clust_directory"></a><span class="summary-name">clust_directory</span> = <code title="''">''</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="clust_prefix"></a><span class="summary-name">clust_prefix</span> = <code title="''">''</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="result_conn_suffix"></a><span class="summary-name">result_conn_suffix</span> = <code title="'_cluster-conn.dat'">'_cluster-conn.dat'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="result_bound_suffix"></a><span class="summary-name">result_bound_suffix</span> = <code title="'_cluster-bound.dat'">'_cluster-bound.dat'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="result_conn_clust_suffix"></a><span class="summary-name">result_conn_clust_suffix</span> = <code title="'_conn-cluster.dat'">'_conn-cluster.dat'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="pickle_clusters"></a><span class="summary-name">pickle_clusters</span> = <code title="True">True</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="pickle_contacts"></a><span class="summary-name">pickle_contacts</span> = <code title="False">False</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="pickle_suffix"></a><span class="summary-name">pickle_suffix</span> = <code title="'_cluster.pkl'">'_cluster.pkl'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="write_images"></a><span class="summary-name">write_images</span> = <code title="False">False</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="conn_conn_suffix"></a><span class="summary-name">conn_conn_suffix</span> = <code title="&quot;_cluster-conn-conn.em&quot;">&quot;_cluster-conn-conn.em&quot;</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="conn_bound_suffix"></a><span class="summary-name">conn_bound_suffix</span> = <code title="&quot;_cluster-conn-bound.em&quot;">&quot;_cluster-conn-bound.em&quot;</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="hi_conn_suffix"></a><span class="summary-name">hi_conn_suffix</span> = <code title="&quot;_cluster-hi-conn.em&quot;">&quot;_cluster-hi-conn.em&quot;</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="hi_bound_suffix"></a><span class="summary-name">hi_bound_suffix</span> = <code title="&quot;_cluster-hi-bound.em&quot;">&quot;_cluster-hi-bound.em&quot;</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="dual_hi_conn_suffix"></a><span class="summary-name">dual_hi_conn_suffix</span> = <code title="&quot;_cluster-dual-hi-conn.em&quot;">&quot;_cluster-dual-hi-conn.em&quot;</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="dual_hi_bound_suffix"></a><span class="summary-name">dual_hi_bound_suffix</span> = <code title="&quot;_cluster-dual-hi-conn.em&quot;">&quot;_cluster-dual-hi-conn.em&quot;</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="clust_data_type"></a><span class="summary-name">clust_data_type</span> = <code title="'uint8'">'uint8'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="distance_prefix"></a><span class="summary-name">distance_prefix</span> = <code title="''">''</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="bound_distance_suffix"></a><span class="summary-name">bound_distance_suffix</span> = <code title="'_bound_distances.pkl'">'_bound_distances.pkl'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="conn_distance_suffix"></a><span class="summary-name">conn_distance_suffix</span> = <code title="'_conn_distances.pkl'">'_conn_distances.pkl'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="read_distance"></a><span class="summary-name">read_distance</span> = <code title="False">False</code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="read_segments"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">read_segments</span>(<span class="sig-arg">name</span>,
+        <span class="sig-arg">bound_ids</span>,
+        <span class="sig-arg">inset</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scripts.cluster-pysrc.html#read_segments">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Reads segments from Hierarchy pickle.</p>
+  <p>Arguments:</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_file_name"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_file_name</span>(<span class="sig-arg">base_file</span>,
+        <span class="sig-arg">directory</span>,
+        <span class="sig-arg">prefix</span>,
+        <span class="sig-arg">suffix</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scripts.cluster-pysrc.html#get_file_name">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Returns file name in the form:
+
+  directory/prefix + root_of_base_file + suffix
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="find_distances"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">find_distances</span>(<span class="sig-arg">file_</span>,
+        <span class="sig-arg">read</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">segments</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scripts.cluster-pysrc.html#find_distances">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Read distances from a pickle file, or calculate them if the file does 
+  not exist or if arg read is False. If distances are calculated they're 
+  saved to a pickle file.</p>
+  <p>Returns distances</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-VariablesDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="tomo_info"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">tomo_info</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+common.__import__(name= 'tomo_info', path= '../common')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

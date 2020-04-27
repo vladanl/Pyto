@@ -1,0 +1,877 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.scripts.layers</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.scripts-module.html">Package&nbsp;scripts</a> ::
+        Module&nbsp;layers
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.scripts.layers-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module layers</h1><p class="nomargin-top"><span class="codelink"><a href="pyto.scripts.layers-pysrc.html">source&nbsp;code</a></span></p>
+<pre class="literalblock">
+
+
+Makes layers in a given region starting from one or between two specified 
+boundaries. Also analyzes position of given segments in respect to the layers  
+
+Important notes:
+
+  - In order to make setting up multiple scripts easier, parameters common 
+to these scripts are expected to be read from tomo_info.py file. The location 
+of this file is given as argument path of common.__import__(). These parameters
+are set in this script in lines having the following form:
+
+  if tomo_info is not None: boundaries_file = tomo_info.labels_file_name
+
+Specifiying another value for the same parameter (here labels_file_name) 
+overrides the value from tomo_info.
+
+  - Incorrect id specification accounts for a majority of problems encountered 
+while running this script. In case an exception is thrown, please check the ids
+carefully first.
+
+  - For many variables more than one option is given. Uncomment the desired one
+and adjust the value if needed, and comment out the other options.
+
+  - Currently (r997) division by 0 warnings are printed. These might be ignored
+because they most likely arise from calculating denisty of a 0-volume segment
+and are also a consequence of the changed behavior of scipy. 
+
+$Id: layers.py 1490 2018-11-08 16:11:29Z vladan $
+Author: Vladan Lucic 
+
+</pre>
+
+<hr />
+<div class="fields">      <p><strong>Version:</strong>
+        $Revision: 1490 $
+      </p>
+</div><!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Functions</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Functions"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scripts.layers-module.html#read_image" class="summary-sig-name">read_image</a>()</span><br />
+      Reads image file and returns an segmentation.Image object</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.layers-pysrc.html#read_image">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scripts.layers-module.html#read_segments" class="summary-sig-name">read_segments</a>(<span class="summary-sig-arg">file_name</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">shape</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">suggest_shape</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">byte_order</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">data_type</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">array_order</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">shift</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">offset</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Reads file(s) containing boundaries.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.layers-pysrc.html#read_segments">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scripts.layers-module.html#read_array_segments" class="summary-sig-name">read_array_segments</a>(<span class="summary-sig-arg">file_name</span>,
+        <span class="summary-sig-arg">offset</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">byte_order</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">data_type</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">array_order</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">shape</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">shift</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Reads segments (labels) file(s)</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.layers-pysrc.html#read_array_segments">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scripts.layers-module.html#read_multi_segments" class="summary-sig-name">read_multi_segments</a>(<span class="summary-sig-arg">file_name</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">byte_order</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">data_type</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">array_order</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">shape</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">shift</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Reads and initializes segments form multiple labels files.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.layers-pysrc.html#read_multi_segments">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scripts.layers-module.html#read_single_segments" class="summary-sig-name">read_single_segments</a>(<span class="summary-sig-arg">file_name</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">byte_order</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">data_type</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">array_order</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">shape</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Reads and initializes segments form a sigle labels file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.layers-pysrc.html#read_single_segments">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="make_layers"></a><span class="summary-sig-name">make_layers</span>(<span class="summary-sig-arg">segments</span>,
+        <span class="summary-sig-arg">mask</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.layers-pysrc.html#make_layers">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="analyze"></a><span class="summary-sig-name">analyze</span>(<span class="summary-sig-arg">image</span>,
+        <span class="summary-sig-arg">layers</span>,
+        <span class="summary-sig-arg">segments</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.layers-pysrc.html#analyze">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_results_file"></a><span class="summary-sig-name">get_results_file</span>(<span class="summary-sig-arg">extension</span>=<span class="summary-sig-default">''</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.layers-pysrc.html#get_results_file">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="write_layers"></a><span class="summary-sig-name">write_layers</span>(<span class="summary-sig-arg">layers</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.layers-pysrc.html#write_layers">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="format_layer_ids"></a><span class="summary-sig-name">format_layer_ids</span>()</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.layers-pysrc.html#format_layer_ids">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="format_header"></a><span class="summary-sig-name">format_header</span>(<span class="summary-sig-arg">nested_segment_ids</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.layers-pysrc.html#format_header">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="format_data"></a><span class="summary-sig-name">format_data</span>(<span class="summary-sig-arg">layers_density</span>,
+        <span class="summary-sig-arg">segment_count</span>,
+        <span class="summary-sig-arg">segment_count_per_volume</span>,
+        <span class="summary-sig-arg">overlap</span>,
+        <span class="summary-sig-arg">layer_ids</span>)</span><br />
+      Formats data section of result file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.layers-pysrc.html#format_data">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="write_results"></a><span class="summary-sig-name">write_results</span>(<span class="summary-sig-arg">layer_density</span>,
+        <span class="summary-sig-arg">layer_ids</span>,
+        <span class="summary-sig-arg">nested_segment_ids</span>,
+        <span class="summary-sig-arg">segment_count</span>,
+        <span class="summary-sig-arg">segment_count_per_volume</span>,
+        <span class="summary-sig-arg">overlap</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.layers-pysrc.html#write_results">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="main"></a><span class="summary-sig-name">main</span>()</span><br />
+      Main function</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.layers-pysrc.html#main">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.scripts.layers-module.html#tomo_info" class="summary-name">tomo_info</a> = <code title="common.__import__(name= 'tomo_info', path= '../common')">common.__import__(name= 'tomo_info', path= '../com<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="boundaries_shape"></a><span class="summary-name">boundaries_shape</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="boundaries_byte_order"></a><span class="summary-name">boundaries_byte_order</span> = <code title="'&lt;'">'&lt;'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="boundaries_array_order"></a><span class="summary-name">boundaries_array_order</span> = <code title="'FORTRAN'">'FORTRAN'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="boundaries_offset"></a><span class="summary-name">boundaries_offset</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="boundaries_shift"></a><span class="summary-name">boundaries_shift</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="boundary_id_1"></a><span class="summary-name">boundary_id_1</span> = <code title="1">1</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="boundary_id_2"></a><span class="summary-name">boundary_id_2</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.scripts.layers-module.html#layers_mask_id" class="summary-name">layers_mask_id</a> = <code title="[tomo_info.segmentation_region]+ tomo_info.vesicle_ids">[tomo_info.segmentation_region]+ tomo_info.ve<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="layer_thickness"></a><span class="summary-name">layer_thickness</span> = <code title="1">1</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="num_layers"></a><span class="summary-name">num_layers</span> = <code title="200">200</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="num_extra_layers"></a><span class="summary-name">num_extra_layers</span> = <code title="0">0</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="extra_layers_mask_id_1"></a><span class="summary-name">extra_layers_mask_id_1</span> = <code title="67">67</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="extra_layers_mask_id_2"></a><span class="summary-name">extra_layers_mask_id_2</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="segments_file"></a><span class="summary-name">segments_file</span> = <code title="'segments.pkl'">'segments.pkl'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="segments_shape"></a><span class="summary-name">segments_shape</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="segments_data_type"></a><span class="summary-name">segments_data_type</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="segments_byte_order"></a><span class="summary-name">segments_byte_order</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="segments_array_order"></a><span class="summary-name">segments_array_order</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="segments_offset"></a><span class="summary-name">segments_offset</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="segments_shift"></a><span class="summary-name">segments_shift</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="layers_file"></a><span class="summary-name">layers_file</span> = <code title="'layers.mrc'">'layers.mrc'</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="results_directory"></a><span class="summary-name">results_directory</span> = <code title="''">''</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="results_prefix"></a><span class="summary-name">results_prefix</span> = <code title="''">''</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="results_suffix"></a><span class="summary-name">results_suffix</span> = <code title="'_layers.dat'">'_layers.dat'</code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="read_image"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">read_image</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scripts.layers-pysrc.html#read_image">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Reads image file and returns an segmentation.Image object</p>
+  <p>Depreciated</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="read_segments"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">read_segments</span>(<span class="sig-arg">file_name</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">shape</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">suggest_shape</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">byte_order</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">data_type</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">array_order</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">shift</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">offset</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scripts.layers-pysrc.html#read_segments">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Reads file(s) containing boundaries.</p>
+  <p>Works on single and multiple segments files. In the latter case, ids 
+  are shifted so that they do not overlap and the segments from different 
+  files are merged.</p>
+  <p>The label file shape is determined using the first found of the 
+  following:</p>
+  <ul>
+    <li>
+      variable labels_shape
+    </li>
+    <li>
+      shape given in the labels file header (em im or mrc format)
+    </li>
+    <li>
+      argument suggest_shape
+    </li>
+  </ul>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      shape, suggest_shape: actual or suggested image shape (see above)
+    </li>
+  </ul>
+  <p>Returns (segments, segment_ids) where:</p>
+  <ul>
+    <li>
+      segments: (Segment) segments, from single file or merged
+    </li>
+    <li>
+      segment_ids: (list of ndarrays) segment ids, each list element 
+      contains ids from one segments file (shifted in case of multiple 
+      files)
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="read_array_segments"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">read_array_segments</span>(<span class="sig-arg">file_name</span>,
+        <span class="sig-arg">offset</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">byte_order</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">data_type</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">array_order</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">shape</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">shift</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scripts.layers-pysrc.html#read_array_segments">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Reads segments (labels) file(s)</p>
+  <p>Depreciated</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="read_multi_segments"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">read_multi_segments</span>(<span class="sig-arg">file_name</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">byte_order</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">data_type</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">array_order</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">shape</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">shift</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scripts.layers-pysrc.html#read_multi_segments">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Reads and initializes segments form multiple labels files.</p>
+  <p>Depreciated</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="read_single_segments"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">read_single_segments</span>(<span class="sig-arg">file_name</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">byte_order</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">data_type</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">array_order</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">shape</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scripts.layers-pysrc.html#read_single_segments">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Reads and initializes segments form a sigle labels file.</p>
+  <p>Depreciated</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-VariablesDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="tomo_info"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">tomo_info</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+common.__import__(name= 'tomo_info', path= '../common')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="layers_mask_id"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">layers_mask_id</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+[tomo_info.segmentation_region]+ tomo_info.vesicle_ids
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

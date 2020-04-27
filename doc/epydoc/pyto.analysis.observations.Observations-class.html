@@ -1,0 +1,2249 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.analysis.observations.Observations</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.analysis-module.html">Package&nbsp;analysis</a> ::
+        <a href="pyto.analysis.observations-module.html">Module&nbsp;observations</a> ::
+        Class&nbsp;Observations
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.analysis.observations.Observations-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Observations</h1><p class="nomargin-top"><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_pyto_ana_8" name="uml_class_diagram_for_pyto_ana_8">
+<area shape="rect" id="node1_14" href="pyto.analysis.observations.Observations-class.html#__init__" title="Initialize attributes" alt="" coords="18,37,694,57"/>
+<area shape="rect" id="node1_15" href="pyto.analysis.observations.Observations-class.html#initializeProperties" title="Adds elements of arg names to properties and initialize each property to &#160;[]." alt="" coords="18,57,694,77"/>
+<area shape="rect" id="node1_16" href="pyto.analysis.observations.Observations-class.html#recast" title="Returns a new instance of this class and sets all attributes of the new &#160;object to the attributes of obj." alt="" coords="18,77,694,97"/>
+<area shape="rect" id="node1_17" href="pyto.analysis.observations.Observations-class.html#addCatalog" title="Adds data from a specified catalog to this instance." alt="" coords="18,97,694,117"/>
+<area shape="rect" id="node1_18" href="pyto.analysis.observations.Observations-class.html#getExperiment" title="Extracts values from this instance that correspond to a single experiment, &#160;specified by its identifier." alt="" coords="18,117,694,137"/>
+<area shape="rect" id="node1_19" href="pyto.analysis.observations.Observations-class.html#getExperimentIndex" title="Returns index correponding to the specifed experiment, or None if the &#160;identifier doesn&#39;t exist" alt="" coords="18,137,694,157"/>
+<area shape="rect" id="node1_20" href="pyto.analysis.observations.Observations-class.html#addExperiment" title="Adds experiment (deepcopied) to this instance." alt="" coords="18,157,694,177"/>
+<area shape="rect" id="node1_21" href="pyto.analysis.observations.Observations-class.html#getValue" title="Returns value of the specified property for the specified experiment." alt="" coords="18,177,694,197"/>
+<area shape="rect" id="node1_22" href="pyto.analysis.observations.Observations-class.html#setValue" title="Sets the specified property for the specified experiment (identifier) to &#160;the given value." alt="" coords="18,197,694,217"/>
+<area shape="rect" id="node1_23" href="pyto.analysis.observations.Observations-class.html#addData" title="Adds properties listed in arg names of another Observations object (arg &#160;source) to this instance." alt="" coords="18,217,694,237"/>
+<area shape="rect" id="node1_24" href="pyto.analysis.observations.Observations-class.html#join" title="Joins observations of this instance with those of arg obs." alt="" coords="18,237,694,257"/>
+<area shape="rect" id="node1_25" href="pyto.analysis.observations.Observations-class.html#joinExperiments" title="Creates new Experiments instance by joining data (specified by arg name) of all experiments." alt="" coords="18,257,694,277"/>
+<area shape="rect" id="node1_26" href="pyto.analysis.observations.Observations-class.html#remove" title="Removes all data for the observation given by arg identifier." alt="" coords="18,277,694,297"/>
+<area shape="rect" id="node1_27" href="pyto.analysis.observations.Observations-class.html#printData" title="Prints data of this instance." alt="" coords="18,317,694,337"/>
+<area shape="rect" id="node1" href="pyto.analysis.observations.Observations-class.html" title="Contains data for (a particular aspect of) one or more experiments and methods useful in the analysis of this data." alt="" coords="5,5,705,344"/>
+</map>
+  <img src="uml_class_diagram_for_pyto_ana_8.gif" alt='' usemap="#uml_class_diagram_for_pyto_ana_8" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<p>Contains data for (a particular aspect of) one or more experiments and
+  methods useful in the analysis of this data.</p>
+  <p>The data for each experiment consist of one or more properties. 
+  Typically, some of these properties are vectorial, that is there as an 
+  array of values for each experiment, and thery are indexed by an index. 
+  The index itself is then one of the vectorial (here called undexed) 
+  properties. In addition, typically there are also scalar properties (one 
+  value for an experiment), here called non-indexed.</p>
+  <p>The data is organized in the following way. Each data-related 
+  attribute (or property) is a list where each element contains value(s) of
+  that property pertaining to one observation. All of these attributes have
+  to have the same order (as identifiers).</p>
+  <p>Furthermore, some of these attributes are 'indexed' (see attribute 
+  indexed below), that is each element is another list or array. Elements 
+  of these sublists (subarrays) are ordered in the same way as the elements
+  of index attribute.</p>
+  <p>Meta-data attributes (obligatory):</p>
+  <ul>
+    <li>
+      properties: set of paroperties (names), indexed and non-indexed
+    </li>
+    <li>
+      indexed: set of indexed properties (names)
+    </li>
+  </ul>
+  <p>Observation related, non-indexed attributes:</p>
+  <ul>
+    <li>
+      identifiers: (list of strings) experiment identifiers, obligatory
+    </li>
+    <li>
+      categories, treatments, features or related: (list of strings) 
+      describing experiments, at least one has to exist
+    </li>
+  </ul>
+  <p>Other attributes</p>
+  <ul>
+    <li>
+      index: (string) name of the index attributes (default 'ids')
+    </li>
+    <li>
+      ids (or other, see above):
+    </li>
+  </ul>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Initialize attributes</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#initializeProperties" class="summary-sig-name">initializeProperties</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">names</span>)</span><br />
+      Adds elements of arg names to properties and initialize each property
+      to [].</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.initializeProperties">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#recast" class="summary-sig-name">recast</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns a new instance of this class and sets all attributes of the 
+      new object to the attributes of obj.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.recast">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#addCatalog" class="summary-sig-name">addCatalog</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">catalog</span>,
+        <span class="summary-sig-arg">default</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Adds data from a specified catalog to this instance.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.addCatalog">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#getExperiment" class="summary-sig-name">getExperiment</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">identifier</span>)</span><br />
+      Extracts values from this instance that correspond to a single 
+      experiment, specified by its identifier.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.getExperiment">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#getExperimentIndex" class="summary-sig-name">getExperimentIndex</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">identifier</span>)</span><br />
+      Returns index correponding to the specifed experiment, or None if the
+      identifier doesn't exist</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.getExperimentIndex">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#addExperiment" class="summary-sig-name">addExperiment</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">experiment</span>,
+        <span class="summary-sig-arg">identifier</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Adds experiment (deepcopied) to this instance.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.addExperiment">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#getValue" class="summary-sig-name">getValue</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">identifier</span>,
+        <span class="summary-sig-arg">property</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">name</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns value of the specified property for the specified experiment.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.getValue">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#setValue" class="summary-sig-name">setValue</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">property</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">name</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">identifier</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">value</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">default</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">indexed</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">id_</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Sets the specified property for the specified experiment (identifier)
+      to the given value.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.setValue">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#addData" class="summary-sig-name">addData</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">source</span>,
+        <span class="summary-sig-arg">names</span>,
+        <span class="summary-sig-arg">identifiers</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">copy</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Adds properties listed in arg names of another Observations object 
+      (arg source) to this instance.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.addData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#join" class="summary-sig-name">join</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">obs</span>)</span><br />
+      Joins observations of this instance with those of arg obs.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.join">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#joinExperiments" class="summary-sig-name">joinExperiments</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">join</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">identifiers</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Creates new Experiments instance by joining data (specified by arg 
+      name) of all experiments.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.joinExperiments">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#remove" class="summary-sig-name">remove</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">identifier</span>)</span><br />
+      Removes all data for the observation given by arg identifier.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.remove">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#keep" class="summary-sig-name">keep</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">identifiers</span>)</span><br />
+      Keeps only the experiments specified by arg identifiers and removes 
+      data corresponding to all other experiments.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.keep">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#split" class="summary-sig-name">split</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">bins</span>)</span><br />
+      Extracts data from this instance according to the values of property 
+      given by arg name and arg bins, makes an instance out of each 
+      exctraction and returns them as list.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.split">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#extract" class="summary-sig-name">extract</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">condition</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">values</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">template</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">target</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns elements from (arg) target (observations) that have the same 
+      positions as either the True elements of condition (if arg conditions
+      is specified), or the elements of (arg) values have in the (arg) 
+      template (if arg condition is not specified).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.extract">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_valueExtractOne"></a><span class="summary-sig-name">_valueExtractOne</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">values</span>,
+        <span class="summary-sig-arg">template</span>,
+        <span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">nested</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Extracts from one target array</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations._valueExtractOne">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_conditionExtractOne"></a><span class="summary-sig-name">_conditionExtractOne</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">condition</span>,
+        <span class="summary-sig-arg">target</span>,
+        <span class="summary-sig-arg">nested</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Extracts from one target array</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations._conditionExtractOne">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#extractIndexed" class="summary-sig-name">extractIndexed</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">condition</span>,
+        <span class="summary-sig-arg">other</span>=<span class="summary-sig-default"><code class="variable-group">[</code><code class="variable-group">]</code></span>)</span><br />
+      Extracts elements of individual observations of this instance, 
+      according to the arg condition and returns an object of this class 
+      containig the extracted elements.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.extractIndexed">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#splitIndexed" class="summary-sig-name">splitIndexed</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Splits this instance according to the indexed properties.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.splitIndexed">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#transpose" class="summary-sig-name">transpose</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Rearanges indexed data so that observations and indices are exchanged</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.transpose">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#apply" class="summary-sig-name">apply</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">funct</span>,
+        <span class="summary-sig-arg">args</span>,
+        <span class="summary-sig-arg">kwargs</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
+        <span class="summary-sig-arg">name</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">indexed</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Applies (arg) funct to properties args where other arguments are 
+      given in arg kwargs.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.apply">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#pixels2nm" class="summary-sig-name">pixels2nm</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">conversion</span>,
+        <span class="summary-sig-arg">power</span>=<span class="summary-sig-default">1</span>)</span><br />
+      Converts all values of ndarray self.name from pixels to nm.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.pixels2nm">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#rebin" class="summary-sig-name">rebin</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">bins</span>)</span><br />
+      Rebins histogram-like data specified by name according to the arg 
+bins and returns the new histogram.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.rebin">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#doStats" class="summary-sig-name">doStats</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">bins</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">fraction</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">identifiers</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">new</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">ddof</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">remove_nan</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Does statistics on data specified by name for each experiment 
+      separately.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.doStats">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#doStatsByIndex" class="summary-sig-name">doStatsByIndex</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">identifiers</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">identifier</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">ddof</span>=<span class="summary-sig-default">1</span>)</span><br />
+      Calculates basic statistics (mean, std, sem, n) for each data point 
+      accross the specified experiments.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.doStatsByIndex">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#doInference" class="summary-sig-name">doInference</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">test</span>,
+        <span class="summary-sig-arg">reference</span>,
+        <span class="summary-sig-arg">name</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">data</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">identifiers</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Tests if data for different experiments are statistically different 
+      from a given reference experiment(s) data.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.doInference">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#doCorrelation" class="summary-sig-name">doCorrelation</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">xName</span>,
+        <span class="summary-sig-arg">yName</span>,
+        <span class="summary-sig-arg">test</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">regress</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">reference</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">new</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">identifiers</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">out</span>=<span class="summary-sig-default">&lt;epydoc.docintrospecter._DevNull object&gt;</span>,
+        <span class="summary-sig-arg">format_</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
+        <span class="summary-sig-arg">title</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span><br />
+      Tests if data specified by args xName and yName are correlated.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.doCorrelation">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#printStats" class="summary-sig-name">printStats</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">out</span>=<span class="summary-sig-default">&lt;epydoc.docintrospecter._DevNull object&gt;</span>,
+        <span class="summary-sig-arg">names</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">identifiers</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">format_</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
+        <span class="summary-sig-arg">title</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Prints basic statistics and inference analysis results contained in 
+      this instance.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.printStats">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#printData" class="summary-sig-name">printData</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">names</span>,
+        <span class="summary-sig-arg">out</span>=<span class="summary-sig-default">&lt;epydoc.docintrospecter._DevNull object&gt;</span>,
+        <span class="summary-sig-arg">identifiers</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">format_</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
+        <span class="summary-sig-arg">title</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Prints data of this instance.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.printData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.observations.Observations-class.html#parseTest" class="summary-sig-name">parseTest</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">test</span>)</span><br />
+      Returns (method, symbol) for the statistical test corresponding to 
+      the arg test.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.parseTest">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Initialize attributes</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="initializeProperties"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">initializeProperties</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">names</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.initializeProperties">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds elements of arg names to properties and initialize each property 
+  to [].</p>
+  <p>Can be used only on instances that have no identifiers.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="recast"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">recast</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.recast">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns a new instance of this class and sets all attributes of the 
+  new object to the attributes of obj.</p>
+  <p>Useful for objects of this class loaded from a pickle that were 
+  pickled before some of the current methods of this class were coded. In 
+  such a case the returned object would contain the same attributes as the 
+  unpickled object but it would accept recently coded methods.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="addCatalog"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addCatalog</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">catalog</span>,
+        <span class="sig-arg">default</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.addCatalog">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds data from a specified catalog to this instance.</p>
+  <p>If an experiment does not have a value for a preference that exists 
+  for other experiment(s) the default value is used. However, if an 
+  identifier from catalog does not exist in the current instance, values 
+  for that experiment are not added to the current instance.</p>
+  <p>Adds added property names to self.properties, but does not change 
+  self.indexed.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      catalog: (Catalog) catalog
+    </li>
+    <li>
+      default: default value
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getExperiment"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getExperiment</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">identifier</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.getExperiment">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Extracts values from this instance that correspond to a single 
+  experiment, specified by its identifier. The extracted values are put 
+  into an Experiment object and returned</p>
+  <p>In adition to data attributes (properties) the following attributes 
+  are set in the resulting Experiment instance:</p>
+  <ul>
+    <li>
+      properties: copied form self.properties
+    </li>
+    <li>
+      indexed: copied form self.indexed
+    </li>
+    <li>
+      identifier: identifier
+    </li>
+  </ul>
+  <p>Attribute identifiers is not present in the resulting object</p>
+  <p>Returns None if arg identifier is not in the list of the current 
+  identifiers (self.identifiers)</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      identifier: experiment identifier
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getExperimentIndex"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getExperimentIndex</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">identifier</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.getExperimentIndex">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns index correponding to the specifed experiment, or None if the 
+  identifier doesn't exist</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      identifier: experiment identifier
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="addExperiment"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addExperiment</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">experiment</span>,
+        <span class="sig-arg">identifier</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.addExperiment">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds experiment (deepcopied) to this instance.</p>
+  <p>If the current object is empty (no items in self.identifiers list) 
+  properties and indexed attributes are copied from experiment, with the 
+  exception that 'identifier' is relaced by 'identifiers'.</p>
+  <p>Otherwise, this instance and experiment have to have the same values 
+  for attributes properties and indexed. Also, experiment.identifier should
+  not be in self.identifiers before this method is called. This method 
+  appends experiment.identifier to self.identifiers.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      expreriment: instance of Experiment
+    </li>
+    <li>
+      identifier: identifier for the added eperiment, if None the value of 
+      experiment.identifier is used
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getValue"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getValue</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">identifier</span>,
+        <span class="sig-arg">property</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">name</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.getValue">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns value of the specified property for the specified 
+  experiment.</p>
+  <p>If arg ids is specified, returns the values corresponding to the 
+  specified ids. If ids is a list or ndarray returns an ndarray of values. 
+  Alternatively, if ids is a single int, returns only the corresponding 
+  value.</p>
+  <p>Raises ValueError if specifed identifier doesn't exist.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      identifier: experiment identifyer
+    </li>
+    <li>
+      name: (string) property name, same as property
+    </li>
+    <li>
+      property: (string) property name, same as name, kept for 
+      backcompatibility
+    </li>
+    <li>
+      ids: (list, ndarray or int) one or more ids
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setValue"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setValue</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">property</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">name</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">identifier</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">value</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">default</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">indexed</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">id_</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.setValue">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the specified property for the specified experiment (identifier) 
+  to the given value.</p>
+  <p>The value can correspond to one or more elements specified by id (arg 
+  id_) or it can be an array that contain values for all ids of the 
+  specifed observation (experiment) (arg id_ is None). In case arg id_ 
+  contains more than one element, arg value has to have the same number of 
+  elements.</p>
+  <p>In case the property doesn't exist, a new one is created. The values 
+  of this property for other experiments is set to the default value.</p>
+  <p>In case the experiment doesn't exist, a new entry is made for that 
+  experiment. The value of the specified property is set to the given 
+  value, while the values of all other properties corresponding to the new 
+  identifier are set to the default value.</p>
+  <p>However, if the experiment does not exist and arg id_ is not None 
+  ValueError is raised.</p>
+  <p>If arg identifier is None, all existing experiments get the default 
+  value for the specified property. Arg value is in this case ignored.</p>
+  <p>Adds the property (name) to self.properties. If arg indexed is True, 
+  the property (name) is also added to self.indexed.</p>
+  <p>Uncommon use: If the property to be set for the specified identifier 
+  does not exist (i.e. the data structures are inconsistent) the specified 
+  value is still set correctly. This can happen within 
+  pyto.io.MultiData.readPropertiesGen() loop for example, as in 
+  CleftLayers.read() (lines 154-156 in rev 697).</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      identifier: experiment identifier
+    </li>
+    <li>
+      name: (string) property name, same as property
+    </li>
+    <li>
+      property: (string) property name, same as name, kept for 
+      backcompatibility
+    </li>
+    <li>
+      value: single value or a ndarray of values for all ids
+    </li>
+    <li>
+      default: default value
+    </li>
+    <li>
+      indexed: flag indicating if the property is indexed
+    </li>
+    <li>
+      id_: (single number, list, tuple or numpy.ndarray) id of one or more 
+      elements that needs to be set, or None for all ids
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="addData"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addData</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">source</span>,
+        <span class="sig-arg">names</span>,
+        <span class="sig-arg">identifiers</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">copy</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.addData">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds properties listed in arg names of another Observations object 
+  (arg source) to this instance.</p>
+  <p>In arg names is a list added properties retain their names, and so 
+  will overwrite the properties having same names of this instance (if they
+  exist). Otherwise, if names is a dictionary, the keys are the property 
+  names in source object and values are the corresponding names under which
+  they are added to this object.</p>
+  <p>All specified identifiers have to exist in both objects. If arg 
+  identifiers is None, identifiers of arg source have to exist in this 
+  object.</p>
+  <p>If arg copy is True, a copy of data is saved to the other object 
+  (copy() method for numpy.ndarrays, deepcopy for the rest).</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      source: (Observations) another object
+    </li>
+    <li>
+      names: list of property names of the source object, or a dictionary 
+      where keys are the property names in source and values are the new 
+      names
+    </li>
+    <li>
+      identifiers: list of experiment identifiers for which the data is 
+      copied. Identifiers listed here that do not exist among identifiers 
+      of source are ignored.
+    </li>
+    <li>
+      copy: Flag indicating if data is copied
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="join"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">join</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">obs</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.join">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Joins observations of this instance with those of arg obs. Only the 
+  attributes listed in attribute self.properties are joined.</p>
+  <p>No two identifiers can be the same. If that happens ValueError is 
+  raised.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      obs: Observations
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="joinExperiments"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">joinExperiments</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">join</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">identifiers</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.joinExperiments">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Creates new Experiments instance by joining data (specified by arg 
+  name) of all experiments.</p>
+  <p>Data of individual experiments (observations) are either joined 
+  together (mode 'join'), or an average value of each experiment is used 
+  (mode 'mean') for the resulting instance.</p>
+  <p>The joined data is ordered according to (the order of) arg 
+  identifiers.</p>
+  <p>The resulting instance has the following properties:</p>
+  <ul>
+    <li>
+      data name(s): the name of the data property stays the same
+    </li>
+    <li>
+      ids: set from 1 up (increment 1), correspond to each data point of 
+      the resulting instance
+    </li>
+    <li>
+      idNames: unique string for each data value derived from identifier 
+      and id for that value, see below.
+    </li>
+  </ul>
+  <p>If data is scalar (one value per experiment), or the mode is 'mean' 
+  experiment identifiers of this instance are saved as attribute idNames of
+  the resulting object. Alternatively, if data is indexed and mode is 
+  'join' idNames of the resulting object for each data element is composed 
+  as identifier_id where identifier and id are specifying this data 
+  element.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      name: name of the data attribute
+    </li>
+    <li>
+      mode: 'join' to join or 'mean' to average data
+    </li>
+    <li>
+      identifiers: list of experiment identifiers to be used here, if None 
+      all are used. Non-existing identifiers are ignored.
+    </li>
+  </ul>
+  <p>Returns: Experiment instance</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="remove"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">remove</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">identifier</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.remove">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes all data for the observation given by arg identifier.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      identifier: observation identifier
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="keep"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">keep</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">identifiers</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.keep">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Keeps only the experiments specified by arg identifiers and removes 
+  data corresponding to all other experiments.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      identifiers: list of experiment identifiers
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="split"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">split</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">bins</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.split">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Extracts data from this instance according to the values of property 
+  given by arg name and arg bins, makes an instance out of each exctraction
+  and returns them as list.</p>
+  <p>If name is not an indexed property, individual observations 
+  (comprising this instance) are assigned to bins, by comparing the value 
+  of property given by name of each observation with the bin limits 
+  specified in arg bins. Lower limits are inclusive, while upper are 
+  exclusive except for the last bin. Consequently, if argument bins has n 
+  elements, they will form n-1 bins.</p>
+  <p>Otherwise, if name is an indexed property values of each element of 
+  property specified by name of each observation is comparred with the bin 
+  limits. Elements of all other indexed properties are assigned to the same
+  bins.</p>
+  <p>Arguements:</p>
+  <ul>
+    <li>
+      name: name of the property whose value(s) is (are) comparred to bins
+    </li>
+    <li>
+      bins: bin limits (has to contain at least two elements)
+    </li>
+  </ul>
+  <p>Returns: list of instances of this class.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="extract"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">extract</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">condition</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">values</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">template</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">target</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.extract">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns elements from (arg) target (observations) that have the same 
+  positions as either the True elements of condition (if arg conditions is 
+  specified), or the elements of (arg) values have in the (arg) template 
+  (if arg condition is not specified).</p>
+  <p>Either condition or values has to be specified. In the later case 
+  self.index (more precisely getrattr(self, name)) is used as a template if
+  template argument is None.</p>
+  <p>If target is specified it has to be eather an array, or a nested array
+  (list).</p>
+  <p>If target is None, all arrays of this instance that are indexed like 
+  self.index (their names are in self.indexed) are used. A new instance of 
+  this class is crated to hold these arrays. Values of attributes 
+  categories, indentifiers index and indexed are copied form this instance 
+  to the new instance. The new instance is returned.</p>
+  <p>Structures of arguments condition, values, template and target have to
+  be the same (flat or nested arrays, same array lengths). In other words, 
+  these ale the same as data structures for properties of this class. The 
+  returned value has the same structure.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      condition: boolean values indicating which elements to extract
+    </li>
+    <li>
+      values: values of template
+    </li>
+    <li>
+      template: array (if None name of this array is given in self.index)
+    </li>
+    <li>
+      target: array to be extracted, or all arrays of this instance if None
+    </li>
+  </ul>
+  <p>Returns: array of extracted values of target, or an instance of this 
+  class containing extracted values.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="extractIndexed"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">extractIndexed</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">condition</span>,
+        <span class="sig-arg">other</span>=<span class="sig-default"><code class="variable-group">[</code><code class="variable-group">]</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.extractIndexed">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Extracts elements of individual observations of this instance, 
+  according to the arg condition and returns an object of this class 
+  containig the extracted elements.</p>
+  <p>The structure of arg condition has to correspond to the structure of 
+  this instance, that is it has to be a list of the same number of elements
+  as the number of observations, and each of these elements has to be a 
+  ndarray containing elements corresponding to the elements of the indexed 
+  properties of this instance.</p>
+  <p>Elements of this instance which correspond to True elements in arg 
+  condition are extracted.</p>
+  <p>Elements are extracted from all indexed properties (as specified in 
+  self.indexed), while the other properties are copied in full.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      condition: condition
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="splitIndexed"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">splitIndexed</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.splitIndexed">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Splits this instance according to the indexed properties.</p>
+  <p>Returns a list of instances of this class where each instance contains
+  only one value of each of the indexed properties. Other (non-indexed) 
+  properties are copied from this to each of the resulting instances.</p>
+  <p>If indexed properties of observations comprising this instance contain
+  different number of elements, only the common elements are returned. That
+  is, the length of the returned list is the minimum number of elements 
+  that indexed properties have.</p>
+  <p>Returns: list of instances of this class.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="transpose"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">transpose</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.transpose">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Rearanges indexed data so that observations and indices are 
+  exchanged</p>
+  <p>ToDo</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="apply"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">apply</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">funct</span>,
+        <span class="sig-arg">args</span>,
+        <span class="sig-arg">kwargs</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
+        <span class="sig-arg">name</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">indexed</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.apply">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Applies (arg) funct to properties args where other arguments are given
+  in arg kwargs.</p>
+  <p>In other words, for each observation and for all observation elements 
+  funct is applied to the corresponding values of the properties.</p>
+  <p>Arguments to funct can be:</p>
+  <ul>
+    <li>
+      property names, specified in args (positional)
+    </li>
+    <li>
+      other values, specified in kwargs (keyword)
+    </li>
+  </ul>
+  <p>Returns the results as a list (representing observations) of ndarrays 
+  (observation elements) if name is None. Otherwise a new property is 
+  created to hold the result. This new name can be the same as an already 
+  existing property, in which case the original values are owerwriten. The 
+  name of the new property is added to properties and indexed 
+  attributes.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      function: function
+    </li>
+    <li>
+      args: list of indexed property names that are used as arguments to 
+      funct
+    </li>
+    <li>
+      kwargs: (dict) other arguments passed to funct
+    </li>
+    <li>
+      name: name of the new property
+    </li>
+    <li>
+      indexed: specifies if the new property is indexed
+    </li>
+  </ul>
+  <p>Sets indexed property name, or returns the result (list of 
+  ndarrays).</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="pixels2nm"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">pixels2nm</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">conversion</span>,
+        <span class="sig-arg">power</span>=<span class="sig-default">1</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.pixels2nm">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Converts all values of ndarray self.name from pixels to nm.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      name: name of the variable that need to be converted
+    </li>
+    <li>
+      conversion: dictionary of pixel sizes (in nm) for each identifier
+    </li>
+    <li>
+      power: used when the new property has dimensions pixels^power, can be
+      positive or negative
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="rebin"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">rebin</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">bins</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.rebin">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Rebins histogram-like data specified by name according to the arg 
+bins and returns the new histogram.
+
+Binning is done according to the position (index) of elements (property
+values) within each onservation. For example:
+
+  obs.volume[0] = [1, 2, 3, 4, 5, 6, 7]
+  new_obs = obs.rebin(name='volume', bins=[0,2,4,6])
+  -&gt; new_obs.volume[0] = [3, 7, 11]
+
+When bins are not integers, trapesoidal rule is used to calculate
+rebinned data.
+
+The rebinned histogram has one element less than bins.
+
+Arguments:
+  - name: (string) name of the attribute to be rebinned, where the
+  attribute is expected to be a nested list
+  - bins: (nested list) list of bins for each observation, in the
+  same order as self.identifiers.
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="doStats"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">doStats</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">bins</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">fraction</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">identifiers</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">new</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">ddof</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">remove_nan</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.doStats">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Does statistics on data specified by name for each experiment 
+  separately.</p>
+  <p>If arg bin is None, calculates basic statistics. The calculations are 
+  saved as following attributes:</p>
+  <ul>
+    <li>
+      data: deepcopied data
+    </li>
+    <li>
+      mean: mean
+    </li>
+    <li>
+      std: n-ddof degrees of freedom,
+    </li>
+    <li>
+      n: number of individual data points
+    </li>
+    <li>
+      sem: standard error of means
+    </li>
+    <li>
+      ddof: delta degrees of freedom, denominator for std is N-ddof
+    </li>
+  </ul>
+  <p>Alternatively, if arg bins is given calculates histogram of the data 
+  according to bins and saves it as the following attributes:</p>
+  <ul>
+    <li>
+      ids: left bin limits
+    </li>
+    <li>
+      data: deepcopied data
+    </li>
+    <li>
+      histogram: (ndarray of length 1 less than bins) histogram values 
+      (indexed)
+    </li>
+    <li>
+      probability: (ndarray of length 1 less than bins) histogram / 
+      sum_of_histogram (indexed)
+    </li>
+    <li>
+      n: number of individual data points
+    </li>
+    <li>
+      fraction: histogram[fraction] / n
+    </li>
+  </ul>
+  <p>If arg remove_nan is True, data points that are numpy.nan are 
+  removed.</p>
+  <p>If arg new is True, a new instance of this class is created that 
+  contain only the statistics attributes and attribute data (contains 
+  data). If new is False statistics attributes are added to the current 
+  instance.</p>
+  <p>If arg identifiers is specified and new is True, arg identifiers 
+  determines the order of identifiers in the resulting instance. If None, 
+  all existing identifiers are used.</p>
+  <p>If new is True, and the resulting object has no identifiers, all data 
+  properties are initialized to [].</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      name: data attribute name, can't be any of statistics results listed 
+      above
+    </li>
+    <li>
+      bins: histogram bins, if specified histogram is calculated
+    </li>
+    <li>
+      fraction: (int) position of the histogram bin for which the fraction 
+      of total histogram values is calculated.
+    </li>
+    <li>
+      identifiers: list of experiment identifiers for which the stats are 
+      calculated. Identifiers listed here that do not exist among 
+      identifiers of this instance are ignored.
+    </li>
+    <li>
+      new: flag indicating if new instance is created
+    </li>
+    <li>
+      ddof: delta degrees of freedom, denominator for std is N-ddof
+    </li>
+  </ul>
+  <p>Returns new instance is new is True</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="doStatsByIndex"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">doStatsByIndex</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">identifiers</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">identifier</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">ddof</span>=<span class="sig-default">1</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.doStatsByIndex">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates basic statistics (mean, std, sem, n) for each data point 
+  accross the specified experiments.</p>
+  <p>In case experiments don't have the same number of data points the min 
+  number of points (across experiments) is used. Furthermore, the data 
+  points are grouped according their position within data arrays (and not 
+  according to actual ids).</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      name: name of the property to be analyzed (has to be indexed)
+    </li>
+    <li>
+      identifiers: list of experiment identifiers, None for all experiments
+    </li>
+    <li>
+      identifier: identifier of the resulting Experiment object
+    </li>
+    <li>
+      ddof: delta degrees of freedom, denominator for std is N-ddof
+    </li>
+  </ul>
+  <p>Returns: (Experiment) object containing the calculated stats having 
+  the following properties:</p>
+  <ul>
+    <li>
+      data: 2D ndarray containing all data, where the first index (axis 0) 
+      denotes different experiments
+    </li>
+    <li>
+      mean, std, sem, n: statistical properties
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="doInference"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">doInference</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">test</span>,
+        <span class="sig-arg">reference</span>,
+        <span class="sig-arg">name</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">data</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">identifiers</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.doInference">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if data for different experiments are statistically different 
+  from a given reference experiment(s) data.</p>
+  <p>Data for each of the experiments comprising this object are compared 
+  with the reference experiment(s). There can be one or more  reference 
+  experiments.</p>
+  <p>In case of paired t-test (test='t_rel') numpy.NaN entries and the 
+  coreresponding reference data (or the other way around) are ignored.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      test: statistical test used: 't', 'h', 'u', or any other stated in 
+      doInference() doc.
+    </li>
+    <li>
+      reference: experiment identifier for the reference experiment, a 
+      dictonary where each experiment identifier (keys) is associated with 
+      its reference (values), or a list of reference identifiers 
+      corresponding (in the same order) to the actual identifiers.
+    </li>
+    <li>
+      name: data attribute name
+    </li>
+    <li>
+      identifiers: list of experiment identifiers for which the stats are 
+      calculated. Identifiers listed here that do not exist among 
+      identifiers of this instance are ignored.
+    </li>
+  </ul>
+  <p>Sets attributes:</p>
+  <ul>
+    <li>
+      testValue: values of t, h or u depending on the test
+    </li>
+    <li>
+      testSymbol: 't', 'h', or 'u', depending on the test
+    </li>
+    <li>
+      confidence: probability that data from an experiment and the/its 
+      reference come from the same population
+    </li>
+  </ul>
+  <p>All attributes are lists with elements corresponding to experiments, 
+  except for testSymbol which is a string</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="doCorrelation"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">doCorrelation</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">xName</span>,
+        <span class="sig-arg">yName</span>,
+        <span class="sig-arg">test</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">regress</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">reference</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">new</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">identifiers</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">out</span>=<span class="sig-default">&lt;epydoc.docintrospecter._DevNull object&gt;</span>,
+        <span class="sig-arg">format_</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
+        <span class="sig-arg">title</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.doCorrelation">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if data specified by args xName and yName are correlated.</p>
+  <p>If mode is None, data from each experiment is analyzed separately. 
+  Otherwise, if it's 'join', data from all experiments are taken together. 
+  In this case arg new is ignored (effectively set to True).</p>
+  <p>If new is True, a new object is created to hold the data and 
+  results.</p>
+  <p>If arg identifiers is specified and new is True, arg identifiers 
+  determines the order of identifiers in the resulting instance. If None, 
+  all existing identifiers are used.</p>
+  <p>If new is True, and the resulting object has no identifiers, all data 
+  properties are initialized to [].</p>
+  <p>The results are saved as the following attributes:</p>
+  <ul>
+    <li>
+      xData, yData: deepcopied xName, yName data, only if new is True
+    </li>
+    <li>
+      n: number of individual data points
+    </li>
+    <li>
+      testValue: correlation test value
+    </li>
+    <li>
+      testSymbol: currently 'r' or 'tau', depending on the test
+    </li>
+    <li>
+      confidence: confidence
+    </li>
+    <li>
+      aRegress, bRegress: slope and intercept of the regression line (if 
+      arg regress is True)
+    </li>
+  </ul>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      xName, yName: property names of data
+    </li>
+    <li>
+      test: correlation test, currently 'r' (or 'pearson'), 'tau' (or 
+      'kendall')
+    </li>
+    <li>
+      regress: flag indicating if regression (best fit) line is calculated
+    </li>
+    <li>
+      mode: None, or 'join'
+    </li>
+    <li>
+      new: flag indicating if new instance is created and returned
+    </li>
+    <li>
+      identifiers: list of experiment identifiers for which the correlation
+      is calculated. Identifiers listed here that do not exist among 
+      identifiers of this instance are ignored.
+    </li>
+    <li>
+      out: output stream, sys.stdout (default) for standard out, if string 
+      it's understood as a file name
+    </li>
+    <li>
+      format_: dictionary containing data formats (keyes are attribute 
+      names) and values are formating strings. If None default names are 
+      used.
+    </li>
+    <li>
+      title: string that's printed first
+    </li>
+  </ul>
+  <p>Returns object containing data and results (only if new is True, or 
+  join is 'join'). The object is Observations if join is None, or 
+  Experiment if join is None.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="parseTest"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">parseTest</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">test</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.parseTest">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns (method, symbol) for the statistical test corresponding to the
+  arg test.</p>
+  <p>Valid test values, and the corresponding tests and symbols are:</p>
+  <ul>
+    <li>
+      't_ind' or 't': scipy.stats.ttest_ind, 't' (independent samples)
+    </li>
+    <li>
+      't_rel': scipy.stats.ttest_rel, 't_rel' (related or paired t-test)
+    </li>
+    <li>
+      'kruskal', 'kruskal-wallis', or 'h': scipy.stats.kruskal, 'h'
+    </li>
+    <li>
+      'mannwhitney' or 'u': scipy.stats.mannwhitneyu, 'u'
+    </li>
+    <li>
+      'pearson' or 'r': scipy.stats.pearsonr, 'r'
+    </li>
+    <li>
+      'kendall' or 'tau' : scipy.stats.kendalltau, 'tau'
+    </li>
+    <li>
+      'chi2' or 'chisquare': pyto.util.scipy_plus.chisquare_2, 'chi2'
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="printStats"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">printStats</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">out</span>=<span class="sig-default">&lt;epydoc.docintrospecter._DevNull object&gt;</span>,
+        <span class="sig-arg">names</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">identifiers</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">format_</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
+        <span class="sig-arg">title</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.printStats">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Prints basic statistics and inference analysis results contained in 
+  this instance.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      out: output stream, sys.stdout (default) for standard out, if string 
+      it's understood as a file name, None for no output
+    </li>
+    <li>
+      names: list of attribute names to be printed, None for a default 
+      names list: ['mean', 'std', 'sem', 'n', 'testValue', 'confidence']
+    </li>
+    <li>
+      identifiers: list of experiment identifiers, None for all experiments
+    </li>
+    <li>
+      format_: dictionary containing data formats (keyes are attribute 
+      names) and values are formating strings. If None default names are 
+      used.
+    </li>
+    <li>
+      title: string that's printed first
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="printData"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">printData</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">names</span>,
+        <span class="sig-arg">out</span>=<span class="sig-default">&lt;epydoc.docintrospecter._DevNull object&gt;</span>,
+        <span class="sig-arg">identifiers</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">format_</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
+        <span class="sig-arg">title</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.observations-pysrc.html#Observations.printData">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Prints data of this instance.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      names: list of property (attribute) names to be printed
+    </li>
+    <li>
+      out: output stream, sys.stdout (default) for standard out, if string 
+      it's understood as a file name, None for no output names list: 
+      ['mean', 'std', 'sem', 'n', 'testValue', 'confidence']
+    </li>
+    <li>
+      identifiers: list of experiment identifiers, None for all experiments
+    </li>
+    <li>
+      format_: dictionary containing data formats (keyes are attribute 
+      names) and values are formating strings. If None default names are 
+      used.
+    </li>
+    <li>
+      title: string that's printed first
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

@@ -1,0 +1,2153 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.core.image.Image</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.core-module.html">Package&nbsp;core</a> ::
+        <a href="pyto.core.image-module.html">Module&nbsp;image</a> ::
+        Class&nbsp;Image
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.core.image.Image-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Image</h1><p class="nomargin-top"><span class="codelink"><a href="pyto.core.image-pysrc.html#Image">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_pyto_cor" name="uml_class_diagram_for_pyto_cor">
+<area shape="rect" id="node1" href="pyto.segmentation.hierarchy.Hierarchy-class.html" title="A hierarchy contains segments that are orgainuzed in a strictly hierarchical manner, that is they satisfy the following requirements: 1) Each segment is either superset (overlaps), subset or does not intersect any other segment." alt="" coords="573,535,804,573"/>
+<area shape="rect" id="node10" href="pyto.segmentation.thresh_conn.ThreshConn-class.html" title="pyto.segmentation.thresh_conn.ThreshConn" alt="" coords="339,592,603,631"/>
+<area shape="rect" id="node2" href="pyto.segmentation.segment.Segment-class.html" title="Manipulations and analysis of segmented images (label fields)." alt="" coords="1050,535,1274,573"/>
+<area shape="rect" id="node3" href="pyto.segmentation.sphere.Sphere-class.html" title="pyto.segmentation.sphere.Sphere" alt="" coords="633,592,835,631"/>
+<area shape="rect" id="node4" href="pyto.segmentation.ball.Ball-class.html" title="pyto.segmentation.ball.Ball" alt="" coords="864,592,1028,631"/>
+<area shape="rect" id="node6" href="pyto.segmentation.shapes.Shapes-class.html" title="Provides methods for crating and manipulating geometrical shapes, in addition to methods defined in its base class Segment." alt="" coords="1058,592,1266,631"/>
+<area shape="rect" id="node9" href="pyto.segmentation.plane.Plane-class.html" title="pyto.segmentation.plane.Plane" alt="" coords="1296,592,1481,631"/>
+<area shape="rect" id="node11" href="pyto.segmentation.cleft.Cleft-class.html" title="Important attributes:" alt="" coords="1511,592,1685,631"/>
+<area shape="rect" id="node13" href="pyto.segmentation.connected.Connected-class.html" title="pyto.segmentation.connected.Connected" alt="" coords="1715,592,1959,631"/>
+<area shape="rect" id="node5" href="pyto.segmentation.grey.Grey-class.html" title="Basic segmentation and analysis of grayscale images." alt="" coords="369,535,544,573"/>
+<area shape="rect" id="node7" href="pyto.particles.phantom.Phantom-class.html" title="pyto.particles.phantom.Phantom" alt="" coords="179,477,374,516"/>
+<area shape="rect" id="node8_20" href="pyto.core.image.Image-class.html#ndim" title="Dimensionality of data" alt="" coords="18,29,929,49"/>
+<area shape="rect" id="node8_21" href="pyto.core.image.Image-class.html#offset" title="Position of the origin in respect to some reference" alt="" coords="18,49,929,69"/>
+<area shape="rect" id="node8_22" href="pyto.core.image.Image-class.html#totalOffset" title="Total offset, that is a sum of self.offset and the start positions of &#160;self.inset." alt="" coords="18,69,929,89"/>
+<area shape="rect" id="node8_23" href="pyto.core.image.Image-class.html#inset" title="(list of slice objects) a current view of self.data array in respect to the underlying base reference array." alt="" coords="18,89,929,109"/>
+<area shape="rect" id="node8_24" href="pyto.core.image.Image-class.html#fullInset" title="Full inset that underlies current self.data." alt="" coords="18,109,929,129"/>
+<area shape="rect" id="node8_25" href="pyto.core.image.Image-class.html#fullData" title="Full size data array" alt="" coords="18,129,929,149"/>
+<area shape="rect" id="node8_26" href="pyto.core.image.Image-class.html#__init__" title="x.__init__(...) initializes x; see help(type(x)) for signature" alt="" coords="18,152,929,172"/>
+<area shape="rect" id="node8_27" href="pyto.core.image.Image-class.html#tile" title="Use the current instance (image) as a tile (pattern) to make a (bigger) &#160;image in arbitrary dimensions." alt="" coords="18,172,929,192"/>
+<area shape="rect" id="node8_28" href="pyto.core.image.Image-class.html#getNdim" title="Gets ndim from self.data, or if the data does not exists returns &#160;self._ndim." alt="" coords="18,192,929,212"/>
+<area shape="rect" id="node8_29" href="pyto.core.image.Image-class.html#setNdim" title="Sets self._ndim." alt="" coords="18,212,929,232"/>
+<area shape="rect" id="node8_30" href="pyto.core.image.Image-class.html#setOffset" title="Sets offset of &#160;(ndarray) self.offset." alt="" coords="18,232,929,252"/>
+<area shape="rect" id="node8_31" href="pyto.core.image.Image-class.html#getOffset" title="Returns current offset value." alt="" coords="18,252,929,272"/>
+<area shape="rect" id="node8_32" href="pyto.core.image.Image-class.html#getTotalOffset" title="Returns total offset, which is a sum of self.offset and the start positions of self.inset." alt="" coords="18,272,929,292"/>
+<area shape="rect" id="node8_33" href="pyto.core.image.Image-class.html#setInset" title="Sets inset for self.data (does not modify self.data)." alt="" coords="18,292,929,312"/>
+<area shape="rect" id="node8_34" href="pyto.core.image.Image-class.html#getInset" title="Returns inset position as a list of slice objects." alt="" coords="18,312,929,332"/>
+<area shape="rect" id="node8_35" href="pyto.core.image.Image-class.html#relativeToAbsoluteInset" title="Converts relative inset (in respect to the current inset (self.inset)) to &#160;an absolute inset." alt="" coords="18,332,929,352"/>
+<area shape="rect" id="node8_36" href="pyto.core.image.Image-class.html#absoluteToRelativeInset" title="Converts given absolute inset into inset relative to the current inset &#160;(self.inset)." alt="" coords="18,352,929,372"/>
+<area shape="rect" id="node8_37" href="pyto.core.image.Image-class.html#setFullInset" title="Sets full inset for self.data (does not modify self.data)." alt="" coords="18,372,929,392"/>
+<area shape="rect" id="node8_38" href="pyto.core.image.Image-class.html#getFullInset" title="Returns a previously defined inset (list of slice objects) of a full&#45;size &#160;array underlying (the current view) of self.data." alt="" coords="18,392,929,412"/>
+<area shape="rect" id="node8_39" href="pyto.core.image.Image-class.html#write" title="Writes image to a file in em, mrc or raw format." alt="" coords="18,432,929,452"/>
+<area shape="rect" id="node8" href="pyto.core.image.Image-class.html" title="Methods for creating new images: &#45; tile: tile current image to get a bigger one" alt="" coords="5,5,940,459"/>
+<area shape="rect" id="node12" href="pyto.grey.image.Image-class.html" title="Manipulation of greyscale images." alt="" coords="404,477,544,516"/>
+<area shape="rect" id="node14" href="pyto.segmentation.labels.Labels-class.html" title="This class concerns an integer&#45;labeled image that contains one or more segments." alt="" coords="592,477,785,516"/>
+</map>
+  <img src="uml_class_diagram_for_pyto_cor.gif" alt='' usemap="#uml_class_diagram_for_pyto_cor" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<pre class="literalblock">
+
+Methods for creating new images:
+  - tile: tile current image to get a bigger one
+
+Input/output methods (see pyto.io.image_io for details): 
+  - read: reads data array from a file in em, mrc or raw-data format
+  - write: writes data to a file
+
+Positioning of the image data array:
+
+  - useInset(): main method to use, sets data to a specified inset
+  - newFromInset(): makes new instance from this instance after data is set
+  to s specified inset
+  - inset: property defining current inset in respect tosome absolute 
+  reference
+  - usePositioning() and copyPositioning(): based on useInset(), also 
+  takes property offset into account (depreciated)
+  - saveFull(), recoverFull(), clearFull(): store, recall and clear 
+  another (previous, for example) inset and data array (properties
+  fullInset and fullData)
+  - fullInset, fullData: properties than can be set, but if there're
+  not set they take the values from the deepest base of self.data
+  (see getDeepBase())
+
+
+Example, speeding up calculations, memory not increased:
+
+  new_data = self.useInset(inset=new_inset, update=False)
+
+  (calculations using new_data)
+
+Alternative, the calculations can use the whole object:
+
+  data, inset = self.getDataInset()   # keep reference to the original array
+  self.useInset(inset=smaller_inset)  
+
+    (calculations using self)
+
+  self.setDataInset(data=data, inset=inset) # self.data points to the 
+                                            # original array again 
+
+  Note: smaller_inset has to be smaller than self.inset. In this way 
+  calculations are done on a view of self.data (to increase speed) and 
+  self.data is never copied (so the memory is not increased). 
+
+Example: memory use reduction
+
+  new = self.newFromInset(inset=smaller_inset, copyData=True, deepcp=True)
+  self = None     # so that self.data can be removed by garbage collection
+  
+    (calculations involving new)
+
+  Again, small_inset has to be smaller than self.inset. 
+
+</pre>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>)</span><br />
+      x.__init__(...) initializes x; see help(type(x)) for signature</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#tile" class="summary-sig-name">tile</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">shape</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">simple</code><code class="variable-quote">'</code></span>)</span><br />
+      Use the current instance (image) as a tile (pattern) to make a (bigger) 
+image in arbitrary dimensions.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.tile">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getNdim"></a><span class="summary-sig-name">getNdim</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Gets ndim from self.data, or if the data does not exists returns 
+      self._ndim.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.getNdim">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="setNdim"></a><span class="summary-sig-name">setNdim</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ndim</span>)</span><br />
+      Sets self._ndim.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.setNdim">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#setOffset" class="summary-sig-name">setOffset</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">offset</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Sets offset of  (ndarray) self.offset.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.setOffset">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#getOffset" class="summary-sig-name">getOffset</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns current offset value.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.getOffset">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getTotalOffset"></a><span class="summary-sig-name">getTotalOffset</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns total offset, which is a sum of self.offset and the start 
+      positions of self.inset.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.getTotalOffset">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#setInset" class="summary-sig-name">setInset</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">inset</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">absolute</code><code class="variable-quote">'</code></span>)</span><br />
+      Sets inset for self.data (does not modify self.data).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.setInset">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#getInset" class="summary-sig-name">getInset</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns inset position as a list of slice objects.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.getInset">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#relativeToAbsoluteInset" class="summary-sig-name">relativeToAbsoluteInset</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">inset</span>)</span><br />
+      Converts relative inset (in respect to the current inset 
+      (self.inset)) to an absolute inset.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.relativeToAbsoluteInset">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#absoluteToRelativeInset" class="summary-sig-name">absoluteToRelativeInset</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">inset</span>)</span><br />
+      Converts given absolute inset into inset relative to the current 
+      inset (self.inset).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.absoluteToRelativeInset">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#setFullInset" class="summary-sig-name">setFullInset</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">inset</span>)</span><br />
+      Sets full inset for self.data (does not modify self.data).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.setFullInset">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#getFullInset" class="summary-sig-name">getFullInset</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns a previously defined inset (list of slice objects) of a 
+      full-size array underlying (the current view) of self.data.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.getFullInset">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#getFullData" class="summary-sig-name">getFullData</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns a previously defined full-size array underlying (the current 
+      view of) self.data.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.getFullData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="setFullData"></a><span class="summary-sig-name">setFullData</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>)</span><br />
+      Sets full size data (the array is not copied).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.setFullData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#getDeepBase" class="summary-sig-name">getDeepBase</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Finds the deepest base of array data that still has the same 
+      dimensionality as data.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.getDeepBase">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="saveFull"></a><span class="summary-sig-name">saveFull</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Sets self.fullInset and self.fullData to the current self.inset and 
+      self.data.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.saveFull">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#recoverFull" class="summary-sig-name">recoverFull</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Recovers the full array (shape self.fullShape) that is a base for the
+      current self.data.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.recoverFull">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="clearFull"></a><span class="summary-sig-name">clearFull</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Sets fullInset and fullData to None.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.clearFull">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#getDataInset" class="summary-sig-name">getDataInset</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns current data (self.data) and inset (self.inset).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.getDataInset">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="setDataInset"></a><span class="summary-sig-name">setDataInset</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>,
+        <span class="summary-sig-arg">inset</span>)</span><br />
+      Sets self.data to data and self.inset to inset.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.setDataInset">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#useInset" class="summary-sig-name">useInset</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">inset</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">relative</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">intersect</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">useFull</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">expand</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">value</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">update</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Finds data inset of the current data that corresponds to the 
+      arguments specified.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.useInset">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#expandInset" class="summary-sig-name">expandInset</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">inset</span>,
+        <span class="summary-sig-arg">value</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">update</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Expands curent self.data array so that it corresponds to inset.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.expandInset">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#usePositioning" class="summary-sig-name">usePositioning</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">image</span>,
+        <span class="summary-sig-arg">intersect</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">useFull</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">expand</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">value</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">new</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Depreciated</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.usePositioning">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#copyPositioning" class="summary-sig-name">copyPositioning</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">image</span>,
+        <span class="summary-sig-arg">saveFull</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Depreciated</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.copyPositioning">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#isInside" class="summary-sig-name">isInside</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">inset</span>)</span><br />
+      Returns True if arg inset lies completely inside self.inset.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.isInside">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#hasOverlap" class="summary-sig-name">hasOverlap</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">inset</span>)</span><br />
+      Returns True if arg inset self.inset have an overlap.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.hasOverlap">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#findEnclosingInset" class="summary-sig-name">findEnclosingInset</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">inset</span>,
+        <span class="summary-sig-arg">inset2</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns minimal inset that fully contains inset and inset2.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.findEnclosingInset">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#findIntersectingInset" class="summary-sig-name">findIntersectingInset</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">inset</span>,
+        <span class="summary-sig-arg">inset2</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns intersection between inset and inset2.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.findIntersectingInset">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#newFromInset" class="summary-sig-name">newFromInset</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">inset</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">relative</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">intersect</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">useFull</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">expand</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">value</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">copyData</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">deepcp</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">noDeepcp</span>=<span class="summary-sig-default"><code class="variable-group">[</code><code class="variable-group">]</code></span>)</span><br />
+      Makes an instance that has values of all attributes the same as this 
+      instance, except that the data array (attribute data) is set to a 
+      copy of the data array inset defined by the arguments, and the inset 
+      attribute is set accordingly.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.newFromInset">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#write" class="summary-sig-name">write</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">file</span>,
+        <span class="summary-sig-arg">byteOrder</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">dataType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">fileFormat</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">arrayOrder</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">shape</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">length</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">pixel</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">casting</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">unsafe</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">header</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Writes image to a file in em, mrc or raw format.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.write">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.core.image.Image-class.html#read" class="summary-sig-name">read</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">file</span>,
+        <span class="summary-sig-arg">fileFormat</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">byteOrder</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">dataType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">arrayOrder</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">shape</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">header</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">memmap</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Reads image from a file and saves the data in numpy.array format.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.core.image-pysrc.html#Image.read">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.core.image.Image-class.html#ndim" class="summary-name">ndim</a><br />
+      Dimensionality of data
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.core.image.Image-class.html#offset" class="summary-name">offset</a><br />
+      Position of the origin in respect to some reference
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.core.image.Image-class.html#totalOffset" class="summary-name">totalOffset</a><br />
+      Total offset, that is a sum of self.offset and the start positions of
+      self.inset.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.core.image.Image-class.html#inset" class="summary-name">inset</a><br />
+      (list of slice objects) a current view of self.data array in respect 
+      to the underlying base reference array.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.core.image.Image-class.html#fullInset" class="summary-name">fullInset</a><br />
+      Full inset that underlies current self.data.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.core.image.Image-class.html#fullData" class="summary-name">fullData</a><br />
+      Full size data array
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>x.__init__(...) initializes x; see help(type(x)) for signature</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="tile"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">tile</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">shape</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">simple</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.tile">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Use the current instance (image) as a tile (pattern) to make a (bigger) 
+image in arbitrary dimensions.
+
+If arg mode is 'simple', the tile (this instance) is simply repeated
+in all dimensions.
+
+If arg mode is 'mirror', each tile is mirrored before it is placed so 
+that its (ndim-1 dimensional) faces have the same values as the 
+neghboring faces of other tiles and it is placed so that the same faces
+overlap. For example:
+
+tile: [[0, 1, 2, 3],
+       [4, 5, 6, 7]]
+
+big:  [[0, 1, 2, 3, 2, 1, 0, 1],
+       [4, 5, 6, 7, 6, 5, 4, 5],
+       [0, 1, 2, 3, 2, 1, 0, 1]]
+
+Arguments:
+  - shape: shape of the newly created image
+  - mode: tailing method, 'simple' or 'mirror'
+
+Return:
+  - instance of the same class containing the newly created image
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setOffset"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setOffset</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">offset</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.setOffset">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets offset of  (ndarray) self.offset.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      offset: position of offset (1d array or similar)
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getOffset"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getOffset</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.getOffset">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns current offset value.</p>
+  <p>If offset has not been set, it is set to 0's if self.data is set</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setInset"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setInset</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">inset</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">absolute</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.setInset">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets inset for self.data (does not modify self.data).</p>
+  <p>If mode is 'absolute' self.inset is set to (arg) inset. If it is 
+  'relative' self inset is obtained by applying (arg) inset on the existing
+  self.inset.</p>
+  <p>Note: start, stop and step for each dimension are saved as a 2d array 
+  in self._inset, because deepcopy doesn't work on slices.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      inset: list of slice objects
+    </li>
+    <li>
+      mode: 'relative' (same as 'rel') or 'absolute' (same as 'abs')
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getInset"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getInset</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.getInset">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns inset position as a list of slice objects.</p>
+  <p>If inset was not defined, it is determined from data shape. If data 
+  doesn't exist either, None is returned.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="relativeToAbsoluteInset"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">relativeToAbsoluteInset</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">inset</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.relativeToAbsoluteInset">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Converts relative inset (in respect to the current inset (self.inset))
+  to an absolute inset.</p>
+  <p>The resulting inset may fall outside the current inset, or even have 
+  negative slice values.</p>
+  <p>If (arg) inset is None, None is returned.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      inset: inset relative to the current inset
+    </li>
+  </ul>
+  <p>Returns: absolute inset</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="absoluteToRelativeInset"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">absoluteToRelativeInset</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">inset</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.absoluteToRelativeInset">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Converts given absolute inset into inset relative to the current inset
+  (self.inset).</p>
+  <p>The resulting inset may fall outside the current inset. If (arg) inset
+  is None, None is returned.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      inset: absolute inset
+    </li>
+  </ul>
+  <p>Returns: inset relative to the corrent inset</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setFullInset"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setFullInset</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">inset</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.setFullInset">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets full inset for self.data (does not modify self.data).</p>
+  <p>Note: start, stop and step for each dimension are saved as a 2d array 
+  in self._fullInset, because deepcopy doesn't work on slices.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      inset: list of slice objects
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getFullInset"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getFullInset</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.getFullInset">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns a previously defined inset (list of slice objects) of a 
+  full-size array underlying (the current view) of self.data.</p>
+  <p>If fullInset was not defined, returns the inset corresponding to the 
+  deepest base of array underlying self.data that still has the same 
+  dimensionality as self.data.</p>
+  <p>If self.data doesn't exist None is returned.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getFullData"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getFullData</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.getFullData">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns a previously defined full-size array underlying (the current 
+  view of) self.data.</p>
+  <p>If fullData was not defined, returns the deepest base array of 
+  self.data that still has the same dimensionality as self.data. Returns 
+  None if self.data wasn't defined.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getDeepBase"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getDeepBase</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.getDeepBase">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Finds the deepest base of array data that still has the same 
+  dimensionality as data.</p>
+  <p>If data is None, self.data is used. Returns None if neither data nor 
+  self.data exist.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="recoverFull"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">recoverFull</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.recoverFull">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Recovers the full array (shape self.fullShape) that is a base for the 
+  current self.data. Consequently, it does not allocate new memory for the 
+  self.data array.</p>
+  <p>Resets self.inset to None.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getDataInset"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getDataInset</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.getDataInset">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns current data (self.data) and inset (self.inset).</p>
+  <p>The returned data is only a reference to the self.data, so this method
+  is meant to be used before useInset() (or related), so that after the 
+  work on data is finished setDataInset() can be used to recover the 
+  original data, without using additional space.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="useInset"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">useInset</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">inset</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">relative</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">intersect</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">useFull</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">expand</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">value</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">update</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.useInset">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Finds data inset of the current data that corresponds to the arguments
+  specified. If arg update is True also sets self.data to the data inset 
+  found and data.inset to the absolute inset corresponding to the 
+  arguments.</p>
+  <p>If mode is relative (arg) inset is relative to the current inset. If 
+  mode is absolute self.inset and (arg) inset are given in respect to the 
+  same reference.</p>
+  <p>If the new inset falls inside the current one (self.inset), self.data 
+  (if update is True) or the returned array (if update is False) is set to 
+  the appropriate view of self.data.</p>
+  <p>If intersect is True, the new inset is obtained as an intersection 
+  between self.inset and (arg) inset (according to the mode). Self.data (if
+  update is True) or the returned array (if update is False) is set to the 
+  appropriate view of self.data.</p>
+  <p>Because in the previous two cases only the view is modified, changing 
+  the new or the returned data changes the original data.</p>
+  <p>If the new inset is outside self.inset, but inside self.fullInset and 
+  intersect is False, the behavior depends on useFull. If it's False an 
+  exception is raised. Otherwise self.data is set to the appropriate view 
+  of self.fullData.</p>
+  <p>If the new inset is outside self.fullData, useFull is True and 
+  intersect is False, the behavior depends on expand. If it is False an 
+  exception is raised. Otherwise, a new data array is created that contains
+  self.fullData and it is large enough to fit the new inset (elements 
+  outside self.fullData are set to arg value.</p>
+  <p>Important: in the cases when self.fullData is used (the last two 
+  cases) self.data and self.fullData need to be consistent, that is 
+  self.data should be a view of self.fullData.</p>
+  <p>Important: in case the data array is expanded and _fullInset and 
+  _fullData were set, properties fullInset and fullData might end up 
+  smaller than inset and data. To avoid that execute self.saveFull() after 
+  this method (removes old _fullInset and _fullData, but does not generate 
+  any additional array).</p>
+  <p>Unless self.data is expanded (prevented by expand=False or 
+  intersect=True) no new array is formed in the memory, only the view of 
+  the array is changed.</p>
+  <p>In all cases when a new array is created, changing self.data (if 
+  update is True) or the returned array (if update is False) does not 
+  change the original array.</p>
+  <p>Can be used only on subclasses of this class that have data 
+  attribute.</p>
+  <p>Sets self.inset and self.data.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      inset: list of slice objects that defines the inset
+    </li>
+    <li>
+      mode: 'relative' (same as 'rel') or 'absolute' (same as 'abs')
+    </li>
+    <li>
+      intersect: flag indicating if the (agr) inset is to be intersected 
+      with the current inset.
+    </li>
+    <li>
+      useFull: flag indicating if self.fullData is used
+    </li>
+    <li>
+      expand: flag indicating if self.data array should be expanded if 
+      needed
+    </li>
+    <li>
+      value: used to fill the expanded part of self.data
+    </li>
+    <li>
+      update: flag indicating if the current object is updated, otherwise 
+      new data array is returned
+    </li>
+  </ul>
+  <p>Sets (only if update is True):</p>
+  <ul>
+    <li>
+      self.data: new data
+    </li>
+    <li>
+      self.inset: inset
+    </li>
+  </ul>
+  <p>Return: (ndarray) data inset found; it can be a view of the initial 
+  data or a new data array, see above.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="expandInset"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">expandInset</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">inset</span>,
+        <span class="sig-arg">value</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">update</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.expandInset">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Expands curent self.data array so that it corresponds to inset.</p>
+  <p>A new array is created, and the old self.data is copied on the 
+  appropriate position. Parts of old self.data that fall outside of inset 
+  are removed, so that the new data and inset correspond to arg inset.</p>
+  <p>If self.inset and inset do not overlap at all, self inset is set to 
+  arg inset and the shape of self.data is set so that it corresponrs to the
+  inset.</p>
+  <p>If arg update is True, data and inset attributes of the current object
+  are set to the new data and inset, respectively.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      inset: absolute inset
+    </li>
+    <li>
+      value: value to fill the added parts of self.data
+    </li>
+    <li>
+      update: flag indicating if the current object is updated
+    </li>
+  </ul>
+  <p>Sets (only if update is True):</p>
+  <ul>
+    <li>
+      self.data: new data
+    </li>
+    <li>
+      self.inset: inset
+    </li>
+  </ul>
+  <p>Return: (ndarray) new data</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="usePositioning"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">usePositioning</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">image</span>,
+        <span class="sig-arg">intersect</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">useFull</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">expand</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">value</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">new</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.usePositioning">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Depreciated</p>
+  <p>Adjusts inset and data attributes (but not offset) by applying the 
+  positioning (offset and inset) of (arg) image on the positioning and data
+  of this instance. Offsets and insets of both (arg) image and this 
+  instance are taken into account.</p>
+  <p>If the new inset falls inside the current one (self.inset), self.data 
+  is set to the appropriate view of self.data.</p>
+  <p>If intersect is True, the new inset is obtained as an intersection 
+  between self.inset and (arg) inset (according to the mode). Self.data is 
+  set to the appropriate view of self.data.</p>
+  <p>If the new inset is outside self.inset, but inside self.fullInset and 
+  intersect is False, the behavior depends on useFull. If it's False an 
+  exception is raised. Otherwise self.data is set to the appropriate view 
+  of self.fullData.</p>
+  <p>If the new inset is outside self.fullData, useFull is True and 
+  intersect is False, the behavior depends on expand. If it is False an 
+  exception is raised. Otherwise, a new data array is created that contains
+  self.fullData and it is large enough to fit the new inset (elements 
+  outside self.fullData are set to arg value.</p>
+  <p>Important: in the cases when self.fullData is used (the last two 
+  cases) self.data and self.fullData need to be consistent, that is 
+  self.data should be a view of self.fullData.</p>
+  <p>Unless self.data is expanded (prevented by expand=False or 
+  intersect=True) no new array is formed in the memory, only the view of 
+  the array is changed.</p>
+  <p>If new is True a new instance is created having restricted data and 
+  adjusted inset attributes. All other attributes are the same as in this 
+  instance, and this instance is not modified. Otherwise modifies 
+  self.inset and self.data.</p>
+  <p>Can be used only on subclasses of this class that have data 
+  attribute.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      image: (Image)
+    </li>
+    <li>
+      intersect: flag indicating if the (agr) inset is to be intersected 
+      with the current inset.
+    </li>
+    <li>
+      useFull: flag indicating if self.fullData is used
+    </li>
+    <li>
+      expand: flag indicating if self.data array should be expanded if 
+      needed
+    </li>
+    <li>
+      value: used to fill the expanded part of self.data
+    </li>
+    <li>
+      new: flag indicating if a new object that uses the given positioning 
+      is generated
+    </li>
+  </ul>
+  <p>Returns: new instance if new is True.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="copyPositioning"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">copyPositioning</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">image</span>,
+        <span class="sig-arg">saveFull</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.copyPositioning">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Depreciated</p>
+  <p>Sets offset and inset attributes of this instance to the corresponding
+  values of image.</p>
+  <p>Attributes self.fullInset and self.fullData are not set, unless 
+  saveFull is True, in which case they are set to the current values of 
+  inset and data.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      image: (Image) image
+    </li>
+    <li>
+      saveFull: flag indication if fullInset and fullData are set
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="isInside"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isInside</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">inset</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.isInside">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns True if arg inset lies completely inside self.inset.</p>
+  <p>Note: Does not take offset into account</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      inset: absolute inset
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="hasOverlap"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">hasOverlap</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">inset</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.hasOverlap">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns True if arg inset self.inset have an overlap.</p>
+  <p>Note: Does not take offset into account</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      inset: absolute inset
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="findEnclosingInset"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">findEnclosingInset</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">inset</span>,
+        <span class="sig-arg">inset2</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.findEnclosingInset">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns minimal inset that fully contains inset and inset2. If inset2 
+  is None, self.inset is used instead.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      inset, inset2: absolute insets
+    </li>
+  </ul>
+  <p>Returns the absolute enclosing inset.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="findIntersectingInset"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">findIntersectingInset</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">inset</span>,
+        <span class="sig-arg">inset2</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.findIntersectingInset">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns intersection between inset and inset2. If inset2 is not 
+  specified, self.inset is used instead.</p>
+  <p>If inset is None, returns inset2 if specified or self.inset.</p>
+  <p>If inset2 and inset.data are None, returns inset.</p>
+  <p>If insets do not intersett at all, returns None</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      inset, inset2: absolute insets
+    </li>
+  </ul>
+  <p>Returns the absolute intersecting inset.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="newFromInset"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">newFromInset</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">inset</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">relative</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">intersect</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">useFull</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">expand</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">value</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">copyData</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">deepcp</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">noDeepcp</span>=<span class="sig-default"><code class="variable-group">[</code><code class="variable-group">]</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.newFromInset">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Makes an instance that has values of all attributes the same as this 
+  instance, except that the data array (attribute data) is set to a copy of
+  the data array inset defined by the arguments, and the inset attribute is
+  set accordingly.</p>
+  <p>The current instance is left unchanged (actaully changed and then 
+  brought back to its original state).</p>
+  <p>If arg copyData is True, the new instance data array is a copy of the 
+  data inset from the current instance. Otherwise the new instance data is 
+  a view of the data array self.data (providing that arg inset fits within 
+  the current data array.</p>
+  <p>Args deepcp and noDeepcp determine which attributes of the current 
+  instance have their values simply copied to the new instance (so that 
+  modifying one modifies other in case they are references to other 
+  objects) and which are deepcopied (modifying one does not modify the 
+  other). In any case, attribute inset is different in the two 
+  instances.</p>
+  <p>See useInset() for the full description of the the role of other 
+  arguments in detemining the inset.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      inset: list of slice objects that defines the inset
+    </li>
+    <li>
+      mode: 'relative' (same as 'rel') or 'absolute' (same as 'abs')
+    </li>
+    <li>
+      intersect: flag indicating if the (agr) inset is to be intersected 
+      with the current inset.
+    </li>
+    <li>
+      useFull: flag indicating if self.fullData is used
+    </li>
+    <li>
+      expand: flag indicating if self.data array should be expanded if 
+      needed
+    </li>
+    <li>
+      value: used to fill the expanded part of self.data
+    </li>
+    <li>
+      copyData: flag indicating if data array is coppied
+    </li>
+    <li>
+      deepcp: flag indicating if a deepcopy or just a copy of the current 
+      instance is used to make the new instance
+    </li>
+    <li>
+      noDeepcp: list of attribute names that are not deepcopied (used only 
+      if deepcp is True)
+    </li>
+  </ul>
+  <p>Returns the new instance.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="read"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">read</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">file</span>,
+        <span class="sig-arg">fileFormat</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">byteOrder</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">dataType</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">arrayOrder</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">shape</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">header</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">memmap</span>=<span class="sig-default">False</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.read">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Reads image from a file and saves the data in numpy.array format.
+
+Images can be in em, mrc and raw format. Unless arg fileFormat is
+specified, file format is determined from the extension: 
+  - 'em' and 'EM' for em format
+  - 'mrc', 'rec' and 'mrcs' for mrc format
+  - 'raw', 'dat' and 'RAW' for raw format
+
+If file is in em or mrc format (file extension em or mrc) only the file
+argument is needed. If the file is in the raw data format (file 
+extension raw) all arguments (except fileFormat) are required.
+
+If arg header is True, file header (em, mrc or raw) is saved as 
+attribute header. In any case attribute fileFormat is set.
+
+For mrc and em files, array order is determined from arg arrayOrder,
+from self.arrayOrder, or it is set to the default (&quot;FORTRAN&quot;) in 
+this order. Data is read according the determined array order.
+That is, array order is not read from the file header.
+
+ If arg memmap is True, instead into a nparray, the data is read to
+a memory map. That means that the complete data is not read into
+the memory, but the required parts are read on demand. This is useful
+when working with large images, but might not always work properly 
+because the memory map is not quite properly a subclass of 
+numpy.ndarray (from Numpy doc).
+
+Data from mrc files is always read as 3D because mrc header always
+contains lengths for all three dimensions (the length of the last
+dimeension is 1 for 2D images). In such cases one can obtain the 
+2D ndarray using:  
+
+  self.data.reshape(self.data.shape[0:2])
+
+Sets attributes:
+  - data: (ndarray) image data
+  - pixelsize: (float or list of floats) pixel size in nm, 1 if pixel 
+  size not known
+  - length: (list or ndarray) length in each dimension in nm
+  - fileFormat: file format ('em', 'mrc', or 'raw')
+  - memmap: from the argument
+
+Arguments:
+  - file: file name
+  - fileFormat: 'em', 'mrc', or 'raw'
+  - byteOrder: '&lt;' (little-endian), '&gt;' (big-endian)
+  - dataType: any of the numpy types, e.g.: 'int8', 'int16', 'int32',
+    'float32', 'float64'
+  - arrayOrder: 'C' (z-axis fastest), or 'FORTRAN' (x-axis fastest)
+  - shape: (x_dim, y_dim, z_dim)
+  - header: flag indicating if file header is saved
+  - memmap: Flag indicating if the data is read to a memory map,
+  instead of reading it into a ndarray
+
+Returns:
+  - instance of this class
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="write"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">write</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">file</span>,
+        <span class="sig-arg">byteOrder</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">dataType</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">fileFormat</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">arrayOrder</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">shape</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">length</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">pixel</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">casting</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">unsafe</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">header</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.core.image-pysrc.html#Image.write">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes image to a file in em, mrc or raw format.</p>
+  <p>If fileFormat is not given it is determined from the file 
+  extension.</p>
+  <p>Data (image) has to be specified by arg data or previously set 
+  self.data attribute.</p>
+  <p>Data type and shape are determined by args dataType and shape, or by 
+  the data type and shape of the data, in this order..</p>
+  <p>If data type (determined as described above) is not one of the data 
+  types used for the specified file format (ubyte, int16, float32, 
+  complex64 for mrc and uint8, uint16, int32, float32, float64, complex64 
+  for em), then the value of arg dataType has to be one of the appropriate 
+  data types. Otherwise an exception is raised.</p>
+  <p>If data type (determined as described above) is different from the 
+  type of actual data, the data is converted to the data type. Note that if
+  these two types are incompatible according to arg casting, an exception 
+  is raised.</p>
+  <p>The data is converted to the (prevously determined) shape and array 
+  order and then written. That means that the shape and the array order may
+  be changed in the original array (argument data or self.data). However, 
+  array order is not written the header.</p>
+  <p>Additional header parameters are determined for mrc format. Nxstart, 
+  nystart and nzstart are set to 0, while mx, my and mz to the 
+  corresponding data size (grid size). xlen, ylen and zlen are taken from 
+  arg length if given, or obtained by multiplying data size with pixel size
+  (in nm).</p>
+  <p>If arg header is True and if the file type corresponding to arg file 
+  is the same as self.fileFormat, a header consisting of self.header (list)
+  and self.extendedHeaderString (str) are written as file header. The 
+  extended header should be used only for mrc format.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      file: file name
+    </li>
+    <li>
+      fileFormat: 'em', 'mrc', or 'raw'
+    </li>
+    <li>
+      byteOrder: '&lt;' (little-endian), '&gt;' (big-endian)
+    </li>
+    <li>
+      dataType: any of the numpy types, e.g.: 'int8', 'int16', 'int32', 
+      'float32', 'float64'
+    </li>
+    <li>
+      arrayOrder: 'C' (z-axis fastest), or 'FORTRAN' (x-axis fastest)
+    </li>
+    <li>
+      shape: (x_dim, y_dim, z_dim)
+    </li>
+    <li>
+      length: (list aor ndarray) length in each dimension in nm (used only 
+      for mrc format)
+    </li>
+    <li>
+      pixel: pixel size in nm (used only for mrc format if length is None)
+    </li>
+    <li>
+      casting: Controls what kind of data casting may occur: 'no', 'equiv',
+      'safe', 'same_kind', 'unsafe'. Identical to numpy.astype() method.
+    </li>
+    <li>
+      header: flag indicating if self.header is written as file header
+    </li>
+  </ul>
+  <p>Returns file instance.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== PROPERTY DETAILS ==================== -->
+<a name="section-PropertyDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Property Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-PropertyDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="ndim"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">ndim</h3>
+  <p>Dimensionality of data</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.core.image.Image-class.html#getNdim" class="summary-sig-name">getNdim</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Gets ndim from self.data, or if the data does not exists returns 
+      self._ndim.
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.core.image.Image-class.html#setNdim" class="summary-sig-name">setNdim</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ndim</span>)</span>
+        - Sets self._ndim.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="offset"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">offset</h3>
+  <p>Position of the origin in respect to some reference</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.core.image.Image-class.html#getOffset" class="summary-sig-name">getOffset</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Returns current offset value.
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.core.image.Image-class.html#setOffset" class="summary-sig-name">setOffset</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">offset</span>=<span class="summary-sig-default">None</span>)</span>
+        - Sets offset of  (ndarray) self.offset.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="totalOffset"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">totalOffset</h3>
+  <p>Total offset, that is a sum of self.offset and the start positions of 
+  self.inset.</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.core.image.Image-class.html#getTotalOffset" class="summary-sig-name">getTotalOffset</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Returns total offset, which is a sum of self.offset and the start 
+      positions of self.inset.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="inset"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">inset</h3>
+  <p>(list of slice objects) a current view of self.data array in respect 
+  to the underlying base reference array.</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.core.image.Image-class.html#getInset" class="summary-sig-name">getInset</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Returns inset position as a list of slice objects.
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.core.image.Image-class.html#setInset" class="summary-sig-name">setInset</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">inset</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">absolute</code><code class="variable-quote">'</code></span>)</span>
+        - Sets inset for self.data (does not modify self.data).
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="fullInset"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">fullInset</h3>
+  <p>Full inset that underlies current self.data.</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.core.image.Image-class.html#getFullInset" class="summary-sig-name">getFullInset</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Returns a previously defined inset (list of slice objects) of a 
+      full-size array underlying (the current view) of self.data.
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.core.image.Image-class.html#setFullInset" class="summary-sig-name">setFullInset</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">inset</span>)</span>
+        - Sets full inset for self.data (does not modify self.data).
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="fullData"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">fullData</h3>
+  <p>Full size data array</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.core.image.Image-class.html#getFullData" class="summary-sig-name">getFullData</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Returns a previously defined full-size array underlying (the current 
+      view of) self.data.
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.core.image.Image-class.html#setFullData" class="summary-sig-name">setFullData</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>)</span>
+        - Sets full size data (the array is not copied).
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

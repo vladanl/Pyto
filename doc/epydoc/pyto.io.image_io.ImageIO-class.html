@@ -1,0 +1,2152 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.io.image_io.ImageIO</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.io-module.html">Package&nbsp;io</a> ::
+        <a href="pyto.io.image_io-module.html">Module&nbsp;image_io</a> ::
+        Class&nbsp;ImageIO
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.io.image_io.ImageIO-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class ImageIO</h1><p class="nomargin-top"><span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_pyto_io__2" name="uml_class_diagram_for_pyto_io__2">
+<area shape="rect" id="node1_28" href="pyto.io.image_io.ImageIO-class.html#byte_order" title="pyto.io.image_io.ImageIO.byte_order" alt="" coords="17,30,1161,50"/>
+<area shape="rect" id="node1_29" href="pyto.io.image_io.ImageIO-class.html#machineByteOrder" title="pyto.io.image_io.ImageIO.machineByteOrder" alt="" coords="17,50,1161,70"/>
+<area shape="rect" id="node1_30" href="pyto.io.image_io.ImageIO-class.html#fileFormats" title="pyto.io.image_io.ImageIO.fileFormats" alt="" coords="17,70,1161,90"/>
+<area shape="rect" id="node1_31" href="pyto.io.image_io.ImageIO-class.html#em" title="pyto.io.image_io.ImageIO.em" alt="" coords="17,90,1161,110"/>
+<area shape="rect" id="node1_32" href="pyto.io.image_io.ImageIO-class.html#emHeaderFields" title="pyto.io.image_io.ImageIO.emHeaderFields" alt="" coords="17,110,1161,130"/>
+<area shape="rect" id="node1_33" href="pyto.io.image_io.ImageIO-class.html#emDefaultHeader" title="pyto.io.image_io.ImageIO.emDefaultHeader" alt="" coords="17,130,1161,150"/>
+<area shape="rect" id="node1_34" href="pyto.io.image_io.ImageIO-class.html#emDefaultShape" title="pyto.io.image_io.ImageIO.emDefaultShape" alt="" coords="17,150,1161,170"/>
+<area shape="rect" id="node1_35" href="pyto.io.image_io.ImageIO-class.html#emByteOrderTab" title="pyto.io.image_io.ImageIO.emByteOrderTab" alt="" coords="17,170,1161,190"/>
+<area shape="rect" id="node1_36" href="pyto.io.image_io.ImageIO-class.html#emByteOrderTabInv" title="pyto.io.image_io.ImageIO.emByteOrderTabInv" alt="" coords="17,190,1161,210"/>
+<area shape="rect" id="node1_37" href="pyto.io.image_io.ImageIO-class.html#emDataTypeTab" title="pyto.io.image_io.ImageIO.emDataTypeTab" alt="" coords="17,210,1161,230"/>
+<area shape="rect" id="node1_38" href="pyto.io.image_io.ImageIO-class.html#emDataTypeTabInv" title="pyto.io.image_io.ImageIO.emDataTypeTabInv" alt="" coords="17,230,1161,250"/>
+<area shape="rect" id="node1_39" href="pyto.io.image_io.ImageIO-class.html#mrc" title="pyto.io.image_io.ImageIO.mrc" alt="" coords="17,250,1161,270"/>
+<area shape="rect" id="node1_40" href="pyto.io.image_io.ImageIO-class.html#mrcDefaultShape" title="pyto.io.image_io.ImageIO.mrcDefaultShape" alt="" coords="17,270,1161,290"/>
+<area shape="rect" id="node1_41" href="pyto.io.image_io.ImageIO-class.html#pixelsize" title="Pixel size (at specimen level) in nm" alt="" coords="17,310,1161,330"/>
+<area shape="rect" id="node1_42" href="pyto.io.image_io.ImageIO-class.html#__init__" title="Initializes variables." alt="" coords="17,333,1161,353"/>
+<area shape="rect" id="node1_43" href="pyto.io.image_io.ImageIO-class.html#read" title="Reads image file in em, mrc or raw data formats and saves the data in numpy.array format." alt="" coords="17,353,1161,373"/>
+<area shape="rect" id="node1_44" href="pyto.io.image_io.ImageIO-class.html#readHeader" title="Reads heder of an image file in em, mrc or raw data formats." alt="" coords="17,373,1161,393"/>
+<area shape="rect" id="node1_45" href="pyto.io.image_io.ImageIO-class.html#write" title="Writes image file (header if applicable and data)." alt="" coords="17,393,1161,413"/>
+<area shape="rect" id="node1_46" href="pyto.io.image_io.ImageIO-class.html#readEM" title="Reads EM file." alt="" coords="17,413,1161,433"/>
+<area shape="rect" id="node1_47" href="pyto.io.image_io.ImageIO-class.html#readEMHeader" title="Reads a header of an EM file" alt="" coords="17,433,1161,453"/>
+<area shape="rect" id="node1_48" href="pyto.io.image_io.ImageIO-class.html#writeEM" title="Writes EM file (header and data)." alt="" coords="17,453,1161,473"/>
+<area shape="rect" id="node1_49" href="pyto.io.image_io.ImageIO-class.html#readMRC" title="Reads mrc file." alt="" coords="17,473,1161,493"/>
+<area shape="rect" id="node1_50" href="pyto.io.image_io.ImageIO-class.html#readMRCHeader" title="Reads a header of an mrc file." alt="" coords="17,493,1161,513"/>
+<area shape="rect" id="node1_51" href="pyto.io.image_io.ImageIO-class.html#parseMRCHeader" title="Parse mrc header." alt="" coords="17,513,1161,533"/>
+<area shape="rect" id="node1_52" href="pyto.io.image_io.ImageIO-class.html#writeMRC" title="Writes MRC file (header and data)." alt="" coords="17,533,1161,553"/>
+<area shape="rect" id="node1_53" href="pyto.io.image_io.ImageIO-class.html#readRaw" title="Reads raw data file." alt="" coords="17,553,1161,573"/>
+<area shape="rect" id="node1_54" href="pyto.io.image_io.ImageIO-class.html#readRawHeader" title="Reads a header of a raw file." alt="" coords="17,573,1161,593"/>
+<area shape="rect" id="node1_55" href="pyto.io.image_io.ImageIO-class.html#putInEMHeader" title="Puts value in self.EmHeaderFields at the position corresponding to name." alt="" coords="17,613,1161,633"/>
+<area shape="rect" id="node1" href="pyto.io.image_io.ImageIO-class.html" title="Reads and writes EM image files in em, mrc and raw formats." alt="" coords="5,5,1173,639"/>
+</map>
+  <img src="uml_class_diagram_for_pyto_io__2.gif" alt='' usemap="#uml_class_diagram_for_pyto_io__2" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<pre class="literalblock">
+
+Reads and writes EM image files in em, mrc and raw formats.
+
+An image file in em or mrc format can be read in the following way:
+
+  myImage = ImageIO()
+  myImage.read(file='my_file.em')
+
+ow written as:
+
+  myImage = ImageIO()
+  myImage.write(file='my_file.em', data=my_array, header=my_header)
+
+Raw file reading and writting is the same except that more arguments are
+required to read (see self.read).
+
+Important attributes:
+  - self.fileName: file name
+  - self.file_: file instance
+
+</pre>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.io.image_io.ImageIO-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">file</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Initializes variables.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.io.image_io.ImageIO-class.html#read" class="summary-sig-name">read</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">file</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">fileFormat</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">byteOrder</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">dataType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">arrayOrder</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">shape</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">memmap</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Reads image file in em, mrc or raw data formats and saves the
+data in numpy.array format.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.read">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="readHeader"></a><span class="summary-sig-name">readHeader</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">file</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">fileFormat</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">byteOrder</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Reads heder of an image file in em, mrc or raw data formats.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.readHeader">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.io.image_io.ImageIO-class.html#write" class="summary-sig-name">write</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">file</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">fileFormat</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">byteOrder</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">dataType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">arrayOrder</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">shape</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">length</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">pixel</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">header</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">extended</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">casting</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">unsafe</code><code class="variable-quote">'</code></span>)</span><br />
+      Writes image file (header if applicable and data).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.write">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="readEM"></a><span class="summary-sig-name">readEM</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">file</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">byteOrder</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">dataType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">arrayOrder</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">shape</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">memmap</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Reads EM file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.readEM">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="readEMHeader"></a><span class="summary-sig-name">readEMHeader</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">file</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">byteOrder</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Reads a header of an EM file</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.readEMHeader">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.io.image_io.ImageIO-class.html#writeEM" class="summary-sig-name">writeEM</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">file</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">header</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">byteOrder</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">shape</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">dataType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">arrayOrder</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">casting</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">unsafe</code><code class="variable-quote">'</code></span>)</span><br />
+      Writes EM file (header and data).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.writeEM">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="readMRC"></a><span class="summary-sig-name">readMRC</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">file</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">byteOrder</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">dataType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">arrayOrder</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">shape</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">memmap</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Reads mrc file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.readMRC">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.io.image_io.ImageIO-class.html#readMRCHeader" class="summary-sig-name">readMRCHeader</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">file</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">byteOrder</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Reads a header of an mrc file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.readMRCHeader">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.io.image_io.ImageIO-class.html#parseMRCHeader" class="summary-sig-name">parseMRCHeader</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">header</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Parse mrc header.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.parseMRCHeader">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.io.image_io.ImageIO-class.html#writeMRC" class="summary-sig-name">writeMRC</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">file</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">header</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">byteOrder</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">shape</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">dataType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">arrayOrder</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">length</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">pixel</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">extended</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">casting</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">unsafe</code><code class="variable-quote">'</code></span>)</span><br />
+      Writes MRC file (header and data).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.writeMRC">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="readRaw"></a><span class="summary-sig-name">readRaw</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">file</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">dataType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">shape</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">byteOrder</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">arrayOrder</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">headerSize</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">memmap</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Reads raw data file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.readRaw">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.io.image_io.ImageIO-class.html#readRawHeader" class="summary-sig-name">readRawHeader</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">file</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">size</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Reads a header of a raw file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.readRawHeader">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.io.image_io.ImageIO-class.html#writeRaw" class="summary-sig-name">writeRaw</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">file</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">header</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">shape</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">dataType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">byteOrder</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">arrayOrder</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">casting</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">unsafe</code><code class="variable-quote">'</code></span>)</span><br />
+      Writes raw data.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.writeRaw">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.io.image_io.ImageIO-class.html#setData" class="summary-sig-name">setData</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>,
+        <span class="summary-sig-arg">shape</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Reshapes data according to the arg shape (if specified) and saves it 
+      as attribute self.data.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.setData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.io.image_io.ImageIO-class.html#readData" class="summary-sig-name">readData</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">shape</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">memmap</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Reads data from an image file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.readData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.io.image_io.ImageIO-class.html#writeData" class="summary-sig-name">writeData</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Writes data in numpy.ndarray format to an image file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.writeData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.io.image_io.ImageIO-class.html#setFileFormat" class="summary-sig-name">setFileFormat</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">fileFormat</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">file_</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Sets self.fileFormat.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.setFileFormat">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.io.image_io.ImageIO-class.html#checkFile" class="summary-sig-name">checkFile</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">file_</span>,
+        <span class="summary-sig-arg">mode</span>)</span><br />
+      If file_ is a string open the file with that name.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.checkFile">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getTiltAngle"></a><span class="summary-sig-name">getTiltAngle</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns titl angle in degrees.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.getTiltAngle">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.io.image_io.ImageIO-class.html#setTiltAngle" class="summary-sig-name">setTiltAngle</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">angle</span>)</span><br />
+      Sets self._tiltAngle to angle*1000 and puts that value in emHeader.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.setTiltAngle">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.io.image_io.ImageIO-class.html#getPixelsize" class="summary-sig-name">getPixelsize</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">diff</span>=<span class="summary-sig-default">1e-06</span>)</span><br />
+      Returns pixel size (at specimen level) in nm.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.getPixelsize">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.io.image_io.ImageIO-class.html#fix" class="summary-sig-name">fix</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">microscope</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Fixes wrong values in header and in the data.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.fix">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.io.image_io.ImageIO-class.html#fixHeader" class="summary-sig-name">fixHeader</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">microscope</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Fixes wrong values in microscope image header.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.fixHeader">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.io.image_io.ImageIO-class.html#getFromEMHeader" class="summary-sig-name">getFromEMHeader</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>)</span><br />
+      Reads the value of variable name from self.emHeader and returns it.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.getFromEMHeader">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="putInEMHeader"></a><span class="summary-sig-name">putInEMHeader</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">value</span>)</span><br />
+      Puts value in self.EmHeaderFields at the position corresponding to 
+      name.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.putInEMHeader">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="byte_order"></a><span class="summary-name">byte_order</span> = <code title="'little'"><code class="variable-quote">'</code><code class="variable-string">little</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="machineByteOrder"></a><span class="summary-name">machineByteOrder</span> = <code title="'&lt;'"><code class="variable-quote">'</code><code class="variable-string">&lt;</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.io.image_io.ImageIO-class.html#fileFormats" class="summary-name">fileFormats</a> = <code title="{'EM': 'em',
+ 'RAW': 'raw',
+ 'dat': 'raw',
+ 'em': 'em',
+ 'mrc': 'mrc',
+ 'mrcs': 'mrc',
+ 'raw': 'raw',
+ 'rec': 'mrc'}"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">EM</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">em</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">RAW</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">raw</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">dat</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">raw</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">em</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.io.image_io.ImageIO-class.html#em" class="summary-name">em</a> = <code title="{'arrayOrder': 'FORTRAN',
+ 'defaultByteOrder': '&lt;',
+ 'headerFormat': '4b 3i 80s 40i 20s 8s 228s',
+ 'headerSize': 512}"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">arrayOrder</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">FORTRAN</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">defaultByteOrder</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">&lt;</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">heade</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.io.image_io.ImageIO-class.html#emHeaderFields" class="summary-name">emHeaderFields</a> = <code title="('machine',
+ 'newOS9',
+ 'noHeader',
+ 'dataTypeCode',
+ 'lengthX',
+ 'lengthY',
+ 'lengthZ',
+ 'comment',
+..."><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">machine</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">newOS9</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">noHeader</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">dataTypeCo</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.io.image_io.ImageIO-class.html#emDefaultHeader" class="summary-name">emDefaultHeader</a> = <code title="[6,
+ 0,
+ 0,
+ 0,
+ 1,
+ 1,
+ 1,
+ '                                                                    \
+..."><code class="variable-group">[</code>6<code class="variable-op">, </code>0<code class="variable-op">, </code>0<code class="variable-op">, </code>0<code class="variable-op">, </code>1<code class="variable-op">, </code>1<code class="variable-op">, </code>1<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">                     </code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="emDefaultShape"></a><span class="summary-name">emDefaultShape</span> = <code title="[0, 0, 0]"><code class="variable-group">[</code>0<code class="variable-op">, </code>0<code class="variable-op">, </code>0<code class="variable-group">]</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="emByteOrderTab"></a><span class="summary-name">emByteOrderTab</span> = <code title="{5: '&gt;', 6: '&lt;'}"><code class="variable-group">{</code>5<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">&gt;</code><code class="variable-quote">'</code><code class="variable-op">, </code>6<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">&lt;</code><code class="variable-quote">'</code><code class="variable-group">}</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="emByteOrderTabInv"></a><span class="summary-name">emByteOrderTabInv</span> = <code title="{'&lt;': 6, '&gt;': 5}"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">&lt;</code><code class="variable-quote">'</code><code class="variable-op">: </code>6<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">&gt;</code><code class="variable-quote">'</code><code class="variable-op">: </code>5<code class="variable-group">}</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.io.image_io.ImageIO-class.html#emDataTypeTab" class="summary-name">emDataTypeTab</a> = <code title="{1: 'uint8',
+ 2: 'uint16',
+ 4: 'int32',
+ 5: 'float32',
+ 8: 'complex64',
+ 9: 'float64'}"><code class="variable-group">{</code>1<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">uint8</code><code class="variable-quote">'</code><code class="variable-op">, </code>2<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">uint16</code><code class="variable-quote">'</code><code class="variable-op">, </code>4<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">int32</code><code class="variable-quote">'</code><code class="variable-op">, </code>5<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">floa</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.io.image_io.ImageIO-class.html#emDataTypeTabInv" class="summary-name">emDataTypeTabInv</a> = <code title="{'complex64': 8,
+ 'float32': 5,
+ 'float64': 9,
+ 'int32': 4,
+ 'uint16': 2,
+ 'uint8': 1}"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">complex64</code><code class="variable-quote">'</code><code class="variable-op">: </code>8<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">float32</code><code class="variable-quote">'</code><code class="variable-op">: </code>5<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">float64</code><code class="variable-quote">'</code><code class="variable-op">: </code>9<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.io.image_io.ImageIO-class.html#mrc" class="summary-name">mrc</a> = <code title="{'defaultArrayOrder': 'FORTRAN',
+ 'defaultAxisOrder': (1, 2, 3),
+ 'defaultByteOrder': '&lt;',
+ 'headerFormat': '10i 6f 3i 3f 2i h 30s 4h 6f 6h 12f i 800s',
+ 'headerSize': 1024}"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">defaultArrayOrder</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">FORTRAN</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">defaultAxisOrder</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code>1<code class="variable-op">,</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="mrcDefaultShape"></a><span class="summary-name">mrcDefaultShape</span> = <code title="[1, 1, 1]"><code class="variable-group">[</code>1<code class="variable-op">, </code>1<code class="variable-op">, </code>1<code class="variable-group">]</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="mrcDefaultPixel"></a><span class="summary-name">mrcDefaultPixel</span> = <code title="[1, 1, 1]"><code class="variable-group">[</code>1<code class="variable-op">, </code>1<code class="variable-op">, </code>1<code class="variable-group">]</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.io.image_io.ImageIO-class.html#mrcDefaultHeader" class="summary-name">mrcDefaultHeader</a> = <code title="[1,
+ 1,
+ 1,
+ 0,
+ 0,
+ 0,
+ 0,
+ 0,
+..."><code class="variable-group">[</code>1<code class="variable-op">, </code>1<code class="variable-op">, </code>1<code class="variable-op">, </code>0<code class="variable-op">, </code>0<code class="variable-op">, </code>0<code class="variable-op">, </code>0<code class="variable-op">, </code>0<code class="variable-op">, </code>0<code class="variable-op">, </code>0<code class="variable-op">, </code>0.0<code class="variable-op">, </code>0.0<code class="variable-op">, </code>0.<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.io.image_io.ImageIO-class.html#mrcDataTypeTab" class="summary-name">mrcDataTypeTab</a> = <code title="{0: 'ubyte', 1: 'int16', 2: 'float32', 4: 'complex64', 6: 'uint16'}"><code class="variable-group">{</code>0<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">ubyte</code><code class="variable-quote">'</code><code class="variable-op">, </code>1<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">int16</code><code class="variable-quote">'</code><code class="variable-op">, </code>2<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">float32</code><code class="variable-quote">'</code><code class="variable-op">, </code>4<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">co</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.io.image_io.ImageIO-class.html#mrcDataTypeTabInv" class="summary-name">mrcDataTypeTabInv</a> = <code title="{'complex64': 4, 'float32': 2, 'int16': 1, 'ubyte': 0, 'uint16': 6}"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">complex64</code><code class="variable-quote">'</code><code class="variable-op">: </code>4<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">float32</code><code class="variable-quote">'</code><code class="variable-op">: </code>2<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">int16</code><code class="variable-quote">'</code><code class="variable-op">: </code>1<code class="variable-op">,</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.io.image_io.ImageIO-class.html#raw" class="summary-name">raw</a> = <code title="{'defaultArrayOrder': 'FORTRAN',
+ 'defaultByteOrder': '&lt;',
+ 'defaultHeaderSize': 0}"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">defaultArrayOrder</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">FORTRAN</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">defaultByteOrder</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">&lt;</code><code class="variable-quote">'</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.io.image_io.ImageIO-class.html#tiltAngle" class="summary-name">tiltAngle</a><br />
+      Tilt angle (in deg)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.io.image_io.ImageIO-class.html#pixelsize" class="summary-name">pixelsize</a><br />
+      Pixel size (at specimen level) in nm
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">file</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Initializes variables.</p>
+  <p>Sets self.fileName to file if file is a string, or sets self.file_ to 
+  file if file is a file instance.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="read"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">read</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">file</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">fileFormat</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">byteOrder</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">dataType</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">arrayOrder</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">shape</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">memmap</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.read">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Reads image file in em, mrc or raw data formats and saves the
+data in numpy.array format.
+
+For reading em and mrc files (having correct extension) only file
+argument is necessary:
+
+  image = Image()
+  image.read(file='myfile.em')
+or to prvent reading the whole file into memory:
+  image.read(file='myfile.em', memmap=True)
+
+Alternatively, file name can be given in the constructor:
+
+  image = Image(file='myfile.em')
+  image.read()
+
+If other arguments are given they will override the corresponding
+values obtained form image header (use if you know what you're
+doing).
+
+For reading raw files, arguments dataType and shape need to
+be specified:
+
+  read(file='myfile.raw', dataType='float32', shape=(200,150,70))
+
+By default, arguments byteOrder='&lt;' (little-endian) and
+arrayOrder='FORTRAN'.
+
+For mrc and em files, array order is determined from arg arrayOrder,
+from self.arrayOrder, or it is set to the default (&quot;FORTRAN&quot;) in 
+this order. Data is read according the determined array order.
+That is, array order is not read from the file header.
+
+File format is determined from the extension:
+  - 'em' and 'EM' for em format
+  - 'mrc', 'rec' and 'mrcs' for mrc format
+  - 'raw', 'dat' and 'RAW' for raw format
+This can be overriden by specifying fileFormat argument.
+
+Byte order is read from the header for em files. For mrc, data type
+is read from the header using the system byte order and if that fails 
+using the other one. In case that also fails ValueError is raised.
+
+The data is read according to 
+Array order is not read from the header. Instead, array order 
+specified by arg arrayOrder or self.arrayOrder is used for
+reading the data.
+
+If arg memmap is True, instead into a ndarray, the data is read to
+a memory map. That means that the complete data is not read into
+the memory, but the required parts are read on demand. This is useful
+when working with large images, but might not always work properly 
+because the memory map is not quite properly a subclass of 
+numpy.ndarray (from Numpy doc).
+
+Data from mrc files is always read as 3D because mrc header always
+contains lengths for all three dimensions (the length of the last
+dimeension is 1 for 2D images). In such cases one can obtain the 
+2D ndarray using:  
+
+  self.data.reshape(self.data.shape[0:2])
+
+Arguments:
+  - file: file name
+  - fileFormat: 'em', 'mrc', or 'raw'
+  - byteOrder: '&lt;' (little-endian), '&gt;' (big-endian)
+  - dataType: any of the numpy types, e.g.: 'int8', 'int16', 'int32',
+    'float32', 'float64'
+  - arrayOrder: 'C' (z-axis fastest), or 'FORTRAN' (x-axis fastest)
+  - shape: (x_dim, y_dim, z_dim), needs to be compatible with the
+  data read
+  - memmap: Flag indicating if the data is read to a memory map,
+  instead of reading it into a ndarray
+
+Sets the following attributes (in addition to the arguments):
+  - data: data in numpy.array form
+  - emHeader / mrcHeader: tuple of all header values (em/mrc) files
+  - header: emHeader for em file, mrcHeader for mrc file or raw header
+  for raw file
+  - headerString: string containing a header
+
+Alternatively, any argument can be omitted if an attribute of the
+same name is set.         
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="write"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">write</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">file</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">fileFormat</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">byteOrder</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">dataType</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">arrayOrder</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">shape</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">length</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">pixel</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">header</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">extended</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">casting</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">unsafe</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.write">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes image file (header if applicable and data).</p>
+  <p>Values of all non-None arguments are saved as properties with same 
+  names.</p>
+  <p>If fileFormat is not given it is determined from the file 
+  extension.</p>
+  <p>Data (image) has to be specified by arg data or previously set 
+  self.data attribute.</p>
+  <p>Data type and shape are determined by args dataType and shape, 
+  previously set attributes self.dataType and self.shape, or by the data 
+  type and shape of the data, in this order.</p>
+  <p>If data type (determined as described above) is not one of the data 
+  types used for the specified file format (ubyte, int16, float32, 
+  complex64 for mrc and uint8, uint16, int32, float32, float64, complex64 
+  for em), then the value of arg dataType has to be one of the appropriate 
+  data types. Otherwise an exception is raised.</p>
+  <p>If data type (determined as described above) is different from the 
+  type of actual data, the data is converted to the data type. Note that if
+  these two types are incompatible according to arg casting, an exception 
+  is raised.</p>
+  <p>Values for byteOrder and arrayOrder are set to the first value found 
+  from the arguments, properties with same names, or from emHeader / 
+  mrcHeader default values.</p>
+  <p>The data is converted to the (prevously determined) shape and array 
+  order and then written. That means that the shape and the array order may
+  be changed in the original array (argument data or self.data). However, 
+  array order is not written the header.</p>
+  <p>If data is not given, only a header is writen.</p>
+  <p>Additional header parameters are determined for mrc format. Nxstart, 
+  nystart and nzstart are set to 0, while mx, my and mz to the 
+  corresponding data size (grid size). xlen, ylen and zlen are taken from 
+  arg length if given, or obtained by multiplying data size with pixel size
+  (in nm).</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      file: file name
+    </li>
+    <li>
+      data: (ndarray) image
+    </li>
+    <li>
+      fileFormat: 'em', 'mrc', or 'raw'
+    </li>
+    <li>
+      byteOrder: '&lt;' (little-endian), '&gt;' (big-endian)
+    </li>
+    <li>
+      dataType: any of the numpy types specified as strings, e.g.: 'int8', 
+      'int16', 'int32', 'float32', 'float64', or as numpy.dtype
+    </li>
+    <li>
+      arrayOrder: 'C' (z-axis fastest), or 'FORTRAN' (x-axis fastest)
+    </li>
+    <li>
+      shape: (x_dim, y_dim, z_dim)
+    </li>
+    <li>
+      length: (list aor ndarray) length in each dimension in nm (used only 
+      for mrc format)
+    </li>
+    <li>
+      pixel: pixel size in nm (used only for mrc format if length is None)
+    </li>
+    <li>
+      header: (list) image header
+    </li>
+    <li>
+      extended: (str) extended header string, only for mrc
+    </li>
+    <li>
+      casting: Controls what kind of data casting may occur: 'no', 'equiv',
+      'safe', 'same_kind', 'unsafe'. Identical to numpy.astype() method.
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeEM"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeEM</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">file</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">header</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">byteOrder</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">shape</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">dataType</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">arrayOrder</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">casting</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">unsafe</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.writeEM">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes EM file (header and data).</p>
+  <p>File can be a file name (string) or an instance of file. If not given 
+  self.fileName determines the file name.</p>
+  <p>Values of all non-None arguments are saved as properties with same 
+  names.</p>
+  <p>Data (image) has to be specified by arg data or previously set 
+  self.data attribute.</p>
+  <p>Data type and shape are determined by args dataType and shape, 
+  previously set attributes self.dataType and self.shape, or by the data 
+  type and shape of the data, in this order.</p>
+  <p>If data type (determined as described above) is not one of the em data
+  types (uint8, uint16, int32, float32, float64, complex64), then the value
+  of arg dataType has to be one of the em data types. Otherwise an 
+  exception is raised.</p>
+  <p>If data type (determined as described above) is different from the 
+  type of actual data, the data is converted to the data type. Note that if
+  these two types are incompatible according to arg casting, an exception 
+  is raised.</p>
+  <p>Values for byteOrder and arrayOrder are set to the first value found 
+  from the arguments, properties with same names, from emHeader of default 
+  values.</p>
+  <p>If data is not given, only a header is written.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="readMRCHeader"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">readMRCHeader</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">file</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">byteOrder</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.readMRCHeader">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Reads a header of an mrc file.</p>
+  <p>To dermine the byte order the file header is read according to the 
+  system byte order. If the data type is not recognized, the other byte 
+  order is used and the data type is checked again. If it still doesn't 
+  work, ValueError is raised.</p>
+  <p>Sets attributes:</p>
+  <ul>
+    <li>
+      headerString
+    </li>
+    <li>
+      mrcHeader
+    </li>
+    <li>
+      byteOrder
+    </li>
+    <li>
+      shape
+    </li>
+    <li>
+      dataType
+    </li>
+    <li>
+      axisOrder
+    </li>
+    <li>
+      pixel: pixel size in nm
+    </li>
+    <li>
+      length: linght in all dimensions in nm
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="parseMRCHeader"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">parseMRCHeader</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">header</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.parseMRCHeader">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Parse mrc header. If arg header is None, self.mrcHeader is used.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeMRC"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeMRC</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">file</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">header</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">byteOrder</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">shape</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">dataType</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">arrayOrder</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">length</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">pixel</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">extended</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">casting</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">unsafe</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.writeMRC">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes MRC file (header and data).</p>
+  <p>Values of all non-None arguments are saved as properties with same 
+  names.</p>
+  <p>Data (image) has to be specified by arg data or previously set 
+  self.data attribute.</p>
+  <p>Data type and shape are determined by args dataType and shape, 
+  previously set attributes self.dataType and self.shape, or by the data 
+  type and shape of the argument data, in this order.</p>
+  <p>If data type (determined as described above) is not one of the mrc 
+  data types (ubyte, int16, float32, complex64), then the value of arg 
+  dataType has to be one of the mrc data types. Otherwise an exception is 
+  raised.</p>
+  <p>If data type (determined as described above) is different from the 
+  type of actual data, the data is converted to the data type. Note that if
+  these two types are incompatible according to arg casting an exception is
+  raised.</p>
+  <p>Values for byteOrder and arrayOrder are set to the first value found 
+  from the arguments, properties with same names, from mrcHeader of default
+  values.</p>
+  <p>The data is converted to the (prevously determined) shape and array 
+  order and then written. That means that the shape and the array order may
+  be changed in the original array (argument data or self.data). However, 
+  array order is not written the header.</p>
+  <p>Header parameters nxstart, nystart and nzstart are set to 0, while mx,
+  my and mz to the corresponding data size (grid size).</p>
+  <p>MRC parameters xlen, ylen and zlen are taken from arg length if given,
+  or obtained by multiplying data size with pixel size (in nm).</p>
+  <p>MRC parameters min, max and mean are recalculated.</p>
+  <p>All other header values are defined in the mrcDefaultHeader. The 
+  default value of axisOrder can be changed by setting self.axisOrder.</p>
+  <p>If data is not given, only a header is writen.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="readRawHeader"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">readRawHeader</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">file</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">size</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.readRawHeader">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Reads a header of a raw file.</p>
+  <p>Sets:</p>
+  <ul>
+    <li>
+      headerString: header as a string
+    </li>
+  </ul>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      file: file name or a file instance
+    </li>
+    <li>
+      size: header size in bytes
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeRaw"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeRaw</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">file</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">header</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">shape</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">dataType</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">byteOrder</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">arrayOrder</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">casting</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">unsafe</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.writeRaw">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes raw data.</p>
+  <p>Values of all non-None arguments are saved as properties with same 
+  names.</p>
+  <p>Data (image) has to be specified by arg data or previously set 
+  self.data attribute.</p>
+  <p>Data type and shape are determined by args dataType and shape, 
+  previously set attributes self.dataType and self.shape, or by the data 
+  type and shape of the data, in this order.</p>
+  <p>If data type (determined as described above) is different from the 
+  type of actual data, the data is converted to the data type. Note that if
+  these two types are incompatible an exception is raised.</p>
+  <p>Values for byteOrder and arrayOrder, are set to the first value found 
+  from the arguments, or properties with same names.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setData"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setData</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>,
+        <span class="sig-arg">shape</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.setData">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Reshapes data according to the arg shape (if specified) and saves it 
+  as attribute self.data. Also sets attributes self.shape and self.dataType
+  accordingly.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="readData"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">readData</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">shape</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">memmap</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.readData">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Reads data from an image file. The data are read to numpy.ndarray if 
+  memmap is False, or a ndarray-like memory mapis created if memmap is 
+  True.</p>
+  <p>Should not be used directly. Instance attributes: file, dataType, 
+  byteOrder, arrayOrder and shape have to be set before calling this 
+  method.</p>
+  <p>Sets self.memmap to the value of the memmap argument.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeData"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeData</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.writeData">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes data in numpy.ndarray format to an image file.</p>
+  <p>Transforms self.data according to self.dataType, self.byteOrder and 
+  self.shape before writing.</p>
+  <p>Should not be used directly. Instance attributes: file, data, 
+  dataType, byteOrder, arrayOrder and shape have to be set before calling 
+  this method.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setFileFormat"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setFileFormat</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">fileFormat</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">file_</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.setFileFormat">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets self.fileFormat.</p>
+  <p>It is determined in the following order: first from the argument 
+  fileFormat, then from the file extension and finally from the already 
+  existing value of self.fileFormat</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      file_: file name
+    </li>
+    <li>
+      fileFormat: file Format
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="checkFile"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">checkFile</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">file_</span>,
+        <span class="sig-arg">mode</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.checkFile">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>If file_ is a string open the file with that name. If file_ is None, 
+  use self.fileName.</p>
+  <p>If file_ is a file instance don't do anything.</p>
+  <p>Sets:</p>
+  <ul>
+    <li>
+      self.fileName: file_ if a string
+    </li>
+    <li>
+      self.file_: file instance
+    </li>
+  </ul>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      file_: file name or instance of file
+    </li>
+    <li>
+      mode: mode as in open()
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setTiltAngle"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setTiltAngle</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">angle</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.setTiltAngle">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets self._tiltAngle to angle*1000 and puts that value in 
+  emHeader.</p>
+  <p>Works only for em format.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getPixelsize"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getPixelsize</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">diff</span>=<span class="sig-default">1e-06</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.getPixelsize">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns pixel size (at specimen level) in nm.</p>
+  <p>For mrc files a single pixelsize is returned if it's the same for all 
+  dimensions, otherwise a list of pixelsizes (for each dimension) is 
+  returned. Pixelsizes are considered the same if they do not differ more 
+  than arg diff.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="fix"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">fix</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">microscope</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.fix">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Fixes wrong values in header and in the data.</p>
+  <p>Mode determines which values are fixed. Currently defined modes 
+  are:</p>
+  <ul>
+    <li>
+      'polara_fei-tomo': images obtained on Polara (at MPI of Biochemistry)
+      using FEI tomography package and saved in EM format.
+    </li>
+    <li>
+      'krios_fei-tomo': images obtained on Krios (at MPI of Biochemistry) 
+      using FEI tomography package and saved in EM format.
+    </li>
+    <li>
+      'cm300': images from cm300 in EM format
+    </li>
+  </ul>
+  <p>If mode is polara_fei-tomo, then arg microscope has to be specified. 
+  The allowed values are specified in microscope_db.py. Currently (r564) 
+  these are: 'polara-1_01-07', 'polara-1_01-09' and 'polara-2_01-09'.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="fixHeader"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">fixHeader</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">microscope</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.fixHeader">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Fixes wrong values in microscope image header.</p>
+  <p>Mode determines which values are fixed. Currently defined modes 
+  are:</p>
+  <ul>
+    <li>
+      'polara_fei-tomo': images obtained on Polara (at MPI of Biochemistry)
+      using FEI tomography package and saved in EM format. Values fixed:
+      <ul>
+        <li>
+          voltage: set to 300000
+        </li>
+        <li>
+          cs: set to 2000
+        </li>
+        <li>
+          ccdPixelsize: physical pixel size, read from microscope_db
+        </li>
+        <li>
+          ccdLength: physical size of the CCD, pixelsize x n_pixels
+        </li>
+        <li>
+          _pixelsize: pixel size at the specimen level [fm]. Nominal mag is
+          read from the header and converted to pixelsize using 
+          microscope_db
+        </li>
+      </ul>
+    </li>
+    <li>
+      'krios_fei-tomo': images obtained on Krios (at MPI of Biochemistry) 
+      using FEI tomography package and saved in EM format. Pixel size at 
+      the specimen level is correct, and the physical detector length might
+      be correct. Values fixed:
+      <ul>
+        <li>
+          voltage: set to 300000
+        </li>
+        <li>
+          cs: set to 2000
+        </li>
+      </ul>
+    </li>
+    <li>
+      'cm300': images from cm300 in EM format
+    </li>
+    <li>
+      None: doesn't do anything
+    </li>
+  </ul>
+  <p>If mode is 'polara_fei-tomo', then arg microscope has to be specified.
+  The allowed values are specified in microscope_db.py. Currently (r564) 
+  these are: 'polara-1_01-07', 'polara-1_01-09' and 'polara-2_01-09'.</p>
+  <p>Updates the appropriate header: self.emHeader if file format is 'em', 
+  or self.mrcHeader for mrc files.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getFromEMHeader"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getFromEMHeader</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.io.image_io-pysrc.html#ImageIO.getFromEMHeader">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Reads the value of variable name from self.emHeader and returns 
+  it.</p>
+  <p>Comment: alternatively, self.name can be used. Not sure which approach
+  is better (VL 04.01.01).</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== CLASS VARIABLE DETAILS ==================== -->
+<a name="section-ClassVariableDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variable Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariableDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="fileFormats"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">fileFormats</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">EM</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">em</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">RAW</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">raw</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">dat</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">raw</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">em</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">em</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">mrc</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">mrc</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">mrcs</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">mrc</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">raw</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">raw</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">rec</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">mrc</code><code class="variable-quote">'</code><code class="variable-group">}</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="em"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">em</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">arrayOrder</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">FORTRAN</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">defaultByteOrder</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">&lt;</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">headerFormat</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">4b 3i 80s 40i 20s 8s 228s</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">headerSize</code><code class="variable-quote">'</code><code class="variable-op">: </code>512<code class="variable-group">}</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="emHeaderFields"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">emHeaderFields</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">machine</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">newOS9</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">noHeader</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">dataTypeCode</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">lengthX</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">lengthY</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">lengthZ</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">comment</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="emDefaultHeader"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">emDefaultHeader</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">[</code>6<code class="variable-op">,</code>
+ 0<code class="variable-op">,</code>
+ 0<code class="variable-op">,</code>
+ 0<code class="variable-op">,</code>
+ 1<code class="variable-op">,</code>
+ 1<code class="variable-op">,</code>
+ 1<code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">                                                                    </code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="emDataTypeTab"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">emDataTypeTab</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">{</code>1<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">uint8</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ 2<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">uint16</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ 4<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">int32</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ 5<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">float32</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ 8<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">complex64</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ 9<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">float64</code><code class="variable-quote">'</code><code class="variable-group">}</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="emDataTypeTabInv"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">emDataTypeTabInv</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">complex64</code><code class="variable-quote">'</code><code class="variable-op">: </code>8<code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">float32</code><code class="variable-quote">'</code><code class="variable-op">: </code>5<code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">float64</code><code class="variable-quote">'</code><code class="variable-op">: </code>9<code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">int32</code><code class="variable-quote">'</code><code class="variable-op">: </code>4<code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">uint16</code><code class="variable-quote">'</code><code class="variable-op">: </code>2<code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">uint8</code><code class="variable-quote">'</code><code class="variable-op">: </code>1<code class="variable-group">}</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="mrc"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">mrc</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">defaultArrayOrder</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">FORTRAN</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">defaultAxisOrder</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-group">(</code>1<code class="variable-op">, </code>2<code class="variable-op">, </code>3<code class="variable-group">)</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">defaultByteOrder</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">&lt;</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">headerFormat</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">10i 6f 3i 3f 2i h 30s 4h 6f 6h 12f i 800s</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">headerSize</code><code class="variable-quote">'</code><code class="variable-op">: </code>1024<code class="variable-group">}</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="mrcDefaultHeader"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">mrcDefaultHeader</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">[</code>1<code class="variable-op">,</code>
+ 1<code class="variable-op">,</code>
+ 1<code class="variable-op">,</code>
+ 0<code class="variable-op">,</code>
+ 0<code class="variable-op">,</code>
+ 0<code class="variable-op">,</code>
+ 0<code class="variable-op">,</code>
+ 0<code class="variable-op">,</code>
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="mrcDataTypeTab"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">mrcDataTypeTab</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">{</code>0<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">ubyte</code><code class="variable-quote">'</code><code class="variable-op">, </code>1<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">int16</code><code class="variable-quote">'</code><code class="variable-op">, </code>2<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">float32</code><code class="variable-quote">'</code><code class="variable-op">, </code>4<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">complex64</code><code class="variable-quote">'</code><code class="variable-op">, </code>6<code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">uint16</code><code class="variable-quote">'</code><code class="variable-group">}</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="mrcDataTypeTabInv"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">mrcDataTypeTabInv</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">complex64</code><code class="variable-quote">'</code><code class="variable-op">: </code>4<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">float32</code><code class="variable-quote">'</code><code class="variable-op">: </code>2<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">int16</code><code class="variable-quote">'</code><code class="variable-op">: </code>1<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">ubyte</code><code class="variable-quote">'</code><code class="variable-op">: </code>0<code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">uint16</code><code class="variable-quote">'</code><code class="variable-op">: </code>6<code class="variable-group">}</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="raw"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">raw</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">defaultArrayOrder</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">FORTRAN</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">defaultByteOrder</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">&lt;</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">defaultHeaderSize</code><code class="variable-quote">'</code><code class="variable-op">: </code>0<code class="variable-group">}</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== PROPERTY DETAILS ==================== -->
+<a name="section-PropertyDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Property Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-PropertyDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="tiltAngle"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">tiltAngle</h3>
+  <p>Tilt angle (in deg)</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.io.image_io.ImageIO-class.html#getTiltAngle" class="summary-sig-name">getTiltAngle</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Returns titl angle in degrees.
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.io.image_io.ImageIO-class.html#setTiltAngle" class="summary-sig-name">setTiltAngle</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">angle</span>)</span>
+        - Sets self._tiltAngle to angle*1000 and puts that value in emHeader.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="pixelsize"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">pixelsize</h3>
+  <p>Pixel size (at specimen level) in nm</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.io.image_io.ImageIO-class.html#getPixelsize" class="summary-sig-name">getPixelsize</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">diff</span>=<span class="summary-sig-default">1e-06</span>)</span>
+        - Returns pixel size (at specimen level) in nm.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

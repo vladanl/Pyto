@@ -1,0 +1,941 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.segmentation.connected.Connected</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.segmentation-module.html">Package&nbsp;segmentation</a> ::
+        <a href="pyto.segmentation.connected-module.html">Module&nbsp;connected</a> ::
+        Class&nbsp;Connected
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.segmentation.connected.Connected-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Connected</h1><p class="nomargin-top"><span class="codelink"><a href="pyto.segmentation.connected-pysrc.html#Connected">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_pyto_seg_5" name="uml_class_diagram_for_pyto_seg_5">
+<area shape="rect" id="node1_58" href="pyto.segmentation.connected.Connected-class.html#__init__" title="Initializes instance and sets data, data&#45;related and id&#45;related attributes &#160;by calling super constructor." alt="" coords="17,1319,1551,1339"/>
+<area shape="rect" id="node1_59" href="pyto.segmentation.connected.Connected-class.html#make" title="Performs threshold and connectivity segmentation at specified threshold." alt="" coords="17,1339,1551,1359"/>
+<area shape="rect" id="node1_60" href="pyto.segmentation.connected.Connected-class.html#label" title="Segments input by identifying (connected) segments in input." alt="" coords="17,1359,1551,1379"/>
+<area shape="rect" id="node1_61" href="pyto.segmentation.connected.Connected-class.html#findContacts" title="Finds all contacts between segements of this instance and boundaries." alt="" coords="17,1379,1551,1399"/>
+<area shape="rect" id="node1_62" href="pyto.segmentation.connected.Connected-class.html#findSegments" title="Analyzes contacs to find segments that satisfy &#160;the criterium specified by &#160;boundaryIds, nBoundary and mode arguments." alt="" coords="17,1399,1551,1419"/>
+<area shape="rect" id="node1" href="pyto.segmentation.connected.Connected-class.html" title="pyto.segmentation.connected.Connected" alt="" coords="5,1287,1563,1425"/>
+<area shape="rect" id="node2_63" href="pyto.segmentation.segment.Segment-class.html#setData" title="Sets data and the attributes determined from data." alt="" coords="427,961,1141,981"/>
+<area shape="rect" id="node2_64" href="pyto.segmentation.segment.Segment-class.html#setDefaults" title="Sets structure elements and _labelMask attributes derived from (the shape &#160;and the type of) data that haven&#39;t been set already to their default &#160;values." alt="" coords="427,981,1141,1001"/>
+<area shape="rect" id="node2_65" href="pyto.segmentation.segment.Segment-class.html#setSurfaceStructEl" title="Not used anymore." alt="" coords="427,1001,1141,1021"/>
+<area shape="rect" id="node2_66" href="pyto.segmentation.segment.Segment-class.html#parseInput" title="Returns data, ids and update." alt="" coords="427,1021,1141,1041"/>
+<area shape="rect" id="node2_67" href="pyto.segmentation.segment.Segment-class.html#removeIdFromBound" title="Removes ids from boundaryIds, freeIds and _free." alt="" coords="427,1041,1141,1061"/>
+<area shape="rect" id="node2_68" href="pyto.segmentation.segment.Segment-class.html#setProperties" title="Sets attributes of this instance from (arg) properties." alt="" coords="427,1061,1141,1081"/>
+<area shape="rect" id="node2_69" href="pyto.segmentation.segment.Segment-class.html#findNonUnique" title="Finds segments that are disconnected and segments that do not exist (id in &#160;self.ids but have no elements) and returns their ids." alt="" coords="427,1081,1141,1101"/>
+<area shape="rect" id="node2_70" href="pyto.segmentation.segment.Segment-class.html#clean" title="Makes self.data and self.ids consistent by removing segments self.data that are not in self.ids, and removing ids from self.ids corresponding to &#160;non&#45;existing segments." alt="" coords="427,1101,1141,1121"/>
+<area shape="rect" id="node2_71" href="pyto.segmentation.segment.Segment-class.html#remove" title="Removes segments labeled by (elements of) ids, by replacing the &#160;corresponding elements of data by value." alt="" coords="427,1121,1141,1141"/>
+<area shape="rect" id="node2_72" href="pyto.segmentation.segment.Segment-class.html#keep" title="Keeps only the segments labeled by elements of ids." alt="" coords="427,1141,1141,1161"/>
+<area shape="rect" id="node2_73" href="pyto.segmentation.segment.Segment-class.html#add" title="Adds new segments to the existing data." alt="" coords="427,1161,1141,1181"/>
+<area shape="rect" id="node2_74" href="pyto.segmentation.segment.Segment-class.html#reorder" title="Changes ids of segments according to the order, or orderes ids from 1 up &#160;without gaps if order is not given." alt="" coords="427,1181,1141,1201"/>
+<area shape="rect" id="node2_75" href="pyto.segmentation.segment.Segment-class.html#shiftIds" title="Shifts all (positive) ids of segments by (arg) shift." alt="" coords="427,1201,1141,1221"/>
+<area shape="rect" id="node2_76" href="pyto.segmentation.segment.Segment-class.html#read" title="Reads segmented image (label filed) from a file." alt="" coords="427,1241,1141,1261"/>
+<area shape="rect" id="node2" href="pyto.segmentation.segment.Segment-class.html" title="Manipulations and analysis of segmented images (label fields)." alt="" coords="415,929,1153,1268"/>
+<area shape="rect" id="node3_77" href="pyto.core.image.Image-class.html#ndim" title="Dimensionality of data" alt="" coords="328,29,1239,49"/>
+<area shape="rect" id="node3_78" href="pyto.core.image.Image-class.html#offset" title="Position of the origin in respect to some reference" alt="" coords="328,49,1239,69"/>
+<area shape="rect" id="node3_79" href="pyto.core.image.Image-class.html#totalOffset" title="Total offset, that is a sum of self.offset and the start positions of &#160;self.inset." alt="" coords="328,69,1239,89"/>
+<area shape="rect" id="node3_80" href="pyto.core.image.Image-class.html#inset" title="(list of slice objects) a current view of self.data array in respect to the underlying base reference array." alt="" coords="328,89,1239,109"/>
+<area shape="rect" id="node3_81" href="pyto.core.image.Image-class.html#fullInset" title="Full inset that underlies current self.data." alt="" coords="328,109,1239,129"/>
+<area shape="rect" id="node3_82" href="pyto.core.image.Image-class.html#fullData" title="Full size data array" alt="" coords="328,129,1239,149"/>
+<area shape="rect" id="node3_83" href="pyto.core.image.Image-class.html#tile" title="Use the current instance (image) as a tile (pattern) to make a (bigger) &#160;image in arbitrary dimensions." alt="" coords="328,152,1239,172"/>
+<area shape="rect" id="node3_84" href="pyto.core.image.Image-class.html#getNdim" title="Gets ndim from self.data, or if the data does not exists returns &#160;self._ndim." alt="" coords="328,172,1239,192"/>
+<area shape="rect" id="node3_85" href="pyto.core.image.Image-class.html#setNdim" title="Sets self._ndim." alt="" coords="328,192,1239,212"/>
+<area shape="rect" id="node3_86" href="pyto.core.image.Image-class.html#setOffset" title="Sets offset of &#160;(ndarray) self.offset." alt="" coords="328,212,1239,232"/>
+<area shape="rect" id="node3_87" href="pyto.core.image.Image-class.html#getOffset" title="Returns current offset value." alt="" coords="328,232,1239,252"/>
+<area shape="rect" id="node3_88" href="pyto.core.image.Image-class.html#getTotalOffset" title="Returns total offset, which is a sum of self.offset and the start positions of self.inset." alt="" coords="328,252,1239,272"/>
+<area shape="rect" id="node3_89" href="pyto.core.image.Image-class.html#setInset" title="Sets inset for self.data (does not modify self.data)." alt="" coords="328,272,1239,292"/>
+<area shape="rect" id="node3_90" href="pyto.core.image.Image-class.html#getInset" title="Returns inset position as a list of slice objects." alt="" coords="328,292,1239,312"/>
+<area shape="rect" id="node3_91" href="pyto.core.image.Image-class.html#relativeToAbsoluteInset" title="Converts relative inset (in respect to the current inset (self.inset)) to &#160;an absolute inset." alt="" coords="328,312,1239,332"/>
+<area shape="rect" id="node3_92" href="pyto.core.image.Image-class.html#absoluteToRelativeInset" title="Converts given absolute inset into inset relative to the current inset &#160;(self.inset)." alt="" coords="328,332,1239,352"/>
+<area shape="rect" id="node3_93" href="pyto.core.image.Image-class.html#setFullInset" title="Sets full inset for self.data (does not modify self.data)." alt="" coords="328,352,1239,372"/>
+<area shape="rect" id="node3_94" href="pyto.core.image.Image-class.html#getFullInset" title="Returns a previously defined inset (list of slice objects) of a full&#45;size &#160;array underlying (the current view) of self.data." alt="" coords="328,372,1239,392"/>
+<area shape="rect" id="node3_95" href="pyto.core.image.Image-class.html#getFullData" title="Returns a previously defined full&#45;size array underlying (the current view &#160;of) self.data." alt="" coords="328,392,1239,412"/>
+<area shape="rect" id="node3_96" href="pyto.core.image.Image-class.html#write" title="Writes image to a file in em, mrc or raw format." alt="" coords="328,432,1239,452"/>
+<area shape="rect" id="node3" href="pyto.core.image.Image-class.html" title="Methods for creating new images: &#45; tile: tile current image to get a bigger one" alt="" coords="315,5,1250,459"/>
+<area shape="rect" id="node4_97" href="pyto.segmentation.labels.Labels-class.html#maxId" title="Maximum id" alt="" coords="452,502,1115,522"/>
+<area shape="rect" id="node4_98" href="pyto.segmentation.labels.Labels-class.html#contactStructElConn" title="Contact structuring element connectivity, default 1" alt="" coords="452,522,1115,542"/>
+<area shape="rect" id="node4_99" href="pyto.segmentation.labels.Labels-class.html#contactStructEl" title="Contact structuring element, default connectivity 1" alt="" coords="452,542,1115,562"/>
+<area shape="rect" id="node4_100" href="pyto.segmentation.labels.Labels-class.html#countStructElConn" title="Count structuring element connectivity, default ndim" alt="" coords="452,562,1115,582"/>
+<area shape="rect" id="node4_101" href="pyto.segmentation.labels.Labels-class.html#countStructEl" title="Count structuring element, default connectivity ndim" alt="" coords="452,582,1115,602"/>
+<area shape="rect" id="node4_102" href="pyto.segmentation.labels.Labels-class.html#makeInset" title="Finds the smallest inset that contains all elements of self.data labeled by ids (or self.ids if ids is None)." alt="" coords="452,605,1115,625"/>
+<area shape="rect" id="node4_103" href="pyto.segmentation.labels.Labels-class.html#findInset" title="Returns the smallest inset (list of slice objects of length self.ndim) that contains all elements of self.data labeled by ids (or self.ids if ids is &#160;None)." alt="" coords="452,625,1115,645"/>
+<area shape="rect" id="node4_104" href="pyto.segmentation.labels.Labels-class.html#setIds" title="Sets id and related attributes: self.ids (ndarray of flattened ids), &#160;self.originalIds (self.maxId, self.nextId and self.n)." alt="" coords="452,645,1115,665"/>
+<area shape="rect" id="node4_105" href="pyto.segmentation.labels.Labels-class.html#extractIds" title="Finds segment ids, that is positive unique elements of data array." alt="" coords="452,665,1115,685"/>
+<area shape="rect" id="node4_106" href="pyto.segmentation.labels.Labels-class.html#getMaxId" title="Maximum id" alt="" coords="452,685,1115,705"/>
+<area shape="rect" id="node4_107" href="pyto.segmentation.labels.Labels-class.html#setMaxId" title="Doesn&#39;t do anything, needed for compatibility with super." alt="" coords="452,705,1115,725"/>
+<area shape="rect" id="node4_108" href="pyto.segmentation.labels.Labels-class.html#restrict" title="Removes (sets to 0) data elements of this instance that have one of the &#160;specified ids and where mask.data is 0 (if arg update is True)." alt="" coords="452,725,1115,745"/>
+<area shape="rect" id="node4_109" href="pyto.segmentation.labels.Labels-class.html#orderByBoundaries" title="Orders segments both here and in the contacts object by ids of contacted &#160;boundaries." alt="" coords="452,745,1115,765"/>
+<area shape="rect" id="node4_110" href="pyto.segmentation.labels.Labels-class.html#orderIdsByBoundaries" title="Orders self.ids according to the ids of contacted boundaries." alt="" coords="452,765,1115,785"/>
+<area shape="rect" id="node4_111" href="pyto.segmentation.labels.Labels-class.html#orderByValues" title="Orders segments, that is changes their ids according to values." alt="" coords="452,785,1115,805"/>
+<area shape="rect" id="node4_112" href="pyto.segmentation.labels.Labels-class.html#orderIdsByValues" title="Orders ids by values." alt="" coords="452,805,1115,825"/>
+<area shape="rect" id="node4_113" href="pyto.segmentation.labels.Labels-class.html#setStructEl" title="Sets or updates structuring element (self.structEl)." alt="" coords="452,825,1115,845"/>
+<area shape="rect" id="node4_114" href="pyto.segmentation.labels.Labels-class.html#setContactStructElConn" title="Sets self._contactStructElConn." alt="" coords="452,845,1115,865"/>
+<area shape="rect" id="node4_115" href="pyto.segmentation.labels.Labels-class.html#magnify" title="Magnifies (increases the size of) the data array (self.data) by an int &#160;factor." alt="" coords="452,885,1115,905"/>
+<area shape="rect" id="node4" href="pyto.segmentation.labels.Labels-class.html" title="This class concerns an integer&#45;labeled image that contains one or more segments." alt="" coords="439,477,1126,911"/>
+</map>
+  <img src="uml_class_diagram_for_pyto_seg_5.gif" alt='' usemap="#uml_class_diagram_for_pyto_seg_5" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.connected.Connected-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">copy</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">clean</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Initializes instance and sets data, data-related and id-related 
+      attributes by calling super constructor.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.connected-pysrc.html#Connected.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.connected.Connected-class.html#label" class="summary-sig-name">label</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">input</span>,
+        <span class="summary-sig-arg">mask</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">structEl</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">update</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">relabel</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Segments input by identifying (connected) segments in input.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.connected-pysrc.html#Connected.label">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.connected.Connected-class.html#findContacts" class="summary-sig-name">findContacts</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">input</span>,
+        <span class="summary-sig-arg">boundary</span>,
+        <span class="summary-sig-arg">boundaryIds</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">boundaryLists</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">label</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">mask</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">freeSize</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">freeMode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">add</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">count</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">saveLabels</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Finds all contacts between segements of this instance and boundaries.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.connected-pysrc.html#Connected.findContacts">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.connected.Connected-class.html#findSegments" class="summary-sig-name">findSegments</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">contacts</span>,
+        <span class="summary-sig-arg">boundaryIds</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">nBoundary</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">countMode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">exact</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">update</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">reorder</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Analyzes contacs to find segments that satisfy  the criterium 
+      specified by boundaryIds, nBoundary and mode arguments.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.connected-pysrc.html#Connected.findSegments">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.segmentation.segment.Segment-class.html">segment.Segment</a></code></b>:
+      <code><a href="pyto.segmentation.segment.Segment-class.html#add">add</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#clean">clean</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#distanceFromOrigin">distanceFromOrigin</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#distanceToRegion">distanceToRegion</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#elementDistanceToRegion">elementDistanceToRegion</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#elementDistanceToRim">elementDistanceToRim</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#elementGeodesicDistanceToRegion">elementGeodesicDistanceToRegion</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#fillSegments">fillSegments</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#findNonUnique">findNonUnique</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#generateNeighborhoods">generateNeighborhoods</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#getStructureFootprint">getStructureFootprint</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#keep">keep</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#labelInteriors">labelInteriors</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#makeFree">makeFree</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#makeLayersBetween">makeLayersBetween</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#makeLayersFrom">makeLayersFrom</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#makeSurfaces">makeSurfaces</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#markDistance">markDistance</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#pairwiseDistance">pairwiseDistance</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#parseInput">parseInput</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#remove">remove</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#removeIdFromBound">removeIdFromBound</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#reorder">reorder</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#setData">setData</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#setDefaults">setDefaults</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#setProperties">setProperties</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#setSurfaceStructEl">setSurfaceStructEl</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#shiftIds">shiftIds</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.segmentation.labels.Labels-class.html">labels.Labels</a></code></b>:
+      <code><a href="pyto.segmentation.labels.Labels-class.html#extractIds">extractIds</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#findInset">findInset</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#getContactStructEl">getContactStructEl</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#getContactStructElConn">getContactStructElConn</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#getCountStructEl">getCountStructEl</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#getCountStructElConn">getCountStructElConn</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#getMaxId">getMaxId</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#getPoints">getPoints</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#getPointsGeodesic">getPointsGeodesic</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#magnify">magnify</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#makeInset">makeInset</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#orderByBoundaries">orderByBoundaries</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#orderByValues">orderByValues</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#orderIdsByBoundaries">orderIdsByBoundaries</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#orderIdsByValues">orderIdsByValues</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#restrict">restrict</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#setContactStructElConn">setContactStructElConn</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#setCountStructElConn">setCountStructElConn</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#setIds">setIds</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#setMaxId">setMaxId</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#setStructEl">setStructEl</a></code>
+      </p>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.segmentation.labels.Labels-class.html">labels.Labels</a></code></b> (private):
+      <code><a href="pyto.segmentation.labels.Labels-class.html#_remove" onclick="show_private();">_remove</a></code>
+      </p></div>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.core.image.Image-class.html">core.image.Image</a></code></b>:
+      <code><a href="pyto.core.image.Image-class.html#absoluteToRelativeInset">absoluteToRelativeInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#clearFull">clearFull</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#copyPositioning">copyPositioning</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#expandInset">expandInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#findEnclosingInset">findEnclosingInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#findIntersectingInset">findIntersectingInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getDataInset">getDataInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getDeepBase">getDeepBase</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getFullData">getFullData</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getFullInset">getFullInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getInset">getInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getNdim">getNdim</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getOffset">getOffset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getTotalOffset">getTotalOffset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#hasOverlap">hasOverlap</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#isInside">isInside</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#newFromInset">newFromInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#recoverFull">recoverFull</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#relativeToAbsoluteInset">relativeToAbsoluteInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#saveFull">saveFull</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#setDataInset">setDataInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#setFullData">setFullData</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#setFullInset">setFullInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#setInset">setInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#setNdim">setNdim</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#setOffset">setOffset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#tile">tile</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#useInset">useInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#usePositioning">usePositioning</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#write">write</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.connected.Connected-class.html#make" class="summary-sig-name">make</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">image</span>,
+        <span class="summary-sig-arg">boundary</span>,
+        <span class="summary-sig-arg">thresh</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">label</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">count</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">structElConn</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">contactStructElConn</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">countStructElConn</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">boundaryIds</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">nBoundary</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">boundCount</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">exact</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">mask</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">freeSize</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">freeMode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">add</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">saveContactLabels</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Performs threshold and connectivity segmentation at specified 
+      threshold.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.connected-pysrc.html#Connected.make">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.segmentation.segment.Segment-class.html">segment.Segment</a></code></b>:
+      <code><a href="pyto.segmentation.segment.Segment-class.html#read">read</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.segmentation.segment.Segment-class.html">segment.Segment</a></code></b> (private):
+      <code><a href="pyto.segmentation.segment.Segment-class.html#_remove_or_keep_factor" onclick="show_private();">_remove_or_keep_factor</a></code>
+      </p></div>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.segmentation.labels.Labels-class.html">labels.Labels</a></code></b>:
+      <code><a href="pyto.segmentation.labels.Labels-class.html#contactStructEl">contactStructEl</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#contactStructElConn">contactStructElConn</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#countStructEl">countStructEl</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#countStructElConn">countStructElConn</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#maxId">maxId</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.core.image.Image-class.html">core.image.Image</a></code></b>:
+      <code><a href="pyto.core.image.Image-class.html#fullData">fullData</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#fullInset">fullInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#inset">inset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#ndim">ndim</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#offset">offset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#totalOffset">totalOffset</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">copy</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">clean</span>=<span class="sig-default">False</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.connected-pysrc.html#Connected.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Initializes instance and sets data, data-related and id-related 
+  attributes by calling super constructor.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      data: (ndarray) segments (labels)
+    </li>
+    <li>
+      copy: if True makes a copy of data
+    </li>
+    <li>
+      ids: list of ids
+    </li>
+    <li>
+      clean: if True only the segments given in ids are retained in 
+      self.data
+    </li>
+  </ul>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="make"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">make</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">image</span>,
+        <span class="sig-arg">boundary</span>,
+        <span class="sig-arg">thresh</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">label</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">count</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">structElConn</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">contactStructElConn</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">countStructElConn</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">boundaryIds</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">nBoundary</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">boundCount</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">exact</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">mask</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">freeSize</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">freeMode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">add</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">saveContactLabels</span>=<span class="sig-default">False</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.connected-pysrc.html#Connected.make">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Performs threshold and connectivity segmentation at specified 
+  threshold.</p>
+  <p>Image is thresholded, and segmented based on contacts to regions 
+  defined in (arg) boundaries. The segmentation consists of finding all 
+  disjoint segments of thresholded image (see label), analyzing contacts 
+  between the segments and the boundaries (see findContacts) and removing 
+  segments that do not satisfy the contact conditions (see 
+  findSegments).</p>
+  <p>If threshold is None, the image is assumed to be either a thresholded 
+  or a fully segmented image having background (0 or False) and foreground 
+  (elements&gt;0 or True), so thresholding is not performed.</p>
+  <p>If label is False, the image is assumed to contain segments already, 
+  so the labeling is skipped.</p>
+  <p>Each segment is allowed to contact exactly/at least/at most (argument 
+  boundCount) nBoundary boundaries. If count is True, the number of 
+  contacts between each segment and each boundaries are counted.</p>
+  <p>Unless attributes contactStructElConn and countStructElConn are set 
+  explicitly before calling this method, the default values (1) are used to
+  generate the structuring elements.</p>
+  <p>The segmentation is preformed on a segmentation (free) region (see 
+  Segment.makeFree). A free region is either given by the positive elements
+  of mask (or mask.data), or if mask is an integer the free region is a 
+  segment of boundary with that id. A free region is further restricted to 
+  a union (freeMode 'add') or an intersection (freeMode 'intersect') of 
+  neighborhoods of boundaries that are at most freeSize away from 
+  boundaries.</p>
+  <p>Internally, this method works on insets of boundary, image and mask 
+  (free region) that are just large enough to contain the free region and 
+  the boundaries. The returned Connected data have the same positioning as 
+  boundary.data.</p>
+  <p>Data and inset of args boundary and image are not changed by this 
+  method.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      image: (grayscale) image to be segmented (ndarray or Image object) if
+      arg label is True, or labeled (Label) image if arg label is False
+    </li>
+    <li>
+      boundary: (Segment): defines boundaries
+    </li>
+    <li>
+      thresh: a threshold
+    </li>
+    <li>
+      label: flag indicating if labeling should be done
+    </li>
+    <li>
+      count: flag indicating if contacts are counted
+    </li>
+    <li>
+      structElConn: structuring element used for finding disjoint segments
+    </li>
+    <li>
+      contactStructElConn: structuring element used to detect contacts 
+      between segments and boundaries
+    </li>
+    <li>
+      countStructElConn: structuring element used to count contacts between
+      each segment and each boundary
+    </li>
+    <li>
+      boundaryIds: ids of boundaries in boundary object
+    </li>
+    <li>
+      nBoundary: number of boundaries that a segment contacts
+    </li>
+    <li>
+      boundCount: 'exact' (or 'eq'), 'at_least' (or 'ge'), or 'at_most' (or
+      'le')
+    </li>
+    <li>
+      mask: (ndarray, Label or int) determines a free region
+    </li>
+    <li>
+      freeSize: max distance to boundaries that is included in a free 
+      region
+    </li>
+    <li>
+      freeMode: 'intersect' or 'add' determines how the boundary 
+      neighborhoods are combined
+    </li>
+    <li>
+      saveContactLabels: flag indicating if the array containing contact 
+      elements is saved (in contacts.labels)
+    </li>
+  </ul>
+  <p>Returns (conn, contacts):</p>
+  <ul>
+    <li>
+      conn: an instance of this class containing the segments found
+    </li>
+    <li>
+      contacts: the corresponding Contacts instance
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="label"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">label</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">input</span>,
+        <span class="sig-arg">mask</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">structEl</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">update</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">relabel</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.connected-pysrc.html#Connected.label">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Segments input by identifying (connected) segments in input. The 
+  connected segments are formed from elements of input that are &gt;0 or 
+  True (if input is binary)</p>
+  <p>Only the elements of input that are &gt;0 and where mask &gt;0 are 
+  labeled. The segmented image has the same offset and inset as mask</p>
+  <p>If update is False self.data is set to the new segments array and the 
+  positioning attributes (offset, inset, fullShape) are set to the same as 
+  in mask.</p>
+  <p>If update is True the new segments are added to the exisiting 
+  self.data, after they are repositioned to fit the current offset and 
+  inset. In this case and if relabel is False, new segemnts are simply 
+  placed on top the exsisting may overwrite the already existing segments 
+  of self.data. Otherwise, the existing and the new segments are combined 
+  and relabeled (the old segments are likely to change their ids). See 
+  self.add.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      input: (pyto.core.Image, or ndarray) image to be segmented
+    </li>
+    <li>
+      mask: (pyto.core.Image or ndarray, mask that defines the segmentation
+      region
+    </li>
+    <li>
+      structEl: instance of StructEl, structuring elements that defines the
+      connectivity of segments (in None, self.structEl is used)
+    </li>
+    <li>
+      update: if True new segments are added to the existing self.data
+    </li>
+    <li>
+      relabel: determines what to do if the segments generated here overlap
+      with the existing segments (self.data).
+    </li>
+  </ul>
+  <p>Sets:</p>
+  <ul>
+    <li>
+      self.data: array containing labeled segments with shape of the 
+      intersection of input and mask.data with mask.offset.
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="findContacts"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">findContacts</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">input</span>,
+        <span class="sig-arg">boundary</span>,
+        <span class="sig-arg">boundaryIds</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">boundaryLists</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">label</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">mask</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">freeSize</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">freeMode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">add</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">count</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">saveLabels</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.connected-pysrc.html#Connected.findContacts">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Finds all contacts between segements of this instance and 
+  boundaries.</p>
+  <p>If label is False, the segments are taken directly from input.</p>
+  <p>If label is True, segments are formed by identifying clusters of 
+  connected elements of input among the forground (&gt;0) elements (see 
+  self.label and scipy.ndimage.label methods). The connectivity is given by
+  structEl or self.structEl structuring element (default connectivity 
+  1).</p>
+  <p>The segmentation is preformed only in the segmentation region defined 
+  as the intersection of the region defined by mask and the 
+  &quot;free&quot; region. The segmentation region is restricted to 
+  bound=mask if mask is an int, or to the positive elements of mask if mask
+  is an array.</p>
+  <p>If freeSize&lt;=0, then the free regions is determined by mask only. 
+  If it is &gt;0, areas around each boundary with max (Euclidean) distance 
+  freeSize are intersected/summmed (determined by freeMode) to define the 
+  free region. Uses self.makeFree method.</p>
+  <p>If boundaryLists is None, the free region is formed using all 
+  boundaryIds. Otherwise, for each element of boundaryList (containing an 
+  array of boundary ids) a free region (and a segmentation region) is 
+  defined and the segmentation is preformed. In this case all segments are 
+  added up and then relabeled (to avoid the overwritting of some segments 
+  in case different segmentation regions overlap). However, some segments 
+  may be formed by addition of separate pieces and therefore be larger than
+  what would be expected based on freeSize and freeMode parameters.</p>
+  <p>Note: the data for input, boundary and mask has to have the same 
+  shape, their positioning (inset) is not taken into account,</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      input: (pyto.core.Image, or ndarray) image to be segmented
+    </li>
+    <li>
+      boundary: ndarray with labeled boundaries, or a Segment instance
+    </li>
+    <li>
+      boundaryIds: list of ids defining boundaries in boundary
+    </li>
+    <li>
+      boundaryLists: an iterable (a list, tuple or a generator) containing 
+      lists (subsets) of boundaryIds.
+    </li>
+    <li>
+      label: if True label input, if False input already contains segments
+    </li>
+    <li>
+      freeSize: size of the free region. Either a list corresponding to ids
+      (different size for each boundary) or a single number (used for all 
+      boundaries)
+    </li>
+    <li>
+      freeMode: Can be 'add' or 'intersect' and specifies that the free 
+      region is formed by the addition or intersection of the enlarged 
+      boundaries
+    </li>
+    <li>
+      mask: defines the region where new segments are allowed to be 
+      established. If int, the allowed region is where boundary==mask. 
+      Otherwise it's an array and the positive or True elements define the 
+      allowed region.
+    </li>
+    <li>
+      saveLabels: flag indicating if the array containing contact elements 
+      is saved (in contacts.labels)
+    </li>
+  </ul>
+  <p>Sets attributes data, ids and id-related and creates a Contact 
+  object.</p>
+  <p>Returns instance of Contacts.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="findSegments"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">findSegments</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">contacts</span>,
+        <span class="sig-arg">boundaryIds</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">nBoundary</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">countMode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">exact</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">update</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">reorder</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.connected-pysrc.html#Connected.findSegments">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Analyzes contacs to find segments that satisfy  the criterium 
+  specified by boundaryIds, nBoundary and mode arguments.</p>
+  <p>See Contact.findSegments for details regarding the criterium.</p>
+  <p>If update is true, only the segments that satisfy the criterium are 
+  retained both in the contacts object and in this instance.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      contacts: instance of Contact that already contains the contact data 
+      structure
+    </li>
+    <li>
+      boundaryIds: (nested) list or ndarray of boundary ids that are 
+      checked for contact with segments. Can be given as int if only one 
+      id.
+    </li>
+    <li>
+      nBoundary: (int) number of contacted boundaries
+    </li>
+    <li>
+      mode: 'exact' (or 'eq'), 'at_least' (or 'ge'), or 'at_most' (or 'le')
+    </li>
+    <li>
+      update: flag indicating if the contact data structure and the 
+      segments of this instance are updated to contain only the segments 
+      that satisfy the criterium.
+    </li>
+    <li>
+      reorder: (used only if update is True) flag indicating if the 
+      segments remaining after update are ordered from 1 up
+    </li>
+  </ul>
+  <p>Returns: instance of Contact</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

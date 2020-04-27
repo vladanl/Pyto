@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.segmentation.bound_distance.BoundDistance</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.segmentation-module.html">Package&nbsp;segmentation</a> ::
+        <a href="pyto.segmentation.bound_distance-module.html">Module&nbsp;bound_distance</a> ::
+        Class&nbsp;BoundDistance
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.segmentation.bound_distance.BoundDistance-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class BoundDistance</h1><p class="nomargin-top"><span class="codelink"><a href="pyto.segmentation.bound_distance-pysrc.html#BoundDistance">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_pyto_seg_2" name="uml_class_diagram_for_pyto_seg_2">
+<area shape="rect" id="node1_22" href="pyto.segmentation.bound_distance.BoundDistance-class.html#__init__" title="Initialization of id and data structures." alt="" coords="17,429,460,449"/>
+<area shape="rect" id="node1_23" href="pyto.segmentation.bound_distance.BoundDistance-class.html#initializeData" title="Initializes id and data structures." alt="" coords="17,449,460,469"/>
+<area shape="rect" id="node1_24" href="pyto.segmentation.bound_distance.BoundDistance-class.html#extend" title="Extends the data structure to be able to hold the data for all specified &#160;segment ids." alt="" coords="17,469,460,489"/>
+<area shape="rect" id="node1_25" href="pyto.segmentation.bound_distance.BoundDistance-class.html#merge" title="Merges data from another instance of this class (arg new) with this &#160;instance." alt="" coords="17,489,460,509"/>
+<area shape="rect" id="node1_26" href="pyto.segmentation.bound_distance.BoundDistance-class.html#calculate" title="For each segment specified by segment id (arg ids) calculates the distance &#160;between the two boundaries (given by arg boundaries) that contact the &#160;segment." alt="" coords="17,509,460,529"/>
+<area shape="rect" id="node1" href="pyto.segmentation.bound_distance.BoundDistance-class.html" title="Distance between boundaries of given segments." alt="" coords="5,397,472,536"/>
+<area shape="rect" id="node2_27" href="pyto.segmentation.features.Features-class.html#ids" title="Ids" alt="" coords="117,29,359,49"/>
+<area shape="rect" id="node2_28" href="pyto.segmentation.features.Features-class.html#ndim" title="Dimensionality of data" alt="" coords="117,49,359,69"/>
+<area shape="rect" id="node2_29" href="pyto.segmentation.features.Features-class.html#maxId" title="Maximum id" alt="" coords="117,69,359,89"/>
+<area shape="rect" id="node2_30" href="pyto.segmentation.features.Features-class.html#setSegments" title="Sets attribute segments and ids." alt="" coords="117,92,359,112"/>
+<area shape="rect" id="node2_31" href="pyto.segmentation.features.Features-class.html#getIds" title="Returns ids" alt="" coords="117,112,359,132"/>
+<area shape="rect" id="node2_32" href="pyto.segmentation.features.Features-class.html#setIds" title="Sets self.ids, If data is internally stored in the compact form, the data &#160;is changed appropriately." alt="" coords="117,132,359,152"/>
+<area shape="rect" id="node2_33" href="pyto.segmentation.features.Features-class.html#changeIds" title="Sets self.ids to arg ids." alt="" coords="117,152,359,172"/>
+<area shape="rect" id="node2_34" href="pyto.segmentation.features.Features-class.html#findIds" title="Returns ids and max id." alt="" coords="117,172,359,192"/>
+<area shape="rect" id="node2_35" href="pyto.segmentation.features.Features-class.html#getNdim" title="Gets ndim from self.data, or if the data does not exists returns &#160;self._ndim." alt="" coords="117,192,359,212"/>
+<area shape="rect" id="node2_36" href="pyto.segmentation.features.Features-class.html#setNdim" title="Sets self._ndim." alt="" coords="117,212,359,232"/>
+<area shape="rect" id="node2_37" href="pyto.segmentation.features.Features-class.html#getMaxId" title="Returns maximum id, or 0 if ids don&#39;t exist." alt="" coords="117,232,359,252"/>
+<area shape="rect" id="node2_38" href="pyto.segmentation.features.Features-class.html#reorder" title="Reorders elements of data array(s)." alt="" coords="117,252,359,272"/>
+<area shape="rect" id="node2_39" href="pyto.segmentation.features.Features-class.html#add" title="Adds data, The same as self.merge but mode=&#39;add&#39;." alt="" coords="117,272,359,292"/>
+<area shape="rect" id="node2_40" href="pyto.segmentation.features.Features-class.html#expand" title="Expands dimension of specified attributes (given by arg names or by &#160;self.dataNames) by adding an axis before arg axis." alt="" coords="117,292,359,312"/>
+<area shape="rect" id="node2_41" href="pyto.segmentation.features.Features-class.html#extractOne" title="Returns a new instance that contains data only for id given by arg id_." alt="" coords="117,312,359,332"/>
+<area shape="rect" id="node2_42" href="pyto.segmentation.features.Features-class.html#nameIds" title="Makes a new attribute from each value of arg names." alt="" coords="117,332,359,352"/>
+<area shape="rect" id="node2_43" href="pyto.segmentation.features.Features-class.html#restrict" title="Effectivly removes data that correspond to ids that are not specified in &#160;the arg ids." alt="" coords="117,352,359,372"/>
+<area shape="rect" id="node2" href="pyto.segmentation.features.Features-class.html" title="Should not be used directly, please use subclasses of this class." alt="" coords="105,5,370,379"/>
+</map>
+  <img src="uml_class_diagram_for_pyto_seg_2.gif" alt='' usemap="#uml_class_diagram_for_pyto_seg_2" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<p>Distance between boundaries of given segments.</p>
+  <p>Important methods:</p>
+  <ul>
+    <li>
+      calculate(): calculates distances
+    </li>
+  </ul>
+  <p>Attributes holding calculated data (ndarray indexed by segment 
+  id):</p>
+  <ul>
+    <li>
+      distance: distance between boundaries
+    </li>
+  </ul>
+  <p>Other important attributes:</p>
+  <ul>
+    <li>
+      ids: (list) segment ids
+    </li>
+  </ul>
+  <p>ToDo: Also save boundary ide for each segments (they're already 
+  calculated in calculate()). As these need to be saved in a 2d ndarray, 
+  need to make sure that all data-handling methods would work with 2d 
+  data.</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.bound_distance.BoundDistance-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">segments</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Initialization of id and data structures.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.bound_distance-pysrc.html#BoundDistance.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.bound_distance.BoundDistance-class.html#initializeData" class="summary-sig-name">initializeData</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">value</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Initializes id and data structures.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.bound_distance-pysrc.html#BoundDistance.initializeData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.bound_distance.BoundDistance-class.html#extend" class="summary-sig-name">extend</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>)</span><br />
+      Extends the data structure to be able to hold the data for all 
+      specified segment ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.bound_distance-pysrc.html#BoundDistance.extend">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.bound_distance.BoundDistance-class.html#merge" class="summary-sig-name">merge</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">new</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">replace</code><code class="variable-quote">'</code></span>)</span><br />
+      Merges data from another instance of this class (arg new) with this 
+      instance.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.bound_distance-pysrc.html#BoundDistance.merge">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.bound_distance.BoundDistance-class.html#calculate" class="summary-sig-name">calculate</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">contacts</span>,
+        <span class="summary-sig-arg">boundaries</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">min</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">extend</span>=<span class="summary-sig-default">False</span>)</span><br />
+      For each segment specified by segment id (arg ids) calculates the 
+      distance between the two boundaries (given by arg boundaries) that 
+      contact the segment.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.bound_distance-pysrc.html#BoundDistance.calculate">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.segmentation.features.Features-class.html">features.Features</a></code></b>:
+      <code><a href="pyto.segmentation.features.Features-class.html#add">add</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#changeIds">changeIds</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#expand">expand</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#extractOne">extractOne</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#findIds">findIds</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#getIds">getIds</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#getMaxId">getMaxId</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#getNdim">getNdim</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#nameIds">nameIds</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#reorder">reorder</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#restrict">restrict</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#setIds">setIds</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#setNdim">setNdim</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#setSegments">setSegments</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.segmentation.features.Features-class.html">features.Features</a></code></b>:
+      <code><a href="pyto.segmentation.features.Features-class.html#ids">ids</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#maxId">maxId</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#ndim">ndim</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">segments</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.bound_distance-pysrc.html#BoundDistance.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Initialization of id and data structures.</p>
+  <p>If ids is not None, it is saved as self.ids. In addition, data 
+  structure (self.distance) is set to an ndarray of the appropriate size 
+  (maxId+1) with values -1 (self.default).</p>
+  <p>Note: if arg segments is specified here, it is saved as an attribute, 
+  so it might significantly increase the size of this object when pickled. 
+  The alternative is to pass arg segment only in methods that use it (but 
+  do not save it).</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      segment: (Labels, or ndarray) segmented image
+    </li>
+    <li>
+      ids: (list, ndarray) ids of segments
+    </li>
+  </ul>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="initializeData"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">initializeData</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">value</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.bound_distance-pysrc.html#BoundDistance.initializeData">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Initializes id and data structures.</p>
+  <p>If ids is not None, it is saved as self.ids. In addition, data 
+  structure (self.distance) is set to an ndarray of the appropriate size 
+  (maxId+1) with values -1.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="pyto.segmentation.features.Features-class.html#initializeData">features.Features.initializeData</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="extend"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">extend</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.bound_distance-pysrc.html#BoundDistance.extend">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Extends the data structure to be able to hold the data for all 
+  specified segment ids. Attribute ids is also updated.</p>
+  <p>Note: Should be used only in methods that calculate distances for the 
+  ids specified here. That is because using this method alone updates ids 
+  but leaves the corresponding data at the default, so it makes ids and 
+  data are inconsistent.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      ids: (list, ndarray) segment ids
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="merge"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">merge</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">new</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">replace</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.bound_distance-pysrc.html#BoundDistance.merge">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Merges data from another instance of this class (arg new) with this 
+  instance. In case of conflict the data from the other instance is 
+  used.</p>
+  <p>The reasons why this method is used instead of the one inherited from 
+  Features is that this one is simpler and that here the default distance 
+  value can be set to -1 instead of 0.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      new: another instance of this class
+    </li>
+    <li>
+      mode: merge mode, currently only 'replace'
+    </li>
+  </ul>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="pyto.segmentation.features.Features-class.html#merge">features.Features.merge</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="calculate"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">calculate</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">contacts</span>,
+        <span class="sig-arg">boundaries</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">min</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">extend</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.bound_distance-pysrc.html#BoundDistance.calculate">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>For each segment specified by segment id (arg ids) calculates the 
+  distance between the two boundaries (given by arg boundaries) that 
+  contact the segment.</p>
+  <p>Segments that do not have exactly two contacting boundaries are 
+  ignored. If arg extend is False, ids of these segments are not added to 
+  self.ids. If arg extend is true and the arg ids is specified, all ids 
+  from arg ids are added to self.ids and the elements of distance structure
+  corresponding to these ids are set to the default value.</p>
+  <p>Based on Segment.distanceToRegion().</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      contacts: (Contact) object that defines contacts between boundaries 
+      and segments
+    </li>
+    <li>
+      ids: (list, ndarray) segment ids
+    </li>
+    <li>
+      mode: distance mode, can be 'min', 'max', 'mean' or 'median' or 
+      'center'
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

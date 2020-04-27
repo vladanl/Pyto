@@ -1,0 +1,893 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.segmentation.ball.Ball</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.segmentation-module.html">Package&nbsp;segmentation</a> ::
+        <a href="pyto.segmentation.ball-module.html">Module&nbsp;ball</a> ::
+        Class&nbsp;Ball
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.segmentation.ball.Ball-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Ball</h1><p class="nomargin-top"><span class="codelink"><a href="pyto.segmentation.ball-pysrc.html#Ball">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_pyto_seg" name="uml_class_diagram_for_pyto_seg">
+<area shape="rect" id="node1_59" href="pyto.segmentation.ball.Ball-class.html#__init__" title="Calls Segment.__init__ to initialize data, data&#45;related and id&#45;related &#160;attributes." alt="" coords="145,1319,803,1339"/>
+<area shape="rect" id="node1_60" href="pyto.segmentation.ball.Ball-class.html#extendDiscs" title="Extends disc&#45;like segments to balls and cuts their tops and bottoms with &#160;planes." alt="" coords="145,1339,803,1359"/>
+<area shape="rect" id="node1_61" href="pyto.segmentation.ball.Ball-class.html#extractDiscs" title="Calculates the center of each segment, and the mean outside (boundary) &#160;radius of central slices of each segment given by ids." alt="" coords="145,1359,803,1379"/>
+<area shape="rect" id="node1_62" href="pyto.segmentation.ball.Ball-class.html#thinToMaxDiscs" title="Thins segments to a largest (volume) slice." alt="" coords="145,1379,803,1399"/>
+<area shape="rect" id="node1_63" href="pyto.segmentation.ball.Ball-class.html#make" title="Makes an instance of this class containing balls defined by centers and radii." alt="" coords="145,1399,803,1419"/>
+<area shape="rect" id="node1_64" href="pyto.segmentation.ball.Ball-class.html#findOverlaps" title="Returns pairs of ids that would overlap when balls of the &#160;cooresponding radii are centered to the corresponding centers" alt="" coords="145,1419,803,1439"/>
+<area shape="rect" id="node1" href="pyto.segmentation.ball.Ball-class.html" title="pyto.segmentation.ball.Ball" alt="" coords="133,1287,815,1445"/>
+<area shape="rect" id="node2_65" href="pyto.segmentation.segment.Segment-class.html#setData" title="Sets data and the attributes determined from data." alt="" coords="117,961,831,981"/>
+<area shape="rect" id="node2_66" href="pyto.segmentation.segment.Segment-class.html#setDefaults" title="Sets structure elements and _labelMask attributes derived from (the shape &#160;and the type of) data that haven&#39;t been set already to their default &#160;values." alt="" coords="117,981,831,1001"/>
+<area shape="rect" id="node2_67" href="pyto.segmentation.segment.Segment-class.html#setSurfaceStructEl" title="Not used anymore." alt="" coords="117,1001,831,1021"/>
+<area shape="rect" id="node2_68" href="pyto.segmentation.segment.Segment-class.html#parseInput" title="Returns data, ids and update." alt="" coords="117,1021,831,1041"/>
+<area shape="rect" id="node2_69" href="pyto.segmentation.segment.Segment-class.html#removeIdFromBound" title="Removes ids from boundaryIds, freeIds and _free." alt="" coords="117,1041,831,1061"/>
+<area shape="rect" id="node2_70" href="pyto.segmentation.segment.Segment-class.html#setProperties" title="Sets attributes of this instance from (arg) properties." alt="" coords="117,1061,831,1081"/>
+<area shape="rect" id="node2_71" href="pyto.segmentation.segment.Segment-class.html#findNonUnique" title="Finds segments that are disconnected and segments that do not exist (id in &#160;self.ids but have no elements) and returns their ids." alt="" coords="117,1081,831,1101"/>
+<area shape="rect" id="node2_72" href="pyto.segmentation.segment.Segment-class.html#clean" title="Makes self.data and self.ids consistent by removing segments self.data that are not in self.ids, and removing ids from self.ids corresponding to &#160;non&#45;existing segments." alt="" coords="117,1101,831,1121"/>
+<area shape="rect" id="node2_73" href="pyto.segmentation.segment.Segment-class.html#remove" title="Removes segments labeled by (elements of) ids, by replacing the &#160;corresponding elements of data by value." alt="" coords="117,1121,831,1141"/>
+<area shape="rect" id="node2_74" href="pyto.segmentation.segment.Segment-class.html#keep" title="Keeps only the segments labeled by elements of ids." alt="" coords="117,1141,831,1161"/>
+<area shape="rect" id="node2_75" href="pyto.segmentation.segment.Segment-class.html#add" title="Adds new segments to the existing data." alt="" coords="117,1161,831,1181"/>
+<area shape="rect" id="node2_76" href="pyto.segmentation.segment.Segment-class.html#reorder" title="Changes ids of segments according to the order, or orderes ids from 1 up &#160;without gaps if order is not given." alt="" coords="117,1181,831,1201"/>
+<area shape="rect" id="node2_77" href="pyto.segmentation.segment.Segment-class.html#shiftIds" title="Shifts all (positive) ids of segments by (arg) shift." alt="" coords="117,1201,831,1221"/>
+<area shape="rect" id="node2_78" href="pyto.segmentation.segment.Segment-class.html#read" title="Reads segmented image (label filed) from a file." alt="" coords="117,1241,831,1261"/>
+<area shape="rect" id="node2" href="pyto.segmentation.segment.Segment-class.html" title="Manipulations and analysis of segmented images (label fields)." alt="" coords="105,929,843,1268"/>
+<area shape="rect" id="node3_79" href="pyto.core.image.Image-class.html#ndim" title="Dimensionality of data" alt="" coords="18,29,929,49"/>
+<area shape="rect" id="node3_80" href="pyto.core.image.Image-class.html#offset" title="Position of the origin in respect to some reference" alt="" coords="18,49,929,69"/>
+<area shape="rect" id="node3_81" href="pyto.core.image.Image-class.html#totalOffset" title="Total offset, that is a sum of self.offset and the start positions of &#160;self.inset." alt="" coords="18,69,929,89"/>
+<area shape="rect" id="node3_82" href="pyto.core.image.Image-class.html#inset" title="(list of slice objects) a current view of self.data array in respect to the underlying base reference array." alt="" coords="18,89,929,109"/>
+<area shape="rect" id="node3_83" href="pyto.core.image.Image-class.html#fullInset" title="Full inset that underlies current self.data." alt="" coords="18,109,929,129"/>
+<area shape="rect" id="node3_84" href="pyto.core.image.Image-class.html#fullData" title="Full size data array" alt="" coords="18,129,929,149"/>
+<area shape="rect" id="node3_85" href="pyto.core.image.Image-class.html#tile" title="Use the current instance (image) as a tile (pattern) to make a (bigger) &#160;image in arbitrary dimensions." alt="" coords="18,152,929,172"/>
+<area shape="rect" id="node3_86" href="pyto.core.image.Image-class.html#getNdim" title="Gets ndim from self.data, or if the data does not exists returns &#160;self._ndim." alt="" coords="18,172,929,192"/>
+<area shape="rect" id="node3_87" href="pyto.core.image.Image-class.html#setNdim" title="Sets self._ndim." alt="" coords="18,192,929,212"/>
+<area shape="rect" id="node3_88" href="pyto.core.image.Image-class.html#setOffset" title="Sets offset of &#160;(ndarray) self.offset." alt="" coords="18,212,929,232"/>
+<area shape="rect" id="node3_89" href="pyto.core.image.Image-class.html#getOffset" title="Returns current offset value." alt="" coords="18,232,929,252"/>
+<area shape="rect" id="node3_90" href="pyto.core.image.Image-class.html#getTotalOffset" title="Returns total offset, which is a sum of self.offset and the start positions of self.inset." alt="" coords="18,252,929,272"/>
+<area shape="rect" id="node3_91" href="pyto.core.image.Image-class.html#setInset" title="Sets inset for self.data (does not modify self.data)." alt="" coords="18,272,929,292"/>
+<area shape="rect" id="node3_92" href="pyto.core.image.Image-class.html#getInset" title="Returns inset position as a list of slice objects." alt="" coords="18,292,929,312"/>
+<area shape="rect" id="node3_93" href="pyto.core.image.Image-class.html#relativeToAbsoluteInset" title="Converts relative inset (in respect to the current inset (self.inset)) to &#160;an absolute inset." alt="" coords="18,312,929,332"/>
+<area shape="rect" id="node3_94" href="pyto.core.image.Image-class.html#absoluteToRelativeInset" title="Converts given absolute inset into inset relative to the current inset &#160;(self.inset)." alt="" coords="18,332,929,352"/>
+<area shape="rect" id="node3_95" href="pyto.core.image.Image-class.html#setFullInset" title="Sets full inset for self.data (does not modify self.data)." alt="" coords="18,352,929,372"/>
+<area shape="rect" id="node3_96" href="pyto.core.image.Image-class.html#getFullInset" title="Returns a previously defined inset (list of slice objects) of a full&#45;size &#160;array underlying (the current view) of self.data." alt="" coords="18,372,929,392"/>
+<area shape="rect" id="node3_97" href="pyto.core.image.Image-class.html#getFullData" title="Returns a previously defined full&#45;size array underlying (the current view &#160;of) self.data." alt="" coords="18,392,929,412"/>
+<area shape="rect" id="node3_98" href="pyto.core.image.Image-class.html#write" title="Writes image to a file in em, mrc or raw format." alt="" coords="18,432,929,452"/>
+<area shape="rect" id="node3" href="pyto.core.image.Image-class.html" title="Methods for creating new images: &#45; tile: tile current image to get a bigger one" alt="" coords="5,5,940,459"/>
+<area shape="rect" id="node4_99" href="pyto.segmentation.labels.Labels-class.html#maxId" title="Maximum id" alt="" coords="142,502,805,522"/>
+<area shape="rect" id="node4_100" href="pyto.segmentation.labels.Labels-class.html#contactStructElConn" title="Contact structuring element connectivity, default 1" alt="" coords="142,522,805,542"/>
+<area shape="rect" id="node4_101" href="pyto.segmentation.labels.Labels-class.html#contactStructEl" title="Contact structuring element, default connectivity 1" alt="" coords="142,542,805,562"/>
+<area shape="rect" id="node4_102" href="pyto.segmentation.labels.Labels-class.html#countStructElConn" title="Count structuring element connectivity, default ndim" alt="" coords="142,562,805,582"/>
+<area shape="rect" id="node4_103" href="pyto.segmentation.labels.Labels-class.html#countStructEl" title="Count structuring element, default connectivity ndim" alt="" coords="142,582,805,602"/>
+<area shape="rect" id="node4_104" href="pyto.segmentation.labels.Labels-class.html#makeInset" title="Finds the smallest inset that contains all elements of self.data labeled by ids (or self.ids if ids is None)." alt="" coords="142,605,805,625"/>
+<area shape="rect" id="node4_105" href="pyto.segmentation.labels.Labels-class.html#findInset" title="Returns the smallest inset (list of slice objects of length self.ndim) that contains all elements of self.data labeled by ids (or self.ids if ids is &#160;None)." alt="" coords="142,625,805,645"/>
+<area shape="rect" id="node4_106" href="pyto.segmentation.labels.Labels-class.html#setIds" title="Sets id and related attributes: self.ids (ndarray of flattened ids), &#160;self.originalIds (self.maxId, self.nextId and self.n)." alt="" coords="142,645,805,665"/>
+<area shape="rect" id="node4_107" href="pyto.segmentation.labels.Labels-class.html#extractIds" title="Finds segment ids, that is positive unique elements of data array." alt="" coords="142,665,805,685"/>
+<area shape="rect" id="node4_108" href="pyto.segmentation.labels.Labels-class.html#getMaxId" title="Maximum id" alt="" coords="142,685,805,705"/>
+<area shape="rect" id="node4_109" href="pyto.segmentation.labels.Labels-class.html#setMaxId" title="Doesn&#39;t do anything, needed for compatibility with super." alt="" coords="142,705,805,725"/>
+<area shape="rect" id="node4_110" href="pyto.segmentation.labels.Labels-class.html#restrict" title="Removes (sets to 0) data elements of this instance that have one of the &#160;specified ids and where mask.data is 0 (if arg update is True)." alt="" coords="142,725,805,745"/>
+<area shape="rect" id="node4_111" href="pyto.segmentation.labels.Labels-class.html#orderByBoundaries" title="Orders segments both here and in the contacts object by ids of contacted &#160;boundaries." alt="" coords="142,745,805,765"/>
+<area shape="rect" id="node4_112" href="pyto.segmentation.labels.Labels-class.html#orderIdsByBoundaries" title="Orders self.ids according to the ids of contacted boundaries." alt="" coords="142,765,805,785"/>
+<area shape="rect" id="node4_113" href="pyto.segmentation.labels.Labels-class.html#orderByValues" title="Orders segments, that is changes their ids according to values." alt="" coords="142,785,805,805"/>
+<area shape="rect" id="node4_114" href="pyto.segmentation.labels.Labels-class.html#orderIdsByValues" title="Orders ids by values." alt="" coords="142,805,805,825"/>
+<area shape="rect" id="node4_115" href="pyto.segmentation.labels.Labels-class.html#setStructEl" title="Sets or updates structuring element (self.structEl)." alt="" coords="142,825,805,845"/>
+<area shape="rect" id="node4_116" href="pyto.segmentation.labels.Labels-class.html#setContactStructElConn" title="Sets self._contactStructElConn." alt="" coords="142,845,805,865"/>
+<area shape="rect" id="node4_117" href="pyto.segmentation.labels.Labels-class.html#magnify" title="Magnifies (increases the size of) the data array (self.data) by an int &#160;factor." alt="" coords="142,885,805,905"/>
+<area shape="rect" id="node4" href="pyto.segmentation.labels.Labels-class.html" title="This class concerns an integer&#45;labeled image that contains one or more segments." alt="" coords="129,477,816,911"/>
+</map>
+  <img src="uml_class_diagram_for_pyto_seg.gif" alt='' usemap="#uml_class_diagram_for_pyto_seg" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.ball.Ball-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">copy</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">clean</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Calls Segment.__init__ to initialize data, data-related and 
+      id-related attributes.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.ball-pysrc.html#Ball.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.ball.Ball-class.html#extendDiscs" class="summary-sig-name">extendDiscs</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">axis</span>=<span class="summary-sig-default">-1</span>,
+        <span class="summary-sig-arg">cut</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">theta</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">enlarge</span>=<span class="summary-sig-default">0.5</span>,
+        <span class="summary-sig-arg">external</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">check</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Extends disc-like segments to balls and cuts their tops and bottoms 
+      with planes.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.ball-pysrc.html#Ball.extendDiscs">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.ball.Ball-class.html#extractDiscs" class="summary-sig-name">extractDiscs</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">axis</span>=<span class="summary-sig-default">-1</span>)</span><br />
+      Calculates the center of each segment, and the mean outside 
+      (boundary) radius of central slices of each segment given by ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.ball-pysrc.html#Ball.extractDiscs">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.ball.Ball-class.html#thinToMaxDiscs" class="summary-sig-name">thinToMaxDiscs</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">axis</span>=<span class="summary-sig-default">-1</span>,
+        <span class="summary-sig-arg">external</span>=<span class="summary-sig-default">0</span>)</span><br />
+      Thins segments to a largest (volume) slice.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.ball-pysrc.html#Ball.thinToMaxDiscs">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.segmentation.segment.Segment-class.html">segment.Segment</a></code></b>:
+      <code><a href="pyto.segmentation.segment.Segment-class.html#add">add</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#clean">clean</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#distanceFromOrigin">distanceFromOrigin</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#distanceToRegion">distanceToRegion</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#elementDistanceToRegion">elementDistanceToRegion</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#elementDistanceToRim">elementDistanceToRim</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#elementGeodesicDistanceToRegion">elementGeodesicDistanceToRegion</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#fillSegments">fillSegments</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#findNonUnique">findNonUnique</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#generateNeighborhoods">generateNeighborhoods</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#getStructureFootprint">getStructureFootprint</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#keep">keep</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#labelInteriors">labelInteriors</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#makeFree">makeFree</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#makeLayersBetween">makeLayersBetween</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#makeLayersFrom">makeLayersFrom</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#makeSurfaces">makeSurfaces</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#markDistance">markDistance</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#pairwiseDistance">pairwiseDistance</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#parseInput">parseInput</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#remove">remove</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#removeIdFromBound">removeIdFromBound</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#reorder">reorder</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#setData">setData</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#setDefaults">setDefaults</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#setProperties">setProperties</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#setSurfaceStructEl">setSurfaceStructEl</a></code>,
+      <code><a href="pyto.segmentation.segment.Segment-class.html#shiftIds">shiftIds</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.segmentation.labels.Labels-class.html">labels.Labels</a></code></b>:
+      <code><a href="pyto.segmentation.labels.Labels-class.html#extractIds">extractIds</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#findInset">findInset</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#getContactStructEl">getContactStructEl</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#getContactStructElConn">getContactStructElConn</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#getCountStructEl">getCountStructEl</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#getCountStructElConn">getCountStructElConn</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#getMaxId">getMaxId</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#getPoints">getPoints</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#getPointsGeodesic">getPointsGeodesic</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#magnify">magnify</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#makeInset">makeInset</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#orderByBoundaries">orderByBoundaries</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#orderByValues">orderByValues</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#orderIdsByBoundaries">orderIdsByBoundaries</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#orderIdsByValues">orderIdsByValues</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#restrict">restrict</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#setContactStructElConn">setContactStructElConn</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#setCountStructElConn">setCountStructElConn</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#setIds">setIds</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#setMaxId">setMaxId</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#setStructEl">setStructEl</a></code>
+      </p>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.segmentation.labels.Labels-class.html">labels.Labels</a></code></b> (private):
+      <code><a href="pyto.segmentation.labels.Labels-class.html#_remove" onclick="show_private();">_remove</a></code>
+      </p></div>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.core.image.Image-class.html">core.image.Image</a></code></b>:
+      <code><a href="pyto.core.image.Image-class.html#absoluteToRelativeInset">absoluteToRelativeInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#clearFull">clearFull</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#copyPositioning">copyPositioning</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#expandInset">expandInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#findEnclosingInset">findEnclosingInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#findIntersectingInset">findIntersectingInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getDataInset">getDataInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getDeepBase">getDeepBase</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getFullData">getFullData</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getFullInset">getFullInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getInset">getInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getNdim">getNdim</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getOffset">getOffset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getTotalOffset">getTotalOffset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#hasOverlap">hasOverlap</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#isInside">isInside</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#newFromInset">newFromInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#recoverFull">recoverFull</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#relativeToAbsoluteInset">relativeToAbsoluteInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#saveFull">saveFull</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#setDataInset">setDataInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#setFullData">setFullData</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#setFullInset">setFullInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#setInset">setInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#setNdim">setNdim</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#setOffset">setOffset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#tile">tile</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#useInset">useInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#usePositioning">usePositioning</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#write">write</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.ball.Ball-class.html#make" class="summary-sig-name">make</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">centers</span>,
+        <span class="summary-sig-arg">radii</span>,
+        <span class="summary-sig-arg">shape</span>,
+        <span class="summary-sig-arg">dtype</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">int</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">cut</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">theta</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">check</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Makes an instance of this class containing balls defined by centers and
+radii.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.ball-pysrc.html#Ball.make">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.ball.Ball-class.html#findOverlaps" class="summary-sig-name">findOverlaps</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">ids</span>,
+        <span class="summary-sig-arg">centers</span>,
+        <span class="summary-sig-arg">radii</span>,
+        <span class="summary-sig-arg">clearance</span>=<span class="summary-sig-default">1</span>)</span><br />
+      Returns pairs of ids that would overlap when balls of the 
+cooresponding radii are centered to the corresponding centers</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.ball-pysrc.html#Ball.findOverlaps">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.segmentation.segment.Segment-class.html">segment.Segment</a></code></b>:
+      <code><a href="pyto.segmentation.segment.Segment-class.html#read">read</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.segmentation.segment.Segment-class.html">segment.Segment</a></code></b> (private):
+      <code><a href="pyto.segmentation.segment.Segment-class.html#_remove_or_keep_factor" onclick="show_private();">_remove_or_keep_factor</a></code>
+      </p></div>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.segmentation.labels.Labels-class.html">labels.Labels</a></code></b>:
+      <code><a href="pyto.segmentation.labels.Labels-class.html#contactStructEl">contactStructEl</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#contactStructElConn">contactStructElConn</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#countStructEl">countStructEl</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#countStructElConn">countStructElConn</a></code>,
+      <code><a href="pyto.segmentation.labels.Labels-class.html#maxId">maxId</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.core.image.Image-class.html">core.image.Image</a></code></b>:
+      <code><a href="pyto.core.image.Image-class.html#fullData">fullData</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#fullInset">fullInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#inset">inset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#ndim">ndim</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#offset">offset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#totalOffset">totalOffset</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">copy</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">clean</span>=<span class="sig-default">False</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.ball-pysrc.html#Ball.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calls Segment.__init__ to initialize data, data-related and id-related
+  attributes.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="extendDiscs"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">extendDiscs</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">axis</span>=<span class="sig-default">-1</span>,
+        <span class="sig-arg">cut</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">theta</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">enlarge</span>=<span class="sig-default">0.5</span>,
+        <span class="sig-arg">external</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">check</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.ball-pysrc.html#Ball.extendDiscs">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Extends disc-like segments to balls and cuts their tops and bottoms 
+  with planes.</p>
+  <p>The discs and the balls have the same centers, while the radii of 
+  balls are increased by enlarge (in respect to the discs).</p>
+  <p>If data is not given self.data is used. If ids is not given tries 
+  self.ids (if data was not given), or extracts ids from data (or 
+  self.data).</p>
+  <p>First calculates centers and radii of the discs using extractDiscs 
+  method. Then uses make method to generate balls and cuts them if needed 
+  (see extractDiscs and make for details). Finally, the balls are put in 
+  the self.data array. Elements that belong to discs, but do not belong to 
+  any of the balls are set to external (expected to be the id of the region
+  surrounding discs).</p>
+  <p>Other segments are kept unchanged.</p>
+  <p>Note: when discs are first extracted and then extended (using this 
+  method) the best value for enlarge seems to be 0.5. The reason is 
+  essentialy a rounding error. Namely, when a disc of a radius R is 
+  created, that means that all array elements whose distance is at most R 
+  to the center are selected. Now when a mean radius is calculated it 
+  naturally smaller than R. Therefore, in order to reproduce an in initial 
+  dist etend &gt; 0 should be used.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      data: (ndarray) labels containg disc-like segments and possibly other
+      segments
+    </li>
+    <li>
+      ids: segment ids of discs
+    </li>
+    <li>
+      axis: the principal axis of disks, should be along one of the 
+      coordinate axes (in 3d 0 is x axis, 1 is y and 2 or -1 is z)
+    </li>
+    <li>
+      cut: normal vector of the plane that cuts each ball (shape ndim)
+    </li>
+    <li>
+      theta: angle that determines how much of each ball is cut (nothing is
+      cut for 0, while if theta is numpy.pi/2 each of the two planes cuts a
+      half of a ball)
+    </li>
+    <li>
+      external: id surrounding discs / balls
+    </li>
+    <li>
+      check: if True, checks if balls overlap (uses findOverlaps())
+    </li>
+  </ul>
+  <p>Returns instance of this class containing the balls, having 
+  attributes:</p>
+  <ul>
+    <li>
+      data:  (ndarray) labels containg ball-like segments and possibly 
+      other segments
+    </li>
+    <li>
+      ids: ids of all segments, balls and possibly other segments
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="extractDiscs"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">extractDiscs</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">axis</span>=<span class="sig-default">-1</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.ball-pysrc.html#Ball.extractDiscs">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates the center of each segment, and the mean outside (boundary)
+  radius of central slices of each segment given by ids.</p>
+  <p>The data has to contain contains 1 pixel thick disk-like segments and 
+  that all disks have their principal axis along one of the coordinate 
+  axes.</p>
+  <p>A center is calculated from a whole disk. A disk radius is calculated 
+  as the mean distance between the center and points that lay on the 
+  boundary of the corresponding ndim-1 dimensional disk. A ndim-1 disk is 
+  obtained from a ndim disk by keeping only a slice along axis that 
+  contains the disk center.</p>
+  <p>If data is not given self.data is used. If ids is not given tries 
+  self.ids (if data was not given), or extracts ids from data (or 
+  self.data).</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      data: (ndarray) segments
+    </li>
+    <li>
+      ids: segment ids
+    </li>
+    <li>
+      axis: the principal axis of disks (in 3d 0 is x axis, 1 is y and 2 or
+      -1 is z)
+    </li>
+  </ul>
+  <p>Return (centers, radii):</p>
+  <ul>
+    <li>
+      centers: array of disk centers (shape n_disks, ndim) for segments 
+      with ids
+    </li>
+    <li>
+      radii: array od mean disk radii (shape n_disks) for segments given by
+      ids
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="thinToMaxDiscs"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">thinToMaxDiscs</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">axis</span>=<span class="sig-default">-1</span>,
+        <span class="sig-arg">external</span>=<span class="sig-default">0</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.ball-pysrc.html#Ball.thinToMaxDiscs">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Thins segments to a largest (volume) slice. That is, for each segment,
+  all slices except the maximal one are removed.</p>
+  <p>If arg ids is specified, only those segments are thinned.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      data: (ndarray) segments
+    </li>
+    <li>
+      ids: ids of segments that need to be thinned
+    </li>
+    <li>
+      axis: the principal axis of disks (in 3d 0 is x axis, 1 is y and 2 or
+      -1 is z)
+    </li>
+    <li>
+      external: segment elements that are removed are set to this value
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="make"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">make</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">centers</span>,
+        <span class="sig-arg">radii</span>,
+        <span class="sig-arg">shape</span>,
+        <span class="sig-arg">dtype</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">int</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">cut</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">theta</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">check</span>=<span class="sig-default">True</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.ball-pysrc.html#Ball.make">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Makes an instance of this class containing balls defined by centers and
+radii. The balls are optionally cut by planes defined by (normal vector)
+cut and theta.
+
+A (cut) ball is generated for each element of centers and its
+corresponding element of radii and it is labeled by (a corresponding)
+id. If ids are not given the segments are labeled in the order starting
+from 1.
+
+Array elements whose distance to the center is &lt;= radius are defined to
+belong to a ball.
+
+If neither cut nor theta arguments are None, each ball is cut by two
+planes. One is defined by a normal vector cut and an angle theta, where
+theta is the angle between the normal vector and points on the edge of
+the ball - plane intersection in respect to the ball center (theta 0
+means nothing and &gt;pi/2 means everything is cut out). This angle is
+used to determine a point that belongs to the plane:
+
+  radius * cos(theta) * cut / abs(cut) + radius
+
+so that the plane can be properly defined (by the normal vector and the
+point).
+
+Array elements that belong (exactly) to the plane, or are on the
+negative (oposite direction from the normal vector) are retained, while
+those that are on the positive side are removed. The other plane is
+symetrical to the first one with respect to the center.
+ 
+Arguments:
+  - centers: array containing centers of balls (segments) listed in ids,
+  shape (n_balls, ndim)
+  - radii: array containing radii for segments listed in ids (shape
+  n_balls)
+  - shape: shape of the data array that holds the circles
+  - dtype: dtype of the data array that holds the circles 
+  - ids: ids of segments (balls)
+  - cut: normal vector of the plane that cuts each ball
+  - theta: angle that determines how much of each ball is cut (nothing
+  is cut for 0, while if theta is numpy.pi/2 each of the two planes cuts
+  a half of a ball)
+  - check: if True, checks if balls overlap (uses findOverlaps()) 
+
+Returns instance of this class containing the balls, with other
+elements set to 0.  
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="findOverlaps"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">findOverlaps</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">ids</span>,
+        <span class="sig-arg">centers</span>,
+        <span class="sig-arg">radii</span>,
+        <span class="sig-arg">clearance</span>=<span class="sig-default">1</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.ball-pysrc.html#Ball.findOverlaps">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Returns pairs of ids that would overlap when balls of the 
+cooresponding radii are centered to the corresponding centers
+
+Returns pairs of ids for which the Euclidean distance between centers 
+(distance):
+
+  distance &gt; r1 + r2 + clearance
+
+where r1 and r2 are the corresponding radii.
+
+Arguments ids, centers and radii have to have the 
+
+Arguments:
+  - ids: list of ids
+  - centers: list of coordinate centers (lists), or 2D array where 
+  index 0 denotes different centers and index 1 the coordinates
+  - radii: list of radii
+
+Returns list of id pairs 
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

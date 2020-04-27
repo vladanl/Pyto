@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.util.scipy_plus</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.util-module.html">Package&nbsp;util</a> ::
+        Module&nbsp;scipy_plus
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.util.scipy_plus-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="pyto.util.scipy_plus-module.html">Module pyto.util.scipy_plus</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-docstring">Scipy related utility functions.</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-docstring"># Author: Vladan Lucic, Max Planck Institute for Biochemistry</tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-docstring"># $Id: scipy_plus.py 1271 2015-12-21 17:59:37Z vladan $</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-name">__version__</tt> <tt class="py-op">=</tt> <tt class="py-string">"$Revision: 1271 $"</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">numpy</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">scipy</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">scipy</tt><tt class="py-op">.</tt><tt id="link-0" class="py-name" targets="Function pyto.scripts.cleft_stats.stats()=pyto.scripts.cleft_stats-module.html#stats,Function pyto.scripts.presynaptic_stats.stats()=pyto.scripts.presynaptic_stats-module.html#stats,Function pyto.scripts.presynaptic_stats_common.stats()=pyto.scripts.presynaptic_stats_common-module.html#stats"><a title="pyto.scripts.cleft_stats.stats
+pyto.scripts.presynaptic_stats.stats
+pyto.scripts.presynaptic_stats_common.stats" class="py-name" href="#" onclick="return doclink('link-0', 'stats', 'link-0');">stats</a></tt> <tt class="py-keyword">as</tt> <tt id="link-1" class="py-name"><a title="pyto.scripts.cleft_stats.stats
+pyto.scripts.presynaptic_stats.stats
+pyto.scripts.presynaptic_stats_common.stats" class="py-name" href="#" onclick="return doclink('link-1', 'stats', 'link-0');">stats</a></tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"> </tt>
+<a name="chisquare_2"></a><div id="chisquare_2-def"><a name="L16"></a><tt class="py-lineno">16</tt> <a class="py-toggle" href="#" id="chisquare_2-toggle" onclick="return toggle('chisquare_2');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.util.scipy_plus-module.html#chisquare_2">chisquare_2</a><tt class="py-op">(</tt><tt class="py-param">f_obs_1</tt><tt class="py-op">,</tt> <tt class="py-param">f_obs_2</tt><tt class="py-op">,</tt> <tt class="py-param">yates</tt><tt class="py-op">=</tt><tt class="py-name">False</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="chisquare_2-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="chisquare_2-expanded"><a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-docstring">    Calculates chi-square between two arrays of observation frequencies and</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"><tt class="py-docstring">    returns the result. </tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"><tt class="py-docstring">    Differs from scipy.stats.chisquare() in that this function calculated </tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"><tt class="py-docstring">    significance between two distributions and that the two distributions </tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-docstring">    can have different number of data points.</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"><tt class="py-docstring">    </tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"><tt class="py-docstring">    Arguments:</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"><tt class="py-docstring">      - f_obs_1, f_obs_2: frequencies of observations 1 and 2</tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"><tt class="py-docstring">    Returns: chi-square, associated p-value </tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">     </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">    <tt class="py-comment"># prepare variables</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">    <tt class="py-name">f_obs_1</tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">asarray</tt><tt class="py-op">(</tt><tt class="py-name">f_obs_1</tt><tt class="py-op">)</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">    <tt class="py-name">f_obs_2</tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">asarray</tt><tt class="py-op">(</tt><tt class="py-name">f_obs_2</tt><tt class="py-op">)</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">    <tt class="py-comment"># chisquare</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt class="py-name">yates</tt><tt class="py-op">:</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line">        <tt class="py-comment"># no yates</tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">        <tt class="py-name">sum_1</tt> <tt class="py-op">=</tt> <tt class="py-name">float</tt><tt class="py-op">(</tt><tt class="py-name">f_obs_1</tt><tt class="py-op">.</tt><tt class="py-name">sum</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line">        <tt class="py-name">sum_2</tt> <tt class="py-op">=</tt> <tt class="py-name">float</tt><tt class="py-op">(</tt><tt class="py-name">f_obs_2</tt><tt class="py-op">.</tt><tt class="py-name">sum</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line"> </tt>
+<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line">        <tt class="py-comment"># calculate chi-square value</tt> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">        <tt class="py-name">chisq</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-op">(</tt><tt class="py-name">el_1</tt> <tt class="py-op">*</tt> <tt class="py-name">sum_2</tt> <tt class="py-op">-</tt> <tt class="py-name">el_2</tt> <tt class="py-op">*</tt> <tt class="py-name">sum_1</tt><tt class="py-op">)</tt> <tt class="py-op">**</tt> <tt class="py-number">2</tt> <tt class="py-op">/</tt> <tt class="py-op">(</tt><tt class="py-name">el_1</tt> <tt class="py-op">+</tt> <tt class="py-name">el_2</tt><tt class="py-op">)</tt>  </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line">                 <tt class="py-keyword">for</tt> <tt class="py-name">el_1</tt><tt class="py-op">,</tt> <tt class="py-name">el_2</tt> <tt class="py-keyword">in</tt> <tt class="py-name">zip</tt><tt class="py-op">(</tt><tt class="py-name">f_obs_1</tt><tt class="py-op">,</tt> <tt class="py-name">f_obs_2</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line">        <tt class="py-name">chisq</tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">array</tt><tt class="py-op">(</tt><tt class="py-name">chisq</tt><tt class="py-op">,</tt> <tt id="link-2" class="py-name" targets="Variable pyto.scripts.correlation_3d_2d.dtype=pyto.scripts.correlation_3d_2d-module.html#dtype"><a title="pyto.scripts.correlation_3d_2d.dtype" class="py-name" href="#" onclick="return doclink('link-2', 'dtype', 'link-2');">dtype</a></tt><tt class="py-op">=</tt><tt class="py-string">'float'</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">sum</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-op">/</tt> <tt class="py-op">(</tt><tt class="py-name">sum_1</tt> <tt class="py-op">*</tt> <tt class="py-name">sum_2</tt><tt class="py-op">)</tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line"> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line">    <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line"> </tt>
+<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line">        <tt class="py-comment"># with yates (easier to see what happens)</tt> </tt>
+<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line">        <tt id="link-3" class="py-name" targets="Variable pyto.geometry.vector.Vector.data=pyto.geometry.vector.Vector-class.html#data,Method pyto.io.multi_data.MultiData.data()=pyto.io.multi_data.MultiData-class.html#data"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-3', 'data', 'link-3');">data</a></tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">vstack</tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-name">f_obs_1</tt><tt class="py-op">,</tt> <tt class="py-name">f_obs_2</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line"> </tt>
+<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line">        <tt class="py-comment"># expectations</tt> </tt>
+<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line">        <tt class="py-name">sum_freq</tt> <tt class="py-op">=</tt> <tt id="link-4" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-4', 'data', 'link-3');">data</a></tt><tt class="py-op">.</tt><tt class="py-name">sum</tt><tt class="py-op">(</tt><tt id="link-5" class="py-name" targets="Variable pyto.scripts.regions.axis=pyto.scripts.regions-module.html#axis,Variable pyto.scripts.vesicles.axis=pyto.scripts.vesicles-module.html#axis"><a title="pyto.scripts.regions.axis
+pyto.scripts.vesicles.axis" class="py-name" href="#" onclick="return doclink('link-5', 'axis', 'link-5');">axis</a></tt><tt class="py-op">=</tt><tt class="py-number">1</tt><tt class="py-op">)</tt> </tt>
+<a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line">        <tt class="py-name">sum_obs</tt> <tt class="py-op">=</tt> <tt id="link-6" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-6', 'data', 'link-3');">data</a></tt><tt class="py-op">.</tt><tt class="py-name">sum</tt><tt class="py-op">(</tt><tt id="link-7" class="py-name"><a title="pyto.scripts.regions.axis
+pyto.scripts.vesicles.axis" class="py-name" href="#" onclick="return doclink('link-7', 'axis', 'link-5');">axis</a></tt><tt class="py-op">=</tt><tt class="py-number">0</tt><tt class="py-op">)</tt> </tt>
+<a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line">        <tt class="py-name">expect</tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">outer</tt><tt class="py-op">(</tt><tt class="py-name">sum_freq</tt><tt class="py-op">,</tt> <tt class="py-name">sum_obs</tt><tt class="py-op">)</tt> <tt class="py-op">/</tt> <tt class="py-name">float</tt><tt class="py-op">(</tt><tt id="link-8" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-8', 'data', 'link-3');">data</a></tt><tt class="py-op">.</tt><tt class="py-name">sum</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line"> </tt>
+<a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line">        <tt class="py-comment"># chisquare</tt> </tt>
+<a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line">        <tt class="py-name">chisq</tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">abs</tt><tt class="py-op">(</tt><tt id="link-9" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-9', 'data', 'link-3');">data</a></tt> <tt class="py-op">-</tt> <tt class="py-name">expect</tt><tt class="py-op">)</tt> <tt class="py-op">-</tt> <tt class="py-number">0.5</tt><tt class="py-op">)</tt><tt class="py-op">**</tt><tt class="py-number">2</tt> <tt class="py-op">/</tt> <tt class="py-name">expect</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">sum</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line"> </tt>
+<a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line">    <tt class="py-comment"># probability (same as stats.chi2.sf())</tt> </tt>
+<a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line">    <tt class="py-name">p</tt> <tt class="py-op">=</tt> <tt id="link-10" class="py-name"><a title="pyto.scripts.cleft_stats.stats
+pyto.scripts.presynaptic_stats.stats
+pyto.scripts.presynaptic_stats_common.stats" class="py-name" href="#" onclick="return doclink('link-10', 'stats', 'link-0');">stats</a></tt><tt class="py-op">.</tt><tt class="py-name">chisqprob</tt><tt class="py-op">(</tt><tt class="py-name">chisq</tt><tt class="py-op">,</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">f_obs_1</tt><tt class="py-op">)</tt><tt class="py-op">-</tt><tt class="py-number">1</tt><tt class="py-op">)</tt> </tt>
+<a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line"> </tt>
+<a name="L63"></a><tt class="py-lineno">63</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">chisq</tt><tt class="py-op">,</tt> <tt class="py-name">p</tt> </tt>
+</div><a name="L64"></a><tt class="py-lineno">64</tt>  <tt class="py-line"> </tt>
+<a name="ttest_ind_nodata"></a><div id="ttest_ind_nodata-def"><a name="L65"></a><tt class="py-lineno">65</tt> <a class="py-toggle" href="#" id="ttest_ind_nodata-toggle" onclick="return toggle('ttest_ind_nodata');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.util.scipy_plus-module.html#ttest_ind_nodata">ttest_ind_nodata</a><tt class="py-op">(</tt><tt class="py-param">mean_1</tt><tt class="py-op">,</tt> <tt class="py-param">std_1</tt><tt class="py-op">,</tt> <tt class="py-param">n_1</tt><tt class="py-op">,</tt> <tt class="py-param">mean_2</tt><tt class="py-op">,</tt> <tt class="py-param">std_2</tt><tt class="py-op">,</tt> <tt class="py-param">n_2</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="ttest_ind_nodata-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="ttest_ind_nodata-expanded"><a name="L66"></a><tt class="py-lineno">66</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L67"></a><tt class="py-lineno">67</tt>  <tt class="py-line"><tt class="py-docstring">    Student's t-test between two independent samples. Unlike in ttest_ind(), </tt> </tt>
+<a name="L68"></a><tt class="py-lineno">68</tt>  <tt class="py-line"><tt class="py-docstring">    the samples (data) are not given, instead the basic statstical quantities </tt> </tt>
+<a name="L69"></a><tt class="py-lineno">69</tt>  <tt class="py-line"><tt class="py-docstring">    (mean, standard deviation and number of measurements) are used to do the </tt> </tt>
+<a name="L70"></a><tt class="py-lineno">70</tt>  <tt class="py-line"><tt class="py-docstring">    test. Returns t-value and a two-tailed confidence level.</tt> </tt>
+<a name="L71"></a><tt class="py-lineno">71</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L72"></a><tt class="py-lineno">72</tt>  <tt class="py-line"><tt class="py-docstring">    Arguments:</tt> </tt>
+<a name="L73"></a><tt class="py-lineno">73</tt>  <tt class="py-line"><tt class="py-docstring">      - mean_1, mean_2: means of samples 1 and 2</tt> </tt>
+<a name="L74"></a><tt class="py-lineno">74</tt>  <tt class="py-line"><tt class="py-docstring">      - std_1, std_2: standard deviations of samples 1 and 2 calculated using</tt> </tt>
+<a name="L75"></a><tt class="py-lineno">75</tt>  <tt class="py-line"><tt class="py-docstring">      n-1 degrees of freedom where n is the number of measurements in a sample</tt> </tt>
+<a name="L76"></a><tt class="py-lineno">76</tt>  <tt class="py-line"><tt class="py-docstring">      - n_1, n_2: number of measurements </tt> </tt>
+<a name="L77"></a><tt class="py-lineno">77</tt>  <tt class="py-line"><tt class="py-docstring">      Arguments can be ndarrays instead of single numbers. </tt> </tt>
+<a name="L78"></a><tt class="py-lineno">78</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L79"></a><tt class="py-lineno">79</tt>  <tt class="py-line"><tt class="py-docstring">    Returns: (t_value, two_tail_confidence)</tt> </tt>
+<a name="L80"></a><tt class="py-lineno">80</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L81"></a><tt class="py-lineno">81</tt>  <tt class="py-line"> </tt>
+<a name="L82"></a><tt class="py-lineno">82</tt>  <tt class="py-line">    <tt class="py-comment"># sums of squares</tt> </tt>
+<a name="L83"></a><tt class="py-lineno">83</tt>  <tt class="py-line">    <tt class="py-name">sum_squares_1</tt> <tt class="py-op">=</tt> <tt class="py-name">std_1</tt> <tt class="py-op">**</tt> <tt class="py-number">2</tt> <tt class="py-op">*</tt> <tt class="py-op">(</tt><tt class="py-name">n_1</tt> <tt class="py-op">-</tt> <tt class="py-number">1</tt><tt class="py-op">)</tt> </tt>
+<a name="L84"></a><tt class="py-lineno">84</tt>  <tt class="py-line">    <tt class="py-name">sum_squares_2</tt> <tt class="py-op">=</tt> <tt class="py-name">std_2</tt> <tt class="py-op">**</tt> <tt class="py-number">2</tt> <tt class="py-op">*</tt> <tt class="py-op">(</tt><tt class="py-name">n_2</tt> <tt class="py-op">-</tt> <tt class="py-number">1</tt><tt class="py-op">)</tt> </tt>
+<a name="L85"></a><tt class="py-lineno">85</tt>  <tt class="py-line"> </tt>
+<a name="L86"></a><tt class="py-lineno">86</tt>  <tt class="py-line">    <tt class="py-comment"># std of the defference between means</tt> </tt>
+<a name="L87"></a><tt class="py-lineno">87</tt>  <tt class="py-line">    <tt class="py-name">pooled_var</tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt><tt class="py-name">sum_squares_1</tt> <tt class="py-op">+</tt> <tt class="py-name">sum_squares_2</tt><tt class="py-op">)</tt> <tt class="py-op">/</tt> <tt class="py-op">(</tt><tt class="py-name">n_1</tt> <tt class="py-op">+</tt> <tt class="py-name">n_2</tt> <tt class="py-op">-</tt> <tt class="py-number">2.</tt><tt class="py-op">)</tt> </tt>
+<a name="L88"></a><tt class="py-lineno">88</tt>  <tt class="py-line">    <tt class="py-name">std_means</tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">sqrt</tt><tt class="py-op">(</tt><tt class="py-name">pooled_var</tt> <tt class="py-op">*</tt> <tt class="py-op">(</tt><tt class="py-number">1.</tt> <tt class="py-op">/</tt> <tt class="py-name">n_1</tt> <tt class="py-op">+</tt> <tt class="py-number">1.</tt> <tt class="py-op">/</tt> <tt class="py-name">n_2</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L89"></a><tt class="py-lineno">89</tt>  <tt class="py-line"> </tt>
+<a name="L90"></a><tt class="py-lineno">90</tt>  <tt class="py-line">    <tt class="py-comment"># t-value and confidence</tt> </tt>
+<a name="L91"></a><tt class="py-lineno">91</tt>  <tt class="py-line">    <tt class="py-name">t</tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt><tt class="py-name">mean_1</tt> <tt class="py-op">-</tt> <tt class="py-name">mean_2</tt><tt class="py-op">)</tt> <tt class="py-op">/</tt> <tt class="py-name">std_means</tt> </tt>
+<a name="L92"></a><tt class="py-lineno">92</tt>  <tt class="py-line">    <tt class="py-name">confidence</tt> <tt class="py-op">=</tt> <tt class="py-number">2</tt> <tt class="py-op">*</tt> <tt id="link-11" class="py-name"><a title="pyto.scripts.cleft_stats.stats
+pyto.scripts.presynaptic_stats.stats
+pyto.scripts.presynaptic_stats_common.stats" class="py-name" href="#" onclick="return doclink('link-11', 'stats', 'link-0');">stats</a></tt><tt class="py-op">.</tt><tt class="py-name">t</tt><tt class="py-op">.</tt><tt class="py-name">sf</tt><tt class="py-op">(</tt><tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">abs</tt><tt class="py-op">(</tt><tt class="py-name">t</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-name">n_1</tt> <tt class="py-op">+</tt> <tt class="py-name">n_2</tt> <tt class="py-op">-</tt> <tt class="py-number">2</tt><tt class="py-op">)</tt> </tt>
+<a name="L93"></a><tt class="py-lineno">93</tt>  <tt class="py-line"> </tt>
+<a name="L94"></a><tt class="py-lineno">94</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">t</tt><tt class="py-op">,</tt> <tt class="py-name">confidence</tt> </tt>
+</div><a name="L95"></a><tt class="py-lineno">95</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

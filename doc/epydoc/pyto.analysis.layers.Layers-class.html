@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.analysis.layers.Layers</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.analysis-module.html">Package&nbsp;analysis</a> ::
+        <a href="pyto.analysis.layers-module.html">Module&nbsp;layers</a> ::
+        Class&nbsp;Layers
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.analysis.layers.Layers-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Layers</h1><p class="nomargin-top"><span class="codelink"><a href="pyto.analysis.layers-pysrc.html#Layers">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_pyto_ana_7" name="uml_class_diagram_for_pyto_ana_7">
+<area shape="rect" id="node1_34" href="pyto.analysis.layers.Layers-class.html#__init__" title="Initializes attributes" alt="" coords="19,767,453,787"/>
+<area shape="rect" id="node1_35" href="pyto.analysis.layers.Layers-class.html#read" title="Reads values form synaptic vesicle layers tables" alt="" coords="19,787,453,807"/>
+<area shape="rect" id="node1_36" href="pyto.analysis.layers.Layers-class.html#getOccupied" title="Calculates number of voxels that are occupied by segments for each layer &#160;and saves it in self.occupied." alt="" coords="19,807,453,827"/>
+<area shape="rect" id="node1_37" href="pyto.analysis.layers.Layers-class.html#convertToNm" title="Converts certain properties from pixels to nm." alt="" coords="19,827,453,847"/>
+<area shape="rect" id="node1_38" href="pyto.analysis.layers.Layers-class.html#rebin" title="Rebins the data of all observations according to the args bin and pixel." alt="" coords="19,847,453,867"/>
+<area shape="rect" id="node1" href="pyto.analysis.layers.Layers-class.html" title="pyto.analysis.layers.Layers" alt="" coords="7,735,465,873"/>
+<area shape="rect" id="node2_39" href="pyto.analysis.groups.Groups-class.html#fromList" title="Adds groups specified in arg groups to this instance." alt="" coords="17,409,455,429"/>
+<area shape="rect" id="node2_40" href="pyto.analysis.groups.Groups-class.html#recast" title="Returns a new instance of this class and sets all attributes of the new &#160;object to the attributes of obj." alt="" coords="17,429,455,449"/>
+<area shape="rect" id="node2_41" href="pyto.analysis.groups.Groups-class.html#__getattr__" title="Allows accessing an item as if it was an attribute, but not for attributes &#160;starting with &#39;_&#39;." alt="" coords="17,449,455,469"/>
+<area shape="rect" id="node2_42" href="pyto.analysis.groups.Groups-class.html#__setattr__" title="Allows setting an item as if it was an attribute, but not for attributes &#160;starting with &#39;_&#39;." alt="" coords="17,469,455,489"/>
+<area shape="rect" id="node2_43" href="pyto.analysis.groups.Groups-class.html#__delattr__" title="Allows deleting an item as if it was an attribute, but not for attributes &#160;starting with &#39;_&#39;." alt="" coords="17,489,455,509"/>
+<area shape="rect" id="node2_44" href="pyto.analysis.groups.Groups-class.html#regroup" title="Returnes a new instance of this class where the observations of this &#160;instance are rearanged into new groups according to values of the specified property." alt="" coords="17,509,455,529"/>
+<area shape="rect" id="node2_45" href="pyto.analysis.groups.Groups-class.html#pool" title="Unites specified categories into a new category." alt="" coords="17,529,455,549"/>
+<area shape="rect" id="node2_46" href="pyto.analysis.groups.Groups-class.html#addGroups" title="Adds all groups of the specified Groups object (arg groups) to this &#160;objects." alt="" coords="17,549,455,569"/>
+<area shape="rect" id="node2_47" href="pyto.analysis.groups.Groups-class.html#experiments" title="Generator that yields all identifiers and observations (experiments) of &#160;this instance." alt="" coords="17,569,455,589"/>
+<area shape="rect" id="node2_48" href="pyto.analysis.groups.Groups-class.html#addData" title="Adds properties listed in arg names of another Groups object (arg source) &#160;to this instance." alt="" coords="17,589,455,609"/>
+<area shape="rect" id="node2_49" href="pyto.analysis.groups.Groups-class.html#remove" title="Removes all data for all experiments specified by arg identifiers." alt="" coords="17,609,455,629"/>
+<area shape="rect" id="node2_50" href="pyto.analysis.groups.Groups-class.html#keep" title="Keeps only the experiments specified by arg identifiers and removes data &#160;corresponding to all other experiments." alt="" coords="17,629,455,649"/>
+<area shape="rect" id="node2_51" href="pyto.analysis.groups.Groups-class.html#extract" title="Returns an instance of this class that contain only those observations for &#160;which the condition is satisfied." alt="" coords="17,649,455,669"/>
+<area shape="rect" id="node2_52" href="pyto.analysis.groups.Groups-class.html#min" title="Returns min value of the property given by arg name from all observations &#160;and all specified categories." alt="" coords="17,689,455,709"/>
+<area shape="rect" id="node2" href="pyto.analysis.groups.Groups-class.html" title="Data from any number of observations (also called experiments) is classified into one or more groups." alt="" coords="5,377,467,716"/>
+<area shape="rect" id="node3_53" href="javascript:void(0);" title="hash(x)" alt="" coords="176,30,295,50"/>
+<area shape="rect" id="node3_54" href="javascript:void(0);" title="cmp(x,y)" alt="" coords="176,53,295,73"/>
+<area shape="rect" id="node3_55" href="javascript:void(0);" title="dict.__contains__" alt="" coords="176,73,295,93"/>
+<area shape="rect" id="node3_56" href="javascript:void(0);" title="del x[y]" alt="" coords="176,93,295,113"/>
+<area shape="rect" id="node3_57" href="javascript:void(0);" title="x==y" alt="" coords="176,113,295,133"/>
+<area shape="rect" id="node3_58" href="javascript:void(0);" title="x&gt;=y" alt="" coords="176,133,295,153"/>
+<area shape="rect" id="node3_59" href="javascript:void(0);" title="x.__getattribute__(&#39;name&#39;) &lt;==&gt; x.name" alt="" coords="176,153,295,173"/>
+<area shape="rect" id="node3_60" href="javascript:void(0);" title="x[y]" alt="" coords="176,173,295,193"/>
+<area shape="rect" id="node3_61" href="javascript:void(0);" title="x&gt;y" alt="" coords="176,193,295,213"/>
+<area shape="rect" id="node3_62" href="javascript:void(0);" title="iter(x)" alt="" coords="176,213,295,233"/>
+<area shape="rect" id="node3_63" href="javascript:void(0);" title="x&lt;=y" alt="" coords="176,233,295,253"/>
+<area shape="rect" id="node3_64" href="javascript:void(0);" title="len(x)" alt="" coords="176,253,295,273"/>
+<area shape="rect" id="node3_65" href="javascript:void(0);" title="x&lt;y" alt="" coords="176,273,295,293"/>
+<area shape="rect" id="node3_66" href="javascript:void(0);" title="x!=y" alt="" coords="176,293,295,313"/>
+<area shape="rect" id="node3_67" href="javascript:void(0);" title="dict.viewvalues" alt="" coords="176,333,295,353"/>
+<area shape="rect" id="node3" href="javascript:void(0);" title="dict() &#45;&gt; new empty dictionary dict(mapping) &#45;&gt; new dictionary initialized from a mapping object&#39;s (key, value) pairs dict(iterable) &#45;&gt; new dictionary initialized as if via: d = {} for k, v in iterable: d[k] = v dict(**kwargs) &#45;&gt; new dictionary initialized with the name=value pairs in the keyword argument list." alt="" coords="163,5,306,359"/>
+</map>
+  <img src="uml_class_diagram_for_pyto_ana_7.gif" alt='' usemap="#uml_class_diagram_for_pyto_ana_7" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type"><pre class="literalblock">
+new empty dictionary
+
+</pre></span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.layers.Layers-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Initializes attributes</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.layers-pysrc.html#Layers.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getOccupied"></a><span class="summary-sig-name">getOccupied</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Calculates number of voxels that are occupied by segments for each 
+      layer and saves it in self.occupied.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.layers-pysrc.html#Layers.getOccupied">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.layers.Layers-class.html#convertToNm" class="summary-sig-name">convertToNm</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">catalog</span>,
+        <span class="summary-sig-arg">categories</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Converts certain properties from pixels to nm.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.layers-pysrc.html#Layers.convertToNm">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.layers.Layers-class.html#rebin" class="summary-sig-name">rebin</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">bins</span>,
+        <span class="summary-sig-arg">pixel</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">categories</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Rebins the data of all observations according to the args bin and pixel.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.layers-pysrc.html#Layers.rebin">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.analysis.groups.Groups-class.html">groups.Groups</a></code></b>:
+      <code><a href="pyto.analysis.groups.Groups-class.html#__delattr__">__delattr__</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#__getattr__">__getattr__</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#__setattr__">__setattr__</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#addData">addData</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#addGroups">addGroups</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#apply">apply</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#countHistogram">countHistogram</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#doCorrelation">doCorrelation</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#doStats">doStats</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#experiments">experiments</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#extract">extract</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#extractIndexed">extractIndexed</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#fromList">fromList</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#getN">getN</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#getNPositive">getNPositive</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#isTransposable">isTransposable</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#joinAndStats">joinAndStats</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#joinExperiments">joinExperiments</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#keep">keep</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#max">max</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#min">min</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#pool">pool</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#printData">printData</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#printStats">printStats</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#recast">recast</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#regroup">regroup</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#remove">remove</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#split">split</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#splitByDistance">splitByDistance</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#splitIndexed">splitIndexed</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#transpose">transpose</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>dict</code></b>:
+      <code>__cmp__</code>,
+      <code>__contains__</code>,
+      <code>__delitem__</code>,
+      <code>__eq__</code>,
+      <code>__ge__</code>,
+      <code>__getattribute__</code>,
+      <code>__getitem__</code>,
+      <code>__gt__</code>,
+      <code>__iter__</code>,
+      <code>__le__</code>,
+      <code>__len__</code>,
+      <code>__lt__</code>,
+      <code>__ne__</code>,
+      <code>__new__</code>,
+      <code>__repr__</code>,
+      <code>__setitem__</code>,
+      <code>__sizeof__</code>,
+      <code>clear</code>,
+      <code>copy</code>,
+      <code>fromkeys</code>,
+      <code>get</code>,
+      <code>has_key</code>,
+      <code>items</code>,
+      <code>iteritems</code>,
+      <code>iterkeys</code>,
+      <code>itervalues</code>,
+      <code>keys</code>,
+      <code>pop</code>,
+      <code>popitem</code>,
+      <code>setdefault</code>,
+      <code>update</code>,
+      <code>values</code>,
+      <code>viewitems</code>,
+      <code>viewkeys</code>,
+      <code>viewvalues</code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__format__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.layers.Layers-class.html#read" class="summary-sig-name">read</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">files</span>,
+        <span class="summary-sig-arg">pixel</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">catalog</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">categories</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">order</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Reads values form synaptic vesicle layers tables</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.layers-pysrc.html#Layers.read">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.analysis.groups.Groups-class.html">groups.Groups</a></code></b>:
+      <code><a href="pyto.analysis.groups.Groups-class.html#joinAndStatsList">joinAndStatsList</a></code>,
+      <code><a href="pyto.analysis.groups.Groups-class.html#joinExperimentsList">joinExperimentsList</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>dict</code></b>:
+      <code>__hash__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.layers-pysrc.html#Layers.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Initializes attributes</p>
+  <dl class="fields">
+    <dt>Returns: <pre class="literalblock">
+new empty dictionary
+
+</pre></dt>
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="read"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">read</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">files</span>,
+        <span class="sig-arg">pixel</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">catalog</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">categories</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">order</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.layers-pysrc.html#Layers.read">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Reads values form synaptic vesicle layers tables
+
+If arg catalog is specified, additional properties are read from the
+catalog. In this case roperty pixel_size has to be specified in
+the catalog. Otherwise, if arg catalog is None, arg pixel has to be
+given.
+
+Argument files has to be a dictionary of dictionaries, where ouside
+keys are group names, inside keys experiment identifiers and 
+inside values file names. For example:
+
+files = {'group_a' : {'exp_1' : file_1,
+                      'exp_2' : file_2,
+                      ...             },
+         'group_b' : {'exp_5' : file_5,
+                      ...             },
+         ...                           }
+
+Argument catalog has to be a Catalog object where the groups are 
+already formed (by using Catalog.makeGroups(), for example). That is,
+catalog has to contain the data in attributes that are themselves
+of type dict. For example:
+
+catalog.pixel_size = {'group_a' : {'exp_1' : pix_size_1,
+                                   'exp_2' : pix_size_2,
+                                    ...             },
+                      'group_b' : {'exp_5' : pix_size_5,
+                                    ...             },
+                      ...                               }
+
+Args files and catalog have to have the same groups and observations.
+
+A category specified by arg categories, or an experiment 
+identifier specified by arg order that does not exist in the data
+(arg files) is ignored and a warning is generated. This condition
+often generates an exception at a later point.
+
+Arguments:
+  - files: dictionary of layers table files
+  - pixel: dictionary of pixel sizes
+  - catalog: (Catalog) data about experiments
+  - categories: list of categories
+  - order: another Groups instance (or just a dictionary with group 
+  names as keys and identifier lists as values) that defines the 
+order of the identifiers here
+
+Sets properties:
+  - 'ids' (indexed): (list of ndarrays) layer ids
+  - 'identifiers' 
+  - 'occupancy' (indexed): fraction of a layer occupied by vesicles 
+  - 'distance' (indexed): distance to the &quot;layer 0&quot; (active zone) in pix
+  - 'distance_nm' (indexed): distance to the &quot;layer 0&quot; (active zone) 
+  in nm
+  - 'volume' (indexed): volume of each layer in pixels
+  - 'volume_nm' (indexed): volume of each layer in nm^3
+  
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="convertToNm"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">convertToNm</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">catalog</span>,
+        <span class="sig-arg">categories</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.layers-pysrc.html#Layers.convertToNm">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Converts certain properties from pixels to nm. The new values are 
+  assigned to (new) properties named by adding '_nm' to the corresponding 
+  original property name.</p>
+  <p>Currently converted properties are: distance, volume, surface</p>
+  <p>Used only when arg catalog is passed to read() method. The catalog has
+  to have 'pixel_size' defined.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      catalog: (Catalog) has to contain attribute pixel_size
+    </li>
+    <li>
+      categories: list of categories
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="rebin"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">rebin</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">bins</span>,
+        <span class="sig-arg">pixel</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">categories</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.layers-pysrc.html#Layers.rebin">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+ Rebins the data of all observations according to the args bin and pixel.
+ 
+ If arg pixel is not specified, all indexed properties (arrays) are
+ binned according to the position of the array elements, For example,
+ if arg bin = [0, 2, 4, 6]
+
+ a volume array
+
+   [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+
+is binned to:
+
+  [ 3, 7, 11]
+
+Alternatively, if arg pixel is specified, it is assumed that each 
+position in the data array is 1 pixel thick and that bins are given
+if the length units. That is, in the above example with pixels
+having length of 0.5, the result is:
+
+  [ 10, 26 ]
+   
+When bins are not integers, trapesoidal rule is used to calculate
+rebinned data.
+
+Properies 'volume', 'volume_nm', 'surface_nm' and 'occupied' are 
+calculated in the above menner because they are additive. However, 
+property 'occupancy' is calculed from the binned 'occupied' and
+'volume'.
+
+ Propeerty ids, is adjusted to the number of bins. Properties 'distance'
+ and 'distance_nm' are adjusted accordingly. Non-indexed properties are 
+ simply copied.
+
+ Arguments:
+   - bins: new bins in nm, or in pixels in pixel is None
+   - pixel: pixel size in nm (dictionary of pixel sizes, such as
+   {categ_1 : {'id_1':pixel, 'id_2':pixel}, categ_2 {'id_3':pixel}}) 
+ 
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

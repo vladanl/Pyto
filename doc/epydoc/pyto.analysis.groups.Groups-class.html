@@ -1,0 +1,2914 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.analysis.groups.Groups</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.analysis-module.html">Package&nbsp;analysis</a> ::
+        <a href="pyto.analysis.groups-module.html">Module&nbsp;groups</a> ::
+        Class&nbsp;Groups
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.analysis.groups.Groups-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Groups</h1><p class="nomargin-top"><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_pyto_ana_6" name="uml_class_diagram_for_pyto_ana_6">
+<area shape="rect" id="node1_29" href="pyto.analysis.groups.Groups-class.html#__init__" title="Doesn&#39;t do almost anything." alt="" coords="209,409,646,429"/>
+<area shape="rect" id="node1_30" href="pyto.analysis.groups.Groups-class.html#fromList" title="Adds groups specified in arg groups to this instance." alt="" coords="209,429,646,449"/>
+<area shape="rect" id="node1_31" href="pyto.analysis.groups.Groups-class.html#recast" title="Returns a new instance of this class and sets all attributes of the new &#160;object to the attributes of obj." alt="" coords="209,449,646,469"/>
+<area shape="rect" id="node1_32" href="pyto.analysis.groups.Groups-class.html#__getattr__" title="Allows accessing an item as if it was an attribute, but not for attributes &#160;starting with &#39;_&#39;." alt="" coords="209,469,646,489"/>
+<area shape="rect" id="node1_33" href="pyto.analysis.groups.Groups-class.html#__setattr__" title="Allows setting an item as if it was an attribute, but not for attributes &#160;starting with &#39;_&#39;." alt="" coords="209,489,646,509"/>
+<area shape="rect" id="node1_34" href="pyto.analysis.groups.Groups-class.html#__delattr__" title="Allows deleting an item as if it was an attribute, but not for attributes &#160;starting with &#39;_&#39;." alt="" coords="209,509,646,529"/>
+<area shape="rect" id="node1_35" href="pyto.analysis.groups.Groups-class.html#regroup" title="Returnes a new instance of this class where the observations of this &#160;instance are rearanged into new groups according to values of the specified property." alt="" coords="209,529,646,549"/>
+<area shape="rect" id="node1_36" href="pyto.analysis.groups.Groups-class.html#pool" title="Unites specified categories into a new category." alt="" coords="209,549,646,569"/>
+<area shape="rect" id="node1_37" href="pyto.analysis.groups.Groups-class.html#addGroups" title="Adds all groups of the specified Groups object (arg groups) to this &#160;objects." alt="" coords="209,569,646,589"/>
+<area shape="rect" id="node1_38" href="pyto.analysis.groups.Groups-class.html#experiments" title="Generator that yields all identifiers and observations (experiments) of &#160;this instance." alt="" coords="209,589,646,609"/>
+<area shape="rect" id="node1_39" href="pyto.analysis.groups.Groups-class.html#addData" title="Adds properties listed in arg names of another Groups object (arg source) &#160;to this instance." alt="" coords="209,609,646,629"/>
+<area shape="rect" id="node1_40" href="pyto.analysis.groups.Groups-class.html#remove" title="Removes all data for all experiments specified by arg identifiers." alt="" coords="209,629,646,649"/>
+<area shape="rect" id="node1_41" href="pyto.analysis.groups.Groups-class.html#keep" title="Keeps only the experiments specified by arg identifiers and removes data &#160;corresponding to all other experiments." alt="" coords="209,649,646,669"/>
+<area shape="rect" id="node1_42" href="pyto.analysis.groups.Groups-class.html#min" title="Returns min value of the property given by arg name from all observations &#160;and all specified categories." alt="" coords="209,689,646,709"/>
+<area shape="rect" id="node1" href="pyto.analysis.groups.Groups-class.html" title="Data from any number of observations (also called experiments) is classified into one or more groups." alt="" coords="197,377,658,716"/>
+<area shape="rect" id="node2" href="pyto.analysis.vesicles.Vesicles-class.html" title="pyto.analysis.vesicles.Vesicles" alt="" coords="5,735,143,773"/>
+<area shape="rect" id="node4" href="pyto.analysis.clusters.Clusters-class.html" title="pyto.analysis.clusters.Clusters" alt="" coords="172,735,307,773"/>
+<area shape="rect" id="node5" href="pyto.analysis.connections.Connections-class.html" title="Modes:" alt="" coords="336,735,519,773"/>
+<area shape="rect" id="node6" href="pyto.analysis.layers.Layers-class.html" title="pyto.analysis.layers.Layers" alt="" coords="548,735,661,773"/>
+<area shape="rect" id="node7" href="pyto.analysis.cleft_regions.CleftRegions-class.html" title="Modes:" alt="" coords="691,735,881,773"/>
+<area shape="rect" id="node3_43" href="javascript:void(0);" title="hash(x)" alt="" coords="367,30,486,50"/>
+<area shape="rect" id="node3_44" href="javascript:void(0);" title="cmp(x,y)" alt="" coords="367,53,486,73"/>
+<area shape="rect" id="node3_45" href="javascript:void(0);" title="dict.__contains__" alt="" coords="367,73,486,93"/>
+<area shape="rect" id="node3_46" href="javascript:void(0);" title="del x[y]" alt="" coords="367,93,486,113"/>
+<area shape="rect" id="node3_47" href="javascript:void(0);" title="x==y" alt="" coords="367,113,486,133"/>
+<area shape="rect" id="node3_48" href="javascript:void(0);" title="x&gt;=y" alt="" coords="367,133,486,153"/>
+<area shape="rect" id="node3_49" href="javascript:void(0);" title="x.__getattribute__(&#39;name&#39;) &lt;==&gt; x.name" alt="" coords="367,153,486,173"/>
+<area shape="rect" id="node3_50" href="javascript:void(0);" title="x[y]" alt="" coords="367,173,486,193"/>
+<area shape="rect" id="node3_51" href="javascript:void(0);" title="x&gt;y" alt="" coords="367,193,486,213"/>
+<area shape="rect" id="node3_52" href="javascript:void(0);" title="iter(x)" alt="" coords="367,213,486,233"/>
+<area shape="rect" id="node3_53" href="javascript:void(0);" title="x&lt;=y" alt="" coords="367,233,486,253"/>
+<area shape="rect" id="node3_54" href="javascript:void(0);" title="len(x)" alt="" coords="367,253,486,273"/>
+<area shape="rect" id="node3_55" href="javascript:void(0);" title="x&lt;y" alt="" coords="367,273,486,293"/>
+<area shape="rect" id="node3_56" href="javascript:void(0);" title="x!=y" alt="" coords="367,293,486,313"/>
+<area shape="rect" id="node3_57" href="javascript:void(0);" title="dict.viewvalues" alt="" coords="367,333,486,353"/>
+<area shape="rect" id="node3" href="javascript:void(0);" title="dict() &#45;&gt; new empty dictionary dict(mapping) &#45;&gt; new dictionary initialized from a mapping object&#39;s (key, value) pairs dict(iterable) &#45;&gt; new dictionary initialized as if via: d = {} for k, v in iterable: d[k] = v dict(**kwargs) &#45;&gt; new dictionary initialized with the name=value pairs in the keyword argument list." alt="" coords="355,5,497,359"/>
+</map>
+  <img src="uml_class_diagram_for_pyto_ana_6.gif" alt='' usemap="#uml_class_diagram_for_pyto_ana_6" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<p>Data from any number of observations (also called experiments) is 
+  classified into one or more groups. Typically groups are based on 
+  different experimental conditions or traits observed in individual 
+  observations.</p>
+  <p>Each group of observations (class Observations) is accesed as values 
+  in a dictionary where keys are group names. A group can also be accessed 
+  as an attribute of this instance. Consequently, my_group['treated'] and 
+  my_group.treated are the same.</p>
+  <p>This class needes to be subclassed. Data is read using read() method 
+  that need to be defined in each subclass.</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type"><pre class="literalblock">
+new empty dictionary
+
+</pre></span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Doesn't do almost anything.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#fromList" class="summary-sig-name">fromList</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">groups</span>,
+        <span class="summary-sig-arg">names</span>)</span><br />
+      Adds groups specified in arg groups to this instance.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.fromList">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#recast" class="summary-sig-name">recast</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns a new instance of this class and sets all attributes of the 
+      new object to the attributes of obj.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.recast">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="__getattr__"></a><span class="summary-sig-name">__getattr__</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">key</span>)</span><br />
+      Allows accessing an item as if it was an attribute, but not for 
+      attributes starting with '_'.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.__getattr__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#__setattr__" class="summary-sig-name">__setattr__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">key</span>,
+        <span class="summary-sig-arg">value</span>)</span><br />
+      Allows setting an item as if it was an attribute, but not for 
+      attributes starting with '_'.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.__setattr__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#__delattr__" class="summary-sig-name">__delattr__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">key</span>)</span><br />
+      Allows deleting an item as if it was an attribute, but not for 
+      attributes starting with '_'.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.__delattr__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#regroup" class="summary-sig-name">regroup</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">categories</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">identifiers</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returnes a new instance of this class where the observations of this 
+      instance are rearanged into new groups according to values of the 
+      specified property.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.regroup">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#pool" class="summary-sig-name">pool</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">categories</span>,
+        <span class="summary-sig-arg">name</span>)</span><br />
+      Unites specified categories into a new category.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.pool">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#addGroups" class="summary-sig-name">addGroups</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">groups</span>,
+        <span class="summary-sig-arg">copy</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Adds all groups of the specified Groups object (arg groups) to this 
+      objects.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.addGroups">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#experiments" class="summary-sig-name">experiments</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">categories</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">identifiers</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Generator that yields all identifiers and observations (experiments) 
+      of this instance.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.experiments">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#addData" class="summary-sig-name">addData</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">source</span>,
+        <span class="summary-sig-arg">names</span>,
+        <span class="summary-sig-arg">groups</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">identifiers</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">copy</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Adds properties listed in arg names of another Groups object (arg 
+      source) to this instance.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.addData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#remove" class="summary-sig-name">remove</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">identifiers</span>,
+        <span class="summary-sig-arg">groups</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Removes all data for all experiments specified by arg identifiers.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.remove">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#keep" class="summary-sig-name">keep</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">groups</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">identifiers</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">removeGroups</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Keeps only the experiments specified by arg identifiers and removes 
+      data corresponding to all other experiments.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.keep">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#extract" class="summary-sig-name">extract</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">condition</span>)</span><br />
+      Returns an instance of this class that contain only those 
+      observations for which the condition is satisfied.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.extract">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#extractIndexed" class="summary-sig-name">extractIndexed</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">condition</span>)</span><br />
+      Extracts elements of individual observations of this instance, 
+      according to the arg condition and returns an object of this class 
+      containig the extracted elements.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.extractIndexed">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#splitIndexed" class="summary-sig-name">splitIndexed</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Splits this instance according to the indexed properties.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.splitIndexed">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#split" class="summary-sig-name">split</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">value</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">categories</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Splits this object into one or more objects depending of the values 
+      of the attribute specified by arg name and returns the object(s).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.split">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#splitByDistance" class="summary-sig-name">splitByDistance</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">distance</span>,
+        <span class="summary-sig-arg">name</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">distance_nm</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">categories</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns a list of Groups objects, where each object contains data for
+      elements of observations whose distances (attribute specified by 
+      name) fall into bins specified by arg distances.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.splitByDistance">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#joinExperiments" class="summary-sig-name">joinExperiments</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">join</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">groups</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">identifiers</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">bins</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">fraction</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">removeEmpty</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Creates new Observations instance by joining data (specified by arg 
+      name) of all experiments belonging to one group.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.joinExperiments">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#transpose" class="summary-sig-name">transpose</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Rearranges experiments so that groups and observations are exchanged
+and returnes a new (rearranged) instance of this class.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.transpose">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isTransposable"></a><span class="summary-sig-name">isTransposable</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns True if this object can be transposed (method transpose()), 
+      that is if all groups have the same experiment identifiers.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.isTransposable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#joinAndStats" class="summary-sig-name">joinAndStats</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">join</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">bins</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">fraction</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">groups</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">identifiers</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">test</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">reference</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">ddof</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">out</span>=<span class="summary-sig-default">&lt;epydoc.docintrospecter._DevNull object&gt;</span>,
+        <span class="summary-sig-arg">outNames</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">format_</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">title</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Does statistics on data (specified by arg name) for each group 
+      separately, and tests for statistical difference between groups and a
+      specified reference group(s).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.joinAndStats">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#doStats" class="summary-sig-name">doStats</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">bins</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">fraction</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">groups</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">identifiers</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">test</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">between</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">experiments</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">reference</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">ddof</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">out</span>=<span class="summary-sig-default">&lt;epydoc.docintrospecter._DevNull object&gt;</span>,
+        <span class="summary-sig-arg">outNames</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">format_</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">title</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Does statistical analysis on data (specified by arg name) for each 
+experiment separately, and tests for statistical difference between
+the data and specified reference experiment(s) data.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.doStats">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#countHistogram" class="summary-sig-name">countHistogram</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">ids</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">groups</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">identifiers</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">test</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">reference</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">out</span>=<span class="summary-sig-default">&lt;epydoc.docintrospecter._DevNull object&gt;</span>,
+        <span class="summary-sig-arg">outNames</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">format_</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">title</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Analysis of histograms, where each histogram is obtained by counting 
+number of data points in all experiments that have the same identifier.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.countHistogram">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#doCorrelation" class="summary-sig-name">doCorrelation</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">xName</span>,
+        <span class="summary-sig-arg">yName</span>,
+        <span class="summary-sig-arg">test</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">regress</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">reference</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">groups</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">identifiers</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">out</span>=<span class="summary-sig-default">&lt;epydoc.docintrospecter._DevNull object&gt;</span>,
+        <span class="summary-sig-arg">format_</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
+        <span class="summary-sig-arg">title</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span><br />
+      Tests if data specified by args xName and yName are correlated.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.doCorrelation">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#printStats" class="summary-sig-name">printStats</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">out</span>=<span class="summary-sig-default">&lt;epydoc.docintrospecter._DevNull object&gt;</span>,
+        <span class="summary-sig-arg">names</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">identifiers</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">groups</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">format_</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
+        <span class="summary-sig-arg">title</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">other</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">otherNames</span>=<span class="summary-sig-default"><code class="variable-group">[</code><code class="variable-group">]</code></span>)</span><br />
+      Prints basic statistics and inference analysis results contained in 
+      this instance.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.printStats">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#printData" class="summary-sig-name">printData</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">names</span>,
+        <span class="summary-sig-arg">out</span>=<span class="summary-sig-default">&lt;epydoc.docintrospecter._DevNull object&gt;</span>,
+        <span class="summary-sig-arg">groups</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">identifiers</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">format_</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
+        <span class="summary-sig-arg">title</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">other</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">otherNames</span>=<span class="summary-sig-default"><code class="variable-group">[</code><code class="variable-group">]</code></span>)</span><br />
+      Prints data (arg names) of this instance.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.printData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#getNPositive" class="summary-sig-name">getNPositive</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">n_name</span>,
+        <span class="summary-sig-arg">categories</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Calculates number of positive elements of a given property for each 
+      observation (experiment) and saves the results as a new (non-indexed)
+      property.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.getNPositive">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#getN" class="summary-sig-name">getN</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">categories</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">inverse</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">fixed</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">layer</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">layer_name</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">surface_nm</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">layer_index</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">layer_factor</span>=<span class="summary-sig-default">1e-06</span>)</span><br />
+      Counts number of elements of this instance, or calculates a related 
+property (depending on the arguments) for each observation and saves it
+as a separate (non-indexed) property named by arg name.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.getN">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#apply" class="summary-sig-name">apply</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">funct</span>,
+        <span class="summary-sig-arg">args</span>,
+        <span class="summary-sig-arg">kwargs</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
+        <span class="summary-sig-arg">name</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">categories</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">indexed</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Applies (arg) funct to indexed properties args where other arguments 
+      are given in arg kwargs.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.apply">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#max" class="summary-sig-name">max</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">categories</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns max value of the property given by arg name from all 
+      observations and all specified categories.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.max">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#min" class="summary-sig-name">min</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">categories</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns min value of the property given by arg name from all 
+      observations and all specified categories.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.min">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>dict</code></b>:
+      <code>__cmp__</code>,
+      <code>__contains__</code>,
+      <code>__delitem__</code>,
+      <code>__eq__</code>,
+      <code>__ge__</code>,
+      <code>__getattribute__</code>,
+      <code>__getitem__</code>,
+      <code>__gt__</code>,
+      <code>__iter__</code>,
+      <code>__le__</code>,
+      <code>__len__</code>,
+      <code>__lt__</code>,
+      <code>__ne__</code>,
+      <code>__new__</code>,
+      <code>__repr__</code>,
+      <code>__setitem__</code>,
+      <code>__sizeof__</code>,
+      <code>clear</code>,
+      <code>copy</code>,
+      <code>fromkeys</code>,
+      <code>get</code>,
+      <code>has_key</code>,
+      <code>items</code>,
+      <code>iteritems</code>,
+      <code>iterkeys</code>,
+      <code>itervalues</code>,
+      <code>keys</code>,
+      <code>pop</code>,
+      <code>popitem</code>,
+      <code>setdefault</code>,
+      <code>update</code>,
+      <code>values</code>,
+      <code>viewitems</code>,
+      <code>viewkeys</code>,
+      <code>viewvalues</code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__format__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#joinExperimentsList" class="summary-sig-name">joinExperimentsList</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">list</span>,
+        <span class="summary-sig-arg">listNames</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">groups</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">identifiers</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">join</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">removeEmpty</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Creates new Groups instance by joining data (specified by arg name) 
+      of all experiments belonging to one group.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.joinExperimentsList">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.analysis.groups.Groups-class.html#joinAndStatsList" class="summary-sig-name">joinAndStatsList</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">list</span>,
+        <span class="summary-sig-arg">listNames</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">join</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">groups</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">test</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">between</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">groups</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">reference</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">ddof</span>=<span class="summary-sig-default">1</span>)</span><br />
+      Does basic statistics on data (specified by arg name) for each group
+separately, and tests for statistical difference between groups and
+a specified reference group(s).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.joinAndStatsList">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>dict</code></b>:
+      <code>__hash__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Doesn't do almost anything.</p>
+  <dl class="fields">
+    <dt>Returns: <pre class="literalblock">
+new empty dictionary
+
+</pre></dt>
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="fromList"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">fromList</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">groups</span>,
+        <span class="sig-arg">names</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.fromList">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds groups specified in arg groups to this instance.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      groups: (list of Observations objects) observations objects that form
+      this object
+    </li>
+    <li>
+      names: (list of strings): names of the groups, the length has to be 
+      the same as the length of arg groups
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="recast"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">recast</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.recast">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns a new instance of this class and sets all attributes of the 
+  new object to the attributes of obj.</p>
+  <p>Useful for objects of this class loaded from a pickle that were 
+  pickled before some of the current methods of this class were coded. In 
+  this case the returned object contains the same attributes as the 
+  unpickled object but it accepts recently coded methods.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="__setattr__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__setattr__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">key</span>,
+        <span class="sig-arg">value</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.__setattr__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Allows setting an item as if it was an attribute, but not for 
+  attributes starting with '_'.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__setattr__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__delattr__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__delattr__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">key</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.__delattr__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Allows deleting an item as if it was an attribute, but not for 
+  attributes starting with '_'.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__delattr__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="regroup"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">regroup</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">categories</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">identifiers</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.regroup">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returnes a new instance of this class where the observations of this 
+  instance are rearanged into new groups according to values of the 
+  specified property.</p>
+  <p>The values of the specified property are used as the groop names of 
+  the new (rearanged) object. If these values are not strings (str type), 
+  they are converted to strings by str(value).</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      name: name of the property used to distinguish groups
+    </li>
+    <li>
+      categories: only experiments belonging to these categories (group 
+      names) are used, if None all categories are used
+    </li>
+    <li>
+      identifiers: only experiments having these experiment identifiers are
+      used, if None all identifiers are used
+    </li>
+  </ul>
+  <p>Returns: new instance of this class</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="pool"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">pool</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">categories</span>,
+        <span class="sig-arg">name</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.pool">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Unites specified categories into a new category.</p>
+  <p>The new category shares the data with the original categories. The 
+  other categories are not modified.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      categories: (list) categories to be united
+    </li>
+    <li>
+      name: new category name (key)
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="addGroups"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addGroups</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">groups</span>,
+        <span class="sig-arg">copy</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.addGroups">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds all groups of the specified Groups object (arg groups) to this 
+  objects. The groups are added separately. The added data</p>
+  <p>If arg copy is True, the individual groups of arg groups are 
+  deepcopied and the copies are added to this instance. Otherwise the 
+  groups are shared.</p>
+  <p>If group names from this and the specified Groups objects overlap, 
+  ValueError is raised.</p>
+  <p>Modifies this instance.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      groups: Groups instance
+    </li>
+    <li>
+      copy: Flag indicating whether the added groups are copied
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="experiments"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">experiments</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">categories</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">identifiers</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.experiments">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Generator that yields all identifiers and observations (experiments) 
+  of this instance.</p>
+  <p>If arg identifier is specified, the order of yielded objects follows 
+  the order of arg identifiers.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      categories: only experiments belonging to these categories (group 
+      names) are yielded, if None all categories are used
+    </li>
+    <li>
+      categories: only experiments having these experiment identifiers are 
+      yielded, if None all identifiers are used
+    </li>
+  </ul>
+  <p>Yields: group_name, identifier, observation (Experiment)</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="addData"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addData</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">source</span>,
+        <span class="sig-arg">names</span>,
+        <span class="sig-arg">groups</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">identifiers</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">copy</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.addData">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds properties listed in arg names of another Groups object (arg 
+  source) to this instance.</p>
+  <p>In arg names is a list, added properties retain their names, and so 
+  will overwrite the properties having same names of this instance (if they
+  exist). Otherwise, if arg names is a dictionary, the keys are the 
+  property names in source object and values are the corresponding names 
+  under which they are added to this object.</p>
+  <p>All specified group names (arg groups) and / or identifiers have to 
+  exist in both objects. If arg groups / identifiers is None, groups / 
+  identifiers of arg source have to exist in this object.</p>
+  <p>If arg copy is True, a copy of data is saved to the other object 
+  (copy() method for numpy.ndarrays, deepcopy for the rest).</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      source: (Observations) another object
+    </li>
+    <li>
+      names: list of property names of the source object, or a dictionary 
+      where keys are the property names in source and values are the new 
+      names
+    </li>
+    <li>
+      groups: list of group names
+    </li>
+    <li>
+      identifiers: list of experiment identifiers for which the data is 
+      copied. Identifiers listed here that do not exist among identifiers 
+      of source are ignored.
+    </li>
+    <li>
+      copy: Flag indicating if data is copied
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="remove"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">remove</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">identifiers</span>,
+        <span class="sig-arg">groups</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.remove">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes all data for all experiments specified by arg identifiers. 
+  Experiments are removed for the specified groups, or if arg groups is 
+  None for all groups of this instance.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      identifiers: list of experiment identifiers
+    </li>
+    <li>
+      groups: list of group names or None for all groups
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="keep"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">keep</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">groups</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">identifiers</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">removeGroups</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.keep">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Keeps only the experiments specified by arg identifiers and removes 
+  data corresponding to all other experiments.</p>
+  <p>If arg removeGroups is False, experiments are removed only for the 
+  specified groups, while the nonspecified groups are not affected.</p>
+  <p>Alternatively, if arg removeGroups is True, groups that are not 
+  specified are (entirely) removed. In other words, only the specified 
+  experiments of the specified gropus are kept.</p>
+  <p>If arg identifiers is None, all identifiers are kept. Similarly, if 
+  arg groups is None, the behaviour is the same as if all groups were 
+  specified.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      identifiers: list of experiment identifiers
+    </li>
+    <li>
+      groups: list of group names or None for all groups
+    </li>
+    <li>
+      removeGroups: flag indicating if non-specified groups are removed
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="extract"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">extract</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">condition</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.extract">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns an instance of this class that contain only those observations
+  for which the condition is satisfied.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      condition: object that have the same structure as this instance
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="extractIndexed"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">extractIndexed</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">condition</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.extractIndexed">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Extracts elements of individual observations of this instance, 
+  according to the arg condition and returns an object of this class 
+  containig the extracted elements.</p>
+  <p>The structure of arg condition has to correspond to the structure of 
+  this instance, that is it has to be a dictionary with the same keys as in
+  this instance, each of its values has to be a list of the same number of 
+  elements as the number of observations, and each of these elements has to
+  be a ndarray containing elements corresponding to the elements of the 
+  indexed properties of this instance.</p>
+  <p>Elements of this instance which correspond to True elements in arg 
+  condition are extracted.</p>
+  <p>Elements are extracted from all indexed properties (as specified in 
+  self.indexed), while the other properties are copied in full.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      condition: condition
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="splitIndexed"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">splitIndexed</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.splitIndexed">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Splits this instance according to the indexed properties.</p>
+  <p>Returns a list of instances of this class where each instance contains
+  only one value of each of the indexed properties for each category (the 
+  returned instances have the same categories as this instance). Other 
+  (non-indexed) properties are copied from this to each of the resulting 
+  instances.</p>
+  <p>If indexed properties of observations comprising this instance contain
+  different number of elements, only the common elements are returned. That
+  is, the length of the returned list is the minimum number of elements 
+  that indexed properties have.</p>
+  <p>Returns: list of instances of this class.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="split"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">split</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">value</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">categories</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.split">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Splits this object into one or more objects depending of the values of
+  the attribute specified by arg name and returns the object(s).</p>
+  <p>If value is a single number, the returned object if formed from all 
+  vesicles of all observations and for all categories that have the value 
+  of property given by arg name between 0 and arg value (limits 
+  inclusive).</p>
+  <p>If value is a list of numbers, they specify bins and a list of objects
+  (one for each bin) is returned. Lower bin limits are inclusive, while the
+  upper are exclusive, except for the upper limit of the last bin which is 
+  inclusive (like numpy.histogram).</p>
+  <p>If value is a single number single sv object is returned. Otherwise, 
+  if value is a list of numbers, a list of sv objects is returned.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      value: list of values, interpreted as value bins, or if a single 
+      number it is a higher value limit, while 0 is the lower
+    </li>
+    <li>
+      name: (string) name of the attribute whose values are compared with 
+      arg values
+    </li>
+    <li>
+      categories:
+    </li>
+  </ul>
+  <p>Returns a list of (if arg value is a list), or one (if arg values is a
+  single number) obect(s) of this class</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="splitByDistance"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">splitByDistance</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">distance</span>,
+        <span class="sig-arg">name</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">distance_nm</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">categories</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.splitByDistance">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns a list of Groups objects, where each object contains data for 
+  elements of observations whose distances (attribute specified by name) 
+  fall into bins specified by arg distances.</p>
+  <p>Lower distance bin limits are inclusive, while the upper are 
+  exclusive, except for the upper limit of the last distance bin which is 
+  inclusive (like numpy.histogram)</p>
+  <p>If distance is a single number single sv object is retutred. 
+  Otherwise, if distance is a list of numbers, a list of sv objects is 
+  returned.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      distance: list of distances, interpreted as distance bins, or if a 
+      single number it is a higher distance limit, while 0 is the lower
+    </li>
+    <li>
+      name: name of the distance attribute (default 'dist_nm')
+    </li>
+    <li>
+      categories:
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="joinExperiments"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">joinExperiments</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">join</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">groups</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">identifiers</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">bins</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">fraction</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">removeEmpty</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.joinExperiments">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Creates new Observations instance by joining data (specified by arg 
+  name) of all experiments belonging to one group. Essentially, groups 
+  comprising this instance (Groups) become observations of the resulting 
+  instance (Observations).</p>
+  <p>Data of individual experiments (observations) can be joined in the 
+  following ways (arg mode):</p>
+  <ul>
+    <li>
+      'join': Data is pooled across experiments of the same group
+    </li>
+    <li>
+      'mean': The mean values of data for all experiments are pooled 
+      accross experiments of the same group
+    </li>
+    <li>
+      'mean_bin': For each experiment data is binned (arg bins), the 
+      resulting histogram is normalized to 1 and data from bin number given
+      by arg fraction is used. These values are pooled accross experiments 
+      of the same group.
+    </li>
+  </ul>
+  <p>The joined data is ordered according to (the order of) arg 
+  identifiers.</p>
+  <p>The resulting instance has the following properties:</p>
+  <ul>
+    <li>
+      identifiers: same as group names of this instance, the order of 
+      identifiers is the same as the order of self.keys().
+    </li>
+    <li>
+      data name(s): the name of the data property stays the same
+    </li>
+    <li>
+      ids: set from 1 up (increment 1), correspond to each data point of 
+      the resulting instance
+    </li>
+    <li>
+      idNames: unique string for each data value derived from identifier 
+      and id for that value, see below.
+    </li>
+  </ul>
+  <p>If data is scalar (one value per experiment), or the mode is 'mean' 
+  experiment identifiers of this instance are saved as attribute idNames of
+  the new Observations. Alternatively, if data is indexed and mode is 
+  'join' idNames of the new Observations for each data element is composed 
+  as identifier_id where identifier and id are specifying this data 
+  element.</p>
+  <p>Arg remove empty determines what to do if there is no data in an 
+  experiment in case arg mode is 'mean' and the data is indexed. If True, 
+  experiment that has no data is ignored, and the identifier of this 
+  experiment is not added to idNames. If False, numpy.NaN is added instead 
+  of the mean.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      name: name of the data attribute
+    </li>
+    <li>
+      mode: 'join' to join or 'mean' to average data
+    </li>
+    <li>
+      groups: (list) names of groups whose experiments are joined
+    </li>
+    <li>
+      identifiers: list of experiment identifiers to be used here, if None 
+      all are used. Non-existing identifiers are ignored.
+    </li>
+    <li>
+      removeEmpty: Flag that determines what to do if there is no data in 
+      an experiment. Used only if arg mode is 'mean' and the data is 
+      indexed.
+    </li>
+  </ul>
+  <p>Returns: Observations instance</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="joinExperimentsList"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">joinExperimentsList</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">list</span>,
+        <span class="sig-arg">listNames</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">groups</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">identifiers</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">join</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">removeEmpty</span>=<span class="sig-default">True</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.joinExperimentsList">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Creates new Groups instance by joining data (specified by arg name) of
+  all experiments belonging to one group. That is, for each Groups objects 
+  given in arg list, individual groups (Observations object) are joined to 
+  become individual observations. Each Groups object given becomes 
+  Observations object in the resulting Groups object.</p>
+  <p>Data of individual experiments (observations) are either joined 
+  together (mode 'join'), or an average value of each experiment is used 
+  (mode 'mean') for the resulting instance.</p>
+  <p>All Observations objects of the resulting Groups instance have the 
+  following properties:</p>
+  <ul>
+    <li>
+      identifiers: same as group names of Groups objects of arg list, the 
+      order of identifiers is the same as the order of the corresponding 
+      groups_instance.keys().
+    </li>
+    <li>
+      data name: the name of the data property stays the same
+    </li>
+    <li>
+      ids: set from 1 up (increment 1), correspond to each data point of 
+      the resulting instance
+    </li>
+    <li>
+      idNames: unique string for each data value derived from identifier 
+      and id for that value, see below.
+    </li>
+  </ul>
+  <p>Values of arg listNames become group names of the resulting 
+  object.</p>
+  <p>If data is scalar (one value per experiment), or the mode is 'mean' 
+  experiment identifiers are saved as attribute idNames of the new 
+  Observations objects. Alternatively, if data is indexed and mode is 
+  'join' idNames of the new Observations for each data element is composed 
+  as identifier_id where identifier and id are specifying this data 
+  element.</p>
+  <p>Arg remove empty determines what to do if there is no data in an 
+  experiment in case arg mode is 'mean' and the data is indexed. If True, 
+  experiment that has no data is ignored, and the identifier of this 
+  experiment is not added to idNames. If False, numpy.NaN is added instead 
+  of the mean.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      list: list of Groups objects
+    </li>
+    <li>
+      listNames: (list of strings) names of the Groups objects given in arg
+      list
+    </li>
+    <li>
+      name: name of the data attribute
+    </li>
+    <li>
+      groups: (list) names of groups whose experiments are joined
+    </li>
+    <li>
+      identifiers: list of experiment identifiers to be used here, if None 
+      all are used. Non-existing identifiers are ignored.
+    </li>
+    <li>
+      mode: 'join' to join or 'mean' to average data
+    </li>
+    <li>
+      removeEmpty: Flag that determines what to do if there is no data in 
+      an experiment. Used only if arg mode is 'mean' and the data is 
+      indexed.
+    </li>
+  </ul>
+  <p>Returns: Groups instance</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="transpose"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">transpose</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.transpose">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Rearranges experiments so that groups and observations are exchanged
+and returnes a new (rearranged) instance of this class.
+
+For example, if this instance contains:
+  group a: exp 1, exp 5, exp 7
+  group b: exp 1, exp 5, exp 7
+then the rearranged object is:
+  group 1: exp a, exp b
+  group 5: exp a, exp b
+  group 7: exp a, exp b
+
+All groups have to have same experiment identifiers, otherwise a
+ValueError ir raised. They are also expected to have the same
+properties and indexed attributes.
+
+Properties reference and referenceGroup are interchanged for each 
+experiment. If an experiment of the original object doesn't have 
+referenceGroup the it is assumed that it is the (name of the) original 
+group and the reference of the same experiment in the transposed
+object is set accordingly.
+
+Does not modify any of the data.
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="joinAndStats"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">joinAndStats</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">join</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">bins</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">fraction</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">groups</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">identifiers</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">test</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">reference</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">ddof</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">out</span>=<span class="sig-default">&lt;epydoc.docintrospecter._DevNull object&gt;</span>,
+        <span class="sig-arg">outNames</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">format_</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">title</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.joinAndStats">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Does statistics on data (specified by arg name) for each group 
+  separately, and tests for statistical difference between groups and a 
+  specified reference group(s).</p>
+  <p>Argument mode determines how the data is pooled across experiments. If
+  mode is 'join', data of individual experiments (observations) are joined 
+  (pooled)  together within a group to be used for further analysis. If it 
+  is 'mean', the mean value for each experiment is calculated and these 
+  means are used for further analysis.</p>
+  <p>Argument bins determined how the above obtained data is further 
+  processed. If arg bins is not specified, basic stats (mean, std, sem) are
+  calculated for all groups and the data is statistically compared among 
+  the groups. Alternatively, if arg bins is specified, histograms of the 
+  data are calculated for all groups, normalized to 1 and statistically 
+  compared between groups.</p>
+  <p>Modes 'join_bins' and 'byIndex' are described below. Specifically, the
+  following types of analysis are implemented:</p>
+  <ul>
+    <li>
+      mode='join', bins=None: Data is pooled across experiments of the same
+      group, basic stats are calculated within groups and statistically 
+      compared between groups.
+    </li>
+    <li>
+      mode='join', bins specified (not None): Data is pooled across 
+      experiments of the same group, histograms (acording to arg bins) of 
+      the data values are calculated within group and statistically 
+      compared among groups.
+    </li>
+    <li>
+      mode='mean', bins=None: Mean values are calculated for all 
+      experiments, basic stats are calculated for means within groups and 
+      statistically compared between groups.
+    </li>
+    <li>
+      mode='mean', bins specified (not None): Mean values are calculated 
+      for all experiment, histograms (acording to arg bins) of the means 
+      are calculated within groups and statistically compared between 
+      groups.
+    </li>
+    <li>
+      mode='mean_bin', bins have to be specified (not None): Histograms of 
+      the data values are calculated for each experiment (acording to arg 
+      bins) and normalized to 1, basic stats are calculated for values of 
+      the bin specified by arg within groups, and statistically compared 
+      between groups
+    </li>
+    <li>
+      mode='byIndex', bins should not be specified: Basic stats (mean, std,
+      sem) are calculated for each index (position) separately. Data has to
+      be indexed, and all experiments within one group have to have same 
+      ids.
+    </li>
+  </ul>
+  <p>Returns Observations instance, where each experiment (observation) of 
+  the returned instance correspond to a group of this instance.</p>
+  <p>In cases data distributions are statistically compared ('join', bins 
+  None; 'mean', bins None; 'mean_bin'; 'byIndex'), the returned instance 
+  has following attributes:</p>
+  <ul>
+    <li>
+      data: deepcopied data that is statistically analyzed
+    </li>
+    <li>
+      mean: mean
+    </li>
+    <li>
+      std: n-ddof degrees of freedom
+    </li>
+    <li>
+      n: number of individual data points
+    </li>
+    <li>
+      sem: standard error of means
+    </li>
+  </ul>
+  <p>In cases histograms are statistically compared ('join' or 'mean', bins
+  specified), the returned instance has following attributes:</p>
+  <ul>
+    <li>
+      ids: left bin limits
+    </li>
+    <li>
+      data: deepcopied data
+    </li>
+    <li>
+      histogram: (ndarray of length 1 less than bins) histogram values 
+      (indexed)
+    </li>
+    <li>
+      probability: (ndarray of length 1 less than bins) histogram / 
+      sum_of_histogram (indexed)
+    </li>
+    <li>
+      n: number of individual data points
+    </li>
+    <li>
+      fraction: histogram[fraction] / n
+    </li>
+    <li>
+      histogram_data, probability_data, fraction_data: the same as the 
+      corresponding attributes without '_data' suffix, except that these 
+      are lists that contain values for each group
+    </li>
+  </ul>
+  <p>If arg test is specified, inference is calculated between groups and 
+  the following attributes are set in the returned instance:</p>
+  <ul>
+    <li>
+      testValue: values of the test used
+    </li>
+    <li>
+      testSymbol: specifies the test ('t', 'h', 'u', ...)
+    </li>
+    <li>
+      confidence: probability that data from a group and the/its reference 
+      come from the same population
+    </li>
+  </ul>
+  <p>All of these attributes are lists with elements corresponding to the 
+  original groups (experiments of the returned object), except for 
+  testSymbol which is a string</p>
+  <p>The results are written on a stream specifed by arg out</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      name: name of the data attribute
+    </li>
+    <li>
+      bins: histogram bins, if specified histogram is calculated
+    </li>
+    <li>
+      fraction: (int) position of the histogram bin that is selected 
+      (starts from 0)
+    </li>
+    <li>
+      groups: list of the groop names to be analyzed, None for all groups
+    </li>
+    <li>
+      identifiers: list of experiment identifiers to be used here, if None 
+      all are used. Non-existing identifiers are ignored.
+    </li>
+    <li>
+      mode: 'join' to join, 'mean' to average data or 'byIndex'
+    </li>
+    <li>
+      reference: name of the reference group, a single name (string), or a 
+      dictonary where each group name (keys) is associated with its 
+      reference (values)
+    </li>
+    <li>
+      test: statistical test used: 't', 'h', 'u', or any other stated in 
+      Observations.doInference() doc. If None no test is done.
+    </li>
+    <li>
+      out: output stream, sys.stdout (default) for standard out, if string 
+      it's understood as a file name, None for no output
+    </li>
+    <li>
+      outNames: list of sttribute names to be printed, None for a default 
+      names list: ['mean', 'std', 'sem', 'n', 'testValue', 'confidence']
+    </li>
+    <li>
+      format_: dictionary containing data formats (keyes are attribute 
+      names) and values are formating strings. If None default names are 
+      used.
+    </li>
+    <li>
+      title: string that's printed first
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="joinAndStatsList"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">joinAndStatsList</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">list</span>,
+        <span class="sig-arg">listNames</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">join</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">groups</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">test</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">between</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">groups</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">reference</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">ddof</span>=<span class="sig-default">1</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.joinAndStatsList">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Does basic statistics on data (specified by arg name) for each group
+separately, and tests for statistical difference between groups and
+a specified reference group(s).
+
+Essentially a combination of joinExperimentsList() that joins data
+belonging to a same group (over individual experiments) thus
+making a Groups object, and doStats() that calculates statstics on 
+this Groups object.
+
+Arg list contains Groups objects as items, and each of these can 
+have one or more groups. If arg between is 'list_items', all Groups 
+objects specified (arg list) have to have the same group names.
+
+Data of individual experiments (observations) are either joined
+together within a group (mode 'join'), or an average value of each 
+experiment is used (mode 'mean') for the resulting instance.
+
+If arg between is 'groups', statistical difference is calculated 
+between groups within a Groups object (item of arg list). In this case
+arg references can be one of the following:
+  - single group name (string), so all groups of a Groups object have
+  the same reference. Here the specified group name has to appear in
+  all Groups objects.
+  - dictonary where list item names are keys and reference group names
+  are values. Again, all groups of a Groups object have the same
+  reference, but Groups objects can have different group names.
+  - dictionary where list item names are keys and values are again 
+  dictionaries with all group names (belonging to the corresponding
+  Groups objects) are keys and the corresponding reference group names
+  are values. Here, each group can have a different reference.
+
+Alternatively, if arg between is 'list_items', the difference is 
+calculated between groups of different Groups objects that have the 
+same group names. In this case each Group object has to have the same 
+group names and arg reference can be one of the following:
+   - single list item name (string), so all groups with the same group
+   name have the same reference and all references belong to the same 
+   Groups object
+   - dictonary where igroup names are keys and list item names are 
+  values. Again, all groups with same group name have the same
+  reference, but reference groups do not have to belong to the
+  same Groups object
+  - dictionary where group names are keys and values are again
+  dictionarys where all list item names are keys and the corresponding 
+  refernce list item names are values.
+
+Returns a new instance of this class where individual groups correspond
+to Groups objects of arg list, and have group names from arg listNames.
+Identifiers of these Groups objects are the same as groups names of 
+arg list elements. Indifidual groups of the resulting Groups object
+(Observations instances) have following attributes (if test is None 
+inference is not calculated):
+  - mean
+  - std: n-ddof degrees of freedom
+  - n: number of individual data points
+  - sem: standard error of means
+  - testValue: values of t, h or u depending on the test
+  - testSymbol: 't', 'h', or 'u', depending on the test
+  - confidence: probability that data from a group and the/its 
+  reference come from the same population
+
+Arguments:
+  - list: list of Groups objects
+  - listNames: (list of strings) list item names 
+  - name: name of the data attribute
+  - groups: list of group names to be analyzed, None for all groups 
+  - mode: 'join' to join or 'mean' to average data
+  - test: statistical test used: 't', 'h', 'u', or any other stated
+  in Observations.doInference() doc. If None no test is done. 
+  - between: determines if statistical significance is calculated 
+  between groups of the same Groups object (value 'groups') or between 
+  groups having the same group name
+  - reference: name of the reference group(s) (if arg between 
+  is 'experiments'), or reference identifier(s) (arg between is
+  'groups')
+  - ddof: delta degrees of freedom, denominator for std is N-ddof
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="doStats"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">doStats</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">bins</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">fraction</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">groups</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">identifiers</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">test</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">between</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">experiments</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">reference</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">ddof</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">out</span>=<span class="sig-default">&lt;epydoc.docintrospecter._DevNull object&gt;</span>,
+        <span class="sig-arg">outNames</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">format_</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">title</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.doStats">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Does statistical analysis on data (specified by arg name) for each 
+experiment separately, and tests for statistical difference between
+the data and specified reference experiment(s) data.
+
+If arg bin is None, calculates basic statistics. The calculations are
+saved as following attributes:
+  - data: deepcopied data 
+  - mean: mean
+  - std: n-ddof degrees of freedom,
+  - n: number of individual data points
+  - sem: standard error of means
+  - ddof: delta degrees of freedom, denominator for std is N-ddof
+
+Alternatively, if arg bins is given calculates histogram of the data 
+according to bins ans saves it as the following attributes:
+  - ids: left bin limits 
+  - data: deepcopied data 
+  - histogram: histogram (indexed)
+  - probability: histogram / sum_of_histogram (indexed)
+  - n: number of individual data points
+  - fraction: histogram[fraction] / n
+
+  If areg test is specified, inference is calculated and the results
+  are saved as the follwoing attributes:
+  - testValue: values of t, chi2, h or u depending on the test
+  - testSymbol: 't', 'chi2', 'h', or 'u', depending on the test
+  - confidence: probability that data from a group and the/its 
+  reference come from the same population
+
+If arg between is 'experiments', statistical difference is calculated 
+between experiments within each group. In this case arg references
+can be one of the following:
+  - single identifier (string), so all experiments of a group have the
+  same reference. Here the specified identifier has to appear in all
+  groups
+  - dictonary where group names are keys and reference identifiers are 
+  values. Again, all experiments of a group have the same reference, 
+  but groups can have different identifiers.
+  - dictionary where group names are keys and values are again 
+  dictionaries with all identifiers (belonging to the corresponding
+  group) are keys and the corresponding reference identifiers are 
+  values. Here, each experiment can have a different reference.
+
+Alternatively, if arg between is 'groups', the difference is calculated
+between experiments of different groups that have the same identifiers.
+In this case each group has to have the same experiment identifiers
+and arg reference can be one of the following:
+   - single group name (string), so all experiments with same 
+   identifier have the same reference and all reference experiments
+   belong to the same group
+   - dictonary where identifiers are keys and group names are 
+  values. Again, all experiments with same identifier have the same
+  reference, but reference experiments do not have to belong to the
+  same group
+  - dictionary where identifiers are keys and values are again
+  dictionarys where all group names are keys and the corresponding 
+  refernce group names are values.
+
+Returns a new instance of this class that has the same groups and
+identifiers as this instance. Each group (Observations instance) has 
+the attributes listed above.
+
+Arguments:
+  - name: name of the data attribute
+  - bins: histogram bins, if specified histogram is calculated
+  - fraction: (int) position of the histogram bin for which the
+  - groups: list of group names, None for all groups 
+  - identifiers: list of experiment identifiers, None for all 
+  experiments of all groups.
+  - between: determines if statistical significance is calculated 
+  between experiments of the same group (value 'experiment') or between 
+  experiments having the same identifyer (value 'groups')
+  - reference: name of the reference group(s) (if arg between 
+  is 'experiments'), or reference identifier(s) (arg between is
+  'groups')
+  - test: statistical test used: 't', 'h', 'u', or any other stated
+  in Observations.doInference() doc. If None no test is done. 
+  - ddof: delta degrees of freedom, denominator for std is N-ddof
+  - out: output stream, sys.stdout (default) for standard out, if
+  string it's understood as a file name
+  - outNames: list of sttribute names to be printed, None for a default
+  names list: ['mean', 'std', 'sem', 'n', 'testValue', 'confidence']
+  - format_: dictionary containing data formats (keyes are attribute
+  names) and values are formating strings. If None default names are
+  used.
+  - title: string that's printed first
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="countHistogram"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">countHistogram</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">ids</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">groups</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">identifiers</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">test</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">reference</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">out</span>=<span class="sig-default">&lt;epydoc.docintrospecter._DevNull object&gt;</span>,
+        <span class="sig-arg">outNames</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">format_</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">title</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.countHistogram">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Analysis of histograms, where each histogram is obtained by counting 
+number of data points in all experiments that have the same identifier.
+
+The resulting object (of this class) has the same group structure as 
+this instance, and each group (Observation object) has the following
+data attributes:
+  - count: number of data points
+  - n: total number of data points for all experiments with the same
+  identifier
+  - fraction: count / n
+
+If areg test is specified, inference is calculated and the results
+are saved as the follwoing attributes (see Observations.doInference()):
+  - reference: reference
+  - testValue: values of t, chi2, h or u depending on the test
+  - testSymbol: 't', 'chi2', 'h', or 'u', depending on the test
+  - confidence: probability that data from a group and the/its 
+  reference come from the same population
+ 
+For example, for an object where:
+
+  group a, identifier 'i1', data = [1, 2, 3]
+  group a, identifier 'i3', data = [1, 2, 3, 4]
+  group b, identifier 'i1', data = [5]
+  group b, identifier 'i3', data = [6, 7]
+   
+the resulting object has:
+
+  group a, identifier 'i1': count=3, n=4, fraction=3/4 
+  group a, identifier 'i3': count=4, n=6, fraction=4/6 
+  group b, identifier 'i1': count=1, n=4, fraction=1/4 
+  group a, identifier 'i3': count=2, n=6, fraction=2/6 
+
+For significance tests histograms [3, 1] (i1) and [4, 2] (i3) are 
+compared.
+
+This method can be applied only on symmetrical objects.
+
+Also prints the calculated data.
+
+Arguments:
+  - name: name of the data attribute (this data is counted)
+  - groups: list of group names, None for all groups 
+  - identifiers: list of experiment identifiers, None for all 
+  experiments of all groups.
+   - reference: name of the reference group(s) (if arg between 
+  is 'experiments'), or reference identifier(s) (arg between is
+  'groups')
+  - test: statistical test used: 't', 'h', 'u', or any other stated
+  in Observations.doInference() doc. If None no test is done. 
+  - out: output stream, sys.stdout (default) for standard out, if
+  string it's understood as a file name
+  - outNames: list of sttribute names to be printed, None for a default
+  names list: ['mean', 'std', 'sem', 'n', 'testValue', 'confidence']
+  - format_: dictionary containing data formats (keyes are attribute
+  names) and values are formating strings. If None default names are
+  used.
+  - title: string that's printed first
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="doCorrelation"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">doCorrelation</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">xName</span>,
+        <span class="sig-arg">yName</span>,
+        <span class="sig-arg">test</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">regress</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">reference</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">groups</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">identifiers</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">out</span>=<span class="sig-default">&lt;epydoc.docintrospecter._DevNull object&gt;</span>,
+        <span class="sig-arg">format_</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
+        <span class="sig-arg">title</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.doCorrelation">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Tests if data specified by args xName and yName are correlated.</p>
+  <p>If mode is None, data from each experiment is analyzed separately. The
+  returned object is an instance of this class and has the same group / 
+  experiment structure as this instance.</p>
+  <p>Alternatively, if mode is 'join', data from all experiments of one 
+  group are taken together. In this case arg new is ignored (effectively 
+  set to True). In this case the returned object is an instance of 
+  Observations and its identifiers correspond to the group names of this 
+  object.</p>
+  <p>If specified, arg identifiers determines the order of identifiers in 
+  the resulting instance. If None, all existing identifiers are used.</p>
+  <p>The results are saved as the following attributes:</p>
+  <ul>
+    <li>
+      xData, yData: deepcopied xName, yName data, only if new is True
+    </li>
+    <li>
+      n: number of individual data points
+    </li>
+    <li>
+      testValue: correlation test value
+    </li>
+    <li>
+      testSymbol: currently 'r' or 'tau', depending on the test
+    </li>
+    <li>
+      confidence: confidence
+    </li>
+    <li>
+      aRegress, bRegress: slope and intercept of the regression line (if 
+      arg regress is True)
+    </li>
+  </ul>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      xName, yName, property names of data
+    </li>
+    <li>
+      test: correlation test, currently 'r' (or 'pearson'), 'tau' (or 
+      'kendall')
+    </li>
+    <li>
+      regress: flag indicating if regression (best fit) line is calculated
+    </li>
+    <li>
+      reference:
+    </li>
+    <li>
+      mode: None, or 'join'
+    </li>
+    <li>
+      groups: list of group names to use
+    </li>
+    <li>
+      identifiers: list of experiment identifiers for which the correlation
+      is calculated. Identifiers listed here that do not exist among 
+      identifiers of this instance are ignored.
+    </li>
+    <li>
+      out: output stream, sys.stdout (default) for standard out, if string 
+      it's understood as a file name
+    </li>
+    <li>
+      outNames: list of sttribute names to be printed, None for a default 
+      names list: ['mean', 'std', 'sem', 'n', 'testValue', 'confidence']
+    </li>
+    <li>
+      format_: dictionary containing data formats (keyes are attribute 
+      names) and values are formating strings. If None default names are 
+      used.
+    </li>
+    <li>
+      title: string that's printed first
+    </li>
+  </ul>
+  <p>Returns object containing data and results.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="printStats"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">printStats</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">out</span>=<span class="sig-default">&lt;epydoc.docintrospecter._DevNull object&gt;</span>,
+        <span class="sig-arg">names</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">identifiers</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">groups</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">format_</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
+        <span class="sig-arg">title</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">other</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">otherNames</span>=<span class="sig-default"><code class="variable-group">[</code><code class="variable-group">]</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.printStats">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Prints basic statistics and inference analysis results contained in 
+  this instance.</p>
+  <p>Data from another Groups object having the same group names and 
+  experiment identifiers can be printed along the stats of this object if 
+  the another group is specifed as arg other and the proeprty names of the 
+  other group are given in arg otherNames.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      out: output stream, sys.stdout (default) for standard out, if string 
+      it's understood as a file name
+    </li>
+    <li>
+      names: list of sttribute names to be printed, None for a default 
+      names list: ['mean', 'std', 'sem', 'n', 'fraction', 'testValue', 
+      'confidence']
+    </li>
+    <li>
+      groups: list of group names, None for all groups
+    </li>
+    <li>
+      identifiers: list of experiment identifiers, None for all experiments
+      of all groups.
+    </li>
+    <li>
+      format_: dictionary containing data formats (keyes are attribute 
+      names) and values are formating strings. If None default names are 
+      used.
+    </li>
+    <li>
+      title: string that's printed first
+    </li>
+    <li>
+      other: (Group) another object of the same group and identifier 
+      structure as this object
+    </li>
+    <li>
+      otherNames: list of property names of the other group
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="printData"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">printData</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">names</span>,
+        <span class="sig-arg">out</span>=<span class="sig-default">&lt;epydoc.docintrospecter._DevNull object&gt;</span>,
+        <span class="sig-arg">groups</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">identifiers</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">format_</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
+        <span class="sig-arg">title</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">other</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">otherNames</span>=<span class="sig-default"><code class="variable-group">[</code><code class="variable-group">]</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.printData">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Prints data (arg names) of this instance.</p>
+  <p>Data from another Groups object having the same group names and 
+  experiment identifiers can be printed along the data of this object if 
+  the another group is specifed as arg other and the proeprty names of the 
+  other group are given in arg otherNames.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      names: list of property names to be printed
+    </li>
+    <li>
+      out: output stream, sys.stdout (default) for standard out, if string 
+      it's understood as a file name
+    </li>
+    <li>
+      groups: list of group names, None for all groups
+    </li>
+    <li>
+      identifiers: list of experiment identifiers, None for all experiments
+      of all groups.
+    </li>
+    <li>
+      format_: dictionary containing data formats (keyes are attribute 
+      names) and values are formating strings. If None default names are 
+      used.
+    </li>
+    <li>
+      title: string that's printed first
+    </li>
+    <li>
+      other: (Group) another object of the same group and identifier 
+      structure as this object
+    </li>
+    <li>
+      otherNames: list of property names of the other group
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getNPositive"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getNPositive</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">n_name</span>,
+        <span class="sig-arg">categories</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.getNPositive">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates number of positive elements of a given property for each 
+  observation (experiment) and saves the results as a new (non-indexed) 
+  property.</p>
+  <p>Arguments</p>
+  <ul>
+    <li>
+      name: name of the property whose positive elements are counted
+    </li>
+    <li>
+      n_name: name of the property where the results are stored
+    </li>
+    <li>
+      categoriesL
+    </li>
+    <li>
+      categories: list of group names, in None all groups are used
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getN"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getN</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">categories</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">inverse</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">fixed</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">layer</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">layer_name</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">surface_nm</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">layer_index</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">layer_factor</span>=<span class="sig-default">1e-06</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.getN">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Counts number of elements of this instance, or calculates a related 
+property (depending on the arguments) for each observation and saves it
+as a separate (non-indexed) property named by arg name.
+
+The elements that are counted are the main elements of this class 
+(those specified by ids). For example they are vesicles if this class 
+is Vesicles, tethers or connectors if this class is Connections.
+
+If arg layers in None, only the number of elements is calculated.
+
+If arg layers is specified, number of elements per unit layer area
+is calculated. The unit layer area is calculated as:
+
+  layer_name[layer_index] * layer_factor
+
+In a typical case layer area in nm (property 'surface_nm') of the
+layer 1 (layer_index=1). If layer_factor=1.e-6 (default), then this 
+method calculates number of elements per 1 um^2 of the layer surface.
+
+If arg inv is True, the inverse is calculated, that is the layer area 
+per one sv.
+
+If arg fixed is specified, te calculation proceed as above except that
+the number of elements (for each observation) is fixed to this number.
+For example, if fixed=1 and inverse=True, the area of the layer
+specifed by arg layer_index is calculated.
+
+Sets property named (arg) name.
+
+Arguments:
+  - name: name of the newly calculated property
+  - inverse: flag indicating if inverse of the property should be 
+  calculated
+  - layer: object containing layer info
+  - layer_name: name of the layer property that contains the desired 
+  layer data
+  - layer_index: index of the layer whose surface is used
+  - layer_factor: the surface is multiplied by this factor
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="apply"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">apply</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">funct</span>,
+        <span class="sig-arg">args</span>,
+        <span class="sig-arg">kwargs</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>,
+        <span class="sig-arg">name</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">categories</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">indexed</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.apply">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Applies (arg) funct to indexed properties args where other arguments 
+  are given in arg kwargs.</p>
+  <p>In other words, for each category, observation and for all observation
+  elements funct is applied to the corresponding values of the 
+  properties.</p>
+  <p>Arguments to funct can be:</p>
+  <ul>
+    <li>
+      property names, specified in args (positional)
+    </li>
+    <li>
+      other values, specified in kwargs (keyword)
+    </li>
+  </ul>
+  <p>Returns the results as a dictionary (representing groups) of lists 
+  (observations) of ndarrays (observation elements) if name is None. 
+  Otherwise a new indexed property is created to hold the result. This new 
+  name can be the same as an already existing property, in which case the 
+  original values are owerwriten. The name of the new property is added to 
+  properties and indexed attributes.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      function: function
+    </li>
+    <li>
+      args: list of indexed property names that are used as arguments to 
+      funct
+    </li>
+    <li>
+      kwargs: (dict) other arguments passed to funct
+    </li>
+    <li>
+      name: name of the new property
+    </li>
+    <li>
+      categories: categories, all categoreis if None
+    </li>
+    <li>
+      indexed: specifies if the new property is indexed
+    </li>
+  </ul>
+  <p>Sets indexed property name, or returns the result (dictionary of lists
+  of ndarrays).</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="max"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">max</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">categories</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.max">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns max value of the property given by arg name from all 
+  observations and all specified categories.</p>
+  <p>Nan values are ignored. However, if nan is the only value, or if there
+  are no values numpy.nan is returned. This is consistent with 
+  numpy.nanmin().</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      name: property name
+    </li>
+    <li>
+      categories: list of categories
+    </li>
+  </ul>
+  <p>Returns max value</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="min"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">min</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">categories</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.analysis.groups-pysrc.html#Groups.min">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns min value of the property given by arg name from all 
+  observations and all specified categories.</p>
+  <p>Nan values are ignored. However, if nan is the only value, or if there
+  are no values numpy.nan is returned. This is consistent with 
+  numpy.nanmin().</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      name: property name
+    </li>
+    <li>
+      categories: list of categories
+    </li>
+  </ul>
+  <p>Returns min value</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

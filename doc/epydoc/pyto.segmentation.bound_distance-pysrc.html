@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.segmentation.bound_distance</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.segmentation-module.html">Package&nbsp;segmentation</a> ::
+        Module&nbsp;bound_distance
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.segmentation.bound_distance-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="pyto.segmentation.bound_distance-module.html">Module pyto.segmentation.bound_distance</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-docstring">Contains class BoundDistance for the calculation of distances between </tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-docstring">boundaries that contact the same segment.</tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-docstring">Applicable only to the segments that contact exactly two boundaries.</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-docstring"># Author: Vladan Lucic</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-docstring"># $Id: bound_distance.py 923 2013-01-18 17:22:23Z vladan $</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-name">__version__</tt> <tt class="py-op">=</tt> <tt class="py-string">"$Revision: 923 $"</tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">copy</tt> <tt class="py-keyword">import</tt> <tt class="py-name">copy</tt><tt class="py-op">,</tt> <tt class="py-name">deepcopy</tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">warnings</tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">numpy</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">scipy</tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">scipy</tt><tt class="py-op">.</tt><tt class="py-name">ndimage</tt> <tt class="py-keyword">as</tt> <tt class="py-name">ndimage</tt> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Module pyto.segmentation.features=pyto.segmentation.features-module.html"><a title="pyto.segmentation.features" class="py-name" href="#" onclick="return doclink('link-0', 'features', 'link-0');">features</a></tt> <tt class="py-keyword">import</tt> <tt id="link-1" class="py-name" targets="Class pyto.segmentation.features.Features=pyto.segmentation.features.Features-class.html"><a title="pyto.segmentation.features.Features" class="py-name" href="#" onclick="return doclink('link-1', 'Features', 'link-1');">Features</a></tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"> </tt>
+<a name="BoundDistance"></a><div id="BoundDistance-def"><a name="L23"></a><tt class="py-lineno"> 23</tt> <a class="py-toggle" href="#" id="BoundDistance-toggle" onclick="return toggle('BoundDistance');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="pyto.segmentation.bound_distance.BoundDistance-class.html">BoundDistance</a><tt class="py-op">(</tt><tt class="py-base-class">Features</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="BoundDistance-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="BoundDistance-expanded"><a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"><tt class="py-docstring">    Distance between boundaries of given segments.</tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line"><tt class="py-docstring">    Important methods:</tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"><tt class="py-docstring">      - calculate(): calculates distances</tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"><tt class="py-docstring">    Attributes holding calculated data (ndarray indexed by segment id):</tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"><tt class="py-docstring">      - distance: distance between boundaries</tt> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"><tt class="py-docstring">    Other important attributes:</tt> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line"><tt class="py-docstring">      - ids: (list) segment ids</tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line"><tt class="py-docstring">    ToDo: Also save boundary ide for each segments (they're already calculated </tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line"><tt class="py-docstring">    in calculate()). As these need to be saved in a 2d ndarray, need to make </tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line"><tt class="py-docstring">    sure that all data-handling methods would work with 2d data. </tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line"> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line">    <tt class="py-comment">######################################################</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line">    <tt class="py-comment">#</tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line">    <tt class="py-comment"># Initialization </tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line">    <tt class="py-comment">#</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line">    <tt class="py-comment">#######################################################</tt> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line">     </tt>
+<a name="BoundDistance.__init__"></a><div id="BoundDistance.__init__-def"><a name="L47"></a><tt class="py-lineno"> 47</tt> <a class="py-toggle" href="#" id="BoundDistance.__init__-toggle" onclick="return toggle('BoundDistance.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.segmentation.bound_distance.BoundDistance-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">segments</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">ids</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="BoundDistance.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="BoundDistance.__init__-expanded"><a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line"><tt class="py-docstring">        Initialization of id and data structures.</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line"><tt class="py-docstring">        If ids is not None, it is saved as self.ids. In addition, data structure</tt> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line"><tt class="py-docstring">        (self.distance) is set to an ndarray of the appropriate size (maxId+1)</tt> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line"><tt class="py-docstring">        with values -1 (self.default).</tt> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line"><tt class="py-docstring">        Note: if arg segments is specified here, it is saved as an attribute,</tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line"><tt class="py-docstring">        so it might significantly increase the size of this object when</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line"><tt class="py-docstring">        pickled. The alternative is to pass arg segment only in methods that</tt> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line"><tt class="py-docstring">        use it (but do not save it).</tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line"><tt class="py-docstring">        Arguments:</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line"><tt class="py-docstring">          - segment: (Labels, or ndarray) segmented image</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line"><tt class="py-docstring">          - ids: (list, ndarray) ids of segments</tt> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line"> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line">        <tt class="py-comment"># default distance value</tt> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">default</tt> <tt class="py-op">=</tt> <tt class="py-op">-</tt><tt class="py-number">1</tt> </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line"> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line">        <tt class="py-comment"># call super to deal with segments and ids</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line">        <tt class="py-name">super</tt><tt class="py-op">(</tt><tt id="link-2" class="py-name" targets="Class pyto.segmentation.bound_distance.BoundDistance=pyto.segmentation.bound_distance.BoundDistance-class.html"><a title="pyto.segmentation.bound_distance.BoundDistance" class="py-name" href="#" onclick="return doclink('link-2', 'BoundDistance', 'link-2');">BoundDistance</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Method pyto.analysis.catalog.Catalog.__init__()=pyto.analysis.catalog.Catalog-class.html#__init__,Method pyto.analysis.cleft_regions.CleftRegions.__init__()=pyto.analysis.cleft_regions.CleftRegions-class.html#__init__,Method pyto.analysis.clusters.Clusters.__init__()=pyto.analysis.clusters.Clusters-class.html#__init__,Method pyto.analysis.connections.Connections.__init__()=pyto.analysis.connections.Connections-class.html#__init__,Method pyto.analysis.experiment.Experiment.__init__()=pyto.analysis.experiment.Experiment-class.html#__init__,Method pyto.analysis.groups.Groups.__init__()=pyto.analysis.groups.Groups-class.html#__init__,Method pyto.analysis.layers.Layers.__init__()=pyto.analysis.layers.Layers-class.html#__init__,Method pyto.analysis.observations.Observations.__init__()=pyto.analysis.observations.Observations-class.html#__init__,Method pyto.analysis.vesicles.Vesicles.__init__()=pyto.analysis.vesicles.Vesicles-class.html#__init__,Method pyto.core.image.Image.__init__()=pyto.core.image.Image-class.html#__init__,Method pyto.correlative.basic.Basic.__init__()=pyto.correlative.basic.Basic-class.html#__init__,Method pyto.geometry.affine.Affine.__init__()=pyto.geometry.affine.Affine-class.html#__init__,Method pyto.geometry.affine_2d.Affine2D.__init__()=pyto.geometry.affine_2d.Affine2D-class.html#__init__,Method pyto.geometry.affine_3d.Affine3D.__init__()=pyto.geometry.affine_3d.Affine3D-class.html#__init__,Method pyto.geometry.coordinates.Coordinates.__init__()=pyto.geometry.coordinates.Coordinates-class.html#__init__,Method pyto.geometry.points.Points.__init__()=pyto.geometry.points.Points-class.html#__init__,Method pyto.geometry.rigid_3d.Rigid3D.__init__()=pyto.geometry.rigid_3d.Rigid3D-class.html#__init__,Method pyto.geometry.vector.Vector.__init__()=pyto.geometry.vector.Vector-class.html#__init__,Method pyto.grey.image.Image.__init__()=pyto.grey.image.Image-class.html#__init__,Method pyto.io.connections.Connections.__init__()=pyto.io.connections.Connections-class.html#__init__,Method pyto.io.image_io.ImageIO.__init__()=pyto.io.image_io.ImageIO-class.html#__init__,Method pyto.io.local_exceptions.FileTypeError.__init__()=pyto.io.local_exceptions.FileTypeError-class.html#__init__,Method pyto.io.multi_data.MultiData.__init__()=pyto.io.multi_data.MultiData-class.html#__init__,Method pyto.io.pickled.Pickled.__init__()=pyto.io.pickled.Pickled-class.html#__init__,Method pyto.io.results.Results.__init__()=pyto.io.results.Results-class.html#__init__,Method pyto.io.table.Table.__init__()=pyto.io.table.Table-class.html#__init__,Method pyto.io.vesicles.Vesicles.__init__()=pyto.io.vesicles.Vesicles-class.html#__init__,Method pyto.particles.multimer.Multimer.__init__()=pyto.particles.multimer.Multimer-class.html#__init__,Method pyto.particles.phantom.Phantom.__init__()=pyto.particles.phantom.Phantom-class.html#__init__,Method pyto.scene.cleft_regions.CleftRegions.__init__()=pyto.scene.cleft_regions.CleftRegions-class.html#__init__,Method pyto.scene.em_lm_correlation.EmLmCorrelation.__init__()=pyto.scene.em_lm_correlation.EmLmCorrelation-class.html#__init__,Method pyto.scene.multi_cluster.MultiCluster.__init__()=pyto.scene.multi_cluster.MultiCluster-class.html#__init__,Method pyto.scene.neighborhood.Neighborhood.__init__()=pyto.scene.neighborhood.Neighborhood-class.html#__init__,Method pyto.scene.segmentation_analysis.SegmentationAnalysis.__init__()=pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#__init__,Method pyto.segmentation.ball.Ball.__init__()=pyto.segmentation.ball.Ball-class.html#__init__,Method pyto.segmentation.bound_distance.BoundDistance.__init__()=pyto.segmentation.bound_distance.BoundDistance-class.html#__init__,Method pyto.segmentation.cleft.Cleft.__init__()=pyto.segmentation.cleft.Cleft-class.html#__init__,Method pyto.segmentation.cluster.Cluster.__init__()=pyto.segmentation.cluster.Cluster-class.html#__init__,Method pyto.segmentation.connected.Connected.__init__()=pyto.segmentation.connected.Connected-class.html#__init__,Method pyto.segmentation.contact.Contact.__init__()=pyto.segmentation.contact.Contact-class.html#__init__,Method pyto.segmentation.density.Density.__init__()=pyto.segmentation.density.Density-class.html#__init__,Method pyto.segmentation.distance.Distance.__init__()=pyto.segmentation.distance.Distance-class.html#__init__,Method pyto.segmentation.distance_to.DistanceTo.__init__()=pyto.segmentation.distance_to.DistanceTo-class.html#__init__,Method pyto.segmentation.features.Features.__init__()=pyto.segmentation.features.Features-class.html#__init__,Method pyto.segmentation.grey.Grey.__init__()=pyto.segmentation.grey.Grey-class.html#__init__,Method pyto.segmentation.hierarchy.Hierarchy.__init__()=pyto.segmentation.hierarchy.Hierarchy-class.html#__init__,Method pyto.segmentation.labels.Labels.__init__()=pyto.segmentation.labels.Labels-class.html#__init__,Method pyto.segmentation.morphology.Morphology.__init__()=pyto.segmentation.morphology.Morphology-class.html#__init__,Method pyto.segmentation.plane.Plane.__init__()=pyto.segmentation.plane.Plane-class.html#__init__,Method pyto.segmentation.segment.Segment.__init__()=pyto.segmentation.segment.Segment-class.html#__init__,Method pyto.segmentation.shapes.Shapes.__init__()=pyto.segmentation.shapes.Shapes-class.html#__init__,Method pyto.segmentation.sphere.Sphere.__init__()=pyto.segmentation.sphere.Sphere-class.html#__init__,Method pyto.segmentation.statistics.Statistics.__init__()=pyto.segmentation.statistics.Statistics-class.html#__init__,Method pyto.segmentation.struct_el.StructEl.__init__()=pyto.segmentation.struct_el.StructEl-class.html#__init__,Method pyto.segmentation.thresh_conn.ThreshConn.__init__()=pyto.segmentation.thresh_conn.ThreshConn-class.html#__init__,Method pyto.segmentation.topology.Topology.__init__()=pyto.segmentation.topology.Topology-class.html#__init__,Method pyto.tomo.ctf.Ctf.__init__()=pyto.tomo.ctf.Ctf-class.html#__init__,Method pyto.tomo.frame_series.FrameSeries.__init__()=pyto.tomo.frame_series.FrameSeries-class.html#__init__,Method pyto.tomo.serial_em.SerialEM.__init__()=pyto.tomo.serial_em.SerialEM-class.html#__init__,Method pyto.tomo.series.Series.__init__()=pyto.tomo.series.Series-class.html#__init__"><a title="pyto.analysis.catalog.Catalog.__init__
+pyto.analysis.cleft_regions.CleftRegions.__init__
+pyto.analysis.clusters.Clusters.__init__
+pyto.analysis.connections.Connections.__init__
+pyto.analysis.experiment.Experiment.__init__
+pyto.analysis.groups.Groups.__init__
+pyto.analysis.layers.Layers.__init__
+pyto.analysis.observations.Observations.__init__
+pyto.analysis.vesicles.Vesicles.__init__
+pyto.core.image.Image.__init__
+pyto.correlative.basic.Basic.__init__
+pyto.geometry.affine.Affine.__init__
+pyto.geometry.affine_2d.Affine2D.__init__
+pyto.geometry.affine_3d.Affine3D.__init__
+pyto.geometry.coordinates.Coordinates.__init__
+pyto.geometry.points.Points.__init__
+pyto.geometry.rigid_3d.Rigid3D.__init__
+pyto.geometry.vector.Vector.__init__
+pyto.grey.image.Image.__init__
+pyto.io.connections.Connections.__init__
+pyto.io.image_io.ImageIO.__init__
+pyto.io.local_exceptions.FileTypeError.__init__
+pyto.io.multi_data.MultiData.__init__
+pyto.io.pickled.Pickled.__init__
+pyto.io.results.Results.__init__
+pyto.io.table.Table.__init__
+pyto.io.vesicles.Vesicles.__init__
+pyto.particles.multimer.Multimer.__init__
+pyto.particles.phantom.Phantom.__init__
+pyto.scene.cleft_regions.CleftRegions.__init__
+pyto.scene.em_lm_correlation.EmLmCorrelation.__init__
+pyto.scene.multi_cluster.MultiCluster.__init__
+pyto.scene.neighborhood.Neighborhood.__init__
+pyto.scene.segmentation_analysis.SegmentationAnalysis.__init__
+pyto.segmentation.ball.Ball.__init__
+pyto.segmentation.bound_distance.BoundDistance.__init__
+pyto.segmentation.cleft.Cleft.__init__
+pyto.segmentation.cluster.Cluster.__init__
+pyto.segmentation.connected.Connected.__init__
+pyto.segmentation.contact.Contact.__init__
+pyto.segmentation.density.Density.__init__
+pyto.segmentation.distance.Distance.__init__
+pyto.segmentation.distance_to.DistanceTo.__init__
+pyto.segmentation.features.Features.__init__
+pyto.segmentation.grey.Grey.__init__
+pyto.segmentation.hierarchy.Hierarchy.__init__
+pyto.segmentation.labels.Labels.__init__
+pyto.segmentation.morphology.Morphology.__init__
+pyto.segmentation.plane.Plane.__init__
+pyto.segmentation.segment.Segment.__init__
+pyto.segmentation.shapes.Shapes.__init__
+pyto.segmentation.sphere.Sphere.__init__
+pyto.segmentation.statistics.Statistics.__init__
+pyto.segmentation.struct_el.StructEl.__init__
+pyto.segmentation.thresh_conn.ThreshConn.__init__
+pyto.segmentation.topology.Topology.__init__
+pyto.tomo.ctf.Ctf.__init__
+pyto.tomo.frame_series.FrameSeries.__init__
+pyto.tomo.serial_em.SerialEM.__init__
+pyto.tomo.series.Series.__init__" class="py-name" href="#" onclick="return doclink('link-3', '__init__', 'link-3');">__init__</a></tt><tt class="py-op">(</tt><tt id="link-4" class="py-name" targets="Variable pyto.segmentation.contact.Contact.segments=pyto.segmentation.contact.Contact-class.html#segments"><a title="pyto.segmentation.contact.Contact.segments" class="py-name" href="#" onclick="return doclink('link-4', 'segments', 'link-4');">segments</a></tt><tt class="py-op">=</tt><tt id="link-5" class="py-name"><a title="pyto.segmentation.contact.Contact.segments" class="py-name" href="#" onclick="return doclink('link-5', 'segments', 'link-4');">segments</a></tt><tt class="py-op">,</tt> <tt id="link-6" class="py-name" targets="Variable pyto.scene.segmentation_analysis.SegmentationAnalysis.ids=pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#ids,Variable pyto.scripts.add_segments.ids=pyto.scripts.add_segments-module.html#ids,Variable pyto.scripts.blank.ids=pyto.scripts.blank-module.html#ids,Variable pyto.scripts.extract_points.ids=pyto.scripts.extract_points-module.html#ids,Variable pyto.segmentation.cluster.Cluster.ids=pyto.segmentation.cluster.Cluster-class.html#ids,Variable pyto.segmentation.features.Features.ids=pyto.segmentation.features.Features-class.html#ids"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-6', 'ids', 'link-6');">ids</a></tt><tt class="py-op">=</tt><tt id="link-7" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-7', 'ids', 'link-6');">ids</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line"> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">dataNames</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-string">'distance'</tt><tt class="py-op">]</tt>  <tt class="py-comment"># actually not used</tt> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-8" class="py-name" targets="Method pyto.segmentation.bound_distance.BoundDistance.initializeData()=pyto.segmentation.bound_distance.BoundDistance-class.html#initializeData,Method pyto.segmentation.distance.Distance.initializeData()=pyto.segmentation.distance.Distance-class.html#initializeData,Method pyto.segmentation.features.Features.initializeData()=pyto.segmentation.features.Features-class.html#initializeData,Method pyto.segmentation.topology.Topology.initializeData()=pyto.segmentation.topology.Topology-class.html#initializeData"><a title="pyto.segmentation.bound_distance.BoundDistance.initializeData
+pyto.segmentation.distance.Distance.initializeData
+pyto.segmentation.features.Features.initializeData
+pyto.segmentation.topology.Topology.initializeData" class="py-name" href="#" onclick="return doclink('link-8', 'initializeData', 'link-8');">initializeData</a></tt><tt class="py-op">(</tt><tt id="link-9" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-9', 'ids', 'link-6');">ids</a></tt><tt class="py-op">=</tt><tt id="link-10" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-10', 'ids', 'link-6');">ids</a></tt><tt class="py-op">,</tt> <tt id="link-11" class="py-name" targets="Variable pyto.scripts.blank.value=pyto.scripts.blank-module.html#value"><a title="pyto.scripts.blank.value" class="py-name" href="#" onclick="return doclink('link-11', 'value', 'link-11');">value</a></tt><tt class="py-op">=</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">default</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line"> </tt>
+<a name="BoundDistance.initializeData"></a><div id="BoundDistance.initializeData-def"><a name="L74"></a><tt class="py-lineno"> 74</tt> <a class="py-toggle" href="#" id="BoundDistance.initializeData-toggle" onclick="return toggle('BoundDistance.initializeData');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.segmentation.bound_distance.BoundDistance-class.html#initializeData">initializeData</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">ids</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">value</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="BoundDistance.initializeData-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="BoundDistance.initializeData-expanded"><a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line"><tt class="py-docstring">        Initializes id and data structures.</tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line"><tt class="py-docstring">        If ids is not None, it is saved as self.ids. In addition, data structure</tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line"><tt class="py-docstring">        (self.distance) is set to an ndarray of the appropriate size (maxId+1)</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line"><tt class="py-docstring">        with values -1.</tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line"> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-12" class="py-name"><a title="pyto.scripts.blank.value" class="py-name" href="#" onclick="return doclink('link-12', 'value', 'link-11');">value</a></tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line">            <tt id="link-13" class="py-name"><a title="pyto.scripts.blank.value" class="py-name" href="#" onclick="return doclink('link-13', 'value', 'link-11');">value</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">default</tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line"> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-14" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-14', 'ids', 'link-6');">ids</a></tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-15" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-15', 'ids', 'link-6');">ids</a></tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">array</tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt id="link-16" class="py-name" targets="Variable pyto.scripts.correlation_3d_2d.dtype=pyto.scripts.correlation_3d_2d-module.html#dtype"><a title="pyto.scripts.correlation_3d_2d.dtype" class="py-name" href="#" onclick="return doclink('link-16', 'dtype', 'link-16');">dtype</a></tt><tt class="py-op">=</tt><tt class="py-name">int</tt><tt class="py-op">)</tt> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-17" class="py-name" targets="Method pyto.geometry.points.Points.distance()=pyto.geometry.points.Points-class.html#distance,Variable pyto.scripts.extract_points.distance=pyto.scripts.extract_points-module.html#distance,Module pyto.segmentation.distance=pyto.segmentation.distance-module.html,Variable pyto.segmentation.distance_to.DistanceTo.distance=pyto.segmentation.distance_to.DistanceTo-class.html#distance"><a title="pyto.geometry.points.Points.distance
+pyto.scripts.extract_points.distance
+pyto.segmentation.distance
+pyto.segmentation.distance_to.DistanceTo.distance" class="py-name" href="#" onclick="return doclink('link-17', 'distance', 'link-17');">distance</a></tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">zeros</tt><tt class="py-op">(</tt><tt class="py-number">0</tt><tt class="py-op">)</tt> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line"> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-18" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-18', 'ids', 'link-6');">ids</a></tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">asarray</tt><tt class="py-op">(</tt><tt id="link-19" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-19', 'ids', 'link-6');">ids</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-20" class="py-name"><a title="pyto.geometry.points.Points.distance
+pyto.scripts.extract_points.distance
+pyto.segmentation.distance
+pyto.segmentation.distance_to.DistanceTo.distance" class="py-name" href="#" onclick="return doclink('link-20', 'distance', 'link-17');">distance</a></tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">zeros</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-21" class="py-name" targets="Variable pyto.segmentation.features.Features.maxId=pyto.segmentation.features.Features-class.html#maxId,Variable pyto.segmentation.labels.Labels.maxId=pyto.segmentation.labels.Labels-class.html#maxId"><a title="pyto.segmentation.features.Features.maxId
+pyto.segmentation.labels.Labels.maxId" class="py-name" href="#" onclick="return doclink('link-21', 'maxId', 'link-21');">maxId</a></tt><tt class="py-op">+</tt><tt class="py-number">1</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt id="link-22" class="py-name"><a title="pyto.scripts.blank.value" class="py-name" href="#" onclick="return doclink('link-22', 'value', 'link-11');">value</a></tt> </tt>
+</div><a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line"> </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line"> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line">    <tt class="py-comment">######################################################</tt> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line">    <tt class="py-comment">#</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line">    <tt class="py-comment"># Basic manipulations of data structures</tt> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line">    <tt class="py-comment">#</tt> </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line">    <tt class="py-comment">#######################################################</tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line">     </tt>
+<a name="BoundDistance.extend"></a><div id="BoundDistance.extend-def"><a name="L102"></a><tt class="py-lineno">102</tt> <a class="py-toggle" href="#" id="BoundDistance.extend-toggle" onclick="return toggle('BoundDistance.extend');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.segmentation.bound_distance.BoundDistance-class.html#extend">extend</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">ids</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="BoundDistance.extend-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="BoundDistance.extend-expanded"><a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line"><tt class="py-docstring">        Extends the data structure to be able to hold the data for all specified</tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line"><tt class="py-docstring">        segment ids. Attribute ids is also updated.</tt> </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line"><tt class="py-docstring">        Note: Should be used only in methods that calculate distances for the </tt> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line"><tt class="py-docstring">        ids specified here. That is because using this method alone updates ids</tt> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line"><tt class="py-docstring">        but leaves the corresponding data at the default, so it makes ids and </tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line"><tt class="py-docstring">        data are inconsistent.</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line"><tt class="py-docstring">        Argument:</tt> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line"><tt class="py-docstring">          - ids: (list, ndarray) segment ids</tt> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line"> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line">        <tt class="py-comment"># deal with ids being None</tt> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-23" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-23', 'ids', 'link-6');">ids</a></tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line"> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line">        <tt class="py-comment"># add new ids</tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-24" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-24', 'ids', 'link-6');">ids</a></tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">union1d</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-25" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-25', 'ids', 'link-6');">ids</a></tt><tt class="py-op">,</tt> <tt id="link-26" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-26', 'ids', 'link-6');">ids</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line"> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line">        <tt class="py-comment"># extend data structure</tt> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line">        <tt class="py-name">curr_data_len</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-27" class="py-name"><a title="pyto.geometry.points.Points.distance
+pyto.scripts.extract_points.distance
+pyto.segmentation.distance
+pyto.segmentation.distance_to.DistanceTo.distance" class="py-name" href="#" onclick="return doclink('link-27', 'distance', 'link-17');">distance</a></tt><tt class="py-op">.</tt><tt id="link-28" class="py-name" targets="Variable pyto.scripts.discs_to_balls.shape=pyto.scripts.discs_to_balls-module.html#shape"><a title="pyto.scripts.discs_to_balls.shape" class="py-name" href="#" onclick="return doclink('link-28', 'shape', 'link-28');">shape</a></tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt> </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-29" class="py-name"><a title="pyto.segmentation.features.Features.maxId
+pyto.segmentation.labels.Labels.maxId" class="py-name" href="#" onclick="return doclink('link-29', 'maxId', 'link-21');">maxId</a></tt><tt class="py-op">+</tt><tt class="py-number">1</tt> <tt class="py-op">&gt;</tt> <tt class="py-name">curr_data_len</tt><tt class="py-op">:</tt> </tt>
+<a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line">            <tt id="link-30" class="py-name" targets="Variable pyto.geometry.vector.Vector.data=pyto.geometry.vector.Vector-class.html#data,Method pyto.io.multi_data.MultiData.data()=pyto.io.multi_data.MultiData-class.html#data"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-30', 'data', 'link-30');">data</a></tt> <tt class="py-op">=</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">zeros</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-31" class="py-name"><a title="pyto.segmentation.features.Features.maxId
+pyto.segmentation.labels.Labels.maxId" class="py-name" href="#" onclick="return doclink('link-31', 'maxId', 'link-21');">maxId</a></tt><tt class="py-op">+</tt><tt class="py-number">1</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">default</tt> </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line">            <tt id="link-32" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-32', 'data', 'link-30');">data</a></tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">:</tt><tt class="py-name">curr_data_len</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-33" class="py-name"><a title="pyto.geometry.points.Points.distance
+pyto.scripts.extract_points.distance
+pyto.segmentation.distance
+pyto.segmentation.distance_to.DistanceTo.distance" class="py-name" href="#" onclick="return doclink('link-33', 'distance', 'link-17');">distance</a></tt> </tt>
+<a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-34" class="py-name"><a title="pyto.geometry.points.Points.distance
+pyto.scripts.extract_points.distance
+pyto.segmentation.distance
+pyto.segmentation.distance_to.DistanceTo.distance" class="py-name" href="#" onclick="return doclink('link-34', 'distance', 'link-17');">distance</a></tt> <tt class="py-op">=</tt> <tt id="link-35" class="py-name"><a title="pyto.geometry.vector.Vector.data
+pyto.io.multi_data.MultiData.data" class="py-name" href="#" onclick="return doclink('link-35', 'data', 'link-30');">data</a></tt> </tt>
+</div><a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line"> </tt>
+<a name="BoundDistance.merge"></a><div id="BoundDistance.merge-def"><a name="L130"></a><tt class="py-lineno">130</tt> <a class="py-toggle" href="#" id="BoundDistance.merge-toggle" onclick="return toggle('BoundDistance.merge');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.segmentation.bound_distance.BoundDistance-class.html#merge">merge</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">new</tt><tt class="py-op">,</tt> <tt class="py-param">mode</tt><tt class="py-op">=</tt><tt class="py-string">'replace'</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="BoundDistance.merge-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="BoundDistance.merge-expanded"><a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line"><tt class="py-docstring">        Merges data from another instance of this class (arg new) with this </tt> </tt>
+<a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line"><tt class="py-docstring">        instance. In case of conflict the data from the other instance is used.</tt> </tt>
+<a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L135"></a><tt class="py-lineno">135</tt>  <tt class="py-line"><tt class="py-docstring">        The reasons why this method is used instead of the one inherited from </tt> </tt>
+<a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line"><tt class="py-docstring">        Features is that this one is simpler and that here the default distance</tt> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line"><tt class="py-docstring">        value can be set to -1 instead of 0.</tt> </tt>
+<a name="L138"></a><tt class="py-lineno">138</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line"><tt class="py-docstring">        Arguments:</tt> </tt>
+<a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line"><tt class="py-docstring">          - new: another instance of this class</tt> </tt>
+<a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line"><tt class="py-docstring">          - mode: merge mode, currently only 'replace'</tt> </tt>
+<a name="L142"></a><tt class="py-lineno">142</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line">         </tt>
+<a name="L144"></a><tt class="py-lineno">144</tt>  <tt class="py-line">        <tt class="py-comment"># deal with new being None</tt> </tt>
+<a name="L145"></a><tt class="py-lineno">145</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">new</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L146"></a><tt class="py-lineno">146</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> </tt>
+<a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line"> </tt>
+<a name="L148"></a><tt class="py-lineno">148</tt>  <tt class="py-line">        <tt class="py-comment"># prepare for the merge</tt> </tt>
+<a name="L149"></a><tt class="py-lineno">149</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-36" class="py-name" targets="Method pyto.segmentation.bound_distance.BoundDistance.extend()=pyto.segmentation.bound_distance.BoundDistance-class.html#extend"><a title="pyto.segmentation.bound_distance.BoundDistance.extend" class="py-name" href="#" onclick="return doclink('link-36', 'extend', 'link-36');">extend</a></tt><tt class="py-op">(</tt><tt id="link-37" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-37', 'ids', 'link-6');">ids</a></tt><tt class="py-op">=</tt><tt class="py-name">new</tt><tt class="py-op">.</tt><tt id="link-38" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-38', 'ids', 'link-6');">ids</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L150"></a><tt class="py-lineno">150</tt>  <tt class="py-line"> </tt>
+<a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line">        <tt class="py-comment"># merge</tt> </tt>
+<a name="L152"></a><tt class="py-lineno">152</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-39" class="py-name" targets="Variable pyto.scripts.extract_points.mode=pyto.scripts.extract_points-module.html#mode,Variable pyto.scripts.sort_series.mode=pyto.scripts.sort_series-module.html#mode"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-39', 'mode', 'link-39');">mode</a></tt> <tt class="py-op">==</tt> <tt class="py-string">'replace'</tt><tt class="py-op">:</tt> </tt>
+<a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-40" class="py-name"><a title="pyto.geometry.points.Points.distance
+pyto.scripts.extract_points.distance
+pyto.segmentation.distance
+pyto.segmentation.distance_to.DistanceTo.distance" class="py-name" href="#" onclick="return doclink('link-40', 'distance', 'link-17');">distance</a></tt><tt class="py-op">[</tt><tt class="py-name">new</tt><tt class="py-op">.</tt><tt id="link-41" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-41', 'ids', 'link-6');">ids</a></tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">new</tt><tt class="py-op">.</tt><tt id="link-42" class="py-name"><a title="pyto.geometry.points.Points.distance
+pyto.scripts.extract_points.distance
+pyto.segmentation.distance
+pyto.segmentation.distance_to.DistanceTo.distance" class="py-name" href="#" onclick="return doclink('link-42', 'distance', 'link-17');">distance</a></tt><tt class="py-op">[</tt><tt class="py-name">new</tt><tt class="py-op">.</tt><tt id="link-43" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-43', 'ids', 'link-6');">ids</a></tt><tt class="py-op">]</tt> </tt>
+<a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line"> </tt>
+<a name="L155"></a><tt class="py-lineno">155</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line">            <tt class="py-keyword">raise</tt> <tt class="py-name">ValueError</tt><tt class="py-op">(</tt><tt class="py-string">"Argument mode can only have value 'replace'."</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L157"></a><tt class="py-lineno">157</tt>  <tt class="py-line"> </tt>
+<a name="L158"></a><tt class="py-lineno">158</tt>  <tt class="py-line"> </tt>
+<a name="L159"></a><tt class="py-lineno">159</tt>  <tt class="py-line">    <tt class="py-comment">######################################################</tt> </tt>
+<a name="L160"></a><tt class="py-lineno">160</tt>  <tt class="py-line">    <tt class="py-comment">#</tt> </tt>
+<a name="L161"></a><tt class="py-lineno">161</tt>  <tt class="py-line">    <tt class="py-comment"># Calculations</tt> </tt>
+<a name="L162"></a><tt class="py-lineno">162</tt>  <tt class="py-line">    <tt class="py-comment">#</tt> </tt>
+<a name="L163"></a><tt class="py-lineno">163</tt>  <tt class="py-line">    <tt class="py-comment">#######################################################</tt> </tt>
+<a name="L164"></a><tt class="py-lineno">164</tt>  <tt class="py-line">     </tt>
+<a name="BoundDistance.calculate"></a><div id="BoundDistance.calculate-def"><a name="L165"></a><tt class="py-lineno">165</tt> <a class="py-toggle" href="#" id="BoundDistance.calculate-toggle" onclick="return toggle('BoundDistance.calculate');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.segmentation.bound_distance.BoundDistance-class.html#calculate">calculate</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">contacts</tt><tt class="py-op">,</tt> <tt class="py-param">boundaries</tt><tt class="py-op">,</tt> <tt class="py-param">ids</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">mode</tt><tt class="py-op">=</tt><tt class="py-string">'min'</tt><tt class="py-op">,</tt>  </tt>
+<a name="L166"></a><tt class="py-lineno">166</tt>  <tt class="py-line">                  <tt class="py-param">extend</tt><tt class="py-op">=</tt><tt class="py-name">False</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="BoundDistance.calculate-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="BoundDistance.calculate-expanded"><a name="L167"></a><tt class="py-lineno">167</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L168"></a><tt class="py-lineno">168</tt>  <tt class="py-line"><tt class="py-docstring">        For each segment specified by segment id (arg ids) calculates the </tt> </tt>
+<a name="L169"></a><tt class="py-lineno">169</tt>  <tt class="py-line"><tt class="py-docstring">        distance between the two boundaries (given by arg boundaries)</tt> </tt>
+<a name="L170"></a><tt class="py-lineno">170</tt>  <tt class="py-line"><tt class="py-docstring">        that contact the segment.</tt> </tt>
+<a name="L171"></a><tt class="py-lineno">171</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L172"></a><tt class="py-lineno">172</tt>  <tt class="py-line"><tt class="py-docstring">        Segments that do not have exactly two contacting boundaries are ignored.</tt> </tt>
+<a name="L173"></a><tt class="py-lineno">173</tt>  <tt class="py-line"><tt class="py-docstring">        If arg extend is False, ids of these segments are not added to self.ids.</tt> </tt>
+<a name="L174"></a><tt class="py-lineno">174</tt>  <tt class="py-line"><tt class="py-docstring">        If arg extend is true and the arg ids is specified, all ids from arg </tt> </tt>
+<a name="L175"></a><tt class="py-lineno">175</tt>  <tt class="py-line"><tt class="py-docstring">        ids are added to self.ids and the elements of distance structure </tt> </tt>
+<a name="L176"></a><tt class="py-lineno">176</tt>  <tt class="py-line"><tt class="py-docstring">        corresponding to these ids are set to the default value.</tt> </tt>
+<a name="L177"></a><tt class="py-lineno">177</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L178"></a><tt class="py-lineno">178</tt>  <tt class="py-line"><tt class="py-docstring">        Based on Segment.distanceToRegion().</tt> </tt>
+<a name="L179"></a><tt class="py-lineno">179</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L180"></a><tt class="py-lineno">180</tt>  <tt class="py-line"><tt class="py-docstring">        Arguments:</tt> </tt>
+<a name="L181"></a><tt class="py-lineno">181</tt>  <tt class="py-line"><tt class="py-docstring">          - contacts: (Contact) object that defines contacts between boundaries</tt> </tt>
+<a name="L182"></a><tt class="py-lineno">182</tt>  <tt class="py-line"><tt class="py-docstring">          and segments</tt> </tt>
+<a name="L183"></a><tt class="py-lineno">183</tt>  <tt class="py-line"><tt class="py-docstring">          - ids: (list, ndarray) segment ids</tt> </tt>
+<a name="L184"></a><tt class="py-lineno">184</tt>  <tt class="py-line"><tt class="py-docstring">          - mode: distance mode, can be 'min', 'max', 'mean' or 'median'</tt> </tt>
+<a name="L185"></a><tt class="py-lineno">185</tt>  <tt class="py-line"><tt class="py-docstring">          or 'center'</tt> </tt>
+<a name="L186"></a><tt class="py-lineno">186</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L187"></a><tt class="py-lineno">187</tt>  <tt class="py-line"> </tt>
+<a name="L188"></a><tt class="py-lineno">188</tt>  <tt class="py-line">        <tt class="py-comment"># get all segment ids if not specified</tt> </tt>
+<a name="L189"></a><tt class="py-lineno">189</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-44" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-44', 'ids', 'link-6');">ids</a></tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L190"></a><tt class="py-lineno">190</tt>  <tt class="py-line">            <tt class="py-name">arg_ids</tt> <tt class="py-op">=</tt> <tt class="py-name">False</tt> </tt>
+<a name="L191"></a><tt class="py-lineno">191</tt>  <tt class="py-line">            <tt id="link-45" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-45', 'ids', 'link-6');">ids</a></tt> <tt class="py-op">=</tt> <tt class="py-name">contacts</tt><tt class="py-op">.</tt><tt id="link-46" class="py-name"><a title="pyto.segmentation.contact.Contact.segments" class="py-name" href="#" onclick="return doclink('link-46', 'segments', 'link-4');">segments</a></tt> </tt>
+<a name="L192"></a><tt class="py-lineno">192</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L193"></a><tt class="py-lineno">193</tt>  <tt class="py-line">            <tt class="py-name">arg_ids</tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt> </tt>
+<a name="L194"></a><tt class="py-lineno">194</tt>  <tt class="py-line"> </tt>
+<a name="L195"></a><tt class="py-lineno">195</tt>  <tt class="py-line">        <tt class="py-comment"># get distance for all segments</tt> </tt>
+<a name="L196"></a><tt class="py-lineno">196</tt>  <tt class="py-line">        <tt class="py-name">new</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__class__</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L197"></a><tt class="py-lineno">197</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt id="link-47" class="py-name" targets="Variable pyto.scripts.cleft.seg_id=pyto.scripts.cleft-module.html#seg_id"><a title="pyto.scripts.cleft.seg_id" class="py-name" href="#" onclick="return doclink('link-47', 'seg_id', 'link-47');">seg_id</a></tt> <tt class="py-keyword">in</tt> <tt id="link-48" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-48', 'ids', 'link-6');">ids</a></tt><tt class="py-op">:</tt> </tt>
+<a name="L198"></a><tt class="py-lineno">198</tt>  <tt class="py-line"> </tt>
+<a name="L199"></a><tt class="py-lineno">199</tt>  <tt class="py-line">            <tt class="py-comment"># get boundaries and check that only 2</tt> </tt>
+<a name="L200"></a><tt class="py-lineno">200</tt>  <tt class="py-line">            <tt class="py-name">bound_ids</tt> <tt class="py-op">=</tt> <tt class="py-name">contacts</tt><tt class="py-op">.</tt><tt id="link-49" class="py-name" targets="Method pyto.segmentation.contact.Contact.findBoundaries()=pyto.segmentation.contact.Contact-class.html#findBoundaries"><a title="pyto.segmentation.contact.Contact.findBoundaries" class="py-name" href="#" onclick="return doclink('link-49', 'findBoundaries', 'link-49');">findBoundaries</a></tt><tt class="py-op">(</tt><tt class="py-name">segmentIds</tt><tt class="py-op">=</tt><tt id="link-50" class="py-name"><a title="pyto.scripts.cleft.seg_id" class="py-name" href="#" onclick="return doclink('link-50', 'seg_id', 'link-47');">seg_id</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L201"></a><tt class="py-lineno">201</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">bound_ids</tt><tt class="py-op">)</tt> <tt class="py-op">!=</tt><tt class="py-number">2</tt><tt class="py-op">:</tt> </tt>
+<a name="L202"></a><tt class="py-lineno">202</tt>  <tt class="py-line">                <tt class="py-keyword">continue</tt> </tt>
+<a name="L203"></a><tt class="py-lineno">203</tt>  <tt class="py-line">             </tt>
+<a name="L204"></a><tt class="py-lineno">204</tt>  <tt class="py-line">            <tt class="py-comment"># update ids</tt> </tt>
+<a name="L205"></a><tt class="py-lineno">205</tt>  <tt class="py-line">            <tt class="py-name">new</tt><tt class="py-op">.</tt><tt id="link-51" class="py-name"><a title="pyto.segmentation.bound_distance.BoundDistance.extend" class="py-name" href="#" onclick="return doclink('link-51', 'extend', 'link-36');">extend</a></tt><tt class="py-op">(</tt><tt id="link-52" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-52', 'ids', 'link-6');">ids</a></tt><tt class="py-op">=</tt><tt class="py-op">[</tt><tt id="link-53" class="py-name"><a title="pyto.scripts.cleft.seg_id" class="py-name" href="#" onclick="return doclink('link-53', 'seg_id', 'link-47');">seg_id</a></tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L206"></a><tt class="py-lineno">206</tt>  <tt class="py-line"> </tt>
+<a name="L207"></a><tt class="py-lineno">207</tt>  <tt class="py-line">            <tt class="py-comment"># calculate distance</tt> </tt>
+<a name="L208"></a><tt class="py-lineno">208</tt>  <tt class="py-line">            <tt class="py-name">dists</tt> <tt class="py-op">=</tt> <tt id="link-54" class="py-name" targets="Variable pyto.segmentation.contact.Contact.boundaries=pyto.segmentation.contact.Contact-class.html#boundaries"><a title="pyto.segmentation.contact.Contact.boundaries" class="py-name" href="#" onclick="return doclink('link-54', 'boundaries', 'link-54');">boundaries</a></tt><tt class="py-op">.</tt><tt id="link-55" class="py-name" targets="Method pyto.segmentation.segment.Segment.distanceToRegion()=pyto.segmentation.segment.Segment-class.html#distanceToRegion"><a title="pyto.segmentation.segment.Segment.distanceToRegion" class="py-name" href="#" onclick="return doclink('link-55', 'distanceToRegion', 'link-55');">distanceToRegion</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L209"></a><tt class="py-lineno">209</tt>  <tt class="py-line">                <tt class="py-name">regionId</tt><tt class="py-op">=</tt><tt class="py-name">bound_ids</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt id="link-56" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-56', 'ids', 'link-6');">ids</a></tt><tt class="py-op">=</tt><tt class="py-op">[</tt><tt class="py-name">bound_ids</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt id="link-57" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-57', 'mode', 'link-39');">mode</a></tt><tt class="py-op">=</tt><tt id="link-58" class="py-name"><a title="pyto.scripts.extract_points.mode
+pyto.scripts.sort_series.mode" class="py-name" href="#" onclick="return doclink('link-58', 'mode', 'link-39');">mode</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L210"></a><tt class="py-lineno">210</tt>  <tt class="py-line">            <tt class="py-name">new</tt><tt class="py-op">.</tt><tt id="link-59" class="py-name"><a title="pyto.geometry.points.Points.distance
+pyto.scripts.extract_points.distance
+pyto.segmentation.distance
+pyto.segmentation.distance_to.DistanceTo.distance" class="py-name" href="#" onclick="return doclink('link-59', 'distance', 'link-17');">distance</a></tt><tt class="py-op">[</tt><tt id="link-60" class="py-name"><a title="pyto.scripts.cleft.seg_id" class="py-name" href="#" onclick="return doclink('link-60', 'seg_id', 'link-47');">seg_id</a></tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">dists</tt><tt class="py-op">[</tt><tt class="py-name">bound_ids</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">]</tt> </tt>
+<a name="L211"></a><tt class="py-lineno">211</tt>  <tt class="py-line"> </tt>
+<a name="L212"></a><tt class="py-lineno">212</tt>  <tt class="py-line">        <tt class="py-comment"># update this instance</tt> </tt>
+<a name="L213"></a><tt class="py-lineno">213</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-61" class="py-name" targets="Method pyto.segmentation.bound_distance.BoundDistance.merge()=pyto.segmentation.bound_distance.BoundDistance-class.html#merge,Method pyto.segmentation.density.Density.merge()=pyto.segmentation.density.Density-class.html#merge,Method pyto.segmentation.distance.Distance.merge()=pyto.segmentation.distance.Distance-class.html#merge,Method pyto.segmentation.features.Features.merge()=pyto.segmentation.features.Features-class.html#merge,Method pyto.segmentation.morphology.Morphology.merge()=pyto.segmentation.morphology.Morphology-class.html#merge"><a title="pyto.segmentation.bound_distance.BoundDistance.merge
+pyto.segmentation.density.Density.merge
+pyto.segmentation.distance.Distance.merge
+pyto.segmentation.features.Features.merge
+pyto.segmentation.morphology.Morphology.merge" class="py-name" href="#" onclick="return doclink('link-61', 'merge', 'link-61');">merge</a></tt><tt class="py-op">(</tt><tt class="py-name">new</tt><tt class="py-op">=</tt><tt class="py-name">new</tt><tt class="py-op">)</tt> </tt>
+<a name="L214"></a><tt class="py-lineno">214</tt>  <tt class="py-line"> </tt>
+<a name="L215"></a><tt class="py-lineno">215</tt>  <tt class="py-line">        <tt class="py-comment"># add unused segment ids if needed</tt> </tt>
+<a name="L216"></a><tt class="py-lineno">216</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-62" class="py-name"><a title="pyto.segmentation.bound_distance.BoundDistance.extend" class="py-name" href="#" onclick="return doclink('link-62', 'extend', 'link-36');">extend</a></tt> <tt class="py-keyword">and</tt> <tt class="py-name">arg_ids</tt><tt class="py-op">:</tt> </tt>
+<a name="L217"></a><tt class="py-lineno">217</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-63" class="py-name"><a title="pyto.segmentation.bound_distance.BoundDistance.extend" class="py-name" href="#" onclick="return doclink('link-63', 'extend', 'link-36');">extend</a></tt><tt class="py-op">(</tt><tt id="link-64" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-64', 'ids', 'link-6');">ids</a></tt><tt class="py-op">=</tt><tt id="link-65" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-65', 'ids', 'link-6');">ids</a></tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L218"></a><tt class="py-lineno">218</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

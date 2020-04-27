@@ -1,0 +1,1032 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.scripts.connections</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.scripts-module.html">Package&nbsp;scripts</a> ::
+        Module&nbsp;connections
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.scripts.connections-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module connections</h1><p class="nomargin-top"><span class="codelink"><a href="pyto.scripts.connections-pysrc.html">source&nbsp;code</a></span></p>
+<pre class="literalblock">
+
+Depreciated. Please use connectors.py instead.
+
+Makes segmentation based on threshold and connectivity, and finds connections
+(segments) that contact specified boundaries.
+
+The main applcations of this script are the following:
+
+  1) Find and analyze connections between given boundaries, such as between synaptic
+  vesicles. Each connections is typically required to make contacts with at least
+  two boundaries.
+
+  2) Find and analyze connections that contact a given boundary, such as a cell
+  membrane. Each connection is required to make a contact with one boundary.
+
+  In this case layers along the boundary are made 
+
+This script may be placed anywhere in the directory tree.
+
+$Id: connections.py 937 2013-01-29 11:39:05Z vladan $
+Author: Vladan Lucic 
+
+</pre>
+
+<hr />
+<div class="fields">      <p><strong>Version:</strong>
+        $Revision: 937 $
+      </p>
+</div><!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Functions</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Functions"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="read_image"></a><span class="summary-sig-name">read_image</span>()</span><br />
+      Reads image file and returns an segmentation.Image object</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.connections-pysrc.html#read_image">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="read_boundaries"></a><span class="summary-sig-name">read_boundaries</span>()</span><br />
+      Reads labels file(s), makes (Segment) boundaries and makes inset.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.connections-pysrc.html#read_boundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="is_multi_boundaries"></a><span class="summary-sig-name">is_multi_boundaries</span>()</span><br />
+      Returns True if maultiple boundaries (labels) files are given.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.connections-pysrc.html#is_multi_boundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="read_single_boundaries"></a><span class="summary-sig-name">read_single_boundaries</span>()</span><br />
+      Reads and initializes boundaries form a sigle labels file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.connections-pysrc.html#read_single_boundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="read_multi_boundaries"></a><span class="summary-sig-name">read_multi_boundaries</span>()</span><br />
+      Reads and initializes boundaries form a sigle labels file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.connections-pysrc.html#read_multi_boundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="read_hi"></a><span class="summary-sig-name">read_hi</span>()</span><br />
+      Reads (unpickles) a hierarchy object.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.connections-pysrc.html#read_hi">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_out_hierarchy_name"></a><span class="summary-sig-name">get_out_hierarchy_name</span>()</span><br />
+      Returns output hierarchy file name</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.connections-pysrc.html#get_out_hierarchy_name">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="machine_info"></a><span class="summary-sig-name">machine_info</span>()</span><br />
+      Returns machine name and machine architecture strings</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.connections-pysrc.html#machine_info">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="write_hi"></a><span class="summary-sig-name">write_hi</span>(<span class="summary-sig-arg">hi</span>,
+        <span class="summary-sig-arg">full_inset</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Writes (pickles) a hierarchy object</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.connections-pysrc.html#write_hi">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="format_threshold"></a><span class="summary-sig-name">format_threshold</span>(<span class="summary-sig-arg">tr</span>)</span><br />
+      Makes threshold strings.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.connections-pysrc.html#format_threshold">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_image_base"></a><span class="summary-sig-name">get_image_base</span>()</span><br />
+      Returns base and root of the image file name</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.connections-pysrc.html#get_image_base">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_connections_name"></a><span class="summary-sig-name">get_connections_name</span>(<span class="summary-sig-arg">tr</span>)</span><br />
+      Returns the connections file name</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.connections-pysrc.html#get_connections_name">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="read_conn"></a><span class="summary-sig-name">read_conn</span>(<span class="summary-sig-arg">tr</span>)</span><br />
+      Reads connections from a file and return a segmentation object.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.connections-pysrc.html#read_conn">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="open_results"></a><span class="summary-sig-name">open_results</span>(<span class="summary-sig-arg">tr</span>)</span><br />
+      Opens a results file name and returns it.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.connections-pysrc.html#open_results">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="analyze_segment"></a><span class="summary-sig-name">analyze_segment</span>(<span class="summary-sig-arg">image</span>,
+        <span class="summary-sig-arg">segment</span>,
+        <span class="summary-sig-arg">contacts</span>,
+        <span class="summary-sig-arg">boundary</span>,
+        <span class="summary-sig-arg">bound_dist_db</span>)</span><br />
+      Calculates volume, surface and density of a segment</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.connections-pysrc.html#analyze_segment">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.scripts.connections-module.html#write_res" class="summary-sig-name">write_res</a>(<span class="summary-sig-arg">seg</span>,
+        <span class="summary-sig-arg">dens</span>,
+        <span class="summary-sig-arg">mor</span>,
+        <span class="summary-sig-arg">topo</span>,
+        <span class="summary-sig-arg">dist</span>,
+        <span class="summary-sig-arg">dist_reg</span>,
+        <span class="summary-sig-arg">contacts</span>,
+        <span class="summary-sig-arg">bound_dist</span>,
+        <span class="summary-sig-arg">res_file</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">multi_b_ids</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Writes results for one level (threshold) in the results file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.connections-pysrc.html#write_res">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="order"></a><span class="summary-sig-name">order</span>(<span class="summary-sig-arg">ids</span>,
+        <span class="summary-sig-arg">contacts</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">volume</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns ordered ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.connections-pysrc.html#order">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="main"></a><span class="summary-sig-name">main</span>()</span><br />
+      Main function</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.scripts.connections-pysrc.html#main">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="image_file_name"></a><span class="summary-name">image_file_name</span> = <code title="'../3d/tomo.em'"><code class="variable-quote">'</code><code class="variable-string">../3d/tomo.em</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="labels_file_name"></a><span class="summary-name">labels_file_name</span> = <code title="'labels.dat'"><code class="variable-quote">'</code><code class="variable-string">labels.dat</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="labels_shape"></a><span class="summary-name">labels_shape</span> = <code title="(100, 120, 90)"><code class="variable-group">(</code>100<code class="variable-op">, </code>120<code class="variable-op">, </code>90<code class="variable-group">)</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="labels_data_type"></a><span class="summary-name">labels_data_type</span> = <code title="'uint8'"><code class="variable-quote">'</code><code class="variable-string">uint8</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="labels_byte_order"></a><span class="summary-name">labels_byte_order</span> = <code title="'&lt;'"><code class="variable-quote">'</code><code class="variable-string">&lt;</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="labels_array_order"></a><span class="summary-name">labels_array_order</span> = <code title="'FORTRAN'"><code class="variable-quote">'</code><code class="variable-string">FORTRAN</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="labels_offset"></a><span class="summary-name">labels_offset</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="read_connections"></a><span class="summary-name">read_connections</span> = <code title="False">False</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="threshold"></a><span class="summary-name">threshold</span> = <code title="array([-0.2 , -0.18, -0.16, -0.14, -0.12, -0.1 ])">array([-0.2 , -0.18, -0.16, -0.14, -0.12, -0.1 ])</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="max_new"></a><span class="summary-name">max_new</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="min_step"></a><span class="summary-name">min_step</span> = <code title="0.001">0.001</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="check_hierarchy"></a><span class="summary-name">check_hierarchy</span> = <code title="False">False</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="struct_el_connectivity"></a><span class="summary-name">struct_el_connectivity</span> = <code title="1">1</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="contact_struct_el_connectivity"></a><span class="summary-name">contact_struct_el_connectivity</span> = <code title="1">1</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="count_struct_el_connectivity"></a><span class="summary-name">count_struct_el_connectivity</span> = <code title="1">1</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.scripts.connections-module.html#all_ids" class="summary-name">all_ids</a> = <code title="[2,
+ 3,
+ 4,
+ 5,
+ 6,
+ 7,
+ 8,
+ 9,
+..."><code class="variable-group">[</code>2<code class="variable-op">, </code>3<code class="variable-op">, </code>4<code class="variable-op">, </code>5<code class="variable-op">, </code>6<code class="variable-op">, </code>7<code class="variable-op">, </code>8<code class="variable-op">, </code>9<code class="variable-op">, </code>10<code class="variable-op">, </code>11<code class="variable-op">, </code>12<code class="variable-op">, </code>13<code class="variable-op">, </code>14<code class="variable-op">, </code>15<code class="variable-op">, </code>16<code class="variable-op">,</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.scripts.connections-module.html#boundary_ids" class="summary-name">boundary_ids</a> = <code title="[2,
+ 3,
+ 4,
+ 5,
+ 6,
+ 7,
+ 8,
+ 9,
+..."><code class="variable-group">[</code>2<code class="variable-op">, </code>3<code class="variable-op">, </code>4<code class="variable-op">, </code>5<code class="variable-op">, </code>6<code class="variable-op">, </code>7<code class="variable-op">, </code>8<code class="variable-op">, </code>9<code class="variable-op">, </code>10<code class="variable-op">, </code>11<code class="variable-op">, </code>12<code class="variable-op">, </code>13<code class="variable-op">, </code>14<code class="variable-op">, </code>15<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="shift"></a><span class="summary-name">shift</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="n_boundary"></a><span class="summary-name">n_boundary</span> = <code title="2">2</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="count_mode"></a><span class="summary-name">count_mode</span> = <code title="'at_least'"><code class="variable-quote">'</code><code class="variable-string">at_least</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="conn_region"></a><span class="summary-name">conn_region</span> = <code title="0">0</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="free_size"></a><span class="summary-name">free_size</span> = <code title="10">10</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="free_mode"></a><span class="summary-name">free_mode</span> = <code title="'add'"><code class="variable-quote">'</code><code class="variable-string">add</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="boundary_lists"></a><span class="summary-name">boundary_lists</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="do_length"></a><span class="summary-name">do_length</span> = <code title="False">False</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="length_mode"></a><span class="summary-name">length_mode</span> = <code title="'c2c'"><code class="variable-quote">'</code><code class="variable-string">c2c</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="do_boundary_distance"></a><span class="summary-name">do_boundary_distance</span> = <code title="True">True</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="do_topology"></a><span class="summary-name">do_topology</span> = <code title="True">True</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="distance_id"></a><span class="summary-name">distance_id</span> = <code title="114">114</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="distance_mode"></a><span class="summary-name">distance_mode</span> = <code title="'mean'"><code class="variable-quote">'</code><code class="variable-string">mean</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="order_by_boundaries"></a><span class="summary-name">order_by_boundaries</span> = <code title="True">True</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="order_by_volume"></a><span class="summary-name">order_by_volume</span> = <code title="False">False</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="write_hierarchy"></a><span class="summary-name">write_hierarchy</span> = <code title="True">True</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="hi_directory"></a><span class="summary-name">hi_directory</span> = <code title="''"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="hi_prefix"></a><span class="summary-name">hi_prefix</span> = <code title="''"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="insert_root_hi"></a><span class="summary-name">insert_root_hi</span> = <code title="True">True</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="hi_suffix"></a><span class="summary-name">hi_suffix</span> = <code title="'.pkl'"><code class="variable-quote">'</code><code class="variable-string">.pkl</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="read_hierarchy"></a><span class="summary-name">read_hierarchy</span> = <code title="False">False</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="hierarchy_file_name"></a><span class="summary-name">hierarchy_file_name</span> = <code title="''"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="write_connections"></a><span class="summary-name">write_connections</span> = <code title="False">False</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="connections_file_name"></a><span class="summary-name">connections_file_name</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="conn_directory"></a><span class="summary-name">conn_directory</span> = <code title="''"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="conn_prefix"></a><span class="summary-name">conn_prefix</span> = <code title="''"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="insert_root_conn"></a><span class="summary-name">insert_root_conn</span> = <code title="True">True</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="conn_suffix"></a><span class="summary-name">conn_suffix</span> = <code title="'.em'"><code class="variable-quote">'</code><code class="variable-string">.em</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="threshold_precision"></a><span class="summary-name">threshold_precision</span> = <code title="3">3</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="conn_data_type"></a><span class="summary-name">conn_data_type</span> = <code title="'uint16'"><code class="variable-quote">'</code><code class="variable-string">uint16</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="write_results"></a><span class="summary-name">write_results</span> = <code title="True">True</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="results_file_name"></a><span class="summary-name">results_file_name</span> = <code title="None">None</code><br />
+      hash(x)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="res_directory"></a><span class="summary-name">res_directory</span> = <code title="''"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="res_prefix"></a><span class="summary-name">res_prefix</span> = <code title="''"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="insert_root_res"></a><span class="summary-name">insert_root_res</span> = <code title="True">True</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="res_suffix"></a><span class="summary-name">res_suffix</span> = <code title="'_con.dat'"><code class="variable-quote">'</code><code class="variable-string">_con.dat</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="include_total"></a><span class="summary-name">include_total</span> = <code title="True">True</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__package__"></a><span class="summary-name">__package__</span> = <code title="'pyto.scripts'"><code class="variable-quote">'</code><code class="variable-string">pyto.scripts</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="write_res"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">write_res</span>(<span class="sig-arg">seg</span>,
+        <span class="sig-arg">dens</span>,
+        <span class="sig-arg">mor</span>,
+        <span class="sig-arg">topo</span>,
+        <span class="sig-arg">dist</span>,
+        <span class="sig-arg">dist_reg</span>,
+        <span class="sig-arg">contacts</span>,
+        <span class="sig-arg">bound_dist</span>,
+        <span class="sig-arg">res_file</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">multi_b_ids</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.scripts.connections-pysrc.html#write_res">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes results for one level (threshold) in the results file.</p>
+  <p>If ids is not given seg.ids is used instead.</p>
+  <p>Arguments:</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-VariablesDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="all_ids"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">all_ids</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">[</code>2<code class="variable-op">,</code>
+ 3<code class="variable-op">,</code>
+ 4<code class="variable-op">,</code>
+ 5<code class="variable-op">,</code>
+ 6<code class="variable-op">,</code>
+ 7<code class="variable-op">,</code>
+ 8<code class="variable-op">,</code>
+ 9<code class="variable-op">,</code>
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="boundary_ids"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">boundary_ids</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">[</code>2<code class="variable-op">,</code>
+ 3<code class="variable-op">,</code>
+ 4<code class="variable-op">,</code>
+ 5<code class="variable-op">,</code>
+ 6<code class="variable-op">,</code>
+ 7<code class="variable-op">,</code>
+ 8<code class="variable-op">,</code>
+ 9<code class="variable-op">,</code>
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

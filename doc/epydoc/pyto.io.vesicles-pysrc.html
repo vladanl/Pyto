@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.io.vesicles</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.io-module.html">Package&nbsp;io</a> ::
+        Module&nbsp;vesicles
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.io.vesicles-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="pyto.io.vesicles-module.html">Module pyto.io.vesicles</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-docstring">Contains class Vesicles for reading vesicles results from a file and</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-docstring">parsing the results.</tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-docstring">After executing the following statements:</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-docstring">ves = pyto.io.Vesicles()</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-docstring">ves.read('vesicles_file')</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-docstring">all data from the vesicles is saved in the following attributes:</tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-docstring">  - ves.ids: ndarray of vesiclke ids</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-docstring">  - ves.vesDensMean: vesicle</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-docstring">  - ves.vesDensStd</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-docstring">  - ves.vesDensMin</tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-docstring">  - ves.vesDensMax</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-docstring">  - ves.memDensMean: membrane</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-docstring">  - ves.memDensStd</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"><tt class="py-docstring">  - ves.memDensMin</tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt class="py-docstring">  - ves.memDensMax</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"><tt class="py-docstring">  - ves.intDensMean: interior</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"><tt class="py-docstring">  - ves.intDensStd</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-docstring">  - ves.intDensMin</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"><tt class="py-docstring">  - ves.intDensMax</tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"><tt class="py-docstring">  - ves.vesVolume: vesicle volume</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"><tt class="py-docstring">  - ves.memVolume: membrane volume</tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"><tt class="py-docstring">  - ves.center: vesicle center</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"><tt class="py-docstring">  - ves.radiusMean: vesicle radius</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"><tt class="py-docstring">  - ves.radiusStd</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"><tt class="py-docstring">  - ves.radiusMin</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"><tt class="py-docstring">  - ves.radiusMax</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"><tt class="py-docstring">All attributes are ndarrays ordered in the same way as ids in ves.ids.</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line"><tt class="py-docstring"># Author: Vladan Lucic (Max Planck Institute for Biochemistry)</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"><tt class="py-docstring"># $Id: vesicles.py 63 2008-02-26 10:22:11Z vladan $</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line"> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line"><tt class="py-name">__version__</tt> <tt class="py-op">=</tt> <tt class="py-string">"$Revision: 63 $"</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line"> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line"> </tt>
+<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">numpy</tt> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">scipy</tt> </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">scipy</tt><tt class="py-op">.</tt><tt id="link-0" class="py-name" targets="Package pyto.io=pyto.io-module.html"><a title="pyto.io" class="py-name" href="#" onclick="return doclink('link-0', 'io', 'link-0');">io</a></tt> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-1" class="py-name" targets="Module pyto.io.results=pyto.io.results-module.html"><a title="pyto.io.results" class="py-name" href="#" onclick="return doclink('link-1', 'results', 'link-1');">results</a></tt> <tt class="py-keyword">import</tt> <tt id="link-2" class="py-name" targets="Class pyto.io.results.Results=pyto.io.results.Results-class.html"><a title="pyto.io.results.Results" class="py-name" href="#" onclick="return doclink('link-2', 'Results', 'link-2');">Results</a></tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line"> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line"> </tt>
+<a name="Vesicles"></a><div id="Vesicles-def"><a name="L48"></a><tt class="py-lineno">48</tt> <a class="py-toggle" href="#" id="Vesicles-toggle" onclick="return toggle('Vesicles');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="pyto.io.vesicles.Vesicles-class.html">Vesicles</a><tt class="py-op">(</tt><tt class="py-base-class">Results</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Vesicles-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="Vesicles-expanded"><a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line"><tt class="py-docstring">    Contains methods to read and write vesicle results.</tt> </tt>
+<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line"> </tt>
+<a name="Vesicles.__init__"></a><div id="Vesicles.__init__-def"><a name="L54"></a><tt class="py-lineno">54</tt> <a class="py-toggle" href="#" id="Vesicles.__init__-toggle" onclick="return toggle('Vesicles.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.io.vesicles.Vesicles-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Vesicles.__init__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="Vesicles.__init__-expanded"><a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line"><tt class="py-docstring">        Initializes attributes.</tt> </tt>
+<a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line"> </tt>
+<a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line">        <tt class="py-comment"># from super</tt> </tt>
+<a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line">        <tt class="py-name">super</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__class__</tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Method pyto.analysis.catalog.Catalog.__init__()=pyto.analysis.catalog.Catalog-class.html#__init__,Method pyto.analysis.cleft_regions.CleftRegions.__init__()=pyto.analysis.cleft_regions.CleftRegions-class.html#__init__,Method pyto.analysis.clusters.Clusters.__init__()=pyto.analysis.clusters.Clusters-class.html#__init__,Method pyto.analysis.connections.Connections.__init__()=pyto.analysis.connections.Connections-class.html#__init__,Method pyto.analysis.experiment.Experiment.__init__()=pyto.analysis.experiment.Experiment-class.html#__init__,Method pyto.analysis.groups.Groups.__init__()=pyto.analysis.groups.Groups-class.html#__init__,Method pyto.analysis.layers.Layers.__init__()=pyto.analysis.layers.Layers-class.html#__init__,Method pyto.analysis.observations.Observations.__init__()=pyto.analysis.observations.Observations-class.html#__init__,Method pyto.analysis.vesicles.Vesicles.__init__()=pyto.analysis.vesicles.Vesicles-class.html#__init__,Method pyto.core.image.Image.__init__()=pyto.core.image.Image-class.html#__init__,Method pyto.correlative.basic.Basic.__init__()=pyto.correlative.basic.Basic-class.html#__init__,Method pyto.geometry.affine.Affine.__init__()=pyto.geometry.affine.Affine-class.html#__init__,Method pyto.geometry.affine_2d.Affine2D.__init__()=pyto.geometry.affine_2d.Affine2D-class.html#__init__,Method pyto.geometry.affine_3d.Affine3D.__init__()=pyto.geometry.affine_3d.Affine3D-class.html#__init__,Method pyto.geometry.coordinates.Coordinates.__init__()=pyto.geometry.coordinates.Coordinates-class.html#__init__,Method pyto.geometry.points.Points.__init__()=pyto.geometry.points.Points-class.html#__init__,Method pyto.geometry.rigid_3d.Rigid3D.__init__()=pyto.geometry.rigid_3d.Rigid3D-class.html#__init__,Method pyto.geometry.vector.Vector.__init__()=pyto.geometry.vector.Vector-class.html#__init__,Method pyto.grey.image.Image.__init__()=pyto.grey.image.Image-class.html#__init__,Method pyto.io.connections.Connections.__init__()=pyto.io.connections.Connections-class.html#__init__,Method pyto.io.image_io.ImageIO.__init__()=pyto.io.image_io.ImageIO-class.html#__init__,Method pyto.io.local_exceptions.FileTypeError.__init__()=pyto.io.local_exceptions.FileTypeError-class.html#__init__,Method pyto.io.multi_data.MultiData.__init__()=pyto.io.multi_data.MultiData-class.html#__init__,Method pyto.io.pickled.Pickled.__init__()=pyto.io.pickled.Pickled-class.html#__init__,Method pyto.io.results.Results.__init__()=pyto.io.results.Results-class.html#__init__,Method pyto.io.table.Table.__init__()=pyto.io.table.Table-class.html#__init__,Method pyto.io.vesicles.Vesicles.__init__()=pyto.io.vesicles.Vesicles-class.html#__init__,Method pyto.particles.multimer.Multimer.__init__()=pyto.particles.multimer.Multimer-class.html#__init__,Method pyto.particles.phantom.Phantom.__init__()=pyto.particles.phantom.Phantom-class.html#__init__,Method pyto.scene.cleft_regions.CleftRegions.__init__()=pyto.scene.cleft_regions.CleftRegions-class.html#__init__,Method pyto.scene.em_lm_correlation.EmLmCorrelation.__init__()=pyto.scene.em_lm_correlation.EmLmCorrelation-class.html#__init__,Method pyto.scene.multi_cluster.MultiCluster.__init__()=pyto.scene.multi_cluster.MultiCluster-class.html#__init__,Method pyto.scene.neighborhood.Neighborhood.__init__()=pyto.scene.neighborhood.Neighborhood-class.html#__init__,Method pyto.scene.segmentation_analysis.SegmentationAnalysis.__init__()=pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#__init__,Method pyto.segmentation.ball.Ball.__init__()=pyto.segmentation.ball.Ball-class.html#__init__,Method pyto.segmentation.bound_distance.BoundDistance.__init__()=pyto.segmentation.bound_distance.BoundDistance-class.html#__init__,Method pyto.segmentation.cleft.Cleft.__init__()=pyto.segmentation.cleft.Cleft-class.html#__init__,Method pyto.segmentation.cluster.Cluster.__init__()=pyto.segmentation.cluster.Cluster-class.html#__init__,Method pyto.segmentation.connected.Connected.__init__()=pyto.segmentation.connected.Connected-class.html#__init__,Method pyto.segmentation.contact.Contact.__init__()=pyto.segmentation.contact.Contact-class.html#__init__,Method pyto.segmentation.density.Density.__init__()=pyto.segmentation.density.Density-class.html#__init__,Method pyto.segmentation.distance.Distance.__init__()=pyto.segmentation.distance.Distance-class.html#__init__,Method pyto.segmentation.distance_to.DistanceTo.__init__()=pyto.segmentation.distance_to.DistanceTo-class.html#__init__,Method pyto.segmentation.features.Features.__init__()=pyto.segmentation.features.Features-class.html#__init__,Method pyto.segmentation.grey.Grey.__init__()=pyto.segmentation.grey.Grey-class.html#__init__,Method pyto.segmentation.hierarchy.Hierarchy.__init__()=pyto.segmentation.hierarchy.Hierarchy-class.html#__init__,Method pyto.segmentation.labels.Labels.__init__()=pyto.segmentation.labels.Labels-class.html#__init__,Method pyto.segmentation.morphology.Morphology.__init__()=pyto.segmentation.morphology.Morphology-class.html#__init__,Method pyto.segmentation.plane.Plane.__init__()=pyto.segmentation.plane.Plane-class.html#__init__,Method pyto.segmentation.segment.Segment.__init__()=pyto.segmentation.segment.Segment-class.html#__init__,Method pyto.segmentation.shapes.Shapes.__init__()=pyto.segmentation.shapes.Shapes-class.html#__init__,Method pyto.segmentation.sphere.Sphere.__init__()=pyto.segmentation.sphere.Sphere-class.html#__init__,Method pyto.segmentation.statistics.Statistics.__init__()=pyto.segmentation.statistics.Statistics-class.html#__init__,Method pyto.segmentation.struct_el.StructEl.__init__()=pyto.segmentation.struct_el.StructEl-class.html#__init__,Method pyto.segmentation.thresh_conn.ThreshConn.__init__()=pyto.segmentation.thresh_conn.ThreshConn-class.html#__init__,Method pyto.segmentation.topology.Topology.__init__()=pyto.segmentation.topology.Topology-class.html#__init__,Method pyto.tomo.ctf.Ctf.__init__()=pyto.tomo.ctf.Ctf-class.html#__init__,Method pyto.tomo.frame_series.FrameSeries.__init__()=pyto.tomo.frame_series.FrameSeries-class.html#__init__,Method pyto.tomo.serial_em.SerialEM.__init__()=pyto.tomo.serial_em.SerialEM-class.html#__init__,Method pyto.tomo.series.Series.__init__()=pyto.tomo.series.Series-class.html#__init__"><a title="pyto.analysis.catalog.Catalog.__init__
+pyto.analysis.cleft_regions.CleftRegions.__init__
+pyto.analysis.clusters.Clusters.__init__
+pyto.analysis.connections.Connections.__init__
+pyto.analysis.experiment.Experiment.__init__
+pyto.analysis.groups.Groups.__init__
+pyto.analysis.layers.Layers.__init__
+pyto.analysis.observations.Observations.__init__
+pyto.analysis.vesicles.Vesicles.__init__
+pyto.core.image.Image.__init__
+pyto.correlative.basic.Basic.__init__
+pyto.geometry.affine.Affine.__init__
+pyto.geometry.affine_2d.Affine2D.__init__
+pyto.geometry.affine_3d.Affine3D.__init__
+pyto.geometry.coordinates.Coordinates.__init__
+pyto.geometry.points.Points.__init__
+pyto.geometry.rigid_3d.Rigid3D.__init__
+pyto.geometry.vector.Vector.__init__
+pyto.grey.image.Image.__init__
+pyto.io.connections.Connections.__init__
+pyto.io.image_io.ImageIO.__init__
+pyto.io.local_exceptions.FileTypeError.__init__
+pyto.io.multi_data.MultiData.__init__
+pyto.io.pickled.Pickled.__init__
+pyto.io.results.Results.__init__
+pyto.io.table.Table.__init__
+pyto.io.vesicles.Vesicles.__init__
+pyto.particles.multimer.Multimer.__init__
+pyto.particles.phantom.Phantom.__init__
+pyto.scene.cleft_regions.CleftRegions.__init__
+pyto.scene.em_lm_correlation.EmLmCorrelation.__init__
+pyto.scene.multi_cluster.MultiCluster.__init__
+pyto.scene.neighborhood.Neighborhood.__init__
+pyto.scene.segmentation_analysis.SegmentationAnalysis.__init__
+pyto.segmentation.ball.Ball.__init__
+pyto.segmentation.bound_distance.BoundDistance.__init__
+pyto.segmentation.cleft.Cleft.__init__
+pyto.segmentation.cluster.Cluster.__init__
+pyto.segmentation.connected.Connected.__init__
+pyto.segmentation.contact.Contact.__init__
+pyto.segmentation.density.Density.__init__
+pyto.segmentation.distance.Distance.__init__
+pyto.segmentation.distance_to.DistanceTo.__init__
+pyto.segmentation.features.Features.__init__
+pyto.segmentation.grey.Grey.__init__
+pyto.segmentation.hierarchy.Hierarchy.__init__
+pyto.segmentation.labels.Labels.__init__
+pyto.segmentation.morphology.Morphology.__init__
+pyto.segmentation.plane.Plane.__init__
+pyto.segmentation.segment.Segment.__init__
+pyto.segmentation.shapes.Shapes.__init__
+pyto.segmentation.sphere.Sphere.__init__
+pyto.segmentation.statistics.Statistics.__init__
+pyto.segmentation.struct_el.StructEl.__init__
+pyto.segmentation.thresh_conn.ThreshConn.__init__
+pyto.segmentation.topology.Topology.__init__
+pyto.tomo.ctf.Ctf.__init__
+pyto.tomo.frame_series.FrameSeries.__init__
+pyto.tomo.serial_em.SerialEM.__init__
+pyto.tomo.series.Series.__init__" class="py-name" href="#" onclick="return doclink('link-3', '__init__', 'link-3');">__init__</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line"> </tt>
+<a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line">        <tt class="py-comment"># local</tt> </tt>
+<a name="L63"></a><tt class="py-lineno">63</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">names</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-string">'id'</tt><tt class="py-op">,</tt>  </tt>
+<a name="L64"></a><tt class="py-lineno">64</tt>  <tt class="py-line">                <tt class="py-string">'vesDensMean'</tt><tt class="py-op">,</tt> <tt class="py-string">'vesDensStd'</tt><tt class="py-op">,</tt> <tt class="py-string">'vesDens.Min'</tt><tt class="py-op">,</tt> <tt class="py-string">'vesDensMax'</tt><tt class="py-op">,</tt> </tt>
+<a name="L65"></a><tt class="py-lineno">65</tt>  <tt class="py-line">                <tt class="py-string">'memDensMean'</tt><tt class="py-op">,</tt> <tt class="py-string">'memDensStd'</tt><tt class="py-op">,</tt> <tt class="py-string">'memDens.Min'</tt><tt class="py-op">,</tt> <tt class="py-string">'memDensMax'</tt><tt class="py-op">,</tt> </tt>
+<a name="L66"></a><tt class="py-lineno">66</tt>  <tt class="py-line">                <tt class="py-string">'intDensMean'</tt><tt class="py-op">,</tt> <tt class="py-string">'intDensStd'</tt><tt class="py-op">,</tt> <tt class="py-string">'intDens.Min'</tt><tt class="py-op">,</tt> <tt class="py-string">'intDensMax'</tt><tt class="py-op">,</tt> </tt>
+<a name="L67"></a><tt class="py-lineno">67</tt>  <tt class="py-line">                <tt class="py-string">'vesVolume'</tt><tt class="py-op">,</tt> <tt class="py-string">'memVolume'</tt><tt class="py-op">,</tt> <tt class="py-string">'center'</tt> </tt>
+<a name="L68"></a><tt class="py-lineno">68</tt>  <tt class="py-line">                <tt class="py-string">'radiusMean'</tt><tt class="py-op">,</tt> <tt class="py-string">'radiusStd'</tt><tt class="py-op">,</tt> <tt class="py-string">'radiusMin'</tt><tt class="py-op">,</tt> <tt class="py-string">'radiusMax'</tt><tt class="py-op">]</tt> </tt>
+<a name="L69"></a><tt class="py-lineno">69</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-4" class="py-name" targets="Variable pyto.scripts.correlation_simple_fileio.columns=pyto.scripts.correlation_simple_fileio-module.html#columns"><a title="pyto.scripts.correlation_simple_fileio.columns" class="py-name" href="#" onclick="return doclink('link-4', 'columns', 'link-4');">columns</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-op">(</tt><tt class="py-number">0</tt><tt class="py-op">,</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-number">1</tt><tt class="py-op">,</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-number">2</tt><tt class="py-op">,</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-number">3</tt><tt class="py-op">,</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-number">4</tt><tt class="py-op">,</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-number">5</tt><tt class="py-op">,</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-number">6</tt><tt class="py-op">,</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-number">7</tt><tt class="py-op">,</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-number">8</tt><tt class="py-op">,</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L70"></a><tt class="py-lineno">70</tt>  <tt class="py-line">                        <tt class="py-op">(</tt><tt class="py-number">9</tt><tt class="py-op">,</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-number">10</tt><tt class="py-op">,</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-number">11</tt><tt class="py-op">,</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-number">12</tt><tt class="py-op">,</tt><tt class="py-op">)</tt><tt class="py-op">,</tt>  </tt>
+<a name="L71"></a><tt class="py-lineno">71</tt>  <tt class="py-line">                        <tt class="py-op">(</tt><tt class="py-number">13</tt><tt class="py-op">,</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-number">14</tt><tt class="py-op">,</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-number">15</tt><tt class="py-op">,</tt><tt class="py-number">16</tt><tt class="py-op">,</tt><tt class="py-number">17</tt><tt class="py-op">)</tt><tt class="py-op">,</tt>  </tt>
+<a name="L72"></a><tt class="py-lineno">72</tt>  <tt class="py-line">                        <tt class="py-op">(</tt><tt class="py-number">18</tt><tt class="py-op">,</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-number">19</tt><tt class="py-op">,</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-number">20</tt><tt class="py-op">,</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-number">21</tt><tt class="py-op">,</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> </tt>
+</div></div><a name="L73"></a><tt class="py-lineno">73</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

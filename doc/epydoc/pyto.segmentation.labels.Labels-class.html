@@ -1,0 +1,1970 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.segmentation.labels.Labels</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.segmentation-module.html">Package&nbsp;segmentation</a> ::
+        <a href="pyto.segmentation.labels-module.html">Module&nbsp;labels</a> ::
+        Class&nbsp;Labels
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.segmentation.labels.Labels-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Labels</h1><p class="nomargin-top"><span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_pyto_seg_14" name="uml_class_diagram_for_pyto_seg_14">
+<area shape="rect" id="node1" href="pyto.segmentation.sphere.Sphere-class.html" title="pyto.segmentation.sphere.Sphere" alt="" coords="5,987,125,1025"/>
+<area shape="rect" id="node2_39" href="pyto.core.image.Image-class.html#ndim" title="Dimensionality of data" alt="" coords="99,29,1009,49"/>
+<area shape="rect" id="node2_40" href="pyto.core.image.Image-class.html#offset" title="Position of the origin in respect to some reference" alt="" coords="99,49,1009,69"/>
+<area shape="rect" id="node2_41" href="pyto.core.image.Image-class.html#totalOffset" title="Total offset, that is a sum of self.offset and the start positions of &#160;self.inset." alt="" coords="99,69,1009,89"/>
+<area shape="rect" id="node2_42" href="pyto.core.image.Image-class.html#inset" title="(list of slice objects) a current view of self.data array in respect to the underlying base reference array." alt="" coords="99,89,1009,109"/>
+<area shape="rect" id="node2_43" href="pyto.core.image.Image-class.html#fullInset" title="Full inset that underlies current self.data." alt="" coords="99,109,1009,129"/>
+<area shape="rect" id="node2_44" href="pyto.core.image.Image-class.html#fullData" title="Full size data array" alt="" coords="99,129,1009,149"/>
+<area shape="rect" id="node2_45" href="pyto.core.image.Image-class.html#tile" title="Use the current instance (image) as a tile (pattern) to make a (bigger) &#160;image in arbitrary dimensions." alt="" coords="99,152,1009,172"/>
+<area shape="rect" id="node2_46" href="pyto.core.image.Image-class.html#getNdim" title="Gets ndim from self.data, or if the data does not exists returns &#160;self._ndim." alt="" coords="99,172,1009,192"/>
+<area shape="rect" id="node2_47" href="pyto.core.image.Image-class.html#setNdim" title="Sets self._ndim." alt="" coords="99,192,1009,212"/>
+<area shape="rect" id="node2_48" href="pyto.core.image.Image-class.html#setOffset" title="Sets offset of &#160;(ndarray) self.offset." alt="" coords="99,212,1009,232"/>
+<area shape="rect" id="node2_49" href="pyto.core.image.Image-class.html#getOffset" title="Returns current offset value." alt="" coords="99,232,1009,252"/>
+<area shape="rect" id="node2_50" href="pyto.core.image.Image-class.html#getTotalOffset" title="Returns total offset, which is a sum of self.offset and the start positions of self.inset." alt="" coords="99,252,1009,272"/>
+<area shape="rect" id="node2_51" href="pyto.core.image.Image-class.html#setInset" title="Sets inset for self.data (does not modify self.data)." alt="" coords="99,272,1009,292"/>
+<area shape="rect" id="node2_52" href="pyto.core.image.Image-class.html#getInset" title="Returns inset position as a list of slice objects." alt="" coords="99,292,1009,312"/>
+<area shape="rect" id="node2_53" href="pyto.core.image.Image-class.html#relativeToAbsoluteInset" title="Converts relative inset (in respect to the current inset (self.inset)) to &#160;an absolute inset." alt="" coords="99,312,1009,332"/>
+<area shape="rect" id="node2_54" href="pyto.core.image.Image-class.html#absoluteToRelativeInset" title="Converts given absolute inset into inset relative to the current inset &#160;(self.inset)." alt="" coords="99,332,1009,352"/>
+<area shape="rect" id="node2_55" href="pyto.core.image.Image-class.html#setFullInset" title="Sets full inset for self.data (does not modify self.data)." alt="" coords="99,352,1009,372"/>
+<area shape="rect" id="node2_56" href="pyto.core.image.Image-class.html#getFullInset" title="Returns a previously defined inset (list of slice objects) of a full&#45;size &#160;array underlying (the current view) of self.data." alt="" coords="99,372,1009,392"/>
+<area shape="rect" id="node2_57" href="pyto.core.image.Image-class.html#getFullData" title="Returns a previously defined full&#45;size array underlying (the current view &#160;of) self.data." alt="" coords="99,392,1009,412"/>
+<area shape="rect" id="node2_58" href="pyto.core.image.Image-class.html#write" title="Writes image to a file in em, mrc or raw format." alt="" coords="99,432,1009,452"/>
+<area shape="rect" id="node2" href="pyto.core.image.Image-class.html" title="Methods for creating new images: &#45; tile: tile current image to get a bigger one" alt="" coords="86,5,1021,459"/>
+<area shape="rect" id="node5_59" href="pyto.segmentation.labels.Labels-class.html#maxId" title="Maximum id" alt="" coords="223,502,885,522"/>
+<area shape="rect" id="node5_60" href="pyto.segmentation.labels.Labels-class.html#contactStructElConn" title="Contact structuring element connectivity, default 1" alt="" coords="223,522,885,542"/>
+<area shape="rect" id="node5_61" href="pyto.segmentation.labels.Labels-class.html#contactStructEl" title="Contact structuring element, default connectivity 1" alt="" coords="223,542,885,562"/>
+<area shape="rect" id="node5_62" href="pyto.segmentation.labels.Labels-class.html#countStructElConn" title="Count structuring element connectivity, default ndim" alt="" coords="223,562,885,582"/>
+<area shape="rect" id="node5_63" href="pyto.segmentation.labels.Labels-class.html#countStructEl" title="Count structuring element, default connectivity ndim" alt="" coords="223,582,885,602"/>
+<area shape="rect" id="node5_64" href="pyto.segmentation.labels.Labels-class.html#__init__" title="Initializes attributes and sets data." alt="" coords="223,605,885,625"/>
+<area shape="rect" id="node5_65" href="pyto.segmentation.labels.Labels-class.html#makeInset" title="Finds the smallest inset that contains all elements of self.data labeled by ids (or self.ids if ids is None)." alt="" coords="223,625,885,645"/>
+<area shape="rect" id="node5_66" href="pyto.segmentation.labels.Labels-class.html#findInset" title="Returns the smallest inset (list of slice objects of length self.ndim) that contains all elements of self.data labeled by ids (or self.ids if ids is &#160;None)." alt="" coords="223,645,885,665"/>
+<area shape="rect" id="node5_67" href="pyto.segmentation.labels.Labels-class.html#setData" title="Sets data and the attributes determined from data." alt="" coords="223,665,885,685"/>
+<area shape="rect" id="node5_68" href="pyto.segmentation.labels.Labels-class.html#setIds" title="Sets id and related attributes: self.ids (ndarray of flattened ids), &#160;self.originalIds (self.maxId, self.nextId and self.n)." alt="" coords="223,685,885,705"/>
+<area shape="rect" id="node5_69" href="pyto.segmentation.labels.Labels-class.html#extractIds" title="Finds segment ids, that is positive unique elements of data array." alt="" coords="223,705,885,725"/>
+<area shape="rect" id="node5_70" href="pyto.segmentation.labels.Labels-class.html#getMaxId" title="Maximum id" alt="" coords="223,725,885,745"/>
+<area shape="rect" id="node5_71" href="pyto.segmentation.labels.Labels-class.html#setMaxId" title="Doesn&#39;t do anything, needed for compatibility with super." alt="" coords="223,745,885,765"/>
+<area shape="rect" id="node5_72" href="pyto.segmentation.labels.Labels-class.html#remove" title="Removes segments specified in arg ids, by both removing them from the data &#160;array (self.data)." alt="" coords="223,765,885,785"/>
+<area shape="rect" id="node5_73" href="pyto.segmentation.labels.Labels-class.html#restrict" title="Removes (sets to 0) data elements of this instance that have one of the &#160;specified ids and where mask.data is 0 (if arg update is True)." alt="" coords="223,785,885,805"/>
+<area shape="rect" id="node5_74" href="pyto.segmentation.labels.Labels-class.html#reorder" title="Changes ids of segments according to the order, or orderes ids from 1 up &#160;without gaps if order is not given." alt="" coords="223,805,885,825"/>
+<area shape="rect" id="node5_75" href="pyto.segmentation.labels.Labels-class.html#shiftIds" title="Changes all (positive) ids of segments by shifting them by (arg) shift." alt="" coords="223,825,885,845"/>
+<area shape="rect" id="node5_76" href="pyto.segmentation.labels.Labels-class.html#orderByBoundaries" title="Orders segments both here and in the contacts object by ids of contacted &#160;boundaries." alt="" coords="223,845,885,865"/>
+<area shape="rect" id="node5_77" href="pyto.segmentation.labels.Labels-class.html#magnify" title="Magnifies (increases the size of) the data array (self.data) by an int &#160;factor." alt="" coords="223,885,885,905"/>
+<area shape="rect" id="node5" href="pyto.segmentation.labels.Labels-class.html" title="This class concerns an integer&#45;labeled image that contains one or more segments." alt="" coords="210,477,897,911"/>
+<area shape="rect" id="node3" href="pyto.segmentation.ball.Ball-class.html" title="pyto.segmentation.ball.Ball" alt="" coords="155,987,237,1025"/>
+<area shape="rect" id="node4" href="pyto.segmentation.segment.Segment-class.html" title="Manipulations and analysis of segmented images (label fields)." alt="" coords="397,929,539,968"/>
+<area shape="rect" id="node6" href="pyto.segmentation.shapes.Shapes-class.html" title="Provides methods for crating and manipulating geometrical shapes, in addition to methods defined in its base class Segment." alt="" coords="267,987,392,1025"/>
+<area shape="rect" id="node8" href="pyto.segmentation.cleft.Cleft-class.html" title="Important attributes:" alt="" coords="422,987,514,1025"/>
+<area shape="rect" id="node9" href="pyto.segmentation.plane.Plane-class.html" title="pyto.segmentation.plane.Plane" alt="" coords="544,987,648,1025"/>
+<area shape="rect" id="node10" href="pyto.segmentation.connected.Connected-class.html" title="pyto.segmentation.connected.Connected" alt="" coords="677,987,840,1025"/>
+<area shape="rect" id="node11" href="pyto.segmentation.hierarchy.Hierarchy-class.html" title="A hierarchy contains segments that are orgainuzed in a strictly hierarchical manner, that is they satisfy the following requirements: 1) Each segment is either superset (overlaps), subset or does not intersect any other segment." alt="" coords="727,929,875,968"/>
+<area shape="rect" id="node7" href="pyto.segmentation.thresh_conn.ThreshConn-class.html" title="pyto.segmentation.thresh_conn.ThreshConn" alt="" coords="869,987,1051,1025"/>
+</map>
+  <img src="uml_class_diagram_for_pyto_seg_14.gif" alt='' usemap="#uml_class_diagram_for_pyto_seg_14" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<pre class="literalblock">
+
+This class concerns an integer-labeled image that contains one or more 
+segments. However, it is not defined how exactly are segments represened 
+in the label image. Therefore, the following subclasses of this
+class should be used for the following cases:
+
+  - Segments: segments are non-overlaping, a segment is represented as 
+a set of image elements having the same value
+  - Hierarchy: hierarchical (overlaping) organization of segments
+
+It is recomended to use objects of the above two subclasses instead
+of instantiating this class.
+
+The essential attribute of this calss is data, which holds an (n-dim)
+image that takes integer values (label field). In general, 0 labels 
+background and positive integers are for different labels (segments),
+while negative integers are normally not used.
+
+Important attributes:
+
+  - data (ndarray): labeled n-dim image
+  - ids (list): label ids, not necessarily set
+
+Positioning of the image data array (methods in addition to those from
+core.Image:
+
+- findInset: returns the smallest inset that contains specified data
+- makeInset: returns the smallest data inset that contains specified data
+and optionally sets self.data to the new data inset
+
+Example: speeding up calculations without using additional memory
+
+  new_data = self.makeInset(... update=False)   # self.data unchanged
+
+  (calculations using new_data)
+
+Id and segments-related methods:
+
+- remove: removes / keeps specified segments
+- restrict(mask): removes elements that are not present in mask
+- reorder: changes segment ids
+- shiftIds: shifts segment ids
+- order*: reorders ids according to different criteria
+
+</pre>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Initializes attributes and sets data.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#makeInset" class="summary-sig-name">makeInset</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">extend</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">additional</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">additionalIds</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">expand</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">value</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">update</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Finds the smallest inset that contains all elements of self.data 
+      labeled by ids (or self.ids if ids is None).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.makeInset">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#findInset" class="summary-sig-name">findInset</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">rel</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">extend</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">additional</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">additionalIds</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">expand</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Returns the smallest inset (list of slice objects of length 
+      self.ndim) that contains all elements of self.data labeled by ids (or
+      self.ids if ids is None).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.findInset">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#setData" class="summary-sig-name">setData</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">copy</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Sets data and the attributes determined from data.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.setData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#setIds" class="summary-sig-name">setIds</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Sets id and related attributes: self.ids (ndarray of flattened ids), 
+      self.originalIds (self.maxId, self.nextId and self.n).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.setIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#extractIds" class="summary-sig-name">extractIds</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">positive</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Finds segment ids, that is positive unique elements of data array.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.extractIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getMaxId"></a><span class="summary-sig-name">getMaxId</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Maximum id</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.getMaxId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="setMaxId"></a><span class="summary-sig-name">setMaxId</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">id_</span>)</span><br />
+      Doesn't do anything, needed for compatibility with super.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.setMaxId">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#remove" class="summary-sig-name">remove</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>,
+        <span class="summary-sig-arg">value</span>=<span class="summary-sig-default">0</span>)</span><br />
+      Removes segments specified in arg ids, by both removing them from the
+      data array (self.data).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.remove">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#_remove" class="summary-sig-name" onclick="show_private();">_remove</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>,
+        <span class="summary-sig-arg">remove</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">keep</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">all</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">auto</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">value</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">slices</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Removes segments labeled by elements of remove, or those that are not
+labeled by keep, by replacing the removed elements of data by value.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels._remove">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#restrict" class="summary-sig-name">restrict</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">mask</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">update</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Removes (sets to 0) data elements of this instance that have one of 
+      the specified ids and where mask.data is 0 (if arg update is True).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.restrict">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#reorder" class="summary-sig-name">reorder</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">order</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">clean</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Changes ids of segments according to the order, or orderes ids from 1
+      up without gaps if order is not given.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.reorder">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#shiftIds" class="summary-sig-name">shiftIds</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">shift</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Changes all (positive) ids of segments by shifting them by (arg) 
+      shift.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.shiftIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#orderByBoundaries" class="summary-sig-name">orderByBoundaries</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">contacts</span>)</span><br />
+      Orders segments both here and in the contacts object by ids of 
+      contacted boundaries.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.orderByBoundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#orderIdsByBoundaries" class="summary-sig-name">orderIdsByBoundaries</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">contacts</span>,
+        <span class="summary-sig-arg">argsort</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Orders self.ids according to the ids of contacted boundaries.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.orderIdsByBoundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#orderByValues" class="summary-sig-name">orderByValues</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">values</span>,
+        <span class="summary-sig-arg">contacts</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Orders segments, that is changes their ids according to values.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.orderByValues">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#orderIdsByValues" class="summary-sig-name">orderIdsByValues</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">values</span>,
+        <span class="summary-sig-arg">contacts</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">argsort</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Orders ids by values.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.orderIdsByValues">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#setStructEl" class="summary-sig-name">setStructEl</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">rank</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">connectivity</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">size</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">axis</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Sets or updates structuring element (self.structEl).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.setStructEl">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="setContactStructElConn"></a><span class="summary-sig-name">setContactStructElConn</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">connectivity</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Sets self._contactStructElConn.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.setContactStructElConn">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#getContactStructElConn" class="summary-sig-name">getContactStructElConn</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns self._contactStructElConn.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.getContactStructElConn">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getContactStructEl"></a><span class="summary-sig-name">getContactStructEl</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Generates and returns contact structuring element.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.getContactStructEl">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="setCountStructElConn"></a><span class="summary-sig-name">setCountStructElConn</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">connectivity</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Sets self._countStructElConn.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.setCountStructElConn">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#getCountStructElConn" class="summary-sig-name">getCountStructElConn</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns self._countStructElConn.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.getCountStructElConn">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getCountStructEl"></a><span class="summary-sig-name">getCountStructEl</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Generates and returns count structuring element.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.getCountStructEl">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#getPoints" class="summary-sig-name">getPoints</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">all</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">connectivity</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">distance</span>=<span class="summary-sig-default">2</span>,
+        <span class="summary-sig-arg">format_</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">coordinates</code><code class="variable-quote">'</code></span>)</span><br />
+      Returns coordinates of selected elements (points) of segments labeled
+      by arg ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.getPoints">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#getPointsGeodesic" class="summary-sig-name">getPointsGeodesic</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>,
+        <span class="summary-sig-arg">connectivity</span>,
+        <span class="summary-sig-arg">distance</span>)</span><br />
+      Returns coordinates of selected elements (points) of segments labeled
+      by arg ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.getPointsGeodesic">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#magnify" class="summary-sig-name">magnify</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">factor</span>)</span><br />
+      Magnifies (increases the size of) the data array (self.data) by an 
+      int factor.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.magnify">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.core.image.Image-class.html">core.image.Image</a></code></b>:
+      <code><a href="pyto.core.image.Image-class.html#absoluteToRelativeInset">absoluteToRelativeInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#clearFull">clearFull</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#copyPositioning">copyPositioning</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#expandInset">expandInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#findEnclosingInset">findEnclosingInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#findIntersectingInset">findIntersectingInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getDataInset">getDataInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getDeepBase">getDeepBase</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getFullData">getFullData</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getFullInset">getFullInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getInset">getInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getNdim">getNdim</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getOffset">getOffset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#getTotalOffset">getTotalOffset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#hasOverlap">hasOverlap</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#isInside">isInside</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#newFromInset">newFromInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#recoverFull">recoverFull</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#relativeToAbsoluteInset">relativeToAbsoluteInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#saveFull">saveFull</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#setDataInset">setDataInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#setFullData">setFullData</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#setFullInset">setFullInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#setInset">setInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#setNdim">setNdim</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#setOffset">setOffset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#tile">tile</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#useInset">useInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#usePositioning">usePositioning</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#write">write</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.core.image.Image-class.html">core.image.Image</a></code></b>:
+      <code><a href="pyto.core.image.Image-class.html#read">read</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_remove_or_keep_factor"></a><span class="summary-name">_remove_or_keep_factor</span> = <code title="0.55">0.55</code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.segmentation.labels.Labels-class.html#maxId" class="summary-name">maxId</a><br />
+      Maximum id
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.segmentation.labels.Labels-class.html#contactStructElConn" class="summary-name">contactStructElConn</a><br />
+      Contact structuring element connectivity, default 1
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.segmentation.labels.Labels-class.html#contactStructEl" class="summary-name">contactStructEl</a><br />
+      Contact structuring element, default connectivity 1
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.segmentation.labels.Labels-class.html#countStructElConn" class="summary-name">countStructElConn</a><br />
+      Count structuring element connectivity, default ndim
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.segmentation.labels.Labels-class.html#countStructEl" class="summary-name">countStructEl</a><br />
+      Count structuring element, default connectivity ndim
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.core.image.Image-class.html">core.image.Image</a></code></b>:
+      <code><a href="pyto.core.image.Image-class.html#fullData">fullData</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#fullInset">fullInset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#inset">inset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#ndim">ndim</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#offset">offset</a></code>,
+      <code><a href="pyto.core.image.Image-class.html#totalOffset">totalOffset</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Initializes attributes and sets data.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="makeInset"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">makeInset</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">extend</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">additional</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">additionalIds</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">expand</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">value</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">update</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.makeInset">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Finds the smallest inset that contains all elements of self.data 
+  labeled by ids (or self.ids if ids is None). This inset is extended at 
+  all sides by (arg) extend (but not outside of the current self.data) and 
+  saves it as self.data.</p>
+  <p>If arg update is True also sets self.data to the data inset found and 
+  data.inset to the absolute inset corresponding to the arguments.</p>
+  <p>If additonal is specified, the smallest inset that contains segments 
+  of both self.data and additional.data (labeled by additionalIds or 
+  additional.ids) is calculated.</p>
+  <p>If some of the additional segments fall outside the current data and 
+  if expand is True, the data is expanded (a new array is created with the 
+  additional elements set at arg value). If expand is False a ValueError is
+  raised.</p>
+  <p>If expand is True or no additional segment falls outside the current 
+  data the data array itself is not changed, only the view of this array 
+  (self.data) is changed.</p>
+  <p>If there are no segments or no ids, inset in all dimenssions is set to
+  slice(0,0).</p>
+  <p>The original inset can be recovered using self.recoverFull().</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      ids: segment ids (of self.data)
+    </li>
+    <li>
+      extend: length of extension in all directions
+    </li>
+    <li>
+      additional: (Segment) additional segmented image
+    </li>
+    <li>
+      additionalIds: segment ids of additional
+    </li>
+    <li>
+      expand: flag indicating if data can be extended if needed
+    </li>
+    <li>
+      value: value assigned to the expanded part of data
+    </li>
+  </ul>
+  <p>Sets (only if update is True):</p>
+  <ul>
+    <li>
+      self.data: new data
+    </li>
+    <li>
+      self.inset: inset
+    </li>
+  </ul>
+  <p>Return: (ndarray) data inset found</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="findInset"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">findInset</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">rel</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">extend</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">additional</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">additionalIds</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">expand</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.findInset">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the smallest inset (list of slice objects of length self.ndim)
+  that contains all elements of self.data labeled by ids (or self.ids if 
+  ids is None).</p>
+  <p>If additonal is specified, the smallest inset that contains segments 
+  of both self.data and additional.data (labeled by additionalIds or 
+  additional.ids) is calculated.</p>
+  <p>If arg extend is &gt;0, the inset is extended on all sides by arg 
+  extend. However, arg expand is False, the inset is not extended outside 
+  of what self.inset was when this method was called. Even if arg expand is
+  True, the resulting inset is extended to negative array indices.</p>
+  <p>The returned inset is absolute (in respect to 0 array index) if arg 
+  mode is 'absolute' or 'abs'. The returned inset is relative to the 
+  current inset (self.inset) if arg mode is 'relative' or 'rel'. Note that 
+  in the relative case the resulting inset can have negative array indices,
+  but they have to be positive when converted to the absolute mode.</p>
+  <p>Returns None if the data (including additional data) do not contain 
+  labels specified by ids (or additionalIds).</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      ids: segment ids (of self.data), if not specified self.ids has to 
+      exist (exists generally only in subclasses of this class)
+    </li>
+    <li>
+      mode: 'relative' (same as 'rel') or 'absolute' (same as 'abs')
+    </li>
+    <li>
+      extend: length of extension in all directions
+    </li>
+    <li>
+      additional: (Segment) additional segmented image
+    </li>
+    <li>
+      additionalIds: segment ids of additional
+    </li>
+    <li>
+      expand: flag indicating if the resulting inset is allowed to extend 
+      beuond the initial inset (self.inset)
+    </li>
+  </ul>
+  <p>Returns: inset (list of slices)</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setData"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setData</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">copy</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.setData">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets data and the attributes determined from data.</p>
+  <p>If copy is True data is copied so that (the original) data can not be 
+  changed in this class. Otherwise only a reference is passed saving 
+  memory, but there is no guarantee that the data would not be changed.</p>
+  <p>The id-related attributes: ids (list containing all ids), maxId, 
+  nextId and n (number of ids) are determined in the following order: from 
+  ids, data, or self.data.</p>
+  <p>Data should always be set using this method (not by the assignment to 
+  self.data).</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      data: (ndarray) segments (labels)
+    </li>
+    <li>
+      copy: flag indication if data is copied to self.data.
+    </li>
+    <li>
+      ids: list of ids
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setIds</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.setIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets id and related attributes: self.ids (ndarray of flattened ids), 
+  self.originalIds (self.maxId, self.nextId and self.n).</p>
+  <p>Attribute self.ids is set to (its own copy of) ids. If ids is None the
+  ids are extracted from self.data.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      ids: segment (label) ids
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="extractIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">extractIds</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">positive</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.extractIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Finds segment ids, that is positive unique elements of data array.</p>
+  <p>If data is None, self.data is used.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      data: segments ndarray
+    </li>
+    <li>
+      positive: if True only positive ids are returned
+    </li>
+  </ul>
+  <p>Returns: ordered ndarray of segment ids.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="remove"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">remove</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>,
+        <span class="sig-arg">value</span>=<span class="sig-default">0</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.remove">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes segments specified in arg ids, by both removing them from the 
+  data array (self.data). Thus it modifies self.data.</p>
+  <p>Uses _remove(remove=ids) to remove segments from data array, see 
+  _remove() doc for a more detailed explanation.</p>
+  <p>Doesn't do anything to other attributes. This means it doesn't even 
+  remove the removed ids from self.ids.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      ids: list of ids to remove
+    </li>
+    <li>
+      value: the replaced ids are replaced by this value
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="_remove"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_remove</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>,
+        <span class="sig-arg">remove</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">keep</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">all</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">auto</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">value</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">slices</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels._remove">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Removes segments labeled by elements of remove, or those that are not
+labeled by keep, by replacing the removed elements of data by value.
+
+A modified segment ndarray is returned. The original data array may
+be changed (depends on the mode).
+
+If argument all is None, all ids are determined from data. If all is
+provided it may increase the speed a bit.
+
+Argument mode determines the method used. If mode is 'remove' the
+segments are removed from the array. If it is 'keep', the segments with
+ids that are not in the argument ids are kept. Finally, the mode 'auto'
+finds the better strategy between the two, based on the numbers  of ids
+that should be removed or kept. Specifically if:
+
+    len(remove) &lt;= len(all) * Segment._remove_or_keep_factor
+
+the 'remove' mode is used. If not, the 'keep' mode is used. The factor
+Segment._remove_or_keep_factor is chosen to minimize the computational
+time. Currently (17.09.07) it is 0.55, because the remove mode is about
+20% faster than the keep mode.
+
+If this method is called many times and with the same data (as in 
+hierarchy.removeLoverLevels), it is likely that its preformance will be 
+improved if (arg) slices is given. Slices is a result of 
+ndimage.find_objects that has to contain all relevant id, that is all
+ids to be removed if mode is 'remove' and all ids to be kept if mode
+is 'keep'. If mode is 'auto' it is the safest to have slice objects
+for all ids.
+
+Arguments:
+  - data: segment ndarray
+  - remove: ids of segments to be removed (int or list/array, positive)
+  - keep: ids of segments not to be removed (int or list/array, 
+  positive)
+  - all: ids of all segments in data (determined from data if not given)
+  - value: value denoting background (no segments)
+  - mode: determines the method used, 'auto' is recommended
+  - slices: result of ndimage.find_objects()
+
+Returns:
+  - modified array 
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="restrict"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">restrict</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">mask</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">update</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.restrict">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes (sets to 0) data elements of this instance that have one of 
+  the specified ids and where mask.data is 0 (if arg update is True).</p>
+  <p>If arg update is False, the data of this instance is not modified, 
+  instead a new ndarray is returned.</p>
+  <p>Respects inset attributes. Acts only on elements of the current inset.
+  Elements of mask that are outside mask's inset (mask.data) are considered
+  to be 0.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      mask: (Labels) image used to restrict this instance
+    </li>
+    <li>
+      ids: list of ids of this instance that are affected, if None all ids 
+      are affected
+    </li>
+    <li>
+      update: flag indicating if the data of this instance is modified
+    </li>
+  </ul>
+  <p>Retruns (if update is True): (ndarray) modified (restricted) data</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="reorder"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">reorder</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">order</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">clean</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.reorder">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Changes ids of segments according to the order, or orderes ids from 1 
+  up without gaps if order is not given.</p>
+  <p>Returns (dictionary) order where keys are old and values are new ids, 
+  if argument order is None.</p>
+  <p>If data is None segments in self.data are reordered and nothing is 
+  returned. Otherwise, segments in data are reordered and the resulting 
+  array is returned (data is not modified).</p>
+  <p>If clean is True, the segments whose ids are not in order.keys() are 
+  removed. This option does have any effect if order is None.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      data: labels array
+    </li>
+    <li>
+      order: dictionary with old (keys) and new ids (values), where keys 
+      and values have to be nonnegative integers
+    </li>
+    <li>
+      clean: flag indicating if ids that are not in order.keys are removed 
+      or kept.
+    </li>
+  </ul>
+  <p>Sets: self.data, self.ids and related if data is None.</p>
+  <p>Returns:</p>
+  <ul>
+    <li>
+      (dictionary) order, if data is None and order is None
+    </li>
+    <li>
+      nothing, if data is None and order is not None
+    </li>
+    <li>
+      reordered_array, order, if data is not None and order is None
+    </li>
+    <li>
+      reordered_array, if data is not None and order is not None
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="shiftIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">shiftIds</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">shift</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.shiftIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Changes all (positive) ids of segments by shifting them by (arg) 
+  shift.</p>
+  <p>If data is None segments in self.data are reordered, self.ids is 
+  adjusted and nothing is returned. Otherwise, segments in data are 
+  reordered and the resulting array is returned (data is modified).</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      shift: value by which ids are increased
+    </li>
+    <li>
+      data: labels array
+    </li>
+  </ul>
+  <p>Sets: self.data and self.ids if data is None.</p>
+  <p>Returns:</p>
+  <ul>
+    <li>
+      nothing, if data is None and order is not None
+    </li>
+    <li>
+      reordered array, if data is not None and order is not None
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="orderByBoundaries"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">orderByBoundaries</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">contacts</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.orderByBoundaries">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Orders segments both here and in the contacts object by ids of 
+  contacted boundaries. Both contacts data structure and the current 
+  instance are updated. Calls contacts.orderSegmentsByContactedBoundaries 
+  to get the order.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      contacts: Contact object
+    </li>
+  </ul>
+  <p>Returns:</p>
+  <ul>
+    <li>
+      dictionary where keys are old ids and values are new ids.
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="orderIdsByBoundaries"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">orderIdsByBoundaries</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">contacts</span>,
+        <span class="sig-arg">argsort</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.orderIdsByBoundaries">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Orders self.ids according to the ids of contacted boundaries. Calls 
+  contacts.orderSegmentsByContactedBoundaries to get the order.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      contacts: Contact object
+    </li>
+    <li>
+      argsort: if True, also returns the list used for ordering
+    </li>
+  </ul>
+  <p>Returns:</p>
+  <ul>
+    <li>
+      if argsort is False: ordered_ids
+    </li>
+    <li>
+      if argsort is True: ordered_ids, sort_array array (as returned from 
+      ndarray.argsort)
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="orderByValues"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">orderByValues</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">values</span>,
+        <span class="sig-arg">contacts</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.orderByValues">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Orders segments, that is changes their ids according to values.</p>
+  <p>The elements of values correspond to elements of self.ids.</p>
+  <p>If contacts is given, the segments in contacts are ordered in the same
+  way. Contacts have to contain the contact data structure already and the 
+  segments in contacts are expected to be the same as segments in this 
+  instance.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      values: (list or ndarray) of values corresponding to self.ids
+    </li>
+    <li>
+      contacts: instance of Contacts
+    </li>
+  </ul>
+  <p>Returns dictionary where keys are old ids and values are new ids.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="orderIdsByValues"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">orderIdsByValues</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">values</span>,
+        <span class="sig-arg">contacts</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">argsort</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.orderIdsByValues">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Orders ids by values.</p>
+  <p>The elements of values correspond to elements of self.ids. The same 
+  permuation that orders values is then used to order ids.</p>
+  <p>If contacts is given, the segments in contacts are ordered in the same
+  way. Contacts have to contain the contact data structure already and the 
+  segments in contacts are expected to be the same as segments in this 
+  instance.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      values: (list or ndarray) of values corresponding to self.ids
+    </li>
+    <li>
+      contacts: instance of Contacts
+    </li>
+  </ul>
+  <p>Returns dictionary where keys are old ids and values are new ids.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setStructEl"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setStructEl</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">rank</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">connectivity</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">size</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">axis</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.setStructEl">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets or updates structuring element (self.structEl).</p>
+  <p>If self.structEl is None, it is set to a new instance of StructEl and 
+  sets attributes of this instance to appropriate arguments. Attribute 
+  self.structEl.rank is set to the argument rank, or if the argument is 
+  None to self.ndim. If connectivity is None, it is set to 1. If size is 
+  None it is set to 3 if connectivity is 1, 2 or 3, or to 5 if connectivity
+  is 4.</p>
+  <p>If self.structEl is not None, updates the attributes of this instance 
+  to the values of non-None attributes. If self.structEl.rank is None, sets
+  it to self.ndim (useful when self.data is set after self.structEl).</p>
+  <p>Arguments  (see StructEl):</p>
+  <ul>
+    <li>
+      rank: dimensionality of the structuring element
+    </li>
+    <li>
+      connectivity: square of the distance from the center that defines 
+      which elements belong to the structuring element (as in 
+      scipy.ndimage.generate_binary_structure)
+    </li>
+    <li>
+      size: size of the structuring element (same in each dimension)
+    </li>
+    <li>
+      mode: type of structuring element
+    </li>
+    <li>
+      axis: structuring element axis if mode is '1d'
+    </li>
+  </ul>
+  <p>Sets:</p>
+  <ul>
+    <li>
+      self.structElConn: connectivity
+    </li>
+    <li>
+      self.structElSize: size
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getContactStructElConn"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getContactStructElConn</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.getContactStructElConn">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns self._contactStructElConn. If it is not found returns the 
+  default value (1).</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getCountStructElConn"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getCountStructElConn</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.getCountStructElConn">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns self._countStructElConn. If it is not found returns the 
+  default value (1).</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getPoints"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getPoints</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">all</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">connectivity</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">distance</span>=<span class="sig-default">2</span>,
+        <span class="sig-arg">format_</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">coordinates</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.getPoints">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns coordinates of selected elements (points) of segments labeled 
+  by arg ids.</p>
+  <p>If mode is 'all', coordinates of all points are returned.</p>
+  <p>If mode is 'geodesic', the points are selected so that they are not 
+  closer than the argument distance, using the geodesic metric with the 
+  structuring element determined by arg connectivity.</p>
+  <p>Respects inset attribute, that is the returned coordinates are given 
+  for the full size array self.data. In addition, it works internally with 
+  the smallest subarray of self.data that contains all ids.</p>
+  <p>Note</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      ids: (list or ndarray) ids, or a sigle (int) id
+    </li>
+    <li>
+      mode: determines how the points are selected
+    </li>
+    <li>
+      distance: min distance between selected points (needed if mode is 
+      'geodesic')
+    </li>
+    <li>
+      connectivity: connectivity for structuring element (needed if mode is
+      'geodesic')
+    </li>
+    <li>
+      format_: output format; 'numpy' for the format used by 
+      numpy.nonzero(), or 'coordinates' for a 2D array where the first 
+      index denotes different points, and the second the coordinates of the
+      point.
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getPointsGeodesic"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getPointsGeodesic</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>,
+        <span class="sig-arg">connectivity</span>,
+        <span class="sig-arg">distance</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.getPointsGeodesic">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns coordinates of selected elements (points) of segments labeled 
+  by arg ids. The points are selected so that they are not closer than the 
+  argument distance, using the geodesic metric with the structuring element
+  determined by arg connectivity.</p>
+  <p>Respects inset attribute, that is the returned coordinates are given 
+  for the full size array self.data. In addition, it works internally with 
+  the smallest subarray of self.data that contains all ids.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      data (bool ndarray):
+    </li>
+    <li>
+      distance (int): min distance between selected points
+    </li>
+    <li>
+      connectivity: connectivity for structuring element
+    </li>
+  </ul>
+  <p>Returns: coordinates</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="magnify"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">magnify</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">factor</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.labels-pysrc.html#Labels.magnify">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Magnifies (increases the size of) the data array (self.data) by an int
+  factor.</p>
+  <p>All other attributes remain the same.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      factor: magnification factor (int)
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== PROPERTY DETAILS ==================== -->
+<a name="section-PropertyDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Property Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-PropertyDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="maxId"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">maxId</h3>
+  <p>Maximum id</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#getMaxId" class="summary-sig-name">getMaxId</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Maximum id
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#setMaxId" class="summary-sig-name">setMaxId</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">id_</span>)</span>
+        - Doesn't do anything, needed for compatibility with super.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="contactStructElConn"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">contactStructElConn</h3>
+  <p>Contact structuring element connectivity, default 1</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#getContactStructElConn" class="summary-sig-name">getContactStructElConn</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Returns self._contactStructElConn.
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#setContactStructElConn" class="summary-sig-name">setContactStructElConn</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">connectivity</span>=<span class="summary-sig-default">None</span>)</span>
+        - Sets self._contactStructElConn.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="contactStructEl"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">contactStructEl</h3>
+  <p>Contact structuring element, default connectivity 1</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#getContactStructEl" class="summary-sig-name">getContactStructEl</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Generates and returns contact structuring element.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="countStructElConn"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">countStructElConn</h3>
+  <p>Count structuring element connectivity, default ndim</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#getCountStructElConn" class="summary-sig-name">getCountStructElConn</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Returns self._countStructElConn.
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#setCountStructElConn" class="summary-sig-name">setCountStructElConn</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">connectivity</span>=<span class="summary-sig-default">None</span>)</span>
+        - Sets self._countStructElConn.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="countStructEl"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">countStructEl</h3>
+  <p>Count structuring element, default connectivity ndim</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.labels.Labels-class.html#getCountStructEl" class="summary-sig-name">getCountStructEl</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Generates and returns count structuring element.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

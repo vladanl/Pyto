@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.scene.multi_cluster</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.scene-module.html">Package&nbsp;scene</a> ::
+        Module&nbsp;multi_cluster
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.scene.multi_cluster-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="pyto.scene.multi_cluster-module.html">Module pyto.scene.multi_cluster</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-docstring">Contains class MultiCluster used to make and analyzes clusters of (already </tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-docstring">existing) boundaries and segments (here called connections).</tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-docstring"># Author: Vladan Lucic (Max Planck Institute for Biochemistry)</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-docstring"># $Id: multi_cluster.py 1059 2014-10-10 15:30:38Z vladan $</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-name">__version__</tt> <tt class="py-op">=</tt> <tt class="py-string">"$Revision: 1059 $"</tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">warnings</tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">logging</tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">numpy</tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">scipy</tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package pyto=pyto-module.html"><a title="pyto" class="py-name" href="#" onclick="return doclink('link-0', 'pyto', 'link-0');">pyto</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package pyto.segmentation=pyto.segmentation-module.html"><a title="pyto.segmentation" class="py-name" href="#" onclick="return doclink('link-1', 'segmentation', 'link-1');">segmentation</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Method pyto.analysis.vesicles.Vesicles.cluster()=pyto.analysis.vesicles.Vesicles-class.html#cluster,Module pyto.scripts.cluster=pyto.scripts.cluster-module.html,Module pyto.segmentation.cluster=pyto.segmentation.cluster-module.html"><a title="pyto.analysis.vesicles.Vesicles.cluster
+pyto.scripts.cluster
+pyto.segmentation.cluster" class="py-name" href="#" onclick="return doclink('link-2', 'cluster', 'link-2');">cluster</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name" targets="Class pyto.segmentation.cluster.Cluster=pyto.segmentation.cluster.Cluster-class.html"><a title="pyto.segmentation.cluster.Cluster" class="py-name" href="#" onclick="return doclink('link-3', 'Cluster', 'link-3');">Cluster</a></tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"> </tt>
+<a name="MultiCluster"></a><div id="MultiCluster-def"><a name="L19"></a><tt class="py-lineno"> 19</tt> <a class="py-toggle" href="#" id="MultiCluster-toggle" onclick="return toggle('MultiCluster');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="pyto.scene.multi_cluster.MultiCluster-class.html">MultiCluster</a><tt class="py-op">(</tt><tt class="py-base-class">object</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="MultiCluster-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="MultiCluster-expanded"><a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"><tt class="py-docstring">    An instance of this class can contain up to six different clusterings of</tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"><tt class="py-docstring">    the same data (see below)</tt> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line"><tt class="py-docstring">    Clusters can be formed in the following ways:</tt> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"><tt class="py-docstring">    1) Clustering based on connectivity</tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"><tt class="py-docstring">    All boundaries that are linked to each other via connections (connectors) </tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line"><tt class="py-docstring">    form a boundary cluster. In the same way, all connections</tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"><tt class="py-docstring">    that are connected to each other vie boundaries form a connections</tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"><tt class="py-docstring">    cluster. These boundary and connection clusters are dual to each other,</tt> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line"><tt class="py-docstring">    because one uniquely determines the other.</tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line"><tt class="py-docstring">    Clustering method: connectivity()</tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line"><tt class="py-docstring">    Attributes (pyto.segmentation.Cluster objects):</tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line"><tt class="py-docstring">      - connectivityBoundaries: clusters of boundaries based on linkage by </tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line"><tt class="py-docstring">      connectors</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line"><tt class="py-docstring">      - connectivityConnections: clusters of connectors based on linkage by </tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line"><tt class="py-docstring">      boundaries</tt> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line"><tt class="py-docstring">      </tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line"><tt class="py-docstring">    The above two clustering objects (connectivityBoundaries, </tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line"><tt class="py-docstring">    connectivityConnections) may contain the following attributes:</tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line"><tt class="py-docstring">      - ids: list of cluster ids</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line"><tt class="py-docstring">      - clusters: list corresponding to ids where each element is a set that</tt> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line"><tt class="py-docstring">      contains ids of boundaries or segments belonging to that cluster</tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line"><tt class="py-docstring">      - nItems: (list corresponding to ids) number of items in each cluster,</tt> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line"><tt class="py-docstring">      where items are boundaries in clusters of boundaries and connections in </tt> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line"><tt class="py-docstring">      clusters of connections.</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line"><tt class="py-docstring">      - nConnections: (list corresponding to ids) number of connections in each</tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line"><tt class="py-docstring">      connection cluster</tt> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line"><tt class="py-docstring">      - nLinks: (list corresponding to ids) number of links in each</tt> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line"><tt class="py-docstring">      connection cluster (links are connections where multiple connections </tt> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line"><tt class="py-docstring">      betweeen the same boundaries are not taken into account)</tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line"><tt class="py-docstring">      - euler, nLoops: (list corresponding to ids) euler number and the number </tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line"><tt class="py-docstring">      of independent loops formed by boundaries and connections of each cluster</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line"><tt class="py-docstring">      - eulerLinks, nLoopsLinks: the same as euler and nLoops, but based on </tt> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line"><tt class="py-docstring">      boundaries and links (that is neglecting multiple connections betweeen</tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line"><tt class="py-docstring">      the same boundaries)      </tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line"><tt class="py-docstring">      - dataIds: list of data (boundary or connector) ids</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line"><tt class="py-docstring">      - nClusters: number of clusters</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line"><tt class="py-docstring">    2) Hierarchical (distance based) clustering</tt> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line"><tt class="py-docstring">    Hierarchical clustering is applied separately to boundaries and connections</tt> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line"><tt class="py-docstring">    to yeild hierarchy boundary and hierarchy connection clusters, respectively.</tt> </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line"><tt class="py-docstring">    Dual clusters to these can be obtained, however hierarchical connection</tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line"><tt class="py-docstring">    (boundary) clusters do not have to be identical to dual hierarchy </tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line"><tt class="py-docstring">    connection (boundary) clusters (obtained from hierarchical boundary/</tt> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line"><tt class="py-docstring">    connection clusters).  </tt> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line"><tt class="py-docstring">    Clustering methods:</tt> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line"><tt class="py-docstring">      - hierarchicalBoundaries(): hierarchical clustering of boundaries</tt> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line"><tt class="py-docstring">      - hierarchicalConections(): hierarchical clustering of connections</tt> </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line"><tt class="py-docstring">    Attributes (pyto.segmentation.Cluster objects):</tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line"><tt class="py-docstring">      - hierarchyBoundaries: hierarchical clusters of boundaries</tt> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line"><tt class="py-docstring">      - hierarchyConnections: hierarchical clusters of connections</tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line"><tt class="py-docstring">      - dualHierarchyBoundaries: hierarchical clusters of connections dual to</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line"><tt class="py-docstring">      hierarchyBoundaries</tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line"><tt class="py-docstring">      - dualHierarchyConnections: hierarchical clusters of boundaries dual to </tt> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line"><tt class="py-docstring">      hierarchyConnections</tt> </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line"><tt class="py-docstring">    The above two clustering objects (connectivityBoundaries, </tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line"><tt class="py-docstring">    connectivityConnections) may contain the following attributes:</tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line"><tt class="py-docstring">      - ids: list of cluster ids</tt> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line"><tt class="py-docstring">      - clusters: list corresponding to ids where each element is a set that</tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line"><tt class="py-docstring">      contains ids of boundaries or segments belonging to that cluster</tt> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line"><tt class="py-docstring">      - nItems: (list corresponding to ids) number of items in each cluster,</tt> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line"><tt class="py-docstring">      where items are boundaries in clusters of boundaries and connections in </tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line"><tt class="py-docstring">      clusters of connections.</tt> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line"><tt class="py-docstring">      - dataIds: list of data (boundary or connector) ids</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line"><tt class="py-docstring">      - nClusters: number of clusters</tt> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line"><tt class="py-docstring">    For furhter info about how clusters are generated and what other attributes</tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line"><tt class="py-docstring">    are set see pyto.segmentation.Cluster class.</tt> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line"> </tt>
+<a name="MultiCluster.__init__"></a><div id="MultiCluster.__init__-def"><a name="L99"></a><tt class="py-lineno"> 99</tt> <a class="py-toggle" href="#" id="MultiCluster.__init__-toggle" onclick="return toggle('MultiCluster.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.scene.multi_cluster.MultiCluster-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="MultiCluster.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="MultiCluster.__init__-expanded"><a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line"><tt class="py-docstring">        Initializes attributes</tt> </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line"> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">connectivityBoundaries</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">connectivityConnections</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">hierarchyBoundaries</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">dualHierarchyBoundaries</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">hierarchyConnections</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">dualHierarchyConnections</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">contacts</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line"> </tt>
+<a name="MultiCluster.connectivity"></a><div id="MultiCluster.connectivity-def"><a name="L112"></a><tt class="py-lineno">112</tt> <a class="py-toggle" href="#" id="MultiCluster.connectivity-toggle" onclick="return toggle('MultiCluster.connectivity');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.scene.multi_cluster.MultiCluster-class.html#connectivity">connectivity</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">contacts</tt><tt class="py-op">,</tt> <tt class="py-param">topology</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">,</tt> <tt class="py-param">branching</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="MultiCluster.connectivity-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="MultiCluster.connectivity-expanded"><a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line"><tt class="py-docstring">        Clusters boundaries and connections based on connectivity.</tt> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line"><tt class="py-docstring">        </tt> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line"><tt class="py-docstring">        Arguments:</tt> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line"><tt class="py-docstring">          - contacts: (Contacts) specifies contacts between connections and </tt> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line"><tt class="py-docstring">          boundaries</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line"><tt class="py-docstring">          - topology: if True calculates topological invariants (Euler </tt> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line"><tt class="py-docstring">          characteristics and the number of independent loops)</tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line"><tt class="py-docstring">          - branching: flag indicating if number of branches is calculated</tt> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line"><tt class="py-docstring">        Sets:</tt> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line"><tt class="py-docstring">          - self.connectivityBoundaries</tt> </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line"><tt class="py-docstring">          - self.connectivityConnections</tt> </tt>
+<a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line"> </tt>
+<a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line">        <tt class="py-comment"># cluster boundaries</tt> </tt>
+<a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">connectivityBoundaries</tt> <tt class="py-op">=</tt> \ </tt>
+<a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line">            <tt id="link-4" class="py-name"><a title="pyto.segmentation.cluster.Cluster" class="py-name" href="#" onclick="return doclink('link-4', 'Cluster', 'link-3');">Cluster</a></tt><tt class="py-op">.</tt><tt id="link-5" class="py-name" targets="Class Method pyto.segmentation.cluster.Cluster.clusterBoundaries()=pyto.segmentation.cluster.Cluster-class.html#clusterBoundaries"><a title="pyto.segmentation.cluster.Cluster.clusterBoundaries" class="py-name" href="#" onclick="return doclink('link-5', 'clusterBoundaries', 'link-5');">clusterBoundaries</a></tt><tt class="py-op">(</tt><tt class="py-name">contacts</tt><tt class="py-op">=</tt><tt class="py-name">contacts</tt><tt class="py-op">)</tt> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line"> </tt>
+<a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line">        <tt class="py-comment"># calculate topology</tt> </tt>
+<a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-6" class="py-name" targets="Module pyto.segmentation.topology=pyto.segmentation.topology-module.html"><a title="pyto.segmentation.topology" class="py-name" href="#" onclick="return doclink('link-6', 'topology', 'link-6');">topology</a></tt><tt class="py-op">:</tt> </tt>
+<a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">connectivityBoundaries</tt><tt class="py-op">.</tt><tt id="link-7" class="py-name" targets="Method pyto.segmentation.cluster.Cluster.calculateTopology()=pyto.segmentation.cluster.Cluster-class.html#calculateTopology"><a title="pyto.segmentation.cluster.Cluster.calculateTopology" class="py-name" href="#" onclick="return doclink('link-7', 'calculateTopology', 'link-7');">calculateTopology</a></tt><tt class="py-op">(</tt><tt class="py-name">contacts</tt><tt class="py-op">=</tt><tt class="py-name">contacts</tt><tt class="py-op">)</tt> </tt>
+<a name="L135"></a><tt class="py-lineno">135</tt>  <tt class="py-line"> </tt>
+<a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line">        <tt class="py-comment"># calculate branching</tt> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">branching</tt><tt class="py-op">:</tt> </tt>
+<a name="L138"></a><tt class="py-lineno">138</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">connectivityBoundaries</tt><tt class="py-op">.</tt><tt id="link-8" class="py-name" targets="Method pyto.segmentation.cluster.Cluster.calculateBranches()=pyto.segmentation.cluster.Cluster-class.html#calculateBranches"><a title="pyto.segmentation.cluster.Cluster.calculateBranches" class="py-name" href="#" onclick="return doclink('link-8', 'calculateBranches', 'link-8');">calculateBranches</a></tt><tt class="py-op">(</tt><tt class="py-name">contacts</tt><tt class="py-op">=</tt><tt class="py-name">contacts</tt><tt class="py-op">)</tt> </tt>
+<a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line"> </tt>
+<a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line">        <tt class="py-comment"># cluster connections</tt> </tt>
+<a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">connectivityConnections</tt> <tt class="py-op">=</tt> <tt id="link-9" class="py-name"><a title="pyto.segmentation.cluster.Cluster" class="py-name" href="#" onclick="return doclink('link-9', 'Cluster', 'link-3');">Cluster</a></tt><tt class="py-op">.</tt><tt id="link-10" class="py-name" targets="Class Method pyto.segmentation.cluster.Cluster.clusterConnections()=pyto.segmentation.cluster.Cluster-class.html#clusterConnections"><a title="pyto.segmentation.cluster.Cluster.clusterConnections" class="py-name" href="#" onclick="return doclink('link-10', 'clusterConnections', 'link-10');">clusterConnections</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L142"></a><tt class="py-lineno">142</tt>  <tt class="py-line">            <tt class="py-name">contacts</tt><tt class="py-op">=</tt><tt class="py-name">contacts</tt><tt class="py-op">,</tt> <tt class="py-name">boundClusters</tt><tt class="py-op">=</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">connectivityBoundaries</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line"> </tt>
+<a name="MultiCluster.hierarchicalBoundaries"></a><div id="MultiCluster.hierarchicalBoundaries-def"><a name="L144"></a><tt class="py-lineno">144</tt> <a class="py-toggle" href="#" id="MultiCluster.hierarchicalBoundaries-toggle" onclick="return toggle('MultiCluster.hierarchicalBoundaries');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.scene.multi_cluster.MultiCluster-class.html#hierarchicalBoundaries">hierarchicalBoundaries</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">linkage</tt><tt class="py-op">,</tt> <tt class="py-param">threshold</tt><tt class="py-op">,</tt> <tt class="py-param">criterion</tt><tt class="py-op">,</tt> <tt class="py-param">depth</tt><tt class="py-op">,</tt>  </tt>
+<a name="L145"></a><tt class="py-lineno">145</tt>  <tt class="py-line">                   <tt class="py-param">distances</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">boundaries</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">contacts</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">ids</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> </tt>
+<a name="L146"></a><tt class="py-lineno">146</tt>  <tt class="py-line">                   <tt class="py-param">reference</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">similarity</tt><tt class="py-op">=</tt><tt class="py-string">'rand'</tt><tt class="py-op">,</tt> <tt class="py-param">single</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="MultiCluster.hierarchicalBoundaries-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="MultiCluster.hierarchicalBoundaries-expanded"><a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L148"></a><tt class="py-lineno">148</tt>  <tt class="py-line"><tt class="py-docstring">        Hierarchical clustering of boundaries. If (arg) contacts is given also </tt> </tt>
+<a name="L149"></a><tt class="py-lineno">149</tt>  <tt class="py-line"><tt class="py-docstring">        generates dual connections clustering.</tt> </tt>
+<a name="L150"></a><tt class="py-lineno">150</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line"><tt class="py-docstring">        Hierarchical clustering is performed based on the specified linkage </tt> </tt>
+<a name="L152"></a><tt class="py-lineno">152</tt>  <tt class="py-line"><tt class="py-docstring">        ('single', 'complete', 'average', 'weighted') and distance args.</tt> </tt>
+<a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line"><tt class="py-docstring">        </tt> </tt>
+<a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line"><tt class="py-docstring">        Flat clusters are made from the hierachical clustering according to the </tt> </tt>
+<a name="L155"></a><tt class="py-lineno">155</tt>  <tt class="py-line"><tt class="py-docstring">        specified criterion (distance', 'maxclust', or 'inconsistent') and </tt> </tt>
+<a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line"><tt class="py-docstring">        threshold args. The meaining of threshold depends on the criterion:</tt> </tt>
+<a name="L157"></a><tt class="py-lineno">157</tt>  <tt class="py-line"><tt class="py-docstring">          - 'distance': maximum distance within each cluster </tt> </tt>
+<a name="L158"></a><tt class="py-lineno">158</tt>  <tt class="py-line"><tt class="py-docstring">          - 'maxclust': max number of clusters</tt> </tt>
+<a name="L159"></a><tt class="py-lineno">159</tt>  <tt class="py-line"><tt class="py-docstring">          - 'inconsistent': maximum inconsistency</tt> </tt>
+<a name="L160"></a><tt class="py-lineno">160</tt>  <tt class="py-line"><tt class="py-docstring">        In addition, arg depth is needed for criterion 'inconsistent'.</tt> </tt>
+<a name="L161"></a><tt class="py-lineno">161</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L162"></a><tt class="py-lineno">162</tt>  <tt class="py-line"><tt class="py-docstring">        If arg reference is 'connectivity', similarity coefficient is </tt> </tt>
+<a name="L163"></a><tt class="py-lineno">163</tt>  <tt class="py-line"><tt class="py-docstring">        calculated in respect to the current connectivity clusters. If arg </tt> </tt>
+<a name="L164"></a><tt class="py-lineno">164</tt>  <tt class="py-line"><tt class="py-docstring">        reference is an instance of Clusters it is used as a reference </tt> </tt>
+<a name="L165"></a><tt class="py-lineno">165</tt>  <tt class="py-line"><tt class="py-docstring">        (reference has to contain flat clusters). In both cases the similarity</tt> </tt>
+<a name="L166"></a><tt class="py-lineno">166</tt>  <tt class="py-line"><tt class="py-docstring">        index is calculated according to the method specified by arg similarity.</tt> </tt>
+<a name="L167"></a><tt class="py-lineno">167</tt>  <tt class="py-line"><tt class="py-docstring">        Otherwise, if arg reference is None no similarity coefficient is </tt> </tt>
+<a name="L168"></a><tt class="py-lineno">168</tt>  <tt class="py-line"><tt class="py-docstring">        calculated.</tt> </tt>
+<a name="L169"></a><tt class="py-lineno">169</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L170"></a><tt class="py-lineno">170</tt>  <tt class="py-line"><tt class="py-docstring">        If arg threshold is a list, flat clusters and the respective similarity</tt> </tt>
+<a name="L171"></a><tt class="py-lineno">171</tt>  <tt class="py-line"><tt class="py-docstring">        coefficients are calculated from the hierarchical clustering for all </tt> </tt>
+<a name="L172"></a><tt class="py-lineno">172</tt>  <tt class="py-line"><tt class="py-docstring">        threshold values. The flat cluster with the highest similarity is</tt> </tt>
+<a name="L173"></a><tt class="py-lineno">173</tt>  <tt class="py-line"><tt class="py-docstring">        retained.</tt> </tt>
+<a name="L174"></a><tt class="py-lineno">174</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L175"></a><tt class="py-lineno">175</tt>  <tt class="py-line"><tt class="py-docstring">        Distances between boundaries are taken from arg distances if specified,</tt> </tt>
+<a name="L176"></a><tt class="py-lineno">176</tt>  <tt class="py-line"><tt class="py-docstring">        or calculated form boundaries otherwise.</tt> </tt>
+<a name="L177"></a><tt class="py-lineno">177</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L178"></a><tt class="py-lineno">178</tt>  <tt class="py-line"><tt class="py-docstring">        Arguments:</tt> </tt>
+<a name="L179"></a><tt class="py-lineno">179</tt>  <tt class="py-line"><tt class="py-docstring">          - linkage: linkage (clustering) method:  'single', 'complete', </tt> </tt>
+<a name="L180"></a><tt class="py-lineno">180</tt>  <tt class="py-line"><tt class="py-docstring">          'average', 'weighted', 'centroid', 'median', 'ward', or whatever else</tt> </tt>
+<a name="L181"></a><tt class="py-lineno">181</tt>  <tt class="py-line"><tt class="py-docstring">          is accepted by scipy.cluster.hierarchy.linkage()</tt> </tt>
+<a name="L182"></a><tt class="py-lineno">182</tt>  <tt class="py-line"><tt class="py-docstring">          - distances: distances between boundaries in the vector form of length</tt> </tt>
+<a name="L183"></a><tt class="py-lineno">183</tt>  <tt class="py-line"><tt class="py-docstring">          n(n-1)/2 (as returned by scipy.spatial.distance.pdist)</tt> </tt>
+<a name="L184"></a><tt class="py-lineno">184</tt>  <tt class="py-line"><tt class="py-docstring">          - criterion: criterion for forming flat clusters from cluster </tt> </tt>
+<a name="L185"></a><tt class="py-lineno">185</tt>  <tt class="py-line"><tt class="py-docstring">          hierarchy: 'distance', 'maxclust', or 'inconsistent'</tt> </tt>
+<a name="L186"></a><tt class="py-lineno">186</tt>  <tt class="py-line"><tt class="py-docstring">          - threshold: threshold for forming flat clusters, depends on criterion</tt> </tt>
+<a name="L187"></a><tt class="py-lineno">187</tt>  <tt class="py-line"><tt class="py-docstring">          - depth: depth for 'inconsistent' criterion</tt> </tt>
+<a name="L188"></a><tt class="py-lineno">188</tt>  <tt class="py-line"><tt class="py-docstring">          - boundaries: (Labels) contains boundaries</tt> </tt>
+<a name="L189"></a><tt class="py-lineno">189</tt>  <tt class="py-line"><tt class="py-docstring">          - ids: ids of boundaries that are clustered</tt> </tt>
+<a name="L190"></a><tt class="py-lineno">190</tt>  <tt class="py-line"><tt class="py-docstring">          - contacts: (Contacts) specifies contacts between connections and </tt> </tt>
+<a name="L191"></a><tt class="py-lineno">191</tt>  <tt class="py-line"><tt class="py-docstring">          boundaries</tt> </tt>
+<a name="L192"></a><tt class="py-lineno">192</tt>  <tt class="py-line"><tt class="py-docstring">          - reference: (Clusters) reference in respect to which a similarity</tt> </tt>
+<a name="L193"></a><tt class="py-lineno">193</tt>  <tt class="py-line"><tt class="py-docstring">          coefficient is calculated</tt> </tt>
+<a name="L194"></a><tt class="py-lineno">194</tt>  <tt class="py-line"><tt class="py-docstring">          - similarity: similarity determination method (see findSimilarity() </tt> </tt>
+<a name="L195"></a><tt class="py-lineno">195</tt>  <tt class="py-line"><tt class="py-docstring">          method)</tt> </tt>
+<a name="L196"></a><tt class="py-lineno">196</tt>  <tt class="py-line"><tt class="py-docstring">          - single: flag indicating if one-item clusters are included in the </tt> </tt>
+<a name="L197"></a><tt class="py-lineno">197</tt>  <tt class="py-line"><tt class="py-docstring">          similarity index calculation</tt> </tt>
+<a name="L198"></a><tt class="py-lineno">198</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L199"></a><tt class="py-lineno">199</tt>  <tt class="py-line"><tt class="py-docstring">        Sets:</tt> </tt>
+<a name="L200"></a><tt class="py-lineno">200</tt>  <tt class="py-line"><tt class="py-docstring">          - self.hierarchyBoundaries</tt> </tt>
+<a name="L201"></a><tt class="py-lineno">201</tt>  <tt class="py-line"><tt class="py-docstring">          - self.dualHierarchyConnections   </tt> </tt>
+<a name="L202"></a><tt class="py-lineno">202</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L203"></a><tt class="py-lineno">203</tt>  <tt class="py-line"><tt class="py-docstring">        Returns:</tt> </tt>
+<a name="L204"></a><tt class="py-lineno">204</tt>  <tt class="py-line"><tt class="py-docstring">          - threshold (if reference is not None)</tt> </tt>
+<a name="L205"></a><tt class="py-lineno">205</tt>  <tt class="py-line"><tt class="py-docstring">          - similarity_index (if reference is not None) </tt> </tt>
+<a name="L206"></a><tt class="py-lineno">206</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L207"></a><tt class="py-lineno">207</tt>  <tt class="py-line"> </tt>
+<a name="L208"></a><tt class="py-lineno">208</tt>  <tt class="py-line">        <tt class="py-comment"># make hierarchy</tt> </tt>
+<a name="L209"></a><tt class="py-lineno">209</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">hierarchyBoundaries</tt> <tt class="py-op">=</tt> <tt id="link-11" class="py-name"><a title="pyto.segmentation.cluster.Cluster" class="py-name" href="#" onclick="return doclink('link-11', 'Cluster', 'link-3');">Cluster</a></tt><tt class="py-op">.</tt><tt id="link-12" class="py-name" targets="Class Method pyto.segmentation.cluster.Cluster.hierarchical()=pyto.segmentation.cluster.Cluster-class.html#hierarchical"><a title="pyto.segmentation.cluster.Cluster.hierarchical" class="py-name" href="#" onclick="return doclink('link-12', 'hierarchical', 'link-12');">hierarchical</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L210"></a><tt class="py-lineno">210</tt>  <tt class="py-line">            <tt class="py-name">distances</tt><tt class="py-op">=</tt><tt class="py-name">distances</tt><tt class="py-op">,</tt> <tt id="link-13" class="py-name" targets="Variable pyto.segmentation.contact.Contact.segments=pyto.segmentation.contact.Contact-class.html#segments"><a title="pyto.segmentation.contact.Contact.segments" class="py-name" href="#" onclick="return doclink('link-13', 'segments', 'link-13');">segments</a></tt><tt class="py-op">=</tt><tt id="link-14" class="py-name" targets="Variable pyto.segmentation.contact.Contact.boundaries=pyto.segmentation.contact.Contact-class.html#boundaries"><a title="pyto.segmentation.contact.Contact.boundaries" class="py-name" href="#" onclick="return doclink('link-14', 'boundaries', 'link-14');">boundaries</a></tt><tt class="py-op">,</tt> <tt id="link-15" class="py-name" targets="Variable pyto.scene.segmentation_analysis.SegmentationAnalysis.ids=pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#ids,Variable pyto.scripts.add_segments.ids=pyto.scripts.add_segments-module.html#ids,Variable pyto.scripts.blank.ids=pyto.scripts.blank-module.html#ids,Variable pyto.scripts.extract_points.ids=pyto.scripts.extract_points-module.html#ids,Variable pyto.segmentation.cluster.Cluster.ids=pyto.segmentation.cluster.Cluster-class.html#ids,Variable pyto.segmentation.features.Features.ids=pyto.segmentation.features.Features-class.html#ids"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-15', 'ids', 'link-15');">ids</a></tt><tt class="py-op">=</tt><tt id="link-16" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-16', 'ids', 'link-15');">ids</a></tt><tt class="py-op">,</tt> <tt class="py-name">method</tt><tt class="py-op">=</tt><tt class="py-name">linkage</tt><tt class="py-op">)</tt> </tt>
+<a name="L211"></a><tt class="py-lineno">211</tt>  <tt class="py-line">     </tt>
+<a name="L212"></a><tt class="py-lineno">212</tt>  <tt class="py-line">        <tt class="py-comment"># set reference</tt> </tt>
+<a name="L213"></a><tt class="py-lineno">213</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-17" class="py-name" targets="Variable pyto.scripts.cleft_stats.reference=pyto.scripts.cleft_stats-module.html#reference,Variable pyto.scripts.presynaptic_stats.reference=pyto.scripts.presynaptic_stats-module.html#reference"><a title="pyto.scripts.cleft_stats.reference
+pyto.scripts.presynaptic_stats.reference" class="py-name" href="#" onclick="return doclink('link-17', 'reference', 'link-17');">reference</a></tt> <tt class="py-op">==</tt> <tt class="py-string">'connectivity'</tt><tt class="py-op">:</tt> </tt>
+<a name="L214"></a><tt class="py-lineno">214</tt>  <tt class="py-line">            <tt id="link-18" class="py-name"><a title="pyto.scripts.cleft_stats.reference
+pyto.scripts.presynaptic_stats.reference" class="py-name" href="#" onclick="return doclink('link-18', 'reference', 'link-17');">reference</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">connectivityBoundaries</tt> </tt>
+<a name="L215"></a><tt class="py-lineno">215</tt>  <tt class="py-line"> </tt>
+<a name="L216"></a><tt class="py-lineno">216</tt>  <tt class="py-line">        <tt class="py-comment"># extract flat clusters</tt> </tt>
+<a name="L217"></a><tt class="py-lineno">217</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt id="link-19" class="py-name" targets="Variable pyto.scripts.cleft.threshold=pyto.scripts.cleft-module.html#threshold,Variable pyto.scripts.connections.threshold=pyto.scripts.connections-module.html#threshold,Variable pyto.scripts.connectors.threshold=pyto.scripts.connectors-module.html#threshold"><a title="pyto.scripts.cleft.threshold
+pyto.scripts.connections.threshold
+pyto.scripts.connectors.threshold" class="py-name" href="#" onclick="return doclink('link-19', 'threshold', 'link-19');">threshold</a></tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-name">list</tt><tt class="py-op">,</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">ndarray</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L218"></a><tt class="py-lineno">218</tt>  <tt class="py-line"> </tt>
+<a name="L219"></a><tt class="py-lineno">219</tt>  <tt class="py-line">            <tt class="py-comment"># find most similar cluster</tt> </tt>
+<a name="L220"></a><tt class="py-lineno">220</tt>  <tt class="py-line">            <tt id="link-20" class="py-name" targets="Variable pyto.segmentation.thresh_conn.ThreshConn.thresh=pyto.segmentation.thresh_conn.ThreshConn-class.html#thresh"><a title="pyto.segmentation.thresh_conn.ThreshConn.thresh" class="py-name" href="#" onclick="return doclink('link-20', 'thresh', 'link-20');">thresh</a></tt><tt class="py-op">,</tt> <tt class="py-name">clust</tt><tt class="py-op">,</tt> <tt class="py-name">simil</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">hierarchyBoundaries</tt><tt class="py-op">.</tt><tt id="link-21" class="py-name" targets="Method pyto.segmentation.cluster.Cluster.findMostSimilar()=pyto.segmentation.cluster.Cluster-class.html#findMostSimilar"><a title="pyto.segmentation.cluster.Cluster.findMostSimilar" class="py-name" href="#" onclick="return doclink('link-21', 'findMostSimilar', 'link-21');">findMostSimilar</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L221"></a><tt class="py-lineno">221</tt>  <tt class="py-line">                <tt class="py-name">thresholds</tt><tt class="py-op">=</tt><tt id="link-22" class="py-name"><a title="pyto.scripts.cleft.threshold
+pyto.scripts.connections.threshold
+pyto.scripts.connectors.threshold" class="py-name" href="#" onclick="return doclink('link-22', 'threshold', 'link-19');">threshold</a></tt><tt class="py-op">,</tt> <tt id="link-23" class="py-name"><a title="pyto.scripts.cleft_stats.reference
+pyto.scripts.presynaptic_stats.reference" class="py-name" href="#" onclick="return doclink('link-23', 'reference', 'link-17');">reference</a></tt><tt class="py-op">=</tt><tt id="link-24" class="py-name"><a title="pyto.scripts.cleft_stats.reference
+pyto.scripts.presynaptic_stats.reference" class="py-name" href="#" onclick="return doclink('link-24', 'reference', 'link-17');">reference</a></tt><tt class="py-op">,</tt> <tt class="py-name">criterion</tt><tt class="py-op">=</tt><tt class="py-name">criterion</tt><tt class="py-op">,</tt> </tt>
+<a name="L222"></a><tt class="py-lineno">222</tt>  <tt class="py-line">                <tt class="py-name">depth</tt><tt class="py-op">=</tt><tt class="py-name">depth</tt><tt class="py-op">,</tt> <tt class="py-name">similarity</tt><tt class="py-op">=</tt><tt class="py-name">similarity</tt><tt class="py-op">,</tt> <tt class="py-name">single</tt><tt class="py-op">=</tt><tt class="py-name">single</tt><tt class="py-op">)</tt> </tt>
+<a name="L223"></a><tt class="py-lineno">223</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">hierarchyBoundaries</tt> <tt class="py-op">=</tt> <tt class="py-name">clust</tt> </tt>
+<a name="L224"></a><tt class="py-lineno">224</tt>  <tt class="py-line"> </tt>
+<a name="L225"></a><tt class="py-lineno">225</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L226"></a><tt class="py-lineno">226</tt>  <tt class="py-line"> </tt>
+<a name="L227"></a><tt class="py-lineno">227</tt>  <tt class="py-line">            <tt class="py-comment"># extract as specified</tt> </tt>
+<a name="L228"></a><tt class="py-lineno">228</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">hierarchyBoundaries</tt><tt class="py-op">.</tt><tt id="link-25" class="py-name" targets="Method pyto.segmentation.cluster.Cluster.extractFlat()=pyto.segmentation.cluster.Cluster-class.html#extractFlat"><a title="pyto.segmentation.cluster.Cluster.extractFlat" class="py-name" href="#" onclick="return doclink('link-25', 'extractFlat', 'link-25');">extractFlat</a></tt><tt class="py-op">(</tt><tt id="link-26" class="py-name"><a title="pyto.scripts.cleft.threshold
+pyto.scripts.connections.threshold
+pyto.scripts.connectors.threshold" class="py-name" href="#" onclick="return doclink('link-26', 'threshold', 'link-19');">threshold</a></tt><tt class="py-op">=</tt><tt id="link-27" class="py-name"><a title="pyto.scripts.cleft.threshold
+pyto.scripts.connections.threshold
+pyto.scripts.connectors.threshold" class="py-name" href="#" onclick="return doclink('link-27', 'threshold', 'link-19');">threshold</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L229"></a><tt class="py-lineno">229</tt>  <tt class="py-line">                                             <tt class="py-name">criterion</tt><tt class="py-op">=</tt><tt class="py-name">criterion</tt><tt class="py-op">,</tt> <tt class="py-name">depth</tt><tt class="py-op">=</tt><tt class="py-name">depth</tt><tt class="py-op">)</tt> </tt>
+<a name="L230"></a><tt class="py-lineno">230</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt id="link-28" class="py-name"><a title="pyto.scripts.cleft_stats.reference
+pyto.scripts.presynaptic_stats.reference" class="py-name" href="#" onclick="return doclink('link-28', 'reference', 'link-17');">reference</a></tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L231"></a><tt class="py-lineno">231</tt>  <tt class="py-line">                <tt class="py-name">simil</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">hierarchyBoundaries</tt><tt class="py-op">.</tt><tt id="link-29" class="py-name" targets="Method pyto.segmentation.cluster.Cluster.findSimilarity()=pyto.segmentation.cluster.Cluster-class.html#findSimilarity"><a title="pyto.segmentation.cluster.Cluster.findSimilarity" class="py-name" href="#" onclick="return doclink('link-29', 'findSimilarity', 'link-29');">findSimilarity</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L232"></a><tt class="py-lineno">232</tt>  <tt class="py-line">                    <tt id="link-30" class="py-name"><a title="pyto.scripts.cleft_stats.reference
+pyto.scripts.presynaptic_stats.reference" class="py-name" href="#" onclick="return doclink('link-30', 'reference', 'link-17');">reference</a></tt><tt class="py-op">=</tt><tt id="link-31" class="py-name"><a title="pyto.scripts.cleft_stats.reference
+pyto.scripts.presynaptic_stats.reference" class="py-name" href="#" onclick="return doclink('link-31', 'reference', 'link-17');">reference</a></tt><tt class="py-op">,</tt> <tt class="py-name">method</tt><tt class="py-op">=</tt><tt class="py-name">similarity</tt><tt class="py-op">,</tt> <tt class="py-name">single</tt><tt class="py-op">=</tt><tt class="py-name">single</tt><tt class="py-op">)</tt> </tt>
+<a name="L233"></a><tt class="py-lineno">233</tt>  <tt class="py-line">                <tt id="link-32" class="py-name"><a title="pyto.segmentation.thresh_conn.ThreshConn.thresh" class="py-name" href="#" onclick="return doclink('link-32', 'thresh', 'link-20');">thresh</a></tt> <tt class="py-op">=</tt> <tt id="link-33" class="py-name"><a title="pyto.scripts.cleft.threshold
+pyto.scripts.connections.threshold
+pyto.scripts.connectors.threshold" class="py-name" href="#" onclick="return doclink('link-33', 'threshold', 'link-19');">threshold</a></tt> </tt>
+<a name="L234"></a><tt class="py-lineno">234</tt>  <tt class="py-line"> </tt>
+<a name="L235"></a><tt class="py-lineno">235</tt>  <tt class="py-line">        <tt class="py-comment"># generate dual connection clusters</tt> </tt>
+<a name="L236"></a><tt class="py-lineno">236</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">contacts</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L237"></a><tt class="py-lineno">237</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">dualHierarchyConnections</tt> <tt class="py-op">=</tt> <tt id="link-34" class="py-name"><a title="pyto.segmentation.cluster.Cluster" class="py-name" href="#" onclick="return doclink('link-34', 'Cluster', 'link-3');">Cluster</a></tt><tt class="py-op">.</tt><tt id="link-35" class="py-name" targets="Class Method pyto.segmentation.cluster.Cluster.dualClusterConnections()=pyto.segmentation.cluster.Cluster-class.html#dualClusterConnections"><a title="pyto.segmentation.cluster.Cluster.dualClusterConnections" class="py-name" href="#" onclick="return doclink('link-35', 'dualClusterConnections', 'link-35');">dualClusterConnections</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L238"></a><tt class="py-lineno">238</tt>  <tt class="py-line">                <tt class="py-name">contacts</tt><tt class="py-op">=</tt><tt class="py-name">contacts</tt><tt class="py-op">,</tt> <tt class="py-name">boundClusters</tt><tt class="py-op">=</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">hierarchyBoundaries</tt><tt class="py-op">)</tt> </tt>
+<a name="L239"></a><tt class="py-lineno">239</tt>  <tt class="py-line"> </tt>
+<a name="L240"></a><tt class="py-lineno">240</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-36" class="py-name"><a title="pyto.scripts.cleft_stats.reference
+pyto.scripts.presynaptic_stats.reference" class="py-name" href="#" onclick="return doclink('link-36', 'reference', 'link-17');">reference</a></tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L241"></a><tt class="py-lineno">241</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt id="link-37" class="py-name"><a title="pyto.segmentation.thresh_conn.ThreshConn.thresh" class="py-name" href="#" onclick="return doclink('link-37', 'thresh', 'link-20');">thresh</a></tt><tt class="py-op">,</tt> <tt class="py-name">simil</tt> </tt>
+</div><a name="L242"></a><tt class="py-lineno">242</tt>  <tt class="py-line"> </tt>
+<a name="MultiCluster.hierarchicalConnections"></a><div id="MultiCluster.hierarchicalConnections-def"><a name="L243"></a><tt class="py-lineno">243</tt> <a class="py-toggle" href="#" id="MultiCluster.hierarchicalConnections-toggle" onclick="return toggle('MultiCluster.hierarchicalConnections');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.scene.multi_cluster.MultiCluster-class.html#hierarchicalConnections">hierarchicalConnections</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">linkage</tt><tt class="py-op">,</tt> <tt class="py-param">threshold</tt><tt class="py-op">,</tt> <tt class="py-param">criterion</tt><tt class="py-op">,</tt> <tt class="py-param">depth</tt><tt class="py-op">,</tt>  </tt>
+<a name="L244"></a><tt class="py-lineno">244</tt>  <tt class="py-line">                   <tt class="py-param">distances</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">connections</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">contacts</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">ids</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> </tt>
+<a name="L245"></a><tt class="py-lineno">245</tt>  <tt class="py-line">                   <tt class="py-param">reference</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">similarity</tt><tt class="py-op">=</tt><tt class="py-string">'rand'</tt><tt class="py-op">,</tt> <tt class="py-param">single</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="MultiCluster.hierarchicalConnections-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="MultiCluster.hierarchicalConnections-expanded"><a name="L246"></a><tt class="py-lineno">246</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L247"></a><tt class="py-lineno">247</tt>  <tt class="py-line"><tt class="py-docstring">        Hierarchical clustering of connections. If (arg) contacts is given also </tt> </tt>
+<a name="L248"></a><tt class="py-lineno">248</tt>  <tt class="py-line"><tt class="py-docstring">        generates dual boundaries clustering.</tt> </tt>
+<a name="L249"></a><tt class="py-lineno">249</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L250"></a><tt class="py-lineno">250</tt>  <tt class="py-line"><tt class="py-docstring">        Hierarchical clustering is performed based on the specified linkage </tt> </tt>
+<a name="L251"></a><tt class="py-lineno">251</tt>  <tt class="py-line"><tt class="py-docstring">        ('single', 'complete', 'average', 'weighted') and distance args.</tt> </tt>
+<a name="L252"></a><tt class="py-lineno">252</tt>  <tt class="py-line"><tt class="py-docstring">        </tt> </tt>
+<a name="L253"></a><tt class="py-lineno">253</tt>  <tt class="py-line"><tt class="py-docstring">        Flat clusters are made from the hierachical clustering according to the </tt> </tt>
+<a name="L254"></a><tt class="py-lineno">254</tt>  <tt class="py-line"><tt class="py-docstring">        specified criterion (distance', 'maxclust', or 'inconsistent') and </tt> </tt>
+<a name="L255"></a><tt class="py-lineno">255</tt>  <tt class="py-line"><tt class="py-docstring">        threshold args. The meaining of threshold depends on the criterion:</tt> </tt>
+<a name="L256"></a><tt class="py-lineno">256</tt>  <tt class="py-line"><tt class="py-docstring">          - 'distance': maximum distance within each cluster </tt> </tt>
+<a name="L257"></a><tt class="py-lineno">257</tt>  <tt class="py-line"><tt class="py-docstring">          - 'maxclust': max number of clusters</tt> </tt>
+<a name="L258"></a><tt class="py-lineno">258</tt>  <tt class="py-line"><tt class="py-docstring">          - 'inconsistent': maximum inconsistency</tt> </tt>
+<a name="L259"></a><tt class="py-lineno">259</tt>  <tt class="py-line"><tt class="py-docstring">        In addition, arg depth is needed for criterion 'inconsistent'.</tt> </tt>
+<a name="L260"></a><tt class="py-lineno">260</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L261"></a><tt class="py-lineno">261</tt>  <tt class="py-line"><tt class="py-docstring">        If arg reference is 'connectivity', similarity coefficient is </tt> </tt>
+<a name="L262"></a><tt class="py-lineno">262</tt>  <tt class="py-line"><tt class="py-docstring">        calculated in respect to the current connectivity clusters. If arg </tt> </tt>
+<a name="L263"></a><tt class="py-lineno">263</tt>  <tt class="py-line"><tt class="py-docstring">        reference is an instance of Clusters it is used as a reference </tt> </tt>
+<a name="L264"></a><tt class="py-lineno">264</tt>  <tt class="py-line"><tt class="py-docstring">        (reference has to contain flat clusters). In both cases the similarity</tt> </tt>
+<a name="L265"></a><tt class="py-lineno">265</tt>  <tt class="py-line"><tt class="py-docstring">        index is calculated according to the method specified by arg similarity.</tt> </tt>
+<a name="L266"></a><tt class="py-lineno">266</tt>  <tt class="py-line"><tt class="py-docstring">        Otherwise, if arg reference is None no similarity coefficient is </tt> </tt>
+<a name="L267"></a><tt class="py-lineno">267</tt>  <tt class="py-line"><tt class="py-docstring">        calculated.</tt> </tt>
+<a name="L268"></a><tt class="py-lineno">268</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L269"></a><tt class="py-lineno">269</tt>  <tt class="py-line"><tt class="py-docstring">        If arg threshold is a list, flat clusters and the respective similarity</tt> </tt>
+<a name="L270"></a><tt class="py-lineno">270</tt>  <tt class="py-line"><tt class="py-docstring">        coefficients are calculated from the hierarchical clustering for all </tt> </tt>
+<a name="L271"></a><tt class="py-lineno">271</tt>  <tt class="py-line"><tt class="py-docstring">        threshold values. The flat cluster with the highest similarity is</tt> </tt>
+<a name="L272"></a><tt class="py-lineno">272</tt>  <tt class="py-line"><tt class="py-docstring">        retained.</tt> </tt>
+<a name="L273"></a><tt class="py-lineno">273</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L274"></a><tt class="py-lineno">274</tt>  <tt class="py-line"><tt class="py-docstring">        Distances between connections are taken from arg distances if specified,</tt> </tt>
+<a name="L275"></a><tt class="py-lineno">275</tt>  <tt class="py-line"><tt class="py-docstring">        or calculated form connections otherwise.</tt> </tt>
+<a name="L276"></a><tt class="py-lineno">276</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L277"></a><tt class="py-lineno">277</tt>  <tt class="py-line"><tt class="py-docstring">        Arguments:</tt> </tt>
+<a name="L278"></a><tt class="py-lineno">278</tt>  <tt class="py-line"><tt class="py-docstring">          - linkage: linkage (clustering) method:  'single', 'complete', </tt> </tt>
+<a name="L279"></a><tt class="py-lineno">279</tt>  <tt class="py-line"><tt class="py-docstring">          'average', 'weighted', 'centroid', 'median', 'ward', or whatever else</tt> </tt>
+<a name="L280"></a><tt class="py-lineno">280</tt>  <tt class="py-line"><tt class="py-docstring">          is accepted by scipy.cluster.hierarchy.linkage()</tt> </tt>
+<a name="L281"></a><tt class="py-lineno">281</tt>  <tt class="py-line"><tt class="py-docstring">          - distances: distances between boundaries in the vector form of length</tt> </tt>
+<a name="L282"></a><tt class="py-lineno">282</tt>  <tt class="py-line"><tt class="py-docstring">          n(n-1)/2 (as returned by scipy.spatial.distance.pdist)</tt> </tt>
+<a name="L283"></a><tt class="py-lineno">283</tt>  <tt class="py-line"><tt class="py-docstring">          - criterion: criterion for forming flat clusters from cluster </tt> </tt>
+<a name="L284"></a><tt class="py-lineno">284</tt>  <tt class="py-line"><tt class="py-docstring">          hierarchy: 'distance', 'maxclust', or 'inconsistent'</tt> </tt>
+<a name="L285"></a><tt class="py-lineno">285</tt>  <tt class="py-line"><tt class="py-docstring">          - threshold: threshold for forming flat clusters, depends on criterion</tt> </tt>
+<a name="L286"></a><tt class="py-lineno">286</tt>  <tt class="py-line"><tt class="py-docstring">          - depth: depth for 'inconsistent' criterion</tt> </tt>
+<a name="L287"></a><tt class="py-lineno">287</tt>  <tt class="py-line"><tt class="py-docstring">          - connections: (Labels) contains connections</tt> </tt>
+<a name="L288"></a><tt class="py-lineno">288</tt>  <tt class="py-line"><tt class="py-docstring">          - ids: ids of connections that are clustered</tt> </tt>
+<a name="L289"></a><tt class="py-lineno">289</tt>  <tt class="py-line"><tt class="py-docstring">          - contacts: (Contacts) specifies contacts between connections and </tt> </tt>
+<a name="L290"></a><tt class="py-lineno">290</tt>  <tt class="py-line"><tt class="py-docstring">          boundaries</tt> </tt>
+<a name="L291"></a><tt class="py-lineno">291</tt>  <tt class="py-line"><tt class="py-docstring">          - reference: (Clusters) reference in respect to which a similarity</tt> </tt>
+<a name="L292"></a><tt class="py-lineno">292</tt>  <tt class="py-line"><tt class="py-docstring">          coefficient is calculated</tt> </tt>
+<a name="L293"></a><tt class="py-lineno">293</tt>  <tt class="py-line"><tt class="py-docstring">          - similarity: similarity determination method (see findSimilarity() </tt> </tt>
+<a name="L294"></a><tt class="py-lineno">294</tt>  <tt class="py-line"><tt class="py-docstring">          method)</tt> </tt>
+<a name="L295"></a><tt class="py-lineno">295</tt>  <tt class="py-line"><tt class="py-docstring">          - single: flag indicating if one-item clusters are included in the </tt> </tt>
+<a name="L296"></a><tt class="py-lineno">296</tt>  <tt class="py-line"><tt class="py-docstring">          similarity index calculation</tt> </tt>
+<a name="L297"></a><tt class="py-lineno">297</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L298"></a><tt class="py-lineno">298</tt>  <tt class="py-line"><tt class="py-docstring">        Sets:</tt> </tt>
+<a name="L299"></a><tt class="py-lineno">299</tt>  <tt class="py-line"><tt class="py-docstring">        - self.hierarchyConnections</tt> </tt>
+<a name="L300"></a><tt class="py-lineno">300</tt>  <tt class="py-line"><tt class="py-docstring">        - self.dualHierarchyBoundaries      </tt> </tt>
+<a name="L301"></a><tt class="py-lineno">301</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L302"></a><tt class="py-lineno">302</tt>  <tt class="py-line"><tt class="py-docstring">        Returns:</tt> </tt>
+<a name="L303"></a><tt class="py-lineno">303</tt>  <tt class="py-line"><tt class="py-docstring">          - threshold (if reference is not None)</tt> </tt>
+<a name="L304"></a><tt class="py-lineno">304</tt>  <tt class="py-line"><tt class="py-docstring">          - similarity_index (if reference is not None) </tt> </tt>
+<a name="L305"></a><tt class="py-lineno">305</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L306"></a><tt class="py-lineno">306</tt>  <tt class="py-line"> </tt>
+<a name="L307"></a><tt class="py-lineno">307</tt>  <tt class="py-line">        <tt class="py-comment"># make hierarchy</tt> </tt>
+<a name="L308"></a><tt class="py-lineno">308</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">hierarchyConnections</tt> <tt class="py-op">=</tt> \ </tt>
+<a name="L309"></a><tt class="py-lineno">309</tt>  <tt class="py-line">            <tt id="link-38" class="py-name"><a title="pyto.segmentation.cluster.Cluster" class="py-name" href="#" onclick="return doclink('link-38', 'Cluster', 'link-3');">Cluster</a></tt><tt class="py-op">.</tt><tt id="link-39" class="py-name"><a title="pyto.segmentation.cluster.Cluster.hierarchical" class="py-name" href="#" onclick="return doclink('link-39', 'hierarchical', 'link-12');">hierarchical</a></tt><tt class="py-op">(</tt><tt class="py-name">distances</tt><tt class="py-op">=</tt><tt class="py-name">distances</tt><tt class="py-op">,</tt> <tt id="link-40" class="py-name"><a title="pyto.segmentation.contact.Contact.segments" class="py-name" href="#" onclick="return doclink('link-40', 'segments', 'link-13');">segments</a></tt><tt class="py-op">=</tt><tt id="link-41" class="py-name" targets="Module pyto.analysis.connections=pyto.analysis.connections-module.html,Module pyto.io.connections=pyto.io.connections-module.html,Module pyto.scripts.connections=pyto.scripts.connections-module.html"><a title="pyto.analysis.connections
+pyto.io.connections
+pyto.scripts.connections" class="py-name" href="#" onclick="return doclink('link-41', 'connections', 'link-41');">connections</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L310"></a><tt class="py-lineno">310</tt>  <tt class="py-line">                                 <tt id="link-42" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-42', 'ids', 'link-15');">ids</a></tt><tt class="py-op">=</tt><tt id="link-43" class="py-name"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.ids
+pyto.scripts.add_segments.ids
+pyto.scripts.blank.ids
+pyto.scripts.extract_points.ids
+pyto.segmentation.cluster.Cluster.ids
+pyto.segmentation.features.Features.ids" class="py-name" href="#" onclick="return doclink('link-43', 'ids', 'link-15');">ids</a></tt><tt class="py-op">,</tt> <tt class="py-name">method</tt><tt class="py-op">=</tt><tt class="py-name">linkage</tt><tt class="py-op">)</tt> </tt>
+<a name="L311"></a><tt class="py-lineno">311</tt>  <tt class="py-line">     </tt>
+<a name="L312"></a><tt class="py-lineno">312</tt>  <tt class="py-line">        <tt class="py-comment"># set reference</tt> </tt>
+<a name="L313"></a><tt class="py-lineno">313</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-44" class="py-name"><a title="pyto.scripts.cleft_stats.reference
+pyto.scripts.presynaptic_stats.reference" class="py-name" href="#" onclick="return doclink('link-44', 'reference', 'link-17');">reference</a></tt> <tt class="py-op">==</tt> <tt class="py-string">'connectivity'</tt><tt class="py-op">:</tt> </tt>
+<a name="L314"></a><tt class="py-lineno">314</tt>  <tt class="py-line">            <tt id="link-45" class="py-name"><a title="pyto.scripts.cleft_stats.reference
+pyto.scripts.presynaptic_stats.reference" class="py-name" href="#" onclick="return doclink('link-45', 'reference', 'link-17');">reference</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">connectivityConnections</tt> </tt>
+<a name="L315"></a><tt class="py-lineno">315</tt>  <tt class="py-line"> </tt>
+<a name="L316"></a><tt class="py-lineno">316</tt>  <tt class="py-line">        <tt class="py-comment"># extract flat clusters</tt> </tt>
+<a name="L317"></a><tt class="py-lineno">317</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt id="link-46" class="py-name"><a title="pyto.scripts.cleft.threshold
+pyto.scripts.connections.threshold
+pyto.scripts.connectors.threshold" class="py-name" href="#" onclick="return doclink('link-46', 'threshold', 'link-19');">threshold</a></tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-name">list</tt><tt class="py-op">,</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">ndarray</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L318"></a><tt class="py-lineno">318</tt>  <tt class="py-line"> </tt>
+<a name="L319"></a><tt class="py-lineno">319</tt>  <tt class="py-line">            <tt class="py-comment"># find most similar cluster</tt> </tt>
+<a name="L320"></a><tt class="py-lineno">320</tt>  <tt class="py-line">            <tt id="link-47" class="py-name"><a title="pyto.segmentation.thresh_conn.ThreshConn.thresh" class="py-name" href="#" onclick="return doclink('link-47', 'thresh', 'link-20');">thresh</a></tt><tt class="py-op">,</tt> <tt class="py-name">clust</tt><tt class="py-op">,</tt> <tt class="py-name">simil</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">hierarchyConnections</tt><tt class="py-op">.</tt><tt id="link-48" class="py-name"><a title="pyto.segmentation.cluster.Cluster.findMostSimilar" class="py-name" href="#" onclick="return doclink('link-48', 'findMostSimilar', 'link-21');">findMostSimilar</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L321"></a><tt class="py-lineno">321</tt>  <tt class="py-line">                <tt class="py-name">thresholds</tt><tt class="py-op">=</tt><tt id="link-49" class="py-name"><a title="pyto.scripts.cleft.threshold
+pyto.scripts.connections.threshold
+pyto.scripts.connectors.threshold" class="py-name" href="#" onclick="return doclink('link-49', 'threshold', 'link-19');">threshold</a></tt><tt class="py-op">,</tt> <tt id="link-50" class="py-name"><a title="pyto.scripts.cleft_stats.reference
+pyto.scripts.presynaptic_stats.reference" class="py-name" href="#" onclick="return doclink('link-50', 'reference', 'link-17');">reference</a></tt><tt class="py-op">=</tt><tt id="link-51" class="py-name"><a title="pyto.scripts.cleft_stats.reference
+pyto.scripts.presynaptic_stats.reference" class="py-name" href="#" onclick="return doclink('link-51', 'reference', 'link-17');">reference</a></tt><tt class="py-op">,</tt> <tt class="py-name">criterion</tt><tt class="py-op">=</tt><tt class="py-name">criterion</tt><tt class="py-op">,</tt> </tt>
+<a name="L322"></a><tt class="py-lineno">322</tt>  <tt class="py-line">                <tt class="py-name">depth</tt><tt class="py-op">=</tt><tt class="py-name">depth</tt><tt class="py-op">,</tt> <tt class="py-name">similarity</tt><tt class="py-op">=</tt><tt class="py-name">similarity</tt><tt class="py-op">,</tt> <tt class="py-name">single</tt><tt class="py-op">=</tt><tt class="py-name">single</tt><tt class="py-op">)</tt> </tt>
+<a name="L323"></a><tt class="py-lineno">323</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">hierarchyConnections</tt> <tt class="py-op">=</tt> <tt class="py-name">clust</tt> </tt>
+<a name="L324"></a><tt class="py-lineno">324</tt>  <tt class="py-line"> </tt>
+<a name="L325"></a><tt class="py-lineno">325</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L326"></a><tt class="py-lineno">326</tt>  <tt class="py-line"> </tt>
+<a name="L327"></a><tt class="py-lineno">327</tt>  <tt class="py-line">            <tt class="py-comment"># extract as specified</tt> </tt>
+<a name="L328"></a><tt class="py-lineno">328</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">hierarchyConnections</tt><tt class="py-op">.</tt><tt id="link-52" class="py-name"><a title="pyto.segmentation.cluster.Cluster.extractFlat" class="py-name" href="#" onclick="return doclink('link-52', 'extractFlat', 'link-25');">extractFlat</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L329"></a><tt class="py-lineno">329</tt>  <tt class="py-line">                <tt id="link-53" class="py-name"><a title="pyto.scripts.cleft.threshold
+pyto.scripts.connections.threshold
+pyto.scripts.connectors.threshold" class="py-name" href="#" onclick="return doclink('link-53', 'threshold', 'link-19');">threshold</a></tt><tt class="py-op">=</tt><tt id="link-54" class="py-name"><a title="pyto.scripts.cleft.threshold
+pyto.scripts.connections.threshold
+pyto.scripts.connectors.threshold" class="py-name" href="#" onclick="return doclink('link-54', 'threshold', 'link-19');">threshold</a></tt><tt class="py-op">,</tt> <tt class="py-name">criterion</tt><tt class="py-op">=</tt><tt class="py-name">criterion</tt><tt class="py-op">,</tt> <tt class="py-name">depth</tt><tt class="py-op">=</tt><tt class="py-name">depth</tt><tt class="py-op">)</tt> </tt>
+<a name="L330"></a><tt class="py-lineno">330</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt id="link-55" class="py-name"><a title="pyto.scripts.cleft_stats.reference
+pyto.scripts.presynaptic_stats.reference" class="py-name" href="#" onclick="return doclink('link-55', 'reference', 'link-17');">reference</a></tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L331"></a><tt class="py-lineno">331</tt>  <tt class="py-line">                <tt class="py-name">simil</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">hierarchyConnections</tt><tt class="py-op">.</tt><tt id="link-56" class="py-name"><a title="pyto.segmentation.cluster.Cluster.findSimilarity" class="py-name" href="#" onclick="return doclink('link-56', 'findSimilarity', 'link-29');">findSimilarity</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L332"></a><tt class="py-lineno">332</tt>  <tt class="py-line">                    <tt id="link-57" class="py-name"><a title="pyto.scripts.cleft_stats.reference
+pyto.scripts.presynaptic_stats.reference" class="py-name" href="#" onclick="return doclink('link-57', 'reference', 'link-17');">reference</a></tt><tt class="py-op">=</tt><tt id="link-58" class="py-name"><a title="pyto.scripts.cleft_stats.reference
+pyto.scripts.presynaptic_stats.reference" class="py-name" href="#" onclick="return doclink('link-58', 'reference', 'link-17');">reference</a></tt><tt class="py-op">,</tt> <tt class="py-name">method</tt><tt class="py-op">=</tt><tt class="py-name">similarity</tt><tt class="py-op">,</tt> <tt class="py-name">single</tt><tt class="py-op">=</tt><tt class="py-name">single</tt><tt class="py-op">)</tt> </tt>
+<a name="L333"></a><tt class="py-lineno">333</tt>  <tt class="py-line">                <tt id="link-59" class="py-name"><a title="pyto.segmentation.thresh_conn.ThreshConn.thresh" class="py-name" href="#" onclick="return doclink('link-59', 'thresh', 'link-20');">thresh</a></tt> <tt class="py-op">=</tt> <tt id="link-60" class="py-name"><a title="pyto.scripts.cleft.threshold
+pyto.scripts.connections.threshold
+pyto.scripts.connectors.threshold" class="py-name" href="#" onclick="return doclink('link-60', 'threshold', 'link-19');">threshold</a></tt> </tt>
+<a name="L334"></a><tt class="py-lineno">334</tt>  <tt class="py-line"> </tt>
+<a name="L335"></a><tt class="py-lineno">335</tt>  <tt class="py-line">        <tt class="py-comment"># generate dual boundary clusters</tt> </tt>
+<a name="L336"></a><tt class="py-lineno">336</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">contacts</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L337"></a><tt class="py-lineno">337</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">dualHierarchyBoundaries</tt> <tt class="py-op">=</tt> <tt id="link-61" class="py-name"><a title="pyto.segmentation.cluster.Cluster" class="py-name" href="#" onclick="return doclink('link-61', 'Cluster', 'link-3');">Cluster</a></tt><tt class="py-op">.</tt><tt id="link-62" class="py-name" targets="Class Method pyto.segmentation.cluster.Cluster.dualClusterBoundaries()=pyto.segmentation.cluster.Cluster-class.html#dualClusterBoundaries"><a title="pyto.segmentation.cluster.Cluster.dualClusterBoundaries" class="py-name" href="#" onclick="return doclink('link-62', 'dualClusterBoundaries', 'link-62');">dualClusterBoundaries</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L338"></a><tt class="py-lineno">338</tt>  <tt class="py-line">                <tt class="py-name">contacts</tt><tt class="py-op">=</tt><tt class="py-name">contacts</tt><tt class="py-op">,</tt> <tt class="py-name">connectClusters</tt><tt class="py-op">=</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">hierarchyConnections</tt><tt class="py-op">)</tt> </tt>
+<a name="L339"></a><tt class="py-lineno">339</tt>  <tt class="py-line"> </tt>
+<a name="L340"></a><tt class="py-lineno">340</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-63" class="py-name"><a title="pyto.scripts.cleft_stats.reference
+pyto.scripts.presynaptic_stats.reference" class="py-name" href="#" onclick="return doclink('link-63', 'reference', 'link-17');">reference</a></tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L341"></a><tt class="py-lineno">341</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt id="link-64" class="py-name"><a title="pyto.segmentation.thresh_conn.ThreshConn.thresh" class="py-name" href="#" onclick="return doclink('link-64', 'thresh', 'link-20');">thresh</a></tt><tt class="py-op">,</tt> <tt class="py-name">simil</tt> </tt>
+</div></div><a name="L342"></a><tt class="py-lineno">342</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

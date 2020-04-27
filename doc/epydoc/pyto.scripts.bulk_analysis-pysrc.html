@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.scripts.bulk_analysis</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.scripts-module.html">Package&nbsp;scripts</a> ::
+        Module&nbsp;bulk_analysis
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.scripts.bulk_analysis-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="pyto.scripts.bulk_analysis-module.html">Module pyto.scripts.bulk_analysis</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-comment">#!/usr/bin/env python</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-docstring">Batch execution of scripts.</tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-docstring">Modifies scripts is a specified way, executes them, and modifies files that</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-docstring">hold information about the results (catalogs). </tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-docstring">As an example of a possible usage existing scripts for segmentation and </tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-docstring">analysis of individual tomograms are first modified (to change parameters, for </tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-docstring">example) and saved under different names. Then the modified scripts are</tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-docstring">executed. Finally, the information about the files holding the script execution </tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-docstring">results are added to the catalog files (contain metadata about individual </tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt class="py-docstring">tomograms and their segmentation and analysis).</tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"><tt class="py-docstring">$Id: bulk_analysis.py 988 2013-09-27 07:50:48Z vladan $</tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"><tt class="py-docstring"># Author: Vladan Lucic (Max Planck Institute for Biochemistry)</tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"><tt class="py-name">__version__</tt> <tt class="py-op">=</tt> <tt class="py-string">"$Revision: 988 $"</tt> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">sys</tt> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">os</tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">re</tt> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">logging</tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">pickle</tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">runpy</tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">imp</tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line"> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">numpy</tt>  </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">scipy</tt>  </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line"> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt id="link-0" class="py-name" targets="Package pyto=pyto-module.html"><a title="pyto" class="py-name" href="#" onclick="return doclink('link-0', 'pyto', 'link-0');">pyto</a></tt> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line"> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"><tt class="py-name">logging</tt><tt class="py-op">.</tt><tt class="py-name">basicConfig</tt><tt class="py-op">(</tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line">    <tt class="py-name">level</tt><tt class="py-op">=</tt><tt class="py-name">logging</tt><tt class="py-op">.</tt><tt class="py-name">INFO</tt><tt class="py-op">,</tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line">    <tt class="py-name">format</tt><tt class="py-op">=</tt><tt class="py-string">'%(levelname)s %(module)s.%(funcName)s():%(lineno)d %(message)s'</tt><tt class="py-op">,</tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line">    <tt class="py-name">datefmt</tt><tt class="py-op">=</tt><tt class="py-string">'%d %b %Y %H:%M:%S'</tt><tt class="py-op">)</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line"> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line"> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line"><tt class="py-comment">##############################################################</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line"><tt class="py-comment"># Parameters (need to be edited)</tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line"><tt class="py-comment">##############################################################</tt> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line"> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line"><tt class="py-comment">##############################################################</tt> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line"><tt class="py-comment"># General</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line"> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line"><tt class="py-comment"># script directories (used for modifying and running the scripts) </tt> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line"><tt id="link-1" class="py-name" targets="Variable pyto.scripts.bulk_analysis.directories=pyto.scripts.bulk_analysis-module.html#directories"><a title="pyto.scripts.bulk_analysis.directories" class="py-name" href="#" onclick="return doclink('link-1', 'directories', 'link-1');">directories</a></tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-string">'ctrl-mouse_'</tt> <tt class="py-op">+</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt id="link-2" class="py-name" targets="Variable pyto.scripts.bulk_analysis.ind=pyto.scripts.bulk_analysis-module.html#ind,Variable pyto.scripts.cleft_stats.ind=pyto.scripts.cleft_stats-module.html#ind"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-2', 'ind', 'link-2');">ind</a></tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt id="link-3" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-3', 'ind', 'link-2');">ind</a></tt> <tt class="py-keyword">in</tt> <tt class="py-name">range</tt><tt class="py-op">(</tt><tt class="py-number">1</tt><tt class="py-op">,</tt><tt class="py-number">8</tt><tt class="py-op">)</tt><tt class="py-op">]</tt>   </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line">               <tt class="py-op">+</tt> <tt class="py-op">[</tt><tt class="py-string">'CAM_'</tt> <tt class="py-op">+</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt id="link-4" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-4', 'ind', 'link-2');">ind</a></tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt id="link-5" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-5', 'ind', 'link-2');">ind</a></tt> <tt class="py-keyword">in</tt> <tt class="py-name">range</tt><tt class="py-op">(</tt><tt class="py-number">1</tt><tt class="py-op">,</tt><tt class="py-number">8</tt><tt class="py-op">)</tt><tt class="py-op">]</tt>  </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line">               <tt class="py-op">+</tt> <tt class="py-op">[</tt><tt class="py-string">'ctrl-rat_'</tt> <tt class="py-op">+</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt id="link-6" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-6', 'ind', 'link-2');">ind</a></tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt id="link-7" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-7', 'ind', 'link-2');">ind</a></tt> <tt class="py-keyword">in</tt> <tt class="py-name">range</tt><tt class="py-op">(</tt><tt class="py-number">1</tt><tt class="py-op">,</tt><tt class="py-number">6</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line">               <tt class="py-op">+</tt> <tt class="py-op">[</tt><tt class="py-string">'egta_0'</tt> <tt class="py-op">+</tt> <tt id="link-8" class="py-name" targets="Variable pyto.scripts.bulk_analysis.sym=pyto.scripts.bulk_analysis-module.html#sym,Variable pyto.scripts.cleft_stats.sym=pyto.scripts.cleft_stats-module.html#sym"><a title="pyto.scripts.bulk_analysis.sym
+pyto.scripts.cleft_stats.sym" class="py-name" href="#" onclick="return doclink('link-8', 'sym', 'link-8');">sym</a></tt> <tt class="py-keyword">for</tt> <tt id="link-9" class="py-name"><a title="pyto.scripts.bulk_analysis.sym
+pyto.scripts.cleft_stats.sym" class="py-name" href="#" onclick="return doclink('link-9', 'sym', 'link-8');">sym</a></tt> <tt class="py-keyword">in</tt> <tt class="py-op">[</tt><tt class="py-string">'a'</tt><tt class="py-op">,</tt><tt class="py-string">'b'</tt><tt class="py-op">,</tt><tt class="py-string">'c'</tt><tt class="py-op">,</tt><tt class="py-string">'d'</tt><tt class="py-op">,</tt><tt class="py-string">'e'</tt><tt class="py-op">,</tt><tt class="py-string">'f'</tt><tt class="py-op">]</tt><tt class="py-op">]</tt>  </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line">               <tt class="py-op">+</tt> <tt class="py-op">[</tt><tt class="py-string">'egta_1'</tt> <tt class="py-op">+</tt> <tt id="link-10" class="py-name"><a title="pyto.scripts.bulk_analysis.sym
+pyto.scripts.cleft_stats.sym" class="py-name" href="#" onclick="return doclink('link-10', 'sym', 'link-8');">sym</a></tt> <tt class="py-keyword">for</tt> <tt id="link-11" class="py-name"><a title="pyto.scripts.bulk_analysis.sym
+pyto.scripts.cleft_stats.sym" class="py-name" href="#" onclick="return doclink('link-11', 'sym', 'link-8');">sym</a></tt> <tt class="py-keyword">in</tt> <tt class="py-op">[</tt><tt class="py-string">'a'</tt><tt class="py-op">,</tt><tt class="py-string">'b'</tt><tt class="py-op">,</tt><tt class="py-string">'c'</tt><tt class="py-op">,</tt><tt class="py-string">'d'</tt><tt class="py-op">,</tt><tt class="py-string">'e'</tt><tt class="py-op">]</tt><tt class="py-op">]</tt>  </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line">               <tt class="py-op">+</tt> <tt class="py-op">[</tt><tt class="py-string">'egta_2'</tt><tt class="py-op">]</tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line">               <tt class="py-op">+</tt> <tt class="py-op">[</tt><tt class="py-string">'egta_3'</tt> <tt class="py-op">+</tt> <tt id="link-12" class="py-name"><a title="pyto.scripts.bulk_analysis.sym
+pyto.scripts.cleft_stats.sym" class="py-name" href="#" onclick="return doclink('link-12', 'sym', 'link-8');">sym</a></tt> <tt class="py-keyword">for</tt> <tt id="link-13" class="py-name"><a title="pyto.scripts.bulk_analysis.sym
+pyto.scripts.cleft_stats.sym" class="py-name" href="#" onclick="return doclink('link-13', 'sym', 'link-8');">sym</a></tt> <tt class="py-keyword">in</tt> <tt class="py-op">[</tt><tt class="py-string">'a'</tt><tt class="py-op">,</tt><tt class="py-string">'b'</tt><tt class="py-op">,</tt><tt class="py-string">'c'</tt><tt class="py-op">,</tt><tt class="py-string">'d'</tt><tt class="py-op">,</tt><tt class="py-string">'e'</tt><tt class="py-op">,</tt><tt class="py-string">'f'</tt><tt class="py-op">]</tt><tt class="py-op">]</tt><tt class="py-op">)</tt>  </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line"><tt id="link-14" class="py-name" targets="Variable pyto.scripts.bulk_analysis.directories_discard=pyto.scripts.bulk_analysis-module.html#directories_discard"><a title="pyto.scripts.bulk_analysis.directories_discard" class="py-name" href="#" onclick="return doclink('link-14', 'directories_discard', 'link-14');">directories_discard</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-string">'syncam_ox_4'</tt><tt class="py-op">,</tt> <tt class="py-string">'syncam_ox_7'</tt><tt class="py-op">]</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line"><tt id="link-15" class="py-name"><a title="pyto.scripts.bulk_analysis.directories" class="py-name" href="#" onclick="return doclink('link-15', 'directories', 'link-1');">directories</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt id="link-16" class="py-name" targets="Variable pyto.scripts.bulk_analysis.ident=pyto.scripts.bulk_analysis-module.html#ident,Variable pyto.scripts.cleft_stats.ident=pyto.scripts.cleft_stats-module.html#ident,Variable pyto.scripts.presynaptic_stats.ident=pyto.scripts.presynaptic_stats-module.html#ident"><a title="pyto.scripts.bulk_analysis.ident
+pyto.scripts.cleft_stats.ident
+pyto.scripts.presynaptic_stats.ident" class="py-name" href="#" onclick="return doclink('link-16', 'ident', 'link-16');">ident</a></tt> <tt class="py-keyword">for</tt> <tt id="link-17" class="py-name"><a title="pyto.scripts.bulk_analysis.ident
+pyto.scripts.cleft_stats.ident
+pyto.scripts.presynaptic_stats.ident" class="py-name" href="#" onclick="return doclink('link-17', 'ident', 'link-16');">ident</a></tt> <tt class="py-keyword">in</tt> <tt id="link-18" class="py-name"><a title="pyto.scripts.bulk_analysis.directories" class="py-name" href="#" onclick="return doclink('link-18', 'directories', 'link-1');">directories</a></tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line">               <tt class="py-keyword">if</tt> <tt id="link-19" class="py-name"><a title="pyto.scripts.bulk_analysis.ident
+pyto.scripts.cleft_stats.ident
+pyto.scripts.presynaptic_stats.ident" class="py-name" href="#" onclick="return doclink('link-19', 'ident', 'link-16');">ident</a></tt> <tt class="py-keyword">not</tt> <tt class="py-keyword">in</tt> <tt id="link-20" class="py-name"><a title="pyto.scripts.bulk_analysis.directories_discard" class="py-name" href="#" onclick="return doclink('link-20', 'directories_discard', 'link-14');">directories_discard</a></tt><tt class="py-op">]</tt> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line"> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line"><tt class="py-comment"># list of script file paths</tt> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line"><tt class="py-comment">#scripts = ['../../all_tomograms/' + dir + '/cleft_test/cleft.py' </tt> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line"><tt class="py-comment">#           for dir in ['CAM_1', 'CAM_2']]</tt> </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line"><tt id="link-21" class="py-name" targets="Package pyto.scripts=pyto.scripts-module.html,Variable pyto.scripts.bulk_analysis.scripts=pyto.scripts.bulk_analysis-module.html#scripts"><a title="pyto.scripts
+pyto.scripts.bulk_analysis.scripts" class="py-name" href="#" onclick="return doclink('link-21', 'scripts', 'link-21');">scripts</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-string">'../../all_tomograms/'</tt> <tt class="py-op">+</tt> <tt id="link-22" class="py-name" targets="Variable pyto.scripts.bulk_analysis.dir=pyto.scripts.bulk_analysis-module.html#dir"><a title="pyto.scripts.bulk_analysis.dir" class="py-name" href="#" onclick="return doclink('link-22', 'dir', 'link-22');">dir</a></tt> <tt class="py-op">+</tt> <tt class="py-string">'/cleft/cleft.py'</tt>  </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line">           <tt class="py-keyword">for</tt> <tt id="link-23" class="py-name"><a title="pyto.scripts.bulk_analysis.dir" class="py-name" href="#" onclick="return doclink('link-23', 'dir', 'link-22');">dir</a></tt> <tt class="py-keyword">in</tt> <tt id="link-24" class="py-name"><a title="pyto.scripts.bulk_analysis.directories" class="py-name" href="#" onclick="return doclink('link-24', 'directories', 'link-1');">directories</a></tt><tt class="py-op">]</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line"> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line"><tt class="py-comment"># identifiers (used only for catalogs)</tt> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line"><tt id="link-25" class="py-name" targets="Method pyto.io.multi_data.MultiData.identifiers()=pyto.io.multi_data.MultiData-class.html#identifiers,Variable pyto.scripts.bulk_analysis.identifiers=pyto.scripts.bulk_analysis-module.html#identifiers,Variable pyto.scripts.cleft_stats.identifiers=pyto.scripts.cleft_stats-module.html#identifiers,Variable pyto.scripts.presynaptic_stats.identifiers=pyto.scripts.presynaptic_stats-module.html#identifiers"><a title="pyto.io.multi_data.MultiData.identifiers
+pyto.scripts.bulk_analysis.identifiers
+pyto.scripts.cleft_stats.identifiers
+pyto.scripts.presynaptic_stats.identifiers" class="py-name" href="#" onclick="return doclink('link-25', 'identifiers', 'link-25');">identifiers</a></tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-string">'syncam_ox_ctrl_'</tt> <tt class="py-op">+</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt id="link-26" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-26', 'ind', 'link-2');">ind</a></tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt id="link-27" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-27', 'ind', 'link-2');">ind</a></tt> <tt class="py-keyword">in</tt> <tt class="py-name">range</tt><tt class="py-op">(</tt><tt class="py-number">1</tt><tt class="py-op">,</tt><tt class="py-number">8</tt><tt class="py-op">)</tt><tt class="py-op">]</tt>   </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line">               <tt class="py-op">+</tt> <tt class="py-op">[</tt><tt class="py-string">'syncam_ox_'</tt> <tt class="py-op">+</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt id="link-28" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-28', 'ind', 'link-2');">ind</a></tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt id="link-29" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-29', 'ind', 'link-2');">ind</a></tt> <tt class="py-keyword">in</tt> <tt class="py-name">range</tt><tt class="py-op">(</tt><tt class="py-number">1</tt><tt class="py-op">,</tt><tt class="py-number">8</tt><tt class="py-op">)</tt><tt class="py-op">]</tt>  </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line">               <tt class="py-op">+</tt> <tt class="py-op">[</tt><tt class="py-string">'egta_ctrl_'</tt> <tt class="py-op">+</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt id="link-30" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-30', 'ind', 'link-2');">ind</a></tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt id="link-31" class="py-name"><a title="pyto.scripts.bulk_analysis.ind
+pyto.scripts.cleft_stats.ind" class="py-name" href="#" onclick="return doclink('link-31', 'ind', 'link-2');">ind</a></tt> <tt class="py-keyword">in</tt> <tt class="py-name">range</tt><tt class="py-op">(</tt><tt class="py-number">1</tt><tt class="py-op">,</tt><tt class="py-number">6</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line">               <tt class="py-op">+</tt> <tt class="py-op">[</tt><tt class="py-string">'egta_0'</tt> <tt class="py-op">+</tt> <tt id="link-32" class="py-name"><a title="pyto.scripts.bulk_analysis.sym
+pyto.scripts.cleft_stats.sym" class="py-name" href="#" onclick="return doclink('link-32', 'sym', 'link-8');">sym</a></tt> <tt class="py-keyword">for</tt> <tt id="link-33" class="py-name"><a title="pyto.scripts.bulk_analysis.sym
+pyto.scripts.cleft_stats.sym" class="py-name" href="#" onclick="return doclink('link-33', 'sym', 'link-8');">sym</a></tt> <tt class="py-keyword">in</tt> <tt class="py-op">[</tt><tt class="py-string">'a'</tt><tt class="py-op">,</tt><tt class="py-string">'b'</tt><tt class="py-op">,</tt><tt class="py-string">'c'</tt><tt class="py-op">,</tt><tt class="py-string">'d'</tt><tt class="py-op">,</tt><tt class="py-string">'e'</tt><tt class="py-op">,</tt><tt class="py-string">'f'</tt><tt class="py-op">]</tt><tt class="py-op">]</tt>  </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line">               <tt class="py-op">+</tt> <tt class="py-op">[</tt><tt class="py-string">'egta_1'</tt> <tt class="py-op">+</tt> <tt id="link-34" class="py-name"><a title="pyto.scripts.bulk_analysis.sym
+pyto.scripts.cleft_stats.sym" class="py-name" href="#" onclick="return doclink('link-34', 'sym', 'link-8');">sym</a></tt> <tt class="py-keyword">for</tt> <tt id="link-35" class="py-name"><a title="pyto.scripts.bulk_analysis.sym
+pyto.scripts.cleft_stats.sym" class="py-name" href="#" onclick="return doclink('link-35', 'sym', 'link-8');">sym</a></tt> <tt class="py-keyword">in</tt> <tt class="py-op">[</tt><tt class="py-string">'a'</tt><tt class="py-op">,</tt><tt class="py-string">'b'</tt><tt class="py-op">,</tt><tt class="py-string">'c'</tt><tt class="py-op">,</tt><tt class="py-string">'d'</tt><tt class="py-op">,</tt><tt class="py-string">'e'</tt><tt class="py-op">]</tt><tt class="py-op">]</tt>  </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line">               <tt class="py-op">+</tt> <tt class="py-op">[</tt><tt class="py-string">'egta_2'</tt><tt class="py-op">]</tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line">               <tt class="py-op">+</tt> <tt class="py-op">[</tt><tt class="py-string">'egta_3'</tt> <tt class="py-op">+</tt> <tt id="link-36" class="py-name"><a title="pyto.scripts.bulk_analysis.sym
+pyto.scripts.cleft_stats.sym" class="py-name" href="#" onclick="return doclink('link-36', 'sym', 'link-8');">sym</a></tt> <tt class="py-keyword">for</tt> <tt id="link-37" class="py-name"><a title="pyto.scripts.bulk_analysis.sym
+pyto.scripts.cleft_stats.sym" class="py-name" href="#" onclick="return doclink('link-37', 'sym', 'link-8');">sym</a></tt> <tt class="py-keyword">in</tt> <tt class="py-op">[</tt><tt class="py-string">'a'</tt><tt class="py-op">,</tt><tt class="py-string">'b'</tt><tt class="py-op">,</tt><tt class="py-string">'c'</tt><tt class="py-op">,</tt><tt class="py-string">'d'</tt><tt class="py-op">,</tt><tt class="py-string">'e'</tt><tt class="py-op">,</tt><tt class="py-string">'f'</tt><tt class="py-op">]</tt><tt class="py-op">]</tt><tt class="py-op">)</tt>  </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line"><tt id="link-38" class="py-name" targets="Variable pyto.scripts.bulk_analysis.identifiers_discard=pyto.scripts.bulk_analysis-module.html#identifiers_discard,Variable pyto.scripts.cleft_stats.identifiers_discard=pyto.scripts.cleft_stats-module.html#identifiers_discard,Variable pyto.scripts.presynaptic_stats.identifiers_discard=pyto.scripts.presynaptic_stats-module.html#identifiers_discard"><a title="pyto.scripts.bulk_analysis.identifiers_discard
+pyto.scripts.cleft_stats.identifiers_discard
+pyto.scripts.presynaptic_stats.identifiers_discard" class="py-name" href="#" onclick="return doclink('link-38', 'identifiers_discard', 'link-38');">identifiers_discard</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-string">'egta_ctrl_6'</tt><tt class="py-op">]</tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line"><tt id="link-39" class="py-name"><a title="pyto.io.multi_data.MultiData.identifiers
+pyto.scripts.bulk_analysis.identifiers
+pyto.scripts.cleft_stats.identifiers
+pyto.scripts.presynaptic_stats.identifiers" class="py-name" href="#" onclick="return doclink('link-39', 'identifiers', 'link-25');">identifiers</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt id="link-40" class="py-name"><a title="pyto.scripts.bulk_analysis.ident
+pyto.scripts.cleft_stats.ident
+pyto.scripts.presynaptic_stats.ident" class="py-name" href="#" onclick="return doclink('link-40', 'ident', 'link-16');">ident</a></tt> <tt class="py-keyword">for</tt> <tt id="link-41" class="py-name"><a title="pyto.scripts.bulk_analysis.ident
+pyto.scripts.cleft_stats.ident
+pyto.scripts.presynaptic_stats.ident" class="py-name" href="#" onclick="return doclink('link-41', 'ident', 'link-16');">ident</a></tt> <tt class="py-keyword">in</tt> <tt id="link-42" class="py-name"><a title="pyto.io.multi_data.MultiData.identifiers
+pyto.scripts.bulk_analysis.identifiers
+pyto.scripts.cleft_stats.identifiers
+pyto.scripts.presynaptic_stats.identifiers" class="py-name" href="#" onclick="return doclink('link-42', 'identifiers', 'link-25');">identifiers</a></tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">               <tt class="py-keyword">if</tt> <tt id="link-43" class="py-name"><a title="pyto.scripts.bulk_analysis.ident
+pyto.scripts.cleft_stats.ident
+pyto.scripts.presynaptic_stats.ident" class="py-name" href="#" onclick="return doclink('link-43', 'ident', 'link-16');">ident</a></tt> <tt class="py-keyword">not</tt> <tt class="py-keyword">in</tt> <tt id="link-44" class="py-name"><a title="pyto.scripts.bulk_analysis.identifiers_discard
+pyto.scripts.cleft_stats.identifiers_discard
+pyto.scripts.presynaptic_stats.identifiers_discard" class="py-name" href="#" onclick="return doclink('link-44', 'identifiers_discard', 'link-38');">identifiers_discard</a></tt><tt class="py-op">]</tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line"> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line"><tt class="py-comment">##############################################################</tt> </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line"><tt class="py-comment"># Modifying scripts</tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line"> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line"><tt class="py-comment"># flag indicating if scripts need to be modified</tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line"><tt id="link-45" class="py-name" targets="Variable pyto.scripts.bulk_analysis.modify_scripts=pyto.scripts.bulk_analysis-module.html#modify_scripts"><a title="pyto.scripts.bulk_analysis.modify_scripts" class="py-name" href="#" onclick="return doclink('link-45', 'modify_scripts', 'link-45');">modify_scripts</a></tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line"> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line"><tt class="py-comment"># script name (path) pattern that is changed for the modified scripts</tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line"><tt id="link-46" class="py-name" targets="Variable pyto.scripts.bulk_analysis.old_script_pattern=pyto.scripts.bulk_analysis-module.html#old_script_pattern"><a title="pyto.scripts.bulk_analysis.old_script_pattern" class="py-name" href="#" onclick="return doclink('link-46', 'old_script_pattern', 'link-46');">old_script_pattern</a></tt> <tt class="py-op">=</tt> <tt class="py-string">r'cleft\.py$'</tt> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line"> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line"><tt class="py-comment"># replacements for the script name pattern (above)</tt> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line"><tt id="link-47" class="py-name" targets="Variable pyto.scripts.bulk_analysis.new_script_replace=pyto.scripts.bulk_analysis-module.html#new_script_replace"><a title="pyto.scripts.bulk_analysis.new_script_replace" class="py-name" href="#" onclick="return doclink('link-47', 'new_script_replace', 'link-47');">new_script_replace</a></tt> <tt class="py-op">=</tt>  <tt class="py-string">'cleft.py'</tt> </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line"> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line"><tt class="py-comment"># rules for modifying scripts, all rules are applied to each line (from each </tt> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line"><tt class="py-comment"># script), two forms are available:</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line"><tt class="py-comment">#   - line_matching_pattern : new_line; each line that matches pattern</tt> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line"><tt class="py-comment"># is replaced by the specified line (new_line needs to end with \n)</tt> </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line"><tt class="py-comment">#   - line_matching_pattern : (pattern, pattern_replacement); in each line </tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line"><tt class="py-comment"># that matches line matching pattern, pattern is replaced by </tt> </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line"><tt class="py-comment"># pattern_replacement and the rest of the line is left unchanged  </tt> </tt>
+<a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line"><tt id="link-48" class="py-name" targets="Variable pyto.scripts.bulk_analysis.script_rules=pyto.scripts.bulk_analysis-module.html#script_rules"><a title="pyto.scripts.bulk_analysis.script_rules" class="py-name" href="#" onclick="return doclink('link-48', 'script_rules', 'link-48');">script_rules</a></tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line">    <tt class="py-string">r'^n_layers ='</tt> <tt class="py-op">:</tt> <tt class="py-string">'n_layers = 4'</tt> <tt class="py-op">+</tt> <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">linesep</tt><tt class="py-op">,</tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line">    <tt class="py-string">r'^n_extra_layers ='</tt> <tt class="py-op">:</tt> <tt class="py-string">'n_extra_layers = 2'</tt> <tt class="py-op">+</tt> <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">linesep</tt><tt class="py-op">,</tt> </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line">    <tt class="py-string">r'^membrane_thickness'</tt> <tt class="py-op">:</tt> <tt class="py-string">'membrane_thickness = 1'</tt> <tt class="py-op">+</tt> <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">linesep</tt><tt class="py-op">,</tt> </tt>
+<a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line">    <tt class="py-string">r'^layers_only ='</tt> <tt class="py-op">:</tt> <tt class="py-string">'layers_only = True'</tt> <tt class="py-op">+</tt> <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">linesep</tt><tt class="py-op">,</tt> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line">    <tt class="py-string">r'^lay_suffix ='</tt> <tt class="py-op">:</tt> <tt class="py-op">{</tt><tt class="py-string">r'_layers\.em'</tt> <tt class="py-op">:</tt> <tt class="py-string">'_layers-4.em'</tt><tt class="py-op">}</tt><tt class="py-op">,</tt> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line">    <tt class="py-string">r'^cleft_res_suffix ='</tt> <tt class="py-op">:</tt> <tt class="py-op">{</tt><tt class="py-string">r'_cl\.dat'</tt> <tt class="py-op">:</tt> <tt class="py-string">'_cl_layer-4.dat'</tt><tt class="py-op">}</tt><tt class="py-op">,</tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line">    <tt class="py-string">r'^cl_suffix ='</tt> <tt class="py-op">:</tt> <tt class="py-op">{</tt><tt class="py-string">r'_cl\.pkl'</tt> <tt class="py-op">:</tt> <tt class="py-string">'_cl_layer-4.pkl'</tt><tt class="py-op">}</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line">    <tt class="py-op">}</tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line"> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line"><tt class="py-comment">##############################################################</tt> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line"><tt class="py-comment"># Running scripts</tt> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line"> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line"><tt class="py-comment"># flag indicating if scripts need to be run</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line"><tt id="link-49" class="py-name" targets="Variable pyto.scripts.bulk_analysis.run_scripts=pyto.scripts.bulk_analysis-module.html#run_scripts"><a title="pyto.scripts.bulk_analysis.run_scripts" class="py-name" href="#" onclick="return doclink('link-49', 'run_scripts', 'link-49');">run_scripts</a></tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line"> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line"><tt class="py-comment">##############################################################</tt> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line"><tt class="py-comment"># Modifying catalogs</tt> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line"> </tt>
+<a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line"><tt class="py-comment"># flag indicating if catalogs need to be modified</tt> </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line"><tt id="link-50" class="py-name" targets="Variable pyto.scripts.bulk_analysis.modify_catalogs=pyto.scripts.bulk_analysis-module.html#modify_catalogs"><a title="pyto.scripts.bulk_analysis.modify_catalogs" class="py-name" href="#" onclick="return doclink('link-50', 'modify_catalogs', 'link-50');">modify_catalogs</a></tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt> </tt>
+<a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line"> </tt>
+<a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line"><tt class="py-comment"># catalog directory</tt> </tt>
+<a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line"><tt id="link-51" class="py-name" targets="Variable pyto.scripts.bulk_analysis.catalog_dir=pyto.scripts.bulk_analysis-module.html#catalog_dir"><a title="pyto.scripts.bulk_analysis.catalog_dir" class="py-name" href="#" onclick="return doclink('link-51', 'catalog_dir', 'link-51');">catalog_dir</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'../catalogs/'</tt> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line"> </tt>
+<a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line"><tt class="py-comment"># list of catalogs file names or name patterns </tt> </tt>
+<a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line"><tt class="py-comment">#catalogs  = [r'[^_].*\.py$']   # extension 'py', doesn't start with '_'</tt> </tt>
+<a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line"><tt class="py-comment">#catalogs = [r'^syncam_ox_1.py$']</tt> </tt>
+<a name="L135"></a><tt class="py-lineno">135</tt>  <tt class="py-line"><tt id="link-52" class="py-name" targets="Variable pyto.scripts.bulk_analysis.catalogs=pyto.scripts.bulk_analysis-module.html#catalogs"><a title="pyto.scripts.bulk_analysis.catalogs" class="py-name" href="#" onclick="return doclink('link-52', 'catalogs', 'link-52');">catalogs</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt id="link-53" class="py-name"><a title="pyto.scripts.bulk_analysis.ident
+pyto.scripts.cleft_stats.ident
+pyto.scripts.presynaptic_stats.ident" class="py-name" href="#" onclick="return doclink('link-53', 'ident', 'link-16');">ident</a></tt> <tt class="py-op">+</tt> <tt class="py-string">'.py$'</tt> <tt class="py-keyword">for</tt> <tt id="link-54" class="py-name"><a title="pyto.scripts.bulk_analysis.ident
+pyto.scripts.cleft_stats.ident
+pyto.scripts.presynaptic_stats.ident" class="py-name" href="#" onclick="return doclink('link-54', 'ident', 'link-16');">ident</a></tt> <tt class="py-keyword">in</tt> <tt id="link-55" class="py-name"><a title="pyto.io.multi_data.MultiData.identifiers
+pyto.scripts.bulk_analysis.identifiers
+pyto.scripts.cleft_stats.identifiers
+pyto.scripts.presynaptic_stats.identifiers" class="py-name" href="#" onclick="return doclink('link-55', 'identifiers', 'link-25');">identifiers</a></tt><tt class="py-op">]</tt> </tt>
+<a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line"> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line"><tt class="py-comment"># catalog lines to copy, each matched lines is first copied unmodified and then</tt> </tt>
+<a name="L138"></a><tt class="py-lineno">138</tt>  <tt class="py-line"><tt class="py-comment"># modified by the catalog_rules and written again</tt> </tt>
+<a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line"><tt class="py-comment">#catalog_copy = [r'^cleft_segmentation_hi = ']</tt> </tt>
+<a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line"><tt id="link-56" class="py-name" targets="Variable pyto.scripts.bulk_analysis.catalog_copy=pyto.scripts.bulk_analysis-module.html#catalog_copy"><a title="pyto.scripts.bulk_analysis.catalog_copy" class="py-name" href="#" onclick="return doclink('link-56', 'catalog_copy', 'link-56');">catalog_copy</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-string">r'^cleft_layers ='</tt><tt class="py-op">]</tt> </tt>
+<a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line"> </tt>
+<a name="L142"></a><tt class="py-lineno">142</tt>  <tt class="py-line"><tt class="py-comment"># rules for modifying lines of catalogs, same format as script_rules</tt> </tt>
+<a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line"><tt id="link-57" class="py-name" targets="Variable pyto.scripts.bulk_analysis.catalog_rules=pyto.scripts.bulk_analysis-module.html#catalog_rules"><a title="pyto.scripts.bulk_analysis.catalog_rules" class="py-name" href="#" onclick="return doclink('link-57', 'catalog_rules', 'link-57');">catalog_rules</a></tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt> </tt>
+<a name="L144"></a><tt class="py-lineno">144</tt>  <tt class="py-line">    <tt class="py-string">r'^cleft_'</tt> <tt class="py-op">:</tt> <tt class="py-op">{</tt><tt class="py-string">r'cleft_vl'</tt> <tt class="py-op">:</tt> <tt class="py-string">'cleft'</tt><tt class="py-op">}</tt><tt class="py-op">,</tt> </tt>
+<a name="L145"></a><tt class="py-lineno">145</tt>  <tt class="py-line">    <tt class="py-string">r'^cleft_layers ='</tt> <tt class="py-op">:</tt> <tt class="py-op">{</tt><tt class="py-string">r'_cl'</tt> <tt class="py-op">:</tt> <tt class="py-string">'_layers-thin'</tt><tt class="py-op">}</tt><tt class="py-op">,</tt> </tt>
+<a name="L146"></a><tt class="py-lineno">146</tt>  <tt class="py-line">    <tt class="py-string">r'^cleft_layers_4 ='</tt> <tt class="py-op">:</tt> <tt class="py-op">{</tt><tt class="py-string">r'_cl'</tt> <tt class="py-op">:</tt> <tt class="py-string">''</tt><tt class="py-op">}</tt><tt class="py-op">,</tt> </tt>
+<a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line">    <tt class="py-string">r'^cleft_segmentation_hi_layers ='</tt> <tt class="py-op">:</tt> <tt class="py-op">{</tt><tt class="py-string">r'^cleft'</tt> <tt class="py-op">:</tt> <tt class="py-string">'#cleft'</tt><tt class="py-op">}</tt><tt class="py-op">,</tt> </tt>
+<a name="L148"></a><tt class="py-lineno">148</tt>  <tt class="py-line">    <tt class="py-string">r'^cleft_segmentation_hi_layers_4 ='</tt> <tt class="py-op">:</tt> <tt class="py-op">{</tt><tt class="py-string">r'_cl'</tt> <tt class="py-op">:</tt> <tt class="py-string">''</tt><tt class="py-op">}</tt> </tt>
+<a name="L149"></a><tt class="py-lineno">149</tt>  <tt class="py-line">    <tt class="py-op">}</tt> </tt>
+<a name="L150"></a><tt class="py-lineno">150</tt>  <tt class="py-line"> </tt>
+<a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line"> </tt>
+<a name="L152"></a><tt class="py-lineno">152</tt>  <tt class="py-line"><tt class="py-comment">################################################################</tt> </tt>
+<a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line"><tt class="py-comment"># Main function (edit if you know what you're doing)</tt> </tt>
+<a name="L155"></a><tt class="py-lineno">155</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line"><tt class="py-comment">###############################################################</tt> </tt>
+<a name="L157"></a><tt class="py-lineno">157</tt>  <tt class="py-line"> </tt>
+<a name="main"></a><div id="main-def"><a name="L158"></a><tt class="py-lineno">158</tt> <a class="py-toggle" href="#" id="main-toggle" onclick="return toggle('main');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.scripts.bulk_analysis-module.html#main">main</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="main-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="main-expanded"><a name="L159"></a><tt class="py-lineno">159</tt>  <tt class="py-line"> </tt>
+<a name="L160"></a><tt class="py-lineno">160</tt>  <tt class="py-line">    <tt class="py-comment"># write and run scripts</tt> </tt>
+<a name="L161"></a><tt class="py-lineno">161</tt>  <tt class="py-line">    <tt class="py-keyword">for</tt> <tt class="py-name">script_path</tt> <tt class="py-keyword">in</tt> <tt id="link-58" class="py-name"><a title="pyto.scripts
+pyto.scripts.bulk_analysis.scripts" class="py-name" href="#" onclick="return doclink('link-58', 'scripts', 'link-21');">scripts</a></tt><tt class="py-op">:</tt> </tt>
+<a name="L162"></a><tt class="py-lineno">162</tt>  <tt class="py-line"> </tt>
+<a name="L163"></a><tt class="py-lineno">163</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-59" class="py-name"><a title="pyto.scripts.bulk_analysis.modify_scripts" class="py-name" href="#" onclick="return doclink('link-59', 'modify_scripts', 'link-45');">modify_scripts</a></tt><tt class="py-op">:</tt> </tt>
+<a name="L164"></a><tt class="py-lineno">164</tt>  <tt class="py-line"> </tt>
+<a name="L165"></a><tt class="py-lineno">165</tt>  <tt class="py-line">            <tt class="py-comment"># open old and new scripts</tt> </tt>
+<a name="L166"></a><tt class="py-lineno">166</tt>  <tt class="py-line">            <tt class="py-comment">#old_script = open(script_path)</tt> </tt>
+<a name="L167"></a><tt class="py-lineno">167</tt>  <tt class="py-line">            <tt class="py-name">new_path</tt> <tt class="py-op">=</tt> <tt class="py-name">re</tt><tt class="py-op">.</tt><tt class="py-name">sub</tt><tt class="py-op">(</tt><tt id="link-60" class="py-name"><a title="pyto.scripts.bulk_analysis.old_script_pattern" class="py-name" href="#" onclick="return doclink('link-60', 'old_script_pattern', 'link-46');">old_script_pattern</a></tt><tt class="py-op">,</tt> <tt id="link-61" class="py-name"><a title="pyto.scripts.bulk_analysis.new_script_replace" class="py-name" href="#" onclick="return doclink('link-61', 'new_script_replace', 'link-47');">new_script_replace</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L168"></a><tt class="py-lineno">168</tt>  <tt class="py-line">                              <tt class="py-name">script_path</tt><tt class="py-op">)</tt> </tt>
+<a name="L169"></a><tt class="py-lineno">169</tt>  <tt class="py-line">            <tt class="py-comment">#try:</tt> </tt>
+<a name="L170"></a><tt class="py-lineno">170</tt>  <tt class="py-line">            <tt class="py-comment">#    new_script = open(new_path, 'w')</tt> </tt>
+<a name="L171"></a><tt class="py-lineno">171</tt>  <tt class="py-line">            <tt class="py-comment">#except IOError:</tt> </tt>
+<a name="L172"></a><tt class="py-lineno">172</tt>  <tt class="py-line">            <tt class="py-comment">#    new_dir, new_base = os.path.split(new_path)</tt> </tt>
+<a name="L173"></a><tt class="py-lineno">173</tt>  <tt class="py-line">            <tt class="py-comment">#    os.makedirs(new_dir)</tt> </tt>
+<a name="L174"></a><tt class="py-lineno">174</tt>  <tt class="py-line">            <tt class="py-comment">#    new_script = open(new_path, 'w')</tt> </tt>
+<a name="L175"></a><tt class="py-lineno">175</tt>  <tt class="py-line">            <tt class="py-comment"># print "created by script ..."</tt> </tt>
+<a name="L176"></a><tt class="py-lineno">176</tt>  <tt class="py-line"> </tt>
+<a name="L177"></a><tt class="py-lineno">177</tt>  <tt class="py-line">            <tt class="py-comment"># write new (modified) script</tt> </tt>
+<a name="L178"></a><tt class="py-lineno">178</tt>  <tt class="py-line">            <tt class="py-name">logging</tt><tt class="py-op">.</tt><tt class="py-name">info</tt><tt class="py-op">(</tt><tt class="py-string">"Modifying script "</tt> <tt class="py-op">+</tt> <tt class="py-name">new_path</tt><tt class="py-op">)</tt> </tt>
+<a name="L179"></a><tt class="py-lineno">179</tt>  <tt class="py-line">            <tt id="link-62" class="py-name"><a title="pyto" class="py-name" href="#" onclick="return doclink('link-62', 'pyto', 'link-0');">pyto</a></tt><tt class="py-op">.</tt><tt id="link-63" class="py-name" targets="Module pyto.io.util=pyto.io.util-module.html,Package pyto.util=pyto.util-module.html"><a title="pyto.io.util
+pyto.util" class="py-name" href="#" onclick="return doclink('link-63', 'util', 'link-63');">util</a></tt><tt class="py-op">.</tt><tt id="link-64" class="py-name" targets="Module pyto.util.bulk=pyto.util.bulk-module.html"><a title="pyto.util.bulk" class="py-name" href="#" onclick="return doclink('link-64', 'bulk', 'link-64');">bulk</a></tt><tt class="py-op">.</tt><tt id="link-65" class="py-name" targets="Function pyto.util.bulk.replace()=pyto.util.bulk-module.html#replace"><a title="pyto.util.bulk.replace" class="py-name" href="#" onclick="return doclink('link-65', 'replace', 'link-65');">replace</a></tt><tt class="py-op">(</tt><tt class="py-name">old</tt><tt class="py-op">=</tt><tt class="py-name">script_path</tt><tt class="py-op">,</tt> <tt class="py-name">new</tt><tt class="py-op">=</tt><tt class="py-name">new_path</tt><tt class="py-op">,</tt>  </tt>
+<a name="L180"></a><tt class="py-lineno">180</tt>  <tt class="py-line">                                   <tt class="py-name">rules</tt><tt class="py-op">=</tt><tt id="link-66" class="py-name"><a title="pyto.scripts.bulk_analysis.script_rules" class="py-name" href="#" onclick="return doclink('link-66', 'script_rules', 'link-48');">script_rules</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L181"></a><tt class="py-lineno">181</tt>  <tt class="py-line">            <tt class="py-comment">#new_script.close()</tt> </tt>
+<a name="L182"></a><tt class="py-lineno">182</tt>  <tt class="py-line"> </tt>
+<a name="L183"></a><tt class="py-lineno">183</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L184"></a><tt class="py-lineno">184</tt>  <tt class="py-line"> </tt>
+<a name="L185"></a><tt class="py-lineno">185</tt>  <tt class="py-line">            <tt class="py-comment"># use existing script</tt> </tt>
+<a name="L186"></a><tt class="py-lineno">186</tt>  <tt class="py-line">            <tt class="py-name">new_path</tt> <tt class="py-op">=</tt> <tt class="py-name">script_path</tt> </tt>
+<a name="L187"></a><tt class="py-lineno">187</tt>  <tt class="py-line">         </tt>
+<a name="L188"></a><tt class="py-lineno">188</tt>  <tt class="py-line">        <tt class="py-comment"># run script</tt> </tt>
+<a name="L189"></a><tt class="py-lineno">189</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-67" class="py-name"><a title="pyto.scripts.bulk_analysis.run_scripts" class="py-name" href="#" onclick="return doclink('link-67', 'run_scripts', 'link-49');">run_scripts</a></tt><tt class="py-op">:</tt> </tt>
+<a name="L190"></a><tt class="py-lineno">190</tt>  <tt class="py-line">            <tt class="py-name">logging</tt><tt class="py-op">.</tt><tt class="py-name">info</tt><tt class="py-op">(</tt><tt class="py-string">"Runninging script "</tt> <tt class="py-op">+</tt> <tt class="py-name">new_path</tt><tt class="py-op">)</tt> </tt>
+<a name="L191"></a><tt class="py-lineno">191</tt>  <tt class="py-line">            <tt id="link-68" class="py-name"><a title="pyto" class="py-name" href="#" onclick="return doclink('link-68', 'pyto', 'link-0');">pyto</a></tt><tt class="py-op">.</tt><tt id="link-69" class="py-name"><a title="pyto.io.util
+pyto.util" class="py-name" href="#" onclick="return doclink('link-69', 'util', 'link-63');">util</a></tt><tt class="py-op">.</tt><tt id="link-70" class="py-name"><a title="pyto.util.bulk" class="py-name" href="#" onclick="return doclink('link-70', 'bulk', 'link-64');">bulk</a></tt><tt class="py-op">.</tt><tt id="link-71" class="py-name" targets="Function pyto.util.bulk.run_path()=pyto.util.bulk-module.html#run_path"><a title="pyto.util.bulk.run_path" class="py-name" href="#" onclick="return doclink('link-71', 'run_path', 'link-71');">run_path</a></tt><tt class="py-op">(</tt><tt class="py-name">path</tt><tt class="py-op">=</tt><tt class="py-name">new_path</tt><tt class="py-op">)</tt> </tt>
+<a name="L192"></a><tt class="py-lineno">192</tt>  <tt class="py-line"> </tt>
+<a name="L193"></a><tt class="py-lineno">193</tt>  <tt class="py-line">    <tt class="py-comment"># add entries to catalogs</tt> </tt>
+<a name="L194"></a><tt class="py-lineno">194</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt id="link-72" class="py-name"><a title="pyto.scripts.bulk_analysis.modify_catalogs" class="py-name" href="#" onclick="return doclink('link-72', 'modify_catalogs', 'link-50');">modify_catalogs</a></tt><tt class="py-op">:</tt> </tt>
+<a name="L195"></a><tt class="py-lineno">195</tt>  <tt class="py-line"> </tt>
+<a name="L196"></a><tt class="py-lineno">196</tt>  <tt class="py-line">        <tt class="py-comment"># read directory</tt> </tt>
+<a name="L197"></a><tt class="py-lineno">197</tt>  <tt class="py-line">        <tt class="py-comment"># Note: can not put in the for loop statement below, because the</tt> </tt>
+<a name="L198"></a><tt class="py-lineno">198</tt>  <tt class="py-line">        <tt class="py-comment"># loop may modify the directory</tt> </tt>
+<a name="L199"></a><tt class="py-lineno">199</tt>  <tt class="py-line">        <tt class="py-name">all_files</tt> <tt class="py-op">=</tt> <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">listdir</tt><tt class="py-op">(</tt><tt id="link-73" class="py-name"><a title="pyto.scripts.bulk_analysis.catalog_dir" class="py-name" href="#" onclick="return doclink('link-73', 'catalog_dir', 'link-51');">catalog_dir</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L200"></a><tt class="py-lineno">200</tt>  <tt class="py-line"> </tt>
+<a name="L201"></a><tt class="py-lineno">201</tt>  <tt class="py-line">        <tt class="py-comment"># modify all catalogs</tt> </tt>
+<a name="L202"></a><tt class="py-lineno">202</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-name">cat</tt> <tt class="py-keyword">in</tt> <tt class="py-name">all_files</tt><tt class="py-op">:</tt> </tt>
+<a name="L203"></a><tt class="py-lineno">203</tt>  <tt class="py-line"> </tt>
+<a name="L204"></a><tt class="py-lineno">204</tt>  <tt class="py-line">            <tt class="py-comment"># check all catalog patterns</tt> </tt>
+<a name="L205"></a><tt class="py-lineno">205</tt>  <tt class="py-line">            <tt class="py-keyword">for</tt> <tt class="py-name">cat_pattern</tt> <tt class="py-keyword">in</tt> <tt id="link-74" class="py-name"><a title="pyto.scripts.bulk_analysis.catalogs" class="py-name" href="#" onclick="return doclink('link-74', 'catalogs', 'link-52');">catalogs</a></tt><tt class="py-op">:</tt> </tt>
+<a name="L206"></a><tt class="py-lineno">206</tt>  <tt class="py-line"> </tt>
+<a name="L207"></a><tt class="py-lineno">207</tt>  <tt class="py-line">                <tt class="py-comment"># do all modifications for the current catalog</tt> </tt>
+<a name="L208"></a><tt class="py-lineno">208</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">re</tt><tt class="py-op">.</tt><tt class="py-name">search</tt><tt class="py-op">(</tt><tt class="py-name">cat_pattern</tt><tt class="py-op">,</tt> <tt class="py-name">cat</tt><tt class="py-op">)</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L209"></a><tt class="py-lineno">209</tt>  <tt class="py-line">                    <tt class="py-name">cat_path</tt> <tt class="py-op">=</tt> <tt class="py-name">os</tt><tt class="py-op">.</tt><tt class="py-name">path</tt><tt class="py-op">.</tt><tt id="link-75" class="py-name" targets="Method pyto.analysis.observations.Observations.join()=pyto.analysis.observations.Observations-class.html#join"><a title="pyto.analysis.observations.Observations.join" class="py-name" href="#" onclick="return doclink('link-75', 'join', 'link-75');">join</a></tt><tt class="py-op">(</tt><tt id="link-76" class="py-name"><a title="pyto.scripts.bulk_analysis.catalog_dir" class="py-name" href="#" onclick="return doclink('link-76', 'catalog_dir', 'link-51');">catalog_dir</a></tt><tt class="py-op">,</tt> <tt class="py-name">cat</tt><tt class="py-op">)</tt> </tt>
+<a name="L210"></a><tt class="py-lineno">210</tt>  <tt class="py-line">                    <tt class="py-name">logging</tt><tt class="py-op">.</tt><tt class="py-name">info</tt><tt class="py-op">(</tt><tt class="py-string">"Modifying catalog "</tt> <tt class="py-op">+</tt> <tt class="py-name">cat_path</tt><tt class="py-op">)</tt> </tt>
+<a name="L211"></a><tt class="py-lineno">211</tt>  <tt class="py-line">                    <tt id="link-77" class="py-name"><a title="pyto" class="py-name" href="#" onclick="return doclink('link-77', 'pyto', 'link-0');">pyto</a></tt><tt class="py-op">.</tt><tt id="link-78" class="py-name"><a title="pyto.io.util
+pyto.util" class="py-name" href="#" onclick="return doclink('link-78', 'util', 'link-63');">util</a></tt><tt class="py-op">.</tt><tt id="link-79" class="py-name"><a title="pyto.util.bulk" class="py-name" href="#" onclick="return doclink('link-79', 'bulk', 'link-64');">bulk</a></tt><tt class="py-op">.</tt><tt id="link-80" class="py-name"><a title="pyto.util.bulk.replace" class="py-name" href="#" onclick="return doclink('link-80', 'replace', 'link-65');">replace</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L212"></a><tt class="py-lineno">212</tt>  <tt class="py-line">                        <tt class="py-name">old</tt><tt class="py-op">=</tt><tt class="py-name">cat_path</tt><tt class="py-op">,</tt> <tt class="py-name">rules</tt><tt class="py-op">=</tt><tt id="link-81" class="py-name"><a title="pyto.scripts.bulk_analysis.catalog_rules" class="py-name" href="#" onclick="return doclink('link-81', 'catalog_rules', 'link-57');">catalog_rules</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L213"></a><tt class="py-lineno">213</tt>  <tt class="py-line">                        <tt class="py-name">repeat</tt><tt class="py-op">=</tt><tt id="link-82" class="py-name"><a title="pyto.scripts.bulk_analysis.catalog_copy" class="py-name" href="#" onclick="return doclink('link-82', 'catalog_copy', 'link-56');">catalog_copy</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L214"></a><tt class="py-lineno">214</tt>  <tt class="py-line">                    <tt class="py-keyword">break</tt> </tt>
+</div><a name="L215"></a><tt class="py-lineno">215</tt>  <tt class="py-line"> </tt>
+<a name="L216"></a><tt class="py-lineno">216</tt>  <tt class="py-line"> </tt>
+<a name="L217"></a><tt class="py-lineno">217</tt>  <tt class="py-line"><tt class="py-comment"># run if standalone</tt> </tt>
+<a name="L218"></a><tt class="py-lineno">218</tt>  <tt class="py-line"><tt class="py-keyword">if</tt> <tt class="py-name">__name__</tt> <tt class="py-op">==</tt> <tt class="py-string">'__main__'</tt><tt class="py-op">:</tt> </tt>
+<a name="L219"></a><tt class="py-lineno">219</tt>  <tt class="py-line">    <tt id="link-83" class="py-name" targets="Function pyto.scripts.bulk_analysis.main()=pyto.scripts.bulk_analysis-module.html#main,Function pyto.scripts.classify_connections.main()=pyto.scripts.classify_connections-module.html#main,Function pyto.scripts.cleft.main()=pyto.scripts.cleft-module.html#main,Function pyto.scripts.cleft_stats.main()=pyto.scripts.cleft_stats-module.html#main,Function pyto.scripts.cluster.main()=pyto.scripts.cluster-module.html#main,Function pyto.scripts.connections.main()=pyto.scripts.connections-module.html#main,Function pyto.scripts.connectors.main()=pyto.scripts.connectors-module.html#main,Function pyto.scripts.correlation_3d_2d.main()=pyto.scripts.correlation_3d_2d-module.html#main,Function pyto.scripts.correlation_simple.main()=pyto.scripts.correlation_simple-module.html#main,Function pyto.scripts.correlation_simple_fileio.main()=pyto.scripts.correlation_simple_fileio-module.html#main,Function pyto.scripts.correlation_two_step_lm_em.main()=pyto.scripts.correlation_two_step_lm_em-module.html#main,Function pyto.scripts.discs_to_balls.main()=pyto.scripts.discs_to_balls-module.html#main,Function pyto.scripts.extract_particles.main()=pyto.scripts.extract_particles-module.html#main,Function pyto.scripts.extract_points.main()=pyto.scripts.extract_points-module.html#main,Function pyto.scripts.layers.main()=pyto.scripts.layers-module.html#main,Function pyto.scripts.neighborhood_grey.main()=pyto.scripts.neighborhood_grey-module.html#main,Function pyto.scripts.presynaptic_stats.main()=pyto.scripts.presynaptic_stats-module.html#main,Function pyto.scripts.regions.main()=pyto.scripts.regions-module.html#main,Function pyto.scripts.sort_series.main()=pyto.scripts.sort_series-module.html#main,Function pyto.scripts.vesicles.main()=pyto.scripts.vesicles-module.html#main"><a title="pyto.scripts.bulk_analysis.main
+pyto.scripts.classify_connections.main
+pyto.scripts.cleft.main
+pyto.scripts.cleft_stats.main
+pyto.scripts.cluster.main
+pyto.scripts.connections.main
+pyto.scripts.connectors.main
+pyto.scripts.correlation_3d_2d.main
+pyto.scripts.correlation_simple.main
+pyto.scripts.correlation_simple_fileio.main
+pyto.scripts.correlation_two_step_lm_em.main
+pyto.scripts.discs_to_balls.main
+pyto.scripts.extract_particles.main
+pyto.scripts.extract_points.main
+pyto.scripts.layers.main
+pyto.scripts.neighborhood_grey.main
+pyto.scripts.presynaptic_stats.main
+pyto.scripts.regions.main
+pyto.scripts.sort_series.main
+pyto.scripts.vesicles.main" class="py-name" href="#" onclick="return doclink('link-83', 'main', 'link-83');">main</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L220"></a><tt class="py-lineno">220</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

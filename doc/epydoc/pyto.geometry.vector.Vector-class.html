@@ -1,0 +1,900 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.geometry.vector.Vector</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.geometry-module.html">Package&nbsp;geometry</a> ::
+        <a href="pyto.geometry.vector-module.html">Module&nbsp;vector</a> ::
+        Class&nbsp;Vector
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.geometry.vector.Vector-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Vector</h1><p class="nomargin-top"><span class="codelink"><a href="pyto.geometry.vector-pysrc.html#Vector">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_pyto_geo_13" name="uml_class_diagram_for_pyto_geo_13">
+<area shape="rect" id="node1_20" href="pyto.geometry.vector.Vector-class.html#data" title="Cartesian coordinates" alt="" coords="18,30,353,50"/>
+<area shape="rect" id="node1_21" href="pyto.geometry.vector.Vector-class.html#r" title="Absolute value" alt="" coords="18,50,353,70"/>
+<area shape="rect" id="node1_22" href="pyto.geometry.vector.Vector-class.html#phi" title="Polar (or spherical) coordinate phi" alt="" coords="18,70,353,90"/>
+<area shape="rect" id="node1_23" href="pyto.geometry.vector.Vector-class.html#phiDeg" title="Polar (or spherical) coordinate phi in degrees" alt="" coords="18,90,353,110"/>
+<area shape="rect" id="node1_24" href="pyto.geometry.vector.Vector-class.html#theta" title="Spherical coordinate theta" alt="" coords="18,110,353,130"/>
+<area shape="rect" id="node1_25" href="pyto.geometry.vector.Vector-class.html#thetaDeg" title="Spherical coordinate theta in degrees" alt="" coords="18,130,353,150"/>
+<area shape="rect" id="node1_26" href="pyto.geometry.vector.Vector-class.html#__init__" title="Sets data structure to hold one or more vector given by arg data." alt="" coords="18,153,353,173"/>
+<area shape="rect" id="node1_27" href="pyto.geometry.vector.Vector-class.html#setCartesian" title="Sets cartesian coordinates." alt="" coords="18,173,353,193"/>
+<area shape="rect" id="node1_28" href="pyto.geometry.vector.Vector-class.html#setSpherical" title="Sets spherical coordinates." alt="" coords="18,193,353,213"/>
+<area shape="rect" id="node1_29" href="pyto.geometry.vector.Vector-class.html#getData" title="Returns cartesian coordinates of vector(s)." alt="" coords="18,213,353,233"/>
+<area shape="rect" id="node1_30" href="pyto.geometry.vector.Vector-class.html#getR" title="Returns absolute value of vector(s)." alt="" coords="18,233,353,253"/>
+<area shape="rect" id="node1_31" href="pyto.geometry.vector.Vector-class.html#getPhi" title="Returns angle phi, defined as atan(y/x), where x and y are rhe first two &#160;coordinates." alt="" coords="18,253,353,273"/>
+<area shape="rect" id="node1_32" href="pyto.geometry.vector.Vector-class.html#getPhiDeg" title="Returns angle phi, defined as atan(y/x), where x and y are rhe first two &#160;coordinates, in degrees." alt="" coords="18,273,353,293"/>
+<area shape="rect" id="node1_33" href="pyto.geometry.vector.Vector-class.html#getTheta" title="Returns angle theta, defined as atan(r_sub, z) where z is the last &#160;coordinate and r_sub is the absolute value of (current) vectors taken &#160;without the last coordinate." alt="" coords="18,293,353,313"/>
+<area shape="rect" id="node1_34" href="pyto.geometry.vector.Vector-class.html#getThetaDeg" title="Returns angle theta, defined as atan(r_sub, z) where z is the last &#160;coordinate and r_sub is the absolute value of (current) vectors taken &#160;without the last coordinate in degrees." alt="" coords="18,313,353,333"/>
+<area shape="rect" id="node1_35" href="pyto.geometry.vector.Vector-class.html#radianToDeg" title="Converts one or more angles from radians to degrees." alt="" coords="18,333,353,353"/>
+<area shape="rect" id="node1_36" href="pyto.geometry.vector.Vector-class.html#degToRadian" title="Converts one or more angles from degrees to radians." alt="" coords="18,353,353,373"/>
+<area shape="rect" id="node1_37" href="pyto.geometry.vector.Vector-class.html#sphericalToCartesian" title="Converts vectors given in spherical coordinates to the cartesian." alt="" coords="18,373,353,393"/>
+<area shape="rect" id="node1_38" href="pyto.geometry.vector.Vector-class.html#angleBetween" title="Calculates angle(s) between two (sets of) vectors." alt="" coords="18,393,353,413"/>
+<area shape="rect" id="node1_39" href="pyto.geometry.vector.Vector-class.html#bestFitLine" title="Determines the best fit line for points specivfed by self.data." alt="" coords="18,413,353,433"/>
+<area shape="rect" id="node1" href="pyto.geometry.vector.Vector-class.html" title="pyto.geometry.vector.Vector" alt="" coords="5,5,364,439"/>
+</map>
+  <img src="uml_class_diagram_for_pyto_geo_13.gif" alt='' usemap="#uml_class_diagram_for_pyto_geo_13" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.geometry.vector.Vector-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>,
+        <span class="summary-sig-arg">oneD</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">coordinates</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">cartesian</code><code class="variable-quote">'</code></span>)</span><br />
+      Sets data structure to hold one or more vector given by arg data.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.geometry.vector-pysrc.html#Vector.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="setCartesian"></a><span class="summary-sig-name">setCartesian</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>,
+        <span class="summary-sig-arg">oneD</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Sets cartesian coordinates.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.geometry.vector-pysrc.html#Vector.setCartesian">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="setSpherical"></a><span class="summary-sig-name">setSpherical</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>,
+        <span class="summary-sig-arg">oneD</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Sets spherical coordinates.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.geometry.vector-pysrc.html#Vector.setSpherical">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getData"></a><span class="summary-sig-name">getData</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns cartesian coordinates of vector(s).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.geometry.vector-pysrc.html#Vector.getData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getR"></a><span class="summary-sig-name">getR</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns absolute value of vector(s).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.geometry.vector-pysrc.html#Vector.getR">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.geometry.vector.Vector-class.html#getPhi" class="summary-sig-name">getPhi</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">units</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">radians</code><code class="variable-quote">'</code></span>)</span><br />
+      Returns angle phi, defined as atan(y/x), where x and y are rhe first 
+      two coordinates.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.geometry.vector-pysrc.html#Vector.getPhi">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.geometry.vector.Vector-class.html#getPhiDeg" class="summary-sig-name">getPhiDeg</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns angle phi, defined as atan(y/x), where x and y are rhe first 
+      two coordinates, in degrees.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.geometry.vector-pysrc.html#Vector.getPhiDeg">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.geometry.vector.Vector-class.html#getTheta" class="summary-sig-name">getTheta</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">units</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">radians</code><code class="variable-quote">'</code></span>)</span><br />
+      Returns angle theta, defined as atan(r_sub, z) where z is the last 
+      coordinate and r_sub is the absolute value of (current) vectors taken
+      without the last coordinate.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.geometry.vector-pysrc.html#Vector.getTheta">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.geometry.vector.Vector-class.html#getThetaDeg" class="summary-sig-name">getThetaDeg</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns angle theta, defined as atan(r_sub, z) where z is the last 
+      coordinate and r_sub is the absolute value of (current) vectors taken
+      without the last coordinate in degrees.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.geometry.vector-pysrc.html#Vector.getThetaDeg">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="radianToDeg"></a><span class="summary-sig-name">radianToDeg</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">angle</span>)</span><br />
+      Converts one or more angles from radians to degrees.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.geometry.vector-pysrc.html#Vector.radianToDeg">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="degToRadian"></a><span class="summary-sig-name">degToRadian</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">angle</span>)</span><br />
+      Converts one or more angles from degrees to radians.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.geometry.vector-pysrc.html#Vector.degToRadian">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.geometry.vector.Vector-class.html#sphericalToCartesian" class="summary-sig-name">sphericalToCartesian</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>)</span><br />
+      Converts vectors given in spherical coordinates to the cartesian.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.geometry.vector-pysrc.html#Vector.sphericalToCartesian">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.geometry.vector.Vector-class.html#bestFitLine" class="summary-sig-name">bestFitLine</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Determines the best fit line for points specivfed by self.data.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.geometry.vector-pysrc.html#Vector.bestFitLine">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.geometry.vector.Vector-class.html#angleBetween" class="summary-sig-name">angleBetween</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">vec_1</span>,
+        <span class="summary-sig-arg">vec_2</span>,
+        <span class="summary-sig-arg">units</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">radians</code><code class="variable-quote">'</code></span>)</span><br />
+      Calculates angle(s) between two (sets of) vectors.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.geometry.vector-pysrc.html#Vector.angleBetween">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.geometry.vector.Vector-class.html#data" class="summary-name">data</a><br />
+      Cartesian coordinates
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.geometry.vector.Vector-class.html#r" class="summary-name">r</a><br />
+      Absolute value
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.geometry.vector.Vector-class.html#phi" class="summary-name">phi</a><br />
+      Polar (or spherical) coordinate phi
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.geometry.vector.Vector-class.html#phiDeg" class="summary-name">phiDeg</a><br />
+      Polar (or spherical) coordinate phi in degrees
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.geometry.vector.Vector-class.html#theta" class="summary-name">theta</a><br />
+      Spherical coordinate theta
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.geometry.vector.Vector-class.html#thetaDeg" class="summary-name">thetaDeg</a><br />
+      Spherical coordinate theta in degrees
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>,
+        <span class="sig-arg">oneD</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">coordinates</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">cartesian</code><code class="variable-quote">'</code></span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.geometry.vector-pysrc.html#Vector.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets data structure to hold one or more vector given by arg data.</p>
+  <p>If arg data is a 2D array it is understood as an array of vectors 
+  where indices along axis 0 designate vectors and indices along axis 1 
+  coordinates.</p>
+  <p>If arg data is a 1D vector of length N, it is uderstood as one ND 
+  vector if arg oneD is False, or as N 1D vectors if oneD is True.</p>
+  <p>If arg coordinates is 'cartesian', the coordinates are x, y, z, ... . 
+  If it is 'spherical', the coordinates are r, phi, theta.</p>
+  <p>Sets attributes:</p>
+  <ul>
+    <li>
+      data: (2D ndarray) vector(s) in cartesian coordinates
+    </li>
+    <li>
+      one: flag indicating if only one vector is specified
+    </li>
+  </ul>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getPhi"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getPhi</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">units</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">radians</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.geometry.vector-pysrc.html#Vector.getPhi">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns angle phi, defined as atan(y/x), where x and y are rhe first 
+  two coordinates.</p>
+  <p>The angle is calculate in radians if arg units is 'radians', or in 
+  degrees if it is 'deg' or 'degree'.</p>
+  <p>Retruns an angle if there's only one vector, ar an array of angles if 
+  more that one angle.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getPhiDeg"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getPhiDeg</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.geometry.vector-pysrc.html#Vector.getPhiDeg">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns angle phi, defined as atan(y/x), where x and y are rhe first 
+  two coordinates, in degrees.</p>
+  <p>Retruns an angle if there's only one vector, ar an array of angles if 
+  more that one angle.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getTheta"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getTheta</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">units</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">radians</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.geometry.vector-pysrc.html#Vector.getTheta">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns angle theta, defined as atan(r_sub, z) where z is the last 
+  coordinate and r_sub is the absolute value of (current) vectors taken 
+  without the last coordinate.</p>
+  <p>The angle is calculate in radians if arg units is 'radians', or in 
+  degrees if it is 'deg' or 'degree'.</p>
+  <p>Retruns an angle if there's only one vector, ar an array of angles if 
+  more that one angle.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getThetaDeg"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getThetaDeg</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.geometry.vector-pysrc.html#Vector.getThetaDeg">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns angle theta, defined as atan(r_sub, z) where z is the last 
+  coordinate and r_sub is the absolute value of (current) vectors taken 
+  without the last coordinate in degrees.</p>
+  <p>Retruns an angle if there's only one vector, ar an array of angles if 
+  more that one angle.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="sphericalToCartesian"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">sphericalToCartesian</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.geometry.vector-pysrc.html#Vector.sphericalToCartesian">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Converts vectors given in spherical coordinates to the cartesian.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      data: (2D ndarray) with values r, phi, theta (if 3D) along axis 1)
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="angleBetween"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">angleBetween</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">vec_1</span>,
+        <span class="sig-arg">vec_2</span>,
+        <span class="sig-arg">units</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">radians</code><code class="variable-quote">'</code></span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.geometry.vector-pysrc.html#Vector.angleBetween">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates angle(s) between two (sets of) vectors. The angle(s) are 
+  returned in radians or degrees, depending on the arg units.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      vec_1, vec_2: two (sets of vectors), can be ndarrays or instances of 
+      this class
+    </li>
+    <li>
+      uniits: 'radians' or 'deg'
+    </li>
+  </ul>
+  <p>Returns ndarray of angles.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="bestFitLine"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">bestFitLine</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.geometry.vector-pysrc.html#Vector.bestFitLine">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Determines the best fit line for points specivfed by self.data.</p>
+  <p>The best fit line minimizes the sum of squared distances from each 
+  point to the line. It is calculated using singular value decomposition. 
+  Note that there is an global sign ambiguity in the calculated line.</p>
+  <p>Returns: cm, direction</p>
+  <ul>
+    <li>
+      cm: (Vector) a point on the best fit line, specifically the center
+    </li>
+  </ul>
+  <p>of mass (mean) of all points</p>
+  <ul>
+    <li>
+      direction: (Vector) direction (vector) of the best fit line
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== PROPERTY DETAILS ==================== -->
+<a name="section-PropertyDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Property Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-PropertyDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="data"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">data</h3>
+  <p>Cartesian coordinates</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.geometry.vector.Vector-class.html#getData" class="summary-sig-name">getData</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Returns cartesian coordinates of vector(s).
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="r"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">r</h3>
+  <p>Absolute value</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.geometry.vector.Vector-class.html#getR" class="summary-sig-name">getR</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Returns absolute value of vector(s).
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="phi"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">phi</h3>
+  <p>Polar (or spherical) coordinate phi</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.geometry.vector.Vector-class.html#getPhi" class="summary-sig-name">getPhi</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">units</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">radians</code><code class="variable-quote">'</code></span>)</span>
+        - Returns angle phi, defined as atan(y/x), where x and y are rhe first 
+      two coordinates.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="phiDeg"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">phiDeg</h3>
+  <p>Polar (or spherical) coordinate phi in degrees</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.geometry.vector.Vector-class.html#getPhiDeg" class="summary-sig-name">getPhiDeg</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Returns angle phi, defined as atan(y/x), where x and y are rhe first 
+      two coordinates, in degrees.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="theta"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">theta</h3>
+  <p>Spherical coordinate theta</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.geometry.vector.Vector-class.html#getTheta" class="summary-sig-name">getTheta</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">units</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">radians</code><code class="variable-quote">'</code></span>)</span>
+        - Returns angle theta, defined as atan(r_sub, z) where z is the last 
+      coordinate and r_sub is the absolute value of (current) vectors taken
+      without the last coordinate.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="thetaDeg"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">thetaDeg</h3>
+  <p>Spherical coordinate theta in degrees</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.geometry.vector.Vector-class.html#getThetaDeg" class="summary-sig-name">getThetaDeg</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Returns angle theta, defined as atan(r_sub, z) where z is the last 
+      coordinate and r_sub is the absolute value of (current) vectors taken
+      without the last coordinate in degrees.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

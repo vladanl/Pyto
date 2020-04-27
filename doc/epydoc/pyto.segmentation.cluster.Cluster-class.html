@@ -1,0 +1,2913 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.segmentation.cluster.Cluster</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.segmentation-module.html">Package&nbsp;segmentation</a> ::
+        <a href="pyto.segmentation.cluster-module.html">Module&nbsp;cluster</a> ::
+        Class&nbsp;Cluster
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.segmentation.cluster.Cluster-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Cluster</h1><p class="nomargin-top"><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_pyto_seg_4" name="uml_class_diagram_for_pyto_seg_4">
+<area shape="rect" id="node1_22" href="pyto.segmentation.cluster.Cluster-class.html#clusters" title="All clusters" alt="" coords="18,29,278,49"/>
+<area shape="rect" id="node1_23" href="pyto.segmentation.cluster.Cluster-class.html#nClusters" title="Number of clusters" alt="" coords="18,49,278,69"/>
+<area shape="rect" id="node1_24" href="pyto.segmentation.cluster.Cluster-class.html#ids" title="Cluster ids" alt="" coords="18,69,278,89"/>
+<area shape="rect" id="node1_25" href="pyto.segmentation.cluster.Cluster-class.html#nItems" title="Size of each cluster, indexed by cluster id." alt="" coords="18,89,278,109"/>
+<area shape="rect" id="node1_26" href="pyto.segmentation.cluster.Cluster-class.html#dataIds" title="Data (item) ids" alt="" coords="18,109,278,129"/>
+<area shape="rect" id="node1_27" href="pyto.segmentation.cluster.Cluster-class.html#clustersData" title="Clusters in the data representation." alt="" coords="18,129,278,149"/>
+<area shape="rect" id="node1_28" href="pyto.segmentation.cluster.Cluster-class.html#codeBook0" title="Code book with data indices starting at 0" alt="" coords="18,149,278,169"/>
+<area shape="rect" id="node1_29" href="pyto.segmentation.cluster.Cluster-class.html#clustersData0" title="Clusters in the data representation with data ids starting form 0" alt="" coords="18,169,278,189"/>
+<area shape="rect" id="node1_30" href="pyto.segmentation.cluster.Cluster-class.html#__init__" title="Sets clusters if specified and initializes attributes." alt="" coords="18,192,278,212"/>
+<area shape="rect" id="node1_31" href="pyto.segmentation.cluster.Cluster-class.html#recast" title="Returns a new instance of this class and sets all attributes of the new &#160;object to the attributes of obj." alt="" coords="18,212,278,232"/>
+<area shape="rect" id="node1_32" href="pyto.segmentation.cluster.Cluster-class.html#getClusters" title="Returns all clusters as a list of sets where each set contains ids of items belonging to that cluster." alt="" coords="18,232,278,252"/>
+<area shape="rect" id="node1_33" href="pyto.segmentation.cluster.Cluster-class.html#setClusters" title="Sets all clusters." alt="" coords="18,252,278,272"/>
+<area shape="rect" id="node1_34" href="pyto.segmentation.cluster.Cluster-class.html#getCluster" title="Returns a cluster (set) number clusterId." alt="" coords="18,272,278,292"/>
+<area shape="rect" id="node1_35" href="pyto.segmentation.cluster.Cluster-class.html#setCluster" title="Set cluster with clusterId to a contain elements from cluster." alt="" coords="18,292,278,312"/>
+<area shape="rect" id="node1_36" href="pyto.segmentation.cluster.Cluster-class.html#getNClusters" title="Returns number of clusters." alt="" coords="18,312,278,332"/>
+<area shape="rect" id="node1_37" href="pyto.segmentation.cluster.Cluster-class.html#getIds" title="Return cluster ids." alt="" coords="18,332,278,352"/>
+<area shape="rect" id="node1_38" href="pyto.segmentation.cluster.Cluster-class.html#getNItems" title="Returns cluster size (number of items in a cluster) for a given cluster if &#160;clusterId is specified." alt="" coords="18,352,278,372"/>
+<area shape="rect" id="node1_39" href="pyto.segmentation.cluster.Cluster-class.html#getDataIds" title="Returns all data (item) ids." alt="" coords="18,372,278,392"/>
+<area shape="rect" id="node1_40" href="pyto.segmentation.cluster.Cluster-class.html#setDataIds" title="Sets data ids." alt="" coords="18,392,278,412"/>
+<area shape="rect" id="node1_41" href="pyto.segmentation.cluster.Cluster-class.html#dataRepresentation" title="Returns an ndarray indexed by item (data ids) that contains cluster ids." alt="" coords="18,412,278,432"/>
+<area shape="rect" id="node1_42" href="pyto.segmentation.cluster.Cluster-class.html#clusterRepresentation" title="Converts clusters in the data representation to the cluster representation." alt="" coords="18,432,278,452"/>
+<area shape="rect" id="node1_43" href="pyto.segmentation.cluster.Cluster-class.html#getEntropy" title="Calculates entropy of the current clustering (flat clusters)." alt="" coords="18,472,278,492"/>
+<area shape="rect" id="node1" href="pyto.segmentation.cluster.Cluster-class.html" title="Internally clusters are represented by a list (self.clusters), where each element of that list defines a cluster." alt="" coords="5,5,289,499"/>
+</map>
+  <img src="uml_class_diagram_for_pyto_seg_4.gif" alt='' usemap="#uml_class_diagram_for_pyto_seg_4" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<p>Internally clusters are represented by a list (self.clusters), where 
+  each element of that list defines a cluster. A cluster is represented by 
+  a set containing ids of data that belong to that cluster. Clusters are 
+  numbered from 1 up, so the i-th element of the clusters list represents a
+  cluster i+1.</p>
+  <p>Alternatively, clusters can be shown in the data representation 
+  (self.clustersData), as an ndarray containing cluster ids and indexed by 
+  item (data) ids. Item (data) ids are positive integers listed in 
+  self.dataIds. They can have gaps and the element 0  of self.clustersData 
+  has no meaning. Cluster ids are also positive integrs.</p>
+  <p>The data representation (self.clustersData) is determineded on the fly
+  from the cluster representation (self.clusters).</p>
+  <p>In order to interface with scipy.cluster.hierarchy which uses data 
+  representation and where the data ids start at 0 and have no gaps the 
+  following attributes are used:</p>
+  <ul>
+    <li>
+      self.clustersData: clusters in the data representation where data ids
+      are positive
+    </li>
+    <li>
+      self.clustersData0: (property derived from self.clustersData and 
+      self.dataIds) clusters in the data representation where data ids 
+      start at 0 and have no gaps
+    </li>
+    <li>
+      self.codeBook: code book (array) where data (leaf node) ids are 
+      positive
+    </li>
+    <li>
+      self.codeBook0: (property derived from self.codeBook and self.ids) 
+      code book (array) where data ids start at 0 and have no gaps
+    </li>
+  </ul>
+  <p>Other attributes:</p>
+  <ul>
+    <li>
+      self.similarity: last calculated similarity index
+    </li>
+  </ul>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">clusters</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">form</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">cluster</code><code class="variable-quote">'</code></span>)</span><br />
+      Sets clusters if specified and initializes attributes.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getClusters"></a><span class="summary-sig-name">getClusters</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns all clusters as a list of sets where each set contains ids of
+      items belonging to that cluster.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.getClusters">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#setClusters" class="summary-sig-name">setClusters</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">clusters</span>)</span><br />
+      Sets all clusters.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.setClusters">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#getCluster" class="summary-sig-name">getCluster</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">clusterId</span>)</span><br />
+      Returns a cluster (set) number clusterId.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.getCluster">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#setCluster" class="summary-sig-name">setCluster</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">cluster</span>,
+        <span class="summary-sig-arg">clusterId</span>)</span><br />
+      Set cluster with clusterId to a contain elements from cluster.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.setCluster">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getNClusters"></a><span class="summary-sig-name">getNClusters</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns number of clusters.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.getNClusters">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getIds"></a><span class="summary-sig-name">getIds</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Return cluster ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.getIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#getNItems" class="summary-sig-name">getNItems</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">clusterId</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns cluster size (number of items in a cluster) for a given 
+      cluster if clusterId is specified.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.getNItems">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#getDataIds" class="summary-sig-name">getDataIds</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">clusters</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns all data (item) ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.getDataIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="setDataIds"></a><span class="summary-sig-name">setDataIds</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>)</span><br />
+      Sets data ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.setDataIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#dataRepresentation" class="summary-sig-name">dataRepresentation</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">clusters</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns an ndarray indexed by item (data ids) that contains cluster 
+      ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.dataRepresentation">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#clusterRepresentation" class="summary-sig-name">clusterRepresentation</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">clustersData</span>)</span><br />
+      Converts clusters in the data representation to the cluster 
+      representation.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.clusterRepresentation">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getClustersData"></a><span class="summary-sig-name">getClustersData</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns clusters in the data representation</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.getClustersData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="setClustersData"></a><span class="summary-sig-name">setClustersData</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">clustersData</span>)</span><br />
+      Sets clusters data structure (self.clusters) from clusters in the 
+      data representation (argument clustersData)</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.setClustersData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#calculateTopology" class="summary-sig-name">calculateTopology</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">contacts</span>)</span><br />
+      Calculates some topological properties for each clusters.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.calculateTopology">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#getNLinks" class="summary-sig-name">getNLinks</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">contacts</span>)</span><br />
+      Calculates number of linked boundary pairs in each cluster.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.getNLinks">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#getNConnections" class="summary-sig-name">getNConnections</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">contacts</span>)</span><br />
+      Calculates number of connections in each cluster.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.getNConnections">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#getEuler" class="summary-sig-name">getEuler</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">contacts</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">conn</code><code class="variable-quote">'</code></span>)</span><br />
+      Calculates Euler characteristics for each connectivity cluster and 
+      for all clusters together.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.getEuler">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#getNLoops" class="summary-sig-name">getNLoops</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">contacts</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">conn</code><code class="variable-quote">'</code></span>)</span><br />
+      Returns number of independent loops formed by connections (for 
+      mode='conn') or links (mode='links') edges.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.getNLoops">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#calculateBranches" class="summary-sig-name">calculateBranches</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">contacts</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Calculates number of branches for each cluster for connections and/or
+      links modes.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.calculateBranches">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#setCodeBook0" class="summary-sig-name">setCodeBook0</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">codeBook0</span>)</span><br />
+      Sets code book (self.codeBook) according to data indices 
+      (self.dataIds) from argument codeBook.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.setCodeBook0">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getCodeBook0"></a><span class="summary-sig-name">getCodeBook0</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns code book with data indices starting at 0 without a gap.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.getCodeBook0">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getClustersData0"></a><span class="summary-sig-name">getClustersData0</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns clusters in the data representation where data ids start at 
+      0.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.getClustersData0">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="setClustersData0"></a><span class="summary-sig-name">setClustersData0</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">clustersData0</span>)</span><br />
+      Sets clusters (self.clusters and self.clustersData) from clusters in 
+      the data representation where data ids start at 0 and have no gaps.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.setClustersData0">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#extractFlat" class="summary-sig-name">extractFlat</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">threshold</span>,
+        <span class="summary-sig-arg">criterion</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">maxclust</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">depth</span>=<span class="summary-sig-default">2</span>,
+        <span class="summary-sig-arg">inconsistency</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Extract flat clusters from a hierarchical clustering.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.extractFlat">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#generateFlats" class="summary-sig-name">generateFlats</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">thresholds</span>,
+        <span class="summary-sig-arg">criterion</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">maxclust</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">depth</span>=<span class="summary-sig-default">2</span>,
+        <span class="summary-sig-arg">inconsistency</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">reference</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">similarity</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">rand</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">single</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Yields flat clusters (clusterings) for all given thresholds.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.generateFlats">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#findMostSimilar" class="summary-sig-name">findMostSimilar</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">thresholds</span>,
+        <span class="summary-sig-arg">reference</span>,
+        <span class="summary-sig-arg">criterion</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">maxclust</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">depth</span>=<span class="summary-sig-default">2</span>,
+        <span class="summary-sig-arg">inconsistency</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">similarity</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">rand</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">single</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Finds the threshold among those listed in arg thresholds that is the 
+      most similar to clusters specified in arg reference.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.findMostSimilar">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#findLower" class="summary-sig-name">findLower</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">node</span>,
+        <span class="summary-sig-arg">depth</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">exclude</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Returns list of nodes that are up to depth levels below node.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.findLower">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#checkClusters" class="summary-sig-name">checkClusters</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">clusters</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns True if no cluster element exists in another cluster, and 
+      False otherwise.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.checkClusters">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#findSimilarity" class="summary-sig-name">findSimilarity</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">reference</span>,
+        <span class="summary-sig-arg">method</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">single</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Determines the similarity index between the clusterings (flat cluster
+      assignment) between this and the reference clusters.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.findSimilarity">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#findSimilarityRand_old" class="summary-sig-name">findSimilarityRand_old</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">reference</span>,
+        <span class="summary-sig-arg">method</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">rand</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">single</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Determines the similarity index between the clusterings (flat cluster
+      assignment) between this and the reference clusters.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.findSimilarityRand_old">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#findSimilarityRand" class="summary-sig-name">findSimilarityRand</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">reference</span>,
+        <span class="summary-sig-arg">method</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">rand</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">single</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Determines the similarity index between the clusterings (flat cluster
+      assignment) between this and the reference clusters.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.findSimilarityRand">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#findSimilarityBFlat" class="summary-sig-name">findSimilarityBFlat</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">reference</span>)</span><br />
+      Retunrs similarity index B between this and the reference flat 
+      clusters.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.findSimilarityBFlat">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="findSimilarityVI"></a><span class="summary-sig-name">findSimilarityVI</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">reference</span>)</span><br />
+      Finds variation of information (VI) similarity index between flat 
+      clusters of this instance and those of reference.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.findSimilarityVI">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#inSameCluster" class="summary-sig-name">inSameCluster</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">items</span>,
+        <span class="summary-sig-arg">clustersData</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns True if all items belong to the same cluster.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.inSameCluster">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getContingency"></a><span class="summary-sig-name">getContingency</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">reference</span>)</span><br />
+      Calculates contingency matrix between flat clusters of this instance 
+      and those of the reference.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.getContingency">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#getEntropy" class="summary-sig-name">getEntropy</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Calculates entropy of the current clustering (flat clusters).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.getEntropy">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#recast" class="summary-sig-name">recast</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">obj</span>)</span><br />
+      Returns a new instance of this class and sets all attributes of the 
+      new object to the attributes of obj.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.recast">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#clusterBoundaries" class="summary-sig-name">clusterBoundaries</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">contacts</span>,
+        <span class="summary-sig-arg">connectedOnly</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Generates clusters of boundaries based on the connectivity 
+      information from (arg) contacts.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.clusterBoundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#clusterConnections" class="summary-sig-name">clusterConnections</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">contacts</span>,
+        <span class="summary-sig-arg">boundClusters</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Clusters connections based on the contacts with boundaries.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.clusterConnections">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#dualClusterBoundaries" class="summary-sig-name">dualClusterBoundaries</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">contacts</span>,
+        <span class="summary-sig-arg">connectClusters</span>,
+        <span class="summary-sig-arg">connectedOnly</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Generates clusters of boundaries that correspond (are dual) to 
+the given connections clusters (arg connectionsClusters).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.dualClusterBoundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#dualClusterConnections" class="summary-sig-name">dualClusterConnections</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">contacts</span>,
+        <span class="summary-sig-arg">boundClusters</span>)</span><br />
+      Generates clusters of connections based on the connectivity 
+information from (arg) contacts and from boundary clusters
+boundClusters.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.dualClusterConnections">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#hierarchical" class="summary-sig-name">hierarchical</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">distances</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">segments</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">metric</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">euclidean</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">method</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">single</code><code class="variable-quote">'</code></span>)</span><br />
+      Preforms hierarchical agglomerative clustering on data.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.hierarchical">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#extractDistances" class="summary-sig-name">extractDistances</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">distances</span>,
+        <span class="summary-sig-arg">ids</span>,
+        <span class="summary-sig-arg">keep</span>)</span><br />
+      Extracts and returns distances corresponding to ids specified by arg 
+      keep starting from (arg) distances that is valid for (arg) ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.extractDistances">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#kmeans" class="summary-sig-name">kmeans</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">data</span>,
+        <span class="summary-sig-arg">k</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">iter</span>=<span class="summary-sig-default">10</span>,
+        <span class="summary-sig-arg">thresh</span>=<span class="summary-sig-default">1e-05</span>,
+        <span class="summary-sig-arg">minit</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">random</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">missing</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">warn</code><code class="variable-quote">'</code></span>)</span><br />
+      K-means clustering.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.kmeans">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#findClosest" class="summary-sig-name">findClosest</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">data</span>,
+        <span class="summary-sig-arg">data_mode</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">metric</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">euclidean</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">p</span>=<span class="summary-sig-default">2</span>,
+        <span class="summary-sig-arg">w</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">V</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">VI</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Finds the closest data point for each data point specified 
+in arg data.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.findClosest">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.segmentation.cluster.Cluster-class.html#clusters" class="summary-name">clusters</a><br />
+      All clusters
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.segmentation.cluster.Cluster-class.html#nClusters" class="summary-name">nClusters</a><br />
+      Number of clusters
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.segmentation.cluster.Cluster-class.html#ids" class="summary-name">ids</a><br />
+      Cluster ids
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.segmentation.cluster.Cluster-class.html#nItems" class="summary-name">nItems</a><br />
+      Size of each cluster, indexed by cluster id.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.segmentation.cluster.Cluster-class.html#dataIds" class="summary-name">dataIds</a><br />
+      Data (item) ids
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.segmentation.cluster.Cluster-class.html#clustersData" class="summary-name">clustersData</a><br />
+      Clusters in the data representation.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.segmentation.cluster.Cluster-class.html#codeBook0" class="summary-name">codeBook0</a><br />
+      Code book with data indices starting at 0
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.segmentation.cluster.Cluster-class.html#clustersData0" class="summary-name">clustersData0</a><br />
+      Clusters in the data representation with data ids starting form 0
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">clusters</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">form</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">cluster</code><code class="variable-quote">'</code></span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets clusters if specified and initializes attributes.</p>
+  <p>If arg form is 'cluster', clusters are specified in the form used 
+  (internaly) by this class, that is by a list of sets, where each set 
+  contains item ids that belong to a same cluster. Alternatively, if form 
+  is 'scipy', clusters is an array of cluster ids indexed by data (item) 
+  ids. This form is used in scipy.cluster.hierarchy (returned by 
+  fcluster(), for example).</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      clusters: clusters
+    </li>
+    <li>
+      form: format in which arg clusters are specified
+    </li>
+  </ul>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="recast"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">recast</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">obj</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.recast">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns a new instance of this class and sets all attributes of the 
+  new object to the attributes of obj.</p>
+  <p>Useful for objects of this class loaded from a pickle that were 
+  pickled before some of the current methods of this class were coded. In 
+  such a case the returned object would contain the same attributes as the 
+  unpickled object but it would accept recently coded methods.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setClusters"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setClusters</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">clusters</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.setClusters">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets all clusters.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      cluster: list where each element is a set containing item ids.
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getCluster"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getCluster</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">clusterId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.getCluster">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns a cluster (set) number clusterId.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      clusterId: (int) cluster id)
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setCluster"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setCluster</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">cluster</span>,
+        <span class="sig-arg">clusterId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.setCluster">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Set cluster with clusterId to a contain elements from cluster.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      cluster: list, ndarray or set containing item ids
+    </li>
+    <li>
+      clusterId: (int) cluster id)
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getNItems"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getNItems</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">clusterId</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.getNItems">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns cluster size (number of items in a cluster) for a given 
+  cluster if clusterId is specified.</p>
+  <p>Otherwise, returns an ndarray of cluster sizes for all clusters 
+  indexed by cluster ids that is in the same order but shifted by one 
+  position in respect to self.clusters. Element 0 contains the total number
+  of items.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      clusterId: cluster id
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getDataIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getDataIds</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">clusters</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.getDataIds">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns all data (item) ids.</p>
+  <p>If arg clusters is given the returned ids as extracted from clusters. 
+  If arg clusters is None, and self.dataIds has not been set (using 
+  setDataIds()) the returned ids are extracted from self.clusters. 
+  Otherwise, the value set by setDataIds() is returned.</p>
+  <p>In each case the returned ids are a sorted ndarray.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      clusters: clusters, in the same form as self.clusters
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="dataRepresentation"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">dataRepresentation</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">clusters</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.dataRepresentation">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns an ndarray indexed by item (data ids) that contains cluster 
+  ids. That is, the value of the element i of the returned array is the 
+  cluster id of the cluster that contains item (data) i.</p>
+  <p>If there are no ids, returns an ndarray of length 1.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      clusters: (list of sets) clusters, if None self.clusters is used.
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="clusterRepresentation"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">clusterRepresentation</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">clustersData</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.clusterRepresentation">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Converts clusters in the data representation to the cluster 
+  representation.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      clustersData: clusters in the cluster representation (numarray 
+      containing cluster ids, indexed by item (data) ids)
+    </li>
+  </ul>
+  <p>Returns clusters in the cluster representation</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="clusterBoundaries"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">clusterBoundaries</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">contacts</span>,
+        <span class="sig-arg">connectedOnly</span>=<span class="sig-default">False</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.clusterBoundaries">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Generates clusters of boundaries based on the connectivity information
+  from (arg) contacts.</p>
+  <p>A boundary cluster contains all boundaries that are connected to each 
+  other by connections.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      contacts: (Contact) contains connectivity info
+    </li>
+    <li>
+      connectedOnly: flag indicating if only the boundaries that are 
+      connected to other boundaries are included
+    </li>
+  </ul>
+  <p>Returns boundary clusters as an instance of this class (Cluster).</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="clusterConnections"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">clusterConnections</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">contacts</span>,
+        <span class="sig-arg">boundClusters</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.clusterConnections">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Clusters connections based on the contacts with boundaries.</p>
+  <p>Connection clusters are generated from boundary clusters using 
+  dualClusterConnections(). If boundary clusters are not given (arg 
+  boundClusters) they are calculated first using clusterBoundaries().</p>
+  <p>A connection cluster contains all connections that are connected to 
+  the same boundaries. Furthermore, each boundary cluster and the 
+  corresponding connection cluster have matching elements, that is i-th 
+  connection cluster contans ids of connections that contact boundaries of 
+  the i-th boundary cluster. Consequently, connection clusters 
+  corresponding to single-element boundary clusters are empty.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      contacts: (Contact) contains connectivity info
+    </li>
+    <li>
+      boundClusters: boundary clusters instance
+    </li>
+  </ul>
+  <p>Returns connection clusters as an instance of this class (Cluster)</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="dualClusterBoundaries"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">dualClusterBoundaries</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">contacts</span>,
+        <span class="sig-arg">connectClusters</span>,
+        <span class="sig-arg">connectedOnly</span>=<span class="sig-default">False</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.dualClusterBoundaries">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Generates clusters of boundaries that correspond (are dual) to 
+the given connections clusters (arg connectionsClusters). This 
+correspondance (duality) is based on the connectivity 
+information from (arg) contacts.
+
+A boundary cluster contains all boundaries that contact
+the same connections. Furthermore, a connectClusters and a 
+corresponding boundary cluster have matching elements, that is
+i-th boundary cluster contans ids of boundaries that contact
+connections of the i-th connections cluster. 
+
+If arg connectedOnly is False, boundaries that contact no connections 
+are added as one-member clusters.
+
+Arguments:
+  - contacts: (Contact) contains connectivity info
+  - connectClusters: boundary clusters instance
+
+Returns segment_clusters: a list of connection clusters, where each  
+  cluster is represented as a set of connection ids forming the 
+  cluster. Elements of connection_clusters correspond to the 
+  (same index) elements of connectClusters.
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="dualClusterConnections"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">dualClusterConnections</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">contacts</span>,
+        <span class="sig-arg">boundClusters</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.dualClusterConnections">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Generates clusters of connections based on the connectivity 
+information from (arg) contacts and from boundary clusters
+boundClusters.
+
+A connection cluster contains all connections that are connected to
+the same boundaries. Furthermore, a boundClusters and a 
+corresponding connection cluster have matching elements, that is
+i-th connection cluster contans ids of connections that contact
+boundaries of the i-th boundary cluster. Consequently, connection
+clusters corresponding to single-element boundary clusters
+are empty.
+
+Boundary clusters are used to avoid doing calculations that were
+already done in clusterBoundaries().
+
+Arguments:
+  - contacts: (Contact) contains connectivity info
+  - boundClusters: boundary clusters instance
+
+Returns segment_clusters: a list of connection clusters, where each  
+  cluster is represented as a set of connection ids forming the 
+  cluster. Elements of connection_clusters correspond to the 
+  (smae index) elements of boundClusters.
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="calculateTopology"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">calculateTopology</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">contacts</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.calculateTopology">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates some topological properties for each clusters.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      contacts: (Contact) instance defining contacts between boundaries and
+      connections
+    </li>
+  </ul>
+  <p>Calculates and sets:</p>
+  <ul>
+    <li>
+      self.euler, self.eulerLinks: Euler characteristics (see 
+      self.getEuler())
+    </li>
+    <li>
+      self.nLoops, self.nLoopsLinks: number of independent loops (see 
+      self.getNLinks())
+    </li>
+    <li>
+      self.nConnections: number of connection (see self.getNConnections())
+    </li>
+    <li>
+      self.nLinks: number of links (see self.getNLinks())
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getNLinks"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getNLinks</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">contacts</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.getNLinks">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates number of linked boundary pairs in each cluster.</p>
+  <p>Two boundaries connected by one or more connections make one link.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      contacts: (Contact) instance defining contacts between boundaries and
+      connections
+    </li>
+  </ul>
+  <p>Sets:</p>
+  <ul>
+    <li>
+      self.nLinks: same as the returned value
+    </li>
+  </ul>
+  <p>Returns ndarray containing number of connections. Element i of this 
+  array gives the number for cluster i, wile element 0 is the number of all
+  clusters together.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getNConnections"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getNConnections</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">contacts</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.getNConnections">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates number of connections in each cluster.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      contacts: (Contact) instance defining contacts between boundaries and
+      connections
+    </li>
+  </ul>
+  <p>Sets:</p>
+  <ul>
+    <li>
+      self.nConnections: same as the returned value
+    </li>
+  </ul>
+  <p>Returns ndarray containing number of connections. Element i of this 
+  array gives the number for cluster i, wile element 0 is the number of all
+  clusters together.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getEuler"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getEuler</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">contacts</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">conn</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.getEuler">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates Euler characteristics for each connectivity cluster and for
+  all clusters together.</p>
+  <p>Boundaries represent verteces and edges represent connections (for 
+  mode='conn') or links (mode='links'). Euler characteristics is calculates
+  as:</p>
+  <p>Euler = n_boundaries - n_edges</p>
+  <p>Two boundaries connected by one or more connections make one link.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      contacts: (Contact) instance defining contacts between boundaries and
+      connections, needed if self.nConnections is not set
+    </li>
+    <li>
+      mode: 'connections' (same as 'conn') or 'links' ('lin')
+    </li>
+  </ul>
+  <p>Sets:</p>
+  <ul>
+    <li>
+      self.euler or self.eulerLink (for mode 'conn' or 'links'): same as 
+      the returned value
+    </li>
+  </ul>
+  <p>Returns ndarray containing Euler characteristics. Element i of this 
+  array gives Euler for cluster i, wile element 0 is the Euler of all 
+  clusters together.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getNLoops"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getNLoops</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">contacts</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">conn</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.getNLoops">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns number of independent loops formed by connections (for 
+  mode='conn') or links (mode='links') edges.</p>
+  <p>If self.euler is not calculated arg contacts is required in order to 
+  calculate the Euler characteristics first (using getEuler()).</p>
+  <p>Two boundaries connected by one or more connections make one link.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      contacts: (Contact) instance defining contacts between boundaries and
+      connections, needed if self.euler is not set
+    </li>
+    <li>
+      mode: 'connections' (same as 'conn') or 'links' ('lin')
+    </li>
+  </ul>
+  <p>Sets:</p>
+  <ul>
+    <li>
+      self.nLoops or self.nLoopsLinks (for mode 'conn' or 'links'): same as
+      the returned value
+    </li>
+  </ul>
+  <p>Returns ndarray containing number of independent loops. Element i of 
+  this array gives the number for cluster i, wile element 0 is the number 
+  for all clusters together.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="calculateBranches"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">calculateBranches</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">contacts</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.calculateBranches">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates number of branches for each cluster for connections and/or 
+  links modes.</p>
+  <p>By definition, branches occur at boundaries that have more than 2 
+  connectors (links). Also, a boundary with k connectors (links) has k-2 
+  branches (k&gt;2).</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      contacts: (Contact) instance defining contacts between boundaries and
+      connections, needed if self.euler is not set
+    </li>
+    <li>
+      mode: 'connections' (same as 'conn') or 'links' ('lin'). If None 
+      branches for both modes are calculated.
+    </li>
+  </ul>
+  <p>Sets:</p>
+  <ul>
+    <li>
+      self.branches: (connections mode) number of branches, indexed by 
+      cluster ids
+    </li>
+    <li>
+      self.branchesLinks: (links mode) number of branches, indexed by 
+      cluster ids
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setCodeBook0"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setCodeBook0</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">codeBook0</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.setCodeBook0">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets code book (self.codeBook) according to data indices 
+  (self.dataIds) from argument codeBook.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      codeBook0: code book where data ids start at 0 and have no gaps
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="hierarchical"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">hierarchical</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">distances</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">segments</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">metric</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">euclidean</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">method</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">single</code><code class="variable-quote">'</code></span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.hierarchical">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Preforms hierarchical agglomerative clustering on data.</p>
+  <p>Either distances, segments or data have to be specified (the first 
+  found is used). If distances are specified ids have to be given. In case 
+  data or segments are given, metric has to be specified.</p>
+  <p>Wraps scipy.cluster.hierarchy.linkage().</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      distances: distances between existing items in the vector-form (as 
+      returned by scipy.spatial.distance.pdist)
+    </li>
+    <li>
+      data: 2D array of data, where indices along axis 0 represent data ids
+      (data id 0 is ignored) and data attributes are specified along axis 1
+    </li>
+    <li>
+      segments: Segment object
+    </li>
+    <li>
+      ids: data or segment ids (default all ids for data and segment.ids)
+    </li>
+    <li>
+      method: clustering (linkage) method: 'single', 'complete', 'average',
+      'weighted', 'centroid', 'median', 'ward', or whatever else is 
+      accepted by scipy.cluster.hierarchy.linkage()
+    </li>
+    <li>
+      metric: metric to use for distances
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="extractDistances"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">extractDistances</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">distances</span>,
+        <span class="sig-arg">ids</span>,
+        <span class="sig-arg">keep</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.extractDistances">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Extracts and returns distances corresponding to ids specified by arg 
+  keep starting from (arg) distances that is valid for (arg) ids.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      distances: pairwise distances between items specified by ids in the 
+      vector form (as used in hierarchical or returned by 
+      scipy.spatial.distance.pdist)
+    </li>
+    <li>
+      ids: ids corresponding to distances
+    </li>
+    <li>
+      keep: ids corresponding to the resulting distances
+    </li>
+  </ul>
+  <p>Returns:</p>
+  <ul>
+    <li>
+      new distances pairwise distances between items specified by keep in 
+      the vector form (see above)
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="extractFlat"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">extractFlat</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">threshold</span>,
+        <span class="sig-arg">criterion</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">maxclust</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">depth</span>=<span class="sig-default">2</span>,
+        <span class="sig-arg">inconsistency</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.extractFlat">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Extract flat clusters from a hierarchical clustering. The method used 
+  is determined by args criterion, threshold and possibly depth.</p>
+  <p>Wraps scipy.cluster.hierarchy.fcluster().</p>
+  <p>Sets:</p>
+  <ul>
+    <li>
+      self.clusters
+    </li>
+    <li>
+      self.codeBook
+    </li>
+  </ul>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      threshold: arg t of scipy.cluster.hierarchy.fcluster()
+    </li>
+    <li>
+      inconsistency: arg R of scipy.cluster.hierarchy.fcluster()
+    </li>
+    <li>
+      criterion, depth: same as in scipy.cluster.hierarchy.fcluster()
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="generateFlats"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">generateFlats</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">thresholds</span>,
+        <span class="sig-arg">criterion</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">maxclust</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">depth</span>=<span class="sig-default">2</span>,
+        <span class="sig-arg">inconsistency</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">reference</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">similarity</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">rand</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">single</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.generateFlats">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Yields flat clusters (clusterings) for all given thresholds. If 
+  reference is specified also yields similarity index between generated 
+  flat clusters and the reference clusters (see findSimilarity()).</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      thresholds:
+    </li>
+    <li>
+    </li>
+  </ul>
+  <p>Sets:</p>
+  <ul>
+    <li>
+      self.similarity: similarity index
+    </li>
+  </ul>
+  <p>Yields:</p>
+  <ul>
+    <li>
+      threshold: threshold
+    </li>
+    <li>
+      clusters: copy of this instance with flat clusters
+    </li>
+    <li>
+      similarity index (only if reference is specified)
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="findMostSimilar"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">findMostSimilar</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">thresholds</span>,
+        <span class="sig-arg">reference</span>,
+        <span class="sig-arg">criterion</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">maxclust</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">depth</span>=<span class="sig-default">2</span>,
+        <span class="sig-arg">inconsistency</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">similarity</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">rand</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">single</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.findMostSimilar">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Finds the threshold among those listed in arg thresholds that is the 
+  most similar to clusters specified in arg reference.</p>
+  <p>The best similarity is obtained for the lowest value of the vi 
+  similarity index and for the highest values of other method indices.</p>
+  <p>Sets:</p>
+  <ul>
+    <li>
+      self.similarity: similarity index
+    </li>
+  </ul>
+  <p>Returns:</p>
+  <ul>
+    <li>
+      best_threshold: threshold for the highest similarity index
+    </li>
+    <li>
+      best_clusters: (Clusters) instance that have the highest similarity 
+      index
+    </li>
+    <li>
+      best_similarity: highest similarity index
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="findLower"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">findLower</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">node</span>,
+        <span class="sig-arg">depth</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">exclude</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.findLower">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns list of nodes that are up to depth levels below node.</p>
+  <p>Note: not used in the moment (11.11.08)</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      node: instance of scipy.cluster.hierarchy.node
+    </li>
+    <li>
+      depth: number of levels below the level of node that are considered. 
+      If none, there is no depth limit
+    </li>
+    <li>
+      exclude: exclude node from the returned list
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="kmeans"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">kmeans</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">data</span>,
+        <span class="sig-arg">k</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">iter</span>=<span class="sig-default">10</span>,
+        <span class="sig-arg">thresh</span>=<span class="sig-default">1e-05</span>,
+        <span class="sig-arg">minit</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">random</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">missing</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">warn</code><code class="variable-quote">'</code></span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.kmeans">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>K-means clustering.</p>
+  <p>Wraps scipy.cluster.vq.kmeans2()</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      data: 2D array of data, axis 1 defines different properties (such as 
+      n-dim positions)
+    </li>
+    <li>
+      ids: list of ids, needed if data is in the expanded form
+    </li>
+    <li>
+      p number of classes
+    </li>
+    <li>
+      iter, thresh, minit, missing: directly passed to
+    </li>
+  </ul>
+  <p>scipy.cluster.vq.kmeans2()</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="findClosest"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">findClosest</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">data</span>,
+        <span class="sig-arg">data_mode</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">metric</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">euclidean</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">p</span>=<span class="sig-default">2</span>,
+        <span class="sig-arg">w</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">V</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">VI</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.findClosest">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Finds the closest data point for each data point specified 
+in arg data. Point coordinates or distances between data points
+can be specified.
+
+If arg data_mode is None or 'coordinates_compact', the arg data 
+should contain coordinates of the data points in the compact form 
+(see below). If arg data_mode is 'coordinates_expanded', the arg data 
+should contain coordinates of the data points in the expanded form.
+In bot cases, distances between the points are calculated
+using scipy.spatial.distance.pdist(), different metics can be chosen
+by arguments.
+
+If arg ids is None, data needs to be specified in the compact form 
+In this case data ids start with 0 and have no gaps. 
+
+If arg ids is not None, data is indexed by ids, that is data[id_] 
+gives data associated with id_. This means that ids and data can 
+have gaps).
+
+For example (2D):
+  coordinates_compact (or None), no ids: 
+    data = [[1,2], [3,-1], [3,2]]
+    ids = [0, 1, 2] (implicit)
+    nearest_distances = [2, 3, 2]
+    nearest_ids = [2, 2, 0] 
+
+  coordinates_compact, with ids: 
+    data = [[1,2], [3,-1], [3,2]]
+    ids = [1, 3, 4]
+    nearest_distances = [2, 3, 2]
+    nearest_ids = [4, 4, 1] 
+
+  coordinates_expanded:
+    data = [[not used], [1,2], [not used], [3,-1], [3,2]]
+    ids = [1, 3, 4]
+    nearest_distances = [-1, 2, -1, 3, 2]
+    nearest_ids = [-1, 4, -1, 4, 1] 
+                       
+On the other hand, if arg data_mode is 'distances_compact', or 
+'distances_expanded', arg data is expected to contain distances 
+betweeen data points in the vector form (as returned by
+scipy.spatial.distance.pdist()). The difference is that in 
+'distances_compact' data is in the compact form as if ids start 
+from 0 and have no gaps. In 'distances_expanded', ids have to be 
+specified and the form of distance vector is expanded, that is 
+it has entries only at positions that correspond to ids, For example:
+
+  'distances_compact', 4 points (so 6 distances), no ids:
+    distances = [3, 1, 4, 
+                    5, 2, 
+                       3] 
+    ids = [0,1,2,3] (immplcitly)
+    nearest_distances = [1, 2, 1, 2]
+    nearest_ids = [2, 3, 0, 1] 
+
+  'distances_compact', 4 points (so 6 distances), with ids:
+    distances = [2, 1, 3, 
+                    4, 2, 
+                       1] 
+    ids = [1, 3, 4, 6]
+    nearest_distances = [1, 2, 1, 2]
+    nearest_ids = [4, 6, 1, 3] 
+
+  'distances_expanded', corresponding to the above:
+    distances = [-1, -1, -1, -1, -1, -1
+                      -1, 3,  1, -1,  5, 
+                         -1, -1, -1, -1,
+                              5, -1,  2, 
+                                 -1, -1, 
+                                      3] 
+    ids = [1, 3, 4, 6]
+    nearest_distances = [-1, 1, -1, 2, 1, -1, 2]
+    nearest_ids = [-1, 4, -1, 6, 1, -1, 3] 
+ 
+The form of returned data (closest distances and the corresponding ids) 
+is the same as the form of the arg data.
+
+Arguments:
+  - data: 2D array of data, axis 1 defines different properties (such
+  as n-dim positions)
+  - data_mode: Specifies the type of data (coordinates or distances)
+  and the format (compact or expanded)
+  - ids: list of ids, needed if data is in the expanded form
+  - metric, p, w, V, VI: directly passed to 
+  scipy.spatial.distance.pdist()
+
+Returns (indices, distances):
+  - indices: (ndarray) indices of the closest neighbors
+  - distances: (ndarray) distances to the closest neighbors
+Both have the same form as the data.
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="checkClusters"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">checkClusters</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">clusters</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.checkClusters">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns True if no cluster element exists in another cluster, and 
+  False otherwise.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      clusters: (list of sets) clusters, if None self.clusters is used.
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="findSimilarity"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">findSimilarity</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">reference</span>,
+        <span class="sig-arg">method</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">single</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.findSimilarity">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Determines the similarity index between the clusterings (flat cluster 
+  assignment) between this and the reference clusters.</p>
+  <p>If method is 'b-flat' the similarity index is calculated based on the 
+  method by Fowlkes and Mallows, Jou Am Stats Assoc vol 78 553-569 (1983), 
+  except that flat clusters of possibly unequal sizes are compared.</p>
+  <p>If method is 'rand' it returns the Rand index. This index is 
+  calculated as follows. For each pair of items, it is determined if the 
+  pair has the same cluster behavior (items belongs to one cluster or not) 
+  in this clusters instance and in the reference. Returns the probability 
+  that an item pair shows same cluster behavior in these two clusters.</p>
+  <p>If method is 'rand_same_cluster' the similarity index is calculated as
+  for the 'rand' method, except that only the pairs where both items belogn
+  to a same cluster in reference clusters are considered.</p>
+  <p>If method is None similarity is calculated using both 'rand' and 
+  'b-flat' methods.</p>
+  <p>If argument single is True all data (item) ids are used. Otherwise, 
+  only the items that belong to clusters of size 2 or larger are 
+  considered.</p>
+  <p>This instance and reference have to have same dataIds.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      reference: (Clusters) reference clusters
+    </li>
+    <li>
+      method: 'b-flat', 'rand' or 'rand_same_cluster'
+    </li>
+    <li>
+      single: ignore single-item slusters, only for 'rand' method
+    </li>
+  </ul>
+  <p>Sets:</p>
+  <ul>
+    <li>
+      self.similarity: similarity index
+    </li>
+    <li>
+      self.similarityMethod: similarity method
+    </li>
+    <li>
+      self.rand: (if mode is None): rand similarity
+    </li>
+    <li>
+      self.bflat: (if mode is None): b-flat similarity
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="findSimilarityRand_old"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">findSimilarityRand_old</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">reference</span>,
+        <span class="sig-arg">method</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">rand</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">single</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.findSimilarityRand_old">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Determines the similarity index between the clusterings (flat cluster 
+  assignment) between this and the reference clusters.</p>
+  <p>If method is 'rand' it returns the Rand index. This index is 
+  calculated as follows. For each pair of items, it is determined if the 
+  pair has the same cluster behavior (items belongs to one cluster or not) 
+  in this clusters instance and in the reference. Returns the probability 
+  that an item pair shows same cluster behavior in these two clusters.</p>
+  <p>If method is 'rand_same_cluster' the similarity index is calculated as
+  for the 'rand' method, except that only the pairs where both items belong
+  to a same cluster in reference clusters are considered.</p>
+  <p>If argument single is True all data (item) ids are used. Otherwise, 
+  only the items that belong to clusters of size 2 or larger are 
+  considered.</p>
+  <p>This instance and reference have to have same dataIds.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      reference: (Clusters) reference clusters
+    </li>
+    <li>
+      method: 'rand' or 'rand_same_cluster'
+    </li>
+    <li>
+      single: ignore single-item slusters, only for 'rand' method
+    </li>
+  </ul>
+  <p>Sets:</p>
+  <ul>
+    <li>
+      self.similarity: similarity index
+    </li>
+    <li>
+      self.similarityMethod: similarity method
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="findSimilarityRand"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">findSimilarityRand</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">reference</span>,
+        <span class="sig-arg">method</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">rand</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">single</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.findSimilarityRand">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Determines the similarity index between the clusterings (flat cluster 
+  assignment) between this and the reference clusters.</p>
+  <p>If method is 'rand' it returns the Rand index. This index is 
+  calculated as follows. For each pair of items, it is determined if the 
+  pair has the same cluster behavior (items belongs to one cluster or not) 
+  in this clusters instance and in the reference. Returns the probability 
+  that an item pair shows same cluster behavior in these two clusters.</p>
+  <p>If method is 'rand_same_cluster' the similarity index is calculated as
+  for the 'rand' method, except that only the pairs where both items belong
+  to a same cluster in reference clusters are considered.</p>
+  <p>If argument single is True all data (item) ids are used. Otherwise, 
+  only the items that belong to clusters of size 2 or larger are 
+  considered.</p>
+  <p>Uses contingency table to calculate the number of pairs where:</p>
+  <ul>
+    <li>
+      both elements are in the same (this) cluster but dirrerent reference 
+      clusters
+    </li>
+    <li>
+      elements are in different (this) clusters but the same reference 
+      cluster
+    </li>
+    <li>
+      both elements are in the same (this) cluster and in the same 
+      reference cluster
+    </li>
+  </ul>
+  <p>This instance and reference have to have same dataIds.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      reference: (Clusters) reference clusters
+    </li>
+    <li>
+      method: 'rand' or 'rand_same_cluster'
+    </li>
+    <li>
+      single: ignore single-item slusters, only for 'rand' method
+    </li>
+  </ul>
+  <p>Sets:</p>
+  <ul>
+    <li>
+      self.similarity: similarity index
+    </li>
+    <li>
+      self.similarityMethod: similarity method
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="findSimilarityBFlat"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">findSimilarityBFlat</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">reference</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.findSimilarityBFlat">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Retunrs similarity index B between this and the reference flat 
+  clusters.</p>
+  <p>Based on the method by Fowlkes and Mallows, Jou Am Stats Assoc vol 78 
+  553-569 (1983), except that flat clusters of possibly unequal sizes are 
+  compared.</p>
+  <p>Uses contingency table to calculate the number of pairs where both 
+  elements are in the same (this) cluster and in the same reference 
+  cluster.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      reference: (Clusters) reference clusters
+    </li>
+  </ul>
+  <p>Returns similarity (B) index.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="inSameCluster"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">inSameCluster</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">items</span>,
+        <span class="sig-arg">clustersData</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.inSameCluster">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns True if all items belong to the same cluster.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      items: list containing item ids
+    </li>
+    <li>
+      clustersData: self.clustersData, passed as argument to speed up the 
+      execution up when this method is called many times
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getEntropy"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getEntropy</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.cluster-pysrc.html#Cluster.getEntropy">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Calculates entropy of the current clustering (flat clusters).
+
+  entropy = - sum(P(k) * ln(P(k)))
+
+for P(k) = n(k) / n 
+
+where n(k) is the number of items in cluster k and n is the total 
+number of items.
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== PROPERTY DETAILS ==================== -->
+<a name="section-PropertyDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Property Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-PropertyDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="clusters"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">clusters</h3>
+  <p>All clusters</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#getClusters" class="summary-sig-name">getClusters</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Returns all clusters as a list of sets where each set contains ids of
+      items belonging to that cluster.
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#setClusters" class="summary-sig-name">setClusters</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">clusters</span>)</span>
+        - Sets all clusters.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="nClusters"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">nClusters</h3>
+  <p>Number of clusters</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#getNClusters" class="summary-sig-name">getNClusters</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Returns number of clusters.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="ids"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">ids</h3>
+  <p>Cluster ids</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#getIds" class="summary-sig-name">getIds</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Return cluster ids.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="nItems"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">nItems</h3>
+  <p>Size of each cluster, indexed by cluster id.</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#getNItems" class="summary-sig-name">getNItems</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">clusterId</span>=<span class="summary-sig-default">None</span>)</span>
+        - Returns cluster size (number of items in a cluster) for a given 
+      cluster if clusterId is specified.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="dataIds"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">dataIds</h3>
+  <p>Data (item) ids</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#getDataIds" class="summary-sig-name">getDataIds</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">clusters</span>=<span class="summary-sig-default">None</span>)</span>
+        - Returns all data (item) ids.
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#setDataIds" class="summary-sig-name">setDataIds</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>)</span>
+        - Sets data ids.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="clustersData"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">clustersData</h3>
+  <p>Clusters in the data representation.</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#getClustersData" class="summary-sig-name">getClustersData</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Returns clusters in the data representation
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#setClustersData" class="summary-sig-name">setClustersData</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">clustersData</span>)</span>
+        - Sets clusters data structure (self.clusters) from clusters in the 
+      data representation (argument clustersData)
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="codeBook0"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">codeBook0</h3>
+  <p>Code book with data indices starting at 0</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#getCodeBook0" class="summary-sig-name">getCodeBook0</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Returns code book with data indices starting at 0 without a gap.
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#setCodeBook0" class="summary-sig-name">setCodeBook0</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">codeBook0</span>)</span>
+        - Sets code book (self.codeBook) according to data indices 
+      (self.dataIds) from argument codeBook.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="clustersData0"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">clustersData0</h3>
+  <p>Clusters in the data representation with data ids starting form 0</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#getClustersData0" class="summary-sig-name">getClustersData0</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Returns clusters in the data representation where data ids start at 
+      0.
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.cluster.Cluster-class.html#setClustersData0" class="summary-sig-name">setClustersData0</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">clustersData0</span>)</span>
+        - Sets clusters (self.clusters and self.clustersData) from clusters in 
+      the data representation where data ids start at 0 and have no gaps.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.segmentation</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        Package&nbsp;segmentation
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.segmentation-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="pyto.segmentation-module.html">Package pyto.segmentation</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-docstring">Segmentation and segment analysis for n-dimensional images.</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-docstring"># Author: Vladan Lucic (Max Planck Institute for Biochemistry)</tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-docstring"># $Id: __init__.py 914 2012-10-25 16:15:17Z vladan $</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-name">__version__</tt> <tt class="py-op">=</tt> <tt class="py-string">"$Revision: 914 $"</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Module pyto.segmentation.struct_el=pyto.segmentation.struct_el-module.html"><a title="pyto.segmentation.struct_el" class="py-name" href="#" onclick="return doclink('link-0', 'struct_el', 'link-0');">struct_el</a></tt> <tt class="py-keyword">import</tt> <tt id="link-1" class="py-name" targets="Class pyto.segmentation.struct_el.StructEl=pyto.segmentation.struct_el.StructEl-class.html"><a title="pyto.segmentation.struct_el.StructEl" class="py-name" href="#" onclick="return doclink('link-1', 'StructEl', 'link-1');">StructEl</a></tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-2" class="py-name" targets="Module pyto.segmentation.statistics=pyto.segmentation.statistics-module.html"><a title="pyto.segmentation.statistics" class="py-name" href="#" onclick="return doclink('link-2', 'statistics', 'link-2');">statistics</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name" targets="Class pyto.segmentation.statistics.Statistics=pyto.segmentation.statistics.Statistics-class.html"><a title="pyto.segmentation.statistics.Statistics" class="py-name" href="#" onclick="return doclink('link-3', 'Statistics', 'link-3');">Statistics</a></tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-4" class="py-name" targets="Package pyto.grey=pyto.grey-module.html,Module pyto.segmentation.grey=pyto.segmentation.grey-module.html"><a title="pyto.grey
+pyto.segmentation.grey" class="py-name" href="#" onclick="return doclink('link-4', 'grey', 'link-4');">grey</a></tt> <tt class="py-keyword">import</tt> <tt id="link-5" class="py-name" targets="Class pyto.segmentation.grey.Grey=pyto.segmentation.grey.Grey-class.html"><a title="pyto.segmentation.grey.Grey" class="py-name" href="#" onclick="return doclink('link-5', 'Grey', 'link-5');">Grey</a></tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-6" class="py-name" targets="Variable pyto.scene.segmentation_analysis.SegmentationAnalysis.labels=pyto.scene.segmentation_analysis.SegmentationAnalysis-class.html#labels,Variable pyto.scripts.blank.labels=pyto.scripts.blank-module.html#labels,Module pyto.segmentation.labels=pyto.segmentation.labels-module.html"><a title="pyto.scene.segmentation_analysis.SegmentationAnalysis.labels
+pyto.scripts.blank.labels
+pyto.segmentation.labels" class="py-name" href="#" onclick="return doclink('link-6', 'labels', 'link-6');">labels</a></tt> <tt class="py-keyword">import</tt> <tt id="link-7" class="py-name" targets="Class pyto.segmentation.labels.Labels=pyto.segmentation.labels.Labels-class.html"><a title="pyto.segmentation.labels.Labels" class="py-name" href="#" onclick="return doclink('link-7', 'Labels', 'link-7');">Labels</a></tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-8" class="py-name" targets="Module pyto.segmentation.contact=pyto.segmentation.contact-module.html"><a title="pyto.segmentation.contact" class="py-name" href="#" onclick="return doclink('link-8', 'contact', 'link-8');">contact</a></tt> <tt class="py-keyword">import</tt> <tt id="link-9" class="py-name" targets="Class pyto.segmentation.contact.Contact=pyto.segmentation.contact.Contact-class.html"><a title="pyto.segmentation.contact.Contact" class="py-name" href="#" onclick="return doclink('link-9', 'Contact', 'link-9');">Contact</a></tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-10" class="py-name" targets="Method pyto.analysis.vesicles.Vesicles.cluster()=pyto.analysis.vesicles.Vesicles-class.html#cluster,Module pyto.scripts.cluster=pyto.scripts.cluster-module.html,Module pyto.segmentation.cluster=pyto.segmentation.cluster-module.html"><a title="pyto.analysis.vesicles.Vesicles.cluster
+pyto.scripts.cluster
+pyto.segmentation.cluster" class="py-name" href="#" onclick="return doclink('link-10', 'cluster', 'link-10');">cluster</a></tt> <tt class="py-keyword">import</tt> <tt id="link-11" class="py-name" targets="Class pyto.segmentation.cluster.Cluster=pyto.segmentation.cluster.Cluster-class.html"><a title="pyto.segmentation.cluster.Cluster" class="py-name" href="#" onclick="return doclink('link-11', 'Cluster', 'link-11');">Cluster</a></tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-12" class="py-name" targets="Module pyto.segmentation.segment=pyto.segmentation.segment-module.html"><a title="pyto.segmentation.segment" class="py-name" href="#" onclick="return doclink('link-12', 'segment', 'link-12');">segment</a></tt> <tt class="py-keyword">import</tt> <tt id="link-13" class="py-name" targets="Class pyto.segmentation.segment.Segment=pyto.segmentation.segment.Segment-class.html"><a title="pyto.segmentation.segment.Segment" class="py-name" href="#" onclick="return doclink('link-13', 'Segment', 'link-13');">Segment</a></tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-14" class="py-name" targets="Module pyto.segmentation.ball=pyto.segmentation.ball-module.html"><a title="pyto.segmentation.ball" class="py-name" href="#" onclick="return doclink('link-14', 'ball', 'link-14');">ball</a></tt> <tt class="py-keyword">import</tt> <tt id="link-15" class="py-name" targets="Class pyto.segmentation.ball.Ball=pyto.segmentation.ball.Ball-class.html"><a title="pyto.segmentation.ball.Ball" class="py-name" href="#" onclick="return doclink('link-15', 'Ball', 'link-15');">Ball</a></tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-16" class="py-name" targets="Module pyto.segmentation.plane=pyto.segmentation.plane-module.html"><a title="pyto.segmentation.plane" class="py-name" href="#" onclick="return doclink('link-16', 'plane', 'link-16');">plane</a></tt> <tt class="py-keyword">import</tt> <tt id="link-17" class="py-name" targets="Class pyto.segmentation.plane.Plane=pyto.segmentation.plane.Plane-class.html"><a title="pyto.segmentation.plane.Plane" class="py-name" href="#" onclick="return doclink('link-17', 'Plane', 'link-17');">Plane</a></tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-18" class="py-name" targets="Module pyto.segmentation.connected=pyto.segmentation.connected-module.html"><a title="pyto.segmentation.connected" class="py-name" href="#" onclick="return doclink('link-18', 'connected', 'link-18');">connected</a></tt> <tt class="py-keyword">import</tt> <tt id="link-19" class="py-name" targets="Class pyto.segmentation.connected.Connected=pyto.segmentation.connected.Connected-class.html"><a title="pyto.segmentation.connected.Connected" class="py-name" href="#" onclick="return doclink('link-19', 'Connected', 'link-19');">Connected</a></tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-20" class="py-name" targets="Module pyto.segmentation.hierarchy=pyto.segmentation.hierarchy-module.html"><a title="pyto.segmentation.hierarchy" class="py-name" href="#" onclick="return doclink('link-20', 'hierarchy', 'link-20');">hierarchy</a></tt> <tt class="py-keyword">import</tt> <tt id="link-21" class="py-name" targets="Class pyto.segmentation.hierarchy.Hierarchy=pyto.segmentation.hierarchy.Hierarchy-class.html"><a title="pyto.segmentation.hierarchy.Hierarchy" class="py-name" href="#" onclick="return doclink('link-21', 'Hierarchy', 'link-21');">Hierarchy</a></tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-22" class="py-name" targets="Module pyto.segmentation.thresh_conn=pyto.segmentation.thresh_conn-module.html"><a title="pyto.segmentation.thresh_conn" class="py-name" href="#" onclick="return doclink('link-22', 'thresh_conn', 'link-22');">thresh_conn</a></tt> <tt class="py-keyword">import</tt> <tt id="link-23" class="py-name" targets="Class pyto.segmentation.thresh_conn.ThreshConn=pyto.segmentation.thresh_conn.ThreshConn-class.html"><a title="pyto.segmentation.thresh_conn.ThreshConn" class="py-name" href="#" onclick="return doclink('link-23', 'ThreshConn', 'link-23');">ThreshConn</a></tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-24" class="py-name" targets="Module pyto.segmentation.features=pyto.segmentation.features-module.html"><a title="pyto.segmentation.features" class="py-name" href="#" onclick="return doclink('link-24', 'features', 'link-24');">features</a></tt> <tt class="py-keyword">import</tt> <tt id="link-25" class="py-name" targets="Class pyto.segmentation.features.Features=pyto.segmentation.features.Features-class.html"><a title="pyto.segmentation.features.Features" class="py-name" href="#" onclick="return doclink('link-25', 'Features', 'link-25');">Features</a></tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-26" class="py-name" targets="Module pyto.segmentation.morphology=pyto.segmentation.morphology-module.html"><a title="pyto.segmentation.morphology" class="py-name" href="#" onclick="return doclink('link-26', 'morphology', 'link-26');">morphology</a></tt> <tt class="py-keyword">import</tt> <tt id="link-27" class="py-name" targets="Class pyto.segmentation.morphology.Morphology=pyto.segmentation.morphology.Morphology-class.html"><a title="pyto.segmentation.morphology.Morphology" class="py-name" href="#" onclick="return doclink('link-27', 'Morphology', 'link-27');">Morphology</a></tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-28" class="py-name" targets="Module pyto.segmentation.topology=pyto.segmentation.topology-module.html"><a title="pyto.segmentation.topology" class="py-name" href="#" onclick="return doclink('link-28', 'topology', 'link-28');">topology</a></tt> <tt class="py-keyword">import</tt> <tt id="link-29" class="py-name" targets="Class pyto.segmentation.topology.Topology=pyto.segmentation.topology.Topology-class.html"><a title="pyto.segmentation.topology.Topology" class="py-name" href="#" onclick="return doclink('link-29', 'Topology', 'link-29');">Topology</a></tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-30" class="py-name" targets="Module pyto.segmentation.distance_to=pyto.segmentation.distance_to-module.html"><a title="pyto.segmentation.distance_to" class="py-name" href="#" onclick="return doclink('link-30', 'distance_to', 'link-30');">distance_to</a></tt> <tt class="py-keyword">import</tt> <tt id="link-31" class="py-name" targets="Class pyto.segmentation.distance_to.DistanceTo=pyto.segmentation.distance_to.DistanceTo-class.html"><a title="pyto.segmentation.distance_to.DistanceTo" class="py-name" href="#" onclick="return doclink('link-31', 'DistanceTo', 'link-31');">DistanceTo</a></tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-32" class="py-name" targets="Method pyto.geometry.points.Points.distance()=pyto.geometry.points.Points-class.html#distance,Variable pyto.scripts.extract_points.distance=pyto.scripts.extract_points-module.html#distance,Module pyto.segmentation.distance=pyto.segmentation.distance-module.html,Variable pyto.segmentation.distance_to.DistanceTo.distance=pyto.segmentation.distance_to.DistanceTo-class.html#distance"><a title="pyto.geometry.points.Points.distance
+pyto.scripts.extract_points.distance
+pyto.segmentation.distance
+pyto.segmentation.distance_to.DistanceTo.distance" class="py-name" href="#" onclick="return doclink('link-32', 'distance', 'link-32');">distance</a></tt> <tt class="py-keyword">import</tt> <tt id="link-33" class="py-name" targets="Class pyto.segmentation.distance.Distance=pyto.segmentation.distance.Distance-class.html"><a title="pyto.segmentation.distance.Distance" class="py-name" href="#" onclick="return doclink('link-33', 'Distance', 'link-33');">Distance</a></tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-34" class="py-name" targets="Module pyto.segmentation.bound_distance=pyto.segmentation.bound_distance-module.html"><a title="pyto.segmentation.bound_distance" class="py-name" href="#" onclick="return doclink('link-34', 'bound_distance', 'link-34');">bound_distance</a></tt> <tt class="py-keyword">import</tt> <tt id="link-35" class="py-name" targets="Class pyto.segmentation.bound_distance.BoundDistance=pyto.segmentation.bound_distance.BoundDistance-class.html"><a title="pyto.segmentation.bound_distance.BoundDistance" class="py-name" href="#" onclick="return doclink('link-35', 'BoundDistance', 'link-35');">BoundDistance</a></tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-36" class="py-name" targets="Module pyto.segmentation.density=pyto.segmentation.density-module.html"><a title="pyto.segmentation.density" class="py-name" href="#" onclick="return doclink('link-36', 'density', 'link-36');">density</a></tt> <tt class="py-keyword">import</tt> <tt id="link-37" class="py-name" targets="Class pyto.segmentation.density.Density=pyto.segmentation.density.Density-class.html"><a title="pyto.segmentation.density.Density" class="py-name" href="#" onclick="return doclink('link-37', 'Density', 'link-37');">Density</a></tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-38" class="py-name" targets="Module pyto.scripts.cleft=pyto.scripts.cleft-module.html,Module pyto.segmentation.cleft=pyto.segmentation.cleft-module.html"><a title="pyto.scripts.cleft
+pyto.segmentation.cleft" class="py-name" href="#" onclick="return doclink('link-38', 'cleft', 'link-38');">cleft</a></tt> <tt class="py-keyword">import</tt> <tt id="link-39" class="py-name" targets="Class pyto.segmentation.cleft.Cleft=pyto.segmentation.cleft.Cleft-class.html"><a title="pyto.segmentation.cleft.Cleft" class="py-name" href="#" onclick="return doclink('link-39', 'Cleft', 'link-39');">Cleft</a></tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"><tt class="py-comment">#import test_old</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"><tt class="py-comment">#import test_hierarchy</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"><tt class="py-comment">#import test</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"><tt class="py-comment">#from numpy.testing import Tester</tt> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line"><tt class="py-comment">#test = Tester().test</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

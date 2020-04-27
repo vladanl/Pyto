@@ -1,0 +1,666 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.segmentation.density.Density</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.segmentation-module.html">Package&nbsp;segmentation</a> ::
+        <a href="pyto.segmentation.density-module.html">Module&nbsp;density</a> ::
+        Class&nbsp;Density
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.segmentation.density.Density-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Density</h1><p class="nomargin-top"><span class="codelink"><a href="pyto.segmentation.density-pysrc.html#Density">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_pyto_seg_7" name="uml_class_diagram_for_pyto_seg_7">
+<area shape="rect" id="node1_24" href="pyto.segmentation.density.Density-class.html#__init__" title="Initializes segments and ids." alt="" coords="18,429,513,449"/>
+<area shape="rect" id="node1_25" href="pyto.segmentation.density.Density-class.html#calculate" title="Calculates gray value mean, std, min, max and volume for each segment from &#160;arg segments specified in arg ids." alt="" coords="18,449,513,469"/>
+<area shape="rect" id="node1_26" href="pyto.segmentation.density.Density-class.html#aggregate" title="Returns a new instance with data corresponding to segments combined according to arg ids." alt="" coords="18,469,513,489"/>
+<area shape="rect" id="node1_27" href="pyto.segmentation.density.Density-class.html#restrict" title="Effectivly removes data that correspond to ids that are not specified in &#160;the arg ids." alt="" coords="18,489,513,509"/>
+<area shape="rect" id="node1_28" href="pyto.segmentation.density.Density-class.html#calculateTotal" title="Calculates total values based on the individual segments data and saves &#160;them at index 0." alt="" coords="18,509,513,529"/>
+<area shape="rect" id="node1_29" href="pyto.segmentation.density.Density-class.html#merge" title="Merges data of this object new with the data of this instance." alt="" coords="18,529,513,549"/>
+<area shape="rect" id="node1_30" href="pyto.segmentation.density.Density-class.html#setTotal" title="Sets total values (index 0) for all data." alt="" coords="18,549,513,569"/>
+<area shape="rect" id="node1" href="pyto.segmentation.density.Density-class.html" title="Calculates basic statistics (mean, std, min, max) and volume for segments of a (typically greyscale) image." alt="" coords="5,397,524,576"/>
+<area shape="rect" id="node2_31" href="pyto.segmentation.features.Features-class.html#ids" title="Ids" alt="" coords="145,29,386,49"/>
+<area shape="rect" id="node2_32" href="pyto.segmentation.features.Features-class.html#ndim" title="Dimensionality of data" alt="" coords="145,49,386,69"/>
+<area shape="rect" id="node2_33" href="pyto.segmentation.features.Features-class.html#maxId" title="Maximum id" alt="" coords="145,69,386,89"/>
+<area shape="rect" id="node2_34" href="pyto.segmentation.features.Features-class.html#setSegments" title="Sets attribute segments and ids." alt="" coords="145,92,386,112"/>
+<area shape="rect" id="node2_35" href="pyto.segmentation.features.Features-class.html#getIds" title="Returns ids" alt="" coords="145,112,386,132"/>
+<area shape="rect" id="node2_36" href="pyto.segmentation.features.Features-class.html#setIds" title="Sets self.ids, If data is internally stored in the compact form, the data &#160;is changed appropriately." alt="" coords="145,132,386,152"/>
+<area shape="rect" id="node2_37" href="pyto.segmentation.features.Features-class.html#changeIds" title="Sets self.ids to arg ids." alt="" coords="145,152,386,172"/>
+<area shape="rect" id="node2_38" href="pyto.segmentation.features.Features-class.html#findIds" title="Returns ids and max id." alt="" coords="145,172,386,192"/>
+<area shape="rect" id="node2_39" href="pyto.segmentation.features.Features-class.html#getNdim" title="Gets ndim from self.data, or if the data does not exists returns &#160;self._ndim." alt="" coords="145,192,386,212"/>
+<area shape="rect" id="node2_40" href="pyto.segmentation.features.Features-class.html#setNdim" title="Sets self._ndim." alt="" coords="145,212,386,232"/>
+<area shape="rect" id="node2_41" href="pyto.segmentation.features.Features-class.html#getMaxId" title="Returns maximum id, or 0 if ids don&#39;t exist." alt="" coords="145,232,386,252"/>
+<area shape="rect" id="node2_42" href="pyto.segmentation.features.Features-class.html#initializeData" title="Sets ids and all data structures to length 0 ndarrays" alt="" coords="145,252,386,272"/>
+<area shape="rect" id="node2_43" href="pyto.segmentation.features.Features-class.html#reorder" title="Reorders elements of data array(s)." alt="" coords="145,272,386,292"/>
+<area shape="rect" id="node2_44" href="pyto.segmentation.features.Features-class.html#add" title="Adds data, The same as self.merge but mode=&#39;add&#39;." alt="" coords="145,292,386,312"/>
+<area shape="rect" id="node2_45" href="pyto.segmentation.features.Features-class.html#expand" title="Expands dimension of specified attributes (given by arg names or by &#160;self.dataNames) by adding an axis before arg axis." alt="" coords="145,312,386,332"/>
+<area shape="rect" id="node2_46" href="pyto.segmentation.features.Features-class.html#extractOne" title="Returns a new instance that contains data only for id given by arg id_." alt="" coords="145,332,386,352"/>
+<area shape="rect" id="node2_47" href="pyto.segmentation.features.Features-class.html#nameIds" title="Makes a new attribute from each value of arg names." alt="" coords="145,352,386,372"/>
+<area shape="rect" id="node2" href="pyto.segmentation.features.Features-class.html" title="Should not be used directly, please use subclasses of this class." alt="" coords="132,5,397,379"/>
+</map>
+  <img src="uml_class_diagram_for_pyto_seg_7.gif" alt='' usemap="#uml_class_diagram_for_pyto_seg_7" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<pre class="literalblock">
+
+Calculates basic statistics (mean, std, min, max) and volume for
+segments of a (typically greyscale) image.
+
+Attributes holding calculated data:
+  - mean
+  - std
+  - min
+  - max
+  - volume
+
+Each of these data attributes is an ndarray indexed by a segment id (from 1 
+up). Elements at position 0 contain values for all segments taken together.
+
+Methods:
+  - calculate(): calculated all data arrays
+  - aggregate(): combines calculated data for more than one segment
+
+Usage:
+  density = Density()
+  density.calculate(image=grey_image, segments_segmented_image)
+
+</pre>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.density.Density-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Initializes segments and ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.density-pysrc.html#Density.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.density.Density-class.html#calculate" class="summary-sig-name">calculate</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">image</span>,
+        <span class="summary-sig-arg">segments</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Calculates gray value mean, std, min, max and volume for each segment
+      from arg segments specified in arg ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.density-pysrc.html#Density.calculate">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.density.Density-class.html#aggregate" class="summary-sig-name">aggregate</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>)</span><br />
+      Returns a new instance with data corresponding to segments combined
+according to arg ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.density-pysrc.html#Density.aggregate">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.density.Density-class.html#restrict" class="summary-sig-name">restrict</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>)</span><br />
+      Effectivly removes data that correspond to ids that are not specified
+      in the arg ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.density-pysrc.html#Density.restrict">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.density.Density-class.html#calculateTotal" class="summary-sig-name">calculateTotal</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Calculates total values based on the individual segments data and 
+      saves them at index 0.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.density-pysrc.html#Density.calculateTotal">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.density.Density-class.html#merge" class="summary-sig-name">merge</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">new</span>,
+        <span class="summary-sig-arg">names</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">replace</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">mode0</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">consistent</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">volume</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Merges data of this object new with the data of this instance.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.density-pysrc.html#Density.merge">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.density.Density-class.html#setTotal" class="summary-sig-name">setTotal</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Sets total values (index 0) for all data.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.density-pysrc.html#Density.setTotal">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.segmentation.features.Features-class.html">features.Features</a></code></b>:
+      <code><a href="pyto.segmentation.features.Features-class.html#add">add</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#changeIds">changeIds</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#expand">expand</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#extractOne">extractOne</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#findIds">findIds</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#getIds">getIds</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#getMaxId">getMaxId</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#getNdim">getNdim</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#initializeData">initializeData</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#nameIds">nameIds</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#reorder">reorder</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#setIds">setIds</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#setNdim">setNdim</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#setSegments">setSegments</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.segmentation.features.Features-class.html">features.Features</a></code></b>:
+      <code><a href="pyto.segmentation.features.Features-class.html#ids">ids</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#maxId">maxId</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#ndim">ndim</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.density-pysrc.html#Density.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Initializes segments and ids.</p>
+  <p>Note (r527): don't want to accept segments as argument because super 
+  sets the argument segments the the actual array (and loses other info 
+  like inset).</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="calculate"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">calculate</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">image</span>,
+        <span class="sig-arg">segments</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.density-pysrc.html#Density.calculate">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates gray value mean, std, min, max and volume for each segment 
+  from arg segments specified in arg ids. The calculated values are saved 
+  as attributes named mean, std, min, max and volume, respectivly.</p>
+  <p>If arg segments is not specified self.segments is used. If arg ids is 
+  not specified self.ids is used if found, or if not segments.ids is 
+  used.</p>
+  <p>Uses minimal possible size of segments and image arrays to speed up 
+  the calculations, but these arguments are not changed. This method 
+  respects positioning of image and segments (attribute inset) but 
+  image.data has to contain the whole inset covered by segments.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      image: (core.Image) grayscale image
+    </li>
+    <li>
+      segments: (Segment) segmented image
+    </li>
+    <li>
+      ids: segment ids
+    </li>
+  </ul>
+  <p>Sets attributes:</p>
+  <ul>
+    <li>
+      mean, std (N-1 degrees of fereedom), min, max and volume to 
+      calculated values
+    </li>
+    <li>
+      ids: to arg ids or segments.ids
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="aggregate"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">aggregate</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.density-pysrc.html#Density.aggregate">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Returns a new instance with data corresponding to segments combined
+according to arg ids.
+
+Elements of ids defines segments in the new instance, element i of
+this list defines segment with id i+1 of the new instance. Each element
+of ids should be a list containing segment ids of the current instance
+that are to be taken together.
+
+For example:
+
+  aggregate(ids=[[1,2], [3,6,7]])
+
+returns instance with ids 1 and 2, where the new segment 1 contains data
+for actual segments 1 and 3 together, and the new segment 2 for actual
+3, 6 and 7.
+
+Note that segment ids can be repeated in the argument ids and that not
+all ids need to be present in the argument ids. In those cases 
+0-elements of data vectors might be meaningless.
+
+Argument:
+  - ids: (list of lists) segment ids
+
+Returns: new instance of this class.
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="restrict"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">restrict</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.density-pysrc.html#Density.restrict">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Effectivly removes data that correspond to ids that are not specified 
+  in the arg ids. Arg ids should not contain ids that are not in 
+  self.ids.</p>
+  <p>Sets self.ids to ids and recalculates totals (index 0). Currently it 
+  doesn't actually remove non-id values from data.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      ids: new ids
+    </li>
+  </ul>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="pyto.segmentation.features.Features-class.html#restrict">features.Features.restrict</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="calculateTotal"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">calculateTotal</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.density-pysrc.html#Density.calculateTotal">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates total values based on the individual segments data and 
+  saves them at index 0.</p>
+  <p>Acts on attributes min, max, volume, mean and std, if in 
+  self.dataNames.</p>
+  <p>Doesn't do anything if there are no ids (self.ids).</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="merge"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">merge</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">new</span>,
+        <span class="sig-arg">names</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">replace</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">mode0</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">consistent</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">volume</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.density-pysrc.html#Density.merge">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Merges data of this object new with the data of this instance. The 
+  values of all attributes listed in self.dataNames are added.</p>
+  <p>The data attributes whose values are meged are those listed in names 
+  or in self.dataNames if names is None.</p>
+  <p>If mode is 'add' the data is simply added. If mode is 'replace' the 
+  new values replace the old ones for id that are in new.ids.</p>
+  <p>Recommended value for arg mode0 is 'consistent', because in this case 
+  index 0 of arrays mean, std min and max will contain appropriate values 
+  for all segments taken together.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      new: instance of Morphology
+    </li>
+    <li>
+      names: (list of strings, or a single string) names of data attributes
+    </li>
+    <li>
+      mode: merge mode for data (indices 1+) 'add' or 'replace'
+    </li>
+    <li>
+      mode0: merge mode for index 0, 'consistent', 'add', 'replace' or a 
+      numerical value
+    </li>
+  </ul>
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="pyto.segmentation.features.Features-class.html#merge">features.Features.merge</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setTotal"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setTotal</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.density-pysrc.html#Density.setTotal">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets total values (index 0) for all data.</p>
+  <p>In particular, total volume is the sum of all volumes, while total 
+  mean, std, min and max are values obtained for all segments taken 
+  together (and not mean of the segment means and so on. Takes into account
+  only segments listed in self.ids.</p>
+  <p>Sets index 0 of data arrays.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

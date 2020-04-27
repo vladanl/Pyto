@@ -1,0 +1,2346 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.segmentation.contact.Contact</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.segmentation-module.html">Package&nbsp;segmentation</a> ::
+        <a href="pyto.segmentation.contact-module.html">Module&nbsp;contact</a> ::
+        Class&nbsp;Contact
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.segmentation.contact.Contact-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Contact</h1><p class="nomargin-top"><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_pyto_seg_6" name="uml_class_diagram_for_pyto_seg_6">
+<area shape="rect" id="node1_18" href="pyto.segmentation.contact.Contact-class.html#segments" title="Ids of all segments" alt="" coords="17,29,407,49"/>
+<area shape="rect" id="node1_19" href="pyto.segmentation.contact.Contact-class.html#boundaries" title="Ids of all boundaries" alt="" coords="17,49,407,69"/>
+<area shape="rect" id="node1_20" href="pyto.segmentation.contact.Contact-class.html#maxSegment" title="Max segment id" alt="" coords="17,69,407,89"/>
+<area shape="rect" id="node1_21" href="pyto.segmentation.contact.Contact-class.html#maxBoundary" title="Max boundary id" alt="" coords="17,89,407,109"/>
+<area shape="rect" id="node1_22" href="pyto.segmentation.contact.Contact-class.html#__init__" title="Initializes data structure that holds number of contacts between given &#160;segments and boundaries, as well as some attributes." alt="" coords="17,112,407,132"/>
+<area shape="rect" id="node1_23" href="pyto.segmentation.contact.Contact-class.html#recast" title="Returns a new instance of this class and sets all attributes of the new &#160;object to the attributes of obj." alt="" coords="17,132,407,152"/>
+<area shape="rect" id="node1_24" href="pyto.segmentation.contact.Contact-class.html#getSegments" title="Returns (ndarray) segment ids of all segments that have at least one &#160;unmasked element." alt="" coords="17,152,407,172"/>
+<area shape="rect" id="node1_25" href="pyto.segmentation.contact.Contact-class.html#getBoundaries" title="Returns (ndarray) boundary ids of all boundaries that have at least one &#160;unmasked element." alt="" coords="17,172,407,192"/>
+<area shape="rect" id="node1_26" href="pyto.segmentation.contact.Contact-class.html#getMaxSegment" title="Returns the highest segment id." alt="" coords="17,192,407,212"/>
+<area shape="rect" id="node1_27" href="pyto.segmentation.contact.Contact-class.html#getMaxBoundary" title="Returns the highest boundary id." alt="" coords="17,212,407,232"/>
+<area shape="rect" id="node1_28" href="pyto.segmentation.contact.Contact-class.html#add" title="Adds contacts to the current contacts." alt="" coords="17,232,407,252"/>
+<area shape="rect" id="node1_29" href="pyto.segmentation.contact.Contact-class.html#addBoundary" title="Adds contact data given in nContacts for boundary with id." alt="" coords="17,252,407,272"/>
+<area shape="rect" id="node1_30" href="pyto.segmentation.contact.Contact-class.html#addSegment" title="Adds contact data given in nContacts for segment with id." alt="" coords="17,272,407,292"/>
+<area shape="rect" id="node1_31" href="pyto.segmentation.contact.Contact-class.html#setN" title="Adds specified contacts to the contact data structure." alt="" coords="17,292,407,312"/>
+<area shape="rect" id="node1_32" href="pyto.segmentation.contact.Contact-class.html#getN" title="Returns number of contacts between segment segmentId and boundary &#160;boundaryId." alt="" coords="17,312,407,332"/>
+<area shape="rect" id="node1_33" href="pyto.segmentation.contact.Contact-class.html#removeBoundaries" title="Removes all contacts of boundaries with ids." alt="" coords="17,332,407,352"/>
+<area shape="rect" id="node1_34" href="pyto.segmentation.contact.Contact-class.html#keepBoundaries" title="Removes all contacts of boundaries whose ids are not in ids." alt="" coords="17,352,407,372"/>
+<area shape="rect" id="node1_35" href="pyto.segmentation.contact.Contact-class.html#findLinkedSegments" title="Returns ids of segments that are linked (through boundaries) to and are at &#160;(arg) distance to each of the segments specified by arg ids." alt="" coords="17,392,407,412"/>
+<area shape="rect" id="node1" href="pyto.segmentation.contact.Contact-class.html" title="Analysis of contacts between segments and boundaries." alt="" coords="5,5,419,419"/>
+</map>
+  <img src="uml_class_diagram_for_pyto_seg_6.gif" alt='' usemap="#uml_class_diagram_for_pyto_seg_6" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<pre class="literalblock">
+
+Analysis of contacts between segments and boundaries.
+
+Important methods:
+  - findContacts: detects and optionally counts contacts between
+  segments and boundaries (needs to be run before the methods given below)
+  - findSegments: finds segments that satisfy given condition (such as
+  number of contacted boundaries) among all contacts previously detected
+  by findContacts
+  - findBoundaries: finds boundaries that satisfy given condition (such as
+  number of contacted segments) among all contacts previously detected
+  by findContacts
+
+The following example finds all contancts between segments 2,3,5 and 7
+with boundaries 1,3,4 and 6, and then returns ids of segments that
+contact both boundary 1 and 4 but do not contact any other boundary:
+
+  con = Contact()  # instantiation
+  con.findContacts(segment=seg, segmentIds=[2,3,5,7], boundary=bound,
+                   boundaryIds=[1,3,4,6])
+  con.findSegments(boundaryIds=[1,4], mode='exact')
+
+Important instance attributes:
+  - labels: Connected object containing an image of contacts labeled
+  by segment ids
+  - segment: (ndarray) segmented image containing segments
+  - segmentIds: ids of segments
+  - boundary: (ndarray) segmented image containing boundaries
+  - boundaryIds: ids of boundaries
+  - contactStructEl: structure element used for finding contacts between
+  boundaries and structures
+  - countStructEl: structure element used to distinguish and count
+  conntacts between a given segment and a given region.
+
+Internal structures (should not be manipulated directly):
+  - _n: contact data structure currently implemented as a masked array
+  where _n[boundId, segId] is a number of contacts segment segId makes
+  with boundary boundId. Shape = (nBoundaries+1, nSegments+1), so that
+  boundary (segment) i as accessed as _n[i,:] (_n[;,i]). Data with
+  index 0 (any) are not used.
+
+</pre>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">nBoundaries</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">nSegments</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">maskValue</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Initializes data structure that holds number of contacts between 
+      given segments and boundaries, as well as some attributes.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#_initializeData" class="summary-sig-name" onclick="show_private();">_initializeData</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">shape</span>=<span class="summary-sig-default"><code class="variable-group">(</code>1<code class="variable-op">, </code>1<code class="variable-group">)</code></span>,
+        <span class="summary-sig-arg">maskValue</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Initializes data structure that holds number of contacts between 
+      given segments and boundaries.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact._initializeData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#_enlargeData" class="summary-sig-name" onclick="show_private();">_enlargeData</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">shape</span>,
+        <span class="summary-sig-arg">maskValue</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Enlarges the size of the data structure.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact._enlargeData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#getSegments" class="summary-sig-name">getSegments</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns (ndarray) segment ids of all segments that have at least one 
+      unmasked element.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.getSegments">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#getBoundaries" class="summary-sig-name">getBoundaries</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns (ndarray) boundary ids of all boundaries that have at least 
+      one unmasked element.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.getBoundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getMaxSegment"></a><span class="summary-sig-name">getMaxSegment</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the highest segment id.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.getMaxSegment">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getMaxBoundary"></a><span class="summary-sig-name">getMaxBoundary</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the highest boundary id.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.getMaxBoundary">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#add" class="summary-sig-name">add</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">contacts</span>,
+        <span class="summary-sig-arg">shift</span>=<span class="summary-sig-default">0</span>)</span><br />
+      Adds contacts to the current contacts.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.add">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#addBoundary" class="summary-sig-name">addBoundary</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">id</span>,
+        <span class="summary-sig-arg">nContacts</span>)</span><br />
+      Adds contact data given in nContacts for boundary with id.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.addBoundary">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#addSegment" class="summary-sig-name">addSegment</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">id</span>,
+        <span class="summary-sig-arg">nContacts</span>)</span><br />
+      Adds contact data given in nContacts for segment with id.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.addSegment">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#setN" class="summary-sig-name">setN</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">boundaryId</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">segmentId</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">nContacts</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Adds specified contacts to the contact data structure.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.setN">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#getN" class="summary-sig-name">getN</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">boundaryId</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">segmentId</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns number of contacts between segment segmentId and boundary 
+      boundaryId.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.getN">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#removeBoundaries" class="summary-sig-name">removeBoundaries</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>)</span><br />
+      Removes all contacts of boundaries with ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.removeBoundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#keepBoundaries" class="summary-sig-name">keepBoundaries</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>)</span><br />
+      Removes all contacts of boundaries whose ids are not in ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.keepBoundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#removeSegments" class="summary-sig-name">removeSegments</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>)</span><br />
+      Removes all contacts of segments with ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.removeSegments">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#keepSegments" class="summary-sig-name">keepSegments</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>)</span><br />
+      Removes all contacts of segments whose ids are not in ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.keepSegments">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#removeContact" class="summary-sig-name">removeContact</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">segmentId</span>,
+        <span class="summary-sig-arg">boundaryId</span>)</span><br />
+      Removes contact between boundaryId and segmentID.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.removeContact">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_recoverBoundary"></a><span class="summary-sig-name">_recoverBoundary</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">boundaryId</span>)</span><br />
+      Recovers previously removed boundary.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact._recoverBoundary">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_recoverSegment"></a><span class="summary-sig-name">_recoverSegment</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">segmentId</span>)</span><br />
+      Recovers previously removed segment.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact._recoverSegment">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_recoverContact"></a><span class="summary-sig-name">_recoverContact</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">segmentId</span>,
+        <span class="summary-sig-arg">boundaryId</span>)</span><br />
+      Recoveres previously removed contact between boundaryId and 
+      segmentID.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact._recoverContact">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#reorderSegments" class="summary-sig-name">reorderSegments</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">order</span>)</span><br />
+      Reorders segments in both contact data structure (self._n) and 
+      contact labels (self.labels) according to the order dictionary.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.reorderSegments">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="shiftSegmentIds"></a><span class="summary-sig-name">shiftSegmentIds</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">shift</span>)</span><br />
+      Increases all segment ids by shift in both contacts data structure 
+      and contacts labels.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.shiftSegmentIds">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#orderSegmentsByContactedBoundaries" class="summary-sig-name">orderSegmentsByContactedBoundaries</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">argsort</span>=<span class="summary-sig-default">False</span>)</span><br />
+      There are two modes.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.orderSegmentsByContactedBoundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#compactify" class="summary-sig-name">compactify</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Saves data structure in a compact form.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.compactify">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#expand" class="summary-sig-name">expand</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Expands data structure form the compact (using self.compactify()) to 
+      the normal (expanded) form.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.expand">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#findContacts" class="summary-sig-name">findContacts</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">segment</span>,
+        <span class="summary-sig-arg">segmentIds</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">boundary</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">boundaryIds</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">contactStructEl</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">saveLabels</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">countStructEl</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">count</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Finds (but doesn't count) contacts between each segment and each 
+      boundary.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.findContacts">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#countContacts" class="summary-sig-name">countContacts</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">labels</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">contactStructEl</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Work in progress.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.countContacts">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#setSegment" class="summary-sig-name">setSegment</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">segment</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Sets attributes (ndarray) segment, segmentIds from arguments.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.setSegment">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#setBoundary" class="summary-sig-name">setBoundary</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">boundary</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Sets attributes (ndarray) boundary, boundaryIds from arguments.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.setBoundary">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#setStructEls" class="summary-sig-name">setStructEls</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">segment</span>,
+        <span class="summary-sig-arg">contactStructEl</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">countStructEl</span>=<span class="summary-sig-default">None</span>)</span><br />
+      By default contactStructEl has connectivity 1, and countStructEl has 
+      connectivity equal to ndim.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.setStructEls">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#findSegments" class="summary-sig-name">findSegments</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">boundaryIds</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">nBoundary</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">at_least</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">update</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Returns segment ids for all segements that satisfy the criterium
+specified by boundaryIds, nBoundary and mode arguments.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.findSegments">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#findBoundaries" class="summary-sig-name">findBoundaries</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">segmentIds</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">nSegment</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">at_least</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">update</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Returns boundary ids for all segements that satisfy the criterium
+specified by segmentIds, nSegment and mode arguments.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.findBoundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#countContactedBoundaries" class="summary-sig-name">countContactedBoundaries</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Calculates and returns the number of boundaries, among those 
+      specified by arg ids, that contact each existing segment.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.countContactedBoundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#countContactedSegments" class="summary-sig-name">countContactedSegments</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Calculates and returns the number of segments among those specified 
+      by arg ids that contact each existing boundary.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.countContactedSegments">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#_countContacted" class="summary-sig-name" onclick="show_private();">_countContacted</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">indices</span>,
+        <span class="summary-sig-arg">axis</span>,
+        <span class="summary-sig-arg">nested</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Counts number of positive elements of self._n._data along axis.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact._countContacted">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#countPositive" class="summary-sig-name">countPositive</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">arr</span>,
+        <span class="summary-sig-arg">indices</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">axis</span>=<span class="summary-sig-default">0</span>)</span><br />
+      Counts positive entries of array arr at indices along axis.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.countPositive">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#findLinkedBoundaries" class="summary-sig-name">findLinkedBoundaries</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">distance</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">exact</code><code class="variable-quote">'</code></span>)</span><br />
+      Returns ids of boundaries that are linked (through segments) to and 
+      are at (arg) distance to each of the boundaries specified by arg ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.findLinkedBoundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#findLinkedSegments" class="summary-sig-name">findLinkedSegments</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">distance</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">exact</code><code class="variable-quote">'</code></span>)</span><br />
+      Returns ids of segments that are linked (through boundaries) to and 
+      are at (arg) distance to each of the segments specified by arg ids.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.findLinkedSegments">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#recast" class="summary-sig-name">recast</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">obj</span>)</span><br />
+      Returns a new instance of this class and sets all attributes of the 
+      new object to the attributes of obj.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.recast">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.segmentation.contact.Contact-class.html#segments" class="summary-name">segments</a><br />
+      Ids of all segments
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.segmentation.contact.Contact-class.html#boundaries" class="summary-name">boundaries</a><br />
+      Ids of all boundaries
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.segmentation.contact.Contact-class.html#maxSegment" class="summary-name">maxSegment</a><br />
+      Max segment id
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.segmentation.contact.Contact-class.html#maxBoundary" class="summary-name">maxBoundary</a><br />
+      Max boundary id
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">nBoundaries</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">nSegments</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">maskValue</span>=<span class="sig-default">True</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Initializes data structure that holds number of contacts between given
+  segments and boundaries, as well as some attributes.</p>
+  <p>Elements of maskValue that are True are masked (not available), 
+  following the scheme of numpy.ma. Regardless of the value of maskValue 
+  argument given, mask for all elements with index 0 is set.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="recast"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">recast</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">obj</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.recast">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns a new instance of this class and sets all attributes of the 
+  new object to the attributes of obj.</p>
+  <p>Useful for objects of this class loaded from a pickle that were 
+  pickled before some of the current methods of this class were coded. In 
+  such a case the returned object would contain the same attributes as the 
+  unpickled object but it would accept recently coded methods.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="_initializeData"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_initializeData</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">shape</span>=<span class="sig-default"><code class="variable-group">(</code>1<code class="variable-op">, </code>1<code class="variable-group">)</code></span>,
+        <span class="sig-arg">maskValue</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact._initializeData">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Initializes data structure that holds number of contacts between given
+  segments and boundaries.</p>
+  <p>Elements of maskValue that are True are masked (not available), 
+  following the scheme of numpy.ma. Regardless of the value of maskValue 
+  argument given, mask for all elements with index 0 is set.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="_enlargeData"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_enlargeData</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">shape</span>,
+        <span class="sig-arg">maskValue</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact._enlargeData">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Enlarges the size of the data structure.</p>
+  <p>The shape of the new structure is the max in each dimension between 
+  shape and the shape of the current (old) data shape. Mask is set for all 
+  newly added elements with index 0.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getSegments"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getSegments</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.getSegments">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns (ndarray) segment ids of all segments that have at least one 
+  unmasked element.</p>
+  <p>Note: perhaps this should be changed to return ids of segments that 
+  contact at lease one boundary.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getBoundaries"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getBoundaries</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.getBoundaries">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns (ndarray) boundary ids of all boundaries that have at least 
+  one unmasked element.</p>
+  <p>Note: perhaps this should be changed to return ids of boundaries that 
+  contact at lease one segment.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="add"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">contacts</span>,
+        <span class="sig-arg">shift</span>=<span class="sig-default">0</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.add">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds contacts to the current contacts. Ids of segments in (argument) 
+  contacts are shifted by (argument) shift.</p>
+  <p>Argumens:</p>
+  <ul>
+    <li>
+      contacts: instance of Contacts
+    </li>
+    <li>
+      shift: all segment ids in contacts are increased by this amount
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="addBoundary"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addBoundary</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">id</span>,
+        <span class="sig-arg">nContacts</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.addBoundary">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds contact data given in nContacts for boundary with id.</p>
+  <p>Argument nContacts has to be a list (or a ndarray) indexed by segment 
+  ids. That is, nContacts[3] is the number of contacts this boundary makes 
+  with segment with ids 3 (nContacts[0] is not used).</p>
+  <p>If the length of nContacts is larger than the max_segmentId+1 the max 
+  segmentId (as returned by getMaxSegment() is increased to hold all 
+  segments. If it is smaller, the missing nContact elements are set to 
+  0.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      id: boundary id whose contacts are added
+    </li>
+    <li>
+      nContacts: list or ndarray containing number of contacts for each 
+      segment (indexed by segmentIds)
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="addSegment"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addSegment</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">id</span>,
+        <span class="sig-arg">nContacts</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.addSegment">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds contact data given in nContacts for segment with id.</p>
+  <p>Argument nContacts has to be a list (or a ndarray) indexed by boundary
+  ids. That is, nContacts[3] is the number of contacts this segment makes 
+  with boundary with ids 3 (nContacts[0] is not used).</p>
+  <p>If the length of nContacts is larger than the max_boundaryId+1 the max
+  boundaryId (as returned by getMaxBoundary() is increased to hold all 
+  boundaries. If it is smaller, the missing nContact elements are set to 
+  0.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      id: segment id whose contacts are added
+    </li>
+    <li>
+      nContacts: list or ndarray containing number of contacts for each 
+      boundary (indexed by boundaryIds)
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setN"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setN</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">boundaryId</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">segmentId</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">nContacts</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.setN">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds specified contacts to the contact data structure.</p>
+  <p>The number of contacts nContacts, between bounday boundaryId and 
+  segment segmentId is added to the contact data structure.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      boundaryId: a boundary
+    </li>
+    <li>
+      segmentId: a segment
+    </li>
+    <li>
+      nContacts: number of contacts between the boundary and the segment
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getN"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getN</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">boundaryId</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">segmentId</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.getN">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns number of contacts between segment segmentId and boundary 
+  boundaryId.</p>
+  <p>If boundaryId (segmentId) is None, number of contacts of the segmentId
+  (boundaryId) with all boundaries (segments) is returned. The array 
+  returned is indexed by boundaryId (segmentId), so the element at position
+  0 has no meaning.</p>
+  <p>At least one of the arguments need to be supplied.</p>
+  <p>Returns a single integer or an array containig number(s) of 
+  contacts.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeBoundaries"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeBoundaries</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.removeBoundaries">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes all contacts of boundaries with ids.</p>
+  <p>Boundaries with ids are only masked (the contact data is not removed),
+  so they can be recovered if needed.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="keepBoundaries"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">keepBoundaries</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.keepBoundaries">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes all contacts of boundaries whose ids are not in ids.</p>
+  <p>Boundaries with ids are only masked (the contact data is not removed),
+  so they can be recovered if needed.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeSegments"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeSegments</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.removeSegments">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes all contacts of segments with ids.</p>
+  <p>Segments with ids are only masked (the contact data is not removed), 
+  so they can be recovered if needed.</p>
+  <p>Note: if it's needed to reduce the size of the contact data structure 
+  (self._n) use reorderSegments().</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="keepSegments"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">keepSegments</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.keepSegments">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes all contacts of segments whose ids are not in ids.</p>
+  <p>Segments with ids are only masked (the contact data is not removed), 
+  so they can be recovered if needed.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeContact"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeContact</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">segmentId</span>,
+        <span class="sig-arg">boundaryId</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.removeContact">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes contact between boundaryId and segmentID.</p>
+  <p>The contact is only masked (the contact data is not removed), so it 
+  can be recovered if needed.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="reorderSegments"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">reorderSegments</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">order</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.reorderSegments">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Reorders segments in both contact data structure (self._n) and contact
+  labels (self.labels) according to the order dictionary.</p>
+  <p>Only the elements corresponding to the new ids (and 0) are set. 
+  Elements corresponding to old ids that are not given in order are 
+  removed.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      order: dictionary where keys are old ids and values are new ids.
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="orderSegmentsByContactedBoundaries"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">orderSegmentsByContactedBoundaries</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">argsort</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.orderSegmentsByContactedBoundaries">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+There are two modes. If argsort is False, orders segments according
+to the boundaries contacted by the segments (changes the contacts
+data structure). If argsort is True, behaves like ndarray.argsort,
+that is the segments are not reordered, but an array that can be used
+to order them is returned.
+
+Only the existing (not masked) segments are reordered.
+
+For example, if:
+
+  segment 1 contacts boundaries [2,3]
+  segment 3 contacts [1,2,5]
+  segment 4 contacts [1,4]
+
+then the segment ids are rearanged as follows:
+
+  3 -&gt; 1
+  4 -&gt; 3
+  1 -&gt; 4
+
+and the dictionary {1:4, 3:1, 4:3} is returned if argsort is False.
+Otherwise [2, 0, 1] is returned.
+
+Argument:
+  - argsort: if True the segments are not reordered, only the array
+  that can be used for sorting is returned, similar to what
+  ndarray.argsort does.  
+
+Returns:
+  - if argsort is False: dictionary where keys are old ids and values
+  are new ids.
+  - if argsort is True: array that can be used for sorting (like
+  ndarray.argsort)
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="compactify"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">compactify</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.compactify">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Saves data structure in a compact form. This is only useful for 
+  storing an object, because all methods that require access to the data 
+  structure need the data in the expanded form. The data can be expanded by
+  self.expand().</p>
+  <p>Sets:</p>
+  <ul>
+    <li>
+      self.compactified: flag indicating if data is in the compact form
+    </li>
+    <li>
+      self._boundaries: boundary ids (as given by self.boundaries)
+    </li>
+    <li>
+      self._segments: boundary ids (as given by self.segments)
+    </li>
+    <li>
+      self._n: (expanded data) set to None
+    </li>
+    <li>
+      self._compact: data in the compact form
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="expand"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">expand</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.expand">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Expands data structure form the compact (using self.compactify()) to 
+  the normal (expanded) form. If self.compactified is False, or if it 
+  doesn't exist, this method doesn't do anything.</p>
+  <p>Sets:</p>
+  <ul>
+    <li>
+      self.compactified: flag indicating if data is in the compact form
+    </li>
+    <li>
+      self._boundaries: to None
+    </li>
+    <li>
+      self._segments: to None
+    </li>
+    <li>
+      self._n: expanded data
+    </li>
+    <li>
+      self._compact: (data in the compact form) to None
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="findContacts"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">findContacts</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">segment</span>,
+        <span class="sig-arg">segmentIds</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">boundary</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">boundaryIds</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">contactStructEl</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">saveLabels</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">countStructEl</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">count</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.findContacts">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Finds (but doesn't count) contacts between each segment and each 
+  boundary.</p>
+  <p>A contact is comosed of mutually connected elements of segment that 
+  lie in the neighborhood of a boundary.</p>
+  <p>For each contact found between a segment and a boundary 1 is entered 
+  to the data structure that holds number of contacts. Flag self.counted is
+  set to False to indicate that the contact were not counted.</p>
+  <p>If saveLabels is true, the contacts are labeled by segments and the 
+  contacts image (labels) is saved in (Connected object) self.labels.</p>
+  <p>Attribute self.segment is set to arg segment.</p>
+  <p>Attribute self.segmentIds is set to the first value found in: 
+  segmentIds, segment.segmentIds, self.segmentIds.</p>
+  <p>Attribute self.boundary is set to the first value found in: boundary, 
+  self.boundary.</p>
+  <p>Attribute self.boundaryIds is set to the first value found in: 
+  boundaryIds, boundary.boundaryIds, self.boundaryIds.</p>
+  <p>Note: does not respect inset of segment and boundary objects.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      segment: instance of class Segment defining all segments, Required 
+      unless self.segment is already set
+    </li>
+    <li>
+      segmentIds: list (or an int) of segment ids
+    </li>
+    <li>
+      boundary: instance of class Segment defining boundaries
+    </li>
+    <li>
+      boundaryIds: list (or an int) of boundary ids
+    </li>
+    <li>
+      contactStructEl: structure element used to find contacts (default 
+      connectivity = 1, or 6 neighbors in 3D )
+    </li>
+    <li>
+      saveLabels: flag indicating if an array of contacts is saved
+    </li>
+    <li>
+      countStructEl: structure element used to count contacts (default 
+      connectivity = ndim, or 26 neighbors in 3D )
+    </li>
+    <li>
+      count: flag indicating if contacts are also counted (or just 
+      detected)
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="countContacts"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">countContacts</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">labels</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">contactStructEl</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.countContacts">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Work in progress.</p>
+  <p>Counts number of contacts.</p>
+  <p>Use findCOntacts instead?</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setSegment"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setSegment</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">segment</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.setSegment">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets attributes (ndarray) segment, segmentIds from arguments.</p>
+  <p>Attribute self.segmentIds is set to argument ids if specified (no type
+  change), otherwise to segment.ids. If segment.ids is also None, the 
+  current self.segmentIds is retained.</p>
+  <p>Agruments:</p>
+  <ul>
+    <li>
+      segment: instance of Segment or ndarray
+    </li>
+    <li>
+      ids: iterable (ndarray, flat or nested list) of segment ids.
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setBoundary"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setBoundary</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">boundary</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.setBoundary">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets attributes (ndarray) boundary, boundaryIds from arguments.</p>
+  <p>Attribute self.boundaryIds is set to argument ids if specified (no 
+  type change), otherwise to boundary.ids. If boundary.ids is also None, 
+  the current self.boundaryIds is retained.</p>
+  <p>Agruments:</p>
+  <ul>
+    <li>
+      boundary: instance of Segment or ndarray defining boundaries
+    </li>
+    <li>
+      ids: iterable (ndarray, flat or nested list) of boundary ids.
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setStructEls"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setStructEls</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">segment</span>,
+        <span class="sig-arg">contactStructEl</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">countStructEl</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.setStructEls">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>By default contactStructEl has connectivity 1, and countStructEl has 
+  connectivity equal to ndim.</p>
+  <p>Sets self.contactStructEl and countStructEl.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      segment: (ndarray) segment, used only to get ndim
+    </li>
+    <li>
+      contactStructEl: structuring element used for contact detetion
+    </li>
+    <li>
+      countStructEl: structuring element used for counting contacts
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="findSegments"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">findSegments</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">boundaryIds</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">nBoundary</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">at_least</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">update</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.findSegments">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Returns segment ids for all segements that satisfy the criterium
+specified by boundaryIds, nBoundary and mode arguments.
+
+  1) If boundaryIds is given, but nBoundary isn't, segments that contact
+  all boundaries specified as elements of boundaryIds are selected.
+
+  2) If boundaryIds isn't given, but nBoundary is, segments that contact
+  nBoundary boundaries are selected.
+
+  3) If both boundaryIds and nBoundary are given, segments that contact
+  nBoundary of the boundaries specified as elements of boundaryIds are
+  selected.
+
+  4) If both boundaryIds and nBoundary are None, ids of all segments
+  are returned
+
+Each of the above conditions is modified by mode. Mode='exact' means
+that the segments whose ids are returned satisfy the condition exactly.
+That is, these segments contact all boundaries in boundaryIds and no
+other boundary, or exactly nBoundary boundaries. In mode='at_least'
+('at_most') all the segments contact at least (at most) all boundaries
+with boundaryIds but may contact other boundaries also, or the segments
+contact nBoundary or more boundaries.
+
+Example:
+
+  findSegments(boundaryIds=[1,3,6], nBoundary=2, mode='exact')
+
+returns ids of segments that contact only two of the boundaries 1,3 or 6
+and do not contact any other boundary.
+
+Furthemore, boundaryIds can be a nested list. In that case, boundary ids
+that are given in a sub-list are taken in the 'or' sense, as if those
+boundaries were merged together. 
+
+Another example:
+
+  findSegments(boundaryIds=[[1,2],4], nBoundary=2, mode='exact')
+
+returns ids of segments that contact boundary 4 and any (or both) of
+1 and 2 and none of the other boundaries.
+
+If update=True the other segments are removed from the contacts data
+structure.
+
+Arguments:
+  - boundaryIds: (nested) list or ndarray of boundary ids that are
+  checked for contact with segments. Can be given as int if only one id.
+  - nBoundary: (int) number of contacted boundaries
+  - mode: 'exact' (or 'eq'), 'at_least' (or 'ge'), or 'at_most' (or 'le')
+  - update: flag indicating if the contact data structure is updated
+
+Returns: ndarray of segments that satisfy the condition.
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="findBoundaries"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">findBoundaries</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">segmentIds</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">nSegment</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">at_least</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">update</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.findBoundaries">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Returns boundary ids for all segements that satisfy the criterium
+specified by segmentIds, nSegment and mode arguments.
+
+  1) If segmentIds is given, but nSegment isn't, boundaries that contact
+  all segments specified as elements of segmentIds are selected.
+
+  2) If segmentIds isn't given, but nSegment is, boundaries that contact
+  nSegment segments are selected.
+
+  3) If both segmentIds and nSegment are given, boundaries that contact
+  nSegment of the segments specified as elements of  segmentIds are
+  selected.
+
+  4) If both segmentIds and nSegment are None, all boundary ids
+  are returned.
+
+Each of the above conditions is modeified by mode. Mode='exact' means
+that the boundaries whose ids are returned satisfy the condition 
+exactly. That is, these boundaries contact all segments in segmentIds 
+and no other segment, or exactly nSegment segments. In mode='at_least'
+('at_most') all the boundaries contact at least (at most) all segments
+with segmentIds but may contact other segments also, or the boundaries
+contact nSegment or more segments.
+
+Example:
+
+  findBoundaries(segmentIds=[1,3,6], nSegment=2, mode='exact')
+
+returns ids of boundaries that contact only two of the segments 1,3 or 6
+and do not contact any other segment.
+
+Furthemore, segmentIds can be a nested list. In that case, segment ids
+that are given in a sub-list are taken in the 'or' sense, as if those
+segments were merged together. 
+
+Another example:
+
+  findBoundaries(segmentIds=[[1,2],4], nSegment=2, mode='exact')
+
+returns ids of boundaries that contact segment 4 and any (or both) of
+1 and 2 and none of the other segments.
+
+If update=True the other boundaries are removed from the contacts data
+structure.
+
+Arguments:
+  - segmentIds: list of segment ids that are checked for contact
+  with boundaries. Can be given as int if only one id.
+  - nSegment: (int) number of contacted segments
+  - mode: 'exact' (or 'eq'), 'at_least' (or 'ge'), or 'at_most' 
+  (or 'le')
+  - update: flag indicating if the contact data structure is updated
+
+Returns: ndarray of boundaries that satisfy the condition.
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="countContactedBoundaries"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">countContactedBoundaries</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.countContactedBoundaries">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates and returns the number of boundaries, among those specified
+  by arg ids, that contact each existing segment.</p>
+  <p>Returns number of contacted boundaries with given ids for each 
+  segment.</p>
+  <p>Masked contacts are not counted. Ids can be a nested list in which 
+  case each sublist is counted as a single boundary.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      ids: (list) boundary ids. If None, all boundaries are used. Note: in 
+      numpy 1.9.0+ single int can be specified.
+    </li>
+  </ul>
+  <p>Returns: masked array indexed by segment ids, where each element 
+  specifies the number of boundaries contacted by the corresponding 
+  segment. Non-existing boundaries specified by arg ids are ignored.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="countContactedSegments"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">countContactedSegments</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.countContactedSegments">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates and returns the number of segments among those specified by
+  arg ids that contact each existing boundary.</p>
+  <p>Masked contacts are not counted. Ids can be a nested list in which 
+  case each sublist is counted as a single segment.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      ids: (list) segments ids. If None, all segments are used. Note: in 
+      numpy 1.9.0+ single int can be specified.
+    </li>
+  </ul>
+  <p>Returns: masked array indexed by boundary ids, where each element 
+  specifies the number of segments contacted by the corresponding boundary.
+  Non-existing segments specified by arg ids are ignored.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="_countContacted"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_countContacted</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">indices</span>,
+        <span class="sig-arg">axis</span>,
+        <span class="sig-arg">nested</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact._countContacted">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Counts number of positive elements of self._n._data along axis.</p>
+  <p>Only the elements that are not masked by self._n._mask and have 
+  indices along axis are counted.</p>
+  <p>Elements of indices can be lists, in which case they are considered to
+  form one boundary/segment.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      axis: axis along which the elements are counted (0 or 1)
+    </li>
+    <li>
+      indices: (list) elements with this indices along axis are used. If 
+      None, all elements are used. Note: in numpy 1.9.0+ single int can be 
+      specified.
+    </li>
+    <li>
+      nested: flag indication if indices is a nested list
+    </li>
+  </ul>
+  <p>Returns: masked array of calculated numbers. Non-existing boundaries /
+  segments specified by arg ids are ignored.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="countPositive"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">countPositive</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">arr</span>,
+        <span class="sig-arg">indices</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">axis</span>=<span class="sig-default">0</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.countPositive">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Counts positive entries of array arr at indices along axis.</p>
+  <p>If indices is None all integers starting with 1 and ending with the 
+  size of arr in the axis dimension are used</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      arr: array
+    </li>
+    <li>
+      indices: list of indices
+    </li>
+    <li>
+      axis: axis
+    </li>
+  </ul>
+  <p>Returns ndim-1 dimensional array</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="findLinkedBoundaries"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">findLinkedBoundaries</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">distance</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">exact</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.findLinkedBoundaries">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns ids of boundaries that are linked (through segments) to and 
+  are at (arg) distance to each of the boundaries specified by arg ids.</p>
+  <p>The distance between two boundaries is defined as the smallest number 
+  of segments needed to link them. For example, the distance between 
+  boundaries that contact the same segment is 1 while the boundaries that 
+  are connected through two segments (and one other boundary) are at 
+  distance 2.</p>
+  <p>If (arg) mode is 'exact' only the boundaries that are exactly at (arg)
+  distance from the specified boundaries are returned. If (arg) mode is 
+  'all' boundaries at or below (arg) distance are returned.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      ids: boundary ids
+    </li>
+    <li>
+      distance: distance between boundaries
+    </li>
+    <li>
+      mode: 'exact' for exact distance or 'all' eact or lower distance
+    </li>
+  </ul>
+  <p>Return: array of ids if arg ids is a single number, or a list of 
+  arrays if arg ids is a list, tuple or ndarray, where each element 
+  correspond to the id in the argument ids at the same position.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="findLinkedSegments"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">findLinkedSegments</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">distance</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">exact</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.contact-pysrc.html#Contact.findLinkedSegments">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns ids of segments that are linked (through boundaries) to and 
+  are at (arg) distance to each of the segments specified by arg ids.</p>
+  <p>The distance between two segments is defined as the smallest number of
+  boundaries needed to link them. For example, the distance between 
+  segments that contact the same boundary is 1 while the segments that are 
+  connected through two boundaries (and one other segment) are at distance 
+  2.</p>
+  <p>If (arg) mode is 'exact' only the segments that are exactly at (arg) 
+  distance from the specified segments are returned. If (arg) mode is 'all'
+  segments at or below (arg) distance are returned.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      ids: segment ids
+    </li>
+    <li>
+      distance: distance between segments
+    </li>
+    <li>
+      mode: 'exact' for exact distance or 'all' eact or lower distance
+    </li>
+  </ul>
+  <p>Return: array of ids if arg ids is a single number, or a list of 
+  arrays if arg ids is a list, tuple or ndarray, where each element 
+  correspond to the id in the argument ids at the same position.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== PROPERTY DETAILS ==================== -->
+<a name="section-PropertyDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Property Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-PropertyDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="segments"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">segments</h3>
+  <p>Ids of all segments</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#getSegments" class="summary-sig-name">getSegments</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Returns (ndarray) segment ids of all segments that have at least one 
+      unmasked element.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="boundaries"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">boundaries</h3>
+  <p>Ids of all boundaries</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#getBoundaries" class="summary-sig-name">getBoundaries</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Returns (ndarray) boundary ids of all boundaries that have at least 
+      one unmasked element.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="maxSegment"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">maxSegment</h3>
+  <p>Max segment id</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#getMaxSegment" class="summary-sig-name">getMaxSegment</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Returns the highest segment id.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="maxBoundary"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">maxBoundary</h3>
+  <p>Max boundary id</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.contact.Contact-class.html#getMaxBoundary" class="summary-sig-name">getMaxBoundary</a>(<span class="summary-sig-arg">self</span>)</span>
+        - Returns the highest boundary id.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

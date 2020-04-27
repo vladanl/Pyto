@@ -1,0 +1,830 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.segmentation.distance_to.DistanceTo</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.segmentation-module.html">Package&nbsp;segmentation</a> ::
+        <a href="pyto.segmentation.distance_to-module.html">Module&nbsp;distance_to</a> ::
+        Class&nbsp;DistanceTo
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.segmentation.distance_to.DistanceTo-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class DistanceTo</h1><p class="nomargin-top"><span class="codelink"><a href="pyto.segmentation.distance_to-pysrc.html#DistanceTo">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_pyto_seg_9" name="uml_class_diagram_for_pyto_seg_9">
+<area shape="rect" id="node1_26" href="pyto.segmentation.distance_to.DistanceTo-class.html#distance" title="Distances from segment to their closest regions" alt="" coords="17,441,609,461"/>
+<area shape="rect" id="node1_27" href="pyto.segmentation.distance_to.DistanceTo-class.html#closestRegion" title="ClosestRegions from segment to their closest regions" alt="" coords="17,461,609,481"/>
+<area shape="rect" id="node1_28" href="pyto.segmentation.distance_to.DistanceTo-class.html#__init__" title="Initializes attributes." alt="" coords="17,484,609,504"/>
+<area shape="rect" id="node1_29" href="pyto.segmentation.distance_to.DistanceTo-class.html#getDistance" title="Get distance to closest region for each segment." alt="" coords="17,504,609,524"/>
+<area shape="rect" id="node1_30" href="pyto.segmentation.distance_to.DistanceTo-class.html#setDistance" title="Sets distance to closest region for each segment." alt="" coords="17,524,609,544"/>
+<area shape="rect" id="node1_31" href="pyto.segmentation.distance_to.DistanceTo-class.html#getClosestRegion" title="Gets closest region id for each segment." alt="" coords="17,544,609,564"/>
+<area shape="rect" id="node1_32" href="pyto.segmentation.distance_to.DistanceTo-class.html#setClosestRegion" title="Sets closest region id for each segment." alt="" coords="17,564,609,584"/>
+<area shape="rect" id="node1_33" href="pyto.segmentation.distance_to.DistanceTo-class.html#calculate" title="Calculates distance of each segment to its closest region." alt="" coords="17,584,609,604"/>
+<area shape="rect" id="node1_34" href="pyto.segmentation.distance_to.DistanceTo-class.html#getDistanceToRegions" title="Calculates distance of each segment to each region." alt="" coords="17,604,609,624"/>
+<area shape="rect" id="node1" href="pyto.segmentation.distance_to.DistanceTo-class.html" title="Distance from segments to specified region(s)" alt="" coords="5,417,621,631"/>
+<area shape="rect" id="node2_35" href="pyto.segmentation.features.Features-class.html#ids" title="Ids" alt="" coords="119,30,507,50"/>
+<area shape="rect" id="node2_36" href="pyto.segmentation.features.Features-class.html#ndim" title="Dimensionality of data" alt="" coords="119,50,507,70"/>
+<area shape="rect" id="node2_37" href="pyto.segmentation.features.Features-class.html#maxId" title="Maximum id" alt="" coords="119,70,507,90"/>
+<area shape="rect" id="node2_38" href="pyto.segmentation.features.Features-class.html#setSegments" title="Sets attribute segments and ids." alt="" coords="119,93,507,113"/>
+<area shape="rect" id="node2_39" href="pyto.segmentation.features.Features-class.html#getIds" title="Returns ids" alt="" coords="119,113,507,133"/>
+<area shape="rect" id="node2_40" href="pyto.segmentation.features.Features-class.html#setIds" title="Sets self.ids, If data is internally stored in the compact form, the data &#160;is changed appropriately." alt="" coords="119,133,507,153"/>
+<area shape="rect" id="node2_41" href="pyto.segmentation.features.Features-class.html#changeIds" title="Sets self.ids to arg ids." alt="" coords="119,153,507,173"/>
+<area shape="rect" id="node2_42" href="pyto.segmentation.features.Features-class.html#findIds" title="Returns ids and max id." alt="" coords="119,173,507,193"/>
+<area shape="rect" id="node2_43" href="pyto.segmentation.features.Features-class.html#getNdim" title="Gets ndim from self.data, or if the data does not exists returns &#160;self._ndim." alt="" coords="119,193,507,213"/>
+<area shape="rect" id="node2_44" href="pyto.segmentation.features.Features-class.html#setNdim" title="Sets self._ndim." alt="" coords="119,213,507,233"/>
+<area shape="rect" id="node2_45" href="pyto.segmentation.features.Features-class.html#getMaxId" title="Returns maximum id, or 0 if ids don&#39;t exist." alt="" coords="119,233,507,253"/>
+<area shape="rect" id="node2_46" href="pyto.segmentation.features.Features-class.html#initializeData" title="Sets ids and all data structures to length 0 ndarrays" alt="" coords="119,253,507,273"/>
+<area shape="rect" id="node2_47" href="pyto.segmentation.features.Features-class.html#reorder" title="Reorders elements of data array(s)." alt="" coords="119,273,507,293"/>
+<area shape="rect" id="node2_48" href="pyto.segmentation.features.Features-class.html#merge" title="Merges data of object new with the data of this instance." alt="" coords="119,293,507,313"/>
+<area shape="rect" id="node2_49" href="pyto.segmentation.features.Features-class.html#add" title="Adds data, The same as self.merge but mode=&#39;add&#39;." alt="" coords="119,313,507,333"/>
+<area shape="rect" id="node2_50" href="pyto.segmentation.features.Features-class.html#expand" title="Expands dimension of specified attributes (given by arg names or by &#160;self.dataNames) by adding an axis before arg axis." alt="" coords="119,333,507,353"/>
+<area shape="rect" id="node2_51" href="pyto.segmentation.features.Features-class.html#restrict" title="Effectivly removes data that correspond to ids that are not specified in &#160;the arg ids." alt="" coords="119,373,507,393"/>
+<area shape="rect" id="node2" href="pyto.segmentation.features.Features-class.html" title="Should not be used directly, please use subclasses of this class." alt="" coords="106,5,518,399"/>
+</map>
+  <img src="uml_class_diagram_for_pyto_seg_9.gif" alt='' usemap="#uml_class_diagram_for_pyto_seg_9" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<pre class="literalblock">
+
+Distance from segments to specified region(s)
+
+Important attributes:
+
+  - distance: distance for each segment
+  - closestRegion: id of the closest region, for each segment
+
+Basic usage:
+
+  # caclulate
+  dist = DistanceTo(segments=segment_object)
+  dist.getDistance(regionIds, regions)
+
+  # show results
+  dist.distance
+  dist.closestRegion
+
+Note: unlike other classes that inherit from Features, the data of this
+class is internally storred in a compact form. That is, elements of 
+self.ids and self._distance directly correspond to each other, both arrays
+are compact. On the other hand, self.distance is dynamically generated 
+(from self._distance) and is indexed by ids (self.distance[i] is the 
+distance for the i-th segment). Important consequence is that changing 
+self.ids effectively changes data (self.distance). The same is true for 
+self.closestRegion and self._closestRegion.
+
+</pre>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.distance_to.DistanceTo-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">segments</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Initializes attributes.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.distance_to-pysrc.html#DistanceTo.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.distance_to.DistanceTo-class.html#getDistance" class="summary-sig-name">getDistance</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Get distance to closest region for each segment.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.distance_to-pysrc.html#DistanceTo.getDistance">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.distance_to.DistanceTo-class.html#setDistance" class="summary-sig-name">setDistance</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">distance</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Sets distance to closest region for each segment.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.distance_to-pysrc.html#DistanceTo.setDistance">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.distance_to.DistanceTo-class.html#getClosestRegion" class="summary-sig-name">getClosestRegion</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Gets closest region id for each segment.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.distance_to-pysrc.html#DistanceTo.getClosestRegion">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.distance_to.DistanceTo-class.html#setClosestRegion" class="summary-sig-name">setClosestRegion</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">closestRegion</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Sets closest region id for each segment.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.distance_to-pysrc.html#DistanceTo.setClosestRegion">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.distance_to.DistanceTo-class.html#calculate" class="summary-sig-name">calculate</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">regionIds</span>,
+        <span class="summary-sig-arg">regions</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">segments</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">mean</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">surface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Calculates distance of each segment to its closest region.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.distance_to-pysrc.html#DistanceTo.calculate">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.segmentation.features.Features-class.html">features.Features</a></code></b>:
+      <code><a href="pyto.segmentation.features.Features-class.html#add">add</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#changeIds">changeIds</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#expand">expand</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#extractOne">extractOne</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#findIds">findIds</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#getIds">getIds</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#getMaxId">getMaxId</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#getNdim">getNdim</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#initializeData">initializeData</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#merge">merge</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#nameIds">nameIds</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#reorder">reorder</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#restrict">restrict</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#setIds">setIds</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#setNdim">setNdim</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#setSegments">setSegments</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.segmentation.distance_to.DistanceTo-class.html#getDistanceToRegions" class="summary-sig-name">getDistanceToRegions</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">segments</span>,
+        <span class="summary-sig-arg">segmentIds</span>,
+        <span class="summary-sig-arg">regions</span>,
+        <span class="summary-sig-arg">regionIds</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">mean</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">surface</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Calculates distance of each segment to each region.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.segmentation.distance_to-pysrc.html#DistanceTo.getDistanceToRegions">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.segmentation.distance_to.DistanceTo-class.html#distance" class="summary-name">distance</a><br />
+      Distances from segment to their closest regions
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pyto.segmentation.distance_to.DistanceTo-class.html#closestRegion" class="summary-name">closestRegion</a><br />
+      ClosestRegions from segment to their closest regions
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="pyto.segmentation.features.Features-class.html">features.Features</a></code></b>:
+      <code><a href="pyto.segmentation.features.Features-class.html#ids">ids</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#maxId">maxId</a></code>,
+      <code><a href="pyto.segmentation.features.Features-class.html#ndim">ndim</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">segments</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.distance_to-pysrc.html#DistanceTo.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Initializes attributes.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      segments: (Segment) segments
+    </li>
+    <li>
+      ids: segment ids (if None segments.ids used)
+    </li>
+  </ul>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getDistance"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getDistance</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.distance_to-pysrc.html#DistanceTo.getDistance">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Get distance to closest region for each segment. Requires self.ids to 
+  be set properly. If arg ids is specified it is used instead of 
+  self.ids.</p>
+  <p>If ids is None, None is returned. If ids is [], 0-length ndarray is 
+  returned.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      ids: ids, if not specified self.ids is used
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setDistance"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setDistance</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">distance</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.distance_to-pysrc.html#DistanceTo.setDistance">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets distance to closest region for each segment. Requires self.ids to
+  be set properly. If arg ids is specified it is used instead of 
+  self.ids.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      distance: (ndarray or list) distances indexed by ids
+    </li>
+    <li>
+      ids: ids, if not specified self.ids is used
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getClosestRegion"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getClosestRegion</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.distance_to-pysrc.html#DistanceTo.getClosestRegion">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets closest region id for each segment. Requires self.ids to be set 
+  properly. If arg ids is specified it is used instead of self.ids.</p>
+  <p>If ids is None, None is returned. If ids is [], 0-length ndarray is 
+  returned.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      ids: ids, if not specified self.ids is used
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setClosestRegion"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setClosestRegion</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">closestRegion</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.distance_to-pysrc.html#DistanceTo.setClosestRegion">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets closest region id for each segment. Requires self.ids to be set 
+  properly. If arg ids is specified it is used instead of self.ids.</p>
+  <p>Argument:</p>
+  <ul>
+    <li>
+      closestRegion: (ndarray or list) closest region ids indexed by 
+      self.ids (segment ids)
+    </li>
+    <li>
+      ids: ids, if not specified self.ids is used
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="calculate"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">calculate</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">regionIds</span>,
+        <span class="sig-arg">regions</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">segments</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">ids</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">mean</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">surface</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.distance_to-pysrc.html#DistanceTo.calculate">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates distance of each segment to its closest region.</p>
+  <p>Regions are specified by (Image or ndarray) region and regionIds. If 
+  (arg) region is not specifed this instance is used. If regionIds is not 
+  given, the region is defined as all positive elements of region 
+  array.</p>
+  <p>Takes into account positioning of segments and regions.</p>
+  <p>If surfaces &gt; 0, only the surfaces (of thickness given by arg 
+  surface) of the segments are considered. Otherwise whole segments are 
+  taken into account. In any case the full region is used.</p>
+  <p>If mode is 'center', shortest distances between the region and segment
+  centers (note that center may lay outside the segment) are 
+  calculated.</p>
+  <p>If mode is 'min'/'max'/'mean'/'median', the shortest distance between 
+  each (surface, if arg surface is not None) element of segments and the 
+  region are calculated first, and then the min/max/mean/median of these 
+  values is found for each segment separately. Finally, the closest region 
+  for each segment is found.</p>
+  <p>If more than one region id is given (arg regionIds is a list with 
+  &gt;1 element) the distance between a segment and each region is 
+  calculated first (according to the arg mode) and then the closest region 
+  is found. Note that in case of mean / median mode this means that the 
+  mean / median is calculated to one (closest) region.</p>
+  <p>If ids are not given, distances to all segments are calculated.</p>
+  <p>If the distance to a segment can not be calculated (if the segments 
+  does not exist, for example) the result for that segment is set to 
+  -1.</p>
+  <p>Uses self.getDistanceToRegions().</p>
+  <p>Sets:</p>
+  <ul>
+    <li>
+      self.distance: ndarray of distances from each segment to its closest 
+      region (indexed by self.ids)
+    </li>
+    <li>
+      self.closestRegion: ndarray of closest region ids for each segment 
+      (indexed by self.ids)
+    </li>
+  </ul>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      segments: (Segment)) segmented image, if None self.segments is used
+    </li>
+    <li>
+      ids: segment ids, if None self.ids is used
+    </li>
+    <li>
+      region: (Segments) regions
+    </li>
+    <li>
+      regionIds: (single int, list, tuple or ndarray) id(s) of the region
+    </li>
+    <li>
+      mode: 'center', 'min', 'max', 'mean' or 'median'
+    </li>
+    <li>
+      surface: thickness of segment surfaces
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getDistanceToRegions"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getDistanceToRegions</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">segments</span>,
+        <span class="sig-arg">segmentIds</span>,
+        <span class="sig-arg">regions</span>,
+        <span class="sig-arg">regionIds</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">mean</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">surface</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.segmentation.distance_to-pysrc.html#DistanceTo.getDistanceToRegions">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates distance of each segment to each region.</p>
+  <p>Segments are specified by args (ndarray) segments and segmentIds. If 
+  segment ids has no elements None is returned. Regions are specified by 
+  args (ndarray) regions and regionIds. If arg regionIds is None, None is 
+  returned. Args segments and regions are ndarrays that are expected to 
+  have the same shape.</p>
+  <p>If surfaces &gt; 0, only the surfaces (of thickness given by arg 
+  surface) of the segments are considered. Otherwise whole segments are 
+  taken into account.</p>
+  <p>If mode is 'center', shortest distances between a region and segment 
+  centers (note that center may lay outside the segment) are 
+  calculated.</p>
+  <p>If mode is 'min'/'max'/'mean'/'median', the shortest distance between 
+  each (surface, if arg surface is not None) element of segments and the 
+  region are calculated first, and then the min/max/mean/median of these 
+  values is found for each segment separately.</p>
+  <p>If the distance to a segment can not be calculated (if the segments 
+  does not exist, for example) the result for that segment is set to 
+  -1.</p>
+  <p>Uses scipy.ndimage.distance_transform_edt.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      segments: (ndarray) segments
+    </li>
+    <li>
+      ids: segment ids
+    </li>
+    <li>
+      region: (Segments) regions
+    </li>
+    <li>
+      regionIds: (single int, list, tuple or ndarray) region ids
+    </li>
+    <li>
+      mode: 'center', 'min', 'max', 'mean' or 'median'
+    </li>
+    <li>
+      surface: thickness of segment surfaces
+    </li>
+  </ul>
+  <p>Returns: distances (2D ndarray where axis 0 corresponds to regions and
+  axis 1 to segments, shape=((len(regionIds), len(segmentIds)) between each
+  segment and each region.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== PROPERTY DETAILS ==================== -->
+<a name="section-PropertyDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Property Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-PropertyDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="distance"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">distance</h3>
+  <p>Distances from segment to their closest regions</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.distance_to.DistanceTo-class.html#getDistance" class="summary-sig-name">getDistance</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>)</span>
+        - Get distance to closest region for each segment.
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.distance_to.DistanceTo-class.html#setDistance" class="summary-sig-name">setDistance</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">distance</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>)</span>
+        - Sets distance to closest region for each segment.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="closestRegion"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">closestRegion</h3>
+  <p>ClosestRegions from segment to their closest regions</p>
+  <dl class="fields">
+    <dt>Get Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.distance_to.DistanceTo-class.html#getClosestRegion" class="summary-sig-name">getClosestRegion</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>)</span>
+        - Gets closest region id for each segment.
+    </dd>
+    <dt>Set Method:</dt>
+    <dd class="value"><span class="summary-sig"><a href="pyto.segmentation.distance_to.DistanceTo-class.html#setClosestRegion" class="summary-sig-name">setClosestRegion</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">closestRegion</span>,
+        <span class="summary-sig-arg">ids</span>=<span class="summary-sig-default">None</span>)</span>
+        - Sets closest region id for each segment.
+    </dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

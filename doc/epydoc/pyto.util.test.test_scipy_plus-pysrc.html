@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.util.test.test_scipy_plus</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.util-module.html">Package&nbsp;util</a> ::
+        <a href="pyto.util.test-module.html">Package&nbsp;test</a> ::
+        Module&nbsp;test_scipy_plus
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.util.test.test_scipy_plus-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="pyto.util.test.test_scipy_plus-module.html">Module pyto.util.test.test_scipy_plus</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-docstring">Tests module pyto.util.scipy_plus.</tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-docstring"># Author: Vladan Lucic</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-docstring"># $Id: test_scipy_plus.py 1062 2014-10-10 15:31:02Z vladan $</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-name">__version__</tt> <tt class="py-op">=</tt> <tt class="py-string">"$Revision: 1062 $"</tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">unittest</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">numpy</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">testing</tt> <tt class="py-keyword">as</tt> <tt class="py-name">np_test</tt>  </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">scipy</tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package pyto=pyto-module.html"><a title="pyto" class="py-name" href="#" onclick="return doclink('link-0', 'pyto', 'link-0');">pyto</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Module pyto.io.util=pyto.io.util-module.html,Package pyto.util=pyto.util-module.html"><a title="pyto.io.util
+pyto.util" class="py-name" href="#" onclick="return doclink('link-1', 'util', 'link-1');">util</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Module pyto.util.scipy_plus=pyto.util.scipy_plus-module.html"><a title="pyto.util.scipy_plus" class="py-name" href="#" onclick="return doclink('link-2', 'scipy_plus', 'link-2');">scipy_plus</a></tt> <tt class="py-keyword">import</tt> <tt class="py-op">*</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"> </tt>
+<a name="TestScipyPlus"></a><div id="TestScipyPlus-def"><a name="L20"></a><tt class="py-lineno">20</tt> <a class="py-toggle" href="#" id="TestScipyPlus-toggle" onclick="return toggle('TestScipyPlus');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="pyto.util.test.test_scipy_plus.TestScipyPlus-class.html">TestScipyPlus</a><tt class="py-op">(</tt><tt class="py-base-class">np_test</tt><tt class="py-op">.</tt><tt class="py-base-class">TestCase</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TestScipyPlus-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="TestScipyPlus-expanded"><a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"> </tt>
+<a name="TestScipyPlus.setUp"></a><div id="TestScipyPlus.setUp-def"><a name="L24"></a><tt class="py-lineno">24</tt> <a class="py-toggle" href="#" id="TestScipyPlus.setUp-toggle" onclick="return toggle('TestScipyPlus.setUp');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.util.test.test_scipy_plus.TestScipyPlus-class.html#setUp">setUp</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TestScipyPlus.setUp-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="TestScipyPlus.setUp-expanded"><a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div><a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"> </tt>
+<a name="TestScipyPlus.test_chisquare_2"></a><div id="TestScipyPlus.test_chisquare_2-def"><a name="L29"></a><tt class="py-lineno">29</tt> <a class="py-toggle" href="#" id="TestScipyPlus.test_chisquare_2-toggle" onclick="return toggle('TestScipyPlus.test_chisquare_2');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="pyto.util.test.test_scipy_plus.TestScipyPlus-class.html#test_chisquare_2">test_chisquare_2</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TestScipyPlus.test_chisquare_2-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="TestScipyPlus.test_chisquare_2-expanded"><a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"><tt class="py-docstring">        Tests chisquare2()</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line">        <tt class="py-comment"># Statistics for the biological sciences, pg 110</tt> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">        <tt class="py-name">chisq</tt><tt class="py-op">,</tt> <tt class="py-name">p</tt> <tt class="py-op">=</tt> <tt id="link-3" class="py-name" targets="Function pyto.util.scipy_plus.chisquare_2()=pyto.util.scipy_plus-module.html#chisquare_2"><a title="pyto.util.scipy_plus.chisquare_2" class="py-name" href="#" onclick="return doclink('link-3', 'chisquare_2', 'link-3');">chisquare_2</a></tt><tt class="py-op">(</tt><tt class="py-name">f_obs_1</tt><tt class="py-op">=</tt><tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">array</tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-number">20</tt><tt class="py-op">,</tt> <tt class="py-number">30</tt><tt class="py-op">]</tt><tt class="py-op">)</tt><tt class="py-op">,</tt>  </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">                               <tt class="py-name">f_obs_2</tt><tt class="py-op">=</tt><tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">array</tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-number">24</tt><tt class="py-op">,</tt> <tt class="py-number">26</tt><tt class="py-op">]</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">                               <tt class="py-name">yates</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line">        <tt class="py-name">np_test</tt><tt class="py-op">.</tt><tt class="py-name">assert_almost_equal</tt><tt class="py-op">(</tt><tt class="py-name">chisq</tt><tt class="py-op">,</tt> <tt class="py-number">0.364</tt><tt class="py-op">,</tt> <tt class="py-name">decimal</tt><tt class="py-op">=</tt><tt class="py-number">2</tt><tt class="py-op">)</tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">        <tt class="py-name">np_test</tt><tt class="py-op">.</tt><tt class="py-name">assert_equal</tt><tt class="py-op">(</tt><tt class="py-name">p</tt><tt class="py-op">&gt;</tt><tt class="py-number">0.25</tt><tt class="py-op">,</tt> <tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line">        <tt class="py-name">np_test</tt><tt class="py-op">.</tt><tt class="py-name">assert_almost_equal</tt><tt class="py-op">(</tt><tt class="py-name">p</tt><tt class="py-op">,</tt> <tt class="py-number">0.546</tt><tt class="py-op">,</tt> <tt class="py-name">decimal</tt><tt class="py-op">=</tt><tt class="py-number">3</tt><tt class="py-op">)</tt> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line">     </tt>
+<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line">        <tt class="py-comment"># Statistics for the biological sciences, pg 111</tt> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">        <tt class="py-name">chisq</tt><tt class="py-op">,</tt> <tt class="py-name">p</tt> <tt class="py-op">=</tt> <tt id="link-4" class="py-name"><a title="pyto.util.scipy_plus.chisquare_2" class="py-name" href="#" onclick="return doclink('link-4', 'chisquare_2', 'link-3');">chisquare_2</a></tt><tt class="py-op">(</tt><tt class="py-name">f_obs_1</tt><tt class="py-op">=</tt><tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">array</tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-number">60</tt><tt class="py-op">,</tt> <tt class="py-number">32</tt><tt class="py-op">,</tt> <tt class="py-number">28</tt><tt class="py-op">]</tt><tt class="py-op">)</tt><tt class="py-op">,</tt>  </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line">                               <tt class="py-name">f_obs_2</tt><tt class="py-op">=</tt><tt class="py-name">numpy</tt><tt class="py-op">.</tt><tt class="py-name">array</tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-number">28</tt><tt class="py-op">,</tt> <tt class="py-number">17</tt><tt class="py-op">,</tt> <tt class="py-number">45</tt><tt class="py-op">]</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line">        <tt class="py-name">np_test</tt><tt class="py-op">.</tt><tt class="py-name">assert_almost_equal</tt><tt class="py-op">(</tt><tt class="py-name">chisq</tt><tt class="py-op">,</tt> <tt class="py-number">16.23</tt><tt class="py-op">,</tt> <tt class="py-name">decimal</tt><tt class="py-op">=</tt><tt class="py-number">2</tt><tt class="py-op">)</tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line">        <tt class="py-name">np_test</tt><tt class="py-op">.</tt><tt class="py-name">assert_equal</tt><tt class="py-op">(</tt><tt class="py-name">p</tt><tt class="py-op">&lt;</tt><tt class="py-number">0.005</tt><tt class="py-op">,</tt> <tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line">        <tt class="py-name">np_test</tt><tt class="py-op">.</tt><tt class="py-name">assert_almost_equal</tt><tt class="py-op">(</tt><tt class="py-name">p</tt><tt class="py-op">,</tt> <tt class="py-number">0.0003</tt><tt class="py-op">,</tt> <tt class="py-name">decimal</tt><tt class="py-op">=</tt><tt class="py-number">4</tt><tt class="py-op">)</tt> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line">        <tt class="py-name">desired</tt> <tt class="py-op">=</tt> <tt class="py-name">scipy</tt><tt class="py-op">.</tt><tt id="link-5" class="py-name" targets="Function pyto.scripts.cleft_stats.stats()=pyto.scripts.cleft_stats-module.html#stats,Function pyto.scripts.presynaptic_stats.stats()=pyto.scripts.presynaptic_stats-module.html#stats,Function pyto.scripts.presynaptic_stats_common.stats()=pyto.scripts.presynaptic_stats_common-module.html#stats"><a title="pyto.scripts.cleft_stats.stats
+pyto.scripts.presynaptic_stats.stats
+pyto.scripts.presynaptic_stats_common.stats" class="py-name" href="#" onclick="return doclink('link-5', 'stats', 'link-5');">stats</a></tt><tt class="py-op">.</tt><tt class="py-name">chi2</tt><tt class="py-op">.</tt><tt class="py-name">sf</tt><tt class="py-op">(</tt><tt class="py-name">chisq</tt><tt class="py-op">,</tt> <tt class="py-number">2</tt><tt class="py-op">)</tt> </tt>
+<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line">        <tt class="py-name">np_test</tt><tt class="py-op">.</tt><tt class="py-name">assert_almost_equal</tt><tt class="py-op">(</tt><tt class="py-name">p</tt><tt class="py-op">,</tt> <tt class="py-name">desired</tt><tt class="py-op">,</tt> <tt class="py-name">decimal</tt><tt class="py-op">=</tt><tt class="py-number">4</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line"> </tt>
+<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line"> </tt>
+<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line"><tt class="py-keyword">if</tt> <tt class="py-name">__name__</tt> <tt class="py-op">==</tt> <tt class="py-string">'__main__'</tt><tt class="py-op">:</tt> </tt>
+<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line">    <tt class="py-name">suite</tt> <tt class="py-op">=</tt> <tt class="py-name">unittest</tt><tt class="py-op">.</tt><tt class="py-name">TestLoader</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">loadTestsFromTestCase</tt><tt class="py-op">(</tt><tt id="link-6" class="py-name" targets="Class pyto.util.test.test_scipy_plus.TestScipyPlus=pyto.util.test.test_scipy_plus.TestScipyPlus-class.html"><a title="pyto.util.test.test_scipy_plus.TestScipyPlus" class="py-name" href="#" onclick="return doclink('link-6', 'TestScipyPlus', 'link-6');">TestScipyPlus</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line">    <tt class="py-name">unittest</tt><tt class="py-op">.</tt><tt class="py-name">TextTestRunner</tt><tt class="py-op">(</tt><tt class="py-name">verbosity</tt><tt class="py-op">=</tt><tt class="py-number">2</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-7" class="py-name" targets="Function pyto.util.test._test_numpy_plus.run()=pyto.util.test._test_numpy_plus-module.html#run"><a title="pyto.util.test._test_numpy_plus.run" class="py-name" href="#" onclick="return doclink('link-7', 'run', 'link-7');">run</a></tt><tt class="py-op">(</tt><tt class="py-name">suite</tt><tt class="py-op">)</tt> </tt>
+<a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

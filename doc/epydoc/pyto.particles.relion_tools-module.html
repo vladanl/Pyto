@@ -1,0 +1,2966 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pyto.particles.relion_tools</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="pyto-module.html">Package&nbsp;pyto</a> ::
+        <a href="pyto.particles-module.html">Package&nbsp;particles</a> ::
+        Module&nbsp;relion_tools
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pyto.particles.relion_tools-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module relion_tools</h1><p class="nomargin-top"><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html">source&nbsp;code</a></span></p>
+<p>Tools for manipulation starfiles used by Relion and Xmipp</p>
+  <p>Relion data processing functions:</p>
+  <ul>
+    <li>
+      print_class_summary: prints number of particles
+    </li>
+    <li>
+      extract_class: extracts particles of a specified class
+    </li>
+    <li>
+      extract_random: extracts random particles
+    </li>
+    <li>
+      get_data: reads one particle property array (star file column)
+    </li>
+    <li>
+      get_class: gets particle class membership
+    </li>
+    <li>
+      get_n_particle_class_change: finds number of particles that changed 
+      class between iterations
+    </li>
+    <li>
+      get_t_n_class_changes: finds number of times a particle changed its 
+      class between specified iterations
+    </li>
+    <li>
+      two_way_class: comparison of two classifications
+    </li>
+    <li>
+      classify_array: classifies elements of an array according to a 
+      specified criterion
+    </li>
+    <li>
+      get_contingency: makes contingency table for two-way data
+    </li>
+    <li>
+      cluster_similarity: calculates similarity between two given 
+      clusterings
+    </li>
+  </ul>
+  <p>Transformations:</p>
+  <ul>
+    <li>
+      multi_transform: multiple rigid3d transforms a particle (image)
+    </li>
+    <li>
+      write_ransformed: rigid3d transforms a particle (image)
+    </li>
+    <li>
+      symmetrize_particle_data: symmetrizes particle data
+    </li>
+    <li>
+      symmetrize_structure: symmetrizes a structure or a particle (image)
+    </li>
+  </ul>
+  <p>Plotting functions</p>
+  <ul>
+    <li>
+      plot_fsc: plots fcs
+    </li>
+    <li>
+      plot_ssnr: plots ssnr
+    </li>
+  </ul>
+  <p>Relion subtomo functions:</p>
+  <ul>
+    <li>
+      average_fixed: makes average without alignment
+    </li>
+  </ul>
+  <p>Functions useful to convert relion data to xmipp:</p>
+  <ul>
+    <li>
+      convert_angle_distribution: converts relion angular distribution to a
+      form that can be displayed by xmipp
+    </li>
+    <li>
+      convert_boxes: convertsparticle box coordinates from relion to xmipp
+    </li>
+    <li>
+      convert_particle_selection: selects particles from an xmipp particle 
+      file that exsist in a specified relion particle file
+    </li>
+  </ul>
+  <p>Basic starfile IO:</p>
+  <ul>
+    <li>
+      get_array_data: reads data from a star file
+    </li>
+    <li>
+      array_data_generator: yields data lines from a star file
+    </li>
+    <li>
+      array_data_head: reads header
+    </li>
+    <li>
+      write_table: writes a star table
+    </li>
+    <li>
+      sort_particles: sorts particles by file name and particle number
+    </li>
+    <li>
+      find_file: finds files whose names match given criteria
+    </li>
+    <li>
+      add_priors: copies rotations to the corresponding priors
+    </li>
+  </ul>
+  <p># Author: Vladan Lucic # $Id: relion_tools.py 1447 2017-04-27 
+  14:11:17Z vladan $</p>
+
+<hr />
+<div class="fields">      <p><strong>Version:</strong>
+        $Revision: 1447 $
+      </p>
+</div><!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Functions</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Functions"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#extract_class" class="summary-sig-name">extract_class</a>(<span class="summary-sig-arg">basename</span>,
+        <span class="summary-sig-arg">iters</span>,
+        <span class="summary-sig-arg">class_</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">max_change</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">out</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">suffix</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">_data.star</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">iter_format</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">_it%03d</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">tablename</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">data_images</code><code class="variable-quote">'</code></span>)</span><br />
+      Finds particles that satisfy specified class-related conditions and writes
+them to a new data file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#extract_class">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#extract_random" class="summary-sig-name">extract_random</a>(<span class="summary-sig-arg">starfile</span>,
+        <span class="summary-sig-arg">out</span>,
+        <span class="summary-sig-arg">number</span>,
+        <span class="summary-sig-arg">tablename</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">data_images</code><code class="variable-quote">'</code></span>)</span><br />
+      Extracts randomly (arg) number of particles form the particle file 
+      (arg starfile) and writes them in a separate file (arg out).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#extract_random">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#print_class_summary" class="summary-sig-name">print_class_summary</a>(<span class="summary-sig-arg">basename</span>,
+        <span class="summary-sig-arg">iters</span>,
+        <span class="summary-sig-arg">class_</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">change</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">fraction</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">suffix</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">_data.star</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">tablename</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">data_</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">label</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">rlnClassNumber</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">cont</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">iter_format</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">_it%03d</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">warn</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Prints class membership for all specifed iterations and the number / 
+      fraction of particles that changed class between neighboring 
+      iterations.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#print_class_summary">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#get_class" class="summary-sig-name">get_class</a>(<span class="summary-sig-arg">basename</span>,
+        <span class="summary-sig-arg">iters</span>,
+        <span class="summary-sig-arg">suffix</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">_data.star</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">tablename</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">data_images</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">cont</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">iter_format</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">_it%03d</code><code class="variable-quote">'</code></span>)</span><br />
+      Reads particle class membership from a particle star file for one or 
+      more iterations, for each iteration separately.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#get_class">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#get_data" class="summary-sig-name">get_data</a>(<span class="summary-sig-arg">basename</span>,
+        <span class="summary-sig-arg">iters</span>,
+        <span class="summary-sig-arg">label</span>,
+        <span class="summary-sig-arg">suffix</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">_data.star</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">tablename</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">data_</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">type_</span>=<span class="summary-sig-default">&lt;type 'int'&gt;</span>,
+        <span class="summary-sig-arg">cont</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">iter_format</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">_it%03d</code><code class="variable-quote">'</code></span>)</span><br />
+      Reads particle data from one column in a particle star file for one 
+      or more iterations, for each iteration separately.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#get_data">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#classify_array" class="summary-sig-name">classify_array</a>(<span class="summary-sig-arg">data</span>,
+        <span class="summary-sig-arg">mode</span>,
+        <span class="summary-sig-arg">pattern</span>,
+        <span class="summary-sig-arg">start</span>=<span class="summary-sig-default">1</span>)</span><br />
+      Classifies 1D array data according to a criterion specified by args 
+mode and pattern.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#classify_array">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#get_n_particle_class_change" class="summary-sig-name">get_n_particle_class_change</a>(<span class="summary-sig-arg">basename</span>,
+        <span class="summary-sig-arg">iters</span>,
+        <span class="summary-sig-arg">class_</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">change</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">fraction</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">out</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">list</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">suffix</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">_data.star</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">tablename</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">data_images</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">label</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">rlnClassNumber</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">cont</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">iter_format</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">_it%03d</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">warn</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Calculates number of particles that changed class between all pairs of 
+consecutive iterations, where iterations are specified by arg iters.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#get_n_particle_class_change">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#get_n_class_changes" class="summary-sig-name">get_n_class_changes</a>(<span class="summary-sig-arg">basename</span>,
+        <span class="summary-sig-arg">iters</span>)</span><br />
+      Returns the number of times a particle has changed its class 
+      membership between the specified iterations.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#get_n_class_changes">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#class_group_interact" class="summary-sig-name">class_group_interact</a>(<span class="summary-sig-arg">method</span>,
+        <span class="summary-sig-arg">basename</span>,
+        <span class="summary-sig-arg">iters</span>,
+        <span class="summary-sig-arg">group_pattern</span>,
+        <span class="summary-sig-arg">classes</span>,
+        <span class="summary-sig-arg">suffix</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">_data.star</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">tablename</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">data_</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">class_label</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">rlnClassNumber</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">group_label</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">rlnMicrographName</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">group_mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">find</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">group_type</span>=<span class="summary-sig-default">&lt;type 'str'&gt;</span>,
+        <span class="summary-sig-arg">iter_format</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">_it%03d</code><code class="variable-quote">'</code></span>)</span><br />
+      A special case of two_way_class() where for the first classification 
+      the classes from the particle star file is used.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#class_group_interact">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#two_way_class" class="summary-sig-name">two_way_class</a>(<span class="summary-sig-arg">method</span>,
+        <span class="summary-sig-arg">basename</span>,
+        <span class="summary-sig-arg">iters</span>,
+        <span class="summary-sig-arg">mode</span>,
+        <span class="summary-sig-arg">pattern</span>,
+        <span class="summary-sig-arg">label</span>,
+        <span class="summary-sig-arg">suffix</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">_data.star</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">tablename</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">data_</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">type_</span>=<span class="summary-sig-default">&lt;type 'str'&gt;</span>,
+        <span class="summary-sig-arg">iter_format</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">_it%03d</code><code class="variable-quote">'</code></span>)</span><br />
+      Gets data from two star files, classifies the data, calculates 
+contingency table between two classifications and optionally
+(in)dependence between them using G-test.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#two_way_class">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#get_contingency" class="summary-sig-name">get_contingency</a>(<span class="summary-sig-arg">class_ids_1</span>,
+        <span class="summary-sig-arg">class_ids_2</span>,
+        <span class="summary-sig-arg">id_limits_1</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">id_limits_2</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">test</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Calculates contingency table between two classifications (args 
+      class_ids_1 and class_ids_2) and optionally (in)dependence between 
+      them using G-test.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#get_contingency">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#cluster_similarity" class="summary-sig-name">cluster_similarity</a>(<span class="summary-sig-arg">class_ids_1</span>,
+        <span class="summary-sig-arg">class_ids_2</span>,
+        <span class="summary-sig-arg">method</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Calculates similarity between two given clusterings.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#cluster_similarity">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#convert_angle_distribution" class="summary-sig-name">convert_angle_distribution</a>(<span class="summary-sig-arg">instar</span>,
+        <span class="summary-sig-arg">outstar</span>,
+        <span class="summary-sig-arg">tablename</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">data_images</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">half</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">class_</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">weight</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Reads particle angles from Relion data file (instar), orders them and
+      writes them to a xmipp style star file which 
+      xmipp_angular_distribution_show understands.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#convert_angle_distribution">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#convert_boxes" class="summary-sig-name">convert_boxes</a>(<span class="summary-sig-arg">instar</span>,
+        <span class="summary-sig-arg">outstar</span>,
+        <span class="summary-sig-arg">verbose</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Converts particle box coordinates from relion (usually stored in 
+      Particles/Micrographs/*_particles.star files) to xmipp (usually in 
+      ParticlePicking/Supervised/run_nnn/extra/*.pos).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#convert_boxes">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#convert_particle_selection" class="summary-sig-name">convert_particle_selection</a>(<span class="summary-sig-arg">relionstar</span>,
+        <span class="summary-sig-arg">xmippinstar</span>,
+        <span class="summary-sig-arg">xmippoutstar</span>,
+        <span class="summary-sig-arg">disable</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">verbose</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Modifies data forom xmipp particle star file (arg xmippinstar; 
+      usually named images.xmd) so that only the particles that are listed 
+      in the relion particle star file (arg relioninstar) are retained.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#convert_particle_selection">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#average_fixed" class="summary-sig-name">average_fixed</a>(<span class="summary-sig-arg">starfile</span>,
+        <span class="summary-sig-arg">mean_file</span>)</span><br />
+      Averages all images listed in the arg starfile (label 
+      '_rlnImageName') without translations and rotations.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#average_fixed">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#get_array_data" class="summary-sig-name">get_array_data</a>(<span class="summary-sig-arg">starfile</span>,
+        <span class="summary-sig-arg">tablename</span>,
+        <span class="summary-sig-arg">labels</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">types</span>=<span class="summary-sig-default">&lt;type 'float'&gt;</span>)</span><br />
+      Gets data (for all particles) for specified labels.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#get_array_data">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#array_data_length" class="summary-sig-name">array_data_length</a>(<span class="summary-sig-arg">starfile</span>,
+        <span class="summary-sig-arg">tablename</span>)</span><br />
+      Returns the number of entries in the specified table.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#array_data_length">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#array_data_generator" class="summary-sig-name">array_data_generator</a>(<span class="summary-sig-arg">starfile</span>,
+        <span class="summary-sig-arg">tablename</span>,
+        <span class="summary-sig-arg">split</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">labels</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">labels_dict</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Generator that yelds data lines from file (arg) starfile, table (arg)
+      tablename.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#array_data_generator">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#sort_particles" class="summary-sig-name">sort_particles</a>(<span class="summary-sig-arg">particles</span>,
+        <span class="summary-sig-arg">indices</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">compact</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">type</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Sorts particle names given in spider format (used by relion and 
+      xmipp).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#sort_particles">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#array_data_head" class="summary-sig-name">array_data_head</a>(<span class="summary-sig-arg">starfile</span>,
+        <span class="summary-sig-arg">tablename</span>,
+        <span class="summary-sig-arg">top</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">labels</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Returns header of the specified table in the specified file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#array_data_head">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#write_table" class="summary-sig-name">write_table</a>(<span class="summary-sig-arg">starfile</span>,
+        <span class="summary-sig-arg">labels</span>,
+        <span class="summary-sig-arg">data</span>,
+        <span class="summary-sig-arg">format_</span>,
+        <span class="summary-sig-arg">comment</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">#</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">header</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">tablename</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">labelindent</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">delimiter</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"> </code><code class="variable-quote">'</code></span>)</span><br />
+      Writes a data table to a star file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#write_table">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#find_file" class="summary-sig-name">find_file</a>(<span class="summary-sig-arg">basename</span>,
+        <span class="summary-sig-arg">suffix</span>,
+        <span class="summary-sig-arg">iter_</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">iter_format</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">_it%03d</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">half</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">half_format</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">_half%d</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">cont</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Returns paths of all existing files that can be composed as:</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#find_file">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#plot_fsc" class="summary-sig-name">plot_fsc</a>(<span class="summary-sig-arg">basename</span>,
+        <span class="summary-sig-arg">iter</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">half</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">class_id</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">legend</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">new</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Plots FSC from 3d refinement or 3d classification.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#plot_fsc">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="plot_post_fsc"></a><span class="summary-sig-name">plot_post_fsc</span>(<span class="summary-sig-arg">starfile</span>,
+        <span class="summary-sig-arg">legend</span>=<span class="summary-sig-default">True</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#plot_post_fsc">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="plot_guinier"></a><span class="summary-sig-name">plot_guinier</span>(<span class="summary-sig-arg">starfile</span>,
+        <span class="summary-sig-arg">legend</span>=<span class="summary-sig-default">True</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#plot_guinier">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#plot_ssnr" class="summary-sig-name">plot_ssnr</a>(<span class="summary-sig-arg">basename</span>,
+        <span class="summary-sig-arg">iter</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">half</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">class_id</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">legend</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Plots SSNR.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#plot_ssnr">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#plot_multi" class="summary-sig-name">plot_multi</a>(<span class="summary-sig-arg">basename</span>,
+        <span class="summary-sig-arg">label_x</span>,
+        <span class="summary-sig-arg">label_y</span>,
+        <span class="summary-sig-arg">iter</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">half</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">class_id</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">new</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Plots data corresponding to args label_x and label_y from one or more 
+files.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#plot_multi">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#plot" class="summary-sig-name">plot</a>(<span class="summary-sig-arg">starfile</span>,
+        <span class="summary-sig-arg">tablename</span>,
+        <span class="summary-sig-arg">label_x</span>,
+        <span class="summary-sig-arg">label_y</span>,
+        <span class="summary-sig-arg">one</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">label</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Plots data from (arg) starfile and datablock (arg) tablename, so that
+      label_x is shown on x and (arg) label_y on the y axis.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#plot">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="list_iterations"></a><span class="summary-sig-name">list_iterations</span>(<span class="summary-sig-arg">basename</span>)</span><br />
+      Makes a sorted ndarray of all iterations that matches basename.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#list_iterations">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#prepare_class_arg" class="summary-sig-name">prepare_class_arg</a>(<span class="summary-sig-arg">class_</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">tuple</code><code class="variable-quote">'</code></span>)</span><br />
+      Converts arg class_ in a form useful for further processing:</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#prepare_class_arg">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#write_transformed" class="summary-sig-name">write_transformed</a>(<span class="summary-sig-arg">array</span>,
+        <span class="summary-sig-arg">angles</span>,
+        <span class="summary-sig-arg">origin</span>,
+        <span class="summary-sig-arg">scale</span>=<span class="summary-sig-default">1.0</span>,
+        <span class="summary-sig-arg">d</span>=<span class="summary-sig-default">0.0</span>,
+        <span class="summary-sig-arg">rot_mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">zyz_in_active</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">dir_</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">suffix</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">dtype</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">float32</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">pixel</span>=<span class="summary-sig-default">1</span>)</span><br />
+      Transforms 3D array according to angles, scale and d and writes the 
+resulting array.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#write_transformed">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#multi_transform" class="summary-sig-name">multi_transform</a>(<span class="summary-sig-arg">array</span>,
+        <span class="summary-sig-arg">transform_iter</span>,
+        <span class="summary-sig-arg">origin</span>,
+        <span class="summary-sig-arg">part_file</span>,
+        <span class="summary-sig-arg">part_dir</span>,
+        <span class="summary-sig-arg">rot_mode</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">zyz_in_active</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">star</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">default</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">number</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">dtype</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">float32</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">pixel</span>=<span class="summary-sig-default">1</span>)</span><br />
+      Makes multiple transformations of array (image) according to the 
+      transformation iterator, saves the  files and writes a corresponding 
+      star file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#multi_transform">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#symmetrize_particle_data" class="summary-sig-name">symmetrize_particle_data</a>(<span class="summary-sig-arg">symmetry</span>,
+        <span class="summary-sig-arg">instar</span>,
+        <span class="summary-sig-arg">outstar</span>,
+        <span class="summary-sig-arg">relion_dir</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">copy</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">particles_dir</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">format_</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">%s </code><code class="variable-quote">'</code></span>)</span><br />
+      Symmetrizes particle data given in the specified relion star file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#symmetrize_particle_data">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#add_priors" class="summary-sig-name">add_priors</a>(<span class="summary-sig-arg">instar</span>,
+        <span class="summary-sig-arg">outstar</span>,
+        <span class="summary-sig-arg">prior_labels</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">format_</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">auto</code><code class="variable-quote">'</code></span>)</span><br />
+      Adds prior angular values to a particle file by copying the values of
+      the corresponding angles.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#add_priors">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pyto.particles.relion_tools-module.html#symmetrize_structure" class="summary-sig-name">symmetrize_structure</a>(<span class="summary-sig-arg">structure</span>,
+        <span class="summary-sig-arg">symmetry</span>,
+        <span class="summary-sig-arg">average</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">dtype</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">pixel</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mask</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">origin</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Rotates a given image (arg iniitial) according to the specified 
+      symmetry (arg symmetry) and returns the average.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#symmetrize_structure">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="symmetrize_particles"></a><span class="summary-sig-name">symmetrize_particles</span>(<span class="summary-sig-arg">instar</span>,
+        <span class="summary-sig-arg">outstar</span>,
+        <span class="summary-sig-arg">tablename</span>,
+        <span class="summary-sig-arg">symmetry</span>,
+        <span class="summary-sig-arg">mask</span>,
+        <span class="summary-sig-arg">name</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#symmetrize_particles">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__package__"></a><span class="summary-name">__package__</span> = <code title="'pyto.particles'"><code class="variable-quote">'</code><code class="variable-string">pyto.particles</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="extract_class"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">extract_class</span>(<span class="sig-arg">basename</span>,
+        <span class="sig-arg">iters</span>,
+        <span class="sig-arg">class_</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">max_change</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">out</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">suffix</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">_data.star</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">iter_format</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">_it%03d</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">tablename</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">data_images</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#extract_class">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Finds particles that satisfy specified class-related conditions and writes
+them to a new data file.
+
+If arg class_ is not None, keeps only the particles that belong to the 
+specified class(es) at the last of the iterations given in arg iters. 
+
+If arg max_change is not None, keeps only those particles that changed
+class at most max_change times during all iterations specified in arg 
+iters. The iterations considered are those between the sucessive
+numbers from arg int.
+
+Examples
+
+  Extract particles belonging to class 3 at iter 15: 
+
+  extract_class(basename='in_basename', iters=15, class=3, out='out_file')
+
+  Extracts particles that changed class at most once during iters 13-14
+  and 14-15.
+
+  extract_class(basename='in_basename', iters=[13,14,15], max_change=1, 
+                out='out_file')
+
+Arguments:
+  - basename: basename of the data file (everything until '_it')
+  - iters: list (or tuple) of iterations, or a single iteration
+  - iter_format: format for the iteration number used for the name of the 
+  data file
+  - suffix: suffix of the data file (whatever comes after iteration number)
+  - class_: (list or int) class number(es)
+  - max_change: max number of class changes
+  - out: name of the output (new data) file or an open stream
+
+Returns: number of particles found
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="extract_random"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">extract_random</span>(<span class="sig-arg">starfile</span>,
+        <span class="sig-arg">out</span>,
+        <span class="sig-arg">number</span>,
+        <span class="sig-arg">tablename</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">data_images</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#extract_random">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Extracts randomly (arg) number of particles form the particle file 
+  (arg starfile) and writes them in a separate file (arg out).</p>
+  <p>The output particles are written in the same order as they appear in 
+  the particle file.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      starfile: particle file name
+    </li>
+    <li>
+      out: output (random particles)
+    </li>
+    <li>
+      number: number of particles to extract
+    </li>
+    <li>
+      tablename: name of the table containing particles
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="print_class_summary"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">print_class_summary</span>(<span class="sig-arg">basename</span>,
+        <span class="sig-arg">iters</span>,
+        <span class="sig-arg">class_</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">change</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">fraction</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">suffix</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">_data.star</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">tablename</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">data_</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">label</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">rlnClassNumber</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">cont</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">iter_format</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">_it%03d</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">warn</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#print_class_summary">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Prints class membership for all specifed iterations and the number / 
+  fraction of particles that changed class between neighboring 
+  iterations.</p>
+  <p>Based on get_class() and get_n_particle_class_change()</p>
+  <p>If arg cont is True, takes also continuing iterations into 
+  account.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      basename: path of the star data file (everything until '_it')
+    </li>
+    <li>
+      iter: list of iterations, if None, all iterations are used
+    </li>
+    <li>
+      class_: list of classes, or None for all classes
+    </li>
+    <li>
+      mode: 'change', 'to_from'
+    </li>
+    <li>
+      suffix: data starfile name part after iteration (includes extension)
+    </li>
+    <li>
+      table_name: name of the table where particles are stored
+    </li>
+    <li>
+      label: label for class number
+    </li>
+    <li>
+      cont: flag indication if continued executions are used
+    </li>
+    <li>
+      iter_format: format for iteration number in starfiles
+    </li>
+    <li>
+      warn: prints warning when starfile not found. Note that if iters is 
+      None and warn is True, there is always a warning after the last 
+      iteration
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_class"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_class</span>(<span class="sig-arg">basename</span>,
+        <span class="sig-arg">iters</span>,
+        <span class="sig-arg">suffix</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">_data.star</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">tablename</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">data_images</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">cont</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">iter_format</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">_it%03d</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#get_class">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Reads particle class membership from a particle star file for one or 
+  more iterations, for each iteration separately.</p>
+  <p>Convenience function based on get_data().</p>
+  <p>The particle star file name is determined from args basename, iters, 
+  iter_format and suffix. If arg cont is True, find the proper file name 
+  even if the file was generated by the continuation of a previous run (the
+  file name contains the contionuation string).</p>
+  <p>It uses get_array_data() to read the data, but provides the following 
+  advantages:</p>
+  <ul>
+    <li>
+      requires iteration(s) as an argument instead of the whole file name
+    </li>
+    <li>
+      finds continuation files automatically
+    </li>
+    <li>
+      reads data ar several iterations
+    </li>
+  </ul>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      basename: part of the data file path until '_it' or '_ct', if cont is
+      True doesn not need the continuation string
+    </li>
+    <li>
+      iters: list of iterations, if None, all iterations are used
+    </li>
+    <li>
+      suffix: data starfile name part after iteration (includes extension)
+    </li>
+    <li>
+      table_name: name of the table where particles are stored
+    </li>
+    <li>
+      cont: flag indication if continued executions are used
+    </li>
+    <li>
+      iter_format: format for iteration number in starfiles
+    </li>
+  </ul>
+  <p>Returns dictionary with iterations as keys and class membership as 
+  values, where the class mebership is a list of class ids in the order of 
+  particles in the particle file.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_data"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_data</span>(<span class="sig-arg">basename</span>,
+        <span class="sig-arg">iters</span>,
+        <span class="sig-arg">label</span>,
+        <span class="sig-arg">suffix</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">_data.star</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">tablename</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">data_</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">type_</span>=<span class="sig-default">&lt;type 'int'&gt;</span>,
+        <span class="sig-arg">cont</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">iter_format</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">_it%03d</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#get_data">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Reads particle data from one column in a particle star file for one or
+  more iterations, for each iteration separately.</p>
+  <p>The particle star file name is determined from args basename, iters, 
+  iter_format and suffix. If arg cont is True, find the proper file name 
+  even if the file was generated by the continuation of a previous run (the
+  file name contains the contionuation string).</p>
+  <p>It uses get_array_data() to read the data, but provides the following 
+  advantages:</p>
+  <ul>
+    <li>
+      requires iteration(s) as an argument instead of the whole file name
+    </li>
+    <li>
+      finds continuation files automatically
+    </li>
+    <li>
+      reads data ar several iterations
+    </li>
+  </ul>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      basename: part of the data file path until '_it' or '_ct', if cont is
+      True doesn not need the continuation string
+    </li>
+    <li>
+      iters: list of iterations, if None, all iterations are used
+    </li>
+    <li>
+      suffix: data starfile name part after iteration (includes extension)
+    </li>
+    <li>
+      table_name: name of the table where particles are stored
+    </li>
+    <li>
+      label: column label
+    </li>
+    <li>
+      type_: function that converts a string read to the proper type, such 
+      as int or float
+    </li>
+    <li>
+      cont: flag indication if continued executions are used
+    </li>
+    <li>
+      iter_format: format for iteration number in starfiles
+    </li>
+  </ul>
+  <p>Returns dictionary with iterations as keys and particle data arrays as
+  values, where the class mebership is a list of class ids in the order of 
+  particles in the particle file.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="classify_array"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">classify_array</span>(<span class="sig-arg">data</span>,
+        <span class="sig-arg">mode</span>,
+        <span class="sig-arg">pattern</span>,
+        <span class="sig-arg">start</span>=<span class="sig-default">1</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#classify_array">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Classifies 1D array data according to a criterion specified by args 
+mode and pattern. 
+
+The classes are labeled by consecutive intgers (class ids) starting 
+from arg start. In order to pass this array directly to scipy, the 
+class ids should start from 0.
+
+If arg mode is 'class', the array elements (arg data) are expected to
+be integers, such as the particle class ids. The array elements are 
+(re)classified taking into account arg pattern. Each element of arg 
+pattern specifies a new class. In the simplest case, arg pattern is 
+a list of integers (such as the existing class ids produced by Relion). 
+If an element of arg pattern is a tuple, all elements of the tuple are 
+taken together. For example:
+
+  classify_array(data=[1,2,3,2,1], mode='class', pattern=[3,2,1])
+
+returns: [3, 2, 1, 2, 3]
+
+  classify_array(data=[1,2,3,4,5], mode='class', pattern=[1, (2,3), (4,5)])
+
+returns: [1, 2, 2, 3, 3]
+
+If arg mode is 'find' the arg data should be an array or strings. The
+classification is again based on elements of arg patter, but here 
+str.find() is used to determine the class. For example:
+
+  classify_array(
+    data=['tomo-3/part_01.mrc', 'tomo-1/part_02.mrc', 'tomo-3/part_03.mrc'],
+    mode='find', pattern=['tomo-1', 'tomo-3'])
+
+returns: [2, 1, 2].
+
+Arguments:
+  - data: array of data to be classified
+  - mode: classification mode, 'class' or 'find'
+  - pattern: pattern that determins the (new) classes
+  - start: starting class index
+
+Returns: array corresponding to arg data that contains (new) class ids.
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_n_particle_class_change"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_n_particle_class_change</span>(<span class="sig-arg">basename</span>,
+        <span class="sig-arg">iters</span>,
+        <span class="sig-arg">class_</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">change</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">fraction</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">out</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">list</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">suffix</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">_data.star</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">tablename</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">data_images</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">label</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">rlnClassNumber</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">cont</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">iter_format</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">_it%03d</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">warn</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#get_n_particle_class_change">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Calculates number of particles that changed class between all pairs of 
+consecutive iterations, where iterations are specified by arg iters.
+
+There are three different usage types, depending on args class_ and mode:
+
+  1) class_=None, mode='change': Total number (or fraction) of particles
+  that changed class is calculated.
+
+  2) class_ is a list, mode='change': Number (or fraction) of particles
+  that changed class is given for each class (specified by arg class_)
+  separately. A particle changed class if in the previous iteration 
+  it was in a class different from the one where it is in the current
+  iteration.
+
+  3) class_ is a list, mode='to_from': Number of particles that moved
+  from one class to another is calculated for each class (specified by 
+  arg class_) and for all pairs of classes separately. The result
+  is given as a 2D ndarray in the form result[from_class, to_class],
+  where from_ and to_class are indices of classes as specified in 
+  arg class_ (list).
+
+For the above classes 2 and 3, arg class_ is a list. It can contain 
+individual ints (class ids) or tuples of class ids in which cases 
+the classes specified in a tuple are taken together. For example:
+
+  class_ = [2, (1, 3, 4), 5]
+
+means that classes 1, 3, and 4 are taken together (merged) and 1 and 
+5 are separate.
+
+If arg fraction is True, the fraction of total particles (case 1 above)
+or of the number of the current (to) particles (cases 2 and 3) is 
+calculated.  
+
+If arg out is 'list', the numbers of changed particles are returned in 
+a list (of length len(iters)-1), so that the element i corresponds to 
+the change between iterations iter[i+1] and iter[i].
+
+Alternatively, if arg out is 'dict', the numbers of changed particles 
+are returned as values of a dictionary where keys are the final 
+iterations (those in iters[1:]). 
+
+If arg cont is True, takes also continuing iterations into account.
+
+Arguments:
+  - basename: basename of the data file (everything until '_it')
+  - iters: list of iterations, if None, all iterations are used
+  - class_: 
+  - mode: 
+  - fraction: If True returns number of particles that changed class 
+  divided by the total number of particles. If False the (absolute) 
+  number of particles that changes class is returned
+  - out: output format, 'list' ot 'dict'
+  - suffix: data starfile name part after iteration (includes extension)
+  - tablename: name of the table where particles are stored
+  - label: label for class number
+  - cont: flag indication if continued executions are used
+  - iter_format: format for iteration number in starfiles
+  - warn: prints warning when starfile not found. Note that if iters is
+  None and warn is True, there is always a warning after the last iteration
+
+Return: dict (keys are iterations) or list (elements correspond to those
+in arg iters[1:]), where iterations are the final from each iteration pair
+(so the first iteration does not have a corresponding entry). The
+keys / list elements can be:
+  - single number (case 1, above)
+  - list (case 2, above)
+  - 2D ndarray (case 3, above)
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_n_class_changes"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_n_class_changes</span>(<span class="sig-arg">basename</span>,
+        <span class="sig-arg">iters</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#get_n_class_changes">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the number of times a particle has changed its class 
+  membership between the specified iterations.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      basename: basename of the data file (everything until '_it')
+    </li>
+    <li>
+      iters: list of iterations
+    </li>
+  </ul>
+  <p>Returns: (ndarray) number of changes for each particle in the order 
+  the particles are listed in the data file</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="class_group_interact"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">class_group_interact</span>(<span class="sig-arg">method</span>,
+        <span class="sig-arg">basename</span>,
+        <span class="sig-arg">iters</span>,
+        <span class="sig-arg">group_pattern</span>,
+        <span class="sig-arg">classes</span>,
+        <span class="sig-arg">suffix</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">_data.star</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">tablename</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">data_</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">class_label</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">rlnClassNumber</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">group_label</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">rlnMicrographName</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">group_mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">find</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">group_type</span>=<span class="sig-default">&lt;type 'str'&gt;</span>,
+        <span class="sig-arg">iter_format</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">_it%03d</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#class_group_interact">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>A special case of two_way_class() where for the first classification 
+  the classes from the particle star file is used. The secon classification
+  may but does not have to be based on an experimental group (specified in 
+  the micrograph name).</p>
+  <p>Not sure if needed</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="two_way_class"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">two_way_class</span>(<span class="sig-arg">method</span>,
+        <span class="sig-arg">basename</span>,
+        <span class="sig-arg">iters</span>,
+        <span class="sig-arg">mode</span>,
+        <span class="sig-arg">pattern</span>,
+        <span class="sig-arg">label</span>,
+        <span class="sig-arg">suffix</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">_data.star</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">tablename</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">data_</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">type_</span>=<span class="sig-default">&lt;type 'str'&gt;</span>,
+        <span class="sig-arg">iter_format</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">_it%03d</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#two_way_class">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Gets data from two star files, classifies the data, calculates 
+contingency table between two classifications and optionally
+(in)dependence between them using G-test. 
+
+Regarding the method, see for example Sokal and Rolph, Biometry, pg 724).
+
+Arg method can be 'contingency' for contingency table only or
+'contingency_g' for contingency table and G-test.
+
+The G-test is calsulated using get_contingency(), which is based on:
+  sp.stats.chi2_contingency(
+    contingency, lambda_=&quot;log-likelihood&quot;, correction=True)
+
+The two clasifications are read from classification partcle (star) files, 
+The starfiles are specified by args basename, iters and suffix,
+the data to be read by args tablename, label and type. The 
+classification is performed using classify_array() where args mode and 
+pattern are passed directly (see classify_array() for more info about
+classification).
+
+Particles in the two particle star files have to be the same and to
+have the same order.
+
+All arguments except method and iter_format can be tuples of length two, 
+in which case the first and the second element specify the corresponding
+values for the first and the second classification, respectivly. If
+an argument is not a tuple, its value is used for for both 
+classifications.
+
+Arguments:
+  - method: 'contingency' or 'contingency_g'
+  - basename: star file basename (the whole path until 'iter') 
+  - iters: one or more iterations for which data is read
+  - suffix: star file suffix
+  - tablename: table name within the star file
+  - label: record label in the star file
+  - mode: classification mode, 'class' or 'find'
+  - pattern: classification pattern
+  - type_: data type, str or int
+  - iter_format: iteration number format
+
+Returns: 
+  - collections.namedtuple object if iters is a single number or a tuple
+  containing single numbers
+  - dictionary where keys are iteration numbers (or the data specified 
+  first) and values are the corresponding collections.namedtuple objects
+
+Each collections.namedtuple object returned contains the following 
+attributes:
+  - contingency: contingency table
+  - fraction: fractions corresponding to the contingency table
+  - total: total number of elements for all classes for both classifications
+  - total_fract: fractions corresponding to total
+  - g, p, dof: G-value, p-value and degrees of freedom, if G-test
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_contingency"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_contingency</span>(<span class="sig-arg">class_ids_1</span>,
+        <span class="sig-arg">class_ids_2</span>,
+        <span class="sig-arg">id_limits_1</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">id_limits_2</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">test</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#get_contingency">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates contingency table between two classifications (args 
+  class_ids_1 and class_ids_2) and optionally (in)dependence between them 
+  using G-test.</p>
+  <p>Class ids are expected to be all integers between the limits specified
+  by args id_limits_1 and id_limits_2 (limits included).</p>
+  <p>Already implemented in pyto.segmentation.Cluster but wo G-test (see 
+  what to do about that).</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      class_ids_1, class_ids_2: classification arrays where elements 
+      correspond to data points and the value of an element denotes its 
+      class
+    </li>
+    <li>
+      id_limits_1, id_limits_2: (list or tuple of length 2), the first 
+      element denots the lowest and the second the highest class id
+    </li>
+    <li>
+      test: 'g' for G-test or None for no testing
+    </li>
+  </ul>
+  <p>Returns:</p>
+  <ul>
+    <li>
+      collections.namedtuple object if iters is a single number or a tuple 
+      containing single numbers
+    </li>
+    <li>
+      dictionary where keys are iteration numbers (or the data specified 
+      first) and values are the corresponding collections.namedtuple 
+      objects
+    </li>
+  </ul>
+  <p>Each collections.namedtuple object returned contains the following 
+  attributes:</p>
+  <ul>
+    <li>
+      contingency: contingency table
+    </li>
+    <li>
+      fraction: fractions corresponding to the contingency table
+    </li>
+    <li>
+      total: total number of elements for all classes for both 
+      classifications
+    </li>
+    <li>
+      total_fract: fractions corresponding to total
+    </li>
+    <li>
+      g, p, dof: G-value, p-value and degrees of freedom, if test='g'
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="cluster_similarity"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">cluster_similarity</span>(<span class="sig-arg">class_ids_1</span>,
+        <span class="sig-arg">class_ids_2</span>,
+        <span class="sig-arg">method</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#cluster_similarity">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates similarity between two given clusterings. The similarity 
+  can be calculated using the Rand, Fowlkes and Mallows, and Variation of 
+  information methods.</p>
+  <p>A wrapper for pyto.segmentation.Cluster.findSimilarity(). See that 
+  method for more info about the cluster similarity methods</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      class_ids_1, class_ids_2: classification arrays where elements 
+      correspond to data points and the value of an element denotes its 
+      class
+    </li>
+    <li>
+      method: similarity method, the same as arg method in 
+      Cluster.findSimilarity(), that is 'rand', 'b-flat' or 'vi'.
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="convert_angle_distribution"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">convert_angle_distribution</span>(<span class="sig-arg">instar</span>,
+        <span class="sig-arg">outstar</span>,
+        <span class="sig-arg">tablename</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">data_images</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">half</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">class_</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">weight</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#convert_angle_distribution">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Reads particle angles from Relion data file (instar), orders them and 
+  writes them to a xmipp style star file which 
+  xmipp_angular_distribution_show understands.</p>
+  <p>Argument half alows chosing one or the both data set halves generated 
+  by refine3d.</p>
+  <p>Argument class_ allows chosing one or more classes generated by 
+  class3d.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      instar: relion data file (input)
+    </li>
+    <li>
+      outstar: xmipp angular distribution file (output)
+    </li>
+    <li>
+      tablename: table name
+    </li>
+    <li>
+      half: 1 or 2 for one or the other half sets, None to use all 
+      (default)
+    </li>
+    <li>
+      class_: class number or a list of class numbers to pick one or more 
+      classes, None to use all (default)
+    </li>
+    <li>
+      weight: if True the weight of a direction is proportional to the 
+      number of particles, if False all directions that contain particles 
+      are labeled
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="convert_boxes"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">convert_boxes</span>(<span class="sig-arg">instar</span>,
+        <span class="sig-arg">outstar</span>,
+        <span class="sig-arg">verbose</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#convert_boxes">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Converts particle box coordinates from relion (usually stored in 
+  Particles/Micrographs/*_particles.star files) to xmipp (usually in 
+  ParticlePicking/Supervised/run_nnn/extra/*.pos).</p>
+  <p>The corresponding relion and xmipp files have the same names except 
+  that relion file names end with  '_particles.star' and xmipp with 
+  '.pos'.</p>
+  <p>Relion labels 'rlnCoordinateX' and 'rlnCoordinateY' are converted to 
+  xmipp 'xcoor' and 'ycoor'. Also, xmipp files are given the header that 
+  they usuallu have, just to mimic 'normal' xmipp particle picking.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      instar: directory containing relion particle files for all 
+      micrographs (should end with '/', todo: extend to use regexp)
+    </li>
+    <li>
+      outstar: directory where xmipp files are written (should end with 
+      '/')
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="convert_particle_selection"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">convert_particle_selection</span>(<span class="sig-arg">relionstar</span>,
+        <span class="sig-arg">xmippinstar</span>,
+        <span class="sig-arg">xmippoutstar</span>,
+        <span class="sig-arg">disable</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">verbose</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#convert_particle_selection">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Modifies data forom xmipp particle star file (arg xmippinstar; usually
+  named images.xmd) so that only the particles that are listed in the 
+  relion particle star file (arg relioninstar) are retained. The modifieded
+  data is written to a new file (arg xmippoutstar).</p>
+  <p>Useful to select particles in xmipp that were previously selected in 
+  relion.</p>
+  <p>It is necessary that particles have the same names in relion and 
+  xmipp. That is, particle numbers and the particle file names (without 
+  directory and extension; usually derived from micrograph names) need to 
+  correspond between relion and xmipp.</p>
+  <p>Consequently, all particles should be in the same directory (relion 
+  particle in one and xmipp in another). If that is not the case, it is 
+  necessary that particle file names (without directory part and extension)
+  are unique.</p>
+  <p>It is possible that some particles exist in the relio file and not in 
+  xmipp. These particles are listed if arg verbose is True.</p>
+  <p>If arg disable is True, xmipp particle lines corresponding to the 
+  disabled particles (those not found in the relion file) are written to 
+  the output xmipp file, but the enable value is converted to a negative 
+  value. Otherwise, if disable is False, these lines are not written at 
+  all.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      xmippinstar: original (input) xmipp particle star file
+    </li>
+    <li>
+      relionstar: relion patrticle star file
+    </li>
+    <li>
+      xmippoutstar: modified (output) xmipp particle star file
+    </li>
+    <li>
+      disable: Flag indicating if how are the non-selected particles 
+      specified
+    </li>
+    <li>
+      verbose: if True, provides info about each particle from xmipp
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="average_fixed"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">average_fixed</span>(<span class="sig-arg">starfile</span>,
+        <span class="sig-arg">mean_file</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#average_fixed">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Averages all images listed in the arg starfile (label '_rlnImageName')
+  without translations and rotations.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      starfile: name of the starfile
+    </li>
+    <li>
+      name of the average image file
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_array_data"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_array_data</span>(<span class="sig-arg">starfile</span>,
+        <span class="sig-arg">tablename</span>,
+        <span class="sig-arg">labels</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">types</span>=<span class="sig-default">&lt;type 'float'&gt;</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#get_array_data">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Gets data (for all particles) for specified labels.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      starfile: name of the starfile that contains data
+    </li>
+    <li>
+      tablename: name of the table that contains data
+    </li>
+    <li>
+      labels: list of lables (variables), if None all labels are used
+    </li>
+    <li>
+      types: list of functions (or a single function) that converts the 
+      data
+    </li>
+  </ul>
+  <p>into proper types (such as str, int, float), in the order of arg 
+  labels (default is float)</p>
+  <p>Returns dictionary where keyes are labels and values are data 
+  arrays</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="array_data_length"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">array_data_length</span>(<span class="sig-arg">starfile</span>,
+        <span class="sig-arg">tablename</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#array_data_length">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the number of entries in the specified table.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      starfile: name of the starfile that contains data
+    </li>
+    <li>
+      tablename: name of the table that contains data
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="array_data_generator"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">array_data_generator</span>(<span class="sig-arg">starfile</span>,
+        <span class="sig-arg">tablename</span>,
+        <span class="sig-arg">split</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">labels</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">labels_dict</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#array_data_generator">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Generator that yelds data lines from file (arg) starfile, table (arg) 
+  tablename.</p>
+  <p>Few notes about file parsing:</p>
+  <ul>
+    <li>
+      comment lines start with '#' and are always ignored
+    </li>
+    <li>
+      labels start with '_' and can have preceeding white characters (' ' 
+      in xmipp)
+    </li>
+    <li>
+      line srarting with arg tablename indicates start of the table
+    </li>
+    <li>
+      table data begins at the first line that doesn't start with '_' 
+      (optionally preceeded with whitespace)
+    </li>
+    <li>
+      table data ends when an empty line is reached
+    </li>
+    <li>
+      the order of data records is determined by indices written next to 
+      labels (relion) or by label order if no index is written next to 
+      labels
+    </li>
+  </ul>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      starfile: name of the starfile that contains data
+    </li>
+    <li>
+      tablename: name of the table that contains data
+    </li>
+    <li>
+      split: flag indicating if yielded data lines should be split in a 
+      list of strings
+    </li>
+    <li>
+      labels: flag indicating if labels are yielded also
+    </li>
+    <li>
+      labels_dict: flag indicating if the yielded labels should be in the 
+      dict form (label : index). If not, labels are returned as a list
+    </li>
+  </ul>
+  <p>Yields: data_line, label_indices / labels_list</p>
+  <ul>
+    <li>
+      data_line: data line split in a list or one string
+    </li>
+    <li>
+      label_indices: dictionary where each item has a label (without 
+      leading '_') as a key and the position (index) of that label in the 
+      data_line list as the corresponding value (only if args labels and 
+      labels_dict are True).
+    </li>
+    <li>
+      label_list: list of labels (without leading '_'), only if arg labels 
+      and labels_dict is True and arg labels_dist is False.
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="sort_particles"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">sort_particles</span>(<span class="sig-arg">particles</span>,
+        <span class="sig-arg">indices</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">compact</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">type</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#sort_particles">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sorts particle names given in spider format (used by relion and 
+  xmipp).</p>
+  <p>Only the particle number and the file name are taken into account for 
+  sorting, the directory part and the extension are disregarded. Therefore,
+  this function should be used if all particles are in the same directory, 
+  or if all particle file names (without directory part and extension) are 
+  unique even if they reside in different directories.</p>
+  <p>Particle number and file name (without directory part and extension) 
+  are concatenated to obtain the compact form of the particle name. In 
+  addition, if type is 'relion', the trailing '_particles' is removed from 
+  the compact form. If type is None or 'xmipp' compact form is not 
+  changed.</p>
+  <p>Note: All particles</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      particles: array of particle names
+    </li>
+    <li>
+      indices: flag indicating if an ndarray of indices corresponding to 
+      the sorting (what np.argsort returns) is returned
+    </li>
+    <li>
+      compact: Flag indicating if an ordered ndarray of compact particle 
+      names (particle number + file name) is returned
+    </li>
+    <li>
+      type: indicates additional processing of the compact form
+    </li>
+  </ul>
+  <p>Returns ndarray of sorted partcle names and optionally inices (for 
+  sorting) and sorted compact particle names.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="array_data_head"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">array_data_head</span>(<span class="sig-arg">starfile</span>,
+        <span class="sig-arg">tablename</span>,
+        <span class="sig-arg">top</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">labels</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#array_data_head">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns header of the specified table in the specified file.</p>
+  <p>If arg labels is True, returns only a list of labels (without leading 
+  '_').</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      starfile: name of the starfile that contains data
+    </li>
+    <li>
+      tablename: name of the table that contains data
+    </li>
+    <li>
+      top: if True, the top of the file, before the first table is reached,
+      is included in the header lines (default False)
+    </li>
+  </ul>
+  <p>Returns: list of header lines</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="write_table"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">write_table</span>(<span class="sig-arg">starfile</span>,
+        <span class="sig-arg">labels</span>,
+        <span class="sig-arg">data</span>,
+        <span class="sig-arg">format_</span>,
+        <span class="sig-arg">comment</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">#</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">header</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">tablename</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">labelindent</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">delimiter</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"> </code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#write_table">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes a data table to a star file.</p>
+  <p>Typical use: args starfile, tablename, labels, data, and format_ are 
+  given.</p>
+  <p>Alternatively, arg header is used in which case arg tablename is 
+  ignored.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      starfile: name of the file or a file descriptor
+    </li>
+    <li>
+      comment: comment written at the file head
+    </li>
+    <li>
+      tablename: name of the table
+    </li>
+    <li>
+      labels: list of labels (with or without leading '_')
+    </li>
+    <li>
+      data: dictionary where keys are labels and values are data ndarrays
+    </li>
+    <li>
+      format_: data format, can be a list of format strings ordered 
+      according to arg labels, or a dictionary where keys are labels and 
+      values are format strings. If 'auto', floats are formated as '%12.6f'
+      and ints as '%12d'.
+    </li>
+    <li>
+      header: list of header lines, from the beginning to (not including) 
+      the labels
+    </li>
+    <li>
+      labelindent: (str) label indentation (typically ' ' for xmipp, None 
+      for relion
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="find_file"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">find_file</span>(<span class="sig-arg">basename</span>,
+        <span class="sig-arg">suffix</span>,
+        <span class="sig-arg">iter_</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">iter_format</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">_it%03d</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">half</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">half_format</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">_half%d</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">cont</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#find_file">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Returns paths of all existing files that can be composed as:
+
+  basename + continuation_str + iteration_str + half_str + suffix
+
+from the specified arguments, where the continuation string may or may
+not exist. If it exists it is of the form '_ct' + number, for example
+'_ct21' or '_ct4'.
+
+If arg cont is False, the continuation string (above) is not allowed.
+
+If the path without the continuation is found, does not search for
+paths with continuation.
+
+Arguments:
+  - basename: part of the path that contains everything until the part
+  composed of continuation, iteration, half and suffix strings 
+  - suffix: the last part of the path, everyhing after continuation, 
+  iteration and half strings
+  - iter_: iteration number, None for no iteration
+  - iter_format: formatting of the interation
+  - half: number of the half (1 or 2), None when no half is in the path
+  - half_format: formatting of the half string
+  - cont: flag indication if continued executions are used
+
+Returns:
+  - None if no path found
+  - list of paths that satisfy the arguments
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="plot_fsc"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">plot_fsc</span>(<span class="sig-arg">basename</span>,
+        <span class="sig-arg">iter</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">half</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">class_id</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">legend</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">new</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#plot_fsc">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Plots FSC from 3d refinement or 3d classification.</p>
+  <p>FSC data is read from model star file determined by args basename, 
+  iter, and half. The table read data_model_class_ + class_id. The column 
+  labels are 'rlnResolution' (x-axis) and 'rlnGoldStandardFsc' 
+  (y-axis).</p>
+  <p>To plot the fsc of the final model set args iter and half to None.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      basename: model file base name (directory and file name until '_it')
+    </li>
+    <li>
+      iter: (single int or list of ints) one or more iterations, or 'all' 
+      for all iterations
+    </li>
+    <li>
+      half: determine which data half is used (None if data is not 
+      separated in halves, 1, 2, or [1,2])
+    </li>
+    <li>
+      class_id: (single int or list of ints) one or more class ids
+    </li>
+    <li>
+      legend: flag indicating if legend is shown
+    </li>
+    <li>
+      new: flag indicating if a new plot is made
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="plot_ssnr"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">plot_ssnr</span>(<span class="sig-arg">basename</span>,
+        <span class="sig-arg">iter</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">half</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">class_id</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">legend</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#plot_ssnr">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Plots SSNR.</p>
+  <p>SSNR data is read from model star file determined by args basename, 
+  iter, and half. The table read data_model_class_ + class_id. The column 
+  labels are 'rlnResolution' (x-axis) and 'rlnSsnrMap' (y-axis).</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      basename: model file base name (directory and fine name until 'it')
+    </li>
+    <li>
+      iter: (single int or list of ints) one or more iterations, or 'all' 
+      for all iterations
+    </li>
+    <li>
+      half: determine which data half is used (None if data is not 
+      separated in halves, 1, 2, or [1,2])
+    </li>
+    <li>
+      class_id: (single int or list of ints) one or more class ids
+    </li>
+    <li>
+      legend: flag indicating if legend is shown
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="plot_multi"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">plot_multi</span>(<span class="sig-arg">basename</span>,
+        <span class="sig-arg">label_x</span>,
+        <span class="sig-arg">label_y</span>,
+        <span class="sig-arg">iter</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">half</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">class_id</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">new</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#plot_multi">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Plots data corresponding to args label_x and label_y from one or more 
+files. 
+
+File names are formed as all possible combinations that have the form:
+
+  basename + '_it' + iteration + '_half' + one_half + '_model.star'
+
+where iteration and one_half are elements of (args) iter and and half, 
+respectively. If None is an element of iter or half, the preceeding string
+('_it' or '_half') is also skipped. If such file doesn't exist, it is
+checked if a continuation file exist.
+
+If the file with such file name still doesn't exist a warning is printed 
+and the files are skipped.
+
+Furthermore, combinations of all file names obtained as above and 
+tablenames ('data_model_class_' + one_class_id, where one class_id is an 
+element of arg class_id) are considered. 
+
+Arguments:
+  - basename: model file base name (directory and fine name until 'it')
+  - iter: (single int or list) one or more iterations, None for no 
+  iteration, 'all' for all iterations
+  - half: (single int or list) denotes data half(s) used, None data is not
+  separated in halfs
+  - class_id: (single int or list) one or more class ids
+  - label_x, label_y: data labels
+  - new: flag indicating if a new plot is made
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="plot"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">plot</span>(<span class="sig-arg">starfile</span>,
+        <span class="sig-arg">tablename</span>,
+        <span class="sig-arg">label_x</span>,
+        <span class="sig-arg">label_y</span>,
+        <span class="sig-arg">one</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">label</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#plot">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Plots data from (arg) starfile and datablock (arg) tablename, so that 
+  label_x is shown on x and (arg) label_y on the y axis.</p>
+  <p>If arg one is True a plot is started and finished here. Otherwise, it 
+  is expected that a plot is already open and that this function only adds 
+  data to it.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      startfile: fine name
+    </li>
+    <li>
+      tablename: data block name
+    </li>
+    <li>
+      label_x, label_y: variable names (without leading '_'
+    </li>
+    <li>
+      one: Flag indication if only one plot is needed, or if this function 
+      is called multiple times to add data to the same plot
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="prepare_class_arg"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">prepare_class_arg</span>(<span class="sig-arg">class_</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">tuple</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#prepare_class_arg">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Converts arg class_ in a form useful for further processing:</p>
+  <ul>
+    <li>
+      If class_ is None, returns None
+    </li>
+    <li>
+      If class is a single number (not a list or ndarray) and arg mode is 
+      'list', returns class_ as a list (that is [class_])
+    </li>
+    <li>
+      If class is a single number (not a list or ndarray) and arg mode is 
+      'tuple', if first converts class_ to a list and then converts each 
+      non-tuple element to a tuple. For example:
+      <p>prepare_class_arg(3, mode-'tuple') -&gt; [(3,)] 
+      prepare_class_arg([3, (4,5), 6] mode-'tuple') -&gt; [(3,), (4,5), 
+      (6,)]</p>
+    </li>
+  </ul>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      class_: class(es) as a single int, list of ints or a list of ints and
+      tuples of ints
+    </li>
+    <li>
+      mode: 'list' or 'tuple'
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="write_transformed"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">write_transformed</span>(<span class="sig-arg">array</span>,
+        <span class="sig-arg">angles</span>,
+        <span class="sig-arg">origin</span>,
+        <span class="sig-arg">scale</span>=<span class="sig-default">1.0</span>,
+        <span class="sig-arg">d</span>=<span class="sig-default">0.0</span>,
+        <span class="sig-arg">rot_mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">zyz_in_active</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">dir_</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">suffix</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">dtype</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">float32</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">pixel</span>=<span class="sig-default">1</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#write_transformed">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Transforms 3D array according to angles, scale and d and writes the 
+resulting array.
+
+The file name is formed as:
+
+  r-&lt;angle_0&gt;-&lt;angle_1&gt;-&lt;angle_2&gt;_t-&lt;d_0&gt;-&lt;d_1&gt;-&lt;d_2&gt;_suffix.mrc
+
+Arguments:
+  - array: 3D ndarray to be transformed
+  - angles: euler angles in rad
+  - origin: coordinates of the rotation origin
+  - scale: scale factor
+  - d: translations
+  - rot_mode: Eauler angles convention
+  - dir_: directory name where the transformed image is stored
+  - suffix: file name suffix, if given, '_' is prepended 
+  - dtype: data type (should correspond to the file format)
+  - pixel: pixel size in nm
+
+Returns file_path
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="multi_transform"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">multi_transform</span>(<span class="sig-arg">array</span>,
+        <span class="sig-arg">transform_iter</span>,
+        <span class="sig-arg">origin</span>,
+        <span class="sig-arg">part_file</span>,
+        <span class="sig-arg">part_dir</span>,
+        <span class="sig-arg">rot_mode</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">zyz_in_active</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">star</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">default</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">number</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">dtype</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">float32</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">pixel</span>=<span class="sig-default">1</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#multi_transform">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Makes multiple transformations of array (image) according to the 
+  transformation iterator, saves the  files and writes a corresponding star
+  file.</p>
+  <p>Arg star determines what values for angles and origin are entered into
+  the star file. If star is 'default', all are set to 0. This is useful 
+  when the particles and the star file generated here are used for (global)
+  alignment and averaging.</p>
+  <p>If arg star is 'inverse', negative translations are used for star file
+  rlnOriginX/Y/Z and the inverse rotation angles (in deg) are used for 
+  relion rotation parameters. Provided that arg rot_mode is 
+  'zyz_in_active', this gives relion-correct assignements, because the 
+  application of translation given by rlnOriginX/Y/Z and rotation specified
+  by relion angles on a (transformed) array (particle) yields (the 
+  non-transformed) arg array.</p>
+  <p>In the star file, '_rlnMicrographName' is set to 'none', ImageName to 
+  the correct name and and all angles and coordinates to 0.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      array: 3D ndarray (image) to be transformed
+    </li>
+    <li>
+      transform_iter: iterator composed of 6 iterators, the three Euler 
+      angles (in rad) and x, y and z translations (in pixels)
+    </li>
+    <li>
+      origin: coordinates of the rotation origin
+    </li>
+    <li>
+      rot_mode: Euler angles convention
+    </li>
+    <li>
+      part_dir_: directory name where the transformed images are stored
+    </li>
+    <li>
+      number: Flag indicating whether a unique index (counter) is appended 
+      to file names (useful when multiple copies of the same transformed 
+      image are written
+    </li>
+    <li>
+      dtype: data type (should correspond to the file format)
+    </li>
+    <li>
+      pixel: pixel size in nm
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="symmetrize_particle_data"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">symmetrize_particle_data</span>(<span class="sig-arg">symmetry</span>,
+        <span class="sig-arg">instar</span>,
+        <span class="sig-arg">outstar</span>,
+        <span class="sig-arg">relion_dir</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">copy</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">particles_dir</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">format_</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">%s </code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#symmetrize_particle_data">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Symmetrizes particle data given in the specified relion star file.</p>
+  <p>Each particle of the initial relion star file (arg instar), is copied 
+  as many times as there are rotational symmetries in the specified 
+  symmetry group (arg symmetry). The Euler angles are modified to reflect 
+  these rotations.</p>
+  <p>More precisely, symmetrized roatations are obtained as a composition 
+  of symmetery rotations and the initial rotations specifed by Euler angles
+  in the initial star file. In this way, the initial rotation is applied on
+  particles first and then a symmetry rotation. This is because rotation 
+  specified in relion star files rotates particles to obtain an averaged 
+  structure.</p>
+  <p>If arg copy is False, particles (files) are not changed, so each 
+  particle file name occurs multiple times (with different angles) in the 
+  symmetrized (final) star file.</p>
+  <p>If arg copy is True, particles are copied for each rotation, so that 
+  particle file names in the symmetrized star file are unique. (Not sure if
+  this is needed for relion to work properly, just in case.)</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      symmetry: symmetry type, currently cn and dn
+    </li>
+    <li>
+      instar: input star file
+    </li>
+    <li>
+      outstar: output (symmetrized) star file
+    </li>
+    <li>
+      copy: flag indicating if particles are copied so that each 
+      orientation has a corresponding particle file
+    </li>
+    <li>
+      relion_dir: relative path to the relion directory (in respect to 
+      which all paths are written in star files)
+    </li>
+    <li>
+      particles_dir: directory where the symmetrized particles are written 
+      relative to the relion directory. If None symmetrized particles are 
+      written in the same directory where the particles already are
+    </li>
+    <li>
+      format: star file entries format
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="add_priors"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_priors</span>(<span class="sig-arg">instar</span>,
+        <span class="sig-arg">outstar</span>,
+        <span class="sig-arg">prior_labels</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">format_</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">auto</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#add_priors">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds prior angular values to a particle file by copying the values of 
+  the corresponding angles. The data is taken from an existing particle 
+  file (arg instar) and written to a new file (arg outstar).</p>
+  <p>If arg prior_labels is not specified, prior angle labels are 
+  _rlnAngleRotPrior, _rlnAngleTiltPrior and _rlnAnglePsiPrior, and the 
+  corresponding angle labels are _rlnAngleRot, _rlnAngleTilt and 
+  _rlnAnglePsi.</p>
+  <p>All other values are copied unchanged.</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      instar: input particle data star file
+    </li>
+    <li>
+      outstar: output particle data star file
+    </li>
+    <li>
+      prior labels: (dict)
+    </li>
+    <li>
+      format_: data format, leaving the default ('auto') makes floats 
+      '%12.6f' and ints '%12d'.
+    </li>
+  </ul>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="symmetrize_structure"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">symmetrize_structure</span>(<span class="sig-arg">structure</span>,
+        <span class="sig-arg">symmetry</span>,
+        <span class="sig-arg">average</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">dtype</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">pixel</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">mask</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">origin</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pyto.particles.relion_tools-pysrc.html#symmetrize_structure">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Rotates a given image (arg iniitial) according to the specified 
+  symmetry (arg symmetry) and returns the average.</p>
+  <p>If arg mask is specified, the initial image is first masked and then 
+  rotated and averaged.</p>
+  <p>The rotation is performed around the specified origin. If None, the 
+  origin is in the image center (image_len / 2).</p>
+  <p>Data type and pixel size are taken from the arguments, if specified. 
+  If these arguments are not given, they are read from the image file if 
+  arg structure is a file. Pixel size and dtype are needed if the average 
+  image is saved to a file</p>
+  <p>Arguments:</p>
+  <ul>
+    <li>
+      structure: initial image (file name, pyto.core.Image or ndarray)
+    </li>
+    <li>
+      symmetry: symmetry type ('Cn' or 'Dn')
+    </li>
+    <li>
+      origin: (list or ndarray) rotation origin
+    </li>
+    <li>
+      mask: mask image (file name, pyto.core.Image or ndarray), if None no 
+      masking is performed
+    </li>
+    <li>
+      average: averaged image, file name or None to return the image
+    </li>
+    <li>
+      dtype: data type of the average image, only in case it is saved in a 
+      file
+    </li>
+    <li>
+      pixel: pixel size in nm (used only for mrc format
+    </li>
+  </ul>
+  <p>Returns (ndarray) averaged image only in case average is None</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="pyto-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            >Pyto</th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1
+    on Thu Nov  8 16:54:04 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
