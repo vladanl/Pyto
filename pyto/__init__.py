@@ -22,7 +22,7 @@ from . import tomo
 from . import correlative
 try:
     from . import particles
-except ModuleNotFoundError:
+except (ModuleNotFoundError, ImportError):
     pass
 
 #import scripts

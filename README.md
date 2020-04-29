@@ -1,4 +1,4 @@
-[
+
 # Pyto #
 
 ### Description ###
