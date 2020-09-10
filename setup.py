@@ -11,7 +11,8 @@ setup(
         "numpy>=1.18",
         "scipy>=1.41",
         "matplotlib>=3.2",
-        "pandas>=1.0"
+        "pandas>=1.0",
+        "future>=0.18"
     ],
     include_package_data=True
 )
