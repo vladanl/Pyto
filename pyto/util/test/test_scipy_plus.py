@@ -50,6 +50,11 @@ class TestScipyPlus(np_test.TestCase):
         desired = scipy.stats.chi2.sf(chisq, 2)
         np_test.assert_almost_equal(p, desired, decimal=4)
 
+        # check that 0-bins are correctly removed
+        chisq, p = chisquare_2(f_obs_1=[2,3,0,4], f_obs_2=[6,5,0,4])
+        np_test.assert_almost_equal(
+            chisquare_2(f_obs_1=[2,3,4], f_obs_2=[6,5,4]), (chisq, p))
+            
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestScipyPlus)

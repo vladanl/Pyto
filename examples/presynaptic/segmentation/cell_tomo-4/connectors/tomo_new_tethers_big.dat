@@ -1,0 +1,58 @@
+#
+# Machine: bebop ['Linux', 'x86_64', 'x86_64']
+# Date: Tue Jan 14 18:23:19 2020
+#
+# Input script: connectors.py (Tue Jan 14 18:23:42 2020)  $Revision: 1573 $
+# Working directory: /fs/pool/pool-lucic2/pyto/presynaptic_example_small/segmentation/cell_tomo-4/connectors
+#
+# Image (in): ../3d/tomo.mrc (Tue Jan 14 17:09:39 2020)
+# Boundaries (in): ../viz/labels.mrc (Tue Jan 14 17:11:59 2020)
+# Segmented image (out): tomo_new_tethers_big.mrc (Tue Jan 14 18:23:19 2020)
+# SegmentationAnalysis pickle (out): tomo_new_tethers_big.pkl (Tue Jan 14 18:23:19 2020)
+#
+# Boundary ids: 
+#     [2, 36, 48, 49, 50, 52, 58, 59, 60, 61]
+#
+# Number of boundaries contacted: 2
+# Contact mode: exact
+#
+# Segmentation region: 3
+# Free region size: 0
+# Free region mode: add
+#
+# Structuring element connectivities
+#     - connector formation: 1
+#     - size: 3
+#     - contact detection: 1
+#     - contact counting: 1
+#     - topology: 1
+#
+# Length
+#     - contact mode: b2c
+#     - line mode: mid
+#
+#
+# Distance:
+#   - region(s): 2
+#   - mode: mean
+#
+# Thresholds: 500.000 550.000 600.000 650.000 700.000 750.000 800.000 850.000 900.000 950.000 1000.000 1050.000 1100.000 1150.000 1200.000 1250.000 1300.000 1350.000 1400.000
+#
+#
+# Number of segments: 2
+#
+# Classification: 
+# 	- type: keep,  arguments: {'mode': 'new'}
+# 	- type: contacted_ids,  arguments: {'ids': [2], 'rest': True, 'names': ['tethers', 'connectors']}
+# 	- type: volume,  arguments: {'volumes': [0, 3, 600, 100000], 'names': ['small', 'good', 'big']}
+#
+# Id  Thresh         Density               Volume Surface  S/V  Euler Loops Holes Length Boundary  Distance    Contacts 
+#             mean    std     min     max                                                distance         to            
+  78 1300.000 817.974 359.101 -593.410 1297.848    704    683  0.970   -10    11     0   10.9    2.8      4.4    2   [ 2 59]
+  76 1250.000 758.377 383.580 -900.962 1249.935   1500   1464  0.976   -43    44     0   18.3    2.8      8.2    2   [ 2 61]
+
+# All segments together:
+#   0 -50000.000 777.414 376.960 -900.962 1297.848   2204   2147  0.974   -53    55     0   -2.0   -1.0     -1.0    2 
+
+# Whole segmentation region:
+#           1857.130 712.596 -1524.226 5460.545 767509

@@ -4,10 +4,10 @@ reference classification.
 
 
 # Author: Vladan Lucic
-# $Id: cluster.py 1520 2019-03-11 17:00:20Z vladan $
+# $Id$
 """
 
-__version__ = "$Revision: 1520 $"
+__version__ = "$Revision$"
 
 
 import collections

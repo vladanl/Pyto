@@ -80,8 +80,9 @@ class Connections(Groups):
         """
 
         # initialize super 
-        super(Connections, self).__init__()
-
+        #super(Connections, self).__init__() # Python 2
+        super().__init__()
+        
         # set mode
         self._mode = mode
         

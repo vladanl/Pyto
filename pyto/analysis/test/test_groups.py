@@ -20,9 +20,10 @@ import os.path
 import sys
 import unittest
 
-import numpy
+import numpy as np
 import numpy.testing as np_test 
 import scipy
+import pandas as pd
 
 import pyto.util.scipy_plus 
 from pyto.analysis.catalog import Catalog
@@ -95,34 +96,34 @@ class TestGroups(np_test.TestCase):
         groups.ga = Observations() 
         groups.ga.identifiers = ['ia1', 'ia3', 'ia5']
         groups.ga.scalar = [2, 6, 10]
-        groups.ga.ids = [2*numpy.arange(2), numpy.arange(6), numpy.array([])]
-        groups.ga.vector = [2*numpy.arange(2) + 1, numpy.arange(6) + 1, 
-                               numpy.array([])]
+        groups.ga.ids = [2*np.arange(2), np.arange(6), np.array([])]
+        groups.ga.vector = [2*np.arange(2) + 1, np.arange(6) + 1, 
+                               np.array([])]
         groups.ga.properties.update(['scalar', 'identifiers', 
                                         'ids', 'vector'])
         groups.ga.indexed.update(['ids', 'vector'])
         groups['gb'] = Observations() 
         groups['gb'].identifiers = ['ib1', 'ib2', 'ib3']
         groups['gb'].scalar = [2, 4, 6]
-        groups['gb'].ids = [2*numpy.arange(2), numpy.array([]), numpy.arange(4)]
-        groups['gb'].vector = [2*numpy.arange(2) + 1, 
-                               numpy.array([]), numpy.arange(4) + 1]
+        groups['gb'].ids = [2*np.arange(2), np.array([]), np.arange(4)]
+        groups['gb'].vector = [2*np.arange(2) + 1, 
+                               np.array([]), np.arange(4) + 1]
         groups['gb'].properties.update(['scalar', 'identifiers', 
                                         'ids', 'vector'])
         groups['gb'].indexed.update(['ids', 'vector'])
         groups['gc'] = Observations() 
         groups['gc'].identifiers = []
         groups['gc'].scalar = []
-        groups['gc'].ids = [numpy.array([])]
-        groups['gc'].vector = [numpy.array([])]
+        groups['gc'].ids = [np.array([])]
+        groups['gc'].vector = [np.array([])]
         groups['gc'].properties.update(['scalar', 'identifiers', 
                                         'ids', 'vector'])
         groups['gc'].indexed.update(['ids', 'vector'])
         groups['gd'] = Observations() 
         groups.gd.identifiers = ['id6']
         groups.gd.scalar = [12]
-        groups.gd.ids = [numpy.arange(5) + 1]
-        groups.gd.vector = [numpy.arange(5) + 2]
+        groups.gd.ids = [np.arange(5) + 1]
+        groups.gd.vector = [np.arange(5) + 2]
         groups.gd.properties.update(['scalar', 'identifiers', 
                                         'ids', 'vector'])
         groups.gd.indexed.update(['ids', 'vector'])
@@ -139,18 +140,18 @@ class TestGroups(np_test.TestCase):
         groups.ga = Observations() 
         groups.ga.identifiers = ['i1', 'i3', 'i5']
         groups.ga.scalar = [2, 6, 10]
-        groups.ga.ids = [2*numpy.arange(2), numpy.arange(6), numpy.array([])]
-        groups.ga.vector = [2*numpy.arange(2) + 1, numpy.arange(6) + 1, 
-                               numpy.array([])]
+        groups.ga.ids = [2*np.arange(2), np.arange(6), np.array([])]
+        groups.ga.vector = [2*np.arange(2) + 1, np.arange(6) + 1, 
+                               np.array([])]
         groups.ga.properties.update(['scalar', 'identifiers', 
                                         'ids', 'vector'])
         groups.ga.indexed.update(['ids', 'vector'])
         groups['gb'] = Observations() 
         groups['gb'].identifiers = ['i1', 'i3', 'i5']
         groups['gb'].scalar = [2, 4, 6]
-        groups['gb'].ids = [2*numpy.arange(2), numpy.array([]), numpy.arange(4)]
-        groups['gb'].vector = [2*numpy.arange(2) + 1, 
-                               numpy.array([]), numpy.arange(4) + 1]
+        groups['gb'].ids = [2*np.arange(2), np.array([]), np.arange(4)]
+        groups['gb'].vector = [2*np.arange(2) + 1, 
+                               np.array([]), np.arange(4) + 1]
         groups['gb'].properties.update(['scalar', 'identifiers', 
                                         'ids', 'vector'])
         groups['gb'].indexed.update(['ids', 'vector'])
@@ -168,15 +169,15 @@ class TestGroups(np_test.TestCase):
         groups.gb = Observations() 
 
         groups.ga.identifiers = ['ia1', 'ia3', 'ia5']
-        groups.ga.ids = 3*[numpy.array([1, 3, 5])]
-        groups.ga.vector = [numpy.array([2,4,6]), numpy.array([3,5,7]),
-                            numpy.array([4,6,8])]
+        groups.ga.ids = 3*[np.array([1, 3, 5])]
+        groups.ga.vector = [np.array([2,4,6]), np.array([3,5,7]),
+                            np.array([4,6,8])]
         groups.ga.properties.update(['identifiers', 'ids', 'vector'])
         groups.ga.indexed.update(['ids', 'vector'])
 
         groups.gb.identifiers = ['ib1', 'ib2']
-        groups.gb.ids = 2*[numpy.array([1, 2, 3])]
-        groups.gb.vector = [numpy.array([10,20,30]), numpy.array([20,40,60])]
+        groups.gb.ids = 2*[np.array([1, 2, 3])]
+        groups.gb.vector = [np.array([10,20,30]), np.array([20,40,60])]
         groups.gb.properties.update(['identifiers', 'ids', 'vector'])
         groups.gb.indexed.update(['ids', 'vector'])
 
@@ -195,42 +196,103 @@ class TestGroups(np_test.TestCase):
             name='ids', identifier='ia1', value=[1,3,5,7,9], indexed=True)
         groups.ga.setValue(
             name='xxx', identifier='ia1', 
-            value=numpy.array([1.1, 2.1, 3.1, 4.1, 5.1]), indexed=True)
+            value=np.array([1.1, 2.1, 3.1, 4.1, 5.1]), indexed=True)
         groups.ga.setValue(
             name='ids', identifier='ia2', value=[3,4,5], indexed=True)
         groups.ga.setValue(
             name='xxx', identifier='ia2', 
-            value=numpy.array([0.1, 1.1, 2.1]), indexed=True)
+            value=np.array([0.1, 1.1, 2.1]), indexed=True)
         groups.ga.setValue(
             name='ids', identifier='ia3', value=[2,3,5,7,8], indexed=True)
         groups.ga.setValue(
             name='xxx', identifier='ia3', 
-            value=numpy.array([3.6, 4.6, 5.6, 6.6, 7.6]), indexed=True)
+            value=np.array([3.6, 4.6, 5.6, 6.6, 7.6]), indexed=True)
 
         groups.gb = Observations() 
         groups.gb.setValue(
             name='ids', identifier='ib1', value=[1,3,4,5,6], indexed=True)
         groups.gb.setValue(
             name='xxx', identifier='ib1', 
-            value=numpy.array([1.3, 2.3, 3.3, 4.3, 5.3]), indexed=True)
+            value=np.array([1.3, 2.3, 3.3, 4.3, 5.3]), indexed=True)
         groups.gb.setValue(
             name='ids', identifier='ib2', value=[2,4,6,8,10], indexed=True)
         groups.gb.setValue(
             name='xxx', identifier='ib2', 
-            value=numpy.array([3.3, 4.3, 5.3, 6.3, 7.3]), indexed=True)
+            value=np.array([3.3, 4.3, 5.3, 6.3, 7.3]), indexed=True)
         groups.gb.setValue(
             name='ids', identifier='ib3', value=[2,4,5,7,9,10], indexed=True)
         groups.gb.setValue(
             name='xxx', identifier='ib3', 
-            value=numpy.array([4.7, 5.7, 6.7, 7.7, 8.7, 6.7]), indexed=True)
+            value=np.array([4.7, 5.7, 6.7, 7.7, 8.7, 6.7]), indexed=True)
         groups.gb.setValue(
             name='ids', identifier='ib4', value=[], indexed=True)
         groups.gb.setValue(
             name='xxx', identifier='ib4', 
-            value=numpy.array([]), indexed=True)
+            value=np.array([]), indexed=True)
 
         return groups
 
+    def make_tables(self):
+        """
+        Makes Pandas tables
+        """
+
+        # data
+        ids = {
+            'alpha' : {'alpha_1' : range(5), 'alpha_2' : np.arange(1,8,2)},
+            'bravo' : {
+                'bravo_1' : np.arange(1,6), 'bravo_2' : np.arange(1,8,2),
+                'bravo_3' : np.arange(0,21,5)}}
+        vector_1 = [
+            1, 1, 1, 3, 3,
+            1, 3, 5, 7,
+            1, 1, 3, 5, 5,
+            3, 5, 7, 9,
+            3, 3, 5, 7, 7]
+        vector_2 = np.array(vector_1) + 10
+        scalar_1 = [1, 2, 3, 4, 5]
+        scalar_2 = np.array(scalar_1) + 10
+
+        # make indexed data table and put group names, identifiers and ids
+        indexed_table = None
+        for g_name in ids:
+            for ident in ids[g_name]:
+                local_data = pd.DataFrame({
+                    'group' : g_name,
+                    'identifiers' : ident,
+                    'ids' : ids[g_name][ident]})
+                try:
+                    indexed_table = pd.concat(
+                        [indexed_table, local_data], axis=0, ignore_index=True)
+                except NameError:
+                    indexed_table = local_data
+
+        # add vector data             
+        indexed_table = pd.concat(
+            [indexed_table, pd.Series(vector_1, name='vector_1')], axis=1)
+        indexed_table = pd.concat(
+            [indexed_table, pd.Series(vector_2, name='vector_2')], axis=1)
+
+        # make scalar data table and put group names and identifiers
+        scalar_table = None
+        for g_name in ids:
+            local_data = pd.DataFrame({
+                'group' : g_name,
+                'identifiers' : list(ids[g_name].keys())})
+            try:
+                scalar_table = pd.concat(
+                    [scalar_table, local_data], axis=0, ignore_index=True)
+            except NameError:
+                scalar_table = local_data
+
+        # add scalar data   
+        scalar_table = pd.concat(
+            [scalar_table, pd.Series(scalar_1, name='scalar_1')], axis=1)
+        scalar_table = pd.concat(
+            [scalar_table, pd.Series(scalar_2, name='scalar_2')], axis=1)
+
+        return indexed_table, scalar_table
+    
     def test_get_indexed_data(self):
         """
         Tests get_indexed_data()
@@ -267,6 +329,71 @@ class TestGroups(np_test.TestCase):
         np_test.assert_equal(
             data.scalar.tolist(), [2, 6, 10] +  [2, 4, 6] +  [12])
             
+    def test_from_pandas(self):
+        """
+        Tests from_pandas()
+        """
+
+        # make tables
+        indexed_table, scalar_table = self.make_tables()
+
+        # check directly
+        groups = Groups.from_pandas(indexed=indexed_table, scalar=scalar_table)
+        np_test.assert_equal(
+            groups.alpha.properties,
+            set(['identifiers', 'ids', 'vector_1', 'vector_2',
+                 'scalar_1', 'scalar_2']))
+        np_test.assert_equal(
+            groups.bravo.properties,
+            set(['identifiers', 'ids', 'vector_1', 'vector_2',
+                 'scalar_1', 'scalar_2']))
+        np_test.assert_equal(
+            groups.alpha.indexed, set(['ids', 'vector_1', 'vector_2']))
+        np_test.assert_equal(
+            groups.bravo.indexed, set(['ids', 'vector_1', 'vector_2']))
+        np_test.assert_equal(
+            groups.alpha.identifiers, ['alpha_1', 'alpha_2'])
+        np_test.assert_equal(
+            groups.bravo.identifiers, ['bravo_1', 'bravo_2', 'bravo_3'])
+        np_test.assert_equal(
+            groups.alpha.getValue(identifier='alpha_1', name='ids'),
+            range(5))
+        np_test.assert_equal(
+            groups.alpha.getValue(identifier='alpha_2', name='ids'),
+            np.arange(1,8,2))
+        np_test.assert_equal(
+            groups.bravo.getValue(identifier='bravo_1', name='ids'),
+            np.arange(1,6))
+        np_test.assert_equal(
+            groups.bravo.getValue(identifier='bravo_2', name='ids'),
+            np.arange(1,8,2))
+        np_test.assert_equal(
+            groups.bravo.getValue(identifier='bravo_3', name='ids'),
+            np.arange(0,21,5))
+        np_test.assert_equal(
+            groups.alpha.getValue(identifier='alpha_1', name='vector_1'),
+            [1, 1, 1, 3, 3])
+        np_test.assert_equal(
+            groups.alpha.getValue(identifier='alpha_2', name='scalar_2'),
+            12)
+        np_test.assert_equal(
+            groups.bravo.getValue(identifier='bravo_2', name='vector_1'),
+            [3, 5, 7, 9])
+        np_test.assert_equal(
+            groups.bravo.getValue(identifier='bravo_3', name='vector_2'),
+            [13, 13, 15, 17, 17])
+        np_test.assert_equal(
+            groups.bravo.getValue(identifier='bravo_1', name='scalar_1'),
+            3)
+          
+        # convert back to pandas and check
+        np_test.assert_equal(
+            np.array((groups.indexed_data == indexed_table).all()).all(),
+            True)
+        np_test.assert_equal(
+            np.array((groups.scalar_data == scalar_table).all()).all(),
+            True)
+
     def testAddGroups(self):
         """
         Tests addGroups()
@@ -287,17 +414,17 @@ class TestGroups(np_test.TestCase):
             grs_1.ga.getValue(name='scalar', identifier='ia3'), 6)
         np_test.assert_equal(
             grs_1.gd.getValue(name='vector', identifier='id6'), 
-            numpy.arange(5) + 2)
+            np.arange(5) + 2)
         np_test.assert_equal(
             grs_1.ga3.getValue(name='ids', identifier='ia2'), [3,4,5])
         np_test.assert_equal(
             grs_1.ga3.getValue(name='xxx', identifier='ia3'), 
-            numpy.array([3.6, 4.6, 5.6, 6.6, 7.6]))
+            np.array([3.6, 4.6, 5.6, 6.6, 7.6]))
         np_test.assert_equal(
             grs_1.gb3.getValue(name='ids', identifier='ib1'), [1,3,4,5,6])
         np_test.assert_equal(
             grs_1.gb3.getValue(name='xxx', identifier='ib3'),
-            numpy.array([4.7, 5.7, 6.7, 7.7, 8.7, 6.7]))
+            np.array([4.7, 5.7, 6.7, 7.7, 8.7, 6.7]))
 
         # test copy
         grs_1 = self.makeInstance()
@@ -347,18 +474,18 @@ class TestGroups(np_test.TestCase):
                 if identifier == 'ia1':
                     np_test.assert_equal(experiment.getValue(name='scalar'), 2)
                     np_test.assert_equal(experiment.getValue(name='vector'), 
-                                         2*numpy.arange(2) + 1)
+                                         2*np.arange(2) + 1)
                 if identifier == 'ia3':
                     np_test.assert_equal(experiment.getValue(name='vector'),
-                                         numpy.arange(6) + 1)
+                                         np.arange(6) + 1)
                 if identifier == 'ia5':
                     np_test.assert_equal(experiment.getValue(name='scalar'), 10)
                     np_test.assert_equal(experiment.getValue(name='ids'), 
-                                         numpy.array([]))
+                                         np.array([]))
             if group_name == 'gb':
                 if identifier == 'ib3':
                     np_test.assert_equal(experiment.getValue(name='ids'), 
-                                         numpy.arange(4))
+                                         np.arange(4))
 
         # test if all groups and identifiers taken into account
         desired = set(groups_obj.keys())
@@ -429,15 +556,15 @@ class TestGroups(np_test.TestCase):
         np_test.assert_equal(new.blue.identifiers, ['ia5']) 
         np_test.assert_equal(new.green.identifiers, ['ib2', 'ia3']) 
         np_test.assert_equal(new['red'].getValue(
-                identifier='id6', name='vector'), numpy.arange(5) + 2)
+                identifier='id6', name='vector'), np.arange(5) + 2)
         np_test.assert_equal(new['red'].getValue(
-                identifier='ia1', name='ids'), 2*numpy.arange(2))
+                identifier='ia1', name='ids'), 2*np.arange(2))
         np_test.assert_equal(new['blue'].getValue(identifier='ia5', name='ids'),
-                             numpy.array([]))
+                             np.array([]))
         np_test.assert_equal(new['green'].getValue(
                 identifier='ib2', name='scalar'), 4)
         np_test.assert_equal(new['green'].getValue(
-                identifier='ia3', name='vector'), numpy.arange(6) + 1)
+                identifier='ia3', name='vector'), np.arange(6) + 1)
         
         # regroup by a non-string value
         new = groups.regroup(name='scalar') 
@@ -449,17 +576,17 @@ class TestGroups(np_test.TestCase):
         np_test.assert_equal(set(new['10'].identifiers), set(['ia5']))
         np_test.assert_equal(set(new['12'].identifiers), set(['id6']))
         np_test.assert_equal(new['2'].getValue(identifier='ia1', name='vector'),
-                             2*numpy.arange(2) + 1)
+                             2*np.arange(2) + 1)
         np_test.assert_equal(new['4'].getValue(identifier='ib2', name='vector'),
-                             numpy.array([]))
+                             np.array([]))
         np_test.assert_equal(new['6'].getValue(identifier='ib3', name='vector'),
-                             numpy.arange(4) + 1)
+                             np.arange(4) + 1)
         np_test.assert_equal(new['6'].getValue(identifier='ia3', name='ids'),
-                             numpy.arange(6))
+                             np.arange(6))
         np_test.assert_equal(new['10'].getValue(identifier='ia5', 
                                                 name='scalar'), 10)
         np_test.assert_equal(new['12'].getValue(identifier='id6', name='ids'),
-                             numpy.arange(5) + 1)
+                             np.arange(5) + 1)
   
     def testApply(self):
         """
@@ -477,7 +604,7 @@ class TestGroups(np_test.TestCase):
         np_test.assert_equal('new' in groups.gb.properties, True)
 
         # one group, more args
-        groups.apply(funct=numpy.subtract, args=['new', 'vector'], name='new2',
+        groups.apply(funct=np.subtract, args=['new', 'vector'], name='new2',
                      categories=['gb'])
         np_test.assert_equal(getattr(groups.ga, 'new2', None) is None, True)
         np_test.assert_equal(groups.gb.new2, [[10,10], [], [10,10,10,10]])
@@ -618,16 +745,16 @@ class TestGroups(np_test.TestCase):
         np_test.assert_equal(set(obs.identifiers), 
                              set(['ga', 'gb', 'gc', 'gd']))
         np_test.assert_equal(obs.getValue('ga', 'scalar'), 
-                             numpy.array([2, 6, 10]))
+                             np.array([2, 6, 10]))
         np_test.assert_equal(obs.getValue('gb', 'scalar'), 
-                             numpy.array([2, 4, 6]))
+                             np.array([2, 4, 6]))
         np_test.assert_equal(obs.getValue('gc', 'scalar'),
-                             numpy.array([]))
-        np_test.assert_equal(obs.getValue('gd', 'scalar'), numpy.array([12]))
-        np_test.assert_equal(obs.getValue('ga', 'ids'), numpy.array([1,2,3]))
-        np_test.assert_equal(obs.getValue('gb', 'ids'), numpy.array([1,2,3]))
-        np_test.assert_equal(obs.getValue('gc', 'ids'), numpy.array([]))
-        np_test.assert_equal(obs.getValue('gd', 'ids'), numpy.array([1]))
+                             np.array([]))
+        np_test.assert_equal(obs.getValue('gd', 'scalar'), np.array([12]))
+        np_test.assert_equal(obs.getValue('ga', 'ids'), np.array([1,2,3]))
+        np_test.assert_equal(obs.getValue('gb', 'ids'), np.array([1,2,3]))
+        np_test.assert_equal(obs.getValue('gc', 'ids'), np.array([]))
+        np_test.assert_equal(obs.getValue('gd', 'ids'), np.array([1]))
         np_test.assert_equal(obs.getValue('ga', 'idNames'),
                              ['ia1','ia3','ia5']) 
         np_test.assert_equal(obs.getValue('gb', 'idNames'),
@@ -645,8 +772,8 @@ class TestGroups(np_test.TestCase):
         np_test.assert_equal(set(obs.identifiers), 
                              set(['ga', 'gd']))
         np_test.assert_equal(obs.getValue('ga', 'scalar'), 
-                             numpy.array([2, 6, 10]))
-        np_test.assert_equal(obs.getValue('gd', 'scalar'), numpy.array([12]))
+                             np.array([2, 6, 10]))
+        np_test.assert_equal(obs.getValue('gd', 'scalar'), np.array([12]))
 
         # mode join, indexed variable, all groups
         obs = self.groups.joinExperiments(name='vector', mode='join')
@@ -658,17 +785,17 @@ class TestGroups(np_test.TestCase):
                              set(['ga', 'gb', 'gc', 'gd']))
         np_test.assert_equal(
             obs.getValue('ga', 'vector'),
-            numpy.append(2*numpy.arange(2) + 1, numpy.arange(6) + 1))
+            np.append(2*np.arange(2) + 1, np.arange(6) + 1))
         np_test.assert_equal(
             obs.getValue('gb', 'vector'), 
-            numpy.append(2*numpy.arange(2) + 1, numpy.arange(4) + 1))
-        np_test.assert_equal(obs.getValue('gc', 'vector'), numpy.array([])) 
+            np.append(2*np.arange(2) + 1, np.arange(4) + 1))
+        np_test.assert_equal(obs.getValue('gc', 'vector'), np.array([])) 
         np_test.assert_equal(obs.getValue('gd', 'vector'), 
-                             numpy.arange(5) + 2)
-        np_test.assert_equal(obs.getValue('ga', 'ids'), numpy.arange(1,9)) 
-        np_test.assert_equal(obs.getValue('gb', 'ids'), numpy.arange(1,7)) 
-        np_test.assert_equal(obs.getValue('gc', 'ids'), numpy.array([])) 
-        np_test.assert_equal(obs.getValue('gd', 'ids'), numpy.arange(1,6)) 
+                             np.arange(5) + 2)
+        np_test.assert_equal(obs.getValue('ga', 'ids'), np.arange(1,9)) 
+        np_test.assert_equal(obs.getValue('gb', 'ids'), np.arange(1,7)) 
+        np_test.assert_equal(obs.getValue('gc', 'ids'), np.array([])) 
+        np_test.assert_equal(obs.getValue('gd', 'ids'), np.arange(1,6)) 
         np_test.assert_equal(
             obs.getValue('ga', 'idNames'), 
             ['ia1_0', 'ia1_2',
@@ -690,16 +817,16 @@ class TestGroups(np_test.TestCase):
         np_test.assert_equal(set(obs.identifiers), 
                              set(['ga', 'gb', 'gc', 'gd']))
         np_test.assert_equal(obs.getValue('ga', 'vector'), 
-                             2*numpy.arange(2) + 1)
+                             2*np.arange(2) + 1)
         np_test.assert_equal(obs.getValue('gb', 'vector'), 
-                             numpy.arange(4) + 1)
-        np_test.assert_equal(obs.getValue('gc', 'vector'), numpy.array([])) 
+                             np.arange(4) + 1)
+        np_test.assert_equal(obs.getValue('gc', 'vector'), np.array([])) 
         np_test.assert_equal(obs.getValue('gd', 'vector'), 
-                             numpy.arange(5) + 2)
-        np_test.assert_equal(obs.getValue('ga', 'ids'), numpy.arange(1,3)) 
-        np_test.assert_equal(obs.getValue('gb', 'ids'), numpy.arange(1,5)) 
-        np_test.assert_equal(obs.getValue('gc', 'ids'), numpy.array([])) 
-        np_test.assert_equal(obs.getValue('gd', 'ids'), numpy.arange(1,6)) 
+                             np.arange(5) + 2)
+        np_test.assert_equal(obs.getValue('ga', 'ids'), np.arange(1,3)) 
+        np_test.assert_equal(obs.getValue('gb', 'ids'), np.arange(1,5)) 
+        np_test.assert_equal(obs.getValue('gc', 'ids'), np.array([])) 
+        np_test.assert_equal(obs.getValue('gd', 'ids'), np.arange(1,6)) 
         np_test.assert_equal(obs.getValue('ga', 'idNames'), 
                               ['ia1_0', 'ia1_2']) 
         np_test.assert_equal(obs.getValue('gb', 'idNames'), 
@@ -720,20 +847,20 @@ class TestGroups(np_test.TestCase):
         np_test.assert_equal(set(obs.identifiers), 
                              set(['ga', 'gb', 'gc', 'gd']))
         np_test.assert_equal(obs.getValue('ga', 'vector'), 
-                             2*numpy.arange(2) + 1)
+                             2*np.arange(2) + 1)
         np_test.assert_equal(obs.getValue('gb', 'vector'), 
-                             numpy.arange(4) + 1)
-        np_test.assert_equal(obs.getValue('gc', 'vector'), numpy.array([])) 
+                             np.arange(4) + 1)
+        np_test.assert_equal(obs.getValue('gc', 'vector'), np.array([])) 
         np_test.assert_equal(obs.getValue('gd', 'vector'), 
-                             numpy.arange(5) + 2)
+                             np.arange(5) + 2)
         np_test.assert_equal(obs.getValue('ga', 'scalar'), [2, 10])
         np_test.assert_equal(obs.getValue('gb', 'scalar'), [6])
         np_test.assert_equal(obs.getValue('gc', 'scalar'), [])
         np_test.assert_equal(obs.getValue('gd', 'scalar'), [12])
-        np_test.assert_equal(obs.getValue('ga', 'ids'), numpy.arange(1,3)) 
-        np_test.assert_equal(obs.getValue('gb', 'ids'), numpy.arange(1,5)) 
-        np_test.assert_equal(obs.getValue('gc', 'ids'), numpy.array([])) 
-        np_test.assert_equal(obs.getValue('gd', 'ids'), numpy.arange(1,6)) 
+        np_test.assert_equal(obs.getValue('ga', 'ids'), np.arange(1,3)) 
+        np_test.assert_equal(obs.getValue('gb', 'ids'), np.arange(1,5)) 
+        np_test.assert_equal(obs.getValue('gc', 'ids'), np.array([])) 
+        np_test.assert_equal(obs.getValue('gd', 'ids'), np.arange(1,6)) 
         np_test.assert_equal(obs.getValue('ga', 'idNames'), 
                               ['ia1_0', 'ia1_2']) 
         np_test.assert_equal(obs.getValue('gb', 'idNames'), 
@@ -767,10 +894,10 @@ class TestGroups(np_test.TestCase):
         np_test.assert_equal(obs.getValue('gb', 'vector'), [2, 2.5])
         np_test.assert_equal(obs.getValue('gc', 'vector'), [])
         np_test.assert_equal(obs.getValue('gd', 'vector'), [4])
-        np_test.assert_equal(obs.getValue('ga', 'ids'), numpy.array([1,2]))
-        np_test.assert_equal(obs.getValue('gb', 'ids'), numpy.array([1,2]))
-        np_test.assert_equal(obs.getValue('gc', 'ids'), numpy.array([]))
-        np_test.assert_equal(obs.getValue('gd', 'ids'), numpy.array([1]))
+        np_test.assert_equal(obs.getValue('ga', 'ids'), np.array([1,2]))
+        np_test.assert_equal(obs.getValue('gb', 'ids'), np.array([1,2]))
+        np_test.assert_equal(obs.getValue('gc', 'ids'), np.array([]))
+        np_test.assert_equal(obs.getValue('gd', 'ids'), np.array([1]))
         np_test.assert_equal(obs.getValue('ga', 'idNames'),
                              ['ia1','ia3']) 
         np_test.assert_equal(obs.getValue('gb', 'idNames'),
@@ -787,14 +914,14 @@ class TestGroups(np_test.TestCase):
                              set(['vector', 'ids', 'idNames']))
         np_test.assert_equal(set(obs.identifiers), 
                              set(['ga', 'gb', 'gc', 'gd']))
-        np_test.assert_equal(obs.getValue('ga', 'vector'), [2, 3.5, numpy.NaN])
-        np_test.assert_equal(obs.getValue('gb', 'vector'), [2, numpy.NaN, 2.5])
+        np_test.assert_equal(obs.getValue('ga', 'vector'), [2, 3.5, np.NaN])
+        np_test.assert_equal(obs.getValue('gb', 'vector'), [2, np.NaN, 2.5])
         np_test.assert_equal(obs.getValue('gc', 'vector'), [])
         np_test.assert_equal(obs.getValue('gd', 'vector'), [4])
-        np_test.assert_equal(obs.getValue('ga', 'ids'), numpy.array([1,2, 3]))
-        np_test.assert_equal(obs.getValue('gb', 'ids'), numpy.array([1,2, 3]))
-        np_test.assert_equal(obs.getValue('gc', 'ids'), numpy.array([]))
-        np_test.assert_equal(obs.getValue('gd', 'ids'), numpy.array([1]))
+        np_test.assert_equal(obs.getValue('ga', 'ids'), np.array([1,2, 3]))
+        np_test.assert_equal(obs.getValue('gb', 'ids'), np.array([1,2, 3]))
+        np_test.assert_equal(obs.getValue('gc', 'ids'), np.array([]))
+        np_test.assert_equal(obs.getValue('gd', 'ids'), np.array([1]))
         np_test.assert_equal(obs.getValue('ga', 'idNames'),
                              ['ia1','ia3','ia5']) 
         np_test.assert_equal(obs.getValue('gb', 'idNames'),
@@ -817,10 +944,10 @@ class TestGroups(np_test.TestCase):
         np_test.assert_equal(obs.getValue('gb', 'fraction'), [0.5, 0.75])
         np_test.assert_equal(obs.getValue('gc', 'fraction'), [])
         np_test.assert_equal(obs.getValue('gd', 'fraction'), [0.6])
-        np_test.assert_equal(obs.getValue('ga', 'ids'), numpy.array([1,2]))
-        np_test.assert_equal(obs.getValue('gb', 'ids'), numpy.array([1,2]))
-        np_test.assert_equal(obs.getValue('gc', 'ids'), numpy.array([]))
-        np_test.assert_equal(obs.getValue('gd', 'ids'), numpy.array([1]))
+        np_test.assert_equal(obs.getValue('ga', 'ids'), np.array([1,2]))
+        np_test.assert_equal(obs.getValue('gb', 'ids'), np.array([1,2]))
+        np_test.assert_equal(obs.getValue('gc', 'ids'), np.array([]))
+        np_test.assert_equal(obs.getValue('gd', 'ids'), np.array([1]))
         np_test.assert_equal(obs.getValue('ga', 'idNames'),
                              ['ia1','ia3']) 
         np_test.assert_equal(obs.getValue('gb', 'idNames'),
@@ -854,7 +981,7 @@ class TestGroups(np_test.TestCase):
             obs.getValue(identifier='ga', name='frac'), [1/5., 2/3., 0.])
         np_test.assert_equal(
             obs.getValue(identifier='gb', name='frac'),
-            [1/5., 0., 0, numpy.NaN])
+            [1/5., 0., 0, np.NaN])
         np_test.assert_equal(
             obs.getValue('ga', 'idNames'), ['ia1','ia2', 'ia3']) 
         np_test.assert_equal(
@@ -890,22 +1017,22 @@ class TestGroups(np_test.TestCase):
             stats.getValue('gb', 'confidence'), 
             scipy.stats.ttest_ind([2,4,6], [2,6,10])[1])
         np_test.assert_equal(stats.getValue('gc', 'data'), [])
-        np_test.assert_equal(numpy.isnan(stats.getValue('gc', 'mean')), True)
+        np_test.assert_equal(np.isnan(stats.getValue('gc', 'mean')), True)
         try:
             np_test.assert_almost_equal(stats.getValue('gc', 'std'), 0)
         except AssertionError:
-            np_test.assert_almost_equal(stats.getValue('gc', 'std'), numpy.nan)
+            np_test.assert_almost_equal(stats.getValue('gc', 'std'), np.nan)
         np_test.assert_equal(stats.getValue('gc', 'n'), 0)
         np_test.assert_equal(
-            numpy.isnan(stats.getValue('gc', 'testValue')), True)
+            np.isnan(stats.getValue('gc', 'testValue')), True)
         np_test.assert_equal(
-            numpy.isnan(stats.getValue('gc', 'confidence')), True)
+            np.isnan(stats.getValue('gc', 'confidence')), True)
         np_test.assert_equal(stats.getValue('gd', 'data'), [12])
         np_test.assert_equal(stats.getValue('gd', 'mean'), 12)
         try:
             np_test.assert_almost_equal(stats.getValue('gd', 'std'), 0)
         except AssertionError:
-            np_test.assert_almost_equal(stats.getValue('gd', 'std'), numpy.nan)
+            np_test.assert_almost_equal(stats.getValue('gd', 'std'), np.nan)
         np_test.assert_equal(stats.getValue('gd', 'n'), 1)
         np_test.assert_almost_equal(
             stats.getValue('gd', 'testValue'), 
@@ -968,7 +1095,7 @@ class TestGroups(np_test.TestCase):
                                     [3, 5, 7]) 
         np_test.assert_almost_equal(stats.getValue('ga', 'std'), [1, 1, 1])
         np_test.assert_almost_equal(stats.getValue('ga', 'sem'), 
-                                    3 * [1./numpy.sqrt(3)])
+                                    3 * [1./np.sqrt(3)])
         np_test.assert_almost_equal(stats.getValue('ga', 'n'), 3)
 
         np_test.assert_equal(stats.getValue('gb', 'ids'), [1, 2, 3])
@@ -976,10 +1103,10 @@ class TestGroups(np_test.TestCase):
                                     [15, 30, 45]) 
         np_test.assert_almost_equal(
                 stats.getValue('gb', 'std'),                    
-                [numpy.sqrt(50), numpy.sqrt(200), numpy.sqrt(450)])
+                [np.sqrt(50), np.sqrt(200), np.sqrt(450)])
         np_test.assert_almost_equal(
                 stats.getValue('gb', 'sem'), 
-                [numpy.sqrt(50/2.), numpy.sqrt(100), numpy.sqrt(450/2.)])
+                [np.sqrt(50/2.), np.sqrt(100), np.sqrt(450/2.)])
         np_test.assert_almost_equal(stats.getValue('gb', 'n'), 2)
                        
         # another group, join no bins
@@ -1001,10 +1128,10 @@ class TestGroups(np_test.TestCase):
             stats.getValue(identifier='ga', name='n'), 13)
         np_test.assert_almost_equal(
             stats.getValue(identifier='ga', name='std'), 
-            numpy.std(desired_ga, ddof=1))
+            np.std(desired_ga, ddof=1))
         np_test.assert_almost_equal(
             stats.getValue(identifier='ga', name='sem'), 
-            numpy.std(desired_ga, ddof=1) / numpy.sqrt(13))
+            np.std(desired_ga, ddof=1) / np.sqrt(13))
         np_test.assert_almost_equal(
             stats.getValue(identifier='gb', name='testValue'), 
             scipy.stats.ttest_ind(desired_gb, desired_ga)[0])
@@ -1031,10 +1158,10 @@ class TestGroups(np_test.TestCase):
             stats.getValue(identifier='gb', name='n'), 3)
         np_test.assert_almost_equal(
             stats.getValue(identifier='gb', name='std'), 
-            numpy.std(desired, ddof=1))
+            np.std(desired, ddof=1))
         np_test.assert_almost_equal(
             stats.getValue(identifier='gb', name='sem'), 
-            numpy.std(desired, ddof=1) / numpy.sqrt(3))
+            np.std(desired, ddof=1) / np.sqrt(3))
 
         # another group, join + bins
         stats = self.groups2.joinAndStats(
@@ -1109,10 +1236,10 @@ class TestGroups(np_test.TestCase):
             stats.getValue(identifier='ga', name='n'), 3)
         np_test.assert_almost_equal(
             stats.getValue(identifier='ga', name='std'), 
-            numpy.std(desired_ga, ddof=1))
+            np.std(desired_ga, ddof=1))
         np_test.assert_almost_equal(
             stats.getValue(identifier='ga', name='sem'), 
-            numpy.std(desired_ga, ddof=1) / numpy.sqrt(3))
+            np.std(desired_ga, ddof=1) / np.sqrt(3))
         np_test.assert_almost_equal(
             stats.getValue(identifier='gb', name='testValue'), 
             scipy.stats.ttest_ind(desired_gb, desired_ga)[0])
@@ -1196,20 +1323,20 @@ class TestGroups(np_test.TestCase):
         # check vector
         np_test.assert_equal(
             transp.i1.getValue(identifier='ga', property='vector'), 
-            2*numpy.arange(2) + 1)
+            2*np.arange(2) + 1)
         np_test.assert_equal(
             transp.i1.getValue(identifier='gb', property='vector'), 
-            2*numpy.arange(2) + 1)
+            2*np.arange(2) + 1)
         np_test.assert_equal(
             transp.i3.getValue(identifier='ga', property='vector'), 
-            numpy.arange(6) + 1)
+            np.arange(6) + 1)
         np_test.assert_equal(
             transp.i3.getValue(identifier='gb', property='vector'), [])
         np_test.assert_equal(
             transp.i5.getValue(identifier='ga', property='vector'), [])
         np_test.assert_equal(
             transp.i5.getValue(identifier='gb', property='vector'), 
-            numpy.arange(4) + 1)
+            np.arange(4) + 1)
 
         # check reference
         np_test.assert_equal(
@@ -1279,7 +1406,7 @@ class TestGroups(np_test.TestCase):
         np_test.assert_almost_equal(
             stats.ga.getValue(identifier='i1', property='mean'), 2)
         np_test.assert_almost_equal(
-            stats.ga.getValue(identifier='i1', property='std'), numpy.sqrt(2))
+            stats.ga.getValue(identifier='i1', property='std'), np.sqrt(2))
         np_test.assert_almost_equal(
             stats.ga.getValue(identifier='i1', property='n'), 2)
         np_test.assert_almost_equal(
@@ -1305,10 +1432,10 @@ class TestGroups(np_test.TestCase):
         np_test.assert_almost_equal(
             stats.ga.getValue(identifier='i5', property='data'), [])
         np_test.assert_equal(
-            numpy.isnan(stats.ga.getValue(identifier='i5', 
+            np.isnan(stats.ga.getValue(identifier='i5', 
                                           property='testValue')), True)
         np_test.assert_equal(
-            numpy.isnan(stats.ga.getValue(identifier='i5', 
+            np.isnan(stats.ga.getValue(identifier='i5', 
                                           property='confidence')), True)
         np_test.assert_equal(
             stats.ga.getValue(identifier='i5', property='reference'), 'i3')
@@ -1317,10 +1444,10 @@ class TestGroups(np_test.TestCase):
         np_test.assert_almost_equal(
             stats.gb.getValue(identifier='i1', property='data'), [1,3])
         np_test.assert_equal(
-            numpy.isnan(stats.gb.getValue(identifier='i1', 
+            np.isnan(stats.gb.getValue(identifier='i1', 
                                           property='testValue')), True)
         np_test.assert_equal(
-            numpy.isnan(stats.gb.getValue(identifier='i1', 
+            np.isnan(stats.gb.getValue(identifier='i1', 
                                           property='confidence')), True)
         np_test.assert_equal(
             stats.gb.getValue(identifier='i1', property='reference'), 'i3')
@@ -1329,10 +1456,10 @@ class TestGroups(np_test.TestCase):
         np_test.assert_almost_equal(
             stats.gb.getValue(identifier='i3', property='data'), [])
         np_test.assert_equal(
-            numpy.isnan(stats.gb.getValue(identifier='i3', 
+            np.isnan(stats.gb.getValue(identifier='i3', 
                                           property='testValue')), True)
         np_test.assert_equal(
-            numpy.isnan(stats.gb.getValue(identifier='i3', 
+            np.isnan(stats.gb.getValue(identifier='i3', 
                                           property='confidence')), True)
         np_test.assert_equal(
             stats.gb.getValue(identifier='i3', property='reference'), 'i3')
@@ -1341,10 +1468,10 @@ class TestGroups(np_test.TestCase):
         np_test.assert_almost_equal(
             stats.gb.getValue(identifier='i5', property='data'), [1,2,3,4])
         np_test.assert_equal(
-            numpy.isnan(stats.gb.getValue(identifier='i5', 
+            np.isnan(stats.gb.getValue(identifier='i5', 
                                           property='testValue')), True)
         np_test.assert_equal(
-            numpy.isnan(stats.gb.getValue(identifier='i5', 
+            np.isnan(stats.gb.getValue(identifier='i5', 
                                           property='confidence')), True)
         np_test.assert_equal(
             stats.gb.getValue(identifier='i5', property='reference'), 'i3')
@@ -1403,7 +1530,7 @@ class TestGroups(np_test.TestCase):
         np_test.assert_almost_equal(
             stats.ga.getValue(identifier='i1', property='mean'), 2)
         np_test.assert_almost_equal(
-            stats.ga.getValue(identifier='i1', property='std'), numpy.sqrt(2))
+            stats.ga.getValue(identifier='i1', property='std'), np.sqrt(2))
         np_test.assert_almost_equal(
             stats.ga.getValue(identifier='i1', property='n'), 2)
         np_test.assert_almost_equal(
@@ -1429,10 +1556,10 @@ class TestGroups(np_test.TestCase):
         np_test.assert_almost_equal(
             stats.ga.getValue(identifier='i5', property='data'), [])
         np_test.assert_equal(
-            numpy.isnan(stats.ga.getValue(identifier='i5', 
+            np.isnan(stats.ga.getValue(identifier='i5', 
                                           property='testValue')), True)
         np_test.assert_equal(
-            numpy.isnan(stats.ga.getValue(identifier='i5', 
+            np.isnan(stats.ga.getValue(identifier='i5', 
                                           property='confidence')), True)
         np_test.assert_equal(
             stats.ga.getValue(identifier='i5', property='reference'), 'i3')
@@ -1467,10 +1594,10 @@ class TestGroups(np_test.TestCase):
         np_test.assert_almost_equal(
             stats.ga.getValue(identifier='i5', property='data'), [])
         np_test.assert_equal(
-            numpy.isnan(stats.ga.getValue(identifier='i5', 
+            np.isnan(stats.ga.getValue(identifier='i5', 
                                           property='testValue')), True)
         np_test.assert_equal(
-            numpy.isnan(stats.ga.getValue(identifier='i5', 
+            np.isnan(stats.ga.getValue(identifier='i5', 
                                           property='confidence')), True)
         np_test.assert_equal(
             stats.ga.getValue(identifier='i5', property='reference'), 'i3')
@@ -1491,10 +1618,10 @@ class TestGroups(np_test.TestCase):
         np_test.assert_almost_equal(
             stats.gb.getValue(identifier='i3', property='data'), [])
         np_test.assert_equal(
-            numpy.isnan(stats.gb.getValue(identifier='i3', 
+            np.isnan(stats.gb.getValue(identifier='i3', 
                                           property='testValue')), True)
         np_test.assert_equal(
-            numpy.isnan(stats.gb.getValue(identifier='i3', 
+            np.isnan(stats.gb.getValue(identifier='i3', 
                                           property='confidence')), True)
         np_test.assert_equal(
             stats.gb.getValue(identifier='i3', property='reference'), 'i5')
@@ -1543,10 +1670,10 @@ class TestGroups(np_test.TestCase):
         np_test.assert_almost_equal(
             stats.ga.getValue(identifier='i5', property='data'), [])
         np_test.assert_equal(
-            numpy.isnan(stats.ga.getValue(identifier='i5', 
+            np.isnan(stats.ga.getValue(identifier='i5', 
                                           property='testValue')), True)
         np_test.assert_equal(
-            numpy.isnan(stats.ga.getValue(identifier='i5', 
+            np.isnan(stats.ga.getValue(identifier='i5', 
                                           property='confidence')), True)
         np_test.assert_equal(
             stats.ga.getValue(identifier='i5', property='reference'), 'i1')
@@ -1567,10 +1694,10 @@ class TestGroups(np_test.TestCase):
         np_test.assert_almost_equal(
             stats.gb.getValue(identifier='i3', property='data'), [])
         np_test.assert_equal(
-            numpy.isnan(stats.gb.getValue(identifier='i3', 
+            np.isnan(stats.gb.getValue(identifier='i3', 
                                           property='testValue')), True)
         np_test.assert_equal(
-            numpy.isnan(stats.gb.getValue(identifier='i3', 
+            np.isnan(stats.gb.getValue(identifier='i3', 
                                           property='confidence')), True)
         np_test.assert_equal(
             stats.gb.getValue(identifier='i3', property='reference'), 'i1')
@@ -1612,15 +1739,15 @@ class TestGroups(np_test.TestCase):
         np_test.assert_almost_equal(
             stats.ga.getValue(identifier='i1', property='mean'), 2)
         np_test.assert_almost_equal(
-            stats.ga.getValue(identifier='i1', property='std'), numpy.sqrt(2))
+            stats.ga.getValue(identifier='i1', property='std'), np.sqrt(2))
         np_test.assert_almost_equal(
             stats.ga.getValue(identifier='i1', property='n'), 2)
         np_test.assert_almost_equal(
             stats.ga.getValue(identifier='i1', property='testValue'), 
-            scipy.stats.kruskal(numpy.array([1,3]), numpy.array([1,3]))[0])
+            scipy.stats.kruskal(np.array([1,3]), np.array([1,3]))[0])
         np_test.assert_almost_equal(
             stats.ga.getValue(identifier='i1', property='confidence'), 
-            scipy.stats.kruskal(numpy.array([1,3]), numpy.array([1,3]))[1])
+            scipy.stats.kruskal(np.array([1,3]), np.array([1,3]))[1])
         np_test.assert_equal(
             stats.ga.getValue(identifier='i1', property='reference'), 'i1')
         np_test.assert_equal(
@@ -1629,12 +1756,12 @@ class TestGroups(np_test.TestCase):
             stats.ga.getValue(identifier='i3', property='data'), [1,2,3,4,5,6])
         np_test.assert_almost_equal(
             stats.ga.getValue(identifier='i3', property='testValue'), 
-            scipy.stats.kruskal(numpy.array([1,2,3,4,5,6]), 
-                                numpy.array([1,2,3,4,5,6]))[0])
+            scipy.stats.kruskal(np.array([1,2,3,4,5,6]), 
+                                np.array([1,2,3,4,5,6]))[0])
         np_test.assert_almost_equal(
             stats.ga.getValue(identifier='i3', property='confidence'),
-            scipy.stats.kruskal(numpy.array([1,2,3,4,5,6]), 
-                                numpy.array([1,2,3,4,5,6]))[1])
+            scipy.stats.kruskal(np.array([1,2,3,4,5,6]), 
+                                np.array([1,2,3,4,5,6]))[1])
         np_test.assert_equal(
             stats.ga.getValue(identifier='i3', property='reference'), 'i3')
         np_test.assert_equal(
@@ -1642,10 +1769,10 @@ class TestGroups(np_test.TestCase):
         np_test.assert_almost_equal(
             stats.ga.getValue(identifier='i5', property='data'), [])
         np_test.assert_equal(
-            numpy.isnan(stats.ga.getValue(identifier='i5', 
+            np.isnan(stats.ga.getValue(identifier='i5', 
                                           property='testValue')), True)
         np_test.assert_equal(
-            numpy.isnan(stats.ga.getValue(identifier='i5', 
+            np.isnan(stats.ga.getValue(identifier='i5', 
                                           property='confidence')), True)
         np_test.assert_equal(
             stats.ga.getValue(identifier='i5', property='reference'), 'i5')
@@ -1655,10 +1782,10 @@ class TestGroups(np_test.TestCase):
             stats.gb.getValue(identifier='i1', property='data'), [1,3])
         np_test.assert_almost_equal(
             stats.gb.getValue(identifier='i1', property='testValue'),
-            scipy.stats.kruskal(numpy.array([1,3]), numpy.array([1,3]))[0])
+            scipy.stats.kruskal(np.array([1,3]), np.array([1,3]))[0])
         np_test.assert_almost_equal(
             stats.gb.getValue(identifier='i1', property='confidence'),
-            scipy.stats.kruskal(numpy.array([1,3]), numpy.array([1,3]))[1])
+            scipy.stats.kruskal(np.array([1,3]), np.array([1,3]))[1])
         np_test.assert_equal(
             stats.gb.getValue(identifier='i1', property='reference'), 'i1')
         np_test.assert_equal(
@@ -1666,10 +1793,10 @@ class TestGroups(np_test.TestCase):
         np_test.assert_almost_equal(
             stats.gb.getValue(identifier='i3', property='data'), [])
         np_test.assert_equal(
-            numpy.isnan(stats.gb.getValue(identifier='i3', 
+            np.isnan(stats.gb.getValue(identifier='i3', 
                                           property='testValue')), True)
         np_test.assert_equal(
-            numpy.isnan(stats.gb.getValue(identifier='i3', 
+            np.isnan(stats.gb.getValue(identifier='i3', 
                                           property='confidence')), True)
         np_test.assert_equal(
             stats.gb.getValue(identifier='i3', property='reference'), 'i3')
@@ -1678,10 +1805,10 @@ class TestGroups(np_test.TestCase):
         np_test.assert_almost_equal(
             stats.gb.getValue(identifier='i5', property='data'), [1,2,3,4])
         np_test.assert_equal(
-            numpy.isnan(stats.gb.getValue(identifier='i5', 
+            np.isnan(stats.gb.getValue(identifier='i5', 
                                           property='testValue')), True)
         np_test.assert_equal(
-            numpy.isnan(stats.gb.getValue(identifier='i5', 
+            np.isnan(stats.gb.getValue(identifier='i5', 
                                           property='confidence')), True)
         np_test.assert_equal(
             stats.gb.getValue(identifier='i5', property='reference'), 'i5')
@@ -1718,9 +1845,9 @@ class TestGroups(np_test.TestCase):
         # between 'groups', simple dictionary reference
         sym2 = self.makeSymmetricalInstance()
         sym2.gb.setValue(identifier='i1', property='vector', 
-                         value=numpy.array([2,5]))
+                         value=np.array([2,5]))
         sym2.gb.setValue(identifier='i3', property='vector', 
-                         value=numpy.array([3,7,8]))
+                         value=np.array([3,7,8]))
         stats = sym2.doStats(name='vector', test='kruskal', between='groups',
                             reference={'i1':'gb', 'i3':'ga', 'i5':'gb'},
                              out=out)
@@ -1728,10 +1855,10 @@ class TestGroups(np_test.TestCase):
             stats.ga.getValue(identifier='i1', property='data'), [1, 3])
         np_test.assert_almost_equal(
             stats.ga.getValue(identifier='i1', property='testValue'), 
-            scipy.stats.kruskal(numpy.array([1,3]), numpy.array([2,5]))[0])
+            scipy.stats.kruskal(np.array([1,3]), np.array([2,5]))[0])
         np_test.assert_almost_equal(
             stats.ga.getValue(identifier='i1', property='confidence'), 
-            scipy.stats.kruskal(numpy.array([1,3]), numpy.array([2,5]))[1])
+            scipy.stats.kruskal(np.array([1,3]), np.array([2,5]))[1])
         np_test.assert_equal(
             stats.ga.getValue(identifier='i1', property='reference'), 'i1')
         np_test.assert_equal(
@@ -1740,12 +1867,12 @@ class TestGroups(np_test.TestCase):
             stats.ga.getValue(identifier='i3', property='data'), [1,2,3,4,5,6])
         np_test.assert_almost_equal(
             stats.ga.getValue(identifier='i3', property='testValue'), 
-            scipy.stats.kruskal(numpy.array([1,2,3,4,5,6]), 
-                                numpy.array([1,2,3,4,5,6]))[0])
+            scipy.stats.kruskal(np.array([1,2,3,4,5,6]), 
+                                np.array([1,2,3,4,5,6]))[0])
         np_test.assert_almost_equal(
             stats.ga.getValue(identifier='i3', property='confidence'),
-            scipy.stats.kruskal(numpy.array([1,2,3,4,5,6]), 
-                                numpy.array([1,2,3,4,5,6]))[1])
+            scipy.stats.kruskal(np.array([1,2,3,4,5,6]), 
+                                np.array([1,2,3,4,5,6]))[1])
         np_test.assert_equal(
             stats.ga.getValue(identifier='i3', property='reference'), 'i3')
         np_test.assert_equal(
@@ -1754,10 +1881,10 @@ class TestGroups(np_test.TestCase):
             stats.gb.getValue(identifier='i1', property='data'), [2, 5])
         np_test.assert_almost_equal(
             stats.gb.getValue(identifier='i1', property='testValue'), 
-            scipy.stats.kruskal(numpy.array([2,5]), numpy.array([2,5]))[0])
+            scipy.stats.kruskal(np.array([2,5]), np.array([2,5]))[0])
         np_test.assert_almost_equal(
             stats.gb.getValue(identifier='i1', property='confidence'), 
-            scipy.stats.kruskal(numpy.array([2,5]), numpy.array([2,5]))[1])
+            scipy.stats.kruskal(np.array([2,5]), np.array([2,5]))[1])
         np_test.assert_equal(
             stats.gb.getValue(identifier='i1', property='reference'), 'i1')
         np_test.assert_equal(
@@ -1766,12 +1893,12 @@ class TestGroups(np_test.TestCase):
             stats.gb.getValue(identifier='i3', property='data'), [3,7,8])
         np_test.assert_almost_equal(
             stats.gb.getValue(identifier='i3', property='testValue'), 
-            scipy.stats.kruskal(numpy.array([3,7,8]), 
-                                numpy.array([1,2,3,4,5,6]))[0])
+            scipy.stats.kruskal(np.array([3,7,8]), 
+                                np.array([1,2,3,4,5,6]))[0])
         np_test.assert_almost_equal(
             stats.gb.getValue(identifier='i3', property='confidence'),
-            scipy.stats.kruskal(numpy.array([3,7,8]), 
-                                numpy.array([1,2,3,4,5,6]))[1])
+            scipy.stats.kruskal(np.array([3,7,8]), 
+                                np.array([1,2,3,4,5,6]))[1])
         np_test.assert_equal(
             stats.gb.getValue(identifier='i3', property='reference'), 'i3')
         np_test.assert_equal(
@@ -1787,10 +1914,10 @@ class TestGroups(np_test.TestCase):
             stats.ga.getValue(identifier='i1', property='data'), [1, 3])
         np_test.assert_almost_equal(
             stats.ga.getValue(identifier='i1', property='testValue'), 
-            scipy.stats.kruskal(numpy.array([1,3]), numpy.array([2,5]))[0])
+            scipy.stats.kruskal(np.array([1,3]), np.array([2,5]))[0])
         np_test.assert_almost_equal(
             stats.ga.getValue(identifier='i1', property='confidence'), 
-            scipy.stats.kruskal(numpy.array([1,3]), numpy.array([2,5]))[1])
+            scipy.stats.kruskal(np.array([1,3]), np.array([2,5]))[1])
         np_test.assert_equal(
             stats.ga.getValue(identifier='i1', property='reference'), 'i1')
         np_test.assert_equal(
@@ -1799,12 +1926,12 @@ class TestGroups(np_test.TestCase):
             stats.ga.getValue(identifier='i3', property='data'), [1,2,3,4,5,6])
         np_test.assert_almost_equal(
             stats.ga.getValue(identifier='i3', property='testValue'), 
-            scipy.stats.kruskal(numpy.array([1,2,3,4,5,6]), 
-                                numpy.array([1,2,3,4,5,6]))[0])
+            scipy.stats.kruskal(np.array([1,2,3,4,5,6]), 
+                                np.array([1,2,3,4,5,6]))[0])
         np_test.assert_almost_equal(
             stats.ga.getValue(identifier='i3', property='confidence'),
-            scipy.stats.kruskal(numpy.array([1,2,3,4,5,6]), 
-                                numpy.array([1,2,3,4,5,6]))[1])
+            scipy.stats.kruskal(np.array([1,2,3,4,5,6]), 
+                                np.array([1,2,3,4,5,6]))[1])
         np_test.assert_equal(
             stats.ga.getValue(identifier='i3', property='reference'), 'i3')
         np_test.assert_equal(
@@ -1813,10 +1940,10 @@ class TestGroups(np_test.TestCase):
             stats.gb.getValue(identifier='i1', property='data'), [2, 5])
         np_test.assert_almost_equal(
             stats.gb.getValue(identifier='i1', property='testValue'), 
-            scipy.stats.kruskal(numpy.array([2,5]), numpy.array([3,1]))[0])
+            scipy.stats.kruskal(np.array([2,5]), np.array([3,1]))[0])
         np_test.assert_almost_equal(
             stats.gb.getValue(identifier='i1', property='confidence'), 
-            scipy.stats.kruskal(numpy.array([2,5]), numpy.array([3,1]))[1])
+            scipy.stats.kruskal(np.array([2,5]), np.array([3,1]))[1])
         np_test.assert_equal(
             stats.gb.getValue(identifier='i1', property='reference'), 'i1')
         np_test.assert_equal(
@@ -1825,12 +1952,12 @@ class TestGroups(np_test.TestCase):
             stats.gb.getValue(identifier='i3', property='data'), [3,7,8])
         np_test.assert_almost_equal(
             stats.gb.getValue(identifier='i3', property='testValue'), 
-            scipy.stats.kruskal(numpy.array([3,7,8]), 
-                                numpy.array([1,2,3,4,5,6]))[0])
+            scipy.stats.kruskal(np.array([3,7,8]), 
+                                np.array([1,2,3,4,5,6]))[0])
         np_test.assert_almost_equal(
             stats.gb.getValue(identifier='i3', property='confidence'),
-            scipy.stats.kruskal(numpy.array([3,7,8]), 
-                                numpy.array([1,2,3,4,5,6]))[1])
+            scipy.stats.kruskal(np.array([3,7,8]), 
+                                np.array([1,2,3,4,5,6]))[1])
         np_test.assert_equal(
             stats.gb.getValue(identifier='i3', property='reference'), 'i3')
         np_test.assert_equal(
@@ -1879,9 +2006,9 @@ class TestGroups(np_test.TestCase):
             stats.ga.getValue(identifier='i5', property='histogram'), [0, 0])
         np_test.assert_equal(
             stats.ga.getValue(identifier='i5', property='probability'), 
-            [numpy.nan, numpy.nan])
+            [np.nan, np.nan])
         np_test.assert_equal(
-            stats.ga.getValue(identifier='i5', property='fraction'), numpy.nan)
+            stats.ga.getValue(identifier='i5', property='fraction'), np.nan)
 
     def testCountHistogram(self):
         """
@@ -2227,16 +2354,16 @@ class TestGroups(np_test.TestCase):
             np_test.assert_almost_equal(
                 corr.ga.getValue(identifier=ident, property='testValue'), 1)
         np_test.assert_equal(
-            numpy.isnan(corr.ga.getValue(identifier='ia5', 
+            np.isnan(corr.ga.getValue(identifier='ia5', 
                                          property='testValue')), True)
         for ident in ['ib1', 'ib3']:
             np_test.assert_almost_equal(
                 corr.gb.getValue(identifier=ident, property='testValue'), 1)
         np_test.assert_equal(
-            numpy.isnan(corr.gb.getValue(identifier='ib2', 
+            np.isnan(corr.gb.getValue(identifier='ib2', 
                                          property='testValue')), True)
-        np_test.assert_almost_equal(corr.gc.identifiers, numpy.array([]))
-        np_test.assert_almost_equal(corr.gc.confidence, numpy.array([]))
+        np_test.assert_almost_equal(corr.gc.identifiers, np.array([]))
+        np_test.assert_almost_equal(corr.gc.confidence, np.array([]))
 
         # mode 'join'
         gs = self.makeInstance()
@@ -2286,9 +2413,9 @@ class TestGroups(np_test.TestCase):
 
         # all nan
         np_test.assert_equal(
-            numpy.isnan(gs.min(name='scalar', categories=['gc', 'gc'])), True)
+            np.isnan(gs.min(name='scalar', categories=['gc', 'gc'])), True)
         np_test.assert_equal(
-            numpy.isnan(gs.max(name='scalar', categories=['gc', 'gc'])), True)
+            np.isnan(gs.max(name='scalar', categories=['gc', 'gc'])), True)
 
     def testGetNPositive(self):
         """
@@ -2299,7 +2426,7 @@ class TestGroups(np_test.TestCase):
         gs.ge = Observations()
         gs.ge.identifiers = ['ie1', 'ie2']
         gs.ge.ids = [list(range(4)), list(range(3))]
-        gs.ge.vector = [numpy.array([1, 0, 0, 1]), numpy.array([0, 0, 1])]
+        gs.ge.vector = [np.array([1, 0, 0, 1]), np.array([0, 0, 1])]
 
         gs.getNPositive(name='vector', n_name='n_positive')
         np_test.assert_equal('n_positive' in gs.ga.properties, True)

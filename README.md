@@ -36,9 +36,14 @@ Put this directory to your PYTHONPATH
 Please start from [Overview](doc/manuals/overview.pdf).
 
 
-### Version ###
+### Release history ###
 
-Version 1.6 is the first public release.
+* 1.7
+    * Added presynaptic example
+    * Improved docs
+    * Small improvements
+* 1.6
+    * The first public release.
 
 
 ### License ###

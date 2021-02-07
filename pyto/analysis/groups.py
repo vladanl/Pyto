@@ -26,7 +26,7 @@ import re
 import imp
 import functools
 
-import numpy
+import numpy as np
 import scipy
 
 import pyto
@@ -113,7 +113,8 @@ class Groups(dict):
         attributes starting with '_'.
         """
         if key.startswith('_'):
-            result = super(Groups, self).__getattr__(key)
+            # result = super(Groups, self).__getattr__(key) # Python 2
+            result = super().__getattr__(key)
         else:
             result = self.__getitem__(key)
         return result
@@ -124,7 +125,8 @@ class Groups(dict):
         attributes starting with '_'.
         """
         if key.startswith('_'):
-            super(Groups, self).__setattr__(key, value)
+            #super(Groups, self).__setattr__(key, value) # Python 2
+            super().__setattr__(key, value)
         else:
             self.__setitem__(key, value)
 
@@ -134,7 +136,8 @@ class Groups(dict):
         attributes starting with '_'.
         """
         if key.startswith('_'):
-            super(Groups, self).__delattr__(key)
+            #super(Groups, self).__delattr__(key) # Python 2
+            super().__delattr__(key)
         else:
             self.__delitem__(key)
 
@@ -193,6 +196,82 @@ class Groups(dict):
 
         return data
 
+    @classmethod
+    def from_pandas(cls, indexed, scalar):
+        """
+        Makes an instance of this class from two pandas.DataFrame.
+
+        The first two columns of both data tables (args indexed and 
+        scalar) have to contain group names and identifiers, respectively.
+        The third column of the indexed table (arg indexed_table) has
+        to contain ids.
+
+        Arguments
+          - indexed: DataFrame containing indexed data
+          - scalar: DataFrame containing scalar data
+
+        Returns: an instace of this class
+        """
+
+        groups_name = 'groups'
+        identifiers_name = 'identifiers'
+        
+        # initialize
+        groups = cls()
+
+        # check indexed properties DataFrame
+        columns = indexed.columns
+        if len(columns) < 2:
+            print(
+                "Indexed data table has to contain at least groups and "
+                + "identifiers columns.")
+
+        # loop over groups
+        for gr in indexed['group'].unique():
+            curr_gr = (indexed['group'] == gr)
+
+            # loop over identifiers (experiments)
+            groups[gr] = pyto.analysis.Observations()
+            for ident in indexed[curr_gr]['identifiers'].unique():
+                curr_ident = (indexed['identifiers'] == ident)
+
+                # extract data for the current group and identifier
+                current = indexed[curr_gr & curr_ident]
+
+                # add indexed properties
+                for col in columns[2:]:
+                    values = np.array(current[col])
+                    groups[gr].setValue(
+                        identifier=ident, name=col, value=values, indexed=True)
+
+        # check scalar properties DataFrame
+        columns = scalar.columns
+        if len(columns) < 2:
+            print(
+                "Indexed data table has to contain at least groups and "
+                + "identifiers columns.")
+
+        # loop over groups
+        for gr in scalar['group'].unique():
+            curr_gr = (scalar['group'] == gr)
+
+            # loop over identifiers (experiments)
+            if groups.get(gr, None) is None:
+                groups[gr] = pyto.analysis.Observations()
+            for ident in scalar[curr_gr]['identifiers'].unique():
+                curr_ident = (scalar['identifiers'] == ident)
+
+                # extract data for the current group and identifier
+                current = scalar[curr_gr & curr_ident]
+                
+                # add scalar properties
+                for col in columns[2:]:
+                    values = np.array(current[col])[0]
+                    groups[gr].setValue(
+                        identifier=ident, name=col, value=values, indexed=False)
+
+        return groups
+    
     def get_indexed_data(
             self, categories=None, identifiers=None,
             group_column='group', names=None, additional=[]):
@@ -258,7 +337,7 @@ class Groups(dict):
             group_column=group_column, names=names)
 
     scalar_data = property(
-         get_scalar_data, doc="Scalar data in pandas.DataFrame")
+        get_scalar_data, doc="Scalar data in pandas.DataFrame")
 
     
     #######################################################
@@ -416,7 +495,7 @@ class Groups(dict):
         identifiers of arg source have to exist in this object.
 
         If arg copy is True, a copy of data is saved to the other object 
-        (copy() method for numpy.ndarrays, deepcopy for the rest).
+        (copy() method for np.ndarrays, deepcopy for the rest).
 
         Arguments:
           - source: (Observations) another object
@@ -582,7 +661,7 @@ class Groups(dict):
         Splits this object into one or more objects depending of the values
         of the attribute specified by arg name and returns the object(s).
 
-        If value is a single number, the returned object if formed from all
+        If value is a single number, the returned object is formed from all
         vesicles of all observations and for all categories that have the
         value of property given by arg name between 0 and arg value (limits
         inclusive).
@@ -590,10 +669,17 @@ class Groups(dict):
         If value is a list of numbers, they specify bins and a list of
         objects (one for each bin) is returned. Lower bin limits are 
         inclusive, while the upper are exclusive, except for the upper limit 
-        of the last bin which is inclusive (like numpy.histogram).
+        of the last bin which is inclusive (like np.histogram).
 
-        If value is a single number single sv object is returned. Otherwise,
-        if value is a list of numbers, a list of sv objects is returned.
+        If value is a single number single object of this calss is returned. 
+        Otherwise, if value is a list of numbers, a list of sv objects is 
+        returned.
+
+        All indexed properties, including ids, are split according to the
+        splitting of the specified property (arg name) and arg value.
+
+        Non-indexed (scalar) properties are copied to all resulting 
+        objects.
 
         Arguments:
           - value: list of values, interpreted as value bins, or if 
@@ -611,7 +697,7 @@ class Groups(dict):
             categories = list(self.keys())
 
         # check if one value or value bins
-        if not isinstance(value, (list, numpy.ndarray)): 
+        if not isinstance(value, (list, np.ndarray)): 
             value = [0, value]
             one = True
         else:
@@ -646,7 +732,7 @@ class Groups(dict):
 
         Lower distance bin limits are inclusive, while the upper are exclusive, 
         except for the upper limit of the last distance bin which is inclusive 
-        (like numpy.histogram)
+        (like np.histogram)
 
         If distance is a single number single sv object is retutred. Otherwise,
         if distance is a list of numbers, a list of sv objects is returned.
@@ -658,7 +744,7 @@ class Groups(dict):
           - categories:
         """
         
-        if not isinstance(distance, (list, numpy.ndarray)):
+        if not isinstance(distance, (list, np.ndarray)):
             distance = [0, distance]
 
         return self.split(value=distance, name=name, categories=categories)
@@ -706,7 +792,7 @@ class Groups(dict):
         in an experiment in case arg mode is 'mean' and the data is 
         indexed. If True, experiment that has no data is ignored, and the
         identifier of this experiment is not added to idNames. If False,
-        numpy.NaN is added instead of the mean.
+        np.NaN is added instead of the mean.
 
         Arguments:
           - name: name of the data attribute
@@ -821,14 +907,14 @@ class Groups(dict):
                         # indexed property
                         if mode == 'join':
                             data.extend(value)
-                        elif (mode == 'mean'):
+                        elif mode == 'mean':
                             if len(value) > 0:
-                                data.append(numpy.mean(value))
+                                data.append(np.mean(value))
                             elif not removeEmpty:
-                                data.append(numpy.NaN)
-                        elif (mode == 'mean_bin'):
+                                data.append(np.NaN)
+                        elif mode == 'mean_bin':
                             if len(value) > 0:
-                                hist, foo = numpy.histogram(value, bins)
+                                hist, foo = np.histogram(value, bins)
                                 frac_value = hist[fraction] / float(len(value))
                                 #if hist is not None:
                                 #    histogram = histogram + hist
@@ -836,7 +922,7 @@ class Groups(dict):
                                 #    histogram = hist
                                 data.append(frac_value)
                             elif not removeEmpty:
-                                data.append(numpy.NaN)
+                                data.append(np.NaN)
 
                     else:
 
@@ -853,14 +939,14 @@ class Groups(dict):
                 # add to the new group data
                 if mode != 'mean_bin':
                     obs.setValue(property=name, identifier=categ, 
-                                 value=numpy.array(data), indexed=indexed)
+                                 value=np.array(data), indexed=indexed)
                 else:
                     #obs.setValue(
                     #    property=histogram_name, identifier=categ, 
                     #    value=histogram, indexed=True)
                     obs.setValue(
                         property=fraction_name, identifier=categ, 
-                        value=numpy.array(data), indexed=indexed)
+                        value=np.array(data), indexed=indexed)
             # set ids
             if mode != 'mean_bin':
                 tmp_name = name_list[0]
@@ -912,7 +998,7 @@ class Groups(dict):
         in an experiment in case arg mode is 'mean' and the data is 
         indexed. If True, experiment that has no data is ignored, and the
         identifier of this experiment is not added to idNames. If False,
-        numpy.NaN is added instead of the mean.
+        np.NaN is added instead of the mean.
 
         Arguments:
           - list: list of Groups objects
@@ -1057,10 +1143,10 @@ class Groups(dict):
     #######################################################
 
     def joinAndStats(
-        self, name, mode='join', bins=None, fraction=None,
-        fraction_name='fraction', groups=None, 
-        identifiers=None, test=None, reference=None, ddof=1, out=sys.stdout, 
-        outNames=None, format_=None, title=None):
+            self, name, mode='join', bins=None, fraction=None,
+            fraction_name='fraction', groups=None, 
+            identifiers=None, test=None, reference=None, ddof=1,
+            out=sys.stdout, outNames=None, format_=None, title=None):
         """
         Does statistics on data (specified by arg name) for each group
         separately, and tests for statistical difference between groups and
@@ -1210,8 +1296,8 @@ class Groups(dict):
                 for g_name in group_names:
                     group = self[g_name]
                     stats_data = group.doStats(
-                       name=name, bins=bins, fraction=fraction, 
-                       identifiers=identifiers, new=True, ddof=ddof)
+                        name=name, bins=bins, fraction=fraction, 
+                        identifiers=identifiers, new=True, ddof=ddof)
 
                     # in case this object was made before self._fract_data_names
                     # was added to __init__
@@ -1224,8 +1310,8 @@ class Groups(dict):
                                 continue
                             stats.setValue(
                                 identifier=g_name, name=yes_data,
-                                value=getattr(
-                                    stats_data, not_data), indexed=False)
+                                value=getattr(stats_data, not_data),
+                                indexed=False)
                     except AttributeError:
                         pass
                         
@@ -1235,8 +1321,9 @@ class Groups(dict):
                     infer_name = 'data'
                 else:
                     infer_name = 'histogram'
-                stats.doInference(test=test, name=infer_name,  
-                                  identifiers=groups, reference=reference)
+                stats.doInference(
+                    test=test, name=infer_name, identifiers=groups,
+                    reference=reference)
 
         elif mode == 'mean_bin':
 
@@ -1536,12 +1623,14 @@ class Groups(dict):
         return stats_groups
 
     def countHistogram(
-        self, name='ids', groups=None, identifiers=None, 
-        test=None, reference=None, 
-        out=sys.stdout, outNames=None, format_=None, title=None):
+            self, name='ids', groups=None, identifiers=None, 
+            test=None, reference=None, 
+            out=sys.stdout, outNames=None, format_=None, title=None):
         """
         Analysis of histograms, where each histogram is obtained by counting 
         number of data points in all experiments that have the same identifier.
+
+        The specified property (arg name) has to be indexed.
 
         The resulting object (of this class) has the same group structure as 
         this instance, and each group (Observation object) has the following
@@ -1576,7 +1665,16 @@ class Groups(dict):
         For significance tests histograms [3, 1] (i1) and [4, 2] (i3) are 
         compared.
 
-        This method can be applied only on symmetrical objects.
+        This method can be applied only on symmetrical objects, that is 
+        objects where all groups have the same experiment identifiers. 
+        Method isTransposable() can be used to check whether on object
+        is symmetrical (transposable).
+
+        This method can be regarded as complementary to 
+        joinAndStats(mode='join') because the former puts together all 
+        values from experiments having the same identifiers accros groups, 
+        while the latter puts together elements of all experiments within 
+        a group.
 
         Also prints the calculated data.
 
@@ -1622,9 +1720,14 @@ class Groups(dict):
                     continue
 
                 values = group.getValue(property=name, identifier=ident)
-                data = len(values)
-                stats[g_name].setValue(property='count', identifier=ident, 
-                                       value=data)
+                try:
+                    data = len(values)
+                except TypeError:
+                    if ((name in group.properties)
+                        and (name not in group.indexed)):
+                        data = 1 # experimental, for non-indexed
+                stats[g_name].setValue(
+                    property='count', identifier=ident, value=data)
                 total_n[ident] = total_n.get(ident, 0) + data
 
         # set fraction and  number of data points for each identifier (across 
@@ -1701,9 +1804,9 @@ class Groups(dict):
         return stats
 
     def doCorrelation(
-        self, xName, yName, test=None, regress=False, reference=None, 
-        mode=None, groups=None, identifiers=None, out=sys.stdout, 
-        format_={}, title=''):
+            self, xName, yName, test=None, regress=False, reference=None, 
+            mode=None, groups=None, identifiers=None, out=sys.stdout, 
+            format_={}, title=''):
         """
         Tests if data specified by args xName and yName are correlated.
 
@@ -1964,7 +2067,7 @@ class Groups(dict):
         # append head names from the other stats
         if other is not None:
             for nam in otherNames:
-                if (nam == 'testValue'):
+                if nam == 'testValue':
                     head_names.append(one_other_group.testSymbol[0])
                 else:
                     head_names.append(nam)
@@ -2008,8 +2111,8 @@ class Groups(dict):
                     for nam in names]
                 if other is not None:
                     other_row_values = [
-                        other[gr_name].getValue(identifier=identif, 
-                                                 property=nam) 
+                        other[gr_name].getValue(
+                            identifier=identif, property=nam) 
                         for nam in other_names]
                     row_values.extend(other_row_values)
                 row_values = [gr_name, identif] + row_values
@@ -2046,12 +2149,13 @@ class Groups(dict):
 
                 values = self[categ].getValue(property=name, identifier=ident)
                 n_pos = (values > 0).sum()
-                self[categ].setValue(property=n_name, identifier=ident,
-                                    value=n_pos, indexed=False)
+                self[categ].setValue(
+                    property=n_name, identifier=ident,value=n_pos,
+                    indexed=False)
 
     def getN(
-        self, name, categories=None, inverse=False, fixed=None, layer=None, 
-        layer_name='surface_nm', layer_index=1, layer_factor=1.e-6):
+            self, name, categories=None, inverse=False, fixed=None, layer=None, 
+            layer_name='surface_nm', layer_index=1, layer_factor=1.e-6):
         """
         Counts number of elements of this instance, or calculates a related 
         property (depending on the arguments) for each observation and saves it
@@ -2114,7 +2218,7 @@ class Groups(dict):
                         identifier=ident, property=layer_name, ids=layer_index)
 
                     # fix in case getValue returns an array
-                    if (isinstance(surface, (list, numpy.ndarray)) 
+                    if (isinstance(surface, (list, np.ndarray))
                         and len(surface) == 1):
                         surface = surface[0]
 
@@ -2127,8 +2231,8 @@ class Groups(dict):
                     value = float(n_sv) / surface
                 else:
                     value = surface / float(n_sv)
-                self[categ].setValue(property=name, identifier=ident, 
-                                         value=value, indexed=False)
+                self[categ].setValue(
+                    property=name, identifier=ident, value=value, indexed=False)
 
 
 
@@ -2161,13 +2265,13 @@ class Groups(dict):
         For example:
 
           def add(x, y): return x + y
-          groups.apply(funct=add, args=['vector'], kwargs={'y', 5)
+          groups.apply(funct=add, args=['vector'], kwargs={'y' : 5)
 
         will return property vector of instance groups increased by 5, while
 
           def add(x, y): return x + y
           groups.apply(
-              funct=add, args=['vector'], kwargs={'y', 5}, name='new_vector')
+              funct=add, args=['vector'], kwargs={'y' : 5}, name='new_vector')
 
         will save the new values as property new_vector.
 
@@ -2209,8 +2313,8 @@ class Groups(dict):
         observations and all specified categories.
 
         Nan values are ignored. However, if nan is the only value, or if there 
-        are no values numpy.nan is returned. This is consistent with 
-        numpy.nanmin(). 
+        are no values np.nan is returned. This is consistent with 
+        np.nanmin(). 
 
         Arguments:
           - name: property name
@@ -2228,9 +2332,9 @@ class Groups(dict):
         all_ = pyto.util.nested.flatten(all_)
 
         if len(all_) > 0:
-            res = numpy.nanmax(all_)
+            res = np.nanmax(all_)
         else:
-            res = numpy.nan
+            res = np.nan
 
         return res
 
@@ -2240,8 +2344,8 @@ class Groups(dict):
         observations and all specified categories.
 
         Nan values are ignored. However, if nan is the only value, or if there 
-        are no values numpy.nan is returned. This is consistent with 
-        numpy.nanmin(). 
+        are no values np.nan is returned. This is consistent with 
+        np.nanmin(). 
 
         Arguments:
           - name: property name
@@ -2259,8 +2363,8 @@ class Groups(dict):
         all_ = pyto.util.nested.flatten(all_)
 
         if len(all_) > 0:
-            res = numpy.nanmin(all_)
+            res = np.nanmin(all_)
         else:
-            res = numpy.nan
+            res = np.nan
 
         return res

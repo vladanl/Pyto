@@ -6,7 +6,7 @@ For example, in case of presynaptic terminal, vesicles are boundaries and
 connectors are segments.
 
 Clustering can be done based on connectivity (see "Clustering by connectivity"
-parameter section) or on distance (see "Hierarchical clustering of connections"
+parameter section) or on distance (see "Hierarchical clustering of connectors"
 and "Hierarchical clustering of boundaries" parameter sections).
 
 In short, clustering based on connectivity makes:
@@ -15,12 +15,12 @@ In short, clustering based on connectivity makes:
 Clustering based on distance (hierarchical clustering) makes:
   - clusters of boundaries
   - clusters of segments
-In addition, clusters dual to distance based clusters are also made 
-(experimental feature):
-  - clusters of segments that contact distance boundary clusters (dual to
-  distance boundary clusters)
-  - clusters of boundariess that contact distance segment clusters (dual to
-  distance segment clusters)
+In addition, clusters dual to distance based clusters are also made as
+follows (experimental feature):
+  - clusters of segments that contact distance-based boundary clusters, 
+  these are dual to distance boundary clusters
+  - clusters of boundariess that contact distance-based segment clusters,
+  these are dual to distance segment clusters
 
 For more info how these clusters are made see class pyto.scene.MultiCluster.
 
@@ -107,7 +107,7 @@ hi_bound_depth = 2
 
 # Threshold for forming flat clusters. Its meaning depends on the criterion 
 # for forming flat clusters: 
-#   - 'distance': maximum distance within each cluster 
+#   - 'distance': maximum distance within each cluster (in pixels)
 #   - 'maxclust': max number of clusters
 #   - 'inconsistent': maximum inconsistency
 #hi_bound_thresh = 10              # single threshold
@@ -117,7 +117,10 @@ hi_bound_depth = 2
 hi_bound_thresh = list(range(6,15))    # find best threshold
 
 # Similarity calculation method used to select the best threshold value. The
-# possible values are: 'vi', 'b-flat', 'rand' or 'rand_same_cluster'
+# possible values are: 'vi', 'b-flat', 'rand' or 'rand_same_cluster'.
+# If None the similarity is calcuated for 'b-flat', 'rand', and 'vi'.
+# See pyto.segmentation.Cluster.findSimilarity() for a further info
+# about these methods.
 hi_bound_similarity = 'b-flat'
 
 # use one-item clusters for similarity calculations
@@ -125,11 +128,11 @@ hi_bound_single = True
 
 ###########################################################
 #
-# Hierarchical clustering of connections
+# Hierarchical clustering of connectors
 #
 
 # hierarchically cluster segments
-hi_cluster_connections = True
+hi_cluster_connectors = True
 
 # linkage method: 'single', 'complete', 'average', 'weighted', or whatever 
 # else is accepted by scipy.cluster.hierarchy.linkage()
@@ -153,8 +156,11 @@ hi_conn_depth = 2
 # (according to the similarity calculation method) is selected.
 hi_conn_thresh = list(range(10,30,2))    # find best threshold
 
-# similarity calculation method: 'b-flat', 'rand' or 'rand_same_cluster'
-hi_conn_similarity = 'rand'
+# similarity calculation method: 'b-flat', 'vi', 'rand' or 'rand_same_cluster';
+# if None the similarity is calcuated for 'b-flat', 'rand', and 'vi'.
+# See pyto.segmentation.Cluster.findSimilarity() for a further info
+# about these methods.
+hi_conn_similarity = 'b-flat' #'rand'
 
 # use one-item clusters for similarity calculations
 hi_conn_single = True
@@ -183,31 +189,34 @@ if tomo_info is not None: boundary_file_name = tomo_info.labels_file_name
 #boundary_file_name = ("bound_1.dat", "bound_2.dat", "bound_3.dat")  # multiple
 
 # boundary file dimensions
-boundary_shape = (512, 512, 200)
+boundary_shape = None   # shape given in header of the labels file (if em
+                      # or mrc), or in the tomo (grayscale image) header   
+#boundary_shape = (512, 512, 200) # shape given here
 
 # boundary file data type (e.g. 'int8', 'int16', 'int32', 'float16', 'float64') 
 if tomo_info is not None: boundary_data_type = tomo_info.labels_data_type
 #boundary_data_type = 'uint8'
 
 # boundary file byteOrder ('<' for little-endian, '>' for big-endian)
-boundary_byte_order = '<'
+boundary_byte_order = None #'<'
 
 # boundary file array order ('F' for x-axis fastest, 'C' for z-axis)
-boundary_array_order = 'F'
+boundary_array_order = None #'F'
 
 # offset of boundary in respect to the data (None means 0-offset) (experimental)
 boundary_offset = None
 
-# ids of all boundaries. In addition to the single and multiple boundary files
-# format, nested list can be used where ids in a sublist are understood in the
-# "or" sense, that is all boundaries listed in a sublist form effectively a 
-# single boundary. 
+# ids of all boundaries. 
 # Note: These ids can be all or a subset of boundary ids in the hierarchy 
 # pickle, but there shouldn't be any id that's not in the hierarchy pickle
 #in_boundary_ids = [2,3,5]       # individual ids, single file
-in_boundary_ids = list(range(2,64))  # range of ids, single file
+if tomo_info is not None: in_boundary_ids = tomo_info.vesicle_ids
+#in_boundary_ids = list(range(2,64))  # range of ids, single file
 #in_boundary_ids = None         # all segments are to be used, single file
-#in_boundary_ids = [[2,3], 4, 5, 6]  #  2 and 3 taken together, single file
+# Experimental: In addition to the single and multiple boundary files
+# format, nested list can be used where ids in a sublist are understood in the
+# "or" sense, that is all boundaries listed in a sublist form effectively a 
+# single boundary. #in_boundary_ids = [[2,3], 4, 5, 6]  #  2 and 3 taken together, single file
 
 # boundary ids that should not be used, same formats as obove apply
 # Note: doesn't work if multiple boundary files and some boundaries taken
@@ -243,7 +252,7 @@ clust_directory = ''
 # clusters file name prefix (no directory name)
 clust_prefix = ''
 
-# clustering connections results file suffix
+# clustering connectors results file suffix
 result_conn_suffix = '_cluster-conn.dat'
 
 # clustering boundaries results file suffix
@@ -264,22 +273,22 @@ pickle_suffix = '_cluster.pkl'
 # if True the clusters array is written to a file 
 write_images = False
 
-# clustering connections by connectivity image file suffix
+# clustering connectors by connectivity image file suffix
 conn_conn_suffix = "_cluster-conn-conn.em"
 
 # clustering boundaries by connectivity image file suffix
 conn_bound_suffix = "_cluster-conn-bound.em"
 
-# herarchical clustering of connections image file suffix
+# herarchical clustering of connectors image file suffix
 hi_conn_suffix = "_cluster-hi-conn.em"
 
 # hierarchical clustering of boundaries image file suffix
 hi_bound_suffix = "_cluster-hi-bound.em"
 
-# dual clustering of connections from hierarchical clustering of boundaries
+# dual clustering of connectors from hierarchical clustering of boundaries
 dual_hi_conn_suffix = "_cluster-dual-hi-conn.em"
 
-# dual clustering of boundaries from hierarchical clustering of connections
+# dual clustering of boundaries from hierarchical clustering of connectors
 dual_hi_bound_suffix = "_cluster-dual-hi-conn.em"
 
 # clusters data type, 'uint8' , or
@@ -297,7 +306,7 @@ distance_prefix = ''
 # name of the pickle containing boundary distances (both for input and output)
 bound_distance_suffix = '_bound_distances.pkl'
 
-# name of the pickle containing connection distances (both for input and output)
+# name of the pickle containing connector distances (both for input and output)
 conn_distance_suffix = '_conn_distances.pkl'
 
 # if True distances are read from a pickle if possible, otherwise they're 
@@ -390,72 +399,18 @@ def read_segments(name, bound_ids, inset=None):
 
     return segments
 
-def read_boundaries(boundary_ids):
+def read_boundaries(boundary_ids, check=True, suggest_shape=None):
     """
     Reads boundaries file(s) and makes (Segment) boundaries.
     """
 
-    # read
-    if is_multi_boundaries():
-        bound, multi_boundary_ids = read_multi_boundaries(
-            boundary_ids=boundary_ids)
-    else:
-        bound = read_single_boundaries(boundary_ids=boundary_ids)
-        multi_boundary_ids = [boundary_ids]
-
-    # offset
-    bound.offset = boundary_offset
-
+    bound, multi_boundary_ids = common.read_labels(
+        file_name=boundary_file_name, ids=boundary_ids, label_ids=boundary_ids, 
+        shift=shift, shape=boundary_shape, suggest_shape=suggest_shape, 
+        byte_order=boundary_byte_order, data_type=boundary_data_type,
+        array_order=boundary_array_order,
+        clean=True, offset=boundary_offset, check=check)
     return bound, multi_boundary_ids
-
-def is_multi_boundaries():
-    """
-    Returns True if maultiple boundaries files are given.
-    """
-    if isinstance(boundary_file_name, basestring):
-        return False
-    elif isinstance(boundary_file_name, tuple) \
-            or isinstance(boundary_file_name, list):
-        return True
-    else:
-        raise ValueError("boundary_file_name has to be aither a string (one " \
-              + "boundary file) or a tuple (multiple boundary files).")    
-
-def read_single_boundaries(boundary_ids):
-    """
-    Reads and initializes boundaries form a sigle file.
-    """
-
-    # read boundaries file and make a Segment object
-    bound = pyto.segmentation.Segment.read(
-        file=boundary_file_name, ids=boundary_ids,
-        clean=True, byteOrder=boundary_byte_order, dataType=boundary_data_type,
-        arrayOrder=boundary_array_order, shape=boundary_shape)
-
-    return bound
-
-def read_multi_boundaries(boundary_ids):
-    """
-    Reads and initializes boundaries form a sigle file.
-    """
-
-    # read all boundaries files and combine them in a single Segment object
-    bound = pyto.segmentation.Segment()
-    curr_shift = 0
-    shifted_boundary_ids = []
-    for (l_name, b_ids) in zip(boundary_file_name, boundary_ids):
-        curr_bound = pyto.segmentation.Segment.read(
-            file=l_name, ids=b_ids, clean=True, byteOrder=boundary_byte_order, 
-            dataType=boundary_data_type, arrayOrder=boundary_array_order, 
-            shape=boundary_shape)
-        bound.add(new=curr_bound, shift=curr_shift, dtype='int16')
-        shifted_boundary_ids.append(numpy.array(b_ids) + curr_shift)
-        if shift is None:
-            curr_shift = None
-        else:
-            curr_shift += shift
-
-    return bound, shifted_boundary_ids
     
 def get_base(file_name):
     """
@@ -495,11 +450,19 @@ def get_file_name(base_file, directory, prefix, suffix):
 
     return file_name
 
-def find_distances(file_, read=True, segments=None, ids=None):
+def find_distances(
+        file_, read=True, segments=None, ids=None, encoding='latin1'):
     """
     Read distances from a pickle file, or calculate them if the file does not
     exist or if arg read is False. If distances are calculated they're saved
     to a pickle file.
+
+    Arguments:
+      - file_: file name
+      - read: flag indicating whether distances should be read (True) or
+      calculated (False)
+      - ids: ids
+      - encoding: encoding for pickle.load(), not used for python 2
 
     Returns distances
     """
@@ -509,9 +472,12 @@ def find_distances(file_, read=True, segments=None, ids=None):
         # read from pickle
         if not read:
             raise IOError 
-        in_file = open(file_)
+        in_file = open(file_, 'rb')
         logging.info('Reading distance file')
-        distances = pickle.load(in_file)
+        if sys.version_info[0] > 2:
+            distances = pickle.load(file_, encoding=encoding)
+        else:
+            distances = pickle.load(file_)
 
     except IOError:
 
@@ -536,7 +502,8 @@ def write_cluster_image(clusters, labels, base_file, cluster_directory,
         return
 
     # get clusters image name
-    file_name = get_clusters_file_name(base_file, cluster_directory, cluster_suffix)
+    file_name = get_clusters_file_name(
+        base_file, cluster_directory, cluster_suffix)
 
     # relabel segment ids according to clusters
     cluster_order = {}
@@ -552,7 +519,8 @@ def write_cluster_image(clusters, labels, base_file, cluster_directory,
     
     return file_
 
-def pickle_all_clusters(multi_clust, base_file, directory, suffix, contacts=None):
+def pickle_all_clusters(
+        multi_clust, base_file, directory, suffix, contacts=None):
     """
     Pickles multi cluster.
     """
@@ -608,10 +576,11 @@ def write_cluster_results(multi_cluster, multi_cluster_name, segments, bound,
     in_seg_time = time.asctime(time.localtime(os.path.getmtime(base_file)))
     header.extend([
             "#",
-            "# Connections: " + base_file + " (" + in_seg_time + ")"])
+            "# Connectors: " + base_file + " (" + in_seg_time + ")"])
 
     # boundary file(s)
-    if is_multi_boundaries():
+    #if is_multi_boundaries():
+    if common.is_multi_file(boundary_file_name):
         boundary_lines = [
             "#     " + b_file + " (" 
             + time.asctime(time.localtime(os.path.getmtime(b_file))) + ")"
@@ -684,7 +653,7 @@ def write_cluster_results(multi_cluster, multi_cluster_name, segments, bound,
             "#",
             " Clustered items:",
             "#   - number of boundaries: " + str(len(bound.ids)),
-            "#   - number of connections: " + str(len(segments.ids))])
+            "#   - number of connectors: " + str(len(segments.ids))])
 
     # hierarchical boundary clustering parameters
     if hi_cluster_boundaries:
@@ -703,11 +672,11 @@ def write_cluster_results(multi_cluster, multi_cluster_name, segments, bound,
                 "#   - use single-item clusters for similarity: " \
                     + str(hi_bound_single)])
 
-    # hierarchical connection clustering parameters
-    if hi_cluster_connections:
+    # hierarchical connector clustering parameters
+    if hi_cluster_connectors:
         header.extend([
                 "#",
-                "# Hierarchical connection clustering parameters:",
+                "# Hierarchical connector clustering parameters:",
                 "#   - clustering method: minimal euclidean distance",
                 "#   - linkage: " + hi_conn_linkage,
                 "#   - flat clusters criterion: " + hi_conn_criter,
@@ -757,11 +726,11 @@ def write_cluster_results(multi_cluster, multi_cluster_name, segments, bound,
         except AttributeError:
             pass
 
-    # hierarchical connection clustering results
-    if hi_cluster_connections:
+    # hierarchical connector clustering results
+    if hi_cluster_connectors:
         header.extend([
                 "#",
-                "# Hierarchical connection clustering results:",
+                "# Hierarchical connector clustering results:",
                 "#   - number of clusters (some clusters may contain no "
                 + " boundaries): " 
                 + str(multi_cluster.hierarchyConnections.nClusters), 
@@ -845,8 +814,8 @@ def write_boundary_cluster_table(file_, multi_cluster, bound, contacts):
     results_tab = pyto.io.util.arrayFormat(arrays=out_vars, format=out_format,
                                            indices=bound.ids, prependIndex=True)
 
-    # append connection ids
-    table_head[0] += ' Connection ids'
+    # append connector ids
+    table_head[0] += ' Connector ids'
     table_head[1] += '              '
     for (id_, line_index) in zip(bound.ids, list(range(len(results_tab)))):
         conn_ids = numpy.array2string(contacts.findSegments(boundaryIds=id_,
@@ -862,7 +831,7 @@ def write_boundary_cluster_table(file_, multi_cluster, bound, contacts):
 
 def write_connection_cluster_table(file_, multi_cluster, conn, contacts):
     """
-    Writes data table for connection clusters.
+    Writes data table for connector clusters.
     """
 
     # start head
@@ -1064,8 +1033,8 @@ def main():
     else:
         hi_bound_thr, hi_bound, dual_hi_conn = (None, None, None)
 
-    # hierarchical clustering of connections
-    if hi_cluster_connections:
+    # hierarchical clustering of connectors
+    if hi_cluster_connectors:
 
         logging.info("Starting hierarchical clustering of connectors")
 
@@ -1104,7 +1073,7 @@ def main():
                 clusters_data_type=clust_data_type)
             cluster_files['dual_hi_bound_file'] = dual_hi_bound_file
 
-        logging.info("Hierarchical connection clustering done")
+        logging.info("Hierarchical connector clustering done")
 
     else:
         hi_conn_thr, hi_conn, dual_hi_bound = (None, None, None)

@@ -43,8 +43,8 @@ def replace(old, rules, new=None, repeat=None):
     """
 
     # open files if needed
-    if not isinstance(old, file):
-        old_fd = open(old)
+    if isinstance(old, str):
+        old_fd = open(old, 'r')
     else:
         old_fd = old
 
@@ -85,7 +85,7 @@ def replace(old, rules, new=None, repeat=None):
         new = old
 
     # open new file and make directories if needed
-    if not isinstance(new, file):
+    if isinstance(new, str):
         try:
             new_fd = open(new, 'w')
         except IOError:

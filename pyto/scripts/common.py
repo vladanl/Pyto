@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """
-Contains functions often used in the scripts of this directory
+Contains functions often used in the scripts of this directory that analyze
+single datasets.
 
 $Id$
 Author: Vladan Lucic 

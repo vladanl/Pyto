@@ -536,6 +536,10 @@ class TestObservations(np_test.TestCase):
                      value=[11, 14], id_=[3, 5], indexed=True) 
         value = obs.getValue(identifier='exp_1', property='std')
         np_test.assert_almost_equal(value, [5, 11, 14])
+        obs.setValue(identifier='exp_1', property='std', 
+                     value=[15, 111], id_=[1, 3], indexed=True) 
+        value = obs.getValue(identifier='exp_1', property='std')
+        np_test.assert_almost_equal(value, [15, 111, 14])
 
         # existing experiment and new property, single indexed
         np_test.assert_equal('volume2' in obs.properties, False)
@@ -552,7 +556,7 @@ class TestObservations(np_test.TestCase):
         value = obs.getValue(identifier='exp_6', property='volume2')
         np_test.assert_almost_equal(value, [-1]) 
 
-         # existing experiment and new property, >1 indexed
+        # existing experiment and new property, >1 indexed
         np_test.assert_equal('volume22' in obs.properties, False)
         obs.setValue(identifier='exp_1', property='volume22', 
                      value=[33,55], indexed=True, id_=[1,5], default=-1)
@@ -664,7 +668,7 @@ class TestObservations(np_test.TestCase):
         np_test.assert_equal('volume_13' not in obs.properties, True)
         np_test.assert_equal('volume_13' not in obs.indexed, True)
  
-       # start from empty object
+       # start from empty object, add non-indexed
         empty = Observations()
         empty.setValue(property='data', identifier='i1', value=1)
         np_test.assert_equal(empty.properties, set(['identifiers', 'data']))
@@ -677,7 +681,143 @@ class TestObservations(np_test.TestCase):
         np_test.assert_equal(
             empty.getValue(property='data', identifier='i3'), 3)
 
-        #
+        # start from empty object, add indexed, ids, list value
+        empty = Observations()
+        desired = [1, 2, 3]
+        empty.setValue(
+            identifier='i1', name='ids', value=desired, indexed=True)
+        np_test.assert_equal(empty.properties, set(['identifiers', 'ids']))
+        np_test.assert_equal(empty.indexed, set(['ids']))
+        np_test.assert_equal(empty.identifiers, ['i1'])
+        np_test.assert_equal(
+            isinstance(
+                empty.getValue(identifier='i1', name='ids'), numpy.ndarray),
+            True)
+        np_test.assert_equal(
+            empty.getValue(identifier='i1', name='ids'), desired)
+        desired = [4, 5]
+        empty.setValue(
+            identifier='i2', name='ids', value=desired, indexed=True)
+        np_test.assert_equal(empty.properties, set(['identifiers', 'ids']))
+        np_test.assert_equal(empty.indexed, set(['ids']))
+        np_test.assert_equal(empty.identifiers, ['i1', 'i2'])
+        np_test.assert_equal(
+            isinstance(
+                empty.getValue(identifier='i2', name='ids'), numpy.ndarray),
+            True)
+        np_test.assert_equal(
+            empty.getValue(identifier='i2', name='ids'), desired)
+
+        # continue object, add indexed, another property, list value
+        desired = [10, 20, 30]
+        empty.setValue(
+            identifier='i1', name='vector', value=desired, indexed=True)
+        np_test.assert_equal(
+            empty.properties, set(['identifiers', 'ids', 'vector']))
+        np_test.assert_equal(empty.indexed, set(['ids', 'vector']))
+        np_test.assert_equal(empty.identifiers, ['i1', 'i2'])
+        np_test.assert_equal(
+            isinstance(
+                empty.getValue(identifier='i1', name='vector'), numpy.ndarray),
+            True)
+        np_test.assert_equal(
+            empty.getValue(identifier='i1', name='vector'), desired)
+        desired = [40, 50]
+        empty.setValue(
+            identifier='i2', name='vector', value=desired, indexed=True)
+        np_test.assert_equal(
+            empty.properties, set(['identifiers', 'ids', 'vector']))
+        np_test.assert_equal(empty.indexed, set(['ids', 'vector']))
+        np_test.assert_equal(empty.identifiers, ['i1', 'i2'])
+        np_test.assert_equal(
+            isinstance(
+                empty.getValue(identifier='i2', name='vector'), numpy.ndarray),
+            True)
+        np_test.assert_equal(
+            empty.getValue(identifier='i2', name='vector'), desired)
+
+        # continue object, change one value of an existing property
+        empty.setValue(
+            identifier='i2', name='vector', value=400, id_=4, indexed=True)
+        np_test.assert_equal(
+            empty.properties, set(['identifiers', 'ids', 'vector']))
+        np_test.assert_equal(empty.indexed, set(['ids', 'vector']))
+        np_test.assert_equal(empty.identifiers, ['i1', 'i2'])
+        np_test.assert_equal(
+            isinstance(
+                empty.getValue(identifier='i1', name='vector'), numpy.ndarray),
+            True)
+        np_test.assert_equal(
+            empty.getValue(identifier='i2', name='vector'), [400, 50])
+
+        # continue object, change multiple value of an existing property
+        empty.setValue(
+            identifier='i1', name='vector', value=[100, 300],
+            id_=[1, 3], indexed=True)
+        np_test.assert_equal(
+            empty.properties, set(['identifiers', 'ids', 'vector']))
+        np_test.assert_equal(empty.indexed, set(['ids', 'vector']))
+        np_test.assert_equal(empty.identifiers, ['i1', 'i2'])
+        np_test.assert_equal(
+            isinstance(
+                empty.getValue(identifier='i1', name='vector'), numpy.ndarray),
+            True)
+        np_test.assert_equal(
+            empty.getValue(identifier='i1', name='vector'), [100, 20, 300])
+
+        # start from empty object, add indexed, ids, ndarray value
+        empty = Observations()
+        desired = numpy.array([1, 2, 3])
+        empty.setValue(
+            identifier='i1', name='ids', value=desired, indexed=True)
+        np_test.assert_equal(empty.properties, set(['identifiers', 'ids']))
+        np_test.assert_equal(empty.indexed, set(['ids']))
+        np_test.assert_equal(empty.identifiers, ['i1'])
+        np_test.assert_equal(
+            isinstance(
+                empty.getValue(identifier='i1', name='ids'), numpy.ndarray),
+            True)
+        np_test.assert_equal(
+            empty.getValue(identifier='i1', name='ids'), desired)
+        desired = numpy.array([4, 5])
+        empty.setValue(
+            identifier='i2', name='ids', value=desired, indexed=True)
+        np_test.assert_equal(empty.properties, set(['identifiers', 'ids']))
+        np_test.assert_equal(empty.indexed, set(['ids']))
+        np_test.assert_equal(empty.identifiers, ['i1', 'i2'])
+        np_test.assert_equal(
+            isinstance(
+                empty.getValue(identifier='i2', name='ids'), numpy.ndarray),
+            True)
+        np_test.assert_equal(
+            empty.getValue(identifier='i2', name='ids'), desired)
+
+        # start from empty object, add indexed without having ids, ndarray value
+        empty = Observations()
+        desired = numpy.array([1, 2, 3])
+        empty.setValue(
+            identifier='i1', name='vector', value=desired, indexed=True)
+        np_test.assert_equal(empty.properties, set(['identifiers', 'vector']))
+        np_test.assert_equal(empty.indexed, set(['vector']))
+        np_test.assert_equal(empty.identifiers, ['i1'])
+        np_test.assert_equal(
+            isinstance(
+                empty.getValue(identifier='i1', name='vector'), numpy.ndarray),
+            True)
+        np_test.assert_equal(
+            empty.getValue(identifier='i1', name='vector'), desired)
+        desired = numpy.array([4, 5])
+        empty.setValue(
+            identifier='i2', name='vector', value=desired, indexed=True)
+        np_test.assert_equal(empty.properties, set(['identifiers', 'vector']))
+        np_test.assert_equal(empty.indexed, set(['vector']))
+        np_test.assert_equal(empty.identifiers, ['i1', 'i2'])
+        np_test.assert_equal(
+            isinstance(
+                empty.getValue(identifier='i2', name='vector'), numpy.ndarray),
+            True)
+        np_test.assert_equal(
+            empty.getValue(identifier='i2', name='vector'), desired)
 
     def testExtract(self):
         """

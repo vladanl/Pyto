@@ -150,7 +150,7 @@ labels_offset = None             # no offset
 do_segmentation_flag = True
 
 # threshold list (not needed if do_segmentation_flag is False)
-threshold = numpy.arange(-0.3, 0, 0.01)  
+threshold = numpy.arange(500, 1450, 50)  
 
 # Currently not implemented
 # in addition to threshold list thresholds are also chosen dynamically, so that

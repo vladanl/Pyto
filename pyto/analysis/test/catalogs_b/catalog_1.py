@@ -12,7 +12,7 @@ __version__ = "$Revision$"
 
 identifier = 'exp_1'
 
-results_file = 'results_1.dat'
+results_file = '../results/below/results_1.dat'
 results_obj = 'results_1.pkl'
 
 cleft_columns_obj = 'cleft_columns_1.pkl'

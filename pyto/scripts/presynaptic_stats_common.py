@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 """
+Superseded by multi_dataset_util.py, should be removed. 
+
 Functions used to display analysys results for presynaptic_stats.py script.
 
 This was previously part of presynaptic_stats.py.

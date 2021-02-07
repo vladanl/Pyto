@@ -13,7 +13,7 @@ __version__ = "$Revision$"
 
 identifier = u'exp_3'
 
-results_file = u'results_3.dat'
+results_file = u'../results/results_3.dat'
 results_obj = u'results_3.pkl'
 
 cleft_columns_obj = u'cleft_columns_3.pkl'

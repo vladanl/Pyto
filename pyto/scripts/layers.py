@@ -171,7 +171,7 @@ num_extra_layers = 0
 
 # ids of a region where extra layers are formed (in addition to boundary_id_1),
 # or None for no extra layers on the boundary 1 side
-extra_layers_mask_id_1 = 67
+extra_layers_mask_id_1 = None
 
 # ids of a region where extra layers are formed (in addition to boundary_id_2),
 # or None for no extra layers on the boundary 2 side

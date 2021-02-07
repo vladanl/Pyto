@@ -15,7 +15,7 @@ import unittest
 import os.path
 
 import numpy
-import numpy.testing as np_test 
+import numpy.testing as np_test
 import scipy
 
 from pyto.analysis.catalog import Catalog
@@ -39,8 +39,8 @@ class TestCatalog(np_test.TestCase):
 
         curr_dir, base = os.path.split(__file__)
         rel_dir =  os.path.join(curr_dir, common.rel_catalogs_dir)
-        catal = Catalog() 
-        catal.read(dir=rel_dir, catalog=r'catalog_[0-9]*\.', 
+        catal = Catalog()
+        catal.read(dir=rel_dir, catalog=r'catalog_[0-9]*\.',
                    type='distributed')
 
         return catal
@@ -57,8 +57,8 @@ class TestCatalog(np_test.TestCase):
 
         curr_dir, base = os.path.split(os.path.abspath(__file__))
         abs_dir =  os.path.join(curr_dir, common.rel_catalogs_dir)
-        catal = Catalog() 
-        catal.read(dir=abs_dir, catalog=r'catalog_[0-9]*\.', 
+        catal = Catalog()
+        catal.read(dir=abs_dir, catalog=r'catalog_[0-9]*\.',
                    type='distributed')
         #print 'catal._db: ', catal._db
 
@@ -69,20 +69,20 @@ class TestCatalog(np_test.TestCase):
         np_test.assert_equal(catal._db['feature']['exp_4'], 'bad')
 
         # test results
-        desired = os.path.realpath(os.path.join(curr_dir, 'catalogs_b', 
-                                               'results_1.dat'))
+        desired = os.path.realpath(os.path.join(
+            curr_dir, 'results/below', 'results_1.dat'))
         np_test.assert_equal(
             os.path.realpath(catal._db['results_file']['exp_1']), desired)
-        desired = os.path.realpath(os.path.join(curr_dir, 'catalogs_b', 
-                                               'results_2.dat'))
+        desired = os.path.realpath(os.path.join(
+            curr_dir, 'catalogs_b', 'results_2.dat'))
         np_test.assert_equal(
             os.path.realpath(catal._db['results_file']['exp_2']), desired)
-        desired = os.path.realpath(os.path.join(curr_dir, 'catalogs_a', 
-                                               'results_3.dat'))
+        desired = os.path.realpath(os.path.join(
+            curr_dir, 'results', 'results_3.dat'))
         np_test.assert_equal(
             os.path.realpath(catal._db['results_file']['exp_3']), desired)
-        desired = os.path.realpath(os.path.join(curr_dir, 'catalogs_a', 
-                                      'catalogs_c', 'res', 'results_4.dat'))
+        desired = os.path.realpath(os.path.join(
+            curr_dir, 'catalogs_a', 'catalogs_c', 'res', 'results_4.dat'))
         np_test.assert_equal(
             os.path.realpath(catal._db['results_file']['exp_4']), desired)
 
@@ -91,8 +91,8 @@ class TestCatalog(np_test.TestCase):
         # Absolute path to catalogs directory, test identifiers
         #
 
-        catal = Catalog() 
-        catal.read(dir=abs_dir, catalog=r'catalog_[0-9]*\.', 
+        catal = Catalog()
+        catal.read(dir=abs_dir, catalog=r'catalog_[0-9]*\.',
                    type='distributed', identifiers=['exp_2', 'exp_3'])
 
         # test feature
@@ -108,23 +108,23 @@ class TestCatalog(np_test.TestCase):
 
         curr_dir, base = os.path.split(__file__)
         rel_dir =  os.path.join(curr_dir, common.rel_catalogs_dir)
-        catal = Catalog() 
-        catal.read(dir=rel_dir, catalog=r'catalog_[0-9]*\.', 
+        catal = Catalog()
+        catal.read(dir=rel_dir, catalog=r'catalog_[0-9]*\.',
                    type='distributed')
         #print 'catal._db: ', catal._db
 
         # test results
-        desired = os.path.realpath(os.path.join(curr_dir, 'catalogs_b', 
-                                               'results_1.dat'))
+        desired = os.path.realpath(os.path.join(
+            curr_dir, 'results/below', 'results_1.dat'))
         np_test.assert_equal(catal._db['results_file']['exp_1'], desired)
-        desired = os.path.realpath(os.path.join(curr_dir, 'catalogs_b', 
-                                               'results_2.dat'))
+        desired = os.path.realpath(os.path.join(
+            curr_dir, 'catalogs_b', 'results_2.dat'))
         np_test.assert_equal(catal._db['results_file']['exp_2'], desired)
-        desired = os.path.realpath(os.path.join(curr_dir, 'catalogs_a', 
-                                               'results_3.dat'))
+        desired = os.path.realpath(os.path.join(
+            curr_dir, 'results', 'results_3.dat'))
         np_test.assert_equal(catal._db['results_file']['exp_3'], desired)
-        desired = os.path.realpath(os.path.join(curr_dir, 'catalogs_a', 
-                                      'catalogs_c', 'res', 'results_4.dat'))
+        desired = os.path.realpath(os.path.join(
+            curr_dir, 'catalogs_a', 'catalogs_c', 'res', 'results_4.dat'))
         np_test.assert_equal(catal._db['results_file']['exp_4'], desired)
 
     def testMakeGroups(self):
@@ -135,8 +135,8 @@ class TestCatalog(np_test.TestCase):
         # read db
         #curr_dir, base = os.path.split(__file__)
         #rel_dir =  os.path.join(curr_dir, common.rel_catalogs_dir)
-        #catal = Catalog() 
-        #catal.read(dir=rel_dir, catalog=r'catalog_[0-9]*\.', 
+        #catal = Catalog()
+        #catal.read(dir=rel_dir, catalog=r'catalog_[0-9]*\.',
         #           type='distributed')
         #print 'catal._db: ', catal._db
 
@@ -199,7 +199,7 @@ class TestCatalog(np_test.TestCase):
             ['results_file', 'results_obj', 'cleft_columns_obj', 'feature',
              'pixel_size', 'category', 'fff'])
         np_test.assert_equal(set(catal.getProperties()), desired)
-        desired = {'ggg' : {'exp_2':'ggg', 'exp_3':'ggg', 
+        desired = {'ggg' : {'exp_2':'ggg', 'exp_3':'ggg',
                     'exp_1':'ggg', 'exp_4':'ggg'}}
         np_test.assert_equal(catal.fff, desired)
         desired = {'ggg' : {
@@ -230,8 +230,8 @@ class TestCatalog(np_test.TestCase):
         # read catalog
         curr_dir, base = os.path.split(os.path.abspath(__file__))
         abs_dir =  os.path.join(curr_dir, common.rel_catalogs_dir)
-        catal = Catalog() 
-        catal.read(dir=abs_dir, catalog=r'catalog_[0-9]*\.', 
+        catal = Catalog()
+        catal.read(dir=abs_dir, catalog=r'catalog_[0-9]*\.',
                    type='distributed')
 
         # add new property
@@ -254,7 +254,7 @@ class TestCatalog(np_test.TestCase):
         # add an existing property, not overwrite
         new_values = {'exp_2' : 'new_2', 'exp_5' : 'new_55'}
         np_test.assert_raises(
-            ValueError, catal.add, 
+            ValueError, catal.add,
             **{'name':'new', 'values':new_values, 'overwrite':False})
 
         # test other features
@@ -274,13 +274,13 @@ class TestCatalog(np_test.TestCase):
 
         # test
         catal.pool(categories=['first', 'second'], name='together')
-        desired = {'exp_2' : 3.2, 'exp_3' : 3.3} 
+        desired = {'exp_2' : 3.2, 'exp_3' : 3.3}
         np_test.assert_equal(catal.pixel_size['first'], desired)
-        desired = {'exp_1' : 3.1, 'exp_4' : 3.4} 
+        desired = {'exp_1' : 3.1, 'exp_4' : 3.4}
         np_test.assert_equal(catal.pixel_size['second'], desired)
-        desired = {'exp_1' : 3.1, 'exp_2' : 3.2, 'exp_3' : 3.3, 'exp_4' : 3.4} 
+        desired = {'exp_1' : 3.1, 'exp_2' : 3.2, 'exp_3' : 3.3, 'exp_4' : 3.4}
         np_test.assert_equal(catal.pixel_size['together'], desired)
-        
+
 
 
 if __name__ == '__main__':

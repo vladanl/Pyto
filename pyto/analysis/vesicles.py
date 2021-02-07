@@ -46,6 +46,7 @@ class Vesicles(Groups):
         """
 
         # initialize super 
+        #super(Vesicles, self).__init__() # Python 2
         super(Vesicles, self).__init__()
 
 

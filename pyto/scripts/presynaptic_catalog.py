@@ -7,6 +7,7 @@ from __future__ import unicode_literals
 #######################################################
 #
 # Experiment description and file names
+#  - required except when noted explicitly
 #
 
 # identifier
@@ -18,7 +19,6 @@ treatment = 'ctrl'
 # further info (optional)
 animal_nr = 'a30p 2'
 
-
 # synaptic vesicles
 sv_file = 'path to segmentation and analysis /vesicles/ some name _vesicles.pkl'
 sv_membrane_file = 'path to segmentation and analysis /vesicles/ some name _mem.pkl'
@@ -27,6 +27,8 @@ sv_lumen_file = 'path to segmentation and analysis /vesicles/ some name _lum.pkl
 # hierarchical segmentation of tethers and connectors
 tethers_file = 'path to segmentation and analysis /conn/ connectors name .pkl'
 connectors_file = 'path to segmentation and analysis /conn/ tethers name .pkl'
+
+# clustering (optional)
 cluster_file = 'path to segmentation and analysis /cluster/ some name .pkl'
 
 # layers
@@ -35,7 +37,7 @@ layers_file =  'path to segmentation and analysis /conn/ some name _layers.dat'
 
 ########################################################
 #
-# Observations
+# Observations (all optional)
 #
 
 # mitochondria in the presyn terminal
@@ -45,6 +47,7 @@ mitochondria = True
 ######################################################
 #
 # Microscopy
+#    - pixel_size required, all other optional
 #
 
 # microscope

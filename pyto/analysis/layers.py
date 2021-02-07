@@ -45,7 +45,8 @@ class Layers(Groups):
         """
 
         # initialize super 
-        super(Layers, self).__init__()
+        #super(Layers, self).__init__() # Python 2
+        super().__init__()
 
     ###############################################################
     #
@@ -287,30 +288,34 @@ class Layers(Groups):
         Rebins the data of all observations according to the args bin and pixel.
         
         If arg pixel is not specified, all indexed properties (arrays) are
-        binned according to the position of the array elements, For example,
+        grouped according to the position of the array elements and the
+        property values in each group are added together. For example,
         if arg bin = [0, 2, 4, 6]
 
-        a volume array
+        the following property array
 
           [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 
-       is binned to:
+        is binned to:
 
          [ 3, 7, 11]
 
-       Alternatively, if arg pixel is specified, it is assumed that each 
-       position in the data array is 1 pixel thick and that bins are given
-       if the length units. That is, in the above example with pixels
-       having length of 0.5, the result is:
+        because the sum of elements at positions 0 and 1 is 1+2, at
+        positions 2 and 3 is 3+4 and so on.
+ 
+        Alternatively, if arg pixel is specified, it is assumed that each 
+        position in the data array is 1 pixel thick and that bins are given
+        if the length units. That is, in the above example with pixels
+        having length of 0.5, the result is:
 
          [ 10, 26 ]
           
-       When bins are not integers, trapesoidal rule is used to calculate
-       rebinned data.
+        When bins are not integers, trapesoidal rule is used to calculate
+        rebinned data.
 
-       Properies 'volume', 'volume_nm', 'surface_nm' and 'occupied' are 
-       calculated in the above menner because they are additive. However, 
-       property 'occupancy' is calculed from the binned 'occupied' and
+        Properies 'volume', 'volume_nm', 'surface_nm' and 'occupied' are 
+        calculated in the above menner because they are additive. However, 
+        property 'occupancy' is calculed from the binned 'occupied' and
        'volume'.
 
         Propeerty ids, is adjusted to the number of bins. Properties 'distance'
@@ -328,7 +333,9 @@ class Layers(Groups):
             categories = self
 
         # initialize
-        rebinned = deepcopy(self)
+        rebinned = self.__class__()
+        for categ in categories:
+            rebinned[categ] = deepcopy(self[categ])            
         bins = numpy.asarray(bins, dtype='float')
 
         # calculate properties 

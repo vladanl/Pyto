@@ -22,10 +22,14 @@ def chisquare_2(f_obs_1, f_obs_2, yates=False):
     Calculates chi-square between two arrays of observation frequencies and
     returns the result. 
 
-    Differs from scipy.stats.chisquare() in that this function calculated 
+    Differs from scipy.stats.chisquare() in that this function calculates
     significance between two distributions and that the two distributions 
     can have different number of data points.
     
+    If both observation frequency arrays have 0 at the same position, those
+    values are removed and the degrees of freedom are adjusted using
+    the new array length. This is equivalent to removing an empty bin.
+
     Arguments:
       - f_obs_1, f_obs_2: frequencies of observations 1 and 2
 
@@ -36,6 +40,12 @@ def chisquare_2(f_obs_1, f_obs_2, yates=False):
     f_obs_1 = numpy.asarray(f_obs_1)
     f_obs_2 = numpy.asarray(f_obs_2)
 
+    # remove elements where both arrays have 0's
+    both_nonzero = (f_obs_1 > 0) & (f_obs_2 > 0)
+    if not both_nonzero.all():
+        f_obs_1 = f_obs_1[both_nonzero]
+        f_obs_2 = f_obs_2[both_nonzero]
+    
     # chisquare
     if not yates:
 

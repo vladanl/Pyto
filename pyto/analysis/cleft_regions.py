@@ -62,7 +62,8 @@ class CleftRegions(Groups):
         """
 
         # initialize super 
-        super(CleftRegions, self).__init__()
+        #super(CleftRegions, self).__init__() # Python 2
+        super().__init__()
 
         # determines the conversion of property names
         self._deep = 'last'

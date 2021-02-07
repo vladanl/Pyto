@@ -2,7 +2,7 @@
 Tests class Contingency
 
 # Author: Vladan Lucic
-# $Id: test_cluster.py 1520 2019-03-11 17:00:20Z vladan $
+# $Id$
 """
 
 __version__ = "$Revision$"

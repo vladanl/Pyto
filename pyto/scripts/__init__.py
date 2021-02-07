@@ -11,3 +11,4 @@ __version__ = "$Revision$"
 
 
 from . import common
+from . import multi_dataset_util

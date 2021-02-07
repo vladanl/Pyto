@@ -31,7 +31,7 @@ __version__ = "$Revision$"
 #
 
 # name of the image file
-image_file_name = "tomo.mrc"
+image_file_name = "../3d/tomo.mrc"
 
 ###############################################################
 #
@@ -39,13 +39,13 @@ image_file_name = "tomo.mrc"
 # 
 
 # name of the labels file containing boundaries
-labels_file_name = "labels.raw"
+labels_file_name = "../viz/labels.mrc"
 
 # labels file data type (e.g. 'int8', 'uint8', 'int16', 'int32', 'float16', 
 # 'float64')
 # For mrc and em files this should be set to None, otherwise it will override
 # the data type specified in the header.
-labels_data_type = 'uint16'
+labels_data_type = None
 
 #####################################################################
 #
@@ -59,7 +59,7 @@ labels_data_type = 'uint16'
 all_ids = [2,3] + list(range(9,165))  
 
 # Ids of all boundaries defined in the labels file. Nested list can be used 
-# where ids in a sublist are uderstood in the "or" sense, that is all boundaries 
+# where ids in a sublist are uderstood in the "or" sense, that is all boundaries
 # listed in a sublist form effectivly a single boundary
 boundary_ids = [2] + list(range(9,165))  
 
