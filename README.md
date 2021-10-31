@@ -38,6 +38,10 @@ Please start from [Overview](doc/manuals/overview.pdf).
 
 ### Release history ###
 
+* 1.8 (31.10.2021, svn r1771)
+    * Added classes for basic geometrical shapes (Plane, Parallelogram)
+    * Added bin_crop script
+    * Improved analysis: Groups to/from Pandas, correlation analysis and graphs
 * 1.7
     * Added presynaptic example
     * Improved docs
