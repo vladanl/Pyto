@@ -31,7 +31,8 @@ try:
 except ImportError:
     pass  # Python 2
 import pyto
-from ..util import nested
+from  ..util.exceptions import ReferenceError
+from ..util import nested as util_nested
 from .experiment import Experiment
 
 
@@ -81,7 +82,15 @@ class Observations(object):
         """
         Initialize attributes
         """
-        self.categories = []
+
+        # Important: Commented out because it is inconsistent to have this
+        # while 'categories' is not in self.properties. Several cases where
+        # fixed where this class was instantiated but the subsequent code
+        # assumed the above inconsistency (eg connections.py:461).
+        # However, other similar cases may exist and should be fixed in
+        # the same way (8.2021).
+        #self.categories = []
+
         self.identifiers = []
         self.index = 'ids'
         self.properties = set(['identifiers'])
@@ -411,10 +420,14 @@ class Observations(object):
             indexed = True
 
         # check if new property and new experiment
-        if getattr(self, property, None) is None:
+        prop_values = getattr(self, property, None)
+        if prop_values is None:
             new_property = True
         else:
             new_property = False
+            # just in case property values set to [] but not in properties
+            if (len(prop_values) == 0) and (property not in self.properties):
+                new_property = True
         if identifier in self.identifiers:
             new_experiment = False
         else:
@@ -584,7 +597,7 @@ class Observations(object):
         if (identifiers is None) or (len(identifiers) == 0):
             return None
 
-        # properties to includefigure out columns
+        # properties to include and figure out columns
         ids_name = self.index
         if names is None:
             names = sorted(self.indexed)
@@ -598,12 +611,18 @@ class Observations(object):
         columns = ['identifiers', ids_name] + columns_clean
 
         # get data for all experiments
+        no_indexed = False
         for ident in identifiers:
             if ident not in self.identifiers: continue
 
             data = {}
             data['identifiers'] = ident
             data[ids_name] = self.getValue(identifier=ident, name=ids_name)
+
+            # if no ids, make sure set to [] (and not to None)
+            if data[ids_name] is None:
+                data[ids_name] = numpy.array([])
+                no_indexed = True
 
             # get data for all indexed properties
             for name in columns_clean:
@@ -616,6 +635,9 @@ class Observations(object):
                         data_value[ind] for ind
                         in list(range(data_value.shape[0]))]
 
+                # if no indexed data, make sure all are set to [] (not to None)
+                if no_indexed and data_value is None:
+                    data_value = numpy.array([])
                 data[name] = data_value
 
             # update data
@@ -689,6 +711,51 @@ class Observations(object):
 
     scalar_data = property(
         get_scalar_data, doc="Scalar data in pandas.DataFrame")
+
+    def is_scalar(self, name):
+        """
+        Returns True if the specified property (arg name) is a scalar
+        property, False if indexed and None if not a property at all.
+
+        Argument:
+          - name: property name
+        """
+        if name in self.properties:
+            if name not in self.indexed:
+                return True
+            else:
+                return False
+        else:
+            return None
+
+    def is_indexed(self, name):
+        """
+        Returns True if the specified property (arg name) is an indexed
+        property, False if scalar and None if not a property at all.
+
+        Argument:
+          - name: property name
+        """
+        if name in self.properties:
+            if name in self.indexed:
+                return True
+            else:
+                return False
+        else:
+            return None
+
+    def remove_property(self, name):
+        """
+        Removes specified property from all experiments
+
+        Argument:
+          - name: property name
+        """
+
+        self.properties.remove(name)
+        if name in self.indexed:
+            self.indexed.remove(name)
+        self.__delattr__(name)
 
     #######################################################
     #
@@ -1001,7 +1068,7 @@ class Observations(object):
 
         # find out if values is nested
         if nested is None:
-            nested = pyto.util.nested.is_nested(values)
+            nested = util_nested.is_nested(values)
 
         if nested:
 
@@ -1027,7 +1094,7 @@ class Observations(object):
 
         # find out if values is nested
         if nested is None:
-            nested = pyto.util.nested.is_nested(condition)
+            nested = util_nested.is_nested(condition)
 
         if nested:
 
@@ -1161,7 +1228,7 @@ class Observations(object):
         For example:
 
           def add(x, y): return x + y
-          obs.apply(funct=add, args=['vector'], kwargs={'y', 5)
+          obs.apply(funct=add, args=['vector'], kwargs={'y', 5})
 
         will return property vector of instance obs increased by 5, while
 
@@ -1273,6 +1340,40 @@ class Observations(object):
             new.append(new_one)
 
         return new
+
+    def scalar_to_indexed(self, scalar, indexed, identifiers=None):
+        """
+        Makes new indexed property from a specified scalar property
+        (arg scalar) by setting all indexed value to the scalar value.
+
+        If property (arg) indexed already exists, it will be overwritten.
+
+        Identifiers that are given in arg identifiers but are not in
+        self.identifiers are ignored.
+
+        Sets:
+          - property named (arg) indexed
+
+        Arguments:
+          - scalar: name of the (existing) scalar property
+          - indexed: name of the indexed property that is created
+          - identifiers: list of experiment identifiers specifying
+          experiments on which this method is applied, or Naone for all
+          experiemnts
+        """
+
+        if identifiers is None:
+            identifiers = self.identifiers
+        else:
+            identifiers = [
+                ident for ident in identifiers if ident in self.identifiers]
+
+        for ident in identifiers:
+            val = self.getValue(name=scalar, identifier=ident)
+            len_ids = len(self.getValue(name='ids', identifier=ident))
+            self.setValue(
+                name=indexed, identifier=ident, value=len_ids*[val],
+                indexed=True)
 
     #######################################################
     #
@@ -1531,7 +1632,7 @@ class Observations(object):
 
         # get data
         #values = getattr(self, name)
-
+  
         # parse test ant check
         test_method, test_symbol = self.__class__.parseTest(test=test)
         if ((test_symbol == 'chi2') and (name != 'histogram')
@@ -1554,19 +1655,41 @@ class Observations(object):
             # get data
             data = self.getValue(identifier=ident, property=name)
 
-            # set reference
+            # set reference, check reeference in the current identifiers
             if isinstance(reference, dict):
-                ref_data = self.getValue(identifier=reference[ident],
-                                         property=name)
+                
+                if (ident not in reference) or (reference.get(ident) is None):
+                    raise ReferenceError()
+                ref_local = reference[ident]
+                if (((identifiers is not None)
+                     and (ref_local not in identifiers))
+                    or (ref_local not in self.identifiers)):
+                    raise ReferenceError()
+                ref_data = self.getValue(identifier=ref_local, property=name)
                 self.setValue(identifier=ident, property='reference',
                               value=reference[ident])
+                
             elif isinstance(reference, list):
-                index = self.getExperimentIndex(identifier=ident)
+                
+                if identifiers is not None:
+                    index = identifiers.index(ident)
+                else:
+                    index = self.getExperimentIndex(identifier=ident)
+                ref_local = reference[index]
+                if (((identifiers is not None)
+                     and (ref_local not in identifiers))
+                    or (ref_local not in self.identifiers)):
+                    raise ReferenceError()                
                 ref_data = self.getValue(identifier=reference[index],
                                          property=name)
                 self.setValue(identifier=ident, property='reference',
                               value=reference[index])
+                
             else:
+                if (((identifiers is not None)
+                     and (reference not in identifiers))
+                    or (reference not in self.identifiers)):
+                    raise ReferenceError()
                 ref_data = self.getValue(identifier=reference, property=name)
                 self.setValue(identifier=ident, property='reference',
                               value=reference)
@@ -1614,14 +1737,30 @@ class Observations(object):
         Tests if data specified by args xName and yName are correlated.
 
         If mode is None, data from each experiment is analyzed separately.
-        Otherwise, if it's 'join', data from all experiments are taken
-        together. In this case arg new is ignored (effectively set to True).
-
         If new is True, a new object is created to hold the data and results.
 
-        If arg identifiers is specified and new is True, arg identifiers
-        determines the order of identifiers in the resulting instance. If None,
-        all existing identifiers are used.
+        If mode is 'join', data specified by args xName and yName are
+        data from all experiments are taken together. They are processed
+        depending on whether they are indexed. Specifically:
+          - If both xName and yName data are indexed, the number of
+          correlation points equals the total number of indexed values
+          for all experiments.
+          - If both xName and yName data are scalar, the number of
+          correlation points equals the total number of experiments
+          - If one is scalar and the other indexed, the same scalar value
+          is used with all indexed values (within one experiemnt. The
+          number of correlation points equals the total number of indexed
+          values for all experiments.
+
+        If mode is 'mean', the mean value of indexed data is calculated and
+        used for the correlation. The scalar values are not changed. The
+        number of correlation points equals the total number of experiments.
+
+        If mode is 'join' or 'mean', arg new is ignored (effectively set
+        to True).
+
+        If specified, arg identifiers determines the order of identifiers
+        in the resulting instance. If None, all existing identifiers are used.
 
         If new is True, and the resulting object has no identifiers, all
         data properties are initialized to [].
@@ -1641,7 +1780,8 @@ class Observations(object):
           (or 'kendall')
           - regress: flag indicating if regression (best fit) line is
           calculated
-          - mode: None, or 'join'
+          - mode: Determines if and how the data from individual experiments
+          are grouped together; None, 'join' or 'mean'
           - new: flag indicating if new instance is created and returned
           - identifiers: list of experiment identifiers for which the
           correlation is calculated. Identifiers listed here that do not
@@ -1675,6 +1815,12 @@ class Observations(object):
             else:
                 corr = self
 
+            # check that both indexed
+            if (xName not in self.indexed) or (yName not in self.indexed):
+                raise ValueError(
+                    f"When mode is None, both properties {xName} and {yName} "
+                    + "have to be indexed")
+
             for ident in identifiers:
 
                 if ident not in self.identifiers:
@@ -1687,7 +1833,10 @@ class Observations(object):
 
                 # test and set related properties
                 if test is not None:
-                    test_value, confid = test_method(x_data, y_data)
+                    if len(x_data) >= 2:
+                        test_value, confid = test_method(x_data, y_data)
+                    else:
+                        test_value, confid = numpy.NaN, numpy.NaN
                     corr.setValue(property='testValue', identifier=ident,
                                   value=test_value)
                     corr.setValue(property='confidence', identifier=ident,
@@ -1697,8 +1846,13 @@ class Observations(object):
 
                 # regression
                 if regress:
-                    reg = scipy.stats.linregress(x_data, y_data)
-                    a_reg, b_reg, r_reg, p_reg, err_reg = reg
+                    if len(x_data) >= 2:
+                        reg = scipy.stats.linregress(x_data, y_data)
+                        a_reg, b_reg, r_reg, p_reg, err_reg = reg
+                    else:
+                        a_reg, b_reg, r_reg, p_reg, err_reg = (
+                            numpy.NaN, numpy.NaN, numpy.NaN, numpy.NaN,
+                            numpy.NaN)
                     corr.setValue(property='aRegress', identifier=ident,
                                   value=numpy.array(a_reg))
                     corr.setValue(property='bRegress', identifier=ident,
@@ -1727,9 +1881,58 @@ class Observations(object):
 
         elif mode == 'join':
 
+            # if one property scalar and the other indexed, expand the scalar
+            suffix = '_expanded'
+            x_expanded, y_expanded = False, False
+            x_name, y_name = xName, yName
+            if self.is_scalar(xName) and self.is_scalar(yName):
+                pass
+            elif self.is_indexed(xName) and self.is_indexed(yName):
+                pass
+            else:
+                if self.is_scalar(xName):
+                    x_name = xName + suffix
+                    self.scalar_to_indexed(
+                        scalar=xName, indexed=x_name, identifiers=identifiers)
+                    x_expanded = True
+                elif self.is_scalar(yName):
+                    y_name = yName + suffix
+                    self.scalar_to_indexed(
+                        scalar=yName, indexed=y_name, identifiers=identifiers)
+                    y_expanded = True
+
             # first join and then correlate
-            exp = self.joinExperiments(name=[xName, yName], mode='join',
+            exp = self.joinExperiments(name=[x_name, y_name], mode='join',
                                        identifiers=identifiers)
+            corr = exp.doCorrelation(
+                xName=x_name, yName=y_name, test=test, regress=regress,
+                reference=reference, out=None)
+
+            # remove converted property
+            if x_expanded:
+                self.remove_property(name=x_name)
+            if y_expanded:
+                self.remove_property(name=y_name)
+
+        elif mode == 'mean':
+
+            # find mean of the indexed var and make Experiemnt object
+            indexed_names = [
+                name for name in [xName, yName] if self.is_indexed(name)]
+            exp = self.joinExperiments(
+                name=indexed_names, mode='mean', identifiers=identifiers)
+            scalar_names = set([xName, yName]).difference(indexed_names)
+
+            # add the scalar var to the above Eperiment object
+            if len(scalar_names) > 0:
+                sc_nam = list(scalar_names)[0]
+                exp_2 = self.joinExperiments(
+                    name=sc_nam, mode='join', identifiers=identifiers)
+                id_names_exp = exp.getValue('idNames')
+                values_exp_2 = exp_2.choose(name=sc_nam, idNames=id_names_exp)
+                exp.setValue(name=sc_nam, value=values_exp_2, indexed=True)
+
+            # correlate the Experiment object
             corr = exp.doCorrelation(
                 xName=xName, yName=yName, test=test, regress=regress,
                 reference=reference, out=None)
@@ -1740,7 +1943,8 @@ class Observations(object):
             names.extend(['testValue', 'confidence'])
         if regress:
             names.extend(['aRegress', 'bRegress'])
-        corr.printData(names=names, out=out, format_=format_, title=title)
+        if corr is not None:
+            corr.printData(names=names, out=out, format_=format_, title=title)
 
         # return
         if new or (mode == 'join'):

@@ -9,6 +9,7 @@ from __future__ import absolute_import
 
 __version__ = "$Revision$"
 
+from . import exceptions
 from . import nested
 from . import attributes
 from . import numpy_plus

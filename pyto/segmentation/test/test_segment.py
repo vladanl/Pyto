@@ -955,7 +955,48 @@ class TestSegment(np_test.TestCase):
             free.data, numpy.where(common.bound_1.data==5, 1, 0)[1:7,2:7])
         np_test.assert_equal(free.inset, [slice(1,7), slice(2,7)])
 
+    def testFindDirection(self):
+        """
+        Tests findDirection()
+        """
 
+        # basic, horizontal
+        vector = self.bound_1.findDirection(segmentId=3, directionId=5)
+        np_test.assert_almost_equal(vector.phi, numpy.pi)
+        vector = self.bound_1.findDirection(
+            segmentId=3, directionId=5, fromLayer=3, toLayer=1)
+        np_test.assert_almost_equal(vector.phi, 0)
+
+        # multiple ids, horisontal
+        vector = self.bound_1.findDirection(segmentId=[1, 2], directionId=5)
+        np_test.assert_almost_equal(vector.phi, 0)
+        vector = self.bound_1.findDirection(segmentId=3, directionId=[5, 6])
+        np_test.assert_almost_equal(vector.phi, numpy.pi)
+       
+        # vertical
+        data = self.bound_1.data.copy()
+        data[:, 9] = 0
+        vector = Segment(data).findDirection(segmentId=6, directionId=5)
+        np_test.assert_almost_equal(vector.phi, numpy.pi/2)
+        
+        # slanted
+        data = numpy.array(
+            [[0, 0, 0, 0, 0, 0, 0, 0],
+             [2, 6, 6, 6, 6, 6, 6, 6],
+             [2, 2, 6, 6, 6, 6, 6, 6],
+             [3, 2, 2, 6, 6, 6, 6, 6],
+             [3, 3, 2, 2, 6, 6, 6, 6],
+             [3, 3, 3, 2, 2, 6, 6, 6],
+             [3, 3, 3, 3, 2, 2, 6, 6],
+             [3, 3, 3, 3, 3, 2, 2, 6],
+             [0, 0, 0, 0, 0, 0, 0, 0]])
+        vector = Segment(data).findDirection(segmentId=2, directionId=6)
+        np_test.assert_almost_equal(vector.phi, numpy.pi*3/4)
+        vector = Segment(data).findDirection(
+            segmentId=2, directionId=6, fromLayer=3, toLayer=1)
+        np_test.assert_almost_equal(vector.phi, -numpy.pi/4)
+        
+        
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestSegment)
     unittest.TextTestRunner(verbosity=2).run(suite)

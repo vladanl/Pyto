@@ -11,6 +11,8 @@ __version__ = "$Revision$"
 
 from .vector import Vector
 from .points import Points
+from .plane import Plane
+from .parallelogram import Parallelogram
 from .affine import Affine
 from .affine_2d import Affine2D
 from .affine_3d import Affine3D

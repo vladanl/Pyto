@@ -146,10 +146,11 @@ identifiers = [ident for ident in identifiers
 #  value category
 #  - control-like categories are compared to themselves (kay and value
 #  are the same)
-reference = {'ko_1': 'wt_1',
-             'wt_1': 'wt_1',
-             'ko_2': 'wt_2',
-             'wt_2': 'wt_2'}
+reference = {
+    'ko_1': 'wt_1',
+    'wt_1': 'wt_1',
+    'ko_2': 'wt_2',
+    'wt_2': 'wt_2'}
 
 # catalog directory
 # Important note: Catalog files have to be in a directory parallel to this
@@ -926,7 +927,7 @@ def main(individual=False, save=False, analyze=False):
 
     # fraction of svs that are connected
     util.stats(
-        data=bulk_sv, name='n_connection', join='join', bins=[0,1,100],
+        data=bulk_sv, name='n_connection', join='join', bins=[0, 1, 100],
         fraction=1, pp=pp, groups=categories, identifiers=identifiers,
         test='chi2', reference=reference, y_label='Fraction of all vesicles',
         title='Fraction of vesicles that are connected')
@@ -934,16 +935,17 @@ def main(individual=False, save=False, analyze=False):
     # fraction of svs that are connected per distance bins
     util.stats_list(
         data=sv_bins, dataNames=distance_bin_names,  pp=pp, groups=categories,
-        identifiers=identifiers, name='n_connection', bins=[0,1,100],
+        identifiers=identifiers, name='n_connection', bins=[0, 1, 100],
         join='join', test='chi2', reference=reference,
         x_label=distance_bins_label, y_label='Fraction of svs',
         title='Fraction of connected svs')
 
     # fraction of proximal svs that are connected
-    util.stats(data=near_sv, name='n_connection', join='join', bins=[0,1,100],
-          fraction=1, pp=pp, groups=categories, identifiers=identifiers,
-          test='chi2', reference=reference, y_label='Fraction of vesicles',
-          title='Fraction of proximal vesicles that are connected')
+    util.stats(
+        data=near_sv, name='n_connection', join='join', bins=[0, 1, 100],
+        fraction=1, pp=pp, groups=categories, identifiers=identifiers,
+        test='chi2', reference=reference, y_label='Fraction of vesicles',
+        title='Fraction of proximal vesicles that are connected')
 
     # connectivity interaction beween wt / tko and w/wo aox
     connectivity_factorial(
@@ -1017,7 +1019,7 @@ def main(individual=False, save=False, analyze=False):
         y_label='Length [nm]', title='Mean connector length')
 
     # connector length dependence on distance to the AZ
-     util.stats_list(
+    util.stats_list(
         data=conn.splitByDistance(distance=distance_bins),
         dataNames=distance_bin_names, name='length_nm', join='join',
         pp=pp, groups=categories, identifiers=identifiers, test='kruskal',
@@ -1027,7 +1029,7 @@ def main(individual=False, save=False, analyze=False):
     # connector length of proximal svs
     util.stats(
         data=conn.extractByVesicles(vesicles=near_sv, categories=categories)[0],
-        name= 'length_nm', join='join', pp=pp, groups=categories,
+        name='length_nm', join='join', pp=pp, groups=categories,
         identifiers=identifiers, test='kruskal', reference=reference,
         y_label='Length [nm]',
         title='Mean connector length of proximal vesicles')
@@ -1036,7 +1038,7 @@ def main(individual=False, save=False, analyze=False):
     util.stats_list(
         data=[conn.extractByVesicles(vesicles=near_non_teth_sv)[0],
               conn.extractByVesicles(vesicles=near_teth_sv)[0]],
-        dataNames=['non_teth_sv', 'teth_sv'], name= 'length_nm',
+        dataNames=['non_teth_sv', 'teth_sv'], name='length_nm',
         join='join', pp=pp, groups=categories, identifiers=identifiers,
         test='kruskal', reference=reference, y_label='Length [nm]',
         title='Mean connector length dependence on tethering')
@@ -1120,7 +1122,7 @@ def main(individual=False, save=False, analyze=False):
                 vesicles=near_non_conn_sv, categories=categories)[0],
             tether.extractByVesicles(
                 vesicles=near_conn_sv, categories=categories)[0]],
-        dataNames=['non_connected', 'connected'], name= 'length_nm',
+        dataNames=['non_connected', 'connected'], name='length_nm',
         join='join', pp=pp, groups=categories, identifiers=identifiers,
         test='kruskal', reference=reference, y_label='Length [nm]',
         title='Mean tether length dependence on connectivity')

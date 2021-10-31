@@ -237,6 +237,7 @@ class MultiData(object):
         if multi is None:
             from pyto.analysis.observations import Observations as Observations
             multi = Observations()
+            multi.categories = []
 
         # initialize self.properties
         self.properties = set(['categories', 'identifiers'])
@@ -405,7 +406,8 @@ class MultiData(object):
         if multi is None:
             from pyto.analysis.observations import Observations as Observations
             multi = Observations()
-
+            multi.categories = []
+            
         # initialize self.properties
         self.properties = set(['categories', 'identifiers'])
 

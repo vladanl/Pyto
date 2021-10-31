@@ -458,6 +458,7 @@ class Connections(Groups):
 
             # get data from all experiments of this category
             group = Observations()
+            group.categories = []
             for group, obj, categ_tmp, name_tmp in db.readPropertiesGen(
                 category=categ, identifier=identifier, 
                 properties=inst._full_properties, deep=inst._deep, index='ids', 
@@ -588,6 +589,7 @@ class Connections(Groups):
 
             # get data from all experiments of this category
             group = Observations()
+            group.categories = []
             for group, obj, categ_tmp, current_identif in db.readPropertiesGen(
                 category=categ, identifier=identifier, 
                 properties=self._full_properties, deep=self._deep, index='ids', 
@@ -815,6 +817,19 @@ class Connections(Groups):
                 else:
                     raise
         
+            # convert volume
+            try:
+                self[categ].volume_nm = self[categ].pixels2nm(
+                    name='volume', power=3, conversion=pixel[categ])
+                self[categ].properties.update(['volume_nm'])
+                self[categ].indexed.update(['volume_nm']) 
+            except TypeError:
+                if ((self[categ].volume is None) 
+                    or any(value is None for value in self[categ].volume)): 
+                    pass
+                else:
+                    raise
+
     def calculateProperties(self, categories=None):
         """
         Calculates additonal properties from the already existing properties. 

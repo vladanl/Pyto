@@ -1,6 +1,6 @@
 """
-Defines class Groups that can hold data form one or more observations 
-(experiments) divided (classified) in groups. 
+Defines class Groups that can hold data form one or more observations
+(experiments) divided (classified) in groups.
 
 # Author: Vladan Lucic (Max Planck Institute for Biochemistry)
 # $Id$
@@ -33,22 +33,23 @@ import pyto
 from .observations import Observations
 from ..util import nested
 
+
 class Groups(dict):
     """
-    Data from any number of observations (also called experiments) is 
-    classified into one or more groups. Typically groups are based on 
-    different experimental conditions or traits observed in individual 
+    Data from any number of observations (also called experiments) is
+    classified into one or more groups. Typically groups are based on
+    different experimental conditions or traits observed in individual
     observations.
 
     Each group of observations (class Observations) is accesed as values in
-    a dictionary where keys are group names. A group can also be accessed 
+    a dictionary where keys are group names. A group can also be accessed
     as an attribute of this instance. Consequently, my_group['treated'] and
     my_group.treated are the same.
 
     This class needes to be subclassed. Data is read using read() method that
     need to be defined in each subclass.
     """
-    
+
     #######################################################
     #
     # Initialization
@@ -57,13 +58,19 @@ class Groups(dict):
 
     def __init__(self):
         """
-        Doesn't do almost anything.
+        Defines following constants:
+          - self._skip_name
+          - self._fract_data_names
         """
 
+        # group name that des not contain any data and is used only as a
+        # placeholder
+        _skip_name = '_skip'
+        
         # define property names for fraction-like data properties
         self._fract_data_names = {
-            'fraction':'fraction_data', 'histogram':'histogram_data',
-            'probability':'probability_data'}
+            'fraction': 'fraction_data', 'histogram': 'histogram_data',
+            'probability': 'probability_data'}
 
     def fromList(self, groups, names):
         """
@@ -89,13 +96,13 @@ class Groups(dict):
 
     def recast(self):
         """
-        Returns a new instance of this class and sets all attributes of the new 
+        Returns a new instance of this class and sets all attributes of the new
         object to the attributes of obj.
 
         Useful for objects of this class loaded from a pickle that were pickled
         before some of the current methods of this class were coded. In this
-        case the returned object contains the same attributes as the unpickled 
-        object but it accepts recently coded methods. 
+        case the returned object contains the same attributes as the unpickled
+        object but it accepts recently coded methods.
         """
 
         # make a new instance
@@ -109,7 +116,7 @@ class Groups(dict):
 
     def __getattr__(self, key):
         """
-        Allows accessing an item as if it was an attribute, but not for 
+        Allows accessing an item as if it was an attribute, but not for
         attributes starting with '_'.
         """
         if key.startswith('_'):
@@ -121,7 +128,7 @@ class Groups(dict):
 
     def __setattr__(self, key, value):
         """
-        Allows setting an item as if it was an attribute, but not for 
+        Allows setting an item as if it was an attribute, but not for
         attributes starting with '_'.
         """
         if key.startswith('_'):
@@ -132,7 +139,7 @@ class Groups(dict):
 
     def __delattr__(self, key):
         """
-        Allows deleting an item as if it was an attribute, but not for 
+        Allows deleting an item as if it was an attribute, but not for
         attributes starting with '_'.
         """
         if key.startswith('_'):
@@ -145,17 +152,17 @@ class Groups(dict):
             self, type, categories=None, identifiers=None,
             group_column='group', names=None, additional=[]):
         """
-        Returns pandas.DataFrame that contains indexed or scalar data, 
-        depending on arg type. 
+        Returns pandas.DataFrame that contains indexed or scalar data,
+        depending on arg type.
 
-        See docs for get_scalar_data() and get_indexed_data(). 
+        See docs for get_scalar_data() and get_indexed_data().
 
         Arguments:
           - type: 'indexed' to return indexed and 'scalar for scalar data
           - categories: list of categories (groups), if None all groups
           of the current object are used
           - identifiers: list of identifiers, if None all identifiers of
-          all groups are used 
+          all groups are used
           - group_column: name of the column that contains group names
           - names: list of indexed properties, if None self.indexed is used
           - additional: list of other properties (not used if type is 'scalar')
@@ -168,7 +175,7 @@ class Groups(dict):
             categories = list(self.keys())
         if (categories is None) or (len(categories) == 0):
             return None
-            
+
         for group_name in categories:
 
             # get observations data
@@ -179,7 +186,7 @@ class Groups(dict):
                 one_data = self[group_name].get_scalar_data(
                     identifiers=identifiers, names=names)
             if one_data is None: continue
-            
+
             # add group column
             if group_column in one_data.columns:
                 raise ValueError(
@@ -187,8 +194,8 @@ class Groups(dict):
                     + "the properties. Please specify another name "
                     + "(argument group_name).")
             one_data.insert(0, group_column, group_name)
-                
-            # add to data 
+
+            # add to data
             try:
                 data = data.append(one_data, ignore_index=True)
             except (NameError, AttributeError):
@@ -197,138 +204,179 @@ class Groups(dict):
         return data
 
     @classmethod
-    def from_pandas(cls, indexed, scalar):
+    def from_pandas(
+            cls, indexed, scalar, group_column='group',
+            identifiers_column='identifiers'):
         """
         Makes an instance of this class from two pandas.DataFrame.
 
-        The first two columns of both data tables (args indexed and 
-        scalar) have to contain group names and identifiers, respectively.
+        The first column of both data tables (args indexed and
+        scalar) have to contain group names, the column name is specified
+        by arg group_column.
+
+        The second column of both data tables has to contain identifiers,
+        the column name is is specified by arg indentifiers_column.
+
         The third column of the indexed table (arg indexed_table) has
         to contain ids.
+
+        When converted to an object of this class, the values of the
+        group column become keys of this instance and not values of a
+        property.
 
         Arguments
           - indexed: DataFrame containing indexed data
           - scalar: DataFrame containing scalar data
+          - group_column: name of the column that contains group names
 
         Returns: an instace of this class
         """
 
-        groups_name = 'groups'
-        identifiers_name = 'identifiers'
-        
         # initialize
         groups = cls()
 
         # check indexed properties DataFrame
-        columns = indexed.columns
-        if len(columns) < 2:
+        icolumns = indexed.columns
+        if len(icolumns) < 2:
             print(
                 "Indexed data table has to contain at least groups and "
                 + "identifiers columns.")
 
-        # loop over groups
-        for gr in indexed['group'].unique():
-            curr_gr = (indexed['group'] == gr)
+        # add indexed data for all groups
+        for gr in indexed[group_column].unique():
 
-            # loop over identifiers (experiments)
+            # identifiers from both tables to find experiments w no indexed
+            curr_gr = (indexed[group_column] == gr)
+            iidentifiers = indexed[curr_gr][identifiers_column].unique()
+            curr_gr_scalar = (scalar[group_column] == gr)
+            sidentifiers = scalar[curr_gr_scalar][identifiers_column].unique()
+
+            # loop over identifiers (experiments) from scalar table
+            # because those without indexed data are not in indexed table
             groups[gr] = pyto.analysis.Observations()
-            for ident in indexed[curr_gr]['identifiers'].unique():
-                curr_ident = (indexed['identifiers'] == ident)
+            for ident in sidentifiers:
+                curr_ident = (indexed[identifiers_column] == ident)
 
                 # extract data for the current group and identifier
                 current = indexed[curr_gr & curr_ident]
 
-                # add indexed properties
-                for col in columns[2:]:
-                    values = np.array(current[col])
+                # add indexed properties, ot [] if no indexed data
+                for col in icolumns[2:]:
+                    if ident in iidentifiers:
+                        values = np.array(current[col])
+                    else:
+                        values = np.array([])
                     groups[gr].setValue(
                         identifier=ident, name=col, value=values, indexed=True)
 
         # check scalar properties DataFrame
-        columns = scalar.columns
-        if len(columns) < 2:
+        scolumns = scalar.columns
+        if len(scolumns) < 2:
             print(
-                "Indexed data table has to contain at least groups and "
+                "Scalar data table has to contain at least groups and "
                 + "identifiers columns.")
 
-        # loop over groups
-        for gr in scalar['group'].unique():
-            curr_gr = (scalar['group'] == gr)
+        # add scalar data for all groups
+        for gr in scalar[group_column].unique():
+            curr_gr = (scalar[group_column] == gr)
 
             # loop over identifiers (experiments)
             if groups.get(gr, None) is None:
                 groups[gr] = pyto.analysis.Observations()
-            for ident in scalar[curr_gr]['identifiers'].unique():
-                curr_ident = (scalar['identifiers'] == ident)
+            for ident in scalar[curr_gr][identifiers_column].unique():
+                curr_ident = (scalar[identifiers_column] == ident)
 
                 # extract data for the current group and identifier
                 current = scalar[curr_gr & curr_ident]
-                
+
                 # add scalar properties
-                for col in columns[2:]:
+                for col in scolumns[2:]:
                     values = np.array(current[col])[0]
                     groups[gr].setValue(
-                        identifier=ident, name=col, value=values, indexed=False)
+                        identifier=ident, name=col, value=values,
+                        indexed=False)
 
         return groups
-    
+
     def get_indexed_data(
             self, categories=None, identifiers=None,
             group_column='group', names=None, additional=[]):
         """
-        Returns pandas.DataFrame that contains all indexed data.
+        Returns pandas.DataFrame that contains all indexed data of this
+        instance.
 
-        Columns correspond to properties. A row corresponds to a single element
-        of one experiment and it is uniquely specified by identifier, index
-        pair. Column containing group names is added.
+        Columns directly correspond to the indexed properties of this
+        instance. In addition, the first column contain group names
+        (keys of this instance) and its name is specified by
+        arg group_column, while the second column contains identifiers
+        and its name is 'identifiers'.
+
+         A row corresponds to a single element of one experiment and it
+        is uniquely specified by identifier, index pair.
 
         If the current object does not contain any groups, None is returned.
+
+        If a value of this instance (Observations object) has no identifiers,
+        the resulting DataFrame will not contain a row corresponding to
+        that instance.
 
         Arguments:
           - categories: list of categories (groups), if None all groups
           of the current object are used
           - identifiers: list of identifiers, if None all identifiers of
-          all groups are used 
+          all groups are used
           - group_column: name of the column that contains group names
+          (default "group")
           - names: list of indexed properties, if None self.indexed is used
           - additional: list of other properties
 
         Returns DataFrame, the columns are:
-          - group
+          - arg group_column (usually "group")
           - identifiers
           - self.index (usually ids)
-          - indexed properties, elements of self.indexed (sorted) or names, 
-          except self.index 
+          - indexed properties, elements of self.indexed (sorted) or names,
+          except self.index
           - all properties listed in arg additional
         """
         return self._get_data(
             type='indexed', categories=categories, identifiers=identifiers,
             group_column=group_column, names=names, additional=additional)
-    
+
     indexed_data = property(
         get_indexed_data, doc="Indexed data in pandas.DataFrame")
-                
+
     def get_scalar_data(
             self, categories=None, identifiers=None,
             group_column='group', names=None):
         """
-        Returns pandas.DataFrame that contains the specified scalar data.
+        Returns pandas.DataFrame that contains all scalar data of this
+        instance.
 
-        Columns correspond to properties. Rows correspond to individual 
-        experiments (observations). 
+        Columns directly correspond to the scalar properties of this
+        instance. In addition, the first column contain group names
+        (keys of this instance) and its name is specified by
+        arg group_column, while the second column contains identifiers
+        and its name is 'identifiers'.
+
+        Rows correspond to individual experiments (observations).
 
         If the current object does not contain any groups, None is returned.
+
+        If a value of this instance (Observations object) has no identifiers,
+        the resulting DataFrame will not contain any row corresponding to
+        that instance.
 
         Arguments:
           - categories: list of categories (groups), if None all groups
           of the current object are used
           - identifiers: list of identifiers, if None all identifiers of
-          all groups are used 
+          all groups are used
           - group_column: name of the column that contains group names
+          (default "group")
           - names: list of indexed properties, if None self.indexed is used
 
         Returns DataFrame, the columns are:
-          - group
+          - arg group_column (usually "group")
           - identifiers
           - other properties sorted by name, except identifiers
         """
@@ -339,7 +387,7 @@ class Groups(dict):
     scalar_data = property(
         get_scalar_data, doc="Scalar data in pandas.DataFrame")
 
-    
+
     #######################################################
     #
     # Methods that unite, separate or rearrange observations
@@ -348,7 +396,7 @@ class Groups(dict):
 
     def regroup(self, name, categories=None, identifiers=None):
         """
-        Returnes a new instance of this class where the observations of this 
+        Returnes a new instance of this class where the observations of this
         instance are rearanged into new groups according to values of
         the specified property.
 
@@ -358,9 +406,9 @@ class Groups(dict):
 
         Arguments:
           - name: name of the property used to distinguish groups
-          - categories: only experiments belonging to these categories (group 
+          - categories: only experiments belonging to these categories (group
           names) are used, if None all categories are used
-          - identifiers: only experiments having these experiment identifiers 
+          - identifiers: only experiments having these experiment identifiers
           are used, if None all identifiers are used
 
         Returns: new instance of this class
@@ -368,22 +416,22 @@ class Groups(dict):
 
         # make new instance
         rearranged = self.__class__()
-        
-        for categ, ident, exp in self.experiments(categories=categories, 
+
+        for categ, ident, exp in self.experiments(categories=categories,
                                                   identifiers=identifiers):
 
             # add experiment to the appropriate group (make group if needed)
             new_categ = str(exp.getValue(name=name))
             if rearranged.get(new_categ) is None:
                 rearranged[new_categ] = Observations()
-            rearranged[new_categ].addExperiment(experiment=exp, 
+            rearranged[new_categ].addExperiment(experiment=exp,
                                                 identifier=ident)
 
         return rearranged
 
     def pool(self, categories, name):
         """
-        Unites specified categories into a new category. 
+        Unites specified categories into a new category.
 
         The new category shares the data with the original categories. The
         other categories are not modified.
@@ -401,32 +449,32 @@ class Groups(dict):
     def addGroups(self, groups, copy=False):
         """
         Adds all groups of the specified Groups object (arg groups) to this
-        objects. The groups are added separately. The added data 
+        objects. The groups are added separately. The added data
 
-        If arg copy is True, the individual groups of arg groups are 
+        If arg copy is True, the individual groups of arg groups are
         deepcopied and the copies are added to this instance. Otherwise
-        the groups are shared. 
+        the groups are shared.
 
         If group names from this and the specified Groups objects overlap,
         ValueError is raised.
 
-        Modifies this instance. 
+        Modifies this instance.
 
         Argument:
           - groups: Groups instance
-          - copy: Flag indicating whether the added groups are copied 
+          - copy: Flag indicating whether the added groups are copied
         """
 
         # check for overlap
         overlap = set(self).intersection(groups)
         if len(overlap) > 1:
-            raise ValueError("The following groups overlap: " + str(overlap)) 
+            raise ValueError("The following groups overlap: " + str(overlap))
 
         # add groups
         for name, one_group in list(groups.items()):
             if copy:
                 one_group = deepcopy(one_group)
-            self[name] = one_group 
+            self[name] = one_group
 
     def experiments(self, categories=None, identifiers=None):
         """
@@ -437,9 +485,9 @@ class Groups(dict):
         the order of arg identifiers.
 
         Arguments:
-          - categories: only experiments belonging to these categories (group 
+          - categories: only experiments belonging to these categories (group
           names) are yielded, if None all categories are used
-          - categories: only experiments having these experiment identifiers 
+          - categories: only experiments having these experiment identifiers
           are yielded, if None all identifiers are used
 
         Yields: group_name, identifier, observation (Experiment)
@@ -482,19 +530,19 @@ class Groups(dict):
     def addData(self, source, names, groups=None, identifiers=None, copy=True):
         """
         Adds properties listed in arg names of another Groups object
-        (arg source) to this instance. 
+        (arg source) to this instance.
 
-        In arg names is a list, added properties retain their names, and so 
-        will overwrite the properties having same names of this instance (if 
-        they exist). Otherwise, if arg names is a dictionary, the keys are the 
-        property names in source object and values are the corresponding names 
+        If arg names is a list, added properties retain their names, and so
+        will overwrite the properties having same names of this instance (if
+        they exist). Otherwise, if arg names is a dictionary, the keys are the
+        property names in source object and values are the corresponding names
         under which they are added to this object.
 
-        All specified group names (arg groups) and / or identifiers have to 
-        exist in both objects. If arg groups / identifiers is None, groups / 
+        All specified group names (arg groups) and / or identifiers have to
+        exist in both objects. If arg groups / identifiers is None, groups /
         identifiers of arg source have to exist in this object.
 
-        If arg copy is True, a copy of data is saved to the other object 
+        If arg copy is True, a copy of data is saved to the other object
         (copy() method for np.ndarrays, deepcopy for the rest).
 
         Arguments:
@@ -504,9 +552,9 @@ class Groups(dict):
           new names
           - groups: list of group names
           - identifiers: list of experiment identifiers for which the data is
-          copied. Identifiers listed here that do not exist among 
-          identifiers of source are ignored.  
-          - copy: Flag indicating if data is copied 
+          copied. Identifiers listed here that do not exist among
+          identifiers of source are ignored.
+          - copy: Flag indicating if data is copied
         """
 
         # set groups
@@ -518,7 +566,7 @@ class Groups(dict):
 
             self[group_name].addData(source=source[group_name], names=names,
                                      identifiers=identifiers, copy=copy)
-        
+
     def remove(self, identifiers, groups=None):
         """
         Removes all data for all experiments specified by arg identifiers.
@@ -529,8 +577,8 @@ class Groups(dict):
           - identifiers: list of experiment identifiers
           - groups: list of group names or None for all groups
         """
-        
-        # repeat for each group 
+
+        # repeat for each group
         for group_name, group in list(self.items()):
 
             # skip if current group in specified groups
@@ -541,30 +589,30 @@ class Groups(dict):
             # remove
             for ident in identifiers:
                 group.remove(identifier=ident)
-       
+
     def keep(self, groups=None, identifiers=None, removeGroups=False):
         """
-        Keeps only the experiments specified by arg identifiers and removes 
-        data corresponding to all other experiments. 
+        Keeps only the experiments specified by arg identifiers and removes
+        data corresponding to all other experiments.
 
-        If arg removeGroups is False, experiments are removed only for the 
-        specified groups, while the nonspecified groups are not affected. 
-        
+        If arg removeGroups is False, experiments are removed only for the
+        specified groups, while the nonspecified groups are not affected.
+
         Alternatively, if arg removeGroups is True, groups that are not
         specified are (entirely) removed. In other words, only the specified
         experiments of the specified gropus are kept.
 
-        If arg identifiers is None, all identifiers are kept. Similarly, if arg 
-        groups is None, the behaviour is the same as if all groups were 
-        specified. 
+        If arg identifiers is None, all identifiers are kept. Similarly, if arg
+        groups is None, the behaviour is the same as if all groups were
+        specified.
 
         Arguments:
           - identifiers: list of experiment identifiers
           - groups: list of group names or None for all groups
-          - removeGroups: flag indicating if non-specified groups are removed 
+          - removeGroups: flag indicating if non-specified groups are removed
          """
-        
-        # repeat for each group 
+
+        # repeat for each group
         for group_name, group in list(self.items()):
 
             # skip if current group in specified groups
@@ -580,13 +628,13 @@ class Groups(dict):
 
     def extract(self, condition):
         """
-        Returns an instance of this class that contain only those  
+        Returns an instance of this class that contain only those
         observations for which the condition is satisfied.
 
         Argument:
-          - condition: object that have the same structure as this instance 
+          - condition: object that have the same structure as this instance
         """
-            
+
         extracted = self.__class__()
         for categ in self:
             extracted[categ] = self[categ].extract(condition=condition[categ])
@@ -595,20 +643,20 @@ class Groups(dict):
     def extractIndexed(self, condition):
         """
         Extracts elements of individual observations of this instance, according
-        to the arg condition and returns an object of this class containig 
+        to the arg condition and returns an object of this class containig
         the extracted elements.
 
-        The structure of arg condition has to correspond to the structure of 
+        The structure of arg condition has to correspond to the structure of
         this instance, that is it has to be a dictionary with the same keys as
         in this instance, each of its values has to be a list of the same
         number of elements as the number of observations, and each of these
         elements has to be a ndarray containing elements corresponding to the
-        elements of the indexed properties of this instance. 
+        elements of the indexed properties of this instance.
 
-        Elements of this instance which correspond to True elements in arg 
-        condition are extracted.  
+        Elements of this instance which correspond to True elements in arg
+        condition are extracted.
 
-        Elements are extracted from all indexed properties (as specified in 
+        Elements are extracted from all indexed properties (as specified in
         self.indexed), while the other properties are copied in full.
 
         Arguments:
@@ -626,12 +674,12 @@ class Groups(dict):
         Splits this instance according to the indexed properties.
 
         Returns a list of instances of this class where each instance contains
-        only one value of each of the indexed properties for each category 
-        (the returned instances have the same categories as this instance). 
-        Other (non-indexed) properties are copied from this to each of the 
+        only one value of each of the indexed properties for each category
+        (the returned instances have the same categories as this instance).
+        Other (non-indexed) properties are copied from this to each of the
         resulting instances.
 
-        If indexed properties of observations comprising this instance contain 
+        If indexed properties of observations comprising this instance contain
         different number of elements, only the common elements are returned.
         That is, the length of the returned list is the minimum number of
         elements that indexed properties have.
@@ -650,10 +698,10 @@ class Groups(dict):
                 try:
                     split[obs_ind][categ] = split_obs[obs_ind]
                 except NameError:
-                    split = [self.__class__() for init_ind 
+                    split = [self.__class__() for init_ind
                              in range(len(split_obs))]
                     split[obs_ind][categ] = split_obs[obs_ind]
-            
+
         return split
 
     def split(self, value, name, categories=None):
@@ -667,28 +715,28 @@ class Groups(dict):
         inclusive).
 
         If value is a list of numbers, they specify bins and a list of
-        objects (one for each bin) is returned. Lower bin limits are 
-        inclusive, while the upper are exclusive, except for the upper limit 
+        objects (one for each bin) is returned. Lower bin limits are
+        inclusive, while the upper are exclusive, except for the upper limit
         of the last bin which is inclusive (like np.histogram).
 
-        If value is a single number single object of this calss is returned. 
-        Otherwise, if value is a list of numbers, a list of sv objects is 
+        If value is a single number single object of this calss is returned.
+        Otherwise, if value is a list of numbers, a list of sv objects is
         returned.
 
         All indexed properties, including ids, are split according to the
         splitting of the specified property (arg name) and arg value.
 
-        Non-indexed (scalar) properties are copied to all resulting 
+        Non-indexed (scalar) properties are copied to all resulting
         objects.
 
         Arguments:
-          - value: list of values, interpreted as value bins, or if 
+          - value: list of values, interpreted as value bins, or if
           a single number it is a higher value limit, while 0 is the lower
-          - name: (string) name of the attribute whose values are compared 
+          - name: (string) name of the attribute whose values are compared
           with arg values
           - categories:
 
-        Returns a list of (if arg value is a list), or one (if arg values is 
+        Returns a list of (if arg value is a list), or one (if arg values is
         a single number) obect(s) of this class
         """
 
@@ -697,7 +745,7 @@ class Groups(dict):
             categories = list(self.keys())
 
         # check if one value or value bins
-        if not isinstance(value, (list, np.ndarray)): 
+        if not isinstance(value, (list, np.ndarray)):
             value = [0, value]
             one = True
         else:
@@ -727,23 +775,23 @@ class Groups(dict):
     def splitByDistance(self, distance, name='distance_nm', categories=None):
         """
         Returns a list of Groups objects, where each object contains data
-        for elements of observations whose distances (attribute specified by 
+        for elements of observations whose distances (attribute specified by
         name) fall into bins specified by arg distances.
 
-        Lower distance bin limits are inclusive, while the upper are exclusive, 
-        except for the upper limit of the last distance bin which is inclusive 
+        Lower distance bin limits are inclusive, while the upper are exclusive,
+        except for the upper limit of the last distance bin which is inclusive
         (like np.histogram)
 
         If distance is a single number single sv object is retutred. Otherwise,
         if distance is a list of numbers, a list of sv objects is returned.
 
         Arguments:
-          - distance: list of distances, interpreted as distance bins, or if 
+          - distance: list of distances, interpreted as distance bins, or if
           a single number it is a higher distance limit, while 0 is the lower
           - name: name of the distance attribute (default 'dist_nm')
           - categories:
         """
-        
+
         if not isinstance(distance, (list, np.ndarray)):
             distance = [0, distance]
 
@@ -759,7 +807,7 @@ class Groups(dict):
         comprising this instance (Groups) become observations of the resulting
         instance (Observations).
 
-        Data of individual experiments (observations) can be joined in the 
+        Data of individual experiments (observations) can be joined in the
         following ways (arg mode):
           - 'join': Data is pooled across experiments of the same group
           - 'mean': The mean values of data for all experiments are pooled
@@ -772,24 +820,24 @@ class Groups(dict):
 
         The joined data is ordered according to (the order of) arg identifiers.
 
-        The resulting instance has the following properties: 
+        The resulting instance has the following properties:
           - identifiers: same as group names of this instance, the order of
           identifiers is the same as the order of self.keys().
           - data name(s): the name of the data property stays the same
           - ids: set from 1 up (increment 1), correspond to each data point of
-          the resulting instance 
-          - idNames: unique string for each data value derived from identifier 
+          the resulting instance
+          - idNames: unique string for each data value derived from identifier
           and id for that value, see below.
 
-        If data is scalar (one value per experiment), or the mode is 'mean' 
-        experiment identifiers of this instance are saved as attribute 
+        If data is scalar (one value per experiment), or the mode is 'mean'
+        experiment identifiers of this instance are saved as attribute
         idNames of the new Observations. Alternatively, if data is indexed and
         mode is 'join' idNames of the new Observations for each data element is
         composed as identifier_id where identifier and id are specifying this
-        data element. 
+        data element.
 
-        Arg remove empty determines what to do if there is no data 
-        in an experiment in case arg mode is 'mean' and the data is 
+        Arg remove empty determines what to do if there is no data
+        in an experiment in case arg mode is 'mean' and the data is
         indexed. If True, experiment that has no data is ignored, and the
         identifier of this experiment is not added to idNames. If False,
         np.NaN is added instead of the mean.
@@ -802,12 +850,12 @@ class Groups(dict):
           - fraction: bin index, only if mode is 'mean_bin'
           - histogram_name:
           - fraction_name:
-          - groups: (list) names of groups whose experiments are joined 
-          - identifiers: list of experiment identifiers to be used here, if 
-          None all are used. Non-existing identifiers are ignored. 
-          - removeEmpty: Flag that determines what to do if there is no data 
-          in an experiment. Used only if arg mode is 'mean' and the data is 
-          indexed. 
+          - groups: (list) names of groups whose experiments are joined
+          - identifiers: list of experiment identifiers to be used here, if
+          None all are used. Non-existing identifiers are ignored.
+          - removeEmpty: Flag that determines what to do if there is no data
+          in an experiment. Used only if arg mode is 'mean' and the data is
+          indexed.
 
         Returns: Observations instance
         """
@@ -819,7 +867,7 @@ class Groups(dict):
                     "Arguments bins and fraction have to be specified when "
                     + "arg mode is 'mean_bin'.")
         elif (mode == 'join') or (mode == 'mean'):
-            if ((bins is not None) or (fraction is not None)): 
+            if ((bins is not None) or (fraction is not None)):
                 raise ValueError(
                     "Arguments bins and fraction should not be specified when "
                     + "arg mode (" + mode + ") is different from 'mean_bin'.")
@@ -827,7 +875,7 @@ class Groups(dict):
             raise ValueError(
                 "Argument mode ({}) can be 'join', 'mean'".format(mode)
                 + " or 'mean_bin'.")
-            
+
         # initialize new Observations
         obs = Observations()
         obs.properties.add('identifiers')
@@ -842,10 +890,14 @@ class Groups(dict):
         # set data, ids and id_names
         for categ, group in list(self.items()):
 
-            # skip groups that are not listed 
+            # skip groups that are not listed
             if (groups is not None) and (categ not in groups):
                 continue
 
+            # skip placeholder group
+            if categ == self._skip_name:
+                continue
+            
             # set identifiers
             if identifiers is None:
                 loc_idents = group.identifiers
@@ -866,12 +918,13 @@ class Groups(dict):
 
                     # indexed property
                     if mode == 'join':
-                        curr_ids = group.getValue(property='ids', 
+                        curr_ids = group.getValue(property='ids',
                                                   identifier=ident)
-                        id_names.extend([ident + '_' + str(id_) 
+                        id_names.extend([ident + '_' + str(id_)
                                          for id_ in curr_ids])
                     elif ((mode == 'mean') or (mode == 'mean_bin')):
-                        if (len(value) > 0) or not removeEmpty:
+                        if (((value is not None) and (len(value) > 0))
+                            or not removeEmpty):
                             id_names.append(ident)
                     else:
                         raise ValueError(
@@ -884,10 +937,10 @@ class Groups(dict):
                     id_names.append(ident)
 
             # add to the new group data
-            obs.setValue(property='idNames', identifier=categ, value=id_names, 
+            obs.setValue(property='idNames', identifier=categ, value=id_names,
                          indexed=True)
 
-            # set all data of all experiments 
+            # set all data of all experiments
             for name in name_list:
 
                 # set data
@@ -908,12 +961,12 @@ class Groups(dict):
                         if mode == 'join':
                             data.extend(value)
                         elif mode == 'mean':
-                            if len(value) > 0:
+                            if (value is not None) and (len(value) > 0):
                                 data.append(np.mean(value))
                             elif not removeEmpty:
                                 data.append(np.NaN)
                         elif mode == 'mean_bin':
-                            if len(value) > 0:
+                            if (value is not None) and (len(value) > 0):
                                 hist, foo = np.histogram(value, bins)
                                 frac_value = hist[fraction] / float(len(value))
                                 #if hist is not None:
@@ -933,20 +986,21 @@ class Groups(dict):
                 if name == name_list[0]:
                     indexed = True
                 else:
-                    indexed = ((name in group.indexed) 
+                    indexed = ((name in group.indexed)
                                == (name_list[0] in group.indexed))
 
                 # add to the new group data
                 if mode != 'mean_bin':
-                    obs.setValue(property=name, identifier=categ, 
+                    obs.setValue(property=name, identifier=categ,
                                  value=np.array(data), indexed=indexed)
                 else:
                     #obs.setValue(
-                    #    property=histogram_name, identifier=categ, 
+                    #    property=histogram_name, identifier=categ,
                     #    value=histogram, indexed=True)
                     obs.setValue(
-                        property=fraction_name, identifier=categ, 
+                        property=fraction_name, identifier=categ,
                         value=np.array(data), indexed=indexed)
+                    
             # set ids
             if mode != 'mean_bin':
                 tmp_name = name_list[0]
@@ -954,48 +1008,48 @@ class Groups(dict):
                 tmp_name = fraction_name
             data_0 = obs.getValue(property=tmp_name, identifier=categ)
             ids = list(range(1, len(data_0)+1))
-            obs.setValue(property='ids', identifier=categ, value=ids, 
+            obs.setValue(property='ids', identifier=categ, value=ids,
                          indexed=True)
 
         return obs
 
     @classmethod
     def joinExperimentsList(
-            cls, list, listNames, name, groups=None, 
+            cls, list, listNames, name, groups=None,
             identifiers=None, mode='join', removeEmpty=True):
         """
         Creates new Groups instance by joining data (specified by arg
         name) of all experiments belonging to one group. That is, for each
         Groups objects given in arg list, individual groups (Observations
         object) are joined to become individual observations. Each Groups
-        object given becomes Observations object in the resulting Groups 
+        object given becomes Observations object in the resulting Groups
         object.
 
         Data of individual experiments (observations) are either joined
-        together (mode 'join'), or an average value of each experiment is 
+        together (mode 'join'), or an average value of each experiment is
         used (mode 'mean') for the resulting instance.
 
-        All Observations objects of the resulting Groups instance have the 
-        following properties: 
-          - identifiers: same as group names of Groups objects of arg list, 
+        All Observations objects of the resulting Groups instance have the
+        following properties:
+          - identifiers: same as group names of Groups objects of arg list,
           the order of identifiers is the same as the order of the
           corresponding groups_instance.keys().
           - data name: the name of the data property stays the same
           - ids: set from 1 up (increment 1), correspond to each data point of
-          the resulting instance 
-          - idNames: unique string for each data value derived from identifier 
+          the resulting instance
+          - idNames: unique string for each data value derived from identifier
           and id for that value, see below.
         Values of arg listNames become group names of the resulting object.
 
-        If data is scalar (one value per experiment), or the mode is 'mean' 
-        experiment identifiers are saved as attribute idNames of the new 
+        If data is scalar (one value per experiment), or the mode is 'mean'
+        experiment identifiers are saved as attribute idNames of the new
         Observations objects. Alternatively, if data is indexed and
         mode is 'join' idNames of the new Observations for each data element is
         composed as identifier_id where identifier and id are specifying this
-        data element. 
+        data element.
 
-        Arg remove empty determines what to do if there is no data 
-        in an experiment in case arg mode is 'mean' and the data is 
+        Arg remove empty determines what to do if there is no data
+        in an experiment in case arg mode is 'mean' and the data is
         indexed. If True, experiment that has no data is ignored, and the
         identifier of this experiment is not added to idNames. If False,
         np.NaN is added instead of the mean.
@@ -1005,20 +1059,20 @@ class Groups(dict):
           - listNames: (list of strings) names of the Groups objects given
           in arg list
           - name: name of the data attribute
-          - groups: (list) names of groups whose experiments are joined 
-          - identifiers: list of experiment identifiers to be used here, if 
-          None all are used. Non-existing identifiers are ignored. 
+          - groups: (list) names of groups whose experiments are joined
+          - identifiers: list of experiment identifiers to be used here, if
+          None all are used. Non-existing identifiers are ignored.
           - mode: 'join' to join or 'mean' to average data
-          - removeEmpty: Flag that determines what to do if there is no data 
-          in an experiment. Used only if arg mode is 'mean' and the data is 
-          indexed. 
+          - removeEmpty: Flag that determines what to do if there is no data
+          in an experiment. Used only if arg mode is 'mean' and the data is
+          indexed.
 
         Returns: Groups instance
         """
 
         # make new Groups object
         new_groups = cls()
-        
+
         # loop over list items (Groups objects)
         for _groups, new_name in zip(list, listNames):
 
@@ -1048,10 +1102,10 @@ class Groups(dict):
         All groups have to have same experiment identifiers, otherwise a
         ValueError ir raised. They are also expected to have the same
         properties and indexed attributes.
-        
-        Properties reference and referenceGroup are interchanged for each 
-        experiment. If an experiment of the original object doesn't have 
-        referenceGroup the it is assumed that it is the (name of the) original 
+
+        Properties reference and referenceGroup are interchanged for each
+        experiment. If an experiment of the original object doesn't have
+        referenceGroup the it is assumed that it is the (name of the) original
         group and the reference of the same experiment in the transposed
         object is set accordingly.
 
@@ -1073,15 +1127,15 @@ class Groups(dict):
                 # check identifiers
                 if set(old_identifiers) != set(group.identifiers):
                     raise ValueError(
-                        "Can't transpose Groups object because individual " 
-                        + "groups comprising this instance don't " 
+                        "Can't transpose Groups object because individual "
+                        + "groups comprising this instance don't "
                         + "have the same identifiers")
 
         # transpose
         new = self.__class__()
         for new_group_name in old_identifiers:
 
-            # instantiate new group and add properties and indexed 
+            # instantiate new group and add properties and indexed
             new_group = Observations()
             new_group.properties = copy(properties)
             new_group.indexed = copy(indexed)
@@ -1096,19 +1150,19 @@ class Groups(dict):
 
                 # interchange reference and referenceGroup
                 if 'reference' in new_group.properties:
-                    ref = new_group.getValue(identifier=new_identifier, 
+                    ref = new_group.getValue(identifier=new_identifier,
                                              property='reference')
                     if 'referenceGroup' in new_group.properties:
-                        ref_g = new_group.getValue(identifier=new_identifier, 
+                        ref_g = new_group.getValue(identifier=new_identifier,
                                                    property='referenceGroup')
                     else:
                         ref_g = new_identifier
-                    new_group.setValue(identifier=new_identifier, 
+                    new_group.setValue(identifier=new_identifier,
                                        property='referenceGroup', value=ref)
-                    new_group.setValue(identifier=new_identifier, 
+                    new_group.setValue(identifier=new_identifier,
                                        property='reference', value=ref_g)
 
-            # add the new group  
+            # add the new group
             new[new_group_name] = new_group
 
         return new
@@ -1121,7 +1175,7 @@ class Groups(dict):
 
         first_group = True
         for name, group in list(self.items()):
-            
+
             # first time around
             if first_group:
                 old_idents = set(group.identifiers)
@@ -1144,7 +1198,7 @@ class Groups(dict):
 
     def joinAndStats(
             self, name, mode='join', bins=None, fraction=None,
-            fraction_name='fraction', groups=None, 
+            fraction_name='fraction', groups=None,
             identifiers=None, test=None, reference=None, ddof=1,
             out=sys.stdout, outNames=None, format_=None, title=None):
         """
@@ -1153,56 +1207,56 @@ class Groups(dict):
         a specified reference group(s).
 
         Argument mode determines how the data is pooled across experiments.
-        If mode is 'join', data of individual experiments (observations) are 
-        joined (pooled)  together within a group to be used for further 
-        analysis. If it is 'mean', the mean value for each experiment is 
+        If mode is 'join', data of individual experiments (observations) are
+        joined (pooled)  together within a group to be used for further
+        analysis. If it is 'mean', the mean value for each experiment is
         calculated and these means are used for further analysis.
 
-        Argument bins determined how the above obtained data is further 
+        Argument bins determined how the above obtained data is further
         processed. If arg bins is not specified, basic stats (mean, std, sem)
-        are calculated for all groups and the data is statistically compared 
-        among the groups. Alternatively, if arg bins is specified, histograms 
-        of the data are calculated for all groups, normalized to 1 and 
-        statistically compared between groups. 
+        are calculated for all groups and the data is statistically compared
+        among the groups. Alternatively, if arg bins is specified, histograms
+        of the data are calculated for all groups, normalized to 1 and
+        statistically compared between groups.
 
         Modes 'join_bins' and 'byIndex' are described below. Specifically,
-        the following types of analysis are implemented: 
+        the following types of analysis are implemented:
 
           - mode='join', bins=None: Data is pooled across experiments of
-          the same group, basic stats are calculated within groups and 
+          the same group, basic stats are calculated within groups and
           statistically compared between groups.
 
-          - mode='join', bins specified (not None): Data is pooled across 
+          - mode='join', bins specified (not None): Data is pooled across
           experiments of the same group, histograms (acording to arg bins)
-          of the data values are calculated within group and statistically 
+          of the data values are calculated within group and statistically
           compared among groups.
 
           - mode='mean', bins=None: Mean values are calculated for all
-          experiments, basic stats are calculated for means within groups 
+          experiments, basic stats are calculated for means within groups
           and statistically compared between groups.
 
-          - mode='mean', bins specified (not None): Mean values are 
+          - mode='mean', bins specified (not None): Mean values are
           calculated for all experiment, histograms (acording to arg bins)
-          of the means are calculated within groups and statistically 
+          of the means are calculated within groups and statistically
           compared between groups.
 
-          - mode='mean_bin', bins have to be specified (not None): 
-          Histograms of the data values are calculated for each experiment 
-          (acording to arg bins), normalized to 1 and values of the bin 
-          specified by arg fraction are selected (saved as arg fraction_name). 
-          Basic stats for this property are calculated and statistically 
-          compared within and between groups. 
+          - mode='mean_bin', bins have to be specified (not None):
+          Histograms of the data values are calculated for each experiment
+          (acording to arg bins), normalized to 1 and values of the bin
+          specified by arg fraction are selected (saved as arg fraction_name).
+          Basic stats for this property are calculated and statistically
+          compared within and between groups.
 
-          - mode='byIndex', bins should not be specified: Basic stats 
-          (mean, std, sem) are calculated for each index (position) 
-          separately. Data has to be indexed, and all experiments within 
+          - mode='byIndex', bins should not be specified: Basic stats
+          (mean, std, sem) are calculated for each index (position)
+          separately. Data has to be indexed, and all experiments within
           one group have to have same ids.
 
-        Returns Observations instance, where each experiment (observation) 
-        of the returned instance correspond to a group of this instance. 
+        Returns Observations instance, where each experiment (observation)
+        of the returned instance correspond to a group of this instance.
 
-        In cases data distributions are statistically compared ('join', bins 
-        None; 'mean', bins None; 'mean_bin'; 'byIndex'), the returned 
+        In cases data distributions are statistically compared ('join', bins
+        None; 'mean', bins None; 'mean_bin'; 'byIndex'), the returned
         instance has following attributes:
           - data: deepcopied data that is statistically analyzed
           - mean: mean
@@ -1210,28 +1264,28 @@ class Groups(dict):
           - n: number of individual data points
           - sem: standard error of means
 
-        In cases histograms are statistically compared ('join' or 'mean', 
+        In cases histograms are statistically compared ('join' or 'mean',
         bins specified), the returned instance has following attributes:
-          - ids: left bin limits 
-          - data: deepcopied data 
-          - histogram: (ndarray of length 1 less than bins) histogram values 
+          - ids: left bin limits
+          - data: deepcopied data
+          - histogram: (ndarray of length 1 less than bins) histogram values
           (indexed)
-          - probability: (ndarray of length 1 less than bins) 
+          - probability: (ndarray of length 1 less than bins)
           histogram / sum_of_histogram (indexed)
           - n: number of individual data points
           - fraction: histogram[fraction] / n
-          - histogram_data, probability_data, fraction_data: the same as the 
+          - histogram_data, probability_data, fraction_data: the same as the
           corresponding attributes without '_data' suffix, except that these
           are lists that contain values for each group
 
-        If arg test is specified, inference is calculated between groups 
+        If arg test is specified, inference is calculated between groups
         and the following attributes are set in the returned instance:
           - testValue: values of the test used
           - testSymbol: specifies the test ('t', 'h', 'u', ...)
-          - confidence: probability that data from a group and the/its 
+          - confidence: probability that data from a group and the/its
           reference come from the same population
-        All of these attributes are lists with elements corresponding to 
-        the original groups (experiments of the returned object), except 
+        All of these attributes are lists with elements corresponding to
+        the original groups (experiments of the returned object), except
         for testSymbol which is a string
 
         The results are written on a stream specifed by arg out
@@ -1241,19 +1295,21 @@ class Groups(dict):
           - bins: histogram bins, if specified histogram is calculated
           - fraction: (int) position of the histogram bin that is selected
           (starts from 0)
-          - groups: list of the groop names to be analyzed, None for all groups
-          - identifiers: list of experiment identifiers to be used here, if 
-          None all are used. Non-existing identifiers are ignored. 
+          - groups: list of the groop names to be analyzed, None for all
+          groups
+          - identifiers: list of experiment identifiers to be used here, if
+          None all are used. Non-existing identifiers are ignored.
           - mode: 'join' to join, 'mean' to average data or 'byIndex'
-          - reference: name of the reference group, a single name (string), 
-          or a dictonary where each group name (keys) is associated with its 
-          reference (values)         
+          - reference: name of the reference group, a single name (string),
+          or a dictonary where each group name (keys) is associated with its
+          reference (values)
           - test: statistical test used: 't', 'h', 'u', or any other stated
-          in Observations.doInference() doc. If None no test is done. 
+          in Observations.doInference() doc. If None no test is done.
           - out: output stream, sys.stdout (default) for standard out, if
           string it's understood as a file name, None for no output
-          - outNames: list of sttribute names to be printed, None for a default
-          names list: ['mean', 'std', 'sem', 'n', 'testValue', 'confidence']
+          - outNames: list of sttribute names to be printed, None for a
+          default names list: ['mean', 'std', 'sem', 'n', 'testValue',
+          'confidence']
           - format_: dictionary containing data formats (keyes are attribute
           names) and values are formating strings. If None default names are
           used.
@@ -1263,14 +1319,24 @@ class Groups(dict):
         # keep group order if given
         if groups is None:
             group_names = list(self.keys())
+            #groups_local = None
         else:
-            group_names = groups
+            #groups_local = groups.copy()
+            group_names = groups.copy()
 
+        # remove placeholder group
+        # don't understand why this doesn't work
+        #try:
+        #    #group_names.remove(self._skip_name)
+        # except ValueError:
+        #    pass
+        group_names = [nam for nam in group_names if nam != self._skip_name]
+            
         if mode == 'byIndex':
 
             # mode byIndex
 
-            # calculate 
+            # calculate
             stats = Observations()
             for g_name in group_names:
 
@@ -1279,24 +1345,26 @@ class Groups(dict):
                     continue
 
                 exp = self[g_name].doStatsByIndex(
-                    name=name, identifiers=identifiers, 
+                    name=name, identifiers=identifiers,
                     identifier=g_name, ddof=ddof)
                 stats.addExperiment(experiment=exp)
 
         elif ((mode == 'join') or (mode == 'mean')):
 
             # join and stats
-            obser = self.joinExperiments(name=name, mode=mode, groups=groups,
-                                         identifiers=identifiers)
-            stats = obser.doStats(name=name, bins=bins, fraction=fraction, 
-                                  identifiers=groups, new=True, ddof=ddof)
-            
+            obser = self.joinExperiments(
+                name=name, mode=mode, groups=group_names,
+                identifiers=identifiers)
+            stats = obser.doStats(
+                name=name, bins=bins, fraction=fraction,
+                identifiers=group_names, new=True, ddof=ddof)
+
             # add fraction-like data properties for each observation separately
             if bins is not None:
                 for g_name in group_names:
                     group = self[g_name]
                     stats_data = group.doStats(
-                        name=name, bins=bins, fraction=fraction, 
+                        name=name, bins=bins, fraction=fraction,
                         identifiers=identifiers, new=True, ddof=ddof)
 
                     # in case this object was made before self._fract_data_names
@@ -1314,7 +1382,7 @@ class Groups(dict):
                                 indexed=False)
                     except AttributeError:
                         pass
-                        
+
             # inference
             if test is not None:
                 if bins is None:
@@ -1322,7 +1390,7 @@ class Groups(dict):
                 else:
                     infer_name = 'histogram'
                 stats.doInference(
-                    test=test, name=infer_name, identifiers=groups,
+                    test=test, name=infer_name, identifiers=group_names,
                     reference=reference)
 
         elif mode == 'mean_bin':
@@ -1330,26 +1398,27 @@ class Groups(dict):
             # join and stats
             obser = self.joinExperiments(
                 name=name, mode=mode, bins=bins, fraction=fraction,
-                fraction_name=fraction_name, groups=groups,
+                fraction_name=fraction_name, groups=group_names,
                 identifiers=identifiers)
             stats = obser.doStats(
-                name=fraction_name, identifiers=groups, new=True, ddof=ddof)
+                name=fraction_name, identifiers=group_names, new=True,
+                ddof=ddof)
 
             # inference
             if test is not None:
                 infer_name = 'data'
                 stats.doInference(
-                    test=test, name=infer_name,  
-                    identifiers=groups, reference=reference)
+                    test=test, name=infer_name,
+                    identifiers=group_names, reference=reference)
 
         else:
             raise ValueError(
                 "Argument mode " + str(mode) + " was not understood. "
                 + "Acceptable values are: 'join', 'mean', 'mean_bin' and"
-                + " 'byIndex'.") 
- 
+                + " 'byIndex'.")
+
         # print
-        stats.printStats(out=out, identifiers=groups, names=outNames, 
+        stats.printStats(out=out, identifiers=group_names, names=outNames,
                          format_=format_, title=title)
 
         return stats
@@ -1364,18 +1433,18 @@ class Groups(dict):
 
         Essentially a combination of joinExperimentsList() that joins data
         belonging to a same group (over individual experiments) thus
-        making a Groups object, and doStats() that calculates statstics on 
+        making a Groups object, and doStats() that calculates statstics on
         this Groups object.
 
-        Arg list contains Groups objects as items, and each of these can 
-        have one or more groups. If arg between is 'list_items', all Groups 
+        Arg list contains Groups objects as items, and each of these can
+        have one or more groups. If arg between is 'list_items', all Groups
         objects specified (arg list) have to have the same group names.
 
         Data of individual experiments (observations) are either joined
-        together within a group (mode 'join'), or an average value of each 
+        together within a group (mode 'join'), or an average value of each
         experiment is used (mode 'mean') for the resulting instance.
- 
-        If arg between is 'groups', statistical difference is calculated 
+
+        If arg between is 'groups', statistical difference is calculated
         between groups within a Groups object (item of arg list). In this case
         arg references can be one of the following:
           - single group name (string), so all groups of a Groups object have
@@ -1384,31 +1453,31 @@ class Groups(dict):
           - dictonary where list item names are keys and reference group names
           are values. Again, all groups of a Groups object have the same
           reference, but Groups objects can have different group names.
-          - dictionary where list item names are keys and values are again 
+          - dictionary where list item names are keys and values are again
           dictionaries with all group names (belonging to the corresponding
           Groups objects) are keys and the corresponding reference group names
           are values. Here, each group can have a different reference.
 
-        Alternatively, if arg between is 'list_items', the difference is 
-        calculated between groups of different Groups objects that have the 
-        same group names. In this case each Group object has to have the same 
+        Alternatively, if arg between is 'list_items', the difference is
+        calculated between groups of different Groups objects that have the
+        same group names. In this case each Group object has to have the same
         group names and arg reference can be one of the following:
            - single list item name (string), so all groups with the same group
-           name have the same reference and all references belong to the same 
+           name have the same reference and all references belong to the same
            Groups object
-           - dictonary where igroup names are keys and list item names are 
+           - dictonary where igroup names are keys and list item names are
           values. Again, all groups with same group name have the same
           reference, but reference groups do not have to belong to the
           same Groups object
           - dictionary where group names are keys and values are again
-          dictionarys where all list item names are keys and the corresponding 
+          dictionarys where all list item names are keys and the corresponding
           refernce list item names are values.
 
         Returns a new instance of this class where individual groups correspond
         to Groups objects of arg list, and have group names from arg listNames.
-        Identifiers of these Groups objects are the same as groups names of 
+        Identifiers of these Groups objects are the same as groups names of
         arg list elements. Indifidual groups of the resulting Groups object
-        (Observations instances) have following attributes (if test is None 
+        (Observations instances) have following attributes (if test is None
         inference is not calculated):
           - mean
           - std: n-ddof degrees of freedom
@@ -1416,31 +1485,31 @@ class Groups(dict):
           - sem: standard error of means
           - testValue: values of t, h or u depending on the test
           - testSymbol: 't', 'h', or 'u', depending on the test
-          - confidence: probability that data from a group and the/its 
+          - confidence: probability that data from a group and the/its
           reference come from the same population
 
         Arguments:
           - list: list of Groups objects
-          - listNames: (list of strings) list item names 
+          - listNames: (list of strings) list item names
           - name: name of the data attribute
-          - groups: list of group names to be analyzed, None for all groups 
+          - groups: list of group names to be analyzed, None for all groups
           - mode: 'join' to join or 'mean' to average data
           - test: statistical test used: 't', 'h', 'u', or any other stated
-          in Observations.doInference() doc. If None no test is done. 
-          - between: determines if statistical significance is calculated 
-          between groups of the same Groups object (value 'groups') or between 
+          in Observations.doInference() doc. If None no test is done.
+          - between: determines if statistical significance is calculated
+          between groups of the same Groups object (value 'groups') or between
           groups having the same group name
-          - reference: name of the reference group(s) (if arg between 
+          - reference: name of the reference group(s) (if arg between
           is 'experiments'), or reference identifier(s) (arg between is
           'groups')
           - ddof: delta degrees of freedom, denominator for std is N-ddof
         """
 
         # join experiments to obtain single Groups object
-        new_groups = cls.joinExperimentsList(list=list, listNames=listNames, 
+        new_groups = cls.joinExperimentsList(list=list, listNames=listNames,
                                              name=name, mode=mode)
-        
-        # adjust between to be correct for the joined data 
+
+        # adjust between to be correct for the joined data
         if between == 'list_items':
             new_bet = 'groups'
         elif between == 'groups':
@@ -1452,98 +1521,99 @@ class Groups(dict):
 
         # do stats and inference on the new Groups
         stats = new_groups.doStats(
-            name=name, test=test, identifiers=groups, between=new_bet, 
+            name=name, test=test, identifiers=groups, between=new_bet,
             reference=reference, ddof=ddof, out=None)
 
         return stats
 
-    def doStats(self, name, bins=None, fraction=1, 
-                groups=None, identifiers=None, 
-                test=None, between='experiments', reference=None, ddof=1, 
+    def doStats(self, name, bins=None, fraction=1,
+                groups=None, identifiers=None,
+                test=None, between='experiments', reference=None, ddof=1,
                 out=sys.stdout, outNames=None, format_=None, title=None):
         """
-        Does statistical analysis on data (specified by arg name) for each 
+        Does statistical analysis on data (specified by arg name) for each
         experiment separately, and tests for statistical difference between
         the data and specified reference experiment(s) data.
 
         If arg bin is None, calculates basic statistics. The calculations are
         saved as following attributes:
-          - data: deepcopied data 
+          - data: deepcopied data
           - mean: mean
           - std: n-ddof degrees of freedom,
           - n: number of individual data points
           - sem: standard error of means
           - ddof: delta degrees of freedom, denominator for std is N-ddof
 
-        Alternatively, if arg bins is given calculates histogram of the data 
+        Alternatively, if arg bins is given calculates histogram of the data
         according to bins ans saves it as the following attributes:
-          - ids: left bin limits 
-          - data: deepcopied data 
+          - ids: left bin limits
+          - data: deepcopied data
           - histogram: histogram (indexed)
           - probability: histogram / sum_of_histogram (indexed)
           - n: number of individual data points
           - fraction: histogram[fraction] / n
- 
+
           If areg test is specified, inference is calculated and the results
           are saved as the follwoing attributes:
           - testValue: values of t, chi2, h or u depending on the test
           - testSymbol: 't', 'chi2', 'h', or 'u', depending on the test
-          - confidence: probability that data from a group and the/its 
+          - confidence: probability that data from a group and the/its
           reference come from the same population
 
-        If arg between is 'experiments', statistical difference is calculated 
+        If arg between is 'experiments', statistical difference is calculated
         between experiments within each group. In this case arg references
         can be one of the following:
           - single identifier (string), so all experiments of a group have the
           same reference. Here the specified identifier has to appear in all
           groups
-          - dictonary where group names are keys and reference identifiers are 
-          values. Again, all experiments of a group have the same reference, 
+          - dictonary where group names are keys and reference identifiers are
+          values. Again, all experiments of a group have the same reference,
           but groups can have different identifiers.
-          - dictionary where group names are keys and values are again 
+          - dictionary where group names are keys and values are again
           dictionaries with all identifiers (belonging to the corresponding
-          group) are keys and the corresponding reference identifiers are 
+          group) are keys and the corresponding reference identifiers are
           values. Here, each experiment can have a different reference.
 
         Alternatively, if arg between is 'groups', the difference is calculated
         between experiments of different groups that have the same identifiers.
         In this case each group has to have the same experiment identifiers
         and arg reference can be one of the following:
-           - single group name (string), so all experiments with same 
+           - single group name (string), so all experiments with same
            identifier have the same reference and all reference experiments
            belong to the same group
-           - dictonary where identifiers are keys and group names are 
+           - dictonary where identifiers are keys and group names are
           values. Again, all experiments with same identifier have the same
           reference, but reference experiments do not have to belong to the
           same group
           - dictionary where identifiers are keys and values are again
-          dictionarys where all group names are keys and the corresponding 
+          dictionarys where all group names are keys and the corresponding
           refernce group names are values.
 
         Returns a new instance of this class that has the same groups and
-        identifiers as this instance. Each group (Observations instance) has 
+        identifiers as this instance. Each group (Observations instance) has
         the attributes listed above.
 
         Arguments:
           - name: name of the data attribute
           - bins: histogram bins, if specified histogram is calculated
           - fraction: (int) position of the histogram bin for which the
-          - groups: list of group names, None for all groups 
-          - identifiers: list of experiment identifiers, None for all 
+          - groups: list of group names, None for all groups
+          - identifiers: list of experiment identifiers, None for all
           experiments of all groups.
-          - between: determines if statistical significance is calculated 
-          between experiments of the same group (value 'experiment') or between 
-          experiments having the same identifyer (value 'groups')
-          - reference: name of the reference group(s) (if arg between 
+          - between: determines if statistical significance is calculated
+          between experiments of the same group (value 'experiment') or
+          between experiments having the same identifyer (value 'groups')
+          - reference: name of the reference group(s) (if arg between
           is 'experiments'), or reference identifier(s) (arg between is
           'groups')
           - test: statistical test used: 't', 'h', 'u', or any other stated
-          in Observations.doInference() doc. If None no test is done. 
+          in Observations.doInference() doc. If None no test is done.
           - ddof: delta degrees of freedom, denominator for std is N-ddof
           - out: output stream, sys.stdout (default) for standard out, if
           string it's understood as a file name
-          - outNames: list of sttribute names to be printed, None for a default
-          names list: ['mean', 'std', 'sem', 'n', 'testValue', 'confidence']
+          - outNames: list of sttribute names to be printed, None for a
+          default names list: ['mean', 'std', 'sem', 'n', 'testValue',
+          'confidence']
           - format_: dictionary containing data formats (keyes are attribute
           names) and values are formating strings. If None default names are
           used.
@@ -1551,7 +1621,7 @@ class Groups(dict):
         """
 
         # stats instance
-        stats_groups = self.__class__()        
+        stats_groups = self.__class__()
 
         if between == 'experiments':
 
@@ -1565,18 +1635,6 @@ class Groups(dict):
                 stats = group.doStats(
                     name=name, bins=bins, fraction=fraction,
                     new=True, identifiers=identifiers, ddof=ddof)
-
-                # not good
-                # add fraction-like data properties for each observation
-                # separately
-                #if bins is not None:
-                #    stats_data = group.doStats(
-                #        name=name, bins=bins, fraction=fraction, 
-                #        identifiers=identifiers, new=True, ddof=ddof)
-                #    for (not_data, yes_data) in self._fract_data_names.items():
-                #        stats.setValue(
-                #            identifier=g_name, name=yes_data,
-                #            value=getattr(stats_data, not_data), indexed=False)
 
                 # inference
                 if test is not None:
@@ -1593,7 +1651,7 @@ class Groups(dict):
                         infer_name = 'data'
                     else:
                         infer_name = 'histogram'
-                    stats.doInference(identifiers=identifiers, test=test, 
+                    stats.doInference(identifiers=identifiers, test=test,
                                       name=infer_name, reference=obs_ref)
                     stats.setValue(property='referenceGroup', identifier=None,
                                    default=g_name)
@@ -1610,8 +1668,8 @@ class Groups(dict):
 
             transp = self.transpose()
             t_stats = transp.doStats(
-                name=name, bins=bins, fraction=fraction, test=test, 
-                groups=identifiers, identifiers=groups, 
+                name=name, bins=bins, fraction=fraction, test=test,
+                groups=identifiers, identifiers=groups,
                 between='experiments', reference=reference, ddof=ddof, out=out)
             stats_groups = t_stats.transpose()
 
@@ -1623,75 +1681,76 @@ class Groups(dict):
         return stats_groups
 
     def countHistogram(
-            self, name='ids', groups=None, identifiers=None, 
-            test=None, reference=None, 
+            self, name='ids', groups=None, identifiers=None,
+            test=None, reference=None,
             out=sys.stdout, outNames=None, format_=None, title=None):
         """
-        Analysis of histograms, where each histogram is obtained by counting 
+        Analysis of histograms, where each histogram is obtained by counting
         number of data points in all experiments that have the same identifier.
 
         The specified property (arg name) has to be indexed.
 
-        The resulting object (of this class) has the same group structure as 
+        The resulting object (of this class) has the same group structure as
         this instance, and each group (Observation object) has the following
         data attributes:
           - count: number of data points
           - n: total number of data points for all experiments with the same
           identifier
           - fraction: count / n
- 
+
         If areg test is specified, inference is calculated and the results
         are saved as the follwoing attributes (see Observations.doInference()):
           - reference: reference
           - testValue: values of t, chi2, h or u depending on the test
           - testSymbol: 't', 'chi2', 'h', or 'u', depending on the test
-          - confidence: probability that data from a group and the/its 
+          - confidence: probability that data from a group and the/its
           reference come from the same population
-         
+
         For example, for an object where:
 
           group a, identifier 'i1', data = [1, 2, 3]
           group a, identifier 'i3', data = [1, 2, 3, 4]
           group b, identifier 'i1', data = [5]
           group b, identifier 'i3', data = [6, 7]
-           
+
         the resulting object has:
 
-          group a, identifier 'i1': count=3, n=4, fraction=3/4 
-          group a, identifier 'i3': count=4, n=6, fraction=4/6 
-          group b, identifier 'i1': count=1, n=4, fraction=1/4 
-          group a, identifier 'i3': count=2, n=6, fraction=2/6 
+          group a, identifier 'i1': count=3, n=4, fraction=3/4
+          group a, identifier 'i3': count=4, n=6, fraction=4/6
+          group b, identifier 'i1': count=1, n=4, fraction=1/4
+          group a, identifier 'i3': count=2, n=6, fraction=2/6
 
-        For significance tests histograms [3, 1] (i1) and [4, 2] (i3) are 
+        For significance tests histograms [3, 1] (i1) and [4, 2] (i3) are
         compared.
 
-        This method can be applied only on symmetrical objects, that is 
-        objects where all groups have the same experiment identifiers. 
+        This method can be applied only on symmetrical objects, that is
+        objects where all groups have the same experiment identifiers.
         Method isTransposable() can be used to check whether on object
         is symmetrical (transposable).
 
-        This method can be regarded as complementary to 
-        joinAndStats(mode='join') because the former puts together all 
-        values from experiments having the same identifiers accros groups, 
-        while the latter puts together elements of all experiments within 
+        This method can be regarded as complementary to
+        joinAndStats(mode='join') because the former puts together all
+        values from experiments having the same identifiers accros groups,
+        while the latter puts together elements of all experiments within
         a group.
 
         Also prints the calculated data.
 
         Arguments:
           - name: name of the data attribute (this data is counted)
-          - groups: list of group names, None for all groups 
-          - identifiers: list of experiment identifiers, None for all 
+          - groups: list of group names, None for all groups
+          - identifiers: list of experiment identifiers, None for all
           experiments of all groups.
-           - reference: name of the reference group(s) (if arg between 
+           - reference: name of the reference group(s) (if arg between
           is 'experiments'), or reference identifier(s) (arg between is
           'groups')
           - test: statistical test used: 't', 'h', 'u', or any other stated
-          in Observations.doInference() doc. If None no test is done. 
+          in Observations.doInference() doc. If None no test is done.
           - out: output stream, sys.stdout (default) for standard out, if
           string it's understood as a file name
-          - outNames: list of sttribute names to be printed, None for a default
-          names list: ['mean', 'std', 'sem', 'n', 'testValue', 'confidence']
+          - outNames: list of sttribute names to be printed, None for a
+          default names list: ['mean', 'std', 'sem', 'n', 'testValue',
+          'confidence']
           - format_: dictionary containing data formats (keyes are attribute
           names) and values are formating strings. If None default names are
           used.
@@ -1701,8 +1760,8 @@ class Groups(dict):
         # make instance to hold statistics
         stats = self.__class__()
         total_n = {}
-        
-        # set data and count data point for each identifier (across groups)  
+
+        # set data and count data point for each identifier (across groups)
         for g_name, group in list(self.items()):
 
             # skip non-specified groups
@@ -1725,13 +1784,13 @@ class Groups(dict):
                 except TypeError:
                     if ((name in group.properties)
                         and (name not in group.indexed)):
-                        data = 1 # experimental, for non-indexed
+                        data = 1  # experimental, for non-indexed
                 stats[g_name].setValue(
                     property='count', identifier=ident, value=data)
                 total_n[ident] = total_n.get(ident, 0) + data
 
-        # set fraction and  number of data points for each identifier (across 
-        # groups)  
+        # set fraction and  number of data points for each identifier (across
+        # groups)
         for g_name, group in list(stats.items()):
 
             # skip non-specified groups
@@ -1744,16 +1803,16 @@ class Groups(dict):
                 # skip non-specified identifiers
                 if (identifiers is not None) and (ident not in identifiers):
                     continue
-   
+
                 # calculate fraction
-                stats[g_name].setValue(property='n', 
+                stats[g_name].setValue(property='n',
                                        identifier=ident, value=total_n[ident])
-                data = stats[g_name].getValue(property='count', 
+                data = stats[g_name].getValue(property='count',
                                               identifier=ident)
                 fraction = data / float(total_n[ident])
-                stats[g_name].setValue(property='fraction', identifier=ident, 
+                stats[g_name].setValue(property='fraction', identifier=ident,
                                        value=fraction)
- 
+
         # do inference
         if test is not None:
 
@@ -1771,7 +1830,7 @@ class Groups(dict):
             #                     + "string or dictionary.")
 
             # inference
-            obs.doInference(name='count', identifiers=identifiers, test=test, 
+            obs.doInference(name='count', identifiers=identifiers, test=test,
                             reference=reference)
             obs.setValue(property='referenceGroup', identifier=None,
                          default=g_name)
@@ -1789,12 +1848,13 @@ class Groups(dict):
                 # skip non-specified identifiers
                 if (identifiers is not None) and (ident not in identifiers):
                     continue
-   
-                for name in ['confidence', 'reference', 'testValue', 
-                             'testSymbol']:
-                    value = obs.getValue(property=name, identifier=ident)
-                    stats[g_name].setValue(property=name, identifier=ident,
-                                           value=value)
+
+                for test_name in [
+                        'confidence', 'reference', 'testValue', 'testSymbol']:
+                    value = obs.getValue(
+                        property=test_name, identifier=ident)
+                    stats[g_name].setValue(
+                        property=test_name, identifier=ident, value=value)
 
         # print stats
         stats.printStats(
@@ -1804,22 +1864,42 @@ class Groups(dict):
         return stats
 
     def doCorrelation(
-            self, xName, yName, test=None, regress=False, reference=None, 
-            mode=None, groups=None, identifiers=None, out=sys.stdout, 
+            self, xName, yName, test=None, regress=False, reference=None,
+            mode=None, groups=None, identifiers=None, out=sys.stdout,
             format_={}, title=''):
         """
         Tests if data specified by args xName and yName are correlated.
 
-        If mode is None, data from each experiment is analyzed separately. 
-        The returned object is an instance of this class and has the same
-        group / experiment structure as this instance.
+        The correlation is done separately on each of the Observations
+        instances that form the values of this instance.
 
-        Alternatively, if mode is 'join', data from all experiments of one group
-        are taken together. In this case arg new is ignored (effectively set to
-        True). In this case the returned object is an instance of Observations
-        and its identifiers correspond to the group names of this object.
+        If mode is None, data from each experiment is analyzed separately.
 
-        If specified, arg identifiers determines the order of identifiers 
+        If mode is 'join', data specified by args xName and yName are
+        data from all experiments are taken together. They are processed
+        depending on whether they are indexed. Specifically:
+          - If both xName and yName data are indexed, the number of
+          correlation points equals the total number of indexed values
+          for all experiments.
+          - If both xName and yName data are scalar, the number of
+          correlation points equals the total number of experiments
+          - If one is scalar and the other indexed, the same scalar value
+          is used with all indexed values (within one experiemnt. The
+          number of correlation points equals the total number of indexed
+          values for all experiments.
+
+        If mode is 'mean', the mean value of indexed data is calculated and
+        used for the correlation. The scalar values are not changed. The
+        number of correlation points equals the total number of experiments.
+
+        If new is True, a new object is created to hold the data and results.
+        But if mode is 'join' or 'mean', arg new is ignored (effectively set
+        to True).
+
+        If new is True, and the resulting object has no identifiers, all
+        data properties are initialized to [].
+
+        If specified, arg identifiers determines the order of identifiers
         in the resulting instance. If None, all existing identifiers are used.
 
         The results are saved as the following attributes:
@@ -1828,20 +1908,21 @@ class Groups(dict):
           - testValue: correlation test value
           - testSymbol: currently 'r' or 'tau', depending on the test
           - confidence: confidence
-          - aRegress, bRegress: slope and intercept of the regression line 
+          - aRegress, bRegress: slope and intercept of the regression line
           (if arg regress is True)
 
         Arguments:
-          - xName, yName, property names of data 
-          - test: correlation test, currently 'r' (or 'pearson'), 'tau' 
+          - xName, yName, property names of data
+          - test: correlation test, currently 'r' (or 'pearson'), 'tau'
           (or 'kendall')
           - regress: flag indicating if regression (best fit) line is calculated
-          - reference:
-          - mode: None, or 'join'
+          - reference: currently not used
+          - mode: Determines if and how the data from individual experiments
+          are grouped together; None, 'join' or 'mean'
           - groups: list of group names to use
-          - identifiers: list of experiment identifiers for which the 
-          correlation is calculated. Identifiers listed here that do not 
-          exist among identifiers of this instance are ignored.  
+          - identifiers: list of experiment identifiers for which the
+          correlation is calculated. Identifiers listed here that do not
+          exist among identifiers of this instance are ignored.
           - out: output stream, sys.stdout (default) for standard out, if
           string it's understood as a file name
           - outNames: list of sttribute names to be printed, None for a default
@@ -1860,7 +1941,7 @@ class Groups(dict):
         else:
             group_names = groups
 
-        # calculate correlation 
+        # calculate correlation
         if mode is None:
 
             # make a new group
@@ -1874,28 +1955,28 @@ class Groups(dict):
 
                 # do correlation
                 corr = self[group_nam].doCorrelation(
-                    xName=xName, yName=yName, test=test, regress=regress, 
-                    reference=reference, mode=None, new=True, 
+                    xName=xName, yName=yName, test=test, regress=regress,
+                    reference=reference, mode=None, new=True,
                     identifiers=identifiers, out=None)
 
                 # add to the new object
                 inst[group_nam] = corr
 
-        elif mode == 'join':
+        elif (mode == 'join') or (mode == 'mean'):
 
             # make new Observations
             inst = Observations()
 
             for group_nam in group_names:
-                
+
                 # discard non-existing groups
                 if group_nam not in list(self.keys()):
                     continue
 
                 # do correlation
                 corr = self[group_nam].doCorrelation(
-                    xName=xName, yName=yName, test=test, regress=regress, 
-                    reference=reference, mode='join', new=True, 
+                    xName=xName, yName=yName, test=test, regress=regress,
+                    reference=reference, mode=mode, new=True,
                     identifiers=identifiers, out=None)
 
                 # add to the new object
@@ -1907,7 +1988,7 @@ class Groups(dict):
                 "Argument mode: " + mode + " not understood. "
                 + "Allowed values are None and 'join'.")
 
-        # print 
+        # print
         names = ['n']
         if test is not None:
             names.extend(['testValue', 'confidence'])
@@ -1918,7 +1999,7 @@ class Groups(dict):
         # return
         return inst
 
-    def printStats(self, out=sys.stdout, names=None, identifiers=None, 
+    def printStats(self, out=sys.stdout, names=None, identifiers=None,
                    groups=None, format_={}, title=None,
                    other=None, otherNames=[]):
 
@@ -1935,10 +2016,10 @@ class Groups(dict):
           - out: output stream, sys.stdout (default) for standard out, if
           string it's understood as a file name
           - names: list of sttribute names to be printed, None for a default
-          names list: ['mean', 'std', 'sem', 'n', 'fraction', 'testValue', 
+          names list: ['mean', 'std', 'sem', 'n', 'fraction', 'testValue',
           'confidence']
-          - groups: list of group names, None for all groups 
-          - identifiers: list of experiment identifiers, None for all 
+          - groups: list of group names, None for all groups
+          - identifiers: list of experiment identifiers, None for all
           experiments of all groups.
           - format_: dictionary containing data formats (keyes are attribute
           names) and values are formating strings. If None default names are
@@ -1950,8 +2031,8 @@ class Groups(dict):
         """
 
         # names
-        default_names = ['mean', 'std', 'sem', 'fraction', 'count', 'n', 
-                         'testValue', 'confidence'] 
+        default_names = ['mean', 'std', 'sem', 'fraction', 'count', 'n',
+                         'testValue', 'confidence']
         if names is None:
             names = default_names
 
@@ -1971,10 +2052,10 @@ class Groups(dict):
 
         # print
         self.printData(
-            names=names, out=out, groups=groups, identifiers=identifiers, 
+            names=names, out=out, groups=groups, identifiers=identifiers,
             format_=loc_format, title=title, other=other, otherNames=otherNames)
 
-    def printData(self, names, out=sys.stdout, groups=None, identifiers=None, 
+    def printData(self, names, out=sys.stdout, groups=None, identifiers=None,
                   format_={}, title=None, other=None, otherNames=[]):
         """
         Prints data (arg names) of this instance.
@@ -1988,8 +2069,8 @@ class Groups(dict):
           - names: list of property names to be printed
           - out: output stream, sys.stdout (default) for standard out, if
           string it's understood as a file name
-          - groups: list of group names, None for all groups 
-          - identifiers: list of experiment identifiers, None for all 
+          - groups: list of group names, None for all groups
+          - identifiers: list of experiment identifiers, None for all
           experiments of all groups.
           - format_: dictionary containing data formats (keyes are attribute
           names) and values are formating strings. If None default names are
@@ -2003,7 +2084,7 @@ class Groups(dict):
         # default data format
         default_format = '    %5.2f '
 
-        # set output 
+        # set output
         if out is None:
             return
         elif isinstance(out, basestring):
@@ -2046,7 +2127,7 @@ class Groups(dict):
                 one_other_group = other[gr_name]
             break
 
-        # set variable (attribute) names 
+        # set variable (attribute) names
         names = [name for name in names if name in one_group.properties]
         if other is not None:
             other_names = [name for name in otherNames \
@@ -2063,7 +2144,7 @@ class Groups(dict):
                 head_names.append(one_group.testSymbol[0])
             else:
                 head_names.append(nam)
-            
+
         # append head names from the other stats
         if other is not None:
             for nam in otherNames:
@@ -2071,17 +2152,17 @@ class Groups(dict):
                     head_names.append(one_other_group.testSymbol[0])
                 else:
                     head_names.append(nam)
-                
+
         # print column (data) names
         var_head = (group_format + ident_format) % ('Group', 'Identifier')
         var_head = var_head + (('%9s ' * len(head_names)) % tuple(head_names))
         out.write(var_head + os.linesep)
 
         # make one row format string
-        var_format = ''.join([format_.get(name, default_format) 
+        var_format = ''.join([format_.get(name, default_format)
                               for name in names])
         if other is not None:
-            other_var_format = ''.join([format_.get(name, default_format) 
+            other_var_format = ''.join([format_.get(name, default_format)
                                         for name in other_names])
         else:
             other_var_format = ''
@@ -2095,7 +2176,7 @@ class Groups(dict):
             # get identifiers
             curr_identifiers = group.identifiers
             if identifiers is not None:
-                curr_identifiers = [ident for ident in identifiers 
+                curr_identifiers = [ident for ident in identifiers
                                     if ident in curr_identifiers]
 
             # loop over experiments in order
@@ -2107,12 +2188,12 @@ class Groups(dict):
 
                 # set values
                 row_values = [
-                    group.getValue(identifier=identif, property=nam) 
+                    group.getValue(identifier=identif, property=nam)
                     for nam in names]
                 if other is not None:
                     other_row_values = [
                         other[gr_name].getValue(
-                            identifier=identif, property=nam) 
+                            identifier=identif, property=nam)
                         for nam in other_names]
                     row_values.extend(other_row_values)
                 row_values = [gr_name, identif] + row_values
@@ -2139,7 +2220,7 @@ class Groups(dict):
           - categoriesL
           - categories: list of group names, in None all groups are used
         """
- 
+
         if categories is None:
             categories = list(self.keys())
 
@@ -2154,15 +2235,15 @@ class Groups(dict):
                     indexed=False)
 
     def getN(
-            self, name, categories=None, inverse=False, fixed=None, layer=None, 
+            self, name, categories=None, inverse=False, fixed=None, layer=None,
             layer_name='surface_nm', layer_index=1, layer_factor=1.e-6):
         """
-        Counts number of elements of this instance, or calculates a related 
+        Counts number of elements of this instance, or calculates a related
         property (depending on the arguments) for each observation and saves it
         as a separate (non-indexed) property named by arg name.
 
-        The elements that are counted are the main elements of this class 
-        (those specified by ids). For example they are vesicles if this class 
+        The elements that are counted are the main elements of this class
+        (those specified by ids). For example they are vesicles if this class
         is Vesicles, tethers or connectors if this class is Connections.
 
         If arg layers in None, only the number of elements is calculated.
@@ -2173,10 +2254,10 @@ class Groups(dict):
           layer_name[layer_index] * layer_factor
 
         In a typical case layer area in nm (property 'surface_nm') of the
-        layer 1 (layer_index=1). If layer_factor=1.e-6 (default), then this 
+        layer 1 (layer_index=1). If layer_factor=1.e-6 (default), then this
         method calculates number of elements per 1 um^2 of the layer surface.
 
-        If arg inv is True, the inverse is calculated, that is the layer area 
+        If arg inv is True, the inverse is calculated, that is the layer area
         per one sv.
 
         If arg fixed is specified, te calculation proceed as above except that
@@ -2188,10 +2269,10 @@ class Groups(dict):
 
         Arguments:
           - name: name of the newly calculated property
-          - inverse: flag indicating if inverse of the property should be 
+          - inverse: flag indicating if inverse of the property should be
           calculated
           - layer: object containing layer info
-          - layer_name: name of the layer property that contains the desired 
+          - layer_name: name of the layer property that contains the desired
           layer data
           - layer_index: index of the layer whose surface is used
           - layer_factor: the surface is multiplied by this factor
@@ -2205,7 +2286,7 @@ class Groups(dict):
         for categ in categories:
             for ident in self[categ].identifiers:
 
-                # get n 
+                # get n
                 if fixed is None:
                     ids = self[categ].getValue(identifier=ident, property='ids')
                     n_sv = len(ids)
@@ -2238,28 +2319,28 @@ class Groups(dict):
 
     #######################################################
     #
-    # Other methods 
+    # Other methods
     #
     #######################################################
 
-    def apply(self, funct, args, kwargs={}, name=None, categories=None, 
+    def apply(self, funct, args, kwargs={}, name=None, categories=None,
               indexed=True):
         """
-        Applies (arg) funct to indexed properties args where other arguments 
-        are given in arg kwargs. 
+        Applies (arg) funct to indexed properties args where other arguments
+        are given in arg kwargs.
 
-        In other words, for each category, observation and for all observation 
+        In other words, for each category, observation and for all observation
         elements funct is applied to the corresponding values of the properties.
 
         Arguments to funct can be:
           - property names, specified in args (positional)
           - other values, specified in kwargs (keyword)
 
-        Returns the results as a dictionary (representing groups) of lists 
-        (observations) of ndarrays (observation elements) if name is None. 
-        Otherwise a new indexed property is created to hold the result. This 
-        new name can be the same as an already existing property, in which 
-        case the original values are owerwriten. The name of the new property 
+        Returns the results as a dictionary (representing groups) of lists
+        (observations) of ndarrays (observation elements) if name is None.
+        Otherwise a new indexed property is created to hold the result. This
+        new name can be the same as an already existing property, in which
+        case the original values are owerwriten. The name of the new property
         is added to properties and indexed attributes.
 
         For example:
@@ -2284,7 +2365,7 @@ class Groups(dict):
           - categories: categories, all categoreis if None
           - indexed: specifies if the new property is indexed
 
-        Sets indexed property name, or returns the result (dictionary of lists 
+        Sets indexed property name, or returns the result (dictionary of lists
         of ndarrays).
         """
 
@@ -2295,7 +2376,7 @@ class Groups(dict):
         # apply to each category
         for categ in categories:
             res_categ = self[categ].apply(
-                funct=funct, args=args, kwargs=kwargs, name=name, 
+                funct=funct, args=args, kwargs=kwargs, name=name,
                 indexed=indexed)
             if name is None:
                 try:
@@ -2312,9 +2393,9 @@ class Groups(dict):
         Returns max value of the property given by arg name from all
         observations and all specified categories.
 
-        Nan values are ignored. However, if nan is the only value, or if there 
-        are no values np.nan is returned. This is consistent with 
-        np.nanmin(). 
+        Nan values are ignored. However, if nan is the only value, or if there
+        are no values np.nan is returned. This is consistent with
+        np.nanmin().
 
         Arguments:
           - name: property name
@@ -2343,9 +2424,9 @@ class Groups(dict):
         Returns min value of the property given by arg name from all
         observations and all specified categories.
 
-        Nan values are ignored. However, if nan is the only value, or if there 
-        are no values np.nan is returned. This is consistent with 
-        np.nanmin(). 
+        Nan values are ignored. However, if nan is the only value, or if there
+        are no values np.nan is returned. This is consistent with
+        np.nanmin().
 
         Arguments:
           - name: property name

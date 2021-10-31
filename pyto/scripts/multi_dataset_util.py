@@ -25,6 +25,7 @@ import logging
 from copy import copy, deepcopy
 #import pickle
 from types import ModuleType
+import pickle
 
 import numpy
 import scipy
@@ -38,14 +39,15 @@ except ImportError:
     pass
 
 import pyto
+from pyto.util.exceptions import ReferenceError
 from pyto.analysis.groups import Groups
 from pyto.analysis.observations import Observations
+
 
 ##############################################################
 #
 # Higher level stats and plot functions
 #
-
 
 def analyze_occupancy(
         layer, bins, bin_names, pixel_size, pp, groups=None, identifiers=None,
@@ -97,7 +99,6 @@ def analyze_occupancy(
         y_label=y_label)
 
     return result, ax
-
 
 def stats_list(
         data, dataNames, name, pp, join='join', bins=None, fraction=1,
@@ -157,7 +158,6 @@ def stats_list(
 
     return result, ax
 
-
 def stats_list_pair(
         data, dataNames, name, pp, groups=None, identifiers=None,
         test='t_rel', reference=None,  out=sys.stdout, yerr='sem', ddof=1,
@@ -210,7 +210,6 @@ def stats_list_pair(
         confidence=confidence, title=title, x_label=x_label, y_label=y_label)
 
     return result, ax
-
 
 def stats(
         data, name, pp, bins=None, bin_names=None, fraction=None, join=None,
@@ -337,6 +336,8 @@ def stats(
       - groups: list of group names
       - identifiers: list of identifiers
       - test: statistical inference test type
+      - test_mean: additional statistical inference test type, used only when
+      arg join is 'join', args bins and fractions are specified
       - reference: specifies reference data
       - ddof: differential degrees of freedom used for std
       - out: output stream for printing data and results
@@ -360,6 +361,8 @@ def stats(
       - x_label: x axis label
       - y_label: y axis label, if not specified arg name used instead
       - title: title
+
+    Returns: stats, axes
 
     ToDo: include stats_x in stats
     """
@@ -443,7 +446,9 @@ def stats(
                     format_=pp.print_format, title=title)
                 if plot_:
                     plot_stats_dict = plot_stats(
-                        stats=stats, name=plot_name, pp=pp,
+                        #stats=stats, name=plot_name, pp=pp,
+                        # work in progress
+                        stats=stats, identifiers=groups, name=plot_name, pp=pp,
                         randomized_x=randomized_x,
                         plot_type=plot_type, yerr=yerr, confidence=confidence,
                         axes=axes)
@@ -493,7 +498,7 @@ def stats(
                             format_=pp.print_format, out=None)
     # ToDo: include stats_x in stats
                         names_x = ['testValue', 'confidence']
-                    except KeyError:
+                    except ReferenceError:
                         stats_x = None
                         names_x = None
                 else:
@@ -655,8 +660,10 @@ def stats(
         #plt.show()  # commented out to alow changing plot in notebook
 
     if indexed or (join is not None):
-        return stats, axes
-
+        if plot_: 
+            return stats, axes
+        else:
+            return stats, None
 
 def count_histogram(
         data, pp, name='ids', dataNames=None, groups=None, identifiers=None,
@@ -778,24 +785,64 @@ def count_histogram(
 
     return stats, axes
 
-
 def correlation(
         xData, xName, yName, pp, yData=None, test=None, regress=True,
         reference=None, groups=None, identifiers=None, join=None, plot_=True,
         out=sys.stdout, format_=None, title='', x_label=None, y_label=None):
     """
-    Correlates two properties and plots them as a 2d scatter graph.
+    Correlates two properties and plots them as a 2d scatter graph. The
+    properties are specified by data objects (args xData and yData) and
+    property names (args xName and yName, respectively).
 
-    In case arg join is None a value is printed and a bar is plotted for each
-    experiment. This value is either the value of the specified property if
-    scalar, or a mean of the property values if indexed.
+    The specified data (args xData and yData) have to be Groups or 
+    Observations instances. They have to be of the same type and have
+    the same structures: keys, experiment identifiers and ids. If 
+    yData is None, xData is used for both properties (args xName and yName). 
 
-    If arg join is 'join', the values of the specified property are pooled
-    accross all experiments belonging to one group, and the mean is
-    printed and plotted.
+    If the specified data are Groups instances (or xData is Groups and 
+    yData is None), the correlation is done separately on each of the 
+    Observations instances that form the values of these instances.
 
-    If arg join is 'mean', the mean of experiment means for each group
-    (indexed properties only) is printed and plotted.
+        The correlation is done separately on each of the Observations 
+        instances that form the values of this instance.
+
+        If mode is None, data from each experiment is analyzed separately.
+        
+        If mode is 'join', data specified by args xName and yName are 
+        data from all experiments are taken together. They are processed 
+        depending on whether they are indexed. Specifically:
+          - If both xName and yName data are indexed, the number of 
+          correlation points equals the total number of indexed values 
+          for all experiments. 
+          - If both xName and yName data are scalar, the number of 
+          correlation points equals the total number of experiments
+          - If one is scalar and the other indexed, the same scalar value 
+          is used with all indexed values (within one experiemnt. The 
+          number of correlation points equals the total number of indexed 
+          values for all experiments. 
+
+        If mode is 'mean', the mean value of indexed data is calculated and
+        used for the correlation. The scalar values are not changed. The 
+        number of correlation points equals the total number of experiments.
+
+        If new is True, a new object is created to hold the data and results.
+        But if mode is 'join' or 'mean', arg new is ignored (effectively set 
+        to True).
+
+        If new is True, and the resulting object has no identifiers, all
+        data properties are initialized to [].
+
+        If specified, arg identifiers determines the order of identifiers 
+        in the resulting instance. If None, all existing identifiers are used.
+
+        The results are saved as the following attributes:
+          - xData, yData: deepcopied xName, yName data, only if new is True
+          - n: number of individual data points
+          - testValue: correlation test value
+          - testSymbol: currently 'r' or 'tau', depending on the test
+          - confidence: confidence
+          - aRegress, bRegress: slope and intercept of the regression line 
+          (if arg regress is True)
 
     Arguments:
       - xData, yData: (Groups or Observations) structures containing data
@@ -803,7 +850,7 @@ def correlation(
       - pp: module containing print and plot parameters
       - test: correlation test type
       - regress: flag indicating if regression (best fit) line is calculated
-      - reference:
+      - reference: currently not used
       - groups: list of group names
       - identifiers: list of identifiers
       - join: None to correlate data from each experiment separately, or 'join'
@@ -890,7 +937,6 @@ def correlation(
 # Plot functions
 #
 
-
 def plot_layers(
         data, pp, yName='occupancy', xName='distance_nm', yerr=None,
         groups=None, identifiers=None, mode='all', ddof=1, graphType='line',
@@ -920,6 +966,12 @@ def plot_layers(
       - graphType: 'line' for line-graph or 'scatter' for a scatter-graph
       - x_label, y_label: labels for x and y axes
       - title: title (used only if mode is 'mean')
+
+    Returns:
+      - axes (list of axes objects) if data is instance of Groups and
+      mode is 'all' or 'all&mean'
+      - stats, axes: if data is instance of Groups and mode is 'mean'
+      = axes: if data is instance of Observations
     """
 
     # plot ot not
@@ -934,13 +986,16 @@ def plot_layers(
         if (mode == 'all') or (mode == 'all&mean'):
 
             # a separate figure for each group
+            axes_list = []
             for group_name in groups:
                 title = pp.category_label.get(group_name, group_name)
-                plot_layers_one(
+                axes = plot_layers_one(
                     data=data[group_name], yName=yName, xName=xName, pp=pp,
                     yerr=yerr, identifiers=identifiers, mode=mode,
                     graphType=graphType,
                     x_label=x_label, y_label=y_label, title=title)
+                axes_list.append(axes)
+            ret = axes_list
 
         elif mode == 'mean':
 
@@ -953,26 +1008,27 @@ def plot_layers(
                     property=xName, identifier=data[group_name].identifiers[0])
                 stats.setValue(property=xName, value=dist,
                                identifier=group_name)
-            plot_layers_one(
+            axes = plot_layers_one(
                 data=stats, yName='mean', xName=xName, pp=pp, yerr=yerr,
                 identifiers=None, mode=mode, graphType=graphType, ddof=ddof,
                 x_label=x_label, y_label=y_label, title=title)
+            ret = stats, axes
 
     elif isinstance(data, Observations):
 
         # Observations: plot one graph
-        plot_layers_one(
+        axes = plot_layers_one(
             data=data, yName=yName, xName=xName, pp=pp, yerr=yerr,
             identifiers=identifiers, mode=mode, graphType=graphType, ddof=ddof,
             x_label=x_label, y_label=y_label)
+        ret = axes
 
     else:
         raise ValueError(
             "Argument 'data' has to be either pyto.analysis.Groups"
             + " or Observations.")
 
-    if mode == 'mean': return stats
-
+    return ret
 
 def plot_layers_one(
         data, pp, yName='occupancy', xName='distance_nm', yerr=None,
@@ -997,6 +1053,8 @@ def plot_layers_one(
       - graphType: 'line' for line-graph or 'scatter' for a scatter-graph
       - x_label, y_label: labels for x and y axes
       - title: title
+
+    Returns axes
     """
     # from here on plotting an Observations object
     #fig = plt.figure()
@@ -1045,6 +1103,7 @@ def plot_layers_one(
         axes.legend()
     #plt.show()  # commented out to alow changing plot in notebook
 
+    return axes
 
 def plot_histogram(
         data, name, bins, pp, groups=None, identifiers=None,
@@ -1087,7 +1146,8 @@ def plot_histogram(
                 facecolor = pp.color.get(groups, None)
 
     # plot
-    plt.hist(combined_data, bins=bins, facecolor=facecolor, edgecolor=edgecolor)
+    plt.hist(
+        combined_data, bins=bins, facecolor=facecolor, edgecolor=edgecolor)
 
     # finish plot
     if title is not None:
@@ -1097,11 +1157,10 @@ def plot_histogram(
     plt.xlabel(x_label)
     #plt.show()  # commented out to alow changing plot in notebook
 
-
 def plot_stats(
         stats, name, pp, groups=None, identifiers=None, axes=None, yerr='sem',
         plot_type='bar', randomized_x=False, confidence='stars',
-        stats_between=None, label=None):
+        stats_between=None, label=None, skip_name='_skip'):
     """
     Does main part of plotting property (arg) name of (arg) stats, in the
     form of a bar chart.
@@ -1135,6 +1194,7 @@ def plot_stats(
       (experiments of) different groups having the same identifiers
       - label: determines which color, alpha, ... is used, can be 'group' to
       label by group or 'experiment' to label by experiment
+      - skip_name: should not be used - Work in progress
     """
 
     # stats type
@@ -1201,24 +1261,44 @@ def plot_stats(
             group_names, list(range(len(group_names)))):
         group = stats[group_nam]
 
-        # set experiment order
-        if identifiers is None:
-            loc_identifs = group.identifiers
-        elif isinstance(identifiers, (list, tuple)):
-            loc_identifs = [ident for ident in identifiers
-                            if ident in group.identifiers]
-        elif isinstance(identifiers, dict):
-            loc_identifs = identifiers[group_nam]
-
         # move bar position
         if pp.bar_arrange == 'uniform':
             left += bar_width
             group_left.append(left + bar_width)
 
+        # skip if placeholder - Work in progress
+        if group_nam == skip_name:
+            continue
+
+        # set experiment order
+        if identifiers is None:
+            loc_identifs = group.identifiers
+        elif isinstance(identifiers, (list, tuple)):
+            loc_identifs = [
+                ident for ident in identifiers
+                if ident in group.identifiers or ident == skip_name]
+            #loc_identifs = identifiers.copy()
+        elif isinstance(identifiers, dict):
+            loc_identifs = identifiers[group_nam]
+
         # loop over experiments
         for ident, exp_ind in zip(
                 loc_identifs, list(range(len(loc_identifs)))):
 
+            #
+            #if ident not in loc_identifs:
+            #    continue
+            
+            # move plot position
+            if pp.bar_arrange == 'uniform':
+                left += bar_width
+            elif pp.bar_arrange == 'grouped':
+                left = group_ind + exp_ind * bar_width
+                
+            # skip if placeholder - Work in progress
+            if ident == skip_name:
+                continue
+                
             # label
             if label is None:
                 if stats_type == 'groups':
@@ -1266,11 +1346,6 @@ def plot_stats(
                 y_min = min(y_min, value)
 
             # plot
-            if pp.bar_arrange == 'uniform':
-                left += bar_width
-            elif pp.bar_arrange == 'grouped':
-                left = group_ind + exp_ind * bar_width
-
             if plot_type == 'bar':
                 bar, = axes.bar(
                     x=left, height=value, yerr=yerr_num, width=bar_width,
@@ -1452,7 +1527,6 @@ def plot_stats(
     result = {}
     result['legend_done'] = legend_done  # not sure if needed
     return result
-
 
 def plot_2d(
         x_data, pp, x_name='x_data', y_data=None, y_name='y_data', yerr=None,
@@ -1637,7 +1711,6 @@ def plot_2d(
 
     return figure
 
-
 def get_confidence_stars(value, limits):
     """
     Returns number of stars for a given confidence level(s).
@@ -1658,6 +1731,48 @@ def get_confidence_stars(value, limits):
 
     return result
 
+def get_bin_names(bins, mode='limits', fancy_ends=True, discrete=False):
+    """
+    Given bin values, returns reasonably formated bin names (strings) to
+    be used to present the bins, for example in plots.
+
+    Arguments:
+      - bins: list of bin values
+      - mode: 'limits' to make bin names show bin intervals, 'lower' to show
+      lower and 'higher' to show higher bin values
+      - fancy_ends: if True, the lowest and the highest bin names will
+      look like '<value', '>value' or similar
+      - discrete: should be set to True if bin values are integers (and
+      not foats)
+
+    Returns: list of the corresponding bin names.
+    """
+
+    if (mode == 'limits') and not discrete:
+        bin_names = ['{}-{}'.format(x, y) for x, y in zip(bins[:-1], bins[1:])]
+        if fancy_ends:
+            bin_names[0] = '<{}'.format(bins[1])
+            bin_names[-1] = '>{}'.format(bins[-2])
+
+    elif (mode == 'limits') and discrete:
+        bin_values = [(x, y-1) for x, y in zip(bins[:-1], bins[1:])]
+        bin_names = ['{}-{}'.format(x, y) for x, y in bin_values]
+        for ind, val in enumerate(bin_values):
+            if val[0] == val[1]:
+                bin_names[ind] = '{}'.format(val[0])
+        if fancy_ends and (bin_values[0][0] != bin_values[0][1]):
+            bin_names[0] = '\u2264{}'.format(bin_values[0][1])
+        if fancy_ends and (bin_values[-1][0] != bin_values[-1][1]):
+            bin_names[-1] = '\u2265{}'.format(bin_values[-1][0])
+
+    elif mode == 'lower':
+        bin_names = ['{}'.format(x) for x in bins[:-1]]
+
+    elif mode == 'higher':
+        bin_names = ['{}'.format(x) for x in bins[1:]]
+        bin_names[-1] = '>{}'.format(bins[-2])
+
+    return bin_names
 
 def save_data(object, base, categories, name=['mean', 'sem']):
     """
@@ -1722,12 +1837,10 @@ def save_data(object, base, categories, name=['mean', 'sem']):
         file_ = base + '_' + one_name
         numpy.savetxt(file_, result, fmt=format, header=header)
 
-
 ##############################################################
 #
 # Functions that calculate certain properites for cleft analysis
 #
-
 
 def getSpecialThreshold(
         cleft, segments, fraction, groups=None, identifiers=None):
@@ -1803,7 +1916,6 @@ def getSpecialThreshold(
 
     return fract_densities
 
-
 def get_occupancy(segments, layers, groups, name):
     """
     Occupancy is added to the segments object
@@ -1828,7 +1940,6 @@ def get_occupancy(segments, layers, groups, name):
             occup = seg_vol / float(cleft_vol)
             segments[categ].setValue(identifier=ident, property=name,
                                      value=occup)
-
 
 def get_cleft_layer_differences(data, name, groups):
     """
@@ -1873,7 +1984,6 @@ def get_cleft_layer_differences(data, name, groups):
 # Functions that calculate certain properites for presynaptic analysis
 #
 
-
 def calculateVesicleProperties(data, layer=None, tether=None, categories=None):
     """
     Calculates additional vesicle related properties.
@@ -1905,7 +2015,6 @@ def calculateVesicleProperties(data, layer=None, tether=None, categories=None):
         data.getMeanConnectionLength(conn=tether, name='mean_tether_nm',
                                      categories=categories, value=numpy.nan)
 
-
 def calculateTetherProperties(data, layer=None, categories=None):
     """
     Calculates additional vesicle related properties.
@@ -1923,7 +2032,6 @@ def calculateTetherProperties(data, layer=None, categories=None):
         data.getN(
             layer=layer, name='tether_per_area_um',
             layer_name='surface_nm', layer_factor=1.e-6, categories=categories)
-
 
 def calculateConnectivityDistanceRatio(
         vesicles, initial, distances, name='n_tethered_ratio',
@@ -1957,128 +2065,85 @@ def calculateConnectivityDistanceRatio(
         funct=numpy.true_divide, args=['_n_conndist_1', '_n_conndist_0'],
         name=name, categories=categories, indexed=False)
 
+def convert_synapse_angles(
+        data, old_mode, new_name='angle_90', old_name='angle'):
+    """
+    Converts synapse orientation, defined as the direction of the vector from 
+    post- to presynaptic terminal (synapse vector) to an angle between 0 and 90 
+    degrees that characterizes the missing wedge effects in z-plane.
+    
+    If arg old_mode is 'clock', the direction of the synaptic vector is 
+    defined as the angle it makes with the y-axis in the clockwise mode 
+    and it is specified by the value of the property with name given by 
+    the arg old_name. For example, if this angle is:
+      - 0, it means the presynaptic terminal is up (positive y axis) and the 
+      postsynaptic down
+      - 90 degerees, it means that the presynaptic terminal is on the right 
+      (positive x axis) and the postsinaptic on the left.
+      
+    The final angle is also defined by the angle between the synaptic 
+    vector and the y-axis, but it takes values from 0-90 degrees as follows:
+      - 0: pre- or postsynaptic terminal is up (positive y) and the other 
+      is down
+      - 90: one terninal is on the right (positive x) and the other on the left 
+  
+    If the property new_name already exists, it will be overwriten.
 
-##############################################################
+    If arg data is a list or tuple of Groups objects, they have to have
+    the same group names and identifiers. This is because the (old) angle is 
+    read only from the first object and the converted angle property is 
+    added to all Groups objects.
+
+    Sets:
+      - property new_angle
+
+    Arguments:
+      - data: Groups object, or a list (tuple) of Groups objects that 
+      contains the old angles
+      - old_mode: the way old angles are defined
+      - now_name: property name for the new (converted angles)
+      - old_name: property name for the old angle
+    """
+
+    # get scalars
+    if isinstance(data, (list, tuple)):
+        data_0 = data[0]
+    else:
+        data = [data]
+        data_0 = data[0]
+    sdata = data_0.scalar_data
+
+    # convert angles
+    if old_mode == 'clock':
+        sdata[new_name] = sdata[old_name].abs()
+        sdata[new_name] = sdata[new_name].map(
+            lambda x: 180 - x if x > 90 else x)    
+
+    elif old_mode == 'phi':
+        sdata[new_name] = (sdata[old_name].abs() - 90).abs()
+        #sdata[new_name] = sdata[new_name].map(
+        #    lambda x: 180 - x if x > 90 else x)
+        
+    else:
+        raise ValueError(f"Mode {old_mode} is not understood.")
+    
+    # make a Groups object that contains converted angles
+    sdata_small = sdata[['identifiers', 'group', new_name]]
+    idata_small = sdata[['identifiers', 'group']]
+    groups_new = Groups.from_pandas(indexed=idata_small, scalar=sdata_small)
+    
+    # add restricted angles
+    for da in data:
+        da.addData(source=groups_new, names=[new_name], copy=True)
+
+
+##################################################################
 #
-# Other statistics functions (should be integrated with the rest)
+# Fanctions that start from multi-dataset analysis to get data from
+# individual datasets (tomograms).
 #
-
-
-def connectivity_factorial(
-        data, groups, identifiers=None, name='n_connection', mode='positive'):
-    """
-    Calculates interaction term for 4 sets of data obtained under two
-    conditions.
-
-    Uses property n_connection to calculate fraction connected for each
-    experiemnt. In other words, the data points for one condition consist
-    of individual values corresponding to experiments.
-    """
-
-    # extract values
-    #values = [
-    #    numpy.array([len(x[x>0]) / float(len(x))
-    #                 for x in getattr(data[group], name)])
-    #    for group in groups]
-
-    total_conn = []
-    for group in groups:
-        conn_values = []
-        for ident in data[group].identifiers:
-            if (identifiers is None) or (ident in identifiers):
-                x = data[group].getValue(name=name, identifier=ident)
-                if mode is None:
-                    conn_values.extend(x)
-                elif mode == 'join':
-                    conn_values.append(x.sum() / float(len(x)))
-                elif mode == 'positive':
-                    conn_values.append(len(x[x > 0]) / float(len(x)))
-        total_conn.append(numpy.asarray(conn_values))
-
-    # calculate
-    anova_factorial(*total_conn)
-
-
-def anova_factorial(data_11, data_12, data_21, data_22):
-    """
-    ANOVA analysis of 2x2 factorial experimental design.
-    """
-
-    # make sure ndarrays
-    data_11 = numpy.asarray(data_11)
-    data_12 = numpy.asarray(data_12)
-    data_21 = numpy.asarray(data_21)
-    data_22 = numpy.asarray(data_22)
-
-    # all data
-    tot = numpy.hstack((data_11, data_12, data_21, data_22))
-    ss_tot = (tot**2).sum() - tot.sum()**2 / float(len(tot))
-
-    # ss between columns
-    ss_col = (
-        numpy.hstack((data_11, data_21)).sum()**2 /
-        (float(len(data_11) + len(data_21)))
-        + numpy.hstack((data_12, data_22)).sum()**2 /
-        (float(len(data_12) + len(data_22)))
-        - tot.sum()**2 / float(len(tot)))
-
-    # ss between rows
-    ss_row = (
-        numpy.hstack(
-            (data_11, data_12)).sum()**2 / (float(len(data_11) + len(data_12)))
-        + numpy.hstack(
-            (data_21, data_22)).sum()**2 / (float(len(data_21) + len(data_22)))
-        - tot.sum()**2 / float(len(tot)))
-
-    # ss interaction
-    ss_int = (
-        data_11.sum()**2 / float(len(data_11))
-        + data_12.sum()**2 / float(len(data_12))
-        + data_21.sum()**2 / float(len(data_21))
-        + data_22.sum()**2 / float(len(data_22))
-        - tot.sum()**2 / float(len(tot))
-        - (ss_col + ss_row))
-
-    # ss error
-    ss_err = ss_tot - (ss_col + ss_row + ss_int)
-    ms_err = ss_err / float(
-        len(data_11) + len(data_12) + len(data_21) + len(data_22) - 4)
-
-    # f values and significances
-    f_col = ss_col / ms_err
-    p_col = scipy.stats.f.sf(f_col, dfn=1, dfd=len(tot)-4)
-    print("Columns (1&3 vs 2&4): f = %f6.2  p = %f7.5" % (f_col, p_col))
-
-    f_row = ss_row / ms_err
-    p_row = scipy.stats.f.sf(f_row, dfn=1, dfd=len(tot)-4)
-    print("Rows (1&2 vs 3&4):    f = %f6.2  p = %f7.5" % (f_row, p_row))
-
-    f_int = ss_int / ms_err
-    p_int = scipy.stats.f.sf(f_int, dfn=1, dfd=len(tot)-4)
-    print("Interaction:          f = %f6.2  p = %f7.5" % (f_int, p_int))
-
-
-##############################################################
+# Currently applied for the presynaptic analysis
 #
-# Miscelaneous functions
-#
-
-
-def str_attach(string, attach):
-    """
-    Inserts '_' followed by attach in front of the right-most '.' in string and
-    returns the resulting string.
-
-    For example:
-      str_attach(string='sv.new.pkl', attach='raw') -> 'sv.new_raw.pkl)
-    """
-
-    string_parts = list(string.rpartition('.'))
-    string_parts.insert(-2, '_' + attach)
-    res = ''.join(string_parts)
-
-    return res
-
 
 def tomo_metadata(work, segment_var, boundary_var, rm_prefix=None):
     """
@@ -2176,3 +2241,189 @@ def tomo_metadata(work, segment_var, boundary_var, rm_prefix=None):
             break
 
     return metadata
+
+def find_synapse_angle(
+        data, segment_var, bound_id, segmentation_id, angle_name='angle_phi'):
+    """
+    Finds synapse angles for all synapses contained in the specified Groups
+    object (arg data) and adds them as a new property (name specified by
+    arg 'angle_phi').
+
+    Synapse angle is defined as the angle between the vector from the post-
+    to the presynaptic terminal (synaptic direction vector, perpendicular 
+    to the synaptic membranes and the cleft) and the x-axis. This convention
+    is named 'phi' mode in convert_synapse_angles().
+
+    Both theta and phy angles are calculated, but only phi is saved because
+    normally theta is 90 degrees.
+
+    Synapse angle is determined as follows:
+      - From Groups object data, for each experiment, the path to individual
+      dataset analysis pickle is found as the value of the property 
+      named segment_var, and the pickles are loaded
+      - Attribute boundary of the loaded pickled object is read. It is
+      expected to be a Segment object containing synapse boundaries
+      (labeled presynaptic membrane and the presynaptic segmentation region),
+      otherwise an exception is raised.
+      - The synaptic direction vector is determined to point from the 
+      presynaptic membrane to the presynaptic cytoplasm (see 
+      Segment.findDirection()).
+
+    Assumes that the presynaptic membrane label and the presynaptic 
+    cytoplasm are the same (specified by args bound_id and segmentation_id, 
+    respectively). 
+
+    ToDo: read the labels for each dataset from tomo_info.py files 
+    (tomo_metadata, column 'tomo_info_path_rel', load, get variables)
+
+    Sets:
+      - Adds property angle_name to data
+
+    Arguments:
+      - data: Groups object containing all synapses
+      - segment_var: property of data that contains the part to a pickled
+      individual dataset object that contains labeled synapse as attribute
+      boundary
+      - bound_id: label id of presynaptic membrane
+      - segmentation_id: label id of presynaptic membrane (segmentation 
+      region) 
+      - angle_name: name of the property holding the determined angles 
+    """
+ 
+    # get and sort scalar dataframe
+    sdata = data.scalar_data
+    sdata['file'] = sdata[segment_var]
+    #sdata['file'] = sdata[segment_var].apply(lambda x: x.lstrip(rm_prefix))
+    sdata.sort_values('identifiers', ascending=True, inplace=True)
+
+    # loop over tomos
+    for id_, (ident, gr, pkl_path) in sdata[
+            ['identifiers', 'group', 'file']].iterrows():
+
+        # determine the angle
+        struct = pickle.load(open(pkl_path, 'rb'), encoding='latin1')
+        vector = struct.boundary.findDirection(
+            segmentId=bound_id, directionId=segmentation_id, thick=1)
+        
+        # add the angle to the groups 
+        phi_deg =  vector.phi * 180 / numpy.pi
+        data[gr].setValue(identifier=ident, name=angle_name, value=phi_deg)
+    
+
+##############################################################
+#
+# Other statistics functions (should be integrated with the rest)
+#
+
+def connectivity_factorial(
+        data, groups, identifiers=None, name='n_connection', mode='positive'):
+    """
+    Calculates interaction term for 4 sets of data obtained under two
+    conditions.
+
+    Uses property n_connection to calculate fraction connected for each
+    experiemnt. In other words, the data points for one condition consist
+    of individual values corresponding to experiments.
+    """
+
+    # extract values
+    #values = [
+    #    numpy.array([len(x[x>0]) / float(len(x))
+    #                 for x in getattr(data[group], name)])
+    #    for group in groups]
+
+    total_conn = []
+    for group in groups:
+        conn_values = []
+        for ident in data[group].identifiers:
+            if (identifiers is None) or (ident in identifiers):
+                x = data[group].getValue(name=name, identifier=ident)
+                if mode is None:
+                    conn_values.extend(x)
+                elif mode == 'join':
+                    conn_values.append(x.sum() / float(len(x)))
+                elif mode == 'positive':
+                    conn_values.append(len(x[x > 0]) / float(len(x)))
+        total_conn.append(numpy.asarray(conn_values))
+
+    # calculate
+    anova_factorial(*total_conn)
+
+def anova_factorial(data_11, data_12, data_21, data_22):
+    """
+    ANOVA analysis of 2x2 factorial experimental design.
+    """
+
+    # make sure ndarrays
+    data_11 = numpy.asarray(data_11)
+    data_12 = numpy.asarray(data_12)
+    data_21 = numpy.asarray(data_21)
+    data_22 = numpy.asarray(data_22)
+
+    # all data
+    tot = numpy.hstack((data_11, data_12, data_21, data_22))
+    ss_tot = (tot**2).sum() - tot.sum()**2 / float(len(tot))
+
+    # ss between columns
+    ss_col = (
+        numpy.hstack((data_11, data_21)).sum()**2 /
+        (float(len(data_11) + len(data_21)))
+        + numpy.hstack((data_12, data_22)).sum()**2 /
+        (float(len(data_12) + len(data_22)))
+        - tot.sum()**2 / float(len(tot)))
+
+    # ss between rows
+    ss_row = (
+        numpy.hstack(
+            (data_11, data_12)).sum()**2 / (float(len(data_11) + len(data_12)))
+        + numpy.hstack(
+            (data_21, data_22)).sum()**2 / (float(len(data_21) + len(data_22)))
+        - tot.sum()**2 / float(len(tot)))
+
+    # ss interaction
+    ss_int = (
+        data_11.sum()**2 / float(len(data_11))
+        + data_12.sum()**2 / float(len(data_12))
+        + data_21.sum()**2 / float(len(data_21))
+        + data_22.sum()**2 / float(len(data_22))
+        - tot.sum()**2 / float(len(tot))
+        - (ss_col + ss_row))
+
+    # ss error
+    ss_err = ss_tot - (ss_col + ss_row + ss_int)
+    ms_err = ss_err / float(
+        len(data_11) + len(data_12) + len(data_21) + len(data_22) - 4)
+
+    # f values and significances
+    f_col = ss_col / ms_err
+    p_col = scipy.stats.f.sf(f_col, dfn=1, dfd=len(tot)-4)
+    print("Columns (1&3 vs 2&4): f = %f6.2  p = %f7.5" % (f_col, p_col))
+
+    f_row = ss_row / ms_err
+    p_row = scipy.stats.f.sf(f_row, dfn=1, dfd=len(tot)-4)
+    print("Rows (1&2 vs 3&4):    f = %f6.2  p = %f7.5" % (f_row, p_row))
+
+    f_int = ss_int / ms_err
+    p_int = scipy.stats.f.sf(f_int, dfn=1, dfd=len(tot)-4)
+    print("Interaction:          f = %f6.2  p = %f7.5" % (f_int, p_int))
+
+
+##############################################################
+#
+# Miscelaneous functions
+#
+
+def str_attach(string, attach):
+    """
+    Inserts '_' followed by attach in front of the right-most '.' in string and
+    returns the resulting string.
+
+    For example:
+      str_attach(string='sv.new.pkl', attach='raw') -> 'sv.new_raw.pkl)
+    """
+
+    string_parts = list(string.rpartition('.'))
+    string_parts.insert(-2, '_' + attach)
+    res = ''.join(string_parts)
+
+    return res

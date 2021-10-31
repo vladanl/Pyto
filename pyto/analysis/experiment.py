@@ -20,9 +20,8 @@ import warnings
 import logging
 from copy import copy, deepcopy
 
-import numpy
-import scipy
-
+import numpy as np
+import scipy as sp
 
 class Experiment(object):
     """
@@ -41,7 +40,7 @@ class Experiment(object):
 
     def getValue(self, name=None):
         """
-        Returns the value of the property specified by arg name.
+        Returns the value(s) of the property specified by arg name.
 
         Argument:
           - name: (str) property name
@@ -50,6 +49,42 @@ class Experiment(object):
         """
         value = getattr(self, name)
         return value
+
+    def setValue(self, name, value, indexed=False):
+        """
+        Adds the specified value as a property of this instance.
+
+        Id adding indexed property (arg indexed is True), the length of
+        arg value has to be the same as the length of self.idNames. In
+        this case also adds arg name to self.indexed.
+
+        Arguments:
+          - name: property name
+          - value: property value, single value if scalar, or array-like
+          if indexed
+          - indexed: flag indication if indexed property
+        """
+
+        if indexed:
+            if len(value) == len(self.getValue("idNames")):
+                self.indexed.add(name)
+                value = np.asarray(value)
+            else:
+                raise ValueError(
+                    "Lengths of the arg value and property idNames have to "
+                    + "be the same.")
+        setattr(self, name, value)
+        self.properties.add(name)
+        
+    def choose(self, name, idNames):
+        """
+        """
+        old_id_names = np.asarray(self.getValue(name='idNames')) 
+        indices = [
+            np.where(old_id_names == new_id)[0][0] for new_id in idNames]
+        old_values = self.getValue(name)
+        chosen = np.array(old_values)[indices].tolist()
+        return chosen
         
     @classmethod
     def transformByIds(
@@ -86,8 +121,8 @@ class Experiment(object):
         if mode == 'vector_1-1':
 
             # initialize new values array
-            max_new = numpy.max(new_ids)
-            new_values_exp = numpy.zeros(max_new+1) + default
+            max_new = np.max(new_ids)
+            new_values_exp = np.zeros(max_new+1) + default
 
             # put old values in
             for id_, val in zip(ids, values):
@@ -99,15 +134,15 @@ class Experiment(object):
         elif mode == 'vector_pair':
 
             # expand to square
-            values_sq = scipy.spatial.distance.squareform(values)
-            #values_sq = values_sq + numpy.diag(
-            #    numpy.zeros(values_sq.shape[0]) + values_sq.max() + 1)
+            values_sq = sp.spatial.distance.squareform(values)
+            #values_sq = values_sq + np.diag(
+            #    np.zeros(values_sq.shape[0]) + values_sq.max() + 1)
             
             new_values_sq = cls._transformByIdsSquare(
                 ids=ids, new_ids=new_ids, values=values_sq, default=default)
 
             # back to vector_pair form
-            triu_inds = numpy.triu_indices(len(new_ids), 1)
+            triu_inds = np.triu_indices(len(new_ids), 1)
             new_values = new_values_sq[triu_inds]
 
         elif mode == 'square':
@@ -127,11 +162,11 @@ class Experiment(object):
         """
 
         # initialize new values array
-        max_new = numpy.max(new_ids)
-        new_values_exp = numpy.zeros((max_new+1, max_new+1)) + default
+        max_new = np.max(new_ids)
+        new_values_exp = np.zeros((max_new+1, max_new+1)) + default
 
         # put old values in the expanded new array
-        for (i, j), val in numpy.ndenumerate(values):
+        for (i, j), val in np.ndenumerate(values):
             try:
                 new_values_exp[ids[i], ids[j]] = val
             except IndexError:

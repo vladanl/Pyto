@@ -3,7 +3,9 @@ Class Plane provides methods for crating and manipulating n-1 dimensional planes
 in n dimentional space, in addition to methods defined in its base class 
 Segment.
 
-Note: This class is depreciated.
+Notes: 
+  - Currently only used in ball.py (3.2021)
+  - Plan to implement a similar one in geometry/plane.py 
 
 # Author: Vladan Lucic (Max Planck Institute for Biochemistry)
 # $Id$

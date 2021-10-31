@@ -765,8 +765,9 @@ class ImageIO(object):
         """
         Parse mrc header. If arg header is None, self.mrcHeader is used.
 
-        Needs self.headerString to be set. It also has to be consistent 
-        with header (arg or attribute).
+        Also sets self.labels in case self.headerString is present. In this
+        case self.headerString has to be consistent with header (arg or 
+        attribute).
 
         Sets attributes:
           - mrcHeader (if given as arg)
@@ -802,12 +803,15 @@ class ImageIO(object):
                        self.mrcHeader[12]]
 
         # labels (titles)
-        self.n_labels = struct.unpack('i', self.headerString[220:224])[0]
-        self.labels = []
-        l_begin = 224
-        for label_ind in range(self.n_labels):
-            self.labels.append(self.headerString[l_begin:l_begin+80])
-            l_begin += 80
+        try:
+            self.n_labels = struct.unpack('i', self.headerString[220:224])[0]
+            self.labels = []
+            l_begin = 224
+            for label_ind in range(self.n_labels):
+                self.labels.append(self.headerString[l_begin:l_begin+80])
+                l_begin += 80
+        except AttributeError:
+            pass           
 
         # read extended header if present
         self.extendedHeaderLength = self.mrcHeader[23]

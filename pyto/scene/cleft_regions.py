@@ -28,7 +28,7 @@ from ..segmentation.cleft import Cleft
 
 class CleftRegions(object):
     """
-    Formation and analysis of cleft regions. A cleft is defined by an 
+    Formation and analysis of cleft regions. A cleft is defined by a 
     greyscale image (self.image) and a corresponding segmentation (self.cleft) 
     that defines two boundaries and cleft proper that is located between the 
     boundaries (self.cleft). 
@@ -657,9 +657,10 @@ class CleftRegions(object):
 
         # group density
         group_dens = regionDensity.aggregate(ids=group_ids)
-        group_density = [(key, group_dens.extractOne(id_=id_, array_=False)) 
-                         for key, id_ 
-                         in zip(list(groups.keys()), list(range(1, len(groups)+1)))] 
+        group_density = [
+            (key, group_dens.extractOne(id_=id_, array_=False)) 
+            for key, id_ 
+            in zip(list(groups.keys()), list(range(1, len(groups)+1)))] 
         group_density = dict(group_density)
 
         return group_density, groups

@@ -240,6 +240,7 @@ class CleftRegions(Groups):
 
             # get data
             observ = Observations()
+            observ.categories = []
             for observ, obj, categ_tmp, name_tmp in db.readPropertiesGen(
                 category=categ, identifier=identifier, deep=inst._deep, 
                 properties=inst._full_properties, index='regions.ids', 

@@ -39,7 +39,7 @@ class Image(BaseImage):
           - data: (ndarray) image
         """
         super(Image, self).__init__(data)
-        
+
 
     #############################################################
     #
@@ -57,7 +57,7 @@ class Image(BaseImage):
         size centered at the element to be corrected. For elements near the
         edges the subarray is shifted so that it does it still has the required
         size. If size is even the subarray is shifted towards higher indices
-        in respect to the element to be corrected. 
+        in respect to the element to be corrected.
 
         The low and high limit values are determined from limit and mode. If
         mode is 'abs', the limiting value(s) is (are) given in argument limit.
@@ -77,7 +77,7 @@ class Image(BaseImage):
         Updates self.data, that is overwerites the uncorrected image.
         """
 
-        # Note: only marginal speedup with data.squeeze() 
+        # Note: only marginal speedup with data.squeeze()
 
         # determine low and high limits
         if mode == 'std':
@@ -103,7 +103,7 @@ class Image(BaseImage):
 
         else:
             raise ValueError("Mode: " + mode + " is not recognized.")
-                
+
         # find array elements that are outside of the limits
         bad = numpy.zeros(shape=self.data.shape, dtype='bool')
         if low_limit is not None:
@@ -115,7 +115,7 @@ class Image(BaseImage):
         n_corr = 0
         n_uncorr = 0
         new = self.data.copy()
-        bad_ind = bad.nonzero()           # much faster than ndenumerate 
+        bad_ind = bad.nonzero()           # much faster than ndenumerate
         for ind in zip(*bad_ind):         # followed by if val != 0
 
             # find index limits so they don't extend outside data
@@ -126,9 +126,9 @@ class Image(BaseImage):
 
             # enlarge limits on edges (needed?)
             correction = size - (high_ind - low_ind)
-            low_ind = numpy.where(high_ind < shape, 
+            low_ind = numpy.where(high_ind < shape,
                                   low_ind, low_ind - correction)
-            high_ind = numpy.where(low_ind > 0, high_ind, 
+            high_ind = numpy.where(low_ind > 0, high_ind,
                                    high_ind + correction)
 
             # make index limit slices
@@ -136,7 +136,7 @@ class Image(BaseImage):
 
             # correct data
             if numpy.logical_not(bad[tuple(sl)]).sum() <= 0:
-                logging.debug("Element " + str(ind) + 
+                logging.debug("Element " + str(ind) +
                               " could not be corrected.")
                 n_uncorr += 1
             else:
@@ -152,14 +152,14 @@ class Image(BaseImage):
         if n_corr > 0:
             logging.info("Corrected " + str(n_corr) + " image elements.")
         if n_uncorr > 0:
-            logging.info("Could not correct " + str(n_uncorr) 
+            logging.info("Could not correct " + str(n_uncorr)
                          + " image elements.")
 
     def getStats(self, apixel=None, counte=None):
         """
         Calculates basic statistics for the data.
 
-        If args apix and counte are specified also calculates mean electrons 
+        If args apix and counte are specified also calculates mean electrons
         per A^2.
         """
         self.mean = self.data.mean()
@@ -175,3 +175,34 @@ class Image(BaseImage):
 
         return
 
+    def normalize(self, mean=None, std=None, min_limit=None, max_limit=None):
+        """
+        Normalizes data in the following order:
+          - adjusts mean and std to the specified values
+          - limits data to the specified limits
+
+        If any of the arguments is None, the corresponding normalization
+        is omitted.
+
+        Note that if min_limit or max_limit is specified, the resulting
+        data mean and std may be different from the requested values.
+
+        Modifies self.data.
+
+        Arguments:
+          - mean: mean
+          - std: std
+          - min_limit, max_limit: data value limits
+        """
+
+        if mean is not None:
+            self.data = self.data - self.data.mean()
+        if std is not None:
+            self.data = std * self.data / self.data.std()
+        if mean is not None:
+            self.data += mean
+
+        if min_limit is not None:
+            self.data[self.data < min_limit] = min_limit
+        if max_limit is not None:
+            self.data[self.data > max_limit] = max_limit

@@ -88,12 +88,14 @@ class Segment(Labels):
       - distanceToRegion()
       - pairwiseDistance()
 
+    Segment orientation:
+      - findDirection()
+
     Individual distances between elements of a segment and another region
     (segment):
       - elementDistanceToRegion()
       - elementGeodesicDistanceToRegion()
       - elementDistanceToRim()
-
     """
     
     ##################################################################
@@ -1331,8 +1333,8 @@ class Segment(Labels):
 
     def makeSurfaces(self, data=None, size=1, ids=None):
         """
-        Creates surfaces of thickness given by size of all segments specified
-        by ids.
+        Creates surfaces of thickness given by arg size of all segments 
+        specified by ids.
 
         Segements are specified by data, or by self.data if data is not given.
         In both cases the segment arrays are modified to contain only the 
@@ -2334,7 +2336,66 @@ class Segment(Labels):
 
         return distance
 
+    def findDirection(
+            self, segmentId, directionId, fromLayer=1, toLayer=3, thick=1):
+        """
+        Determines the direction vector of the segment of this object 
+        specified  by arg segmentId, in the direction of another segment 
+        specified by arg directionId.
 
+        The direction vector is determined as follows:
+          - Layers are created parallel to segment segmentId on segment 
+          directionIdm of thickness given by arg thick (see makeLayersFrom())
+          - The vector is determined as the mean of all distance vectors 
+          from layer specified by arg fromLayer to the one specified by 
+          arg toLayer (see Cleft.getWith())
+
+        Args fromLayer and toLayer have to differ by at least one.
+
+        For example, given a plane like segment segmentId and and another
+        segment (region) on one side of the plane-like segment, the resulting
+        vector will have the direction perpendicular to the plane in the 
+        direction of the region. 
+
+        The above case assumes toLayer > fromLayer. If this is the opposite,
+        the direction vector will have the opposite direction.
+
+        In the above case, the magnitude of the direction vector will be 
+        the distance between fromLayer and toLayers.       
+
+        Arguments:
+          - segmentId: id of the segment whose direction is determined
+          - directionId: id of the segment that spcifies the direction from
+          the segmentId
+          - fromLayer, toLayer: the direction vector is determined form
+          layer fromLayer to layer toLayer
+          - thick: layer thickness (in pixels)
+
+        Returns (..geometry.Vector) direction vector
+        """
+
+        # make layers from segment over direction region
+        nLayers = max(fromLayer, toLayer)
+        layers = self.makeLayersFrom(
+            bound=segmentId, nLayers=nLayers, thick=thick, mask=directionId)
+
+        # find layers between from and to
+        cleftId = list(range(fromLayer+1, toLayer))
+        if len(cleftId) == 0:
+            cleftId = list(range(toLayer+1, fromLayer))
+            if len(cleftId) == 0:
+                raise ValueError(
+                    f"Args toLayer {toLayer} and fromLayer {fromLayer} have "
+                    + "to differ by at least 2.")
+        
+        from .cleft import Cleft  # here to avoid circular import
+        cleft = Cleft(
+            data=layers.data, cleftId=cleftId, bound1Id=[fromLayer],
+            bound2Id=[toLayer], copy=True, clean=True)
+        width, vector = cleft.getWidth()
+
+        return vector
+    
     ########################################################
     #
     # Input / output
