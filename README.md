@@ -13,7 +13,7 @@ Finaly, tools that assist general processing of cryo-electron tomograms (frame a
 
 ### Dependencies: ###
 
-The current version is written in Python 3. The code was originally written in Pythin 2 and subsequently converted to Python 3.6. While most of the code is currently compatible with Python 2.7, this will not be enforced in future. 
+The current version is written in Python 3. The code was originally written in Python 2 and subsequently converted to Python 3.6. While most of the code is currently compatible with Python 2.7, this will not be enforced in future. 
 
 The major dependencies of this package are:
 
@@ -38,6 +38,9 @@ Please start from [Overview](doc/manuals/overview.pdf).
 
 ### Release history ###
 
+* 1.9 (7.12.2021, svn r1824)
+	* Added colocalization analysis (developed for Martinez-Sanchez et al 2021 "Trans-synaptic assemblies link synaptic vesicles and neuroreceptors" DOI: 10.1126/sciadv.abe6204)
+	* Added functionality to extract additional features of segments
 * 1.8 (31.10.2021, svn r1771)
     * Added classes for basic geometrical shapes (Plane, Parallelogram)
     * Added bin_crop script
