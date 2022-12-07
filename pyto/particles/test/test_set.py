@@ -288,7 +288,7 @@ class TestSet(np_test.TestCase):
         particles.get_coordinates_single(
             work=common.work, group_name='group_x', identifier='exp_1',
             label_set=labels)
-        particles.write_particles(identifier='exp_1', test=True)
+        particles.write_particles(identifier='exp_1', write=False)
 
         # test
         particles.add_data(group_name='group_x', identifier='exp_1')
@@ -361,13 +361,15 @@ class TestSet(np_test.TestCase):
          
         # test particle tomo paths
         desired_paths = [
-            os.path.join(common.particle_dir_abs,'exp_1_id-{}.mrc'.format(id_))
+            os.path.join(
+                common.particle_dir_abs, 'group_x', f'exp_1_id-{id_}.mrc')
             for id_ in [2, 4, 5]]
         actual_paths_x = particles.data[
             particles.data.group_name == 'group_x']['particle_path']
         np_test.assert_equal((actual_paths_x == desired_paths).all(), True)
         desired_paths = [
-            os.path.join(common.particle_dir_abs,'exp_3_id-{}.mrc'.format(id_))
+            os.path.join(
+                common.particle_dir_abs,'group_y', f'exp_3_id-{id_}.mrc')
             for id_ in [6, 7]]
         actual_paths_y = particles.data[
             particles.data.group_name == 'group_y']['particle_path']
@@ -415,14 +417,14 @@ class TestSet(np_test.TestCase):
        # test label tomo paths
         desired_paths = [
             os.path.join(
-                common.particle_dir_abs,'exp_1_id-{}_label.mrc'.format(id_))
+                common.particle_dir_abs, 'group_x', f'exp_1_id-{id_}_label.mrc')
             for id_ in [2, 4, 5]]
         actual_paths_x = labels.data[
             labels.data.group_name == 'group_x']['particle_path']
         np_test.assert_equal((actual_paths_x == desired_paths).all(), True)
         desired_paths = [
             os.path.join(
-                common.particle_dir_abs,'exp_3_id-{}_label.mrc'.format(id_))
+                common.particle_dir_abs, 'group_y', f'exp_3_id-{id_}_label.mrc')
             for id_ in [6, 7]]
         actual_paths_y = labels.data[
             labels.data.group_name == 'group_y']['particle_path']
@@ -509,6 +511,7 @@ class TestSet(np_test.TestCase):
         # too complicated to remove only the files created by the tests
         try:
             shutil.rmtree(common.particle_dir_abs)
+            #print(f"removing from {common.particle_dir_abs}")
         except FileNotFoundError:
             pass
 

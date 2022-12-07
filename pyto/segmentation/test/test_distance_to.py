@@ -28,6 +28,7 @@ from pyto.segmentation.segment import Segment
 
 class TestDistanceTo(np_test.TestCase):
     """
+    Tests DistanceTo class
     """
 
     def setUp(self):
@@ -66,9 +67,9 @@ class TestDistanceTo(np_test.TestCase):
         self.seg_3_4_min = numpy.array([2, numpy.sqrt(2)])
         self.seg_3_4_closest = numpy.array([3, 4])
 
-    def testGetDistanceToRegion(self):
+    def testGetDistanceToRegions(self):
         """
-        Tests getDistanceToRegion
+        Tests getDistanceToRegions()
         """
         
         # min 
@@ -79,6 +80,46 @@ class TestDistanceTo(np_test.TestCase):
             regions=self.bound.data, mode='min')
         np_test.assert_almost_equal(all_dist, self.dist_min)
 
+        # min with coordinates
+        shapes = common.make_shapes()
+        dist = DistanceTo(segments=shapes)
+        all_dist, coords = dist.getDistanceToRegions(
+            segments=shapes.data, segmentIds=shapes.ids, regionIds=3, 
+            regions=self.bound.data, mode='min', coordinates=True)
+        np_test.assert_equal(
+            (coords[0] == [1, 1]).all() or (coords[0] == [2, 1]).all()
+            or (coords[0] == [3, 1]).all(),
+            True)
+        np_test.assert_equal(
+            (coords[1] == [1, 5]).all() or (coords[1] == [2, 5]).all()
+            or (coords[1] == [3, 5]).all(),
+            True)
+        np_test.assert_equal((coords[2] == [7, 2]).all(), True)
+        np_test.assert_equal((coords[3] == [6, 5]).all(), True)
+        all_dist, coords = dist.getDistanceToRegions(
+            segments=shapes.data, segmentIds=shapes.ids, regionIds=[3, 4], 
+            regions=self.bound.data, mode='min', coordinates=True)
+        np_test.assert_equal(
+            (coords[0, 0] == [1, 1]).all() or (coords[0, 0] == [2, 1]).all()
+            or (coords[0, 0] == [3, 1]).all(),
+            True)
+        np_test.assert_equal(
+            (coords[0, 1] == [1, 5]).all() or (coords[0, 1] == [2, 5]).all()
+            or (coords[0, 1] == [3, 5]).all(),
+            True)
+        np_test.assert_equal((coords[0, 2] == [7, 2]).all(), True)
+        np_test.assert_equal((coords[0, 3] == [6, 5]).all(), True)
+        np_test.assert_equal(
+            (coords[1, 0] == [3, 1]).all() or (coords[1, 0] == [3, 2]).all()
+            or (coords[1, 0] == [3, 3]).all(),
+            True)
+        np_test.assert_equal((coords[1, 1] == [4, 6]).all(), True) 
+        np_test.assert_equal(
+            (coords[1, 2] == [9, 2]).all() or (coords[1, 2] == [9, 3]).all()
+            or (coords[1, 2] == [9, 4]).all(),
+            True)
+        np_test.assert_equal((coords[1, 3] == [7, 6]).all(), True) 
+            
         # max 
         shapes = common.make_shapes()
         dist = DistanceTo(segments=shapes)
@@ -87,6 +128,33 @@ class TestDistanceTo(np_test.TestCase):
             regions=self.bound.data, mode='max')
         np_test.assert_almost_equal(all_dist, self.dist_max)
 
+        # max with coordinates
+        shapes = common.make_shapes()
+        dist = DistanceTo(segments=shapes)
+        all_dist, coords = dist.getDistanceToRegions(
+            segments=shapes.data, segmentIds=shapes.ids, regionIds=[3, 4], 
+            regions=self.bound.data, mode='max', coordinates=True)
+        np_test.assert_equal(
+            (coords[0, 0] == [1, 3]).all() or (coords[0, 0] == [2, 3]).all()
+            or (coords[0, 0] == [3, 3]).all(),
+            True)
+        np_test.assert_equal(
+            (coords[0, 1] == [1, 9]).all() or (coords[0, 1] == [2, 9]).all()
+            or (coords[0, 1] == [3, 9]).all(),
+            True)
+        np_test.assert_equal((coords[0, 2] == [9, 6]).all(), True)
+        np_test.assert_equal((coords[0, 3] == [9, 8]).all(), True)
+        np_test.assert_equal(
+            (coords[1, 0] == [1, 1]).all() or (coords[1, 0] == [1, 2]).all()
+            or (coords[1, 0] == [1, 3]).all(),
+            True)
+        np_test.assert_equal((coords[1, 1] == [0, 8]).all(), True) 
+        np_test.assert_equal(
+            (coords[1, 2] == [7, 2]).all() or (coords[1, 2] == [7, 3]).all()
+            or (coords[1, 2] == [7, 4]).all() or (coords[1, 2] == [9, 6]).all(),
+            True)
+        np_test.assert_equal((coords[1, 3] == [8, 8]).all(), True) 
+       
         # mean 
         shapes = common.make_shapes()
         dist = DistanceTo(segments=shapes)

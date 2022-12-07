@@ -24,8 +24,9 @@ try:
     from . import particles
 except (ModuleNotFoundError, ImportError):
     pass
+from . import spatial
 
-#import scripts
+from . import scripts
 
 from numpy.testing import Tester
 test = Tester().test

@@ -118,11 +118,9 @@ class TestLabelSet(np_test.TestCase):
         """
 
         # exp 1
-        print("watch now")
         labels = LabelSet(
             struct=common.tethers, work_path=common.work_path_abs,
             catalog_var=common.catalogs_var, box_size=6)
-        print("end")
         labels.get_coordinates_single(
             work=common.work, group_name='group_x', identifier='exp_1')
         np_test.assert_equal(labels._pickle_path, common.pickle_path_1)
@@ -177,7 +175,7 @@ class TestLabelSet(np_test.TestCase):
         # make particle set
         particles = Set(
             struct=common.tethers, work_path=common.work_path_abs,
-            catalog_var=common.catalogs_var,
+            #catalog_var=common.catalogs_var,
             box_size=6, particle_dir=common.particle_dir_abs)
         particles.get_coordinates_single(
             work=common.work, group_name='group_x', identifier='exp_1',
@@ -243,7 +241,7 @@ class TestLabelSet(np_test.TestCase):
         # make particle set
         particles = Set(
             struct=common.tethers, work_path=common.work_path_abs,
-            catalog_var=common.catalogs_var,
+            #catalog_var=common.catalogs_var,
             box_size=6, particle_dir=common.particle_dir_abs)
         particles.get_coordinates_single(
             work=common.work, group_name='group_x', identifier='exp_1',
@@ -252,7 +250,7 @@ class TestLabelSet(np_test.TestCase):
             left_corners=particles._left_corners,
             centers=particles._centers)
         labels.write_particles(
-            identifier='exp_1', ids=None, keep_ids=True, test=True)
+            identifier='exp_1', ids=None, keep_ids=True, write=False)
 
         # test
         labels.add_data(group_name='group_x', identifier='exp_1')

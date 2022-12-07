@@ -17,6 +17,8 @@ from .table import Table
 from .results import Results
 from .connections import Connections
 from .vesicles import Vesicles
+from .pandas_io import PandasIO
+from .module_io import ModuleIO
 from .local_exceptions import FileTypeError
 from . import util
 

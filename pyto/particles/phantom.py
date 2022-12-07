@@ -125,7 +125,7 @@ class Phantom(Image):
         # tranform
         for trans in transfs:
             transf_array = trans.transformArray(
-                array=self.data, origin=origin, order=order, 
+                array=self.data, center=origin, order=order, 
                 mode='constant')
             final_array = final_array + transf_array
                       
@@ -207,11 +207,11 @@ class Phantom(Image):
 
         # make image
         im_array = np.zeros(shape=shape)
-        im_array[base_slices] = 1
+        im_array[tuple(base_slices)] = 1
         if binary:
-            im_array[prot_slices] = 1
+            im_array[tuple(prot_slices)] = 1
         else:
-            im_array[prot_slices] += 1
+            im_array[tuple(prot_slices)] += 1
         
         # make instance
         phantom = cls(im_array)

@@ -103,22 +103,28 @@ class LabelSet(Set):
     def get_coordinates_single(
         self, work, group_name, identifier):
         """
+        Determines absolute and relative label center coordinates.
+
+        The following steps are performed:
+        
         Reads segmented image for one dataset and the coordinates of 
         individual segments.
 
-        Figures out the path and loads the individual dataset pickle for 
+        1) Figures out the path to the individual dataset pickle for 
         the dataset specified by args group_name and identifier, and
         for structures defined by self.catalog_var.
 
-        Then, extracts coordinates of all segments (meant for structures 
-        like connectors and tethers).
+        2) Loads the pickle, extracts labes and morphology attributes.
+
+        3) Determines relative label coordinates of all segments and uses
+        inset to convert them to absolute label center coordinates 
+        (meant for structures like connectors and tethers).
 
         Arguments:
           - work: analysis module (needs to have catalog and catalog_directory
           attributes)
           - group_name: dataset (experiment) group name
           - identifier: dataset (experiment) identifier
-          - do_write: flag indicating if particle images are written
 
         Sets attributes:
           - _pickle_path
@@ -249,7 +255,7 @@ class LabelSet(Set):
         #        "Box size {} is larger than the labels shape {}".format(
         #            self.box_size, shape))
             
-        # get centers of labels (no inset) and tomo (with inset)
+        # get relative (this data) and absolute (tomo) label centers 
         if len(ids) > 0:
             self._centers_rel = self._morphology.getCenter(
                 segments=self._labels, ids=ids)[ids]
@@ -275,7 +281,9 @@ class LabelSet(Set):
           - _centers_abs: absolute center coordinates
           - _centers_rel: relative center coordinates
         If arg left_corners is specified, _left_corners_* attributes are
-        set, and similar to arg centers.
+        set and _centers_* attributes are left unchanged. Alternatively,
+        if arg centers is specified, _centers_* are set and _left_corners_*
+        are left unchanged.
 
         Arguments:
           - left_corners: absolute left corners coordinates
@@ -320,21 +328,27 @@ class LabelSet(Set):
 
     def write_particles(
             self, identifier, boundary=None, ids=None, keep_ids=True,
-            group_name=None, pixelsize=None, test=False):
+            group_name=None, pixelsize=None, write=True):
         """
-        Writes particles as mrc files.
+        Writes label particles as mrc files and optionally labels with 
+        boundaries.
 
-        Particles foreground pixel values are set to self.fg_value 
+        Label particles foreground pixel values are set to self.fg_value 
         and background to self.bkg_value.
 
-        Particle file names are formed as follows:
+        Label particle file names wo and with boundaries are formed as follows:
             identifier + "_id-" + id + "_label.mrc"
+            identifier + "_id-" + id + "_label_bound.mrc"
         where identifier is given by the argument. If keep_ids is True,
         the existing particle ids are used, otherwise particles are labeled 
         from 0 up.
 
+        Label particles are extracted from _labels attribute. The coordinates
+        are determined from _left_corners_* attributes, _centers_* are 
+        not used.
+
         Sets attributes:
-          - _particle_paths: particle file paths
+          - _particle_paths: label particle file paths
 
         Arguments:
           - identifier: dataset identifier
@@ -344,7 +358,7 @@ class LabelSet(Set):
           used to form the file names
           - group_name: group name, needed if arg boundary is not None
           - pixelsize: pixel size in nm
-          - test: if True, particles are not written (for testing)
+          - write: if False, particles are not written
         """
         
         # check ids
@@ -413,7 +427,7 @@ class LabelSet(Set):
 
             # put image data to Labels object and write (wo boundaries)
             particle = pyto.segmentation.Labels(data=particle_data)
-            if not test:
+            if write:
                 particle.write(
                     file=path, dataType=self.dtype, pixel=pixelsize)
 
@@ -435,7 +449,7 @@ class LabelSet(Set):
 
                 # put image data to Labels object and write (w boundaries)
                 particle = pyto.segmentation.Labels(data=particle_data)
-                if not test:
+                if write:
                     particle.write(
                         file=bound_path, dataType=self.dtype,
                         pixel=pixelsize)

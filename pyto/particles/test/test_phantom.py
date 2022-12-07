@@ -199,7 +199,7 @@ class TestPhantom(np_test.TestCase):
             homo.data[10, 10:19, 10:18], desired_x_0)
         np_test.assert_equal(
             homo.data[11, 12:19, 10:18], desired_x_0[2:,:])
-        np_test.assert_equal(
+        np_test.assert_almost_equal(
             homo.data[11, 10:12, 10:18], desired_x_0[0:2,:] / 2.)
         np_test.assert_almost_equal(
             homo.data[10:19, 10, 10:18], desired_x_0)

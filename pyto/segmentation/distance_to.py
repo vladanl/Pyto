@@ -18,8 +18,8 @@ __version__ = "$Revision$"
 import sys
 import logging
 import inspect
-import numpy
-import scipy
+import numpy as np
+import scipy as sp
 import scipy.ndimage as ndimage
 
 from .features import Features
@@ -79,7 +79,7 @@ class DistanceTo(Features):
             if self.segments is not None:
                 self._ids = segments.ids
         else:
-            self._ids = numpy.asarray(ids)
+            self._ids = np.asarray(ids)
 
         # local data attributes
         self.dataNames = ['distance', 'closestRegion']
@@ -111,9 +111,9 @@ class DistanceTo(Features):
         if ids is None:
             dist = None
         elif len(ids) == 0:
-            dist = numpy.array([])
+            dist = np.array([])
         else:
-            dist = numpy.zeros(self.maxId+1) -1
+            dist = np.zeros(self.maxId+1) -1
             dist[ids] = self._distance
 
         return dist
@@ -135,7 +135,7 @@ class DistanceTo(Features):
         if (distance is None) and (ids is None):
             self._distance = None
         else:
-            dist = numpy.asarray(distance)
+            dist = np.asarray(distance)
             self._distance = dist[ids]
         
     distance = property(fget=getDistance, fset=setDistance, 
@@ -159,9 +159,9 @@ class DistanceTo(Features):
         if ids is None:
             res = None
         elif len(ids) == 0:
-            res = numpy.array([])
+            res = np.array([])
         else:
-            res = numpy.zeros(max(ids)+1) -1
+            res = np.zeros(max(ids)+1) -1
             res[ids] = self._closestRegion
 
         return res
@@ -183,7 +183,7 @@ class DistanceTo(Features):
         if (closestRegion is None) and (ids is None):
             self._closestRegion = None
         else:
-            dist = numpy.asarray(closestRegion)
+            dist = np.asarray(closestRegion)
             self._closestRegion = dist[ids]
         
     closestRegion = property(fget=getClosestRegion, fset=setClosestRegion, 
@@ -276,29 +276,30 @@ class DistanceTo(Features):
         # find closest region for each segment and set attributes
         if all_dist is not None:
             if all_dist.ndim == 2:
-                self._distance = numpy.min(all_dist, axis=0)
-                id_pos = numpy.argmin(all_dist, axis=0)
-                self._closestRegion = numpy.asarray(regionIds)[id_pos]
+                self._distance = np.min(all_dist, axis=0)
+                id_pos = np.argmin(all_dist, axis=0)
+                self._closestRegion = np.asarray(regionIds)[id_pos]
             else:
                 self._distance = all_dist
                 self._closestRegion = (
-#                    numpy.zeros(segments.maxId+1, dtype=int) + regionIds
-                    numpy.zeros(len(self.ids), dtype=int) + regionIds)
+#                    np.zeros(segments.maxId+1, dtype=int) + regionIds
+                    np.zeros(len(self.ids), dtype=int) + regionIds)
         else:
             self._distance = None
             self._closestRegion = None
             
     @classmethod
-    def getDistanceToRegions(cls, segments, segmentIds, regions,
-                             regionIds, mode='mean', surface=None):
+    def getDistanceToRegions(
+            cls, segments, segmentIds, regions, regionIds, mode='mean',
+            surface=None, coordinates=False):
         """
         Calculates distance of each segment to each region.
 
         Segments are specified by args (ndarray) segments and segmentIds. If
         segment ids has no elements None is returned. Regions are specified 
         by args (ndarray) regions and regionIds. If arg regionIds is None, 
-        None is returned. Args segments and regions are ndarrays that are 
-        expected to have the same shape.
+        None is returned. Args segments and regions are ndarrays that have
+        to have the same shape and be aligned with each other.
 
         If surfaces > 0, only the surfaces (of thickness given by arg surface)
         of the segments are considered. Otherwise whole segments are taken into 
@@ -315,19 +316,27 @@ class DistanceTo(Features):
         If the distance to a segment can not be calculated (if the segments does
         not exist, for example) the result for that segment is set to -1.
 
+        If arg coordinates is True, the coordinates of the min/max point
+        are also returned (in addition to distances). Implemented for modes
+        'min' and 'max' only.
+
         Uses scipy.ndimage.distance_transform_edt.
 
         Arguments:
           - segments: (ndarray) segments
           - ids: segment ids
-          - region: (Segments) regions
+          - regions: (ndarray) regions, has to align with segments
           - regionIds: (single int, list, tuple or ndarray) region ids
           - mode: 'center', 'min', 'max', 'mean' or 'median'
           - surface: thickness of segment surfaces 
 
-        Returns: distances (2D ndarray where axis 0 corresponds to regions
+        Returns (distances, coordinates): 
+          - distances (2D ndarray where axis 0 corresponds to regions
         and axis 1 to segments, shape=((len(regionIds), len(segmentIds)) 
         between each segment and each region.
+          - coordinates (only if arg coordinates is True) 3D ndarray where
+        axis 0 corresponds to regions, axis 1 to segments nad axis 3 to 
+        coordinate axes.
         """
 
         # trivial cases
@@ -340,29 +349,40 @@ class DistanceTo(Features):
         if (surface is not None) and (surface > 0):
             from .segment import Segment
             tmp_seg = Segment()
-            segments = tmp_seg.makeSurfaces(data=segments, 
-                                            size=surface, ids=segmentIds)
+            segments = tmp_seg.makeSurfaces(
+                data=segments, size=surface, ids=segmentIds)
 
         # deal with multiple region ids
-        if isinstance(regionIds, (list, tuple, numpy.ndarray)):
-            regionIds = numpy.asarray(regionIds)
-            distances = \
-                numpy.zeros(shape=(len(regionIds), len(segmentIds)), 
-                            dtype='float')
-            for reg_id, reg_id_index in zip(regionIds, list(range(len(regionIds)))):
-                distances[reg_id_index,:] = \
-                    cls.getDistanceToRegions(regions=regions, regionIds=reg_id,
-                                   segments=segments, segmentIds=segmentIds, 
-                                   mode=mode, surface=surface)
+        if isinstance(regionIds, (list, tuple, np.ndarray)):
+            regionIds = np.asarray(regionIds)
+            distances =  np.zeros(
+                shape=(len(regionIds), len(segmentIds)), dtype='float')
+            if coordinates:
+                coords =  np.zeros(
+                    shape=(len(regionIds), len(segmentIds), regions.ndim),
+                    dtype='float')
+            for reg_id, reg_id_index in zip(
+                    regionIds, list(range(len(regionIds)))):
+                dist_res  =  cls.getDistanceToRegions(
+                    regions=regions, regionIds=reg_id, segments=segments,
+                    segmentIds=segmentIds,  mode=mode, surface=surface,
+                    coordinates=coordinates)
+                if not coordinates:
+                    distances[reg_id_index,:] = dist_res
+                else:
+                    distances[reg_id_index,:] = dist_res[0]
+                    coords[reg_id_index,:] = dist_res[1]
+            if coordinates:
+                return distances, coords
             return distances
 
         # calculate distance (from all elements) to the region
         if regionIds is None:
-            distance_input = numpy.where(regions>0, 0, 1)
+            distance_input = np.where(regions>0, 0, 1)
         else:
-            distance_input = numpy.where(regions==regionIds, 0, 1)
+            distance_input = np.where(regions==regionIds, 0, 1)
         if (distance_input > 0).all():  # workaround for scipy bug 1089
-            dist_array = numpy.zeros(shape=distance_input.shape) - 1
+            dist_array = np.zeros(shape=distance_input.shape) - 1
         else:
             dist_array = ndimage.distance_transform_edt(distance_input)
 
@@ -378,21 +398,39 @@ class DistanceTo(Features):
         elif mode == 'median':
 
             # median distance to segments
-            distances = [numpy.median(dist_array[segments==id_]) \
+            distances = [np.median(dist_array[segments==id_]) \
                              for id_ in segmentIds]
 
         else:
 
             # any of ndarray methods (no arguments)
             try:
-                distances = [getattr(dist_array[segments==id_], mode)() \
-                                 for id_ in segmentIds]
+                distances = [getattr(dist_array[segments==id_], mode)() 
+                             for id_ in segmentIds]
+
             except AttributeError:
                 raise ValueError("Mode ", mode, " was not recognized. It can ",
                          "be 'center', 'median' or any appropriate ndarray ",
                          "method name, such as 'min', 'max' or 'mean'.")
 
-        distances = numpy.asarray(distances)
+            if coordinates and (mode == 'min'):
+                coords = ndimage.minimum_position(
+                    dist_array, labels=segments, index=segmentIds)
+                coords = np.asarray(coords)
+                
+            elif coordinates and (mode == 'max'):
+                coords = ndimage.maximum_position(
+                    dist_array, labels=segments, index=segmentIds)
+                coords = np.asarray(coords)
+
+            elif coordinates:
+                raise ValueError(
+                    f"Sorry, calculating coordinates for mode {mode} is "
+                    + "not implemented.")
+
+        distances = np.asarray(distances)
+        if coordinates:
+            return distances, coords
         return distances
 
 

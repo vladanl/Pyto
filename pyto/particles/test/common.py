@@ -54,7 +54,8 @@ def setup():
     # structure specific pickles
     tethers_pickle_path = os.path.normpath(os.path.join(
         os.path.dirname(__file__), 
-        'set_data/analysis/work/tether.pkl'))
+        #'set_data/analysis/work/tether.pkl'))  # hpcl5* have python 3.6
+        'set_data/analysis/work/tether_prot-4.pkl'))
         #'set_data/analysis/work/teth_sv_10.pkl'))
     sv_pickle_path = os.path.normpath(os.path.join(
         os.path.dirname(__file__),

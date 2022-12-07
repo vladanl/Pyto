@@ -643,8 +643,10 @@ class Observations(object):
             # update data
             data_indexed_local = pd.DataFrame(data, columns=columns)
             try:
-                data_indexed = data_indexed.append(
-                    data_indexed_local, ignore_index=True)
+                #data_indexed = data_indexed.append(
+                #    data_indexed_local, ignore_index=True)
+                data_indexed = pd.concat(
+                    [data_indexed, data_indexed_local], ignore_index=True)
             except (NameError, AttributeError):
                 data_indexed = pd.DataFrame(data, columns=columns)
 

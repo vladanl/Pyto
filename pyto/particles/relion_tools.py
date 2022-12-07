@@ -2901,7 +2901,7 @@ def symmetrize_structure(
 
         q = Rigid3D.make_r_euler(angles=sym_euler, mode='zxz_ex_active')
         r3d = Rigid3D(q=q, scale=1)
-        rotated = r3d.transformArray(array=array, origin=origin)
+        rotated = r3d.transformArray(array=array, center=origin)
         new_array = new_array + rotated
 
     new_array = new_array / float(sym_multiplicity)

@@ -46,7 +46,7 @@ class SegmentationAnalysis(object):
       - labels: hieararchy or segments, whichever one is set (see below)
       - hierarchy: set if hierarchical segmentation
       - segments: set if sigle threshold segmentation
-       - density: (Density) density stats for all segments
+      - density: (Density) density stats for all segments
       - regionDensity: (Density, non-array form) density stats for
       the segmentation region
       - morphology: (Morphology) morphology for all segments, includes
@@ -582,8 +582,8 @@ class SegmentationAnalysis(object):
 
         # segment morphology
         if doMorphology:
-            self._morphology = self.getMorphology(segments=segments, 
-                                                    doLength=doLength)
+            self._morphology = self.getMorphology(
+                segments=segments, doLength=doLength)
 
         # topology
         if doTopology:
