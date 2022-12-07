@@ -663,10 +663,10 @@ class Contact(object):
                   boundaryIds=None, contactStructEl=None, saveLabels=False, 
                   countStructEl=None, count=False):
         """
-        Finds (but doesn't count) contacts between each segment and each
+        Finds and optionally counts contacts between each segment and each
         boundary.
 
-        A contact is comosed of mutually connected elements of segment that
+        A contact is composed of mutually connected elements of segment that
         lie in the neighborhood of a boundary.
 
         For each contact found between a segment and a boundary 1 is entered
@@ -689,6 +689,9 @@ class Contact(object):
         boundaryIds, boundary.boundaryIds, self.boundaryIds.
 
         Note: does not respect inset of segment and boundary objects.
+
+        Note: When arg segmentIds is specified, it may also determine 
+        contacts made by other (non-specified but existing) segments.
 
         Arguments:
           - segment: instance of class Segment defining all segments, Required
@@ -746,8 +749,8 @@ class Contact(object):
         for bound in self.boundaryIds:
         
             # dilate the current boundary and intersect with all segments
-            dilated_bound = ndimage.binary_dilation(self.boundary==bound,
-                                         structure=self.contactStructEl)
+            dilated_bound = ndimage.binary_dilation(
+                self.boundary==bound, structure=self.contactStructEl)
             curr_contacts = numpy.where(dilated_bound, self.segment, 0)
 
             # put contacts into array
@@ -758,8 +761,17 @@ class Contact(object):
             # find segments with contacts
             segs = numpy.unique(curr_contacts)
 
+            # need to make sure conts have sufficient length, because
+            # curr_contacts takes all segments into account, so it may have
+            # segment ids higher than those in arg segmentIds
+            if len(segs > 0):
+                segs_max = segs.max()
+            else:
+                segs_max = 0
+            shape_seg = numpy.max([self.getMaxSegment(), segs_max]) + 1
+            conts = numpy.zeros(shape_seg, dtype=numpy.int_)
+            
             # count or just find contacts
-            conts = numpy.zeros(self.getMaxSegment()+1, dtype='int_')
             if count:
 
                 # count number of contacts between current boundary and each 
@@ -956,12 +968,12 @@ class Contact(object):
 
           findSegments(boundaryIds=[1,3,6], nBoundary=2, mode='exact')
 
-        returns ids of segments that contact only two of the boundaries 1,3 or 6
-        and do not contact any other boundary.
+        returns ids of segments that contact only two of the boundaries 1,
+        3 or 6 and do not contact any other boundary.
 
-        Furthemore, boundaryIds can be a nested list. In that case, boundary ids
-        that are given in a sub-list are taken in the 'or' sense, as if those
-        boundaries were merged together. 
+        Furthemore, boundaryIds can be a nested list. In that case, boundary 
+        ids that are given in a sub-list are taken in the 'or' sense, as if 
+        those boundaries were merged together. 
     
         Another example:
 

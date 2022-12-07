@@ -19,6 +19,7 @@ import importlib
 
 import numpy
 import scipy
+import pandas as pd
 
 import unittest
 from numpy.testing import *
@@ -33,7 +34,8 @@ class TestMorphology(TestCase):
     """
 
     def setUp(self):
-        importlib.reload(common) # to avoid problems when running multiple tests
+        importlib.reload(common)  # to avoid problems when running multiple
+                                  # tests
         self.shapes = common.make_shapes()
 
     def testVS(self):
@@ -169,21 +171,76 @@ class TestMorphology(TestCase):
         con.findContacts(segment=seg, boundary=bound)
 
         # b2b, straight mode
+        #print(f"seg before {id(seg.data)}")
         mor = Morphology()
         mor.getLength(segments=seg, boundaries=bound, contacts=con, 
                       distance='b2b', line='straight', position=True)
         assert_almost_equal(mor.length[seg.ids], [4, 4, numpy.sqrt(17)])
         assert_equal(mor.end1[seg.ids], numpy.array([[0,1], [0,3], [0,7]]))
         assert_equal(mor.end2[seg.ids], numpy.array([[4,1], [4,3], [4,6]]))
-       
-        # check lengths in straight mode
+        #print(f"seg after {id(seg.data)}")
+        
+        # c2c, straight mode
+        #print(f"seg before {id(seg.data)}")
         mor = Morphology()
-        mor.getLength(segments=seg, boundaries=bound, contacts=con, 
-                      distance='c2c', line='straight', position=True)
+        mor.getLength(
+            segments=seg, boundaries=bound, contacts=con, 
+            distance='c2c', line='straight', mode='min', position=True)
         assert_almost_equal(mor.length[seg.ids], [2, 2, numpy.sqrt(5)])
-        assert_equal(mor.end1[seg.ids], numpy.array([[1,1], [1,3], [1,7]]))
-        assert_equal(mor.end2[seg.ids], numpy.array([[3,1], [3,3], [3,6]]))
-
+        assert_equal(mor.end1[seg.ids], numpy.array([[1, 1], [1, 3], [1, 7]]))
+        assert_equal(mor.end2[seg.ids], numpy.array([[3, 1], [3, 3], [3, 6]]))
+        #print(f"seg after {id(seg.data)}")
+ 
+        # c2c, straight mode max
+        mor = Morphology()
+        mor.getLength(
+            segments=seg, boundaries=bound, contacts=con, 
+            distance='c2c', line='straight', mode='max', position=False)
+        assert_almost_equal(
+            mor.length[seg.ids],
+            [numpy.sqrt(5), numpy.sqrt(5), numpy.sqrt(13)])
+ 
+        # c2c, straight mode mean
+        mor = Morphology()
+        mor.getLength(
+            segments=seg, boundaries=bound, contacts=con, 
+            distance='c2c', line='straight', mode='mean', position=False)
+        assert_almost_equal(
+            mor.length[seg.ids],
+            [numpy.mean([2, numpy.sqrt(5)]), numpy.mean([2, numpy.sqrt(5)]),
+             numpy.mean([
+                 numpy.sqrt(5), numpy.sqrt(8), numpy.sqrt(8), numpy.sqrt(13)])])
+ 
+        # c2c, straight mode median
+        print(f"seg before {id(seg.data)}")
+        mor = Morphology()
+        mor.getLength(
+            segments=seg, boundaries=bound, contacts=con, 
+            distance='c2c', line='straight', mode='median', position=False)
+        assert_almost_equal(
+            mor.length[seg.ids],
+            [numpy.mean([2, numpy.sqrt(5)]), numpy.mean([2, numpy.sqrt(5)]),
+             numpy.sqrt(8)])
+        print(f"seg after {id(seg.data)}")
+ 
+        # c2c, straight mode median
+        print("Watch now")
+        print(f"seg before {id(seg.data)}")
+        #print(f"bound before {bound.data}")
+        #print(f"con before {con.data}")
+        mor = Morphology()
+        with assert_raises(ValueError):
+            mor.getLength(
+                segments=seg, boundaries=bound, contacts=con, distance='c2c',
+                line='mid', mode='median', position=False)
+        # needed because otherwise after raising exception seg.data and
+        # bound.data remain at insets
+        seg = Segment(seg_data)
+        bound = Segment(bound_data)
+        print(f"seg after {id(seg.data)}")
+        #print(f"bound after {bound.data}")
+        #print(f"con after {con.data}")
+ 
         # b2c, straight mode
         mor = Morphology()
         mor.getLength(segments=seg, boundaries=bound, contacts=con, 
@@ -329,7 +386,65 @@ class TestMorphology(TestCase):
                       distance='c2c', line='straight', position=False)
         assert_almost_equal(mor.length[seg.ids], [0])
         
+    def test_getLabelsDistance(self):
+        """
+        Tests getLabelsDistance()
+        """
 
+        shapes = common.make_shapes()
+        mor = Morphology()
+        label_1 = (shapes.data == 1)
+        label_2 = (shapes.data == 4)
+        actual = mor.getLabelsDistance(
+            label_1=label_1, label_2=label_2, mode='min')
+        assert_almost_equal(actual, 4)
+        actual = mor.getLabelsDistance(
+            label_1=label_1, label_2=label_2, mode='max')
+        assert_almost_equal(actual, numpy.sqrt(25+64))
+        actual = mor.getLabelsDistance(
+            label_1=label_1, label_2=label_2, mode='mean')
+        assert_almost_equal(actual, 6.4926, decimal=3)
+        actual = mor.getLabelsDistance(
+            label_1=label_1, label_2=label_2, mode='median')
+        assert_almost_equal(actual, numpy.sqrt(40))
+
+    def test_to_dataframe(self):
+        """
+        Tests to_dataframe()
+        """
+
+        # test data
+        ids = [1, 4, 5, 8]
+        volume = numpy.array([0, 101, 0, 0, 404, 505, 0, 0, 808])
+        surface = numpy.array([0, 11, 0, 0, 44, 55, 0, 0, 88])
+        center =  numpy.array([
+            [-1, -1], [1, 11], [-1, -1], [-1, -1], [4, 44],
+            [5, 55], [-1, -1], [-1, -1], [8, 88]])
+        length = numpy.array([0, 1.1, 0, 0, 4.4, 5.5, 0, 0, 8.8])
+        mor = Morphology(ids=ids)
+        mor.volume = volume
+        mor.surface = surface
+        mor.center = center
+        mor.length = length
+        mor.dataNames = ['volume', 'surface', 'center', 'length']
+
+        # empty begin
+        desired = pd.DataFrame({
+            'ids': ids, 'volume': volume[ids], 'surface': surface[ids],
+            'center': center[ids].tolist(), 'length': length[ids]})
+        actual = mor.to_dataframe()
+        assert_almost_equal(actual.equals(desired), True)
+        
+        # with begin
+        begin = {'group': 'some_group', 'ident': 'some_ident'}
+        df_dict = begin.copy()
+        df_dict.update({
+            'ids': ids, 'volume': volume[ids], 'surface': surface[ids],
+            'center': center[ids].tolist(), 'length': length[ids]})
+        desired = pd.DataFrame(df_dict)
+        actual = mor.to_dataframe(begin=begin)
+        assert_almost_equal(actual.equals(desired), True)
+        
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestMorphology)

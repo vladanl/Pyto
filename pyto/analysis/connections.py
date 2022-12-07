@@ -99,15 +99,20 @@ class Connections(Groups):
             # connectors, make property definitions to be used in read() 
             self._full_properties = {
                 'ids' : 'ids', 
+                'density.mean' : 'density_mean', 'density.std' : 'density_std', 
+                'density.min' : 'density_min', 'density.max' : 'density_max', 
                 'morphology.surface' : 'surface', 
                 'morphology.volume' : 'volume', 
                 'morphology.length' : 'length',
                 'boundDistance.distance' : 'boundaryDistance', 
-                'distance.distance' : 'distance'}
+                'distance.distance' : 'distance',
+                'topology.euler' : 'euler', 'topology.nLoops' : 'nLoops'}
             self._full_indexed = [
                 'ids', 
+                'density.mean', 'density.std', 'density.min', 'density.max', 
                 'morphology.surface', 'morphology.volume', 'morphology.length',
-                'boundDistance.distance', 'distance.distance']
+                'boundDistance.distance', 'distance.distance',
+                'topology.euler', 'topology.nLoops']
             self._indexed = [self._full_properties[full_indexed] 
                              for full_indexed in self._full_indexed]
 
@@ -692,6 +697,18 @@ class Connections(Groups):
         group.setValue(property='boundaries', identifier=identifier,
                        value=bounds, indexed=True)
 
+        # fix for the bug in topology: when there are no elements, nLoops 
+        # is set to None instead of array([])
+        try:
+            n_loops = group.getValue(property='nLoops', identifier=identifier)
+            if n_loops is None:
+                group.setValue(
+                    property='nLoops', identifier=identifier,
+                    value=numpy.array([]), indexed=True)
+        except AttributeError:
+            # no nLoops in this object, so fine
+            pass
+
     def extractPropertiesCleft(self, group, obj, category, identifier):
         """
         Currently nothing calculated
@@ -817,6 +834,19 @@ class Connections(Groups):
                 else:
                     raise
         
+            # convert surface
+            try:
+                self[categ].surface_nm = self[categ].pixels2nm(
+                    name='surface', power=2, conversion=pixel[categ])
+                self[categ].properties.update(['surface_nm'])
+                self[categ].indexed.update(['surface_nm']) 
+            except TypeError:
+                if ((self[categ].surface is None) 
+                    or any(value is None for value in self[categ].surface)): 
+                    pass
+                else:
+                    raise
+
             # convert volume
             try:
                 self[categ].volume_nm = self[categ].pixels2nm(

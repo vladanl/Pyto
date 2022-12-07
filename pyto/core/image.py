@@ -35,8 +35,12 @@ class Image(object):
     Positioning of the image data array:
 
       - useInset(): main method to use, sets data to a specified inset
-      - newFromInset(): makes new instance from this instance after data is set
-      to s specified inset
+      - findEnclosingInset(inset): finds the smallest inset that fully 
+      contain inset of this object and the inset specified by arg inset  
+      - findIntersectingInset(inset): finds the intersection between the 
+      inset of this object and the inset specified by arg inset
+      - newFromInset(): makes new instance from this instance after data is
+      set to the specified inset
       - inset: property defining current inset in respect tosome absolute
       reference
       - usePositioning() and copyPositioning(): based on useInset(), also

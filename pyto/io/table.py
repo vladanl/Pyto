@@ -1,6 +1,9 @@
 """
-Contains class Table for read (write in the future?) or results in the 
-table form.
+Contains class Table for read (write in the future?) of single tomo analysis
+results in the table form.
+
+For a while now (10.2022) the only single tomo analysis results that are
+written to a table are layers (pyto.analysis.Layers).
 
 # Author: Vladan Lucic (Max Planck Institute for Biochemistry)
 # $Id$

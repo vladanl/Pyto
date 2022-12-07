@@ -29,6 +29,8 @@ from .features import Features
 from .statistics import Statistics
 from .labels import Labels
 from .segment import Segment
+from .distance import Distance
+
 
 class Morphology(Features):
     """
@@ -738,7 +740,7 @@ class Morphology(Features):
 
     def getLength(
             self, segments, boundaries, contacts, ids=None, distance='b2b', 
-            structElConn=1, line='straight', position=False):
+            structElConn=1, line='straight', mode='min', position=False):
         """
         Calculates lengts of segments specified by (args) segments and ids. The
         segments can contact exactly one or two boundaries. 
@@ -803,8 +805,12 @@ class Morphology(Features):
           to detect contacts (can be 1 to ndim).
           - line: The type of the line used to calculate the distance in the
           2-boundary cases: 'straight', 'mid' or 'mid-seg'
+          - mode: basic statistical mode for length determination: 'max', 
+          'mean', 'median', 'min'. Implemented only for two boundaries and 
+          mode='straight'
           - position: flag indicating if the positions of the contact points
-          used for the length measurment are calculated and returned, used only
+          used for the length measurment are calculated and returned, 
+          used only for mode='min'
           
         Return:
           - length: if pos is False
@@ -871,7 +877,8 @@ class Morphology(Features):
                     res = self._getSingleLength2Bound(
                         segments=segments, boundaries=boundaries, 
                         boundaryIds=b_ids, id_=seg_id, distance=distance, 
-                        structEl=struct_el, line=line, position=position)
+                        structEl=struct_el, line=line, mode=mode,
+                        position=position)
                     
                 # parse result
                 if position:
@@ -977,7 +984,7 @@ class Morphology(Features):
 
     def _getSingleLength2Bound(
             self, segments, id_, boundaries, boundaryIds,
-            distance, structEl, line='straight', position=False):
+            distance, structEl, line='straight', mode='min', position=False):
 
         """
         Calculate length of a given segment that contacts exactly two 
@@ -1044,6 +1051,16 @@ class Morphology(Features):
                 + "Defined values are 'b2b', 'boundary', 'c2', 'contact', "
                 + "'b2c' and 'c2c'.")
 
+        # deal with modes other than 'min'
+        if mode != 'min':
+            if line != 'straight':
+                raise ValueError(
+                    f"For mode {mode}, length can be calculated only if "
+                    + f"argument line is 'straight'")
+            length = self.getLabelsDistance(
+                label_1=contact_1, label_2=contact_2, mode=mode)
+            return length
+            
         # distances from contacts 1
         if (~contact_1 > 0).all():  # workaround for scipy bug 1089
             raise ValueError("Can't calculate distance_function ",
@@ -1132,3 +1149,37 @@ class Morphology(Features):
             raise ValueError(
                 "Line mode: " + line + " was not recognized. " 
                 + "Available line modes are 'straight' and 'mid'.")
+
+    def getLabelsDistance(self, label_1, label_2, mode):
+        """
+        Calculates distances between two specified binary labels (segments).
+
+        The type of calculated distance is determined by arg mode, it can 
+        be "min", "max", "mean", "median" or any other for which an 
+        appropriate numpy function exists.
+
+        The labels should not overlap.
+
+        Used to calculate segment length other than min (self.getLength()).
+
+        Arguments:
+          - label_, label_2: (binary ndarrays) the two segments
+          - mode: distance calculation mode
+        """
+
+        # check for overlap
+        if (label_1 & label_2).any():
+            raise ValueError(
+                "Cannot calculate distance between overlapping segments.")
+
+        # combine the two labels
+        label = numpy.where(label_1, 1, 0)
+        label[label_2] = 2
+ 
+        # calculate
+        distance = Distance()
+        distance.calculate_symmetric_distance(
+            segments=Labels(label), ids=(1, 2), mode=mode)
+        dist = distance.getDistance(ids=(1, 2))
+
+        return dist

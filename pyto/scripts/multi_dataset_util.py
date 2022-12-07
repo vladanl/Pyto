@@ -593,8 +593,8 @@ def stats(
                         ddof=ddof, out=out, format_=pp.print_format,
                         title=title_mean_bin)
                     stats.addData(
-                        source=stats_mean_bin, names={'sem': 'sem_mean_bin'},
-                        identifiers=groups)
+                        source=stats_mean_bin, names={'sem': 'sem_mean_bin'})
+                        #identifiers=groups)
                     yerr = 'sem_mean_bin'
 
                 if ((plot_name != 'histogram')

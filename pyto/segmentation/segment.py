@@ -1560,9 +1560,11 @@ class Segment(Labels):
         Calculates distance of all segments specified by ids to a given region.
 
         If mode is 'min'/'max'/'mean'/'median', the shortest distance between
-        each (surface, if arg surface is not None) element of segments and the
-        region are calculated first, and then the min/max/mean/median of these
-        values is found for each segment separately.
+        each element of segments (or surface, if arg surface is not None) 
+        and the region are calculated first, and then the min/max/mean/median 
+        of these values is found for each segment separately. In other
+        words the statistics is done over all elements of segments, but
+        not over region.
 
         If mode is 'center', shortest distances between the region and segment
         centers (note that center may lay outside the segment) are calculated.
@@ -1596,8 +1598,8 @@ class Segment(Labels):
           - see about using insets (see Density.calculateNeighborhoods)
         """
 
-        logging.debug("segment.py (distanceToRegion): ids: %s, regionId: %s",
-                      str(ids), str(regionId)) 
+        #logging.debug("segment.py (distanceToRegion): ids: %s, regionId: %s",
+        #              str(ids), str(regionId)) 
 
         # parse ids
         if ids is None:

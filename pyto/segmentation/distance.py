@@ -12,10 +12,12 @@ __version__ = "$Revision$"
 
 from copy import copy, deepcopy
 import warnings
+import itertools
 
-import numpy
-import scipy
+import numpy as np
+import scipy as sp
 import scipy.ndimage as ndimage
+from scipy.spatial.distance import cdist as cdist
 
 
 class Distance(object):
@@ -98,9 +100,17 @@ class Distance(object):
 
     def calculate(self, segments, ids, force=False, mode='min'):
         """
-        Calculates distance between segments specified by a segmented image and 
-        their ids (args segments, id_1 and id_2). The calculation is based on
-        Segment.distanceToRegion().
+        Calculates distance between two segments specified by a segmented 
+        image and their ids (args segments, ids=[id_1, id_2]). 
+
+        The calculation performed by calling
+        Segment.distanceToRegion(ids=[ids[0]], regionId=ids[1]). Therefore,
+        the min distance between each element of segment specified by ids[0]
+        and the whole ids[1] is caluclated first and then the statistics
+        of these distances (min, max, ...) is done based on arg mode.
+
+        See self.calculate_symmetric_distance() for distance calculation 
+        that takes all pairs of elements from the two segments.
 
         If arg force is False, returns an already calculated value in case it
         exists.
@@ -109,9 +119,9 @@ class Distance(object):
 
         Arguments:
           - segments: (Segment) segmented image
-          - id_1, id_2: segment ids
-          - force: flag indicating if the distance should be calculated even if
-          it already exists
+          - ids: [id_1, id_2] segment ids
+          - force: flag indicating if a calculated distance should 
+          overwrite an already existing one
           - mode: 'center', 'min', 'max', 'mean' or 'median'
 
         Returns: distance
@@ -139,6 +149,65 @@ class Distance(object):
 
         return dist
 
+    def calculate_symmetric_distance(
+            self, segments, ids, force=False, mode='min'):
+        """
+        Calculates distance between two segments specified by a segmented 
+        image and their ids (args segments, ids=[id_1, id_2]). 
+
+        First, distances between all pairs of elements from segments id_1
+        and id_2 are calculated, and then the statistical function 
+        specified by arg mode (such as 'min', 'max', 'mean', 'median') 
+        is applied to all distances. 
+
+        Strictly speaking, arg mode can be the name of any numpy function 
+        that takes a 1D array as the only argument.
+
+        Therefore, if mode =='min' this method and self.calculate() 
+        calculate the same values regardless the segment shapes. Other
+        values for mode generally produse different results.
+
+        If arg force is False, returns an already calculated value in case it
+        exists.
+
+        The distance calculated is saved in the internal distances structure.
+
+        Arguments:
+          - segments: (Segment) segmented image
+          - ids: [id_1, id_2] segment ids
+          - force: flag indicating if a calculated distance should 
+          overwrite an already existing one
+          - mode: statistican function implemented in numpy (such as 'min', 
+          'max', 'mean' or 'median')
+
+        Returns: distance
+        """
+    
+        # shortcut
+        id_1, id_2 = ids
+
+        # check if calculated already
+        if not force:
+            dist = self.getDistance(ids=(id_1, id_2))
+            if dist is not None:
+                return dist
+
+        # convert label images to coords
+        coords_1 = np.vstack(np.nonzero(segments.data == id_1)).transpose()
+        coords_2 = np.vstack(np.nonzero(segments.data == id_2)).transpose()
+
+        # make all pairs of coordinates
+        prod = np.array(list(itertools.product(coords_1, coords_2)))
+        pairs = np.swapaxes(prod, 0, 1)
+
+        # calculate distances and the specified stats
+        dist_all = cdist(pairs[0], pairs[1])
+        dist = getattr(np, mode)(dist_all)
+        
+        self.setDistance(ids=(id_1, id_2), value=dist)
+
+        return dist
+    
     def calculateBound(self, contacts, ids):
         """
         Calulcates distances between boundaries that are connected by segments

@@ -76,7 +76,7 @@ class Multimer(object):
         for mono_ind, mono in enumerate(self.monomers):
             for transf_ind, trans in enumerate(sym_rotations):
                 curr_array = trans.transformArray(
-                    array=mono.data, origin=mono.origin, order=order, 
+                    array=mono.data, center=mono.origin, order=order, 
                     mode='constant')
                 self.set_sym_rotated(
                     mono_index=mono_ind, sym_index=transf_ind, 

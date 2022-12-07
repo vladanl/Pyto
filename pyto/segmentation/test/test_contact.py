@@ -19,6 +19,7 @@ import numpy.testing as np_test
 import scipy
 
 from pyto.segmentation.contact import Contact
+from pyto.segmentation.segment import Segment
 from pyto.segmentation.test import common 
 
 
@@ -176,6 +177,117 @@ class TestContact(np_test.TestCase):
             contacts.countContactedBoundaries(ids=[[2,4], 2]), 
             [-99, 2, 0, 2, 1])
 
+    def testFindContacts(self):
+        """
+        Tests findContacts()
+        """
+
+        # no boundaries
+        con = Contact()
+        seg_data = common.image_1.data.round().astype(int)
+        seg = Segment(
+            data=seg_data, ids=list(range(1, 7)), clean=True)
+        bound = Segment(data=numpy.zeros_like(seg_data))
+        con.findContacts(
+            segment=seg, boundary=bound)
+        np_test.assert_equal(con.segments, [])
+        np_test.assert_equal(con.boundaries, [])
+        np_test.assert_equal(con._n.shape, [1, 7])
+
+        # all segments and boundaries
+        con = Contact()
+        seg_data = common.image_1.data.round().astype(int)
+        seg = Segment(
+            data=seg_data, ids=list(range(1, 7)), clean=True)
+        bound = Segment(
+            data=common.bound_1.data, ids=[3, 4], clean=True)
+        con.findContacts(segment=seg, boundary=bound, count=True)
+        np_test.assert_equal(con.segments, list(range(1, 7)))
+        np_test.assert_equal(con.boundaries, [3, 4])
+        np_test.assert_equal(con.getN(boundaryId=3, segmentId=1), 2)
+        np_test.assert_equal(con.getN(boundaryId=4, segmentId=1), 0)
+        np_test.assert_equal(con.getN(boundaryId=3, segmentId=2), 0)
+        np_test.assert_equal(con.getN(boundaryId=4, segmentId=2), 2)
+        np_test.assert_equal(con.getN(boundaryId=3, segmentId=3), 0)
+        np_test.assert_equal(con.getN(boundaryId=4, segmentId=3), 2)
+        np_test.assert_equal(con.getN(boundaryId=3, segmentId=4), 1)
+        np_test.assert_equal(con.getN(boundaryId=4, segmentId=4), 0)
+        np_test.assert_equal(con.getN(boundaryId=3, segmentId=5), 0)
+        np_test.assert_equal(con.getN(boundaryId=4, segmentId=5), 1)
+        np_test.assert_equal(con.getN(boundaryId=3, segmentId=6), 0)
+        np_test.assert_equal(con.getN(boundaryId=4, segmentId=6), 0)
+        np_test.assert_equal(con._n.shape, [5, 7])
+        np_test.assert_equal(con.findSegments(), [1, 2, 3, 4, 5, 6])
+        np_test.assert_equal(con.findSegments(nBoundary=1), [1, 2, 3, 4, 5])
+        np_test.assert_equal(con.findSegments(boundaryIds=[3]), [1, 4])
+        np_test.assert_equal(con.findSegments(boundaryIds=[4]), [2, 3, 5])
+        np_test.assert_equal(
+            con.findSegments(nBoundary=2, mode='exact'), [])
+        np_test.assert_equal(con.findBoundaries(segmentIds=[1, 4]), [3])
+        np_test.assert_equal(
+            con.findBoundaries(nSegment=3, mode='exact'), [4])
+
+        # select segments, all boundaries
+        seg_data = common.image_1.data.round().astype(int)
+        seg = Segment(
+            data=seg_data, ids=list(range(1, 7)), clean=True)
+        bound = Segment(
+            data=common.bound_1.data, ids=[3, 4], clean=True)
+        #print(seg.data)
+        #print(bound.data)
+        con = Contact()
+        con.findContacts(
+            segment=seg, segmentIds=[1, 4, 5], boundary=bound, count=True)
+        np_test.assert_equal(con.boundaries, [3, 4])
+        np_test.assert_equal(con.getN(boundaryId=3, segmentId=1), 2)
+        np_test.assert_equal(con.getN(boundaryId=4, segmentId=1), 0)
+        np_test.assert_equal(con.getN(boundaryId=3, segmentId=2), 0)
+        np_test.assert_equal(con.getN(boundaryId=4, segmentId=2), 2)
+        np_test.assert_equal(con.getN(boundaryId=3, segmentId=4), 1)
+        np_test.assert_equal(con.getN(boundaryId=4, segmentId=4), 0)
+        np_test.assert_equal(con.getN(boundaryId=3, segmentId=5), 0)
+        np_test.assert_equal(con.getN(boundaryId=4, segmentId=5), 1)
+        # Note: segment id 6 is not included because it makes not contacts 
+        np_test.assert_equal(con.segments, list(range(1, 6)))
+
+        # select segments and boundaries
+        seg_data = common.image_1.data.round().astype(int)
+        seg = Segment(
+            data=seg_data, ids=list(range(1, 7)), clean=True)
+        bound = Segment(
+            data=common.bound_1.data, ids=[3, 4], clean=True)
+        con = Contact()
+        con.findContacts(
+            segment=seg, segmentIds=[4, 5], boundary=bound,
+            boundaryIds=[3], count=True)
+        np_test.assert_equal(con.boundaries, [3])
+        # Note: contact to boundary 4 are not determined
+        np_test.assert_equal(con.getN(boundaryId=3, segmentId=1), 2)
+        np_test.assert_equal(con.getN(boundaryId=3, segmentId=2), 0)
+        np_test.assert_equal(con.getN(boundaryId=3, segmentId=4), 1)
+        np_test.assert_equal(con.getN(boundaryId=3, segmentId=5), 0)
+        # Note: segment id 6 is not included because it makes not contacts 
+        np_test.assert_equal(con.segments, list(range(1, 6))) 
+        
+        # select segments and boundaries
+        seg_data = common.image_1.data.round().astype(int)
+        seg = Segment(
+            data=seg_data, ids=list(range(1, 7)), clean=True)
+        bound = Segment(
+            data=common.bound_1.data, ids=[3, 4], clean=True)
+        con = Contact()
+        con.findContacts(
+            segment=seg, segmentIds=[4, 5], boundary=bound,
+            boundaryIds=[4], count=True)
+        np_test.assert_equal(con.boundaries, [4])
+        # Note: contact to boundary 3 are not determined
+        np_test.assert_equal(con.getN(boundaryId=4, segmentId=1), 0)
+        np_test.assert_equal(con.getN(boundaryId=4, segmentId=2), 2)
+        np_test.assert_equal(con.getN(boundaryId=4, segmentId=4), 0)
+        np_test.assert_equal(con.getN(boundaryId=4, segmentId=5), 1)
+        # Note: segment id 6 is not included because it makes not contacts 
+        np_test.assert_equal(con.segments, list(range(1, 6)))
+        
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestContact)

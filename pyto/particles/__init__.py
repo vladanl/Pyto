@@ -1,5 +1,5 @@
 """
-Tools averiging and classification of images
+Tools for averaging and classification of images
 
 # Author: Vladan Lucic (Max Planck Institute for Biochemistry)
 # $Id$
@@ -17,6 +17,7 @@ from .set import Set
 from .label_set import LabelSet
 from .boundary_set import BoundarySet
 from .tile_set import TileSet
+#from .features import Features
 from . import test
 
 from numpy.testing import Tester

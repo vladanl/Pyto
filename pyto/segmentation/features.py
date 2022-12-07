@@ -21,6 +21,7 @@ from copy import copy, deepcopy
 import numpy
 import scipy
 import scipy.ndimage as ndimage
+import pandas as pd
 
 from .labels import Labels
 from .segment import Segment
@@ -550,6 +551,76 @@ class Features(object):
 
         # recalculate total
 
+    def to_dataframe(self, names=None, begin=None):
+        """
+        Returns data of this instance as pandas.DataFrame. 
+
+        Data of this instance is placed in column(s) of the same name
+        as the attributes of this object that hold the data. Column 'ids' 
+        of the resulting table has values of self.ids. 
+
+        External values that should be placed in the resulting table
+        are specified in arg begin. Intended for columns such as 'groups'
+        and 'identifiers' that have the same values for all rows. 
+
+        In case this obect does not have dataNames attribute, arg names
+        has to be specified.
+
+        If this data contsins compactified data, they are expanded, read
+        and compactified  again.
+
+        Arguments:
+          - names: (list) attribute names of this instance for which the 
+          corresponding data is saved in the table. If None, all data
+          is used (as determined by self.dataNames)
+          - begin: (dict) keys specify column names and values the
+          corresponding table values
+
+        Returns pandas.DataFrame containing data of this instance
+        """
+
+        # expand if needed
+        was_compact = False
+        try:
+            if self.compactified:
+                self.expand()
+                was_compact = True
+        except AttributeError:
+            pass
+
+        # find column names
+        if names is None:
+            try:
+                names = self.dataNames
+            except AttributeError:
+                raise ValueError(
+                    "As this object does not have attribute dataNames, "
+                    "argument names has to be specified.")
+
+        # initialize dict
+        
+        if begin is None:
+            data = {}
+        else:
+            data = begin.copy()
+        data['ids'] = self.ids
+
+        # add other values to dict and make dataframe
+        for nam in names:
+            value_expanded = getattr(self, nam)
+            if value_expanded is not None:
+                value = value_expanded[self.ids]
+                if isinstance(value, numpy.ndarray):
+                    value = value.tolist()
+                data[nam] = value
+        df = pd.DataFrame(data)
+
+        # return this instance to the initial state
+        if was_compact:
+            self.compactify()
+
+        return df
+    
 
 class FeaturesError(ValueError):
     """

@@ -119,11 +119,12 @@ class Set(object):
     #
     @classmethod
     def extract_particles(
-            cls, struct, work, work_path, group_names, identifiers,
-            segment_var, boundary_var=None, box_size=None, particle_dir=None,
+            cls, struct, work, work_path, group_names, segment_var, 
+            identifiers=None, boundary_var=None, 
+            box_size=None, particle_dir=None,
             dir_mode=0o775, dtype=None, mean=None, std=None,
             pixelsize=None, label_dtype='int16', label_fg_value=2,
-            label_bkg_value=0, bound_fg_value=1):
+            label_bkg_value=0, bound_fg_value=1, write=True):
         """
         Extract (and writes) particles from one or more tomograms. Particles
         are defined as labels obtained by segmentation of these tomograms.
@@ -132,7 +133,8 @@ class Set(object):
         Arg identifiers specify tomograms from which particles are extracted,
         while arg group_names list all experimental groups in which
         contain the tomograms specified by identifiers, Identifiers should
-        not be repeated in different experimental groups.
+        not be repeated in different experimental groups. If identifiers
+        is None, all identifiers of that group are used.
 
         Particles are defined by property ids of the specified structure
         specific pickle (arg struct). This pickle has to contain data for
@@ -160,12 +162,12 @@ class Set(object):
 
         Tomo and label (output) particle file names contain their
         identifier and id and are saves in the same directory. In addition,
-        label particle file names contain '_label'.
+        label particle file names have suffix '_label' and labels+boundaries
+        '_label_bound'. 
 
         Arguments:
-          - struct: structure specific pickle path, should be a Groups object
-          that contains the structures of interest, such as tethers
-          or connectors
+          - struct: structure specific Groups object that contains the 
+          structures of interest, such as tethers or connectors
           - work: analysis module (needs to have catalog and catalog_directory
           attributes)
           - work_path: path to the analysis work module
@@ -177,7 +179,8 @@ class Set(object):
           - boundary_var: name of the catalog variable containing path to
           the boundary pickle (the one that defines vesicles)
           - box_size: particle box size in pixels
-          - particle_dir: directory where particles are written
+          - particle_dir: directory where particles are written is obtained 
+          by appending the group name to this variable
           - dir_mode: mode of the created particle directories
           - dtype: tomo particles data type
           - pixelsize: pixel size in nm
@@ -186,11 +189,15 @@ class Set(object):
           - label_dtype: label particles data type
           - label_fg_value: forground value for label particles
           - label_bkg_value: background value for label particles
+          - write: Flag indicating if particles are written, if False
+          everything alse is done, including returning proper tables,
+          except writting
 
-        Returns (particles, labels):
+        Returns (particles, labels, bounds):
           - particles: Instance of this class containing the tomo data
           - labels: (LabelSet) Instance containing extracted labels data
-          - bounds: (BoundarySet) labeled boundaries
+          - bounds: (BoundarySet) labeled boundaries, returned if 
+          boundary_var is soecified
         """
 
         # make set object for tomo particles
@@ -217,42 +224,55 @@ class Set(object):
         else:
             bounds = None
 
-        # pick specified tomos
+        # set identifiers if not specified
+        if identifiers is None:
+            identifiers = np.hstack(
+                [particles.struct[g_name].identifiers 
+                 for g_name in group_names])
+
+        # loop over specified tomos
         for ident in identifiers:
             group_found = False
             for g_name in group_names:
                 if ident not in particles.struct[g_name].identifiers:
                     continue
 
-                # get particle coordinates from labels
+                # get particle center coordinates (abs and rel) from labels
                 labels.get_coordinates_single(
                     work=work, group_name=g_name, identifier=ident)
+                labels.particle_dir = os.path.join(particle_dir, g_name) 
 
-                # adjust particle coordinates according to the tomo
+                # adjust particle center and left corner coords to the tomo
                 particles.get_coordinates_single(
                     work=work, group_name=g_name, identifier=ident,
                     label_set=labels)
+                particles.particle_dir = os.path.join(particle_dir, g_name)
 
-                # convert adjusted particle coords to relative label coords
+                # convert adjusted particle left corner coords to label coords
                 labels.set_box_coords(left_corners=particles._left_corners)
+                # just for consistency
+                labels.set_box_coords(centers=particles._centers)
 
-                # convert adjusted particle coords to relative boundary coords
+                # convert adjusted particle left corner coords to 
+                # boundary coords
                 if boundary_var is not None:
                     bounds.read_tomo(
                         work=work, group_name=g_name, identifier=ident,
                         label_set=labels)
                     bounds.set_box_coords(left_corners=particles._left_corners)
+                    # just for consistency
+                    bounds.set_box_coords(centers=particles._centers)
 
-                # write particles
+                # write particles (needs left corners)
                 if particles.pixelsize is not None:
                     pixelsize = particles.pixelsize
                 else:
                     pixelsize = particles._tomo.pixelsize
                 particles.write_particles(
-                     identifier=ident, pixelsize=pixelsize)
+                     identifier=ident, pixelsize=pixelsize, write=write)
                 labels.write_particles(
                     identifier=ident, boundary=bounds, group_name=g_name,
-                    pixelsize=pixelsize)
+                    pixelsize=pixelsize, write=write)
 
                 # update data
                 particles.add_data(group_name=g_name, identifier=ident)
@@ -272,6 +292,176 @@ class Set(object):
         else:
             return particles, labels
 
+    @classmethod
+    def extract_boundaries(
+            cls, bound_struct, label_struct, work, work_path, group_names, 
+            segment_var, boundary_var, identifiers=None, box_size=None, 
+            particle_dir=None, dir_mode=0o775, dtype=None, mean=None, 
+            std=None, pixelsize=None, label_dtype='int16', label_fg_value=2,
+            label_bkg_value=0, bound_fg_value=1, write=True):
+        """
+        Extract (and writes) boundaries from one or more tomograms. It also
+        writes particles (greyscale subtomos at the same position) and
+        boundaries together with labels obtained by segmentation of these 
+        tomograms (such as connectors and tethers).
+
+        Arg identifiers specify tomograms from which particles are extracted,
+        while arg group_names list all experimental groups in which
+        contain the tomograms specified by identifiers, Identifiers should
+        not be repeated in different experimental groups. If identifiers
+        is None, all identifiers of that group are used.
+
+        Boundaries are defined by property ids of the specified boundary 
+        structure specific pickle (arg bound_struct), while labels are 
+        defined by arg label_struct. These pickles have to contain data for
+        all experiments specified by arg indentifiers. Each experiment
+        contains its own ids.
+
+        Requires the standard arrangement of files (see get_tomo_path()).
+        Analysis work module, catalog files, structure specific pickles,
+        tomograms and individual dataset pickles have to be consistent
+        with each other, like in the standard presynaptic analysis.
+
+        In short, the (greyscale) tomogram, labels image and boundary
+        image are found in the following way:
+          - Catalog variables are read from the analysis work module
+          for all experiments
+          - Args segment_var and boundary_var specify variable names
+          defined in catalogs, these variables contain paths to individual
+          tomogram segmentation and boundary pickles.
+
+        For each particle, its positions is determined so that its center
+        is the center of mass of the corresponding label. In case the box
+        size and the position are such that the particle extends outside the
+        tomogram, the particle is shifted as little as needed to fit it
+        within the tomogram.
+
+        Tomo, boundary and boundary+label (output) particle file names 
+        contain their identifier and id and are saves in the same directory. 
+        In addition, boundary particles have suffix '_bound' and 
+        boundary+label '_bound_label'.
+
+        Arguments:
+          - bound_struct: structure specific Groups object that contains 
+          the boundaries of interest, such as vesilces
+          - labelstruct: structure specific Groups object that contains the 
+          structures of interest, such as tethers or connectors
+          - work: analysis module (needs to have catalog and catalog_directory
+          attributes)
+          - work_path: path to the analysis work module
+          - group_names: dataset (experiment) group names
+          - identifiers: dataset (experiment) identifiers
+          - segment_var: name of the catalog variable containing path to
+          one of the segmentation pickles (such as that defining tethers
+          or connectors)
+          - boundary_var: name of the catalog variable containing path to
+          the boundary pickle (the one that defines vesicles)
+          - box_size: particle box size in pixels
+          - particle_dir: directory where particles are written is obtained 
+          by appending the group name to this variable
+          - dir_mode: mode of the created particle directories
+          - dtype: tomo particles data type
+          - pixelsize: pixel size in nm
+          - mean: particle means are set to this value
+          - std: particle stds are set to this value
+          - label_dtype: label particles data type
+          - label_fg_value: forground value for label particles
+          - label_bkg_value: background value for label particles
+          - write: Flag indicating if particles are written, if False
+          everything alse is done, including returning proper tables,
+          except writting
+
+        Returns (particles, labels, bounds):
+          - particles: Instance of this class containing the tomo data
+          - labels: (LabelSet) Instance containing extracted labels data
+          - bounds: (BoundarySet) labeled boundaries
+        """
+
+        # make set object for tomo particles
+        particles = cls(
+            struct=bound_struct, work_path=work_path, box_size=box_size,
+            particle_dir=particle_dir, dtype=dtype, mean=mean, std=std,
+            pixelsize=pixelsize)
+
+        # make set object for boundaries
+        bounds = pyto.particles.BoundarySet(
+            struct=bound_struct, work_path=work_path, catalog_var=boundary_var,
+            box_size=box_size, particle_dir=particle_dir,
+            dtype=label_dtype, fg_value=bound_fg_value,
+            pixelsize=pixelsize, bkg_value=label_bkg_value)
+
+        # make set object for label particles
+        from .label_set import LabelSet
+        labels = LabelSet(
+            struct=label_struct, work_path=work_path, catalog_var=segment_var,
+            box_size=box_size, particle_dir=particle_dir,
+            dtype=label_dtype, pixelsize=pixelsize, fg_value=label_fg_value,
+            bkg_value=label_bkg_value)
+
+        # set identifiers if not specified
+        if identifiers is None:
+            identifiers = np.hstack(
+                [particles.struct[g_name].identifiers 
+                 for g_name in group_names])
+
+        # loop over specified tomos
+        for ident in identifiers:
+            group_found = False
+            for g_name in group_names:
+                if ident not in particles.struct[g_name].identifiers:
+                    continue
+
+                # get particle center coordinates (abs and rel) from bounds
+                bounds.get_coordinates_single(
+                    work=work, group_name=g_name, identifier=ident)
+                bounds.particle_dir = os.path.join(particle_dir, g_name)
+
+                # adjust particle center and left corner coords to the tomo
+                particles.get_coordinates_single(
+                    work=work, group_name=g_name, identifier=ident,
+                    label_set=bounds)
+                particles.particle_dir = os.path.join(particle_dir, g_name)
+
+                # convert adjusted particle left corner coords to bound coords
+                bounds.set_box_coords(left_corners=particles._left_corners)
+                # just for consistency
+                bounds.set_box_coords(centers=particles._centers)
+
+                # convert adjusted particle left corner coords to label coords
+                labels.get_coordinates_single(
+                    work=work, group_name=g_name, identifier=ident)
+                labels.set_box_coords(left_corners=particles._left_corners)
+                # just for consistency
+                labels.set_box_coords(centers=particles._centers)
+
+                # write particles (needs left corners)
+                if particles.pixelsize is not None:
+                    pixelsize = particles.pixelsize
+                else:
+                    pixelsize = particles._tomo.pixelsize
+                particles.write_particles(
+                     identifier=ident, pixelsize=pixelsize, write=write)
+                bounds.write_particles(
+                    identifier=ident, labels=labels, group_name=g_name,
+                    pixelsize=pixelsize, write=write)
+
+                # update data
+                particles.add_data(
+                    group_name=g_name, identifier=ident)
+                bounds.add_data(group_name=g_name, identifier=ident)
+
+                group_found = True
+                break
+
+            # check if the current experiment was processed
+            if not group_found:
+                raise ValueError(
+                    ("Identifier {} does not belong to any of the "
+                     + " groups {}").format(ident, group_names))
+
+        return particles, labels, bounds
+
+
     ##############################################################
     #
     # Extracting particles from one dataset
@@ -290,7 +480,6 @@ class Set(object):
           - identifier: dataset (experiment) identifier
           - pickle_path: path to one of the pickles
           - label_set: LabelSet object corresponding to the current dataset
-          - do_write: flag indicating if particle images are written
 
         Sets attributes:
           - _tomo_path:
@@ -450,7 +639,7 @@ class Set(object):
 
     def write_particles(
             self, identifier, ids=None, keep_ids=True, pixelsize=None,
-            test=False):
+            write=True):
         """
         Writes particles as mrc files.
 
@@ -463,6 +652,10 @@ class Set(object):
         the existing particle ids are used, otherwise particles are labeled
         from 0 up.
 
+        Perticles are extracted from _tomo attribute. The coordinates
+        are determined from _left_corners attribute, _centers are 
+        not used.
+
         Sets attributes:
           - _particle_paths: particle file paths
 
@@ -472,7 +665,7 @@ class Set(object):
           - keep_ids: flag indicating whether the existing particle are
           used to form the file names
           - pixelsize: pixel size in nm
-          - test: if True, particles are not written (for testing)
+          - write: if False, particles are not written
         """
 
         # check ids
@@ -539,7 +732,7 @@ class Set(object):
 
             # write
             particle = pyto.grey.Image(data=particle_data)
-            if not test:
+            if write:
                 particle.write(
                     file=path, header=self._tomo.header, pixel=pixelsize)
 

@@ -28,10 +28,12 @@ import functools
 
 import numpy as np
 import scipy
+import pandas as pd
 
 import pyto
 from .observations import Observations
 from ..util import nested
+from ..util.scipy_plus import anova_two_level
 
 
 class Groups(dict):
@@ -56,22 +58,49 @@ class Groups(dict):
     #
     #######################################################
 
-    def __init__(self):
+    def __init__(self, pickle_debug=False):
         """
         Defines following constants:
           - self._skip_name
           - self._fract_data_names
+
+        Argument:
+          - pickle_debug: used to test loading an instance of this class
+          from a pickle created when setting self._skip_name had not_
+          been implemented
         """
 
         # group name that des not contain any data and is used only as a
         # placeholder
-        _skip_name = '_skip'
+        if not pickle_debug:
+            self._skip_name = self.default_skip_name()
         
         # define property names for fraction-like data properties
         self._fract_data_names = {
             'fraction': 'fraction_data', 'histogram': 'histogram_data',
             'probability': 'probability_data'}
 
+    @property
+    def _skip_name(self):
+        """
+        Implemented as a property instead of simply setting the default 
+        value in __init__, so that it works with instances of this class 
+        obtained from pickles  created before self._skip_name was 
+        implemented. 
+        """
+        try:
+            return self.__skip_name
+        except AttributeError:
+            self.__skip_name = '_skip'
+            return self.__skip_name
+
+    @_skip_name.setter
+    def _skip_name(self, value):
+        self.__skip_value = value
+
+    def default_skip_name(self):
+        return '_skip'
+        
     def fromList(self, groups, names):
         """
         Adds groups specified in arg groups to this instance.
@@ -119,9 +148,12 @@ class Groups(dict):
         Allows accessing an item as if it was an attribute, but not for
         attributes starting with '_'.
         """
+        
         if key.startswith('_'):
             # result = super(Groups, self).__getattr__(key) # Python 2
-            result = super().__getattr__(key)
+            #print("_ in __getattr__")
+            #result = super().__getattr__(key)  # ok because dict -> object
+            result = super().__getattribute__(key)  # also works
         else:
             result = self.__getitem__(key)
         return result
@@ -131,6 +163,7 @@ class Groups(dict):
         Allows setting an item as if it was an attribute, but not for
         attributes starting with '_'.
         """
+        #print("start __setattr__")
         if key.startswith('_'):
             #super(Groups, self).__setattr__(key, value) # Python 2
             super().__setattr__(key, value)
@@ -142,6 +175,7 @@ class Groups(dict):
         Allows deleting an item as if it was an attribute, but not for
         attributes starting with '_'.
         """
+        #print("start __delattr__")
         if key.startswith('_'):
             #super(Groups, self).__delattr__(key) # Python 2
             super().__delattr__(key)
@@ -197,8 +231,10 @@ class Groups(dict):
 
             # add to data
             try:
-                data = data.append(one_data, ignore_index=True)
-            except (NameError, AttributeError):
+                #data = data.append(one_data, ignore_index=True)
+                data = pd.concat([data, one_data], ignore_index=True)
+            except (NameError, AttributeError) as err:
+                #print(err)
                 data = one_data
 
         return data
@@ -895,6 +931,8 @@ class Groups(dict):
                 continue
 
             # skip placeholder group
+            # takes care of the case when this instance was created (and 
+            # pickled) before setting self._skip_name was implemented
             if categ == self._skip_name:
                 continue
             
@@ -1325,11 +1363,8 @@ class Groups(dict):
             group_names = groups.copy()
 
         # remove placeholder group
-        # don't understand why this doesn't work
-        #try:
-        #    #group_names.remove(self._skip_name)
-        # except ValueError:
-        #    pass
+        # takes care of the case when this instance was created (and pickled)
+        # before setting self._skip_name was implemented
         group_names = [nam for nam in group_names if nam != self._skip_name]
             
         if mode == 'byIndex':
@@ -1863,6 +1898,60 @@ class Groups(dict):
 
         return stats
 
+    def histo_to_cdf(
+            self, bins, num_bin_label='bin_values', probability='probability', 
+            identifiers='identifiers'):
+        """
+        Converts histogram data of this object to a DataFrame to cumulative
+        distribution function in pandas.DataFrame.
+
+        The histogram data may be specified for one or more experimental 
+        groups. 
+
+        This object is expected to be generated by doStats() method, where
+        doStats() is executed so that it generates a histogam (argument bins 
+        is specified).
+
+        In general, this object has to have keys that determine the 
+        bins and each value has to have a property (named by arg probability) 
+        that contains probabilities for all experimental groups. Note that 
+        the names of the experimental groups are given by property
+        identifier.
+               
+        Arguments:
+          - bins: Numerical values that correspond to the bins (keys) of 
+          this object, in the same order
+          - num_bin_label: Name of the column (label) of the resulting table
+          that contains the numerical bin values
+          - probability: Name of the property that contain the probability
+          values
+          - identifiers: Name of the property that contains identifiers 
+
+        Returns pandas.DataFrame containing following columns:
+          - numerical bin values 
+          - multiple columns named by the identifiers that contain cdf 
+          values for each identifier (experimental group) 
+        """
+
+        # conversion of this object to dataframe should always have
+        # 'group' label, so no need to have this in args
+        orig_bin_label = 'group'
+        
+        # convert to DataFrame
+        idata = self.indexed_data
+
+        # add numerical bins columns
+        bin_dict = dict(zip(idata.group.unique(), bins))
+        idata[num_bin_label] = idata[orig_bin_label].apply(
+            lambda x: bin_dict[x])
+
+        # separate probabilities by groups
+        probability_dist = idata.pivot_table(
+            values=probability, columns=[identifiers], index=num_bin_label)
+        cum_dist = probability_dist.cumsum()
+    
+        return cum_dist
+    
     def doCorrelation(
             self, xName, yName, test=None, regress=False, reference=None,
             mode=None, groups=None, identifiers=None, out=sys.stdout,
@@ -1999,6 +2088,52 @@ class Groups(dict):
         # return
         return inst
 
+    def doInference(
+            self, name, reference, groups=None, identifiers=None,
+            group_label='group', subgroup_label='identifiers', test='anova',
+            output='dataframe_line'):
+        """
+        Two-level inference
+        """
+
+        # get data and keep only those specified by groups and identifiers
+        data = self.indexed_data
+        if groups is not None:
+            data = data[data['group'].isin(groups)]
+        else:
+            groups = data['group'].unique().to_list()
+        if identifiers is not None:
+            data = data[data['identifiers'].isin(identifiers)]
+
+        # check test
+        if test not in ['anova', 'ANOVA', 'F']:
+            raise ValueError(
+                "Sorry, 'anova' (same as 'ANOVA' or 'F') is the only"
+                + "currently implemented nested two-level test") 
+            
+        # do inference for each reference pair
+        for gr in groups:
+            ref = reference[gr]
+
+            # inference
+            data_local = data[data[group_label].isin([gr, ref])].copy()
+            infer = anova_two_level(
+                data=data_local, group_label=group_label,
+                subgroup_label=subgroup_label, value_label=name,
+                output=output)
+
+            # add to results table
+            old_cols = infer.columns.to_list()
+            infer['group'] = gr
+            infer['reference'] = ref
+            infer = infer[['group', 'reference'] + old_cols]
+            try:
+                res = res.append(infer, ignore_index=True, sort=False)
+            except NameError:
+                res = infer
+
+        return res                
+            
     def printStats(self, out=sys.stdout, names=None, identifiers=None,
                    groups=None, format_={}, title=None,
                    other=None, otherNames=[]):

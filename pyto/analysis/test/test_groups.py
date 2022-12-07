@@ -232,6 +232,44 @@ class TestGroups(np_test.TestCase):
 
         return groups
 
+    @classmethod
+    def makeStats(cls):
+        """
+        Makes and returns a statistics-like Groups object, as retured
+        by doStats()
+        """
+
+        groups = Groups()
+
+        for bin in ['0-2', '2-4', '4-10']:
+            groups[bin] = Observations()
+            groups[bin].setValue(
+                name='ids', identifier='g1', value=[0], indexed=True)
+            groups[bin].setValue(
+                name='ids', identifier='g2', value=[0], indexed=True)
+            groups[bin].setValue(
+                name='ids', identifier='g3', value=[0], indexed=True)
+        groups['0-2'].setValue(
+            name='probability', identifier='g1', value=[0.4], indexed=True)
+        groups['2-4'].setValue(
+            name='probability', identifier='g1', value=[0.5], indexed=True)
+        groups['4-10'].setValue(
+            name='probability', identifier='g1', value=[0.1], indexed=True)
+        groups['0-2'].setValue(
+            name='probability', identifier='g2', value=[0.2], indexed=True)
+        groups['2-4'].setValue(
+            name='probability', identifier='g2', value=[0.4], indexed=True)
+        groups['4-10'].setValue(
+            name='probability', identifier='g2', value=[0.4], indexed=True)
+        groups['0-2'].setValue(
+            name='probability', identifier='g3', value=[0.], indexed=True)
+        groups['2-4'].setValue(
+            name='probability', identifier='g3', value=[0.4], indexed=True)
+        groups['4-10'].setValue(
+            name='probability', identifier='g3', value=[0.6], indexed=True)
+
+        return groups
+
     def make_tables(self):
         """
         Makes Pandas tables
@@ -300,6 +338,20 @@ class TestGroups(np_test.TestCase):
 
         return indexed_table, scalar_table
 
+    def test_skip_name(self):
+        """
+        """
+
+        # check _skip_name and default_skip_name set in a new instance
+        grs = Groups()
+        np_test.assert_equal(grs._skip_name, '_skip')
+        np_test.assert_equal(grs.default_skip_name(), '_skip')
+
+        # mimics the case when
+        grs = Groups(pickle_debug=True)
+        np_test.assert_equal(grs._skip_name, '_skip')
+        np_test.assert_equal(grs.default_skip_name(), '_skip')
+        
     def test_get_indexed_data(self):
         """
         Tests get_indexed_data()
@@ -2208,7 +2260,19 @@ class TestGroups(np_test.TestCase):
             stats.ga.getValue(property='confidence', identifier='i1'),
             pyto.util.scipy_plus.chisquare_2([2,2], [0, 4])[1])
 
+    def test_histo_to_cdf(self):
+        """
+        Tests histo_to_cdf()
+        """
 
+        stats = self.makeStats()
+        bins = [1, 3, 7]
+        cdf_tab = stats.histo_to_cdf(bins, num_bin_label='bin_label')
+        np_test.assert_equal(cdf_tab.index.to_list(), bins)
+        np_test.assert_almost_equal(cdf_tab['g1'].to_list(), [0.4, 0.9, 1])
+        np_test.assert_almost_equal(cdf_tab['g2'].to_list(), [0.2, 0.6, 1])
+        np_test.assert_almost_equal(cdf_tab['g3'].to_list(), [0., 0.4, 1])
+        
     def testJoinExperimentsList(self):
         """
         Tests joinExperimentsList()
