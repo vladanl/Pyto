@@ -19,6 +19,7 @@ The major dependencies of this package are:
 
 * NumPy
 + SciPy
++ future
 
 In addition, some parts depend on:
 
