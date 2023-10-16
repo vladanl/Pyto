@@ -20,5 +20,5 @@ from .tile_set import TileSet
 #from .features import Features
 from . import test
 
-from numpy.testing import Tester
-test = Tester().test
+#from numpy.testing import Tester
+#test = Tester().test

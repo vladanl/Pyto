@@ -39,6 +39,9 @@ Please start from [Overview](doc/manuals/overview.pdf).
 
 ### Release history ###
 
+* 1.9.1 (18.10.2023, svn r2024) 
+	* Noted future module dependency
+	* Removed references to numpy.testing.Tester (removd from numpy 1.24) 
 * 1.9 (7.12.2021, svn r1824)
 	* Added colocalization analysis (developed for Martinez-Sanchez et al 2021 "Trans-synaptic assemblies link synaptic vesicles and neuroreceptors" DOI: 10.1126/sciadv.abe6204)
 	* Added functionality to extract additional features of segments
