@@ -18,6 +18,8 @@ from .label_set import LabelSet
 from .boundary_set import BoundarySet
 from .tile_set import TileSet
 #from .features import Features
+from .extract_mps_filter import ExtractMPSFilter
+from .extract_mps import ExtractMPS
 from . import test
 
 #from numpy.testing import Tester

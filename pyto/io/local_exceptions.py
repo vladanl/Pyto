@@ -23,7 +23,7 @@ class FileTypeError(IOError):
                + "\nand defined extensions are: \n\t" \
                + str(set(self.defined.keys()))
         if self.requested is None:
-            msg = msg + " File format not understood. "
+            msg = msg + f" File format {self.requested} not understood. "
         else:
             msg = msg + " File format: " + self.requested \
                + " doesn't exist. " 

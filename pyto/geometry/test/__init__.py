@@ -10,7 +10,9 @@ from __future__ import absolute_import
 __version__ = "$Revision$"
 
 from .test_vector import TestVector
+from .test_cylinder import TestCylinder
 from .test_affine import TestAffine
 from .test_affine_2d import TestAffine2D
 from .test_rigid_3d import TestRigid3D
+from .test_convex_hull_util import TestConvexHullUtil
 

@@ -203,7 +203,59 @@ class TestRigid3D(np_test.TestCase):
             Rigid3D.shift_angle_range(angle=4., low=0), 4)
         np_test.assert_almost_equal(
             Rigid3D.shift_angle_range(angle=4., low=-2*np.pi), 4 - 2*np.pi)
+
+    def test_normalize_euler(self):
+        """Tests normalize_euler
+        """
+
+        # simple theta
+        angles = [1 + 2*np.pi, 0.4 - 2*np.pi, 0.3 - 5*np.pi]
+        actual = Rigid3D.normalize_euler(angles=angles, range='0_2pi')
+        np_test.assert_array_almost_equal(actual, [1, 0.4, 0.3 + np.pi])
+        actual = Rigid3D.normalize_euler(angles=angles, range='-pi_pi')
+        np_test.assert_array_almost_equal(actual, [1, 0.4, 0.3 - np.pi])
+
+        # theta [pi, 2*pi] mod 2*pi
+        angles = [1 + 2*np.pi, -0.7 - 2*np.pi, 0.3 - 5*np.pi]
+        actual = Rigid3D.normalize_euler(angles=angles, range='0_2pi')
+        np_test.assert_array_almost_equal(actual, [1 + np.pi, 0.7, 0.3])
+        actual = Rigid3D.normalize_euler(angles=angles, range='-pi_pi')
+        np_test.assert_array_almost_equal(actual, [1 - np.pi, 0.7, 0.3])
+
+        # degrees
+        angles = (-20, 100, 490)
+        actual = Rigid3D.normalize_euler(
+            angles=angles, range='0_2pi', degree=True)
+        np_test.assert_array_almost_equal(actual, [340, 100, 130])
+        actual = Rigid3D.normalize_euler(
+            angles=angles, range='-pi_pi', degree=True)
+        np_test.assert_array_almost_equal(actual, [-20, 100, 130])
+        angles = (-20, -100, 490)
+        actual = Rigid3D.normalize_euler(
+            angles=angles, range='0_2pi', degree=True)
+        np_test.assert_array_almost_equal(actual, [160, 100, 310])
+
+        # degrees -pi_pi
+        angles = (-20, -100, 490)
+        actual = Rigid3D.normalize_euler(
+            angles=angles, range='-pi_pi', degree=True)
+        np_test.assert_array_almost_equal(actual, [160, 100, -50])
         
+    def test_reverse_euler(self):
+        """Tests reverse_euler()
+        """
+
+        # radians
+        angles = (4, 0.5, 1)
+        actual = Rigid3D.reverse_euler(angles=angles)
+        np_test.assert_array_almost_equal(
+             actual, [4 - np.pi, np.pi - 0.5, 1 + np.pi])
+
+        # degrees
+        angles = (120, 40, 310)
+        actual = Rigid3D.reverse_euler(angles=angles, degree=True)
+        np_test.assert_array_almost_equal(actual, [300, 140, 130])
+
     def test_find_32_constr_ck_scale_1(self):
         """
         Tests find_32_constr_ck(scale=1)

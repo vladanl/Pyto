@@ -143,6 +143,16 @@ class TestColocFunctions(np_test.TestCase):
         np_test.assert_equal(
             actual.equals(data[actual.columns]), True)
  
+        # multiple distances
+        data, data_tomos = common.make_coloc_tables(random_stats=False)
+        actual = col_func.aggregate(
+            data=data_tomos, distance=range(5, 11, 5),
+            add_columns=['n_subcol', 'n_set1_subcol', 'n_set1_total'],
+            array_columns=['n_subcol_random_all', 'n_subcol_random_alt_all'],
+            p_values=False, random_stats=False)
+        np_test.assert_equal(
+            actual.equals(data[actual.columns]), True)
+ 
         # multiple distances, p values, random stats
         data, data_tomos = common.make_coloc_tables(random_stats=True)
         actual = col_func.aggregate(
@@ -153,6 +163,42 @@ class TestColocFunctions(np_test.TestCase):
                 'n_col', 'area_col', 'volume', 'area'],
             array_columns=['n_subcol_random_all', 'n_subcol_random_alt_all'],
             p_values=True, random_stats=True)
+        np_test.assert_equal(
+            set(['n_subcol_random_all', 'p_subcol_normal',
+                 'n_subcol_random_mean', 'n_subcol_random_std'])
+            - set(actual.columns.to_numpy()),
+            set([]))
+        np_test.assert_array_equal(
+            [x in set(actual.columns.to_numpy())
+             for x
+             in ['n_subcol_random_alt_all', 'p_subcol_other',
+                 'n_subcol_random_alt_mean', 'n_subcol_random_alt_std']],
+             4 * [True])
+        np_test.assert_equal(
+            actual.round(12).equals(data[actual.columns].round(12)), True)
+ 
+        # multiple distances, p values, random stats, all random
+        data, data_tomos = common.make_coloc_tables(random_stats=True)
+        actual = col_func.aggregate(
+            data=data_tomos, distance=None,
+            add_columns=[
+                'n_subcol', 'n_set1_subcol', 'n_set1_total', 'n_set3_subcol',
+                'n_set3_total', 'n_set8_subcol', 'n_set8_total',
+                'n_col', 'area_col', 'volume', 'area'],
+            array_columns=['n_subcol_random_all'],# 'n_subcol_random_alt_all'],
+            p_values=True, random_stats=True,
+            random_suff=['random'], p_suff=['normal'])
+        np_test.assert_equal(
+            set(['n_subcol_random_all', 'p_subcol_normal',
+                 'n_subcol_random_mean', 'n_subcol_random_std'])
+            - set(actual.columns.to_numpy()),
+            set([]))
+        np_test.assert_array_equal(
+            [x in set(actual.columns.to_numpy())
+             for x
+             in ['n_subcol_random_alt_all', 'p_subcol_other',
+                 'n_subcol_random_alt_mean', 'n_subcol_random_alt_std']],
+             4 * [False])
         np_test.assert_equal(
             actual.round(12).equals(data[actual.columns].round(12)), True)
  
@@ -267,10 +313,99 @@ class TestColocFunctions(np_test.TestCase):
             p_func=np.less_equal)
         np_test.assert_equal(
             actual['fraction'].equals(data_tomo['p_subcol_other']), True)
- 
+
+    def test_get_names(self):
+        """Tests get_names() and get_layers()
+        """
         
- 
-          
+        np_test.assert_array_equal(
+            col_func.get_names(name='setx_sety_setz'), ['setx', 'sety', 'setz'])
+        np_test.assert_array_equal(
+            col_func.get_names(name='setx_sety_ves_ap'),
+            ['setx', 'sety', 'ves', 'ap'])
+        np_test.assert_array_equal(
+            col_func.get_names(name='setx_sety_ves_ap', mode='columns_2021'),
+            ['setx', 'sety', 'ves_ap'])
+        np_test.assert_array_equal(
+            col_func.get_layers(name='setx_sety_ves_ap', mode='_'),
+            ['setx', 'sety', 'ves', 'ap'])
+
+        # other mode
+        np_test.assert_array_equal(
+            col_func.get_names(name='X-1__Y-2__Z-3', mode='__'),
+            ['X-1', 'Y-2', 'Z-3'])
+       
+    def test_make_name(self):
+        """Tests make_name()
+        """
+
+        actual = col_func.make_name(
+            names=['setx', 'sety', 'setz'], suffix='dat')
+        np_test.assert_equal(actual, 'setx_sety_setz_dat')
+        actual = col_func.make_name(
+            names=['setx', 'sety', 'setz'], suffix=None)
+        np_test.assert_equal(actual, 'setx_sety_setz')
+
+    def test_make_full_coloc_names(self):
+        """Tests make_full_coloc_names()
+        """
+        
+        actual = col_func.make_full_coloc_names(
+            names=['setX', 'setY', 'setZ', 'setW'], suffix='data')
+        desired = [
+            'setX_setY_setZ_setW_data', 'setX_setY_data', 'setX_setZ_data',
+            'setX_setW_data'] 
+        np_test.assert_equal(actual, desired)
+        
+        actual = col_func.make_full_coloc_names(
+            names=['setX', 'setY', 'setZ', 'setW'], suffix=None)
+        desired = [
+            'setX_setY_setZ_setW', 'setX_setY', 'setX_setZ',
+            'setX_setW'] 
+        np_test.assert_equal(actual, desired)
+        
+        actual = col_func.make_full_coloc_names(
+            names=['setX', 'setY'], suffix='data')
+        desired = ['setX_setY_data']
+        np_test.assert_equal(actual, desired)
+        
+    def test_get_2_names(self):
+        """Tests get_2_names()
+        """
+
+        actual = col_func.get_2_names(
+            name='pre_sv_post', order=((0, 1), (0, 2)))
+        np_test.assert_equal(actual, ['pre_sv', 'pre_post'])
+
+        actual = col_func.get_2_names(
+            name=['pre_sv_post'], order=((0, 1), (2, 1)))
+        np_test.assert_equal(actual, ['pre_sv', 'post_sv'])
+        actual = col_func.get_2_names(
+            name=['pre1_sv1_post1', 'pre2_sv2_post2'],
+            order=((0, 1), (1, 2)))
+        np_test.assert_equal(
+            actual, [['pre1_sv1', 'sv1_post1'], ['pre2_sv2', 'sv2_post2']])
+
+        # order None
+        actual = col_func.get_2_names(name=['pre_sv_post_4th'])
+        np_test.assert_equal(actual, ['pre_sv', 'pre_post', 'pre_4th'])
+
+        # multiple names, changed mode
+        actual = col_func.get_2_names(
+            name=['pre__sv__post', 'X__Y__Z'], mode='__')
+        np_test.assert_equal(
+            actual, [['pre__sv', 'pre__post'], ['X__Y', 'X__Z']])
+        
+        # multiple names, by_order
+        actual = col_func.get_2_names(
+            name=['pre__sv__post', 'X_a__Y_b__Z_c', '1__2__3'], mode='__',
+            by_order=True)
+        np_test.assert_equal(
+            actual,
+            [['pre__sv', 'X_a__Y_b', '1__2'],
+             ['pre__post', 'X_a__Z_c', '1__3']])
+        
+        
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestColocFunctions)
     unittest.TextTestRunner(verbosity=2).run(suite)

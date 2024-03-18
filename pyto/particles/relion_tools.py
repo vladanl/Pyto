@@ -23,6 +23,8 @@ Relion starfile processing functions:
   class between specified iterations
   - classify_array(): classifies elements of an array according to a
   specified criterion
+  - update_priors_replace(): updates prior angles and modifies string
+  values of a star file (such as image paths)
 
 Statistics:
   - two_way_class(): comparison of two classifications
@@ -1538,7 +1540,7 @@ def array_data_generator(
       - comment lines start with '#' and are always ignored
       - labels start with '_' and can have preceeding white characters (' ' in
       xmipp)
-      - line srarting with arg tablename indicates start of the table
+      - line starting with arg tablename indicates start of the table
       - table data begins at the first line that doesn't start with '_'
       (optionally preceeded with whitespace)
       - table data ends when an empty line is reached
@@ -1782,8 +1784,8 @@ def write_table(
     """
     Writes a data table to a star file.
 
-    Data is given as a dictionary containing label : array pairs, which
-    represents a variable name and the array o values.
+    Data is given as a dictionary containing label: array pairs, which
+    represents a variable name and the array of values.
 
     The keys of arg data have to be the same as the elements of arg 
     labels. Arg labels needs to be specified because it specifies the 
@@ -1895,7 +1897,7 @@ def write_table(
                     else:
                         raise ValueError(
                             "Could not do format_='auto' because array format"
-                            + " was not understood.")
+                            + f" {data_lab.dtype} was not understood.")
                     fmt.append(new_fmt)
 
             elif isinstance(format_, dict):
@@ -2946,3 +2948,49 @@ def symmetrize_particles(
     # add entry to symmetrized particles starfile
 
     pass
+
+def update_priors_replace(
+        in_star_path, out_star_path, update_priors=True, 
+        replace_label='rlnImageName',
+        pattern=None, replace=None, star_comment=''):
+    """Updates prior angles and modifies paths in a star file.
+
+    Reads the star file specified by arg in_star_path, makes the 
+    manipulations explained below and write sta resulting star file.
+
+    If arg update_priors is True, copes values of Tilt and Psi angles
+    to TiltPrior and PsiPrior.
+
+    If arg pattern is not None, replaces all occurances of (arg)
+    pattern with (arg) replace in column (arg) replace_label. Meant
+    to change the particle sets whie keeping all other info the same,
+    as may be needed between two 3d refinement rounds
+
+    Arguments:
+      - in_star_path: path to input star file
+      - out_star_path: path to output star file
+      - update_priors: flag indicating whether prior angles are updated
+      - replace label: column (label) name that specifies which values
+      are replaced (default 'rlnImageName')
+      - pattern: (str) pattern to be replaced
+      - replace: (str) replacement
+      - star_comment: comment written at the top of the output star file
+    """
+    
+    star = get_array_data(
+        starfile=in_star_path, tablename='data', types=str)
+
+    if update_priors:
+        star['rlnAnglePsiPrior'] = star['rlnAnglePsi'] 
+        star['rlnAngleTiltPrior'] = star['rlnAngleTilt'] 
+
+    if pattern is not None:
+        updated = [pat.replace(pattern, replace) 
+                   for pat in star[replace_label]]
+        star[replace_label] = updated
+
+    write_table(
+        starfile=out_star_path, labels=list(star.keys()), data=star, 
+        format_='%s', tablename='data', delimiter=' ', 
+        comment=f"# {star_comment}")
+    

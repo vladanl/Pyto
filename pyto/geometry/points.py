@@ -1,6 +1,8 @@
 """
 Contains class Points for basic manipulation of points.
 
+Work in progress or abandoned?
+
 # Author: Vladan Lucic (Max Planck Institute for Biochemistry)
 # $Id$
 """

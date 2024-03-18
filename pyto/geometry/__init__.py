@@ -13,11 +13,13 @@ from .vector import Vector
 from .points import Points
 from .plane import Plane
 from .parallelogram import Parallelogram
+from .cylinder import Cylinder
 from .affine import Affine
 from .affine_2d import Affine2D
 from .affine_3d import Affine3D
 from .rigid_3d import Rigid3D
 from .coordinates import Coordinates
+from .convex_hull_util import ConvexHullUtil
 from . import test
 
 

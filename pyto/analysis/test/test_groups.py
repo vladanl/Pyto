@@ -355,6 +355,8 @@ class TestGroups(np_test.TestCase):
     def test_get_indexed_data(self):
         """
         Tests get_indexed_data()
+
+        Problem: ids and vector converted to float
         """
 
         grs_1 = self.makeInstance()
@@ -370,11 +372,17 @@ class TestGroups(np_test.TestCase):
         np_test.assert_equal(
             data.ids.tolist(),
             ([0, 2] + list(range(6)) + [0, 2] + list(range(4))
-             + list(range(1,6))) )
+             + list(range(1, 6))) )
+        #print(data.ids)
+        # Need to fix
+        dtype = data.ids.dtype
+        #np_test.assert_equal(np.issubdtype(dtype, int), True)
         np_test.assert_equal(
             data.vector.tolist(),
             ([1,3] + list(range(1,7)) + [1,3] + list(range(1,5))
              + list(range(2,7))))
+        #print(data.vector)
+        #np_test.assert_equal(np.issubdtype(data.vector.dtype, int), True)
 
         # no indexed data saved as None (shouldn't really happen)
         gr = self.makeInstance()
@@ -419,6 +427,7 @@ class TestGroups(np_test.TestCase):
         indexed_table, scalar_table = self.make_tables()
 
         # check directly
+        #print(indexed_table)
         groups = Groups.from_pandas(indexed=indexed_table, scalar=scalar_table)
         np_test.assert_equal(
             groups.alpha.properties,

@@ -6,3 +6,6 @@ Tests for clustering
 """
 
 __version__ = "$Revision$"
+
+from .test_contingency import TestContingency
+from .test_classification_results import TestClassificationResults

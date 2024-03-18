@@ -32,7 +32,6 @@ import re
 import logging
 import pickle
 import runpy
-import imp
 
 import numpy
 import scipy

@@ -995,8 +995,159 @@ class TestSegment(np_test.TestCase):
         vector = Segment(data).findDirection(
             segmentId=2, directionId=6, fromLayer=3, toLayer=1)
         np_test.assert_almost_equal(vector.phi, -numpy.pi/4)
-        
-        
+
+    def testGenerateNeighborhoods(self):
+        """Tests generateNeighborhood()
+        """
+
+        # setup
+        bound_data = numpy.zeros((10, 10), dtype=int)
+        bound_data[3, 1:9] = 2
+        bound = Segment(data=bound_data)
+        bound_2_inset = [slice(2, 10), slice(0, 10)]
+        bound_2 = Segment(data=(bound.data[tuple(bound_2_inset)]).copy())
+        bound_2.inset = bound_2_inset
+        seg_data = numpy.zeros((10, 10), dtype=int)
+        seg_data[4:8, 2] = 1
+        seg_data[4:6, 4:7] = 4
+        seg = Segment(data=seg_data)
+        seg_2_inset = [slice(1, 9), slice(1, 8)]
+        seg_2 = Segment(data=(seg.data[tuple(seg_2_inset)]).copy())
+        seg_2.inset = seg_2_inset
+
+        # no size, no maxDistance
+        for reg_id, hood, all_hoods in seg.generateNeighborhoods(
+                regions=bound, regionIds=[2], ids=[1, 4], size=None,
+                maxDistance=None):
+            desired_hood_data = seg.data[4:8, 2:7]
+            desired_hood_inset = [slice(4, 8), slice(2, 7)]
+            np_test.assert_equal(reg_id, 2)
+            np_test.assert_equal(hood.data, desired_hood_data)
+            np_test.assert_equal(hood.inset, desired_hood_inset)
+
+        # size, no maxDistance
+        for reg_id, hood, all_hoods in seg.generateNeighborhoods(
+                regions=bound, regionIds=[2], ids=[1, 4], size=1,
+                maxDistance=None):
+            desired_hood_inset = [slice(4, 8), slice(2, 7)]
+            np_test.assert_equal(reg_id, 2)
+            np_test.assert_equal(hood.data[0, 0], 1)
+            np_test.assert_equal((hood.data[0, 2:5] == 4).any(), True)
+            np_test.assert_equal(hood.inset, desired_hood_inset)
+
+        # two regions, no maxDistance
+        bound.data[8, 1:9] = 3
+        seg_data_cp = seg.data.copy()
+        for reg_id, hood, all_hoods in seg.generateNeighborhoods(
+                regions=bound, regionIds=[2, 3], ids=[1, 4], size=None,
+                maxDistance=None):
+
+            np_test.assert_equal(reg_id in [2, 3], True)
+            if reg_id == 2:
+                desired_hood_inset = [slice(4, 8), slice(2, 7)]
+                np_test.assert_equal(hood.inset, desired_hood_inset)
+                np_test.assert_equal(hood.data[0, 0], 1)
+                np_test.assert_equal(hood.data[0, 2:5], 4)
+
+                # to check seg.data not changed
+                all_hoods.data = numpy.zeros_like(all_hoods.data) - 1
+                hood.data = numpy.zeros_like(hood.data) - 100
+                np_test.assert_equal(seg.data, seg_data_cp)
+                
+            elif reg_id == 3:
+                desired_hood_inset = [slice(4, 8), slice(2, 7)]
+                np_test.assert_equal(hood.inset, desired_hood_inset)
+                np_test.assert_equal(hood.data[3, 0], 1)
+                np_test.assert_equal(hood.data[0, 2:5], 4)
+                np_test.assert_equal(seg.data, seg_data_cp)
+            else:
+                np_test.assert_equal(True, False)
+    
+        # two regions, maxDistance
+        bound.data[8, 1:9] = 3
+        seg_data_cp = seg.data.copy()
+        bound_data_cp = bound.data.copy()
+        for reg_id, hood, all_hoods in seg.generateNeighborhoods(
+                regions=bound, regionIds=[2, 3], ids=[1, 4], size=None,
+                maxDistance=1):
+
+            np_test.assert_equal(reg_id in [2, 3], True)
+            if reg_id == 2:
+                desired_hood_inset = [slice(4, 8), slice(2, 7)]
+                np_test.assert_equal(hood.inset, desired_hood_inset)
+                np_test.assert_equal(hood.data[0, 0], 1)
+                np_test.assert_equal(hood.data[0, 2:5], 4)
+                
+                # to check seg.data not changed
+                all_hoods.data = numpy.zeros_like(all_hoods.data) - 1
+                hood.data = numpy.zeros_like(hood.data) - 100
+                np_test.assert_equal(seg.data, seg_data_cp)
+                np_test.assert_equal(bound.data, bound_data_cp)
+                
+            elif reg_id == 3:
+                print(hood.data)
+                desired_hood_inset = [slice(4, 8), slice(2, 7)]
+                np_test.assert_equal(hood.inset, desired_hood_inset)
+                np_test.assert_equal(hood.data[3, 0], 1)
+                np_test.assert_equal(hood.data[0, 2:5], 4)
+
+                # to check seg.data not changed
+                all_hoods.data = numpy.zeros_like(all_hoods.data) - 1
+                hood.data = numpy.zeros_like(hood.data) - 100
+                np_test.assert_equal(seg.data, seg_data_cp)
+                np_test.assert_equal(bound.data, bound_data_cp)
+                
+            else:
+                np_test.assert_equal(True, False)
+       
+        # seg and bound given as insets, no size, no maxDistance
+        for reg_id, hood, all_hoods in seg_2.generateNeighborhoods(
+                regions=bound_2, regionIds=[2], ids=[1, 4], size=None,
+                maxDistance=None):
+            desired_hood_data = seg.data[4:8, 2:7]
+            desired_hood_inset = [slice(4, 8), slice(2, 7)]
+            np_test.assert_equal(reg_id, 2)
+            np_test.assert_equal(hood.data, desired_hood_data)
+            np_test.assert_equal(hood.inset, desired_hood_inset)
+
+        # seg and bound given as insets, two regions, maxDistance
+        bound_2.data[6, 1:9] = 3
+        seg_2_data_cp = seg_2.data.copy()
+        bound_2_data_cp = bound_2.data.copy()
+        for reg_id, hood, all_hoods in seg_2.generateNeighborhoods(
+                regions=bound_2, regionIds=[2, 3], ids=[1, 4], size=None,
+                maxDistance=1):
+
+            np_test.assert_equal(reg_id in [2, 3], True)
+            if reg_id == 2:
+                desired_hood_inset = [slice(4, 8), slice(2, 7)]
+                np_test.assert_equal(hood.inset, desired_hood_inset)
+                np_test.assert_equal(hood.data[0, 0], 1)
+                np_test.assert_equal(hood.data[0, 2:5], 4)
+                
+                # to check seg_2.data not changed
+                all_hoods.data = numpy.zeros_like(all_hoods.data) - 1
+                hood.data = numpy.zeros_like(hood.data) - 100
+                np_test.assert_equal(seg_2.data, seg_2_data_cp)
+                np_test.assert_equal(bound_2.data, bound_2_data_cp)
+                
+            elif reg_id == 3:
+                print(hood.data)
+                desired_hood_inset = [slice(4, 8), slice(2, 7)]
+                np_test.assert_equal(hood.inset, desired_hood_inset)
+                np_test.assert_equal(hood.data[3, 0], 1)
+                np_test.assert_equal(hood.data[0, 2:5], 4)
+
+                # to check seg_2.data not changed
+                all_hoods.data = numpy.zeros_like(all_hoods.data) - 1
+                hood.data = numpy.zeros_like(hood.data) - 100
+                np_test.assert_equal(seg_2.data, seg_2_data_cp)
+                np_test.assert_equal(bound_2.data, bound_2_data_cp)
+                
+            else:
+                np_test.assert_equal(True, False)
+       
+
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestSegment)
     unittest.TextTestRunner(verbosity=2).run(suite)

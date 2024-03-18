@@ -658,7 +658,8 @@ def write_res(ves, dist, mem, lum, file_name, ids=None, multi_ves_ids=None):
                         + "#" + tot_line[0] + os.linesep)
 
     # write background results
-    bkgOutVars = [ves.bkg.mean, ves.bkg.std, ves.bkg.min, ves.bkg.max]
+    bkgOutVars = [
+        ves.bkg.mean[0], ves.bkg.std[0], ves.bkg.min[0], ves.bkg.max[0]]
     bkgOutFormat = "# bkg %6.2f %5.2f %6.2f %6.2f"
     file_name.write((bkgOutFormat % tuple(bkgOutVars)) + os.linesep)
 
@@ -676,8 +677,8 @@ def write_res(ves, dist, mem, lum, file_name, ids=None, multi_ves_ids=None):
                  mem.meanDensity.min[-1], mem.meanDensity.max[-1],
                  lum.meanDensity.mean[-1], lum.meanDensity.std[-1],
                  lum.meanDensity.min[-1], lum.meanDensity.max[-1],
-                 ves.mor.meanRadius.mean, ves.mor.meanRadius.std,
-                 ves.mor.meanRadius.min, ves.mor.meanRadius.max]
+                 ves.mor.meanRadius.mean[0], ves.mor.meanRadius.std[0],
+                 ves.mor.meanRadius.min[0], ves.mor.meanRadius.max[0]]
     avOutFormat = "# av  %6.2f %5.2f %6.2f %6.2f  %6.2f %5.2f %6.2f %6.2f" \
         + "  %6.2f %5.2f %6.2f %6.2f            " \
         + '         ' * len(dist) \

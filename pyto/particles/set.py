@@ -126,9 +126,9 @@ class Set(object):
             pixelsize=None, label_dtype='int16', label_fg_value=2,
             label_bkg_value=0, bound_fg_value=1, write=True):
         """
-        Extract (and writes) particles from one or more tomograms. Particles
-        are defined as labels obtained by segmentation of these tomograms.
-        The labels are also extracted and written.
+        Extracts and writes particles (greyscale subtomos) and the 
+        corresponding labels (subtomos of segmented and/or boundary tomos)
+        from one or more tomograms. 
 
         Arg identifiers specify tomograms from which particles are extracted,
         while arg group_names list all experimental groups in which
@@ -343,8 +343,8 @@ class Set(object):
 
         Arguments:
           - bound_struct: structure specific Groups object that contains 
-          the boundaries of interest, such as vesilces
-          - labelstruct: structure specific Groups object that contains the 
+          the boundaries of interest, such as vesicles
+          - label_struct: structure specific Groups object that contains the 
           structures of interest, such as tethers or connectors
           - work: analysis module (needs to have catalog and catalog_directory
           attributes)
@@ -507,7 +507,7 @@ class Set(object):
 
     def get_tomo_info_path(self, pickle_path):
         """
-        Moving to set_path
+        Depreciated: Moved to set_path.py
 
         Returns the path to the tomo info file.
 
@@ -533,7 +533,7 @@ class Set(object):
 
     def import_tomo_info(self, tomo_info_path):
         """
-        Moving to set_path
+        Depreciated: Moved to set_path.py
 
         Imports tomo info file
 
@@ -550,7 +550,7 @@ class Set(object):
 
     def get_tomo_path(self, pickle_path):
         """
-        Moved to set_path
+        Depreciated: Moved to set_path.py
 
         Guesses the path to the tomo file from one of the pickle file names
         in the following way:

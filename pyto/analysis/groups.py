@@ -23,7 +23,6 @@ import warnings
 import logging
 from copy import copy, deepcopy
 import re
-import imp
 import functools
 
 import numpy as np
@@ -242,9 +241,9 @@ class Groups(dict):
     @classmethod
     def from_pandas(
             cls, indexed, scalar, group_column='group',
-            identifiers_column='identifiers'):
+            identifiers_column='identifiers', reorder=False):
         """
-        Makes an instance of this class from two pandas.DataFrame.
+        Makes an instance of this class from two pandas.DataFrames.
 
         The first column of both data tables (args indexed and
         scalar) have to contain group names, the column name is specified
@@ -256,6 +255,11 @@ class Groups(dict):
         The third column of the indexed table (arg indexed_table) has
         to contain ids.
 
+        If arg reorder is True, indexed table is reordered so that 
+        group_column has index 0, and identifiers_column 1 and 'ids' 2.
+        The reordering fails if column 'ids' does not exist or if there
+        are multiple 'ids' columns. 
+
         When converted to an object of this class, the values of the
         group column become keys of this instance and not values of a
         property.
@@ -264,6 +268,9 @@ class Groups(dict):
           - indexed: DataFrame containing indexed data
           - scalar: DataFrame containing scalar data
           - group_column: name of the column that contains group names
+          - identifiers_column: name of the column that contains identifiers
+          - reorder: flag indicating if columns should be reordered in the
+          expected order (experimental)
 
         Returns: an instace of this class
         """
@@ -277,7 +284,25 @@ class Groups(dict):
             print(
                 "Indexed data table has to contain at least groups and "
                 + "identifiers columns.")
-
+        
+        # reorder indexed and scalar
+        if reorder:
+            if indexed.columns[0] != group_column:
+                gr_col = indexed.pop(group_column)
+                indexed.insert(0, column=group_column, value=gr_col)
+            if indexed.columns[1] != identifiers_column:
+                ident_col = indexed.pop(identifiers_column)
+                indexed.insert(1, column=identifiers_column, value=ident_col)
+            if indexed.columns[2] != 'ids':
+                ids_col = indexed.pop('ids')
+                indexed.insert(2, column='ids', value=ids_col)
+            if scalar.columns[0] != group_column:
+                gr_col = scalar.pop(group_column)
+                scalar.insert(0, column=group_column, value=gr_col)
+            if scalar.columns[1] != identifiers_column:
+                ident_col = scalar.pop(identifiers_column)
+                scalar.insert(1, column=identifiers_column, value=ident_col)
+            
         # add indexed data for all groups
         for gr in indexed[group_column].unique():
 
@@ -340,6 +365,8 @@ class Groups(dict):
         """
         Returns pandas.DataFrame that contains all indexed data of this
         instance.
+
+        Experimental, bug: Some int values are converted to floats. 
 
         Columns directly correspond to the indexed properties of this
         instance. In addition, the first column contain group names

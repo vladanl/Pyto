@@ -15,7 +15,10 @@ __version__ = "$Revision$"
 
 # ToDo: see if this should become a superclass for some of the scripts
 
-import imp
+try:
+    import importlib
+except ModuleNotFoundError:
+    import imp
 import sys
 import os
 import os.path
@@ -57,21 +60,33 @@ def __import__(name, path):
     #except KeyError:
     #    pass
 
-    # import
-    try:
-        fp, pathname, description = imp.find_module(name, [path])
-    except Exception:
-        return None
-    try:
-        return imp.load_module(name, fp, pathname, description)
-    except ImportError:
-        return None
-    finally:
-        # since we may exit via an exception, close fp explicitly.
-        if fp:
-            fp.close()
+    # import 
+    if (sys.version_info[0] <= 3) and (sys.version_info[1] <= 8):
 
+        # python <= 3.8 uses imp
+        try:
+            fp, pathname, description = imp.find_module(name, [path])
+        except Exception:
+            return None
+        try:
+            return imp.load_module(name, fp, pathname, description)
+        except ImportError:
+            return None
+        finally:
+            # since we may exit via an exception, close fp explicitly.
+            if fp:
+                fp.close()
 
+    else:
+
+        # python >= 3.9 uses importlib
+        full_path = os.path.join(path, name) + '.py'
+        spec = importlib.util.spec_from_file_location(
+            os.path.basename(full_path), full_path)
+        return spec.loader.load_module(spec.name)
+
+        
+        
 ##################################################
 #
 # File name related
