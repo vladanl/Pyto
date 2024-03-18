@@ -8,3 +8,6 @@ Clustering
 __version__ = "$Revision: 914 $"
 
 from .contingency import Contingency
+from .classification_results import ClassificationResults
+from .contingency_stats import ContingencyStats
+from . import test

@@ -17,14 +17,29 @@ class ModuleIO(object):
     """
     Usage from an external program like a python shell or a notebook:
 
-      >>> mod_io = ModuleIO(calling_dir=os.getcwd())
+      >>> mod_io = ModuleIO()
       >>> module_of_interest = mod_io.load(path=relative_path_from_external)
+
+    Alternatively, if the module path is given relative to another dir:
+
+      >>> mod_io = ModuleIO(calling_dir=another_dir)
+      >>> module_of_interest = mod_io.load(path=relative_path_from_another_dir)
+
+
     """
 
-    def __init__(self, calling_dir=''):
+    def __init__(self, calling_dir=None):
+        """Saves arguments.
+
+        Argument:
+          - calling_dir: dir in respect to which the module path is given
+          in load(). If None, uses the path from which this methods is called 
         """
-        """
-        self.calling_dir = calling_dir
+        
+        if calling_dir is not None:
+            self.calling_dir = calling_dir
+        else:
+            self.calling_dir = os.getcwd()
     
     def load(self, path, preprocess=False):
         """
@@ -48,6 +63,7 @@ class ModuleIO(object):
         if not os.path.isabs(path):
             abs_path = os.path.normpath(
                 os.path.join(self.calling_dir, path))
+            print(f'module_io {abs_path}')
         else:
             abs_path = path
             

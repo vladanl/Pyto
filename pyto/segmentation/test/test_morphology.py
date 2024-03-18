@@ -57,21 +57,61 @@ class TestMorphology(TestCase):
     def testCenter(self):
 
         # int
+        desired = numpy.array([[2, 2], [2, 7], [8, 3], [7, 7]])
         mor = Morphology(segments=self.shapes)
         mor.getCenter()
-        assert_equal(mor.center[self.shapes.ids], numpy.array([[2, 2],
-                                                               [2, 7],
-                                                               [8, 3],
-                                                               [7, 7]]))
- 
+        assert_equal(mor.center[self.shapes.ids], desired)
+        
+         # int
+        desired = numpy.array([[2, 2], [2, 7], [8, 3], [7, 7]])
+        mor = Morphology(segments=self.shapes.data)
+        mor.getCenter()
+        assert_equal(mor.center[self.shapes.ids], desired)
+        
+        # int
+        desired = numpy.array([[2, 2], [2, 7], [8, 3], [7, 7]])
+        mor = Morphology(segments=self.shapes.data, ids=self.shapes.ids)
+        mor.getCenter()
+        assert_equal(mor.center[self.shapes.ids], desired)
+        
+        # int
+        desired = numpy.array([[2, 2], [2, 7], [8, 3], [7, 7]])
+        mor = Morphology(segments=self.shapes, ids=self.shapes.ids)
+        mor.getCenter()
+        assert_equal(mor.center[self.shapes.ids], desired)
+        
+        # int, empty constructor
+        desired = numpy.array([[2, 2], [2, 7], [8, 3], [7, 7]])
+        mor = Morphology()
+        mor.getCenter(segments=self.shapes)
+        assert_equal(mor.center[self.shapes.ids], desired)
+        
+        # int, empty constructor
+        desired = numpy.array([[2, 2], [2, 7], [8, 3], [7, 7]])
+        mor = Morphology()
+        mor.getCenter(segments=self.shapes, ids=self.shapes.ids)
+        assert_equal(mor.center[self.shapes.ids], desired)
+        
+        # int, empty constructor
+        desired = numpy.array([[2, 2], [2, 7], [8, 3], [7, 7]])
+        mor = Morphology()
+        mor.getCenter(segments=self.shapes.data)
+        assert_equal(mor.center[self.shapes.ids], desired)
+        
+        # int, empty constructor
+        desired = numpy.array([[2, 2], [2, 7], [8, 3], [7, 7]])
+        mor = Morphology()
+        mor.getCenter(segments=self.shapes.data, ids=self.shapes.ids)
+        assert_equal(mor.center[self.shapes.ids], desired)
+        
         # real
+        desired = numpy.array([[ 2.        ,  2.        ],
+                               [ 2.        ,  7.        ],
+                               [ 8.15384615,  3.38461538],
+                               [ 7.28571429,  6.71428571]])
         mor = Morphology(segments=self.shapes)
         mor.getCenter(real=True)
-        assert_almost_equal(mor.center[self.shapes.ids], 
-                            numpy.array([[ 2.        ,  2.        ],
-                                         [ 2.        ,  7.        ],
-                                         [ 8.15384615,  3.38461538],
-                                         [ 7.28571429,  6.71428571]]))
+        assert_almost_equal(mor.center[self.shapes.ids], desired)
 
     def testRadius(self):
 
@@ -212,7 +252,7 @@ class TestMorphology(TestCase):
                  numpy.sqrt(5), numpy.sqrt(8), numpy.sqrt(8), numpy.sqrt(13)])])
  
         # c2c, straight mode median
-        print(f"seg before {id(seg.data)}")
+        #print(f"seg before {id(seg.data)}")
         mor = Morphology()
         mor.getLength(
             segments=seg, boundaries=bound, contacts=con, 
@@ -221,11 +261,9 @@ class TestMorphology(TestCase):
             mor.length[seg.ids],
             [numpy.mean([2, numpy.sqrt(5)]), numpy.mean([2, numpy.sqrt(5)]),
              numpy.sqrt(8)])
-        print(f"seg after {id(seg.data)}")
+        #print(f"seg after {id(seg.data)}")
  
         # c2c, straight mode median
-        print("Watch now")
-        print(f"seg before {id(seg.data)}")
         #print(f"bound before {bound.data}")
         #print(f"con before {con.data}")
         mor = Morphology()
@@ -237,7 +275,7 @@ class TestMorphology(TestCase):
         # bound.data remain at insets
         seg = Segment(seg_data)
         bound = Segment(bound_data)
-        print(f"seg after {id(seg.data)}")
+        #print(f"seg after {id(seg.data)}")
         #print(f"bound after {bound.data}")
         #print(f"con after {con.data}")
  

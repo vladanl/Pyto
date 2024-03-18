@@ -512,7 +512,7 @@ class Image(object):
         self.inset = inset
 
     def useInset(self, inset, mode=u'relative', intersect=False, useFull=False,
-                 expand=False, value=0, update=True):
+                 expand=False, value=0, update=True, returnCopy=False):
         """
         Finds data inset of the current data that corresponds to the
         arguments specified. If arg update is True also sets self.data to the
@@ -533,7 +533,18 @@ class Image(object):
         to the appropriate view of self.data.
 
         Because in the previous two cases only the view is modified, changing
-        the new or the returned data changes the original data.
+        the returned data (if update=False) changes the original data 
+        (self.data).
+
+        However, if the new array is returned (update=False) and arg 
+        returnCopy=True, the returned array is copied, so it is no 
+        longer a view of the original data. 
+
+        Therefore, if update=False:
+          - If the returned array is not subsequently modified, it is 
+          recommended to set returnCopy=False because it reduces memory usage
+          - If the returned array is subsequently modified and the original
+          data is used, returnCopy should be set to True.
 
         If the new inset is outside self.inset, but inside self.fullInset and
         intersect is False, the behavior depends on useFull. If it's False an
@@ -579,6 +590,8 @@ class Image(object):
           - value: used to fill the expanded part of self.data
           - update: flag indicating if the current object is updated, otherwise
           new data array is returned
+          - returnCopy: flag indicating if in case update is False, the returned
+          array is copied
 
         Sets (only if update is True):
           - self.data: new data
@@ -644,6 +657,8 @@ class Image(object):
             if update:
                 self.inset = abs_inset
                 self.data = new_data
+            elif returnCopy:
+                new_data = new_data.copy()
 
         elif inside_full and useFull:
 
@@ -661,6 +676,8 @@ class Image(object):
                 self.data = new_data
             else:
                 self.useInset(inset=before_recover_inset, mode=u'abs')
+                if returnCopy:
+                    new_data = new_data.copy()
 
         elif expand:
 
@@ -1232,15 +1249,17 @@ class Image(object):
         return fi.file_
 
     @classmethod
-    def modify(cls, old, new, fun, fun_kwargs={}, memmap=True):
+    def modify(cls, old, new, fun, fun_kwargs={}, pass_data=False, memmap=True):
         """
         Reads an image (arg old), modifies old.data using function
         passed as arg fun and writes an image containing the modified
         data as a new image (arg new).
 
-        The function passes (arg fun) has to have signature
-          fun(Image, **fun_kwargs)
-        and to return image data (ndarray).
+        The function passes (arg fun) has to have signature:
+          fun(image, **fun_kwargs)
+        where image is an instance of this class if arg pass_data is False,
+        or ndarray if arg pass_data is True. In both cases, the function
+        returns image data (ndarray).
 
         Meant for mrc files. The new image will have exactly the same
         header as the old image, except for the shape, length and
@@ -1253,6 +1272,8 @@ class Image(object):
           - old: old mrc image file name
           - new: new (subtomogram) mrc image file name
           - fun: function that takes old.data as an argument
+          - pass_data: flag indicating if the first argument passed
+          to fun is data (ndarray), if False it should be Image object
           - memmap: if True, read memory map instead of the whole image
 
         Returns an instance of this class that holds the new image. This
@@ -1269,7 +1290,10 @@ class Image(object):
         image = cls.read(file=old, memmap=memmap)
 
         # modify data
-        data = fun(image, **fun_kwargs)
+        if pass_data:
+            data = fun(image.data, **fun_kwargs)
+        else:
+            data = fun(image, **fun_kwargs)
 
         # write new (modified data)
         image_io.setData(data=data)

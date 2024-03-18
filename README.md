@@ -25,6 +25,7 @@ In addition, some parts depend on:
 
 + Matplotlib
 + Pandas
++ PySeg: make sure Pyto comes before PySeg in PYTHONPATH because PySeg contains an older version of Pyto 
 
 
 ### Installation ###

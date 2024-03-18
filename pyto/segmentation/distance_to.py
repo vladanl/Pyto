@@ -432,11 +432,3 @@ class DistanceTo(Features):
         if coordinates:
             return distances, coords
         return distances
-
-
-
-            
-
-        
-
-            

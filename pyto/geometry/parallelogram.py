@@ -210,8 +210,8 @@ class Parallelogram(object):
 
     def is_equivalent(self, other):
         """
-        Check if this object is equivalend to the specified Parallelogram
-        (arg paral).
+        Check if this object is equivalent to the specified Parallelogram
+        (arg other).
 
         By definition, parallelograms are equivalent if they have the same
         corners.

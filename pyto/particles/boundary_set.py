@@ -3,7 +3,7 @@ Contains class BoundarySet for manipulation of boundaries associated
 with label particle sets.
 
 Label particles are simply particles (segments) extracted from label files.
-Boundary particles show boundaries at the same positions as label particles.  
+Boundary particles have boundaries at the same positions as label particles.  
 
 # Author: Vladan Lucic (Max Planck Institute for Biochemistry)
 # $Id$

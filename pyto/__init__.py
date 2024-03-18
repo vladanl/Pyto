@@ -20,11 +20,9 @@ from . import analysis
 from . import geometry
 from . import tomo
 from . import correlative
-try:
-    from . import particles
-except (ModuleNotFoundError, ImportError):
-    pass
+from . import particles
 from . import spatial
+from . import projects
 
 from . import scripts
 

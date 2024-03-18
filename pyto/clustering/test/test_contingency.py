@@ -18,7 +18,7 @@ import pandas as pd
 
 from pyto.clustering.contingency import Contingency
 
-class TestCluster(np_test.TestCase):
+class TestContingency(np_test.TestCase):
     """
     """
 
@@ -114,5 +114,5 @@ class TestCluster(np_test.TestCase):
 
         
 if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestCluster)
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestContingency)
     unittest.TextTestRunner(verbosity=2).run(suite)

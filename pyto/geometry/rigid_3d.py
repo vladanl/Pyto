@@ -1257,7 +1257,7 @@ class Rigid3D(Affine):
 
         Arguments:
           - angles: (phi, theta, psi), where rotation by phi is applied first 
-          and by psi last
+          and by psi last [rad]
           - init: Euler angles convention (mode) in which arg. angles are
           specified
           - final: Euler angles convention (mode) to which arg. angles
@@ -1496,6 +1496,75 @@ class Rigid3D(Affine):
         """
         return np.mod(angle - low, 2*np.pi) + low
 
+    @classmethod
+    def normalize_euler(cls, angles, range='0_2pi', degree=False):
+        """Brings Euler angles to a common range.
+
+        Theta is brought to [0, pi].
+
+        Phi and psi are converted to [0, 2*pi] if arg range is '0_2pi', or to 
+        [-pi, pi] if arg range is '-pi_pi'
+
+        Arguments:
+          - angles: (phi, theta, psi) Euler angles [rad]
+          - range: phi and psi angular range, '0_2pi' or '-pi_pi'
+          - degree: flag indicating if angles are in degrees (default False)
+
+        Returns (phi, theta psi): converted angles
+        """
+        
+        if degree:
+            angles = np.asarray(angles) * np.pi / 180
+
+        phi, theta, psi = angles
+        theta = np.mod(theta, 2*np.pi)
+        if theta > np.pi:
+            theta = 2 * np.pi - theta
+            phi += np.pi
+            psi += np.pi
+        phi = np.mod(phi, 2*np.pi)
+        psi = np.mod(psi, 2*np.pi)
+
+        if range == '0_2pi':
+            pass
+        elif range == '-pi_pi':
+            if phi > np.pi:
+                phi -= 2 * np.pi
+            if psi > np.pi:
+                psi -= 2 * np.pi
+        else:
+            raise ValueError(
+                f"Arg range can be '0_2pi' or '-pi_pi', but not {range}")
+        result = np.array([phi, theta, psi])
+
+        if degree:
+            result = 180 * result / np.pi
+
+        return result
+
+    @classmethod
+    def reverse_euler(cls, angles, degree=False, range='0_2pi'):
+        """Finds Euler angles opposite to the specified
+
+        """
+        if degree:
+            angles = np.asarray(angles) * np.pi / 180
+
+        # calculate
+        phi, theta, psi = angles
+        phi_res = phi + np.pi
+        theta_res = np.pi - theta
+        psi_res = psi + np.pi
+
+        # normalize
+        result = Rigid3D.normalize_euler(
+            angles=(phi_res, theta_res, psi_res), range=range, degree=False)
+
+        if degree:
+            result = 180 * result / np.pi
+
+        return result
+   
     @classmethod
     def euler_to_ck(cls, angles, mode='zxz_ex_active'):
         """

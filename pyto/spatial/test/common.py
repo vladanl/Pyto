@@ -9,6 +9,8 @@ Common stuff for tests
 __version__ = "$Revision$"
 
 import numpy as np
+import scipy as sp
+from scipy.spatial.distance import cdist
 import pandas as pd
 
 
@@ -177,4 +179,199 @@ def make_coloc_tables_ac(random_stats=False):
         raise ValueError("Sorry, not implemented for random_stats=True")
 
     return data, data_tomo
+
+def make_coloc_tables_1tomo_2d():
+    """Makes colocalization tables for 2d data of one tomo.
+
+    The data underlying these tables is in test_coloc_core because
+    that is where the creation of these tables is tested in more detail. 
+    """
+
+    # particle patterns and distances
+    global pattern_0, pattern_1, pattern_2, dist_0_0, dist_0_1, dist_0_2
+    global pattern_none, pattern_empty 
+    pattern_0 = np.array(
+        [[1, 1], [11, 1], [11, 20], [1, 20], [1, 15]])
+    pattern_1 = np.array(
+        [[1, 2], [6, 1], [11, 2], [11, 4], [18, 20], [4, 20]])
+    pattern_2 = np.array(
+        [[4, 1], [13, 1], [1, 25]])
+    dist_0_0 = cdist(pattern_0, pattern_0)
+    dist_0_1 = cdist(pattern_0, pattern_1)
+    dist_0_2 = cdist(pattern_0, pattern_2)
+    pattern_none = None
+    pattern_empty = np.array([[]])
+
+    # d = 2
+    global coloc2_d2, particles2_d2, coloc2_indices_d2, particles2_indices_d2
+    global coloc2_n_d2, particles2_n_d2
+    global coloc3_d2, particles3_d2, coloc3_indices_d2, particles3_indices_d2
+    global coloc3_n_d2, particles3_n_d2
+    coloc2_d2 = [
+        [True, True, False, False, False], [False, False, False, False, False]]
+    particles2_d2 = [
+        [[True, True, False, False, False],
+         [True, False, True, False, False, False]],
+        [[False, False, False, False, False], [False, False, False]]]
+    coloc2_indices_d2 = [[0, 1], []]
+    particles2_indices_d2 = [[[0, 1], [0, 2]], [[], []]]
+    coloc2_n_d2 = [2, 0]
+    particles2_n_d2 = [[2, 2], [0, 0]]
+    coloc3_d2 = np.array([False, False, False, False, False])
+    particles3_d2 = [
+        np.array([False, False, False, False, False]),
+        np.array([False, False, False, False, False, False]),
+        np.array([False, False, False])]
+    coloc3_indices_d2 = []
+    particles3_indices_d2 = [[], [], []]
+    coloc3_n_d2 = 0
+    particles3_n_d2 = [0, 0, 0]
+
+    # d = 2 less_eq
+    global coloc2_d2_le, particles2_d2_le, coloc2_indices_d2_le
+    global particles2_indices_d2_le, coloc2_n_d2_le, particles2_n_d2_le
+    global coloc3_d2_le, particles3_d2_le, coloc3_indices_d2_le
+    global particles3_indices_d2_le, coloc3_n_d2_le, particles3_n_d2_le
+    coloc2_d2_le = [
+        [True, True, False, False, False], [False, True, False, False, False]]
+    particles2_d2_le = [
+        [[True, True, False, False, False],
+         [True, False, True, False, False, False]],
+        [[False, True, False, False, False], [False, True, False]]]
+    coloc2_indices_d2_le = [[0, 1], [1]]
+    particles2_indices_d2_le = [[[0, 1], [0, 2]], [[1], [1]]]
+    coloc2_n_d2_le = [2, 1]
+    particles2_n_d2_le = [[2, 2], [1, 1]]
+    coloc3_d2_le = np.array([False, True, False, False, False])
+    particles3_d2_le = [
+        np.array([False, True, False, False, False]),
+        np.array([False, False, True, False, False, False]),
+        np.array([False, True, False])]
+    coloc3_indices_d2_le = [1]
+    particles3_indices_d2_le = [[1], [2], [1]]
+    coloc3_n_d2_le = 1
+    particles3_n_d2_le = [1, 1, 1]
+
+    # d = 4
+    global coloc2_d4, particles2_d4, coloc2_indices_d4, particles2_indices_d4
+    global coloc2_n_d4, particles2_n_d4
+    global coloc3_d4, particles3_d4, coloc3_indices_d4, particles3_indices_d4
+    global coloc3_n_d4, particles3_n_d4
+    coloc2_d4 = [
+        [True, True, False, True, False], [True, True, False, False, False]]
+    particles2_d4 = [
+        [[True, True, False, True, False],
+         [True, False, True, True, False, True]],
+        [[True, True, False, False, False], [True, True, False]]]
+    coloc2_indices_d4 = [[0, 1, 3], [0, 1]]
+    particles2_indices_d4 = [
+        [[0, 1, 3], [0, 2, 3, 5]], [[0, 1], [0, 1]]]
+    coloc2_n_d4 = [3, 2]
+    particles2_n_d4 = [[3, 4], [2, 2]]
+    coloc3_d4 = np.array([True, True, False, False, False])
+    particles3_d4 = [
+        np.array([True, True, False, False, False]),
+        np.array([True, False, True, True, False, False]),
+        np.array([True, True, False])]
+    coloc3_indices_d4 = [0, 1]
+    particles3_indices_d4 = [[0, 1], [0, 2, 3], [0, 1]]
+    coloc3_n_d4 = 2
+    particles3_n_d4 = [2, 3, 2]
+
+    # d = 6
+    global coloc2_d6, particles2_d6, coloc2_indices_d6, particles2_indices_d6
+    global coloc2_n_d6, particles2_n_d6
+    global coloc3_d6, particles3_d6, coloc3_indices_d6, particles3_indices_d6
+    global coloc3_n_d6, particles3_n_d6
+    coloc2_d6 = [
+        [True, True, False, True, True], [True, True, False, True, False]]
+    particles2_d6 = [
+        [[True, True, False, True, True],
+         [True, True, True, True, False, True]],
+        [[True, True, False, True, False], [True, True, True]]]
+    coloc2_indices_d6 = [[0, 1, 3, 4], [0, 1, 3]]
+    particles2_indices_d6 = [
+        [[0, 1, 3, 4], [0, 1, 2, 3, 5]], [[0, 1, 3], [0, 1, 2]]]
+    coloc2_n_d6 = [4, 3]
+    particles2_n_d6 = [[4, 5], [3, 3]]
+    coloc3_d6 = np.array([True, True, False, True, False])
+    particles3_d6 = [
+        np.array([True, True, False, True, True]),
+        np.array([True, True, True, True, False, True]),
+        np.array([True, True, True])]
+    coloc3_indices_d6 = [0, 1, 3]
+    particles3_indices_d6 = [[0, 1, 3, 4], [0, 1, 2, 3, 5], [0, 1, 2]]
+    coloc3_n_d6 = 3
+    particles3_n_d6 = [4, 5, 3]
+
+    # d = 8
+    global coloc2_d8, particles2_d8, coloc2_indices_d8, particles2_indices_d8
+    global coloc2_n_d8, particles2_n_d8
+    global coloc3_d8, particles3_d8, coloc3_indices_d8, particles3_indices_d8
+    global coloc3_n_d8, particles3_n_d8
+    coloc2_d8 = [
+        [True, True, True, True, True], [True, True, False, True, False]]
+    particles2_d8 = [
+        [[True, True, True, True, True], [True, True, True, True, True, True]],
+        [[True, True, False, True, False], [True, True, True]]]
+    coloc2_indices_d8 = [[0, 1, 2, 3, 4], [0, 1, 3]]
+    particles2_indices_d8 = [
+        [[0, 1, 2, 3, 4], [0, 1, 2, 3, 4, 5]], [[0, 1, 3], [0, 1, 2]]]
+    coloc2_n_d8 = [5, 3]
+    particles2_n_d8 = [[5, 6], [3, 3]]
+    coloc3_d8 = np.array([True, True, False, True, False])
+    particles3_d8 = [
+        np.array([True, True, False, True, True]),
+        np.array([True, True, True, True, False, True]),
+        np.array([True, True, True])]
+    coloc3_indices_d8 = [0, 1, 3]
+    particles3_indices_d8 = [[0, 1, 3, 4], [0, 1, 2, 3, 5], [0, 1, 2]]
+    coloc3_n_d8 = 3
+    particles3_n_d8 = [4, 5, 3]
+
+    # region image
+    global region, size_region
+    region = np.zeros(shape=(50, 50), dtype=int)
+    region[:30, :30] = 4
+    size_region = 900
+
+    # columns
+    global n_columns_3, n_columns_0_1, n_columns_0_2
+    global size_col_3, size_col_0_1, size_col_0_2
+    n_columns_3 = [0, 2, 2, 2]
+    n_columns_0_1 = [2, 3, 2, 2]
+    n_columns_0_2 = [0, 2, 2, 2]
+    size_col_3 = [0, 57, 183, 279]
+    size_col_0_1 = [18, 90, 218, 458]
+    size_col_0_2 = [0, 57, 183, 279]
+        
+    # dataframes
+    global pat0_pat1_pat2_data, pat0_pat1_data, pat0_pat2_data
+    pat0_pat1_pat2_data = pd.DataFrame({
+        'distance': [2, 4, 6, 8], 'id': 'tomo', 'n_subcol': [0, 2, 3, 3],
+        'n_pattern0_subcol': [0, 2, 4, 4], 'n_pattern1_subcol': [0, 3, 5, 5],
+        'n_pattern2_subcol': [0, 2, 3, 3], 'n_pattern0_total': 5, 
+        'n_pattern1_total': [6, 6, 6, 6], 'n_pattern2_total': [3, 3, 3, 3],
+        'size_region': 900, 'n_col': [0, 2, 2, 2],
+        'size_col': size_col_3})
+
+    pat0_pat1_data = pd.DataFrame({
+        'distance': [2, 4, 6, 8], 'id': 'tomo', 'n_subcol': [2, 3, 4, 5],
+        'n_pattern0_subcol': [2, 3, 4, 5], 'n_pattern1_subcol': [2, 4, 5, 6],
+        'n_pattern0_total': 5,  'n_pattern1_total': [6, 6, 6, 6],
+        'size_region': 900, 'n_col': [2, 3, 2, 2],
+        'size_col': size_col_0_1})
+
+    pat0_pat2_data = pd.DataFrame({
+        'distance': [2, 4, 6, 8], 'id': 'tomo', 'n_subcol': [0, 2, 3, 3],
+        'n_pattern0_subcol': [0, 2, 3, 3], 'n_pattern2_subcol': [0, 2, 3, 3],
+        'n_pattern0_total': 5, 'n_pattern2_total': [3, 3, 3, 3],
+        'size_region': 900, 'n_col': [0, 2, 2, 2],
+        'size_col': size_col_0_2})
+
+    return (pattern_0, pattern_1, pattern_2, dist_0_1, dist_0_2,
+            pat0_pat1_pat2_data, pat0_pat1_data, pat0_pat2_data)
+
+
+
 

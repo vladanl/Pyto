@@ -14,32 +14,188 @@ import os
 import re
 import functools
 import pickle
+from collections.abc import Iterable
 
 import numpy as np
 import scipy as sp
 import pandas as pd 
+import matplotlib as mpl
+import matplotlib.pyplot as plt
 
 import pyto
 
     
 ###########################################################
 #
-# Basic utility functions
+# Functions that manipulate colocalization and particle set names.
 #
 
-def get_layers(name):
+def get_layers(name, mode='columns_2021'):
     """
     Extracts layer names from the colocalization name (arg name)
 
+    Depreciated: The same as get_names() except here default mode is 
+    'columns_2021', left for backcompatibility.
+
+    In mode 'munc13' arg name is simply split by '_'. Mode 'columns_2021'
+    does the same but does not split 'ves_ap'. 
+
+    Example valid for modes 'columns_2021' and 'munc13':
+      get_layers(name='X_Y_Z') -> ['X', 'Y', 'Z']
+
+    Arguments:
+      - name: (str) colocalization name
+      - mode: operation mode, currently implemented 'columns_2021' (defalut
+      because of backcompatibility) and 'munc13'
+
     Returns: list of layer names
     """
-    layers = name.split('_')
-    if 'ves' in layers:
-        ves_ind = layers.index('ves')
-        if layers[ves_ind+1] == 'ap':
-            layers[ves_ind] = 'ves_ap'
-            layers.remove('ap')
+    return get_names(name=name, mode=mode)
+
+def get_names(name, mode='_'):
+    """
+    Extracts particle set names from the colocalization name (arg name).
+
+    In mode 'munc13' arg name is simply split by '_'. Mode 'columns_2021'
+    does the same but does not split 'ves_ap'. Otherwise, mode can be any 
+    string, which is used to split arg name.
+
+    Examples:
+      get_names(name='X_Y_Z', mode='_') -> ['X', 'Y', 'Z']
+      get_names(name='X_Y_Z', mode='columns_2021') -> ['X', 'Y', 'Z']
+      get_names(name='X-1__Y-2__Z-3', mode='__') -> ['X-1', 'Y-2', 'Z-3']
+
+    Arguments:
+      - name: (str) colocalization name
+      - mode: operation mode, currently implemented '_' (default) and 
+      'columns_2021'
+
+    Returns: layer names:
+      - if one name is given, returns a list with 2-coloc names
+      - if multiple names are given (arg name is a list of strings), returns
+      a list of the same length as name, where elements of the returned list
+      are lists as above that correspond to elements of arg name 
+    """
+
+    if (mode == 'columns_2021'):
+        layers = name.split('_')
+        if 'ves' in layers:
+            ves_ind = layers.index('ves')
+            if layers[ves_ind+1] == 'ap':
+                layers[ves_ind] = 'ves_ap'
+                layers.remove('ap')
+
+    else:
+        layers = name.split(mode)
+        
+    #else:
+    #    raise ValueError(
+    #        f"Mode {mode} was not undertood, implemented values are "
+    #        + "'columns_2021' (default) and '_'.")
+
     return layers
+
+def make_name(names, suffix, mode='_'):
+    """Makes colocalization name.
+
+    For example:
+      make_name(names=['X', 'Y', 'Z'], suffix='data') -> 'X_Y_Z_data'
+      make_name(names=['X', 'Y', 'Z'], suffix=None) -> 'X_Y_Z'
+
+    Arguments:
+      - names: (list) names of individual particle sets
+      - suffix: suffix added at the end of the colocalization name
+
+    Returns colocalization name
+    """
+
+    if suffix is not None:
+        result = mode.join(names + [suffix])
+    else:
+        result = mode.join(names)
+    return result
+
+def make_full_coloc_names(names, suffix, mode='_'):
+    """Makes full colocalization names:
+
+    For example:
+      make_full_coloc_names(['setX', 'setY', 'setZ'], suffix='data')
+      -> 'setX_setY_setZ_data', 'setX_setY_data', 'setX_setZ_data']
+      make_full_coloc_names(['setX', 'setY', 'setZ'], suffix=None)
+      -> 'setX_setY_setZ', 'setX_setY', 'setX_setZ']
+
+    Arguments:
+      - names: (list) point pattern (particle set) names
+      - suffix: suffix, it's preceeded by '_' unles None
+    """
+
+    name_3 = make_name(names=names, suffix=suffix)
+    if len(names) > 2:
+        if suffix is not None:
+            names_2 = [mode.join([names[0], nam, suffix]) for nam in names[1:]]
+        else:
+            names_2 = [mode.join([names[0], nam]) for nam in names[1:]]
+    else:
+        names_2 = []
+        
+    return [name_3] + names_2
+
+def get_2_names(name, order=None, mode='_', by_order=False):
+    """Make 2-colocalization names from a 3- or higher colocalization.
+
+    If arg order is None, the standard 2-colocalizations are made, for example:
+
+      get_2_names(name='X_Y_Z') -> ['X_Y', 'X_Z']
+
+    Setting arg order allows making other pairs, for example:
+
+      get_2_names(name='X_Y_Z', order=((2, 0), (2, 1)) -> ['Z_Y', 'Z_Y'] 
+
+    If multiple 3-colocalization names are given, the order of elemnts of 
+    the returned value depends on arg by_order:
+
+      get_2_names(name=['X_Y_Z', '1_2_3'], by_order=False) 
+          -> [['X_Y', 'X_Z'], ['1_2', '1_3']]
+      get_2_names(name=['X_Y_Z', '1_2_3'], by_order=True) 
+          -> [['X_Y', '1_2'], ['X_Z', '1_3']]
+
+    Arguments:
+      - name: one or more colocalization names, where each name is composed of
+      3 or more particle set names
+      - order: (list of lists of ints) defins how the set names are combined
+      - mode: (str) separator between particle set names, such as '_' or '__'
+      - by_order: (bool, default False) determined the order of returned 
+      elements when more than one colocalization name is given
+    """
+
+    # figure out name
+    if isinstance(name, str):
+        name = [name]
+        one_name = True
+    else:
+        one_name = (True if len(name) == 1 else False)
+        #one_name = False
+        
+    results = []
+    for na in name:
+        current = []
+        layers = get_names(na, mode=mode)
+        if len(layers) < 3:
+            raise ValueError(
+                "This function requires a 3- or higher colocalization")
+        if order is None:
+            order = [(0, ind) for ind in range(1, len(layers))]
+        for comb in order:
+            pair = [layers[comb[0]], layers[comb[1]]]
+            current.append(make_name(names=pair, suffix=None, mode=mode))
+        results.append(current)
+        
+    if one_name:
+        results = results[0]
+    elif by_order:
+        results = np.asarray(results).transpose()
+        
+    return results
 
 
 ###########################################################
@@ -92,7 +248,7 @@ def get_raw_coloc_bases(
       - n-sim: arg n_sim, that is number of simulations (e.g. 200)
 
     Arguments:
-      - name: colocalization case (layers that are colocalized), such as 
+      - name: colocalization name (layers that are colocalized), such as 
       'setx_sety_setz'
       - distances: list of distances in nm
       - mode: defines the way the path is made (see get_raw_coloc_bases() doc)
@@ -145,7 +301,12 @@ def get_tomo_id(path, mode):
       path = 'dir1/dir2/foo_syn_tomoid_bin-foo.ext'
       tomo id = tomoid
 
-    all other cases:
+    mode='simple_examples':
+      path = 'dir1/dir2/foo_tomo-tomoid_seg-foo.ext'
+      tomo id = tomoid
+
+    all other cases ('method-1', 'method-1_cr-same', 'method-1_cr-double'
+    and 'method-1_cr-double_v2'):
       path = 'dir1/dir2/foo_tomoid1_tomoid2_foo.ext'
       tomo id = tomoid1_tomoid2
 
@@ -169,6 +330,14 @@ def get_tomo_id(path, mode):
         id_like = re.split('syn_|_bin', name)[1]
         pieces = re.split('_|-', id_like)
         tomo_id = functools.reduce(lambda a, b: a + '_' + b, pieces)
+
+    elif mode == 'simple_examples':
+        name = os.path.split(path)[1]
+        tomo_id = re.split('tomo-|_seg', name)[1]
+
+    else:
+        raise ValueError(f"Mode {mode} was not understood") 
+        
 
     return tomo_id   
 
@@ -207,12 +376,6 @@ def set_read_parameters(name, distances, in_path, mode, n_sim=None):
 
     # parse name
     layers = get_layers(name=name)
-    #layers = name.split('_')
-    #if 'ves' in layers:
-    #    ves_ind = layers.index('ves')
-    #    if layers[ves_ind+1] == 'ap':
-    #        layers[ves_ind] = 'ves_ap'
-    #        layers.remove('ap')
     n_layers = len(layers)
 
     # set pickle paths
@@ -374,11 +537,38 @@ def select_rows(data, ids=None, distance=None):
 
     return data
 
+def get_aggregate_columns(columns):
+    """Returns columns needed for aggregate() in ColocLite
+
+    Array columns are those that end with 'all'.
+
+    Add columns are 'n_col', 'size_col', 'size_region', and those ending 
+    with 'subcol' or 'total'.
+
+    Argument:
+      - columns: (list) columns from wich the add and array columns are 
+      determined
+
+    Returns (add_columns, array_columns):
+      - add columns: (list) names of columns where individual tomo values
+      should be added to get the value for all tomos together
+      - array_columns: (list) names of columns where each element is 
+      an array (results of random simulations, for example)
+    """
+    array_columns = [col for col in columns if col.endswith('all')]
+    add_columns = [
+        col for col in columns
+        if (col.endswith('subcol') or col.endswith('total') or (col == 'n_col')
+            or (col == 'size_col') or (col == 'size_region'))]
+    return add_columns, array_columns
+
 def aggregate(
         data, distance, add_columns, array_columns, p_values=True,
-        p_func=np.greater, random_stats=True):
+        p_func=np.greater, random_stats=True,
+        random_suff=['random', 'random_alt', 'random_combined'],
+        p_suff=['normal', 'other', 'combined']):
     """
-    Calculates data for all tomograms (synapses) together by combining the 
+    Calculates data for all tomograms (synapses) together by combining 
     data for individual tomograms.
 
     The values in columns specified by arg add_columns are added, while 
@@ -410,6 +600,10 @@ def aggregate(
       - n_subcol_random_combined_{mean, std): Stats where the two random 
       simulation types are taken together
 
+    Note: Column names mentioned in the above two paragraphs are for the 
+    default values of args random_suff and p_suff. Consequently, they are
+    changed if the corresponding arguments are set to other values.
+
     Arguments:
       - data: (pandas.DataFrame) table containing data for each tomogram
       separately
@@ -424,6 +618,9 @@ def aggregate(
       - p_values: flag indication if p_values should be calculated
       - random_stats: flag indicating whether basic stats are calculated
       for random simulations
+      - random_suff: suffixes for random data (default 
+      ['random', 'random_alt, random_combined']
+      - p_suff: suffixes for p_values (default ['normal', 'other', 'combined'])
 
     Returns: (pandas.DataFrame) data table containg data for all 
     synapses together
@@ -435,12 +632,13 @@ def aggregate(
         distance.sort()
         
     # multiple distances
-    if isinstance(distance, (list, tuple, np.ndarray)):
+    if isinstance(distance, Iterable):
         for dist in distance:
             dist_row = aggregate(
                 data=data, distance=dist, add_columns=add_columns,
                 array_columns=array_columns, p_values=p_values, p_func=p_func,
-                random_stats=random_stats)
+                random_stats=random_stats,
+                random_suff=random_suff, p_suff=p_suff)
             try:
                 result = pd.concat([result, dist_row], ignore_index=True)
             except NameError:
@@ -472,8 +670,13 @@ def aggregate(
     if p_values:
 
         # remove rows where experimental data nan
-        random = data_tomo[
-            ['n_subcol', 'n_subcol_random_all', 'n_subcol_random_alt_all']]
+        if len(random_suff) > 1:
+            random = data_tomo[
+                ['n_subcol', f'n_subcol_{random_suff[0]}_all',
+                 f'n_subcol_{random_suff[1]}_all']]
+        else:
+             random = data_tomo[
+                ['n_subcol', f'n_subcol_{random_suff[0]}_all']]
         bad_tomos = [
             index for index, row in random.iterrows() 
             if np.isnan(row['n_subcol'])]
@@ -483,37 +686,43 @@ def aggregate(
         exp = random['n_subcol'].sum()
 
         # calculate fractions standard
-        random_column = 'n_subcol_random_all'
+        random_column = f'n_subcol_{random_suff[0]}_all'
         random_total = np.vstack(
             np.array(random[random_column])).sum(axis=0)
         n_good = p_func(exp, random_total).sum()
-        result['p_subcol_normal'] = n_good / random_total.shape[0]
+        result[f'p_subcol_{p_suff[0]}'] = n_good / random_total.shape[0]
 
         # calculate fractions other
-        random_column = 'n_subcol_random_alt_all'
-        random_alt_total = np.vstack(
-            np.array(random[random_column])).sum(axis=0)
-        n_good_alt = p_func(exp, random_alt_total).sum()
-        result['p_subcol_other'] = n_good_alt / random_alt_total.shape[0]
+        if len(random_suff) > 1:
+            random_column = f'n_subcol_{random_suff[1]}_all'
+            random_alt_total = np.vstack(
+                np.array(random[random_column])).sum(axis=0)
+            n_good_alt = p_func(exp, random_alt_total).sum()
+            result[f'p_subcol_{p_suff[1]}'] = (
+                n_good_alt / random_alt_total.shape[0])
 
-        # calculate fractions combined
-        result['p_subcol_combined'] = (
-            n_good + n_good_alt) / float(
-            random_total.shape[0] + random_alt_total.shape[0])
+            # calculate fractions combined
+            result[f'p_subcol_{p_suff[2]}'] = (
+                n_good + n_good_alt) / float(
+                    random_total.shape[0] + random_alt_total.shape[0])
 
     # calculate statistics on random
     if random_stats:
  
         result, _ = get_random_stats(
-            data=result, data_syn=data_tomo, column='n_subcol_random_all',
-            out_column='n_subcol_random', combine=False)
-        result, _ = get_random_stats(
-            data=result, data_syn=data_tomo, column='n_subcol_random_alt_all', 
-            out_column='n_subcol_random_alt', combine=False)
-        result, _ = get_random_stats(
             data=result, data_syn=data_tomo,
-            column=['n_subcol_random_all', 'n_subcol_random_alt_all'],
-            out_column='n_subcol_random_combined', combine=True)
+            column=f'n_subcol_{random_suff[0]}_all',
+            out_column=f'n_subcol_{random_suff[0]}', combine=False)
+        if len(random_suff) > 1:
+            result, _ = get_random_stats(
+                data=result, data_syn=data_tomo,
+                column=f'n_subcol_{random_suff[1]}_all', 
+                out_column=f'n_subcol_{random_suff[1]}', combine=False)
+            result, _ = get_random_stats(
+                data=result, data_syn=data_tomo,
+                column=[f'n_subcol_{random_suff[0]}_all',
+                        f'n_subcol_{random_suff[1]}_all'],
+                out_column=f'n_subcol_{random_suff[2]}', combine=True)
 
     return result
 
@@ -562,6 +771,9 @@ def get_random_stats(
       - column: list of column names of random simulation data
       - out_column: root name of the column where the results are added,
       - combine: flag indicating if random simulation types need to be combined
+
+    Returns (data, data_syn): modified combined and individual tomo data
+    tables, respectively
     """
 
     for dist in data.distance:
@@ -687,7 +899,9 @@ def get_fraction_syn(data):
     result = get_fraction_syn(data=data)
     return result
     
-def get_fraction_random(data, p_func=np.greater):
+def get_fraction_random(
+        data, p_func=np.greater, random_suff=['random', 'random_alt'],
+        p_suff=['normal', 'other', 'combined']):
     """
     Calculates p-value based on the comparison of experimental and 
     data from multiple simulations.
@@ -706,52 +920,57 @@ def get_fraction_random(data, p_func=np.greater):
 
     The specified data table has to contain the following columns:
       - n_subcol: experimental data (ove value)
-      - n_subcol_random_all: data from one simulation type (each element
-      has to be a list containing values for different simulations
-      - n_subcol_random_alt_all: like n_subcol_random_all but for the other
+      - n_subcol_+random_suff[0]+_all: data from one simulation type (each 
+      element has to be a list containing values for different simulations
+      - n_subcol_+random_suff[1]+_all: like previous but for the other
       simulation type
     Consequently, this function is meant to be applied to individual tomos
     tables because the combined tomos tables usually do not have these
     columns.
 
     The following columns are added to the resulting table:
-      - p_subcol_normal: p-values for the first simulation type
-      - p_subcol_other: p-values for the second simulation type
-      - p_subcol_combined: p-values where the two simylation types are 
+      - p_subcol+p_suff[0]: p-values for the first simulation type
+      - p_subcol+p_suff[1]: p-values for the second simulation type
+      - p_subcol+p_suff[2]: p-values where the two simylation types are 
       combined
 
     Arguments:
       - data: (pandas.DataFrame) table containing experimental and random 
       simulation values for each tomogram separately
+      - p_func: function that takes two array arguments like np.greater, 
+      np.greater-equal, ...  and returns a boolean array.
+      - random_suff: suffixes for random data (default ['random', 'random_alt']
+      - p_suff: suffixes for p_values (default ['normal', 'other', 'combined'])
 
      Returns:
       - data: (pandas.DataFrame) table where the fractions are added as 
       additional columns for each tomogram separately
-      - p_func: function that takes two array arguments like np.greater, 
-      np.greater-equal, ...  and returns a boolean array.
    """
 
     # standard random
     random, n_good, n_random = get_fraction_single(
-        data=data, random_column='n_subcol_random_all',
-        exp_column='n_subcol', fraction_column='p_subcol_normal',
+        data=data, random_column=f'n_subcol_{random_suff[0]}_all',
+        exp_column='n_subcol', fraction_column=f'p_subcol_{p_suff[0]}',
         p_func=p_func)
 
     # alternative random
-    random_alt, n_good_alt, n_random_alt = get_fraction_single(
-        data=data, random_column='n_subcol_random_alt_all',
-        exp_column='n_subcol', fraction_column='p_subcol_other',
-        p_func=p_func)
+    if len(random_suff) > 1:
+        random_alt, n_good_alt, n_random_alt = get_fraction_single(
+            data=data, random_column=f'n_subcol_{random_suff[1]}_all',
+            exp_column='n_subcol', fraction_column=f'p_subcol_{p_suff[1]}',
+            p_func=p_func)
 
     # add fractions to data
-    data['p_subcol_normal'] = random['p_subcol_normal'] 
-    data['p_subcol_other'] = random_alt['p_subcol_other'] 
+    data[f'p_subcol_{p_suff[0]}'] = random[f'p_subcol_{p_suff[0]}'] 
+    if len(random_suff) > 1:
+        data[f'p_subcol_{p_suff[1]}'] = random_alt[f'p_subcol_{p_suff[1]}'] 
 
-    # combined random
-    fraction_good_combined = (
-        (n_good + n_good_alt) / float(n_random + n_random_alt))
-    random['p_subcol_combined'] = fraction_good_combined
-    data['p_subcol_combined'] = random['p_subcol_combined']
+    # combined random       
+    if len(random_suff) > 1:
+        fraction_good_combined = (
+            (n_good + n_good_alt) / float(n_random + n_random_alt))
+        random[f'p_subcol_{p_suff[2]}'] = fraction_good_combined
+        data[f'p_subcol_{p_suff[2]}'] = random[f'p_subcol_{p_suff[2]}']
 
     return data
 
@@ -812,3 +1031,527 @@ def get_fraction_single(
 
     return random, n_good, n_random    
 
+
+####################################################################
+#
+# Plotting and related functions
+#
+
+def make_nice_label(label, sets):
+    """Makes nice looking labels for colocalization names. 
+
+    Arg label is split in pieces separated by '_' and each piece is 
+    substituted by the corresponding value of arg sets.
+
+    Arguments:
+      - label: (str) typically a colocalization name (e.g. 'pre_tether_post')
+      - sets: (dict) substitution rules in the form of {'old_piece: 'nice_piece'}
+
+    Returns nice looking label
+    """
+
+    # check label only one name 
+    if isinstance(label, (list, tuple)):
+        if len(label) == 1:
+            label = label[0]
+        else:
+            raise ValueError(
+                f"Argument label {label} should contain only one name")
+
+    # if mossible, replace the whole label, otherwise peaces
+    nice = sets.get(label, None)
+    if nice is not None:
+        new_label = nice
+    else:
+        psets = get_layers(label)
+        nice_sets = [sets.get(lay, lay) for lay in psets]
+        new_label = ' - '.join(nice_sets)
+    
+    #first = True
+    #new_label = ''
+    #for lay in psets:
+    #    if not first:
+    #        new_label += ' - '
+    #    new_label += sets.get(lay, lay)
+    #    first = False
+        
+    return new_label
+
+def table_generator(coloc=None, name=None, groups=None, single=False):
+    """Generator that makes an iterator over colocalization results.
+
+    Each element returned by the iterator contains a label and a 
+    coloclization table (pandas.DataFrame) where rows correspond to 
+    colocalization distances.
+
+    The following cases are implemented:
+
+    1) One or more colocalization names, all tomos together
+
+    Arg coloc specified, name contains one or more colocalization 
+    names, single=False: The returned iterator contains a table 
+    for each coloclization specified (arg name), for all tomos together.
+
+    2) One colocalization name, each tomogram separately
+
+    Arg coloc specified, name is one colocalization name, single=True:
+    The returned iterator contains a table for each tomo (contained in
+    colocalization data) separately.
+
+    3) One colocalization name, each group separately, DataFrame version
+
+    Arg coloc is None, arg groups is dict of labels (keys) and 
+    colocalization data as DataFrames (values). Args name and single 
+    are ignored: The returned iterator contains the specified 
+    colocalization tables (values of arg groups).
+
+    4) One colocalization name, each group separately, ColocAnalysis
+
+    Arg coloc is None, arg groups is dict of group names (keys) and 
+    colocalization data as ColocAnalysis objects (values). Arg name is 
+    a colocalization name, while arg single is ignored: The returned 
+    iterator contains the colocalization tables for the specified 
+    colocalization names, for each of the colocalizations given in arg 
+    groups. The specifeid colocalization name has to be present in all 
+    colocalization objects. 
+
+    Aguments:
+      - coloc: (ColocAnalysis) colocalization object
+      - name: one or more colocalization names
+      - groups: dictionary where keys are group names and values are the
+      corresponding colocalization tables
+      - single: Flag indication if individual tomo data is returned, used 
+      only if arg coloc is specified
+
+    Returns iterator that in each iteration returns a label and the 
+    corresponding colocalization data.
+    """
+
+    # sanity check
+    if (coloc is None or name is None) and groups is None:
+        raise ValueError(
+            "Argument groups, or both coloc and name need to be specified.")
+        
+    # figire out data arguments
+    if coloc is not None and name is not None and not single:
+        
+        # one coloc name, tomos together
+        if isinstance(name, str):
+            name = [name]
+        data_gen = (
+            (nam, getattr(coloc, nam + '_' + coloc.join_suffix))
+            for nam in name)
+                    
+    elif coloc is not None and name is not None and single:
+
+        # one coloc name, individual tomos
+        tomos_tab = getattr(coloc, name + '_' + coloc.individual_suffix)
+        data_gen = (
+            (tid, tomos_tab[tomos_tab.id == tid].sort_values(by='distance')) 
+            for tid in tomos_tab['id'].unique())
+                                                              
+    elif groups is not None:
+
+        # multiple coloc objects / tables
+        from .coloc_analysis import ColocAnalysis
+        if np.all(
+            [isinstance(value, pd.DataFrame) 
+             for value in groups.values() if value is not None]):
+            
+            # multiple coloc tables
+            data_gen = groups.items()
+            
+        elif np.all(
+            [isinstance(value, ColocAnalysis)  
+             for value in groups.values() if value is not None]):
+              
+            # multiple coloc objects
+            if name is not None and isinstance(name, str):
+                data_gen = (
+                    (gr, getattr(col, name + '_' + col.join_suffix)) 
+                    for gr, col in groups.items() if col is not None)
+            else:
+                raise ValueError(
+                    "Arg name has to be specified and it has to be a str when "
+                    + "arg groups contains colocalization objects "
+                    + "(ColocAnalysis).")
+                
+        else:
+            raise ValueError("Problem with coloc, names and groups arguments.")
+    else:
+        raise ValueError("Problem with coloc, names and groups arguments.")
+             
+    return data_gen
+            
+def plot_p(
+        coloc=None, name=None, groups=None, single=False,
+        y_var='p_subcol_combined', tomos=None, sets={}, pp=None, ax=None):
+    """Plots p-values for one colocalization. 
+
+    """
+    return plot_data(
+        coloc=coloc, name=name, groups=groups, single=single,
+        y_var=y_var, tomos=tomos, simulated={}, normalize=None,
+        sets=sets, pp=pp, ax=ax)
+        
+def plot_data(
+        coloc=None, name=None, groups=None, single=False,
+        y_var='n_subcol', tomos=None, simulated={}, normalize=None,
+        sets={}, pp=None, ax=None):
+    """Plots data for one colocalization. 
+
+    Args coloc, name, groups and single are used to select colocalization
+    data, as explained in table_generator() doc. 
+
+    If arg y_vars contain multiple values, they should be either p-values
+    related ('p_subcol_normal', 'p_subcol_other' and 'p_subcol_combined'), 
+    or other variables.
+
+    Produces nice looking plots for default values of colocalization 
+    parameters related to simulation suffixes, both for the standard 
+    simulations ('normal' and 'other') and for all random simulations
+    (see ColocLite() arg all_random and method set_simulation_suffixes().
+    """
+
+    # figure out what is plotted
+    join_coloc = False
+    if (coloc is not None) and not single:
+        join_coloc = True        
+    one_coloc = False
+    if (name is not None) and (isinstance(name, str) or len(name) == 1):
+        one_coloc = True
+        n_y_vars = 1
+    if isinstance(y_var, str):
+        y_var_list = [y_var]
+    elif len(y_var) == 1:
+        y_var_list = y_var
+        y_var = y_var_list[0]
+    else:
+        n_y_vars = len(y_var)
+        y_var_list = y_var
+
+    # figure out colors for plotting p (just to keep simulated consistent)
+    p_plot = False
+    p_vars = ['p_subcol_normal', 'p_subcol_other', 'p_subcol_combined']
+    if not set(p_vars).isdisjoint(set(y_var_list)):
+        p_plot = True
+        colors = {'p_subcol_normal': 'C0', 'p_subcol_other': 'C1'}
+        if not set(p_vars).issuperset(y_var_list):
+            raise ValueError(
+                "Arg y_vars cannot contain both p-value and other variables.")
+
+    p_var_all_random = 'p_subcol_solo'
+    if p_var_all_random in y_var_list:
+        p_plot = True
+        colors = {'p_subcol': 'C0'}
+        if len(y_var_list) > 1:
+            raise ValueError(
+                "Arg y_vars cannot contain both p-value and other variables.")
+       
+    # plotting one coloc, with simulations
+    data_simul_plot = False
+    if one_coloc and (n_y_vars == 1) and (len(simulated) > 0):
+        colors = {}
+        if 'normal' in simulated:
+            colors['normal'] = 'C0'
+        if 'alt' in simulated:
+            colors['alt'] = 'C1'
+        if 'other' in simulated:
+            colors['other'] = 'C1'
+        data_simul_plot = True
+            
+    # start plot
+    if ax is None:
+        fig, ax = plt.subplots()
+    x_var = 'distance'
+
+    # get tables according to arguments
+    data_gen = table_generator(
+        coloc=coloc, name=name, groups=groups, single=single)
+
+    # plot, loop over all 
+    for label, table in data_gen:
+
+        # skip if no data or tomo not in the list
+        if table is None:
+            continue
+        if single and (tomos is not None) and (label not in tomos):
+            continue
+
+        # normalization
+        if (normalize is None) or (not normalize):
+            area = 1
+        else:
+            area = np.pi * table.distance**2 
+        
+        label_nice = make_nice_label(label, sets=sets)
+        if n_y_vars == 1:
+
+            #try:
+                #color = pp.color.get(y_var)
+                #color = colors.get(y_var)
+            #except (AttributeError, KeyError):
+                #color = None
+
+            # plot one coloc feature
+            y_var_nice = make_nice_label(y_var, sets=sets)
+            if join_coloc and one_coloc:
+                plot_label = y_var_nice
+            else:
+                plot_label = label_nice
+            if p_plot:
+
+                # plot p-values
+                #if not single or (groups is not None):
+                ax.plot(
+                    x_var, y_var, 'x', data=table, linestyle='-',
+                    label=plot_label)
+
+            elif data_simul_plot:
+
+                # plot data other than p-values with simulations
+                ax.plot(
+                    table[x_var], (table[y_var]/area), 'o', linestyle='',
+                    color="C2", label=y_var_nice)
+                for simul_name, y_simul in simulated.items():
+                    y_simul_var = y_simul + '_mean'
+                    y_simul_err = y_simul + '_std'
+                    ax.errorbar(
+                        table.distance, table[y_simul_var]/area,
+                        yerr=table[y_simul_err]/area, 
+                        fmt='x', color=colors.get(simul_name),
+                        label=f'Simulations {simul_name}')
+
+            else:
+
+                # plot data other than p-values without simulations
+                ax.plot(
+                    table[x_var], table[y_var]/area, 'o', linestyle='',
+                    label=plot_label)
+                
+        else:
+
+            # plot multiple coloc features
+            for y_var_one in y_var:
+                y_var_nice = make_nice_label(y_var_one, sets=sets)
+                if one_coloc:
+                    plot_label = y_var_nice
+                else:
+                    plot_lab = label_nice + " " + y_var_nice
+                try:
+                    #color = pp.color.get(y_var_one)
+                    color = colors.get(y_var_one)
+                except (AttributeError, KeyError):
+                    color = None
+                ax.plot(
+                    x_var, y_var_one, 'x', data=table, linestyle='-',
+                    color=color, label=plot_label)
+                
+        distances = table[x_var].unique()
+
+    # make title
+    #if join_coloc:
+    #    if isinstance(name, str):
+    #        name = [name]
+    #    n_layers = [len(get_layers(nam)) for nam in name]
+    #    if np.all([nl == n_layers[0] for nl in n_layers]):
+    #        title_main = f"{n_layers[0]}-"
+    #    else:
+    #        title_main = ""
+    #elif coloc is not None and single:
+    #    title_main = make_nice_label(name, sets=sets) + ' '
+    #elif groups is not None:
+    #    title_main = make_nice_label(name, sets=sets) + ' '
+    if one_coloc:
+        title_main = make_nice_label(name, sets=sets)
+    elif join_coloc and (n_y_vars == 1):
+        title_main = make_nice_label(y_var, sets=sets)
+    else:
+        title_main = "Multiple colocalizations"
+
+    # p-plot limits
+    if p_plot:
+        ax.plot(
+            [distances[0], distances[-1]], [0.95, 0.95], 'k', linestyle='--')
+        ax.set_ylim(-0.05, 1.05)
+
+    # finish plot
+    ax.legend(loc='best')
+    ax.set_xlabel('Distance [nm]')
+    if p_plot:
+        ax.set_ylabel('1 - p value')
+    elif normalize is None:
+        ax.set_ylabel("Number")
+    else:
+        ax.set_label('Surface density [$1/nm^2$]')
+    ax.set_title(f'{title_main}')        
+       
+    return ax
+
+def plot_32_p(
+        name, coloc=None, groups=None, single=False,
+        y_var='p_subcol_combined', tomos=None, sets={},
+        ax=None, figsize=(15, 3)):
+    """
+    """
+    return plot_32_data(
+        name=name, coloc=coloc, groups=groups, single=single,
+        y_var=y_var, tomos=tomos, simulated={}, normalize=None,
+        sets=sets, ax=ax, figsize=figsize)
+
+def plot_32_data(
+        name, coloc=None, groups=None, single=False,
+        y_var='n_subcol', tomos=None, simulated={}, normalize=None,
+        sets={}, ax=None, figsize=(15, 3)):
+    """
+    """
+
+    # start plot
+    if ax is None:
+        fig, ax = plt.subplots(1, 3, figsize=figsize)
+
+    # plot 3-col
+    plot_data(
+        coloc=coloc, name=name, groups=groups, single=single,
+        y_var=y_var, tomos=tomos, simulated=simulated, normalize=normalize,
+        sets=sets, ax=ax[0])
+
+    # figure out 2-colocalizations
+    name_0_1, name_0_2 = get_2_names(
+        name=name, order=((0, 1), (0, 2)), by_order=True)
+        
+    # plot 2-colocalizations
+    try:
+        plot_data(
+            coloc=coloc, name=name_0_1, groups=groups, single=single,
+            y_var=y_var, tomos=tomos, simulated=simulated, normalize=normalize,
+            sets=sets, ax=ax[1])
+    except AttributeError:
+        pass
+    try:
+        plot_data(
+            coloc=coloc, name=name_0_2, groups=groups, single=single,
+            y_var=y_var, tomos=tomos, simulated=simulated, normalize=normalize,
+            sets=sets, ax=ax[2])
+    except AttributeError:
+        pass
+
+    return ax
+    
+def plot_data_old(
+        coloc, name, y_var='n_subcol', simulated={}, normalize=None, 
+        suffix='data', mode='_', sets={}, ax=None):
+    """Plots colocalization data.
+
+    Usage:
+
+      1) One or more colocalization names from a colocalization object:
+        - coloc: colocalization object
+        - name: (str or list of strings): one or more colocalization names
+
+      2) One colocalization name from a table:
+        - coloc: (pandas.DafaFrame) data for one coloc
+        - name: (str) name for the coloc
+    """
+    
+    # plot data
+    if ax is None:
+        fig, ax = plt.subplots()
+    multi_names = True
+    if isinstance(name, str):
+        name = [name]
+        multi_names = False
+
+    # figure out colors (just to keep simulated consistent)
+    if ((len(simulated) == 2) and ('normal' in simulated)
+        and (('alt' in simulated) or ('other' in simulated))):
+        colors = {'normal': 'C0', 'alt': 'C1', 'other': 'C1'}
+        n_simul = 2
+    else:
+        n_simul = 0
+        
+    for ind, nam in enumerate(name):
+        
+        # get data and area
+        if isinstance(coloc, pd.DataFrame):
+            data = coloc
+            if multi_names:
+                raise ValueError(
+                    "Because arg coloc is pandas.DataFrame, arg name "
+                    + "can only be a single colocalization name.")
+        else:
+            data = getattr(
+                coloc, make_name(names=[nam], suffix=suffix, mode=mode))
+        if normalize is None:
+            area = 1
+            y_label = "Number"
+        elif normalize == 'circle_area':
+            area = np.pi * data.distance**2 
+            y_label = 'Surface density [$1/nm^2$]'
+            
+        # plot data
+        if multi_names:
+            label = f"Data {make_nice_label(nam, sets)}"
+        else:
+            label = "Data"
+        ax.plot(
+            data.distance, data[y_var]/area, 'o', linestyle='', 
+            color=f"C{ind+n_simul}", label=label)   
+    
+    # plot simulations
+    for lab, y_simul in simulated.items():
+        y_simul_var = y_simul + '_mean'
+        y_simul_err = y_simul + '_std'
+        ax.errorbar(
+            data.distance, data[y_simul_var]/area, yerr=data[y_simul_err]/area, 
+            fmt='x', color=colors.get(lab),
+            label=f'Simulations {make_nice_label(lab, sets)}')
+            
+    # finish plot
+    ax.legend(loc='best')
+    ax.set_xlabel('Distance [nm]')
+    ax.set_ylabel(y_label)
+    ax.set_ylim(-0.02, ax.set_ylim()[1])
+    if multi_names:
+        title = f"{sets.get(y_var, y_var)}"
+    else:
+        title = f"{sets.get(y_var, y_var)} in {make_nice_label(name[0], sets)}"
+    ax.set_title(title)
+    
+    return ax
+
+def plot_32_data_old(
+        name, coloc=None, y_var='n_subcol', simulated={}, normalize=None,
+        suffix='data', mode='_', sets={}, ax=None, figsize=(15, 3)):
+    """
+    """
+
+    # start plot
+    if ax is None:
+        fig, ax = plt.subplots(1, 3, figsize=figsize)
+
+    # plot 3-col
+    plot_data_old(
+        coloc=coloc, name=name, simulated=simulated, normalize=normalize, 
+        y_var=y_var, suffix=suffix, mode=mode, sets=sets, ax=ax[0])
+
+    # figure out 2-colocalizations
+    name_0_1, name_0_2 = get_2_names(
+        name=name, order=((0, 1), (0, 2)), by_order=True)
+        
+    # plot 2-colocalizations
+    try:
+        plot_data_old(
+            coloc=coloc, name=name_0_1, simulated=simulated, normalize=normalize, 
+            y_var=y_var, suffix=suffix, mode=mode, sets=sets, ax=ax[1])
+    except AttributeError:
+        pass
+    try:
+        plot_data_old(
+            coloc=coloc, name=name_0_2, simulated=simulated, normalize=normalize, 
+            y_var=y_var, suffix=suffix, mode=mode, sets=sets, ax=ax[2])
+    except AttributeError:
+        pass
+
+    return ax
+    

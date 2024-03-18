@@ -1,5 +1,5 @@
 """
-Contains class Contingency for compaing a clustering (classification) with a
+Contains class Contingency for comparing a clustering (classification) with a
 reference classification.
 
 

@@ -27,15 +27,22 @@ except ImportError:
 import pyto
 
 class SetPath(object):
-    """
-    """
+    """Manipulation of paths related to particle sets.
+
+    Methods:
+      - get_pickle_path(): gets a structure pickle of an individual dataset 
+      (tomo) 
+      - get_tomo_info_path(): 
+      - import_tomo_info()
+      - get_tomo_path(): finds tomo path from imported tomo_info file
+   """
 
     ##############################################################
     #
     # Initialization
     #
 
-    def __init__(self, catalog_var):
+    def __init__(self, catalog_var=None, helper_path=None, common=None):
         """
         Sets variables.
 
@@ -44,6 +51,10 @@ class SetPath(object):
           object that contains path to an individual dataset (tomogram) 
           pickle, it is the same as the name of a variable defined in a 
           catalog file.
+          - helper_path: a path used to convert paths in this instance 
+          (see convert_path() doc), default value os.pathgetcwd()
+          - common: common pattern used to convert paths in this instance 
+          (see convert_path() doc)
         """
 
         # set attributes from arguments
@@ -60,10 +71,56 @@ class SetPath(object):
         # of the tomo file
         self.tomo_path_var = 'image_file_name'
 
+        # set vatiable for path conversion
+        self.helper_path = helper_path
+        if helper_path is None:
+            self.helper_path = os.getcwd()
+        self.common = common
+
     ##############################################################
     #
     # Mathods
     #
+
+    def convert_path(self, path):
+        """Converts a path to match a new or different file system organization.
+
+        For example, if the path in the old file system is:
+          path = /pre_old/.../common/post/.../name.ext
+        but in the current system the path is:
+          new_path = /pre_new/.../common/post/.../name.ext
+        attributes common (see above) and a helper path need to be set (such 
+        as os.getcwd()):
+          helper_path = /pre_new/.../common/something_else/.../other
+        to get the new_path:
+          sp = SetPath(common='common', helper_path=helper_path)
+          new_path = sp.convert_path(path)
+
+        Requires self.common and self.helper_path to be set at initialization.
+        If self.common is None, returns the unchanged arg path.
+
+        Pattern self.common has to be present exactly one time in both path 
+        and self.helper_path.
+
+        Argument:
+          - path: path to be converted
+
+        Returns: converted path
+        """
+
+        if self.common is not None:
+            h_path_split = self.helper_path.split(self.common)
+            path_split = path.split(self.common)
+            if (len(h_path_split) != 2) or (len(path_split) != 2):
+                raise ValueError(
+                    f'Both {path} and {self.helper_path} have to contain '
+                    f'{self.common} exactly once.')
+            converted = h_path_split[0] + self.common + path_split[1]
+
+        else:
+            converted = path
+            
+        return converted
 
     def get_pickle_path(
             self, group_name, identifier, struct=None, catalog_dir=None,
@@ -233,8 +290,3 @@ class SetPath(object):
 
         return os.path.normpath(tomo_path)
 
-
-  
-
-
- 

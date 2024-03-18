@@ -105,8 +105,9 @@ class Labels(Image):
     #
     ############################################################
 
-    def makeInset(self, ids=None, extend=0, additional=None, 
-                  additionalIds=None, expand=True, value=0, update=True):
+    def makeInset(
+            self, ids=None, extend=0, additional=None, additionalIds=None,
+            expand=True, value=0, update=True, returnCopy=False):
         """
         Finds the smallest inset that contains all elements of self.data
         labeled by ids (or self.ids if ids is None). This inset is extended at
@@ -115,6 +116,16 @@ class Labels(Image):
 
         If arg update is True also sets self.data to the data inset found and
         data.inset to the absolute inset corresponding to the arguments.
+
+        If update=True, the returned array may be a view of self.data. However,
+        if returnCopy=True, the returned array is copied, so it is no 
+        longer a view of the original data. 
+
+        Therefore, if update=False:
+          - If the returned array is not subsequently modified, it is 
+          recommended to set returnCopy=False because it reduces memory usage
+          - If the returned array is subsequently modified and the original
+          data is used, returnCopy should be set to True.
 
         If additonal is specified, the smallest inset that contains segments of
         both self.data and additional.data (labeled by additionalIds or
@@ -141,6 +152,8 @@ class Labels(Image):
           - additionalIds: segment ids of additional
           - expand: flag indicating if data can be extended if needed
           - value: value assigned to the expanded part of data
+          - returnCopy: flag indicating if in case update is False, the returned
+          array is copied
 
         Sets (only if update is True):
           - self.data: new data
@@ -158,7 +171,8 @@ class Labels(Image):
         if inset is None:
             inset = [slice(0, 0)] * self.ndim
         new_data = self.useInset(
-            inset, mode='abs', expand=expand, update=update)
+            inset, mode='abs', expand=expand, update=update,
+            returnCopy=returnCopy)
 
         return new_data
 
@@ -1173,6 +1187,8 @@ class Labels(Image):
         an int factor.
 
         All other attributes remain the same.
+
+        ToDo: replace by scipy.ndimage.zoom()
 
         Argument:
           - factor: magnification factor (int)

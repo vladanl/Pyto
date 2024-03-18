@@ -1788,165 +1788,35 @@ class Segment(Labels):
         Generates neighborhoods of each specified region on each of the 
         segments.
 
-        Regions are specified by args region and regionIds, and segments by ids.
-        A neighborhood of a given region on a segment is defined as a 
-        subset of the segment that contains elements that are at most (arg) 
-        size/2 away from the closest segment element to the region, as long as 
-        the distance to the region is not above (arg) maxDistance.
+        This method is depreciated. To call this method, Instead of:
+        
+          for ...
+          segment.generateNeighborhoods(
+              regions, ids, regionIds, size, 
+              maxDistance, distanceMode, removeOverlap)
 
-        The distance between a region and segments is calculated according to 
-        the arg distanceMode. First the (min) distance between segments and 
-        each point of regions is calculated. Then the min/max/mean/median of 
-        the calculated distances, or the (min) distance between the region 
-        center and the segments is used.
+        use:
 
-        If removeOverlap is True, parts of segments that overlap with regions 
-        are removed from the calculated neighborhoods.
+          nbgd = Neighborhood(segments=segment, ids=segment.ids)
+          for ...
+          nbgd.generate_neighborhoods(  
+              regions, ids, region_ids, size, 
+              max_distance, distance_mode, remove_overlap)
 
-        Arguments:
-          - ids: segment ids
-          - regions: (Segment) regions
-          - regionIds: region ids
-          - size: size of a neighborhood in the direction perpendicular to
-          the direction towards the corresponding region (diameter-like)
-          - maxDistance: max distance between segments and a given region
-          - distanceMode: how a distance between layers and a region is
-          calculated (min/max/mean/median)
-          - removeOverlap: if True a neighbor can not contain a part of a region
+        The method is left here for back compatibility. Its body is moved 
+        to Neighborhood.generate_neighborhoods() 
 
-        Yields:
-          - region id: id of current neighborhood
-          - neighborhoods: (Segment) neighborhood corresponing to region id
-          - all neighborhoods: (Segment) all neighborhoods together
+        Please check Neighborhood.generate_neighborhoods() doc.
         """
-
-        # parse arguments
-        if ids is None:
-            ids = self.ids
-        ids = numpy.asarray(ids)
-        if regionIds is None:
-            regionIds = regions.ids
-        region_ids = numpy.asarray(regionIds)
-
-        # save initial insets and data of segments
-        self_inset = self.inset
-        self_data = self.data
-        reg_inset = regions.inset
-        reg_data = regions.data
-
-        # make a working copy of an inset of this instance and clean it
-        self.makeInset(ids=ids, additional=regions, additionalIds=region_ids)
-        seg = Segment(data=self.data, ids=ids, copy=True, clean=True)
-        seg.inset = self.inset
-
-        # revert self to initial state (won't be used further down)
-        self.inset = self_inset
-        self.data = self_data
-
-        # save current seg
-        seg_inset = seg.inset
-        seg_data = seg.data
-
-        # find regions that are not further than maxDistance to segments
-        if maxDistance is not None:
-
-            # find min distances from each region to segments 
-            regions.useInset(inset=seg.inset, mode='abs')
-            dist = regions.distanceToRegion(ids=region_ids, 
-                                            region=1*(seg.data>0), 
-                                            regionId=1, mode=distanceMode)
-            regions.inset = reg_inset
-            regions.data = reg_data
-
-            # get ids of close regions 
-            region_ids = ((dist <= maxDistance) & (dist >= 0)).nonzero()[0]
-            region_ids = region_ids.compress(region_ids>0)
-
-        # make Segment to hold all neighborhoods
-        all_hoods = Segment(data=seg.data, ids=ids, copy=False, clean=False)
-        all_hoods.inset = seg.inset
-        all_hoods.makeInset(ids=ids)
-        all_hoods.data = numpy.zeros_like(all_hoods.data)
-
-        # make nighborhoods for each region id
-        for reg_id in region_ids:
-
-            # make insets
-            seg.makeInset(ids=ids, additional=regions, additionalIds=[reg_id])
-            regions.useInset(inset=seg.inset, mode='abs')
-
-            # distances to the current region
-            reg_dist_in = numpy.where(regions.data==reg_id, 0, 1)
-            if (reg_dist_in > 0).all():  # workaround for scipy bug 1089
-                raise ValueError("Can't calculate distance_function ",
-                                 "(no background)")
-            else:
-                reg_dist = ndimage.distance_transform_edt(reg_dist_in)
-
-            # if a region overlaps with a segment remove the overlap and warn
-            if removeOverlap and \
-                   ((seg.data > 0) & (regions.data == reg_id)).any():
-                seg.data = numpy.where(regions.data==reg_id, 0, seg.data)
-                logging.warning(
-                    "Density.calculateNeighbourhood: region " 
-                    + str(reg_id) + " overlap with segments." 
-                    + "Removed the overlap from segments." )
-
-            # make a neighbourhood of current region on each segment
-            if size is not None:
-
-                hood_data = numpy.zeros_like(seg.data)
-                for seg_id in ids:
-
-                    # find the closest point on the current segment
-                    min, max, min_pos, max_pos = \
-                        ndimage.extrema(input=reg_dist, labels=seg.data,
-                                        index=seg_id)
-
-                    # find inset that contains only the current segment 
-                    fine_inset = ndimage.find_objects(seg.data==seg_id)
-                    try:
-                        fine_inset = fine_inset[0]
-                    except IndexError:
-                        continue
-
-                    # prepare input distance array for hood 
-                    hood_in = numpy.ones(shape=seg.data.shape)
-                    hood_in[min_pos] = 0
-
-                    # make hood for this region and segment
-                    if (fine_inset > 0).all():  # workaround for scipy bug 1089
-                        raise ValueError("Can't calculate distance_function ",
-                                         "(no background)")
-                    else:
-                        hood_dist = ndimage.distance_transform_edt(
-                            hood_in[fine_inset])
-                    fine_hood_data = hood_data[fine_inset]
-                    fine_seg = seg.data[fine_inset]
-                    fine_hood_data[
-                        (fine_seg == seg_id) & (hood_dist <= size/2.)] = seg_id
-
-            else:
-                hood_data = seg.data
-
-            # make hood instance
-            hood = Segment(data=hood_data, ids=ids, copy=False)
-            hood.inset = seg.inset
-
-            # add the current hood to all hoods
-            hood.useInset(inset=all_hoods.inset, mode='abs')
-            all_hoods.data = numpy.where(hood.data>0, 
-                                         hood.data, all_hoods.data)
-                
-            # yield
+        from .neighborhood import Neighborhood
+        nbgd = Neighborhood(segments=self, ids=self.ids)
+        for reg_id, hood, all_hoods in nbgd.generate_neighborhoods(
+                regions=regions, ids=ids, region_ids=regionIds, size=size, 
+                max_distance=maxDistance, distance_mode=distanceMode,
+                remove_overlap=removeOverlap):
             yield reg_id, hood, all_hoods
 
-            # revert to initial insets and data
-            seg.inset = seg_inset
-            seg.data = seg_data
-            regions.inset = reg_inset
-            regions.data = reg_data
-
+            
     ###########################################################
     #
     # Distances from/to elements of segments

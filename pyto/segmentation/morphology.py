@@ -387,22 +387,27 @@ class Morphology(Features):
         
     def getCenter(self, ids=None, segments=None, real=False, inset=False):
         """
-        Calculates centers of all segments. Segments are given by arg
+        Calculates centers of mass of all segments. Segments are given by arg
         segments or self.segments.
 
         Sets (int or float) ndarray self.center, where self.center[i] contains
         position of the i-th segment coordinates, and self.center[0] is the
-        center of all segments taken together.
+        center of mass of all segments taken together.
 
         If arg inset is True, the calculated centers take into account inset 
-        info of the segments image (self.segments.inset). Otherwise centers
-        are calculated in respect to the actual array (self.segments.data).
+        info of the segments image (segments.inset or self.segments.inset). 
+        Otherwise centers are calculated in respect to the actual array 
+        (self.segments.data).
 
         In inset is true it is necessary that arg segments or self.segments 
         (if arg segments is None) is an instance of Labels. 
 
         Elements of self.center corresponding to ids that are not in ids (but 
         are smaller than max(ids) are set to -1.
+
+        If arg segments is specified, sets attributes:
+          - self.segments
+          - self.ids
 
         Arguments:
           - ids: segment ids
@@ -413,20 +418,24 @@ class Morphology(Features):
 
         Sets and Returns:
           - self.center: array where element i contains coordinates of the 
-          center of segment i
+          center of mass of segment i
         """
 
         # set ids
-        if ids is not None: self.setIds(ids)
+        #if ids is not None:
+        #    self.setIds(ids)
+        #print(f'self.ids: {self.ids}')
 
         # set segments and inset
         inset_value = None
         if segments is not None:
+            self.setSegments(segments=segments, ids=ids)
             if isinstance(segments, Labels):
                 segments_data = segments.data
                 inset_value = segments.inset
             else:
                 segments_data = segments
+                pass
         else:
             if isinstance(self.segments, Labels):
                 segments_data = self.segments.data
@@ -446,12 +455,11 @@ class Morphology(Features):
         
         # make or enlarge self.center
         if self.center is None:
-            self.center = numpy.zeros(shape=(self.maxId+1, self.ndim), 
-                                      dtype=dtype)
+            self.center = numpy.zeros(
+                shape=(self.maxId+1, self.ndim), dtype=dtype)
             self.center = self.center - 1
         elif self.maxId >= self.center.shape[0]:
-            newCenter = numpy.zeros(shape=(self.maxId+1, self.ndim), 
-                                    dtype=dtype)
+            newCenter = numpy.zeros(shape=(self.maxId+1, self.ndim), dtype=dtype)
             newCenter[0:self.center.shape[0],:] = self.center
             newCenter[self.center.shape[0]:,:] = -1
             self.center = newCenter
@@ -788,6 +796,10 @@ class Morphology(Features):
         
         Segments and boundaries objects have to have the same positioning 
         (attributes offset and inset). 
+
+        Sets attributes:
+          - self.segments
+          - self.ids
 
         Arguments:
           - segments: (Segment) object containing segments whose langths are

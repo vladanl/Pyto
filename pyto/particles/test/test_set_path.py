@@ -43,7 +43,18 @@ class TestSetPath(np_test.TestCase):
         common.setup()
 
         self.label_particle_paths = []
-       
+
+    def test_convert_path(self):
+        """ Tests convert_path()
+        """
+
+        old_path = '/pre_old_1/pre_old_2/foo/post/file.ext'
+        helper_path = '/pre_new/foo/whatever/another_file_or_dir'
+        common = 'foo'
+        desired_path = '/pre_new/foo/post/file.ext'
+        sp = SetPath(common=common, helper_path=helper_path)
+        np_test.assert_equal(sp.convert_path(path=old_path), desired_path)
+        
     def test_get_pickle_path(self):
         """
         Tests get_pickle_path()

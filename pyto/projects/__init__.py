@@ -7,3 +7,4 @@ projects directory module
 __version__ = "$Revision$"
 
 from .presynaptic import Presynaptic
+from .columns_munc13 import ColumnsMunc13

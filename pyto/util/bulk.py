@@ -12,7 +12,11 @@ __version__ = "$Revision$"
 
 import os
 import sys
-import imp
+try:
+    import imp
+except ModuleNotFoundError:
+    # imp used only for python 2
+    pass
 import runpy
 import warnings
 import logging

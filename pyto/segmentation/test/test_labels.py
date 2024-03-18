@@ -447,7 +447,7 @@ class TestLabels(np_test.TestCase):
         Tests makeInset and useInset
         """
 
-        # all ids
+        # all ids, update
         small = Labels(data=self.small_array)
         ids=[1,2,5,7]
         desired_inset = [slice(0,3), slice(1,5)]
@@ -455,6 +455,17 @@ class TestLabels(np_test.TestCase):
         small.makeInset(ids=ids)
         np_test.assert_equal(small.inset, desired_inset)
         np_test.assert_equal(small.data, self.small_array[tuple(desired_inset)])
+        
+        # all ids, no update
+        small_array_copy = self.small_array.copy()
+        small = Labels(data=self.small_array)
+        ids=[1,2,5,7]
+        desired_inset = [slice(0,3), slice(1,5)]
+        np_test.assert_equal(small.findInset(ids=ids), desired_inset)
+        actual = small.makeInset(ids=ids, update=False)
+        np_test.assert_equal(actual.shape, (3, 4))
+        np_test.assert_equal(actual, self.small_array[tuple(desired_inset)])
+        np_test.assert_equal(small.data, small_array_copy)
         
         # some ids
         small = Labels(data=self.small_array)

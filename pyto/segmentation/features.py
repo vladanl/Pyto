@@ -194,8 +194,6 @@ class Features(object):
         # set ids
         self._ids = ids
 
-
-
     def findIds(self, ids=None):
         """
         Returns ids and max id.

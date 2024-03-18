@@ -14,6 +14,7 @@ from . import nested
 from . import attributes
 from . import numpy_plus
 from . import scipy_plus
+from . import pandas_plus
 from . import probability
 from . import bulk
 

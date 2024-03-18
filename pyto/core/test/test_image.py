@@ -98,6 +98,7 @@ class TestImage(np_test.TestCase):
 
     def testUseInset(self):
         """
+        Tests useInset()
         """
 
         # absolute inset
@@ -109,7 +110,7 @@ class TestImage(np_test.TestCase):
                                [44, 45]])
         np_test.assert_equal(image.data, desired_array)
 
-        # absolute inset no update
+        # absolute inset update=False, returnCopy=False
         image = deepcopy(self.image)
         inset = [slice(2,5), slice(4,6)]
         new_data = image.useInset(inset=inset, mode='abs', update=False)
@@ -119,6 +120,19 @@ class TestImage(np_test.TestCase):
         np_test.assert_equal(new_data, desired_array)
         np_test.assert_equal(image.data, self.image.data)
 
+        # absolute inset update=False, returnCopy=True
+        image = deepcopy(self.image)
+        inset = [slice(2,5), slice(4,6)]
+        new_data = image.useInset(
+            inset=inset, mode='abs', update=False, returnCopy=True)
+        desired_array = np.array([[24, 25],
+                               [34, 35],
+                               [44, 45]])
+        np_test.assert_equal(new_data, desired_array)
+        np_test.assert_equal(image.data, self.image.data)
+        new_data[0, 0] = -1
+        np_test.assert_equal(image.data, self.image.data)
+        
         # absolute inset from an inset
         large = deepcopy(self.image)
         inset = [slice(2,5), slice(4,6)]
