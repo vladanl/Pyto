@@ -23,7 +23,7 @@ setup(
     python_requires=">=3.6",
     install_requires=[
         "numpy>=1.18",
-        "scipy>=1.41",
+        "scipy>=1.4.1",
         "matplotlib>=3.2",
         "pandas>=1.0",
         "future>=0.18"
