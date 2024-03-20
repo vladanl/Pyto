@@ -19,12 +19,15 @@ The major dependencies of this package are:
 
 * NumPy
 + SciPy
++ Pandas
 + future
 
 In addition, some parts depend on:
 
 + Matplotlib
-+ Pandas
++ Sklearn
++ SymPy
++ Skimage
 + PySeg: make sure Pyto comes before PySeg in PYTHONPATH because PySeg contains an older version of Pyto 
 
 
@@ -39,6 +42,14 @@ Please start from [Overview](doc/manuals/overview.pdf).
 
 
 ### Release history ###
+
+* 1.9.2 (19.03.2024, svn r2102)
+  	* Added projection methods for colocalization analysis
+	* Added particle extraction from tomos
+	* Removed dependence on imp module to make pyseg compatible with Python 3.12+
+* 1.9.1 (18.10.2023, svn r2024) 
+	* Noted future module dependency
+	* Removed references to numpy.testing.Tester (removd from numpy 1.24) 
 * 1.9 (7.12.2021, svn r1824)
 	* Added colocalization analysis (developed for Martinez-Sanchez et al 2021 "Trans-synaptic assemblies link synaptic vesicles and neuroreceptors" DOI: 10.1126/sciadv.abe6204)
 	* Added functionality to extract additional features of segments
