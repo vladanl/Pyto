@@ -26,7 +26,10 @@ setup(
         "scipy>=1.4.1",
         "matplotlib>=3.2",
         "pandas>=1.0",
-        "future>=0.18"
+        "future>=0.18",
+        "scikit-learn",
+        "scikit-image",
+        "statsmodels"
     ],
     include_package_data=True
 )
