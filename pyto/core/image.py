@@ -81,6 +81,30 @@ class Image(object):
         (calculations involving new)
 
       Again, small_inset has to be smaller than self.inset.
+
+
+    Read and write examples for mrc files. In all cases header is preserved,
+    except data type, shape and greyscale stats, which are determined
+    from the image data:
+
+    Using the same object, image data type stays the same, preserves header
+
+      image = Image.read(input_path, header=True)
+      image.data = ...  # manupulate image
+      image.write(output_path, header=True, pixel=image.pixelsize)
+
+    Changing datatype from float to int, preserves header
+
+      image_in = pyto.grey.Image.read(input_path, header=True)
+      image_out = pyto.segmentation.Labels()
+      image_out.data = ... # manipulate image_in.data
+      image_out.write(
+          output_path, headerSource=image_in, pixel=image.pixelsize)
+
+    Compact form
+
+      ...  # define fun and fun_kwargs to modify image data 
+      Image.modify(old=input_path, new=output_path, fun=..., fun_kwargs=...)
     """
 
     #############################################################
@@ -1155,7 +1179,7 @@ class Image(object):
     def write(
         self, file, byteOrder=None, dataType=None, fileFormat=None,
         arrayOrder=None, shape=None, length=None, pixel=1, casting=u'unsafe',
-        header=False):
+        header=False, headerSource=None):
 
         """
         Writes image to a file in em, mrc or raw format.
@@ -1195,6 +1219,14 @@ class Image(object):
         (list) and self.extendedHeaderString (str) are written as file
         header. The extended header should be used only for mrc format.
 
+        If arg headerSource is specified, attributes headerSource.header and 
+         headerSource.extndedHeaderString are used to make the image
+        header written by this method, except that image data type, shape 
+        and stats are determined from image data. Overrides arg header.
+
+        If specified, args fileFormat, byteOrder, dataType, arrayOrder,
+        shape, length and pixel have precedence.
+
         Arguments:
           - file: file name
           - fileFormat: 'em', 'mrc', or 'raw'
@@ -1205,12 +1237,15 @@ class Image(object):
           - shape: (x_dim, y_dim, z_dim)
           - length: (list aor ndarray) length in each dimension in nm (used
           only for mrc format)
-          - pixel: pixel size in nm (used only for mrc format if length is
-          None)
+          - pixel: (default 1) pixel size in nm (used only for mrc format 
+          if length is None)
           - casting: Controls what kind of data casting may occur: 'no',
           'equiv', 'safe', 'same_kind', 'unsafe'. Identical to np.astype()
           method.
-          - header: flag indicating if self.header is written as file header
+          - header: (default False) flag indicating if self.header 
+          is written as file header
+          - headerSource: (instance of this class, defaut None) instance
+          from which the header is generateed
 
         Returns file instance.
         """
@@ -1239,6 +1274,20 @@ class Image(object):
         except AttributeError:
             pass
 
+        # needed when header is obtained from another instance
+        if headerSource is not None:
+            if new_file_format == headerSource.fileFormat:
+                self.fileFormat = new_file_format
+                self.header = headerSource.header
+                header_arg = self.header
+                self.extendedHeaderString = headerSource.extendedHeaderString
+                extended = self.extendedHeaderString
+            else:
+                raise ValueError(
+                    f"File format of this instance ({new_file_format}) "
+                    + f"has to be the same as that of arg headerSource "
+                    + f"{headerSource.fileFormat}")
+        
         # write
         fi.write(
             file=file, data=self.data, fileFormat=fileFormat,
@@ -1269,9 +1318,10 @@ class Image(object):
         Also works if old is an mrc and new is a raw file.
 
         Arguments:
-          - old: old mrc image file name
-          - new: new (subtomogram) mrc image file name
-          - fun: function that takes old.data as an argument
+          - old: old mrc image file path
+          - new: new (subtomogram) mrc image file path
+          - fun: function that modifies image data
+          - fun_kwargs: kw arguments passed to fun
           - pass_data: flag indicating if the first argument passed
           to fun is data (ndarray), if False it should be Image object
           - memmap: if True, read memory map instead of the whole image
@@ -1307,7 +1357,7 @@ class Image(object):
         #
         image.image_io = image_io
         return image
-
+    
     @classmethod
     def cut(cls, old, new, inset, memmap=True):
         """

@@ -12,6 +12,7 @@ import os
 import sys
 import importlib
 import pickle
+from io import StringIO
 
 import numpy as np
 import pandas as pd
@@ -315,6 +316,8 @@ class PandasIO(object):
                             + " likely because pandas versions do not match.")
                 except OSError:
                     pass
+                except pickle.PickleError:
+                    pass
 
             if (ff == 'hdf5') and (hdf5_name is not None):
                 path, path_short, key = self.get_hdf5_path_key(
@@ -334,7 +337,8 @@ class PandasIO(object):
                 try:
                     with open(path, 'rb') as fd:
                         json_str = pickle.load(fd, encoding='latin1')
-                    table = pd.read_json(json_str)
+                    #table = pd.read_json(json_str)
+                    table = pd.read_json(StringIO(json_str))
                     table = self.recover_index(table=table)
                     if verbose:
                         print(

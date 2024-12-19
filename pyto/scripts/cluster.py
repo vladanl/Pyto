@@ -24,6 +24,14 @@ follows (experimental feature):
 
 For more info how these clusters are made see class pyto.scene.MultiCluster.
 
+Setting parameters - the essential:
+
+    - For standard usage, the only parameters that should be changed from the
+    defaults are (depending on other parameters, both may depend on pixel size):
+        - hi_bound_thresh
+        - hi_conn_thresh
+    - Several other parameters are set in ../common/tomo_info.py (see below)
+
 Important notes:
 
   - In order to make setting up multiple scripts easier, parameters common 
@@ -221,8 +229,8 @@ if tomo_info is not None: in_boundary_ids = tomo_info.vesicle_ids
 # boundary ids that should not be used, same formats as obove apply
 # Note: doesn't work if multiple boundary files and some boundaries taken
 # together
-#ex_boundary_ids = []         # do not exclude any
-ex_boundary_ids = [20, 21]
+ex_boundary_ids = []         # do not exclude any
+#ex_boundary_ids = [20, 21]
 
 # id shift in each subsequent boundary file (in case of multiple boundaries 
 # files) (experimental)

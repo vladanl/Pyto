@@ -22,6 +22,14 @@ it has several software improvements.
 
 This script may be placed anywhere in the directory tree.
 
+Setting parameters - the essential:
+
+    - For standard usage, the parameters that should be changed from the
+    default are (please follow instructions in the documentation):
+        - threshold: depends on the greyscale values range in the tomogram
+        - class_3_volumes: depends on the pixel size
+    - Several other parameters are set in ../common/tomo_info.py (see below)
+
 Important notes:
 
   - In order to make setting up multiple scripts easier, parameters common 

@@ -1068,7 +1068,7 @@ class FrameSeries(object):
             tilt_file.write('%7.2f\n' % tilt)
         tilt_file.close()
 
-        # make proection stack 
+        # make projection stack 
         projections = self.aligned_paths_list
         if ((self.aligned_paths_list is None)
             or (len(self.aligned_paths_list) == 0)):
@@ -1094,8 +1094,9 @@ class FrameSeries(object):
         cmd =  ['alterheader']
         cmd = cmd + ['-CellSize', str(cell_size[0]) + ',' + str(cell_size[1]) 
                      + ',' + str(cell_size[2])]
-        cmd = cmd + ['-SampleSize', str(image_size) + ',' + str(image_size) 
-                     + ',' + str(n_projections)]
+        if image_size is not None:
+            cmd = cmd + ['-SampleSize', str(image_size) + ',' + str(image_size) 
+                         + ',' + str(n_projections)]
         cmd = cmd + ['-TiltCurrent', str(0) + ',' + str(0) + ',' + str(0)]
         cmd = cmd + [series_path]
         if print_cmd:

@@ -49,13 +49,20 @@ import pyto
 
 
 def random_rectangle(
-        N, rectangle=None, exclusion=None, metric='euclidean', other=None,
+        N, rectangle, exclusion=None, metric='euclidean', other=None,
         mode='fine', seed=None, rng=None, max_iter=100, n_factor=2):
     """Makes a int coordinate random pattern in a n_dim rectangle with exclusion. 
     
-    Uses random_rectangle_fun() to generate random points on a specified
-    rectangle and pattern_exclusion() to exclude particles.
+    If arg N is a single number, uses random_rectangle_fun() to generate 
+    random points on a specified rectangle and pattern_exclusion() to 
+    exclude particles. In this case arg rectangle is 2d ndarray that 
+    defines one rectangle. 
     
+    If arg N is a list or tuple, generates random points on multiple 
+    rectangles. In this case arg rectangle hs to be an iterable of 2d 
+    ndarrays. Elements of N and rectangles have to correspond to each 
+    other.
+
     If arg other is given, the generated points cannot be closer than
     arg exclusion to the points specified by arg other.
 
@@ -67,9 +74,13 @@ def random_rectangle(
     exclusion, rectangle, max_iter), ValueError is raised.
 
     Arguments:
-      - N: number of points to be generated
-      - rectangle: (ndarray, 2 x n_dim) rectangle where the low coordinates
-      are specified by rectangle[0, :] and the high coords by rectangle[1, :]
+      - N: (single number for one, or list or tuple of numbers for
+      multiple rectangles) number of points to be generated in the /
+      each of rectangles
+      - rectangle: (ndarray 2 x n_dim for one rectangle, or an iterable
+      of 2 x n_dim arrays for multiple rectangles) rectangle(s) where the 
+      low coordinates are specified by (one_)rectangle[0, :] and the high 
+      coords by (one_)rectangle[1, :]
       - exclusion: exclusion distance in pixels
       - other: (ndarray, n_other_points x n_dim) coordinates of additional 
       points, the generated points cannot be closer than (arg) exclusion to 
@@ -86,12 +97,26 @@ def random_rectangle(
 
     Returns: random points (int ndarray, N x n_dim), with exclusion 
     """
-    fun_partial = partial(random_rectangle_fun, rectangle=rectangle)
-    vals = pattern_exclusion(
-        pattern_fun=fun_partial, N=N, exclusion=exclusion, metric=metric,
-        other=other, mode=mode, seed=seed, rng=rng,
-        max_iter=max_iter, n_factor=n_factor)
-    return vals
+
+    if rng is None:
+        rng = default_rng(seed=seed)
+
+    if not isinstance(N, (list, tuple)):
+        N = [N]
+        rectangle = [rectangle]
+
+    values = []
+    for n_one, rctg in zip(N, rectangle):
+        
+        fun_partial = partial(random_rectangle_fun, rectangle=rctg)
+        vals = pattern_exclusion(
+            pattern_fun=fun_partial, N=n_one, exclusion=exclusion,
+            metric=metric, other=other, mode=mode, seed=seed, rng=rng,
+            max_iter=max_iter, n_factor=n_factor)
+        values.extend(vals)
+
+    result = np.vstack(values)
+    return result
 
 def random_rectangle_fun(rng, N, rectangle):
     """Generates random points in a n_dim rectangle without exclusion.
@@ -416,7 +441,7 @@ def cocluster_region(
     """Generates point patterns that cluster around specified cluster centers.
 
     First randomly selects points (of arg N total points) that are to 
-    be assigned to clusters (with probability arg p_cluster) and then 
+    be coclustered (with probability arg p_cluster) and then 
     randomly (with equal probability) assigns the selected points to one 
     of the clusters.
 

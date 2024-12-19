@@ -5,6 +5,13 @@ Makes layers in a given region starting from one or between two specified
 boundaries. Then it analyzes ovelap of given segments with the layers and
 determines the position of gegment centers in repect to the layers.  
 
+Setting parameters - the essential:
+
+    - For standard usage, the only parameter that should be changed from the
+    default is num_layers. It should be set to a value that is little higher
+    than 250 nm converted to pixels.
+    - Several other parameters are set in ../common/tomo_info.py (see below)
+
 Important notes:
 
   - In order to make setting up multiple scripts easier, parameters common 
@@ -162,7 +169,7 @@ layer_thickness = 1        # for layers from only
 # number of layers 
 # Needed if boundary_2 is None, or if boundary_id_2 is not None and 
 # layer_thickness is None
-num_layers = 200
+num_layers = 300
 
 # number of extra layers (on each side if layers between) formed on 
 # boundary(ies) and on extra_layers mask(s)

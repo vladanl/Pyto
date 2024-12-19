@@ -358,7 +358,7 @@ class MPSConversion(abc.ABC):
             self, particle_df, coord_cols, tomo_id_col, tomo_star=None,
             tomo_ids=None, pixel_size_nm=None, coord_bin=None,
             region_offset=None, region_bin=None, region_id=None,
-            col_conversion={}, project=True,
+            find_region_shape=True, col_conversion={}, project=True,
             exclusion=None, exclusion_mode='before_projection',
             remove_outside_region=False, inside_coord_cols=None,
             particle_name='', out_path=None):
@@ -379,7 +379,10 @@ class MPSConversion(abc.ABC):
 
           - coord_cols: column names of arg particle_df that contain
           particle coordinates; these are saved in column 
-          self.orig_coord_cols of self.particles          
+          self.orig_coord_cols of self.particles   
+       
+         - find_region_shape: flag indicating if shape of regions is
+          determined if True, region image data is read)
 
           - inside_coord_cols: column names of coordinates that are
           tested whether they are inside region image shape, if None 
@@ -412,6 +415,7 @@ class MPSConversion(abc.ABC):
         if tomo_star is not None:
             tomos = self.read_star(
                 path=tomo_star, mode='tomo',  tomo_ids=tomo_ids,
+                find_region_shape=find_region_shape,
                 pixel_size_nm=pixel_size_nm, coord_bin=coord_bin)
         else:
             tomos = self.make_bare_tomos(
@@ -431,7 +435,7 @@ class MPSConversion(abc.ABC):
             tomos = self.set_column(
                 column=self.exclusion_col, tomos=tomos, value=exclusion,
                 update=True)
-        if self.region_col in tomos:
+        if (self.region_col in tomos) and find_region_shape:
             abs_dir = os.path.abspath(os.path.dirname(tomo_star))
             self.get_region_shapes(tomos=tomos, curr_dir=abs_dir, update=True)
         elif remove_outside_region:

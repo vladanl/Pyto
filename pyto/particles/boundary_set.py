@@ -297,6 +297,12 @@ class BoundarySet(LabelSet):
                 for coords in labels._left_corners_abs]
         else:
             label_slices_rel = slices_rel  # dummy
+
+        # deal with self._particle_paths not set
+        try:
+            self._particle_paths
+        except AttributeError:
+            self._particle_paths = [None] * len(ids)
             
         # write particles
         for sl, label_sl, path, label_path, id_ in zip(

@@ -11,6 +11,11 @@ Calculates:
 
 This script may be placed anywhere in the directory tree.
 
+Setting parameters - the essential:
+
+    - For standard usage, all parameters can be left at their defaults
+    - Several other parameters are set in ../common/tomo_info.py (see below)
+
 Important notes:
 
     - This script is essentially the same as vesicles.py (greyscale and 

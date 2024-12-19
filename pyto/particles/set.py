@@ -240,13 +240,15 @@ class Set(object):
                 # get particle center coordinates (abs and rel) from labels
                 labels.get_coordinates_single(
                     work=work, group_name=g_name, identifier=ident)
-                labels.particle_dir = os.path.join(particle_dir, g_name) 
+                if write:
+                    labels.particle_dir = os.path.join(particle_dir, g_name) 
 
                 # adjust particle center and left corner coords to the tomo
                 particles.get_coordinates_single(
                     work=work, group_name=g_name, identifier=ident,
                     label_set=labels)
-                particles.particle_dir = os.path.join(particle_dir, g_name)
+                if write:
+                    particles.particle_dir = os.path.join(particle_dir, g_name)
 
                 # convert adjusted particle left corner coords to label coords
                 labels.set_box_coords(left_corners=particles._left_corners)
@@ -264,15 +266,16 @@ class Set(object):
                     bounds.set_box_coords(centers=particles._centers)
 
                 # write particles (needs left corners)
-                if particles.pixelsize is not None:
-                    pixelsize = particles.pixelsize
-                else:
-                    pixelsize = particles._tomo.pixelsize
-                particles.write_particles(
-                     identifier=ident, pixelsize=pixelsize, write=write)
-                labels.write_particles(
-                    identifier=ident, boundary=bounds, group_name=g_name,
-                    pixelsize=pixelsize, write=write)
+                if write:
+                    if particles.pixelsize is not None:
+                        pixelsize = particles.pixelsize
+                    else:
+                        pixelsize = particles._tomo.pixelsize
+                    particles.write_particles(
+                         identifier=ident, pixelsize=pixelsize, write=write)
+                    labels.write_particles(
+                        identifier=ident, boundary=bounds, group_name=g_name,
+                        pixelsize=pixelsize, write=write)
 
                 # update data
                 particles.add_data(group_name=g_name, identifier=ident)
@@ -414,13 +417,15 @@ class Set(object):
                 # get particle center coordinates (abs and rel) from bounds
                 bounds.get_coordinates_single(
                     work=work, group_name=g_name, identifier=ident)
-                bounds.particle_dir = os.path.join(particle_dir, g_name)
+                if write:
+                    bounds.particle_dir = os.path.join(particle_dir, g_name)
 
                 # adjust particle center and left corner coords to the tomo
                 particles.get_coordinates_single(
                     work=work, group_name=g_name, identifier=ident,
                     label_set=bounds)
-                particles.particle_dir = os.path.join(particle_dir, g_name)
+                if write:
+                    particles.particle_dir = os.path.join(particle_dir, g_name)
 
                 # convert adjusted particle left corner coords to bound coords
                 bounds.set_box_coords(left_corners=particles._left_corners)
@@ -435,15 +440,16 @@ class Set(object):
                 labels.set_box_coords(centers=particles._centers)
 
                 # write particles (needs left corners)
-                if particles.pixelsize is not None:
-                    pixelsize = particles.pixelsize
-                else:
-                    pixelsize = particles._tomo.pixelsize
-                particles.write_particles(
-                     identifier=ident, pixelsize=pixelsize, write=write)
-                bounds.write_particles(
-                    identifier=ident, labels=labels, group_name=g_name,
-                    pixelsize=pixelsize, write=write)
+                if write:
+                    if particles.pixelsize is not None:
+                        pixelsize = particles.pixelsize
+                    else:
+                        pixelsize = particles._tomo.pixelsize
+                    particles.write_particles(
+                         identifier=ident, pixelsize=pixelsize, write=write)
+                    bounds.write_particles(
+                        identifier=ident, labels=labels, group_name=g_name,
+                        pixelsize=pixelsize, write=write)
 
                 # update data
                 particles.add_data(
@@ -600,6 +606,8 @@ class Set(object):
     def adjust_box_coords(self, centers):
         """
         Adjusts box coordinates so that they do not stick out of the tomo
+
+        Requires self.box_size
 
         Argument:
           - centers: box center coordinates, absolute (no inset)
@@ -761,6 +769,12 @@ class Set(object):
             index = [0]
         )
 
+        # deal with self._particle_paths not set
+        try:
+            self._particle_paths
+        except AttributeError:
+            self._particle_paths = None
+            
         # make current table
         curr_data = pd.DataFrame({
             'identifier' : identifier, 'group_name' : group_name,

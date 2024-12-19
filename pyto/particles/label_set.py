@@ -480,6 +480,12 @@ class LabelSet(Set):
             index = [0]                     
         )
 
+        # deal with self._particle_paths not set
+        try:
+            self._particle_paths
+        except AttributeError:
+            self._particle_paths = None
+            
         # make current table
         df_dict = {
             'identifier' : identifier, 'group_name' : group_name,

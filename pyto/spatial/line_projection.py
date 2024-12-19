@@ -48,7 +48,7 @@ class LineProjection:
               degree=True_for_deg_False_for_rad,
               grid_mode='unit', intersect_mode='first')
       projected_points = lp.project(
-              point=origin_point, angles=[phi, theta],,
+              point=origin_point, angles=[phi, theta],
               distance=range(min_distance, max_distance))
  
     For >1 pixel thick regions without holes grid_mode='nearest' will
@@ -61,7 +61,7 @@ class LineProjection:
             distance, reverse=False, grid_mode='unit',
             region_col=None, angle_cols=['rlnAngleTilt', 'rlnAnglePsi'],
             not_found=[-1, -1, -1]):
-        """Projects particles from MultiParticleSets for multiple tomos.
+        """Projects particles on regions for multiple tomos.
 
         If for a particle a projection is not found, coordinates specified
         by arg not_found are entered. This should be something like
@@ -85,7 +85,7 @@ class LineProjection:
             # project
             part_one = mps.particles[mps.particles[
                 mps.tomo_id_col]==tomo_id].copy()
-            cls.project_mps_one(
+            cls.project_mps_one_to_rm(
                 particles=part_one, region=region_path, region_id=region_id,
                 coord_cols=coord_cols, angle_cols=angle_cols, out_cols=out_cols,
                 distance=distance, reverse=reverse, grid_mode=grid_mode,
@@ -98,7 +98,7 @@ class LineProjection:
     def project_mps_one_to_rm(
             cls, particles, region, region_id, coord_cols, angle_cols, out_cols,
             distance, reverse=False, grid_mode='unit', not_found=[-1,-1,-1]):
-        """Projects particles from MultiParticleSets for one tomo.
+        """Projects particles from MultiParticleSets on a region for one tomo.
 
         """
 
@@ -152,7 +152,6 @@ class LineProjection:
             reverse=False, grid_mode='nearest', intersect_mode='first',
             not_found=None):
         """Sets attributes from arguments.
-
 
         Arguments:
           - region: (pyto.core.Image or ndarray) region image, used to
@@ -258,12 +257,6 @@ class LineProjection:
         intersect mode is 'all'.
         """
 
-        # set distance if needed
-        #if distance is None:
-        #    if self.region_coords is None:
-        #        self.region_coords = get_region_coords(
-        #            region=self.region, region_id=self.region_id, shuffle=False)
-
         if self.spherical:
             phi, theta = angles
         else:
@@ -289,27 +282,38 @@ class LineProjection:
         specified as:
           - [rot, tilt, psi]
           - [tilt, psi]  
-        In this case, returns:
-          - [tilt, pi - psi] if 0<theta<pi and self.reverse is False
-          - [-tilt, -psi] if -pi<theta<0 and self.reverse is False
+        Returns sperical coordinates (theta, phi):
+          - [tilt, pi - psi] if 0<tilt<pi and self.reverse is False
+          - [-tilt, -psi] if -pi<tilt<0 and self.reverse is False
           - [pi - tilt, -psi] if 0<theta<pi and self.reverse is True
           - [pi + tilt, pi - psi] if -pi<theta<0 and self.reverse is True
-       Angles are consided to be in degrees (arg degee is ignored).
 
-        In the normal mode (relion=False), arg angles have to be in the 
-        specified euler_mode. They are specified like:
+        This can be seen because the following are equivalent:
+          - Relion (intrinsic, active, zyz): [rot, tilt, psi]
+          - extrinsic, active, zyz: [psi, tilt, rot]
+          - extrinsic, passive, zyz: [-rot, -tilt, -psi]
+        Because the vector that defines spherical angles can be obtained as 
+        extrinsic, passive, zyz Euler transformation of a line along z axis 
+        oriented in the +z direction:
+          - Spherical: [not_defined, theta, phi]
+        It follows (the following two are euqivalent): 
+            theta = -tilt, phi = -psi
+            theta = tilt, phi = pi - psi
+        For reversed vector (self.reverse is True):
+            theta = pi - tilt, phi = -psi
+            theta = pi + tilt, phi = pi - psi        
+
+        In the normal mode (self.relion=False), arg angles have to be in the 
+        Euler mode specified by self.euler_mode in the order:
           - [phi, theta, psi]
-
-        Note: Uses the fact line speified by spherical angles can be 
-        obtained as passive, extrinsic zyz Euler transformation of a line 
-        along z axis oriented in the +z direction. 
 
         Requires attributes:
           - self.relion, or both self_euler_mode and self.degree
           - self.reverse
 
         Arguments:
-          - angles: Euler angles
+          - angles: Euler angles in degrees (if self.degree is True), or
+          in radians (if self.degree is False)
  
         Returns: (theta, phi) spherical angles of the line, in the same 
         units as angles (specified by arg degree)

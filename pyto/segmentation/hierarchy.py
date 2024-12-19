@@ -1162,10 +1162,10 @@ class Hierarchy(Labels):
 
         return level
 
-    def remove(self, ids=None, level=None, new=False):
+    def remove(self, ids=None, level=None, rm_contacts=True, new=False):
         """
-        Removes both the ids (specified by ids or level) from id-related
-        structures, and the segments labeled by those ids.  
+        Removes the ids (specified by ids or level) from id-related
+        structures and the segments labeled by those ids.  
 
         Elements of each removed segment are assigned to a segment directly
         above. Also establishes lower-higher relationship between the remaining
@@ -1184,6 +1184,8 @@ class Hierarchy(Labels):
         Arguments:
           - ids: list of ids to be removed
           - level: (int) level
+          - rm_contacts: flag indicating whether segments should be also 
+          removed from contacts (self.contacts)
           - new: flag indicating if new instance is generated
         """
 
@@ -1207,9 +1209,15 @@ class Hierarchy(Labels):
             inst.removeProperties(level)
 
         # removes segments from contacts
-        if (ids is not None) and ('contacts' in self.properties):
-            inst.contacts.removeSegments(ids=ids)
-
+        if (rm_contacts and (ids is not None)
+            and ('contacts' in self.properties)):
+            try:
+                inst.contacts.removeSegments(ids=ids)
+            except AttributeError:
+                # perhaps error because contacts compactified
+                inst.contacts.expand()
+                inst.contacts.removeSegments(ids=ids)
+                
         # remove ids from id structures
         inst.removeIds(ids, level)
 

@@ -146,13 +146,15 @@ def main():
     """
 
     # read image and vesicles
-    image = common.read_image(file_name=image_file_name, memmap=True)
+    image = common.read_image(
+        file_name=image_file_name, header=True, memmap=True)
     new_shape = common.find_shape(file_name=image_file_name, shape=shape,
                        suggest_shape=image.data.shape)
     # read input file
     discs = pyto.segmentation.Ball.read(
         file=discs_file_name, ids=all_ids, byteOrder=byte_order, 
-        dataType=discs_data_type, arrayOrder=array_order, shape=new_shape)
+        dataType=discs_data_type, arrayOrder=array_order, shape=new_shape,
+        header=True)
 
     # make discs if needed
     if balls_to_discs:
@@ -189,7 +191,9 @@ def main():
         pixel = image.pixelsize
 
     # write balls file
-    balls.write(file=balls_file_name, dataType=balls_data_type, pixel=pixel)
+    balls.write(
+        file=balls_file_name, dataType=balls_data_type, pixel=pixel,
+        headerSource=discs)
 
 
 # run if standalone

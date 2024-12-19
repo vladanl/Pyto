@@ -38,15 +38,15 @@ class MPSInterconversion(abc.ABC):
         that were previously saved as individual instances of this class 
         and combines (concatenates) them to this instance.
 
-        Intended use is to make an instance of this class that can be used to
-        determine colocalization (passed to ColocLite.colocalize()).
+        Intended use is to make an instance of this class that can be 
+        passed to ColocLite.colocalize() to calculate colocalization.
 
         Uses the specified particle sets module (arg psets_module) to 
         resolve paths to saved instances of this class that contain all 
         particles specified by arg set_name (hese may contain additional 
         particles). Then reads the pickles, select only particle and tomos 
         that correspond to the specified particle (sub)sets (arg set_name)
-        and makes a temporary insstance of this class for each particle set.
+        and makes a temporary instance of this class for each particle set.
 
         When more than one set is specified (arg set_name is a list of 
         length >1), tomos and particles tables (attributes) of each 
@@ -54,20 +54,24 @@ class MPSInterconversion(abc.ABC):
         instance of this class. When concatenated, only the common 
         columns are kept.
 
+        Writes the specified set name(s) (arg set_name) in particles 
+        column (arg) subclass_col. This is important so that particles 
+        from different sets can be clearly distinguished.
+
         Furthermore, in the resulting tomos table, all values of column 
         self.coord_bin_col are set to NaN, because the input particles sets 
         (arg set_name) may have coordinates determined at different bins. 
         During the concatenation, duplicate rows of tomos table are removed.
 
         In the resulting particles table, columns self.tomo_id_col, 
-        self.class_name_col (or subclass_col) and self.particle_id_col 
+        self.class_name_col (or self.subclass_col) and self.particle_id_col 
         taken together uniquely specify each particle (row in 
         self.particles table). 
 
         The particles indices of the sets that are concatenated are saved
         in column self.pick_index_col. Because self.pick_index_col
-        values come from different
-        tables, they do not need to be unique when put together. However, 
+        values come from different tables, 
+        they do not need to be unique when put together. However, 
         the combination of self.pick_index_col and self.class_name_col 
         (or subclass_col) columns is unique.
 
@@ -91,15 +95,16 @@ class MPSInterconversion(abc.ABC):
           - tomo_ids: ids of tomos to use, or None for all tomos (default)
           - discard_tomo_ids: ids of the tomos that should not be used, if
           not None arg tomo_ids has to be None (default None)
-          - subclass_column: column name in particles table that holds 
-          subclass names (default 'subclass_name')
+          - subclass_column: column name of particles table where set
+          names are written (default 'subclass_name')
           - ignore_keep: If False (default), only particles where 'keep' 
           column is True are selected, True to ignore 'keep' column
 
         Sets attributes:
           - tomos: tomo table
           - particles: particle table
-          - subclass_name_col: set from arg subclass_col
+          - subclass_col: set from arg subclass_col if not None 
+          (default 'subclass_name')
         """
 
         # check args
@@ -107,6 +112,9 @@ class MPSInterconversion(abc.ABC):
             raise ValueError(
                 "Only one of the arguments tomo_ids and discard_tomo_ids "
                 + " can be specified.")
+
+        if subclass_col is not None:
+            self.subclass_col = subclass_col
         
         # import particle sets module if needed
         if ((psets_module is not None) and isinstance(psets_module, str)):
@@ -141,8 +149,8 @@ class MPSInterconversion(abc.ABC):
                 mps_local.select(
                     class_names=[cl_nam], class_numbers=cl_num,
                     tomo_ids=tomo_ids, update=True)
-            mps_local.subclass_name_col = subclass_col
-            mps_local.particles[mps_local.subclass_name_col] = set_na
+            mps_local.subclass_col = self.subclass_col
+            mps_local.particles[mps_local.subclass_col] = set_na
             if not ignore_keep:
                 mps_local.particles = mps_local.particles[
                     mps_local.particles[mps_local.keep_col]]

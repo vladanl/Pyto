@@ -34,7 +34,7 @@ import pyto.scripts.common as common
 #
 
 # name of the image file
-image_file_name = "../3d/tomo.mrc"
+image_file_name = "balls.mrc"
 
 #####################################################
 #
