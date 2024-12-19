@@ -235,9 +235,12 @@ class ColocLite(ColocAnalysis):
         Colocalization is calculated for all tomos present in the 
         specified (arg) particles. 
 
-        Particles used for colocalization are are specified by args 
-        particles (ParticleSets) and coloc_name (which comprises
-        names of particle sets that are used). That is, particles object 
+        Particles used for colocalization are specified by args 
+        particles and coloc_name (which comprises names of particle sets 
+        that are used). These particle set names have to be present in
+        the column particles.subclass_col of table particles.particles if
+        (arg) particles is MultiParticleSets object, or particles.set_name_col
+        if (arg) particles is ParticleSets object. That is, particles object 
         can contain particles that belong to particle sets other than those 
         specified by arg coloc_name. 
 

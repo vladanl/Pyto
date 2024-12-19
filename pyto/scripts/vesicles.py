@@ -3,6 +3,11 @@
 Basic greyscale density and morphology analysis of vesicle-like segments. 
 These segments are typically manually / Amira segmented. 
 
+Setting parameters - the essential:
+
+    - For standard usage, the only parameter that should be changed from the default is membrane_thick. It should be set to the vesicle membrane thickness in pixels.
+    - Several other parameters are set in ../common/tomo_info.py (see below)
+
 This script may be placed anywhere in the directory tree.
 
 Calculates:

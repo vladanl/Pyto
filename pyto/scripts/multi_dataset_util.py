@@ -1380,10 +1380,17 @@ def plot_stats(
             elif plot_type == 'boxplot_data':
                 squeeze = 0.5 # IMPORTANT: Change if needed
                 x_value = left + bar_width / 2.
-                bplot = axes.boxplot(
-                    value, positions=(x_value,), widths=(squeeze*bar_width,),
-                    labels=pp.category_label.get(label_code, ''),
-                    patch_artist=True, showfliers=False)
+                try:
+                    bplot = axes.boxplot(
+                        value, positions=(x_value,),
+                        widths=(squeeze*bar_width,),
+                        labels=pp.category_label.get(label_code, ''),
+                        patch_artist=True, showfliers=False)
+                except ValueError:
+                    bplot = axes.boxplot(
+                        value, positions=(x_value,),
+                        widths=(squeeze*bar_width,),
+                        patch_artist=True, showfliers=False)
                 #print bplot['boxes'][0].get_ydata()
                 bplot_el_all = (
                     bplot['boxes'] + bplot['caps'] + bplot['whiskers'])

@@ -1,6 +1,7 @@
 """
-Contains class Presynaptic for a further analysis of a presynaptic
-project results.
+Contains class Presynaptic and functions for retrieving and further 
+analysis of presynaptic project results obtained by 
+scripts/presynaptic_stats.py.
 
 # Author: Vladan Lucic (Max Planck Institute for Biochemistry)
 # $Id$
@@ -12,6 +13,7 @@ __version__ = "$Revision$"
 import os
 import sys
 import pickle
+from copy import copy, deepcopy
 import inspect
 
 import numpy as np
@@ -103,8 +105,17 @@ class Presynaptic(object):
         return table
             
     def load(self, path, preprocess=True):
-        """
-        Loads a module that contains the presynaptic project results
+        """Loads presynaptic project results module.
+
+        Arguments:
+          - path: path to the presynaptic project script (like 
+          pyto.scripts.presynaptic_analysis.py) that was previously 
+          executed to obtain multi-tomo presynaptic analysis results 
+          - preprocess: (default True) flag indicating whether to
+          preprocesses the data (like the argument of the main() in 
+          the presynaptic script)
+
+        Returns presynaptic module
         """
 
         mod_io = ModuleIO(calling_dir=self.calling_dir)
@@ -369,12 +380,11 @@ class Presynaptic(object):
         coordinates for multiple tomos, converts the coordinates to 
         another reference (image) frame and puts them all together.
 
-        For example, if get_coords_one() is specified as self.func 
-        (provided that args region_id and coord_cols args are fixed), 
-        which returns tether contact point coordinates of one tomo, this
-        method returns a function that returns tether contact 
-        coords converted to another reference frame (such as a cropped 
-        tomo) from all specified tomos.
+        For example, if self.func is get_contacts_one(), which returns 
+        tether contact point coordinates of one tomo 
+        (args region_id and coord_cols args are fixed), this
+        method returns tether contact coords converted to another 
+        reference frame (such as a cropped tomo) from all specified tomos.
 
         Specifically, this function loops over multiple tomos (using
         tomo_generator(), and for each tomo executes the specified 
@@ -615,6 +625,98 @@ class Presynaptic(object):
             out_offsets.to_csv(
                 os.path.join(out_dir, out_csv_name), sep=" ", index=False)
 
+    @classmethod
+    def restrict_align_one(
+            cls, data, identifier, pickle_var, mode='tether', restrict=True,
+            convert_path_common=None, convert_path_helper=None):
+        """Align selected boundaries and segments for one tomo.
+
+        Does the following:
+          - Reads segments data (tethers or connectors) from multiple 
+          tomo pickles (like work.tether) for the specified tomo 
+          - Restricts vesicles to those that are bound to the segments 
+          (so tethered or connected) and cuts the boundaries tomo 
+          accordingly (optional)
+          - Aligns segments tomo to the boundaries tomo
+          - Returns object of this class containing the above generated
+
+        Individual tomo objects comprising (arg) data have to have 
+        attribute 'boundaries' (in indexed_data). If the mode is 'tether'
+        the first element of all boundaries elements has to be the same
+        and to be the id of the active zone membrane.
+
+        Arguments:
+          - data: (pyto.analysis.Groups) multi-tomo segments data,
+          e.g. work.tether, where work is a presynaptic module (see load())
+          - indetifier: tomo identifier
+          - pickle var: name of the variable that contains path to 
+          pickled single-tomo segments data (like 'tethers_file')
+          - mode: (default 'tether') 'tether' if arg data is tether data, 
+            or 'segment' if segment data
+          - restrict: flag indicationg whether vesicles are restricted 
+          to those that contact the segments
+        - convert_path_common, convert_path_helper: (defaults None) paths
+        used to change a beginning part of pickle file paths (see 
+        tomo_generator doc)
+
+        Return instance of this class, attributes:
+          - segments: (pyto.segmentation.Segment) segments data
+          - boundaries: (pyto.segmentation.Segment) restricted 
+          boundaries data
+          - scalar: (pandas.DataFrame) table containing segment scalar data
+          - indexed: (pandas.DataFrame) table containing segment indexed data
+          - az_id: id of the active zone membrane
+          - sv_ids: vesicle ids
+        """
+
+        # get tether object and info, and boundary object
+        ident, scalar, indexed, scene = [
+            (ident, scalar_one, indexed_one, scene) 
+            for ident, scalar_one, indexed_one, scene in tomo_generator(
+                indexed=data.indexed_data, scalar=data.scalar_data,
+                identifiers=[identifier], pickle_var=pickle_var,
+                convert_path_common=convert_path_common,
+                convert_path_helper=convert_path_helper)
+            ][0]
+        segments = scene.hierarchy
+        boundaries = scene.boundary
+
+        # plasma membrane and connected sv ids
+        if mode == 'tether':
+            pm_id = np.unique(
+                np.vstack(indexed['boundaries'].to_numpy())[:, 0])[0]
+            sv_ids = np.unique(
+                np.vstack(indexed['boundaries'].to_numpy())[:, 1])
+            bound_ids = np.hstack(([pm_id], sv_ids))
+        elif mode == 'segment':
+            sv_ids = np.unique(np.vstack(indexed['boundaries'].to_numpy()))
+            bound_ids = sv_ids
+        else:
+            raise ValueError(
+                f"Argument mode: {mode} was not understood, it has to "
+                + "be 'tether' or 'segments'")
+            
+        # keep only connected svs, crop image
+        if restrict:
+            boundaries.keep(ids=bound_ids)
+            boundaries.makeInset(ids=bound_ids)
+
+        # align tethers with boundaries
+        segments.useInset(inset=boundaries.inset, mode='abs', expand=True)
+
+        # make object and set attributes
+        inst = cls()
+        inst.segments = segments
+        inst.boundaries = boundaries
+        inst.scalar = scalar
+        inst.indexed = indexed
+        if mode == 'tether':
+            inst.az_id = pm_id
+        inst.sv_ids = sv_ids
+
+        return inst
+
+
 ##########################################################
 #
 # Functions
@@ -648,6 +750,8 @@ def tomo_generator(
       - identifierss: selected tomo identifiers, or None for all tomos
       - pickle_var: name of a scalar variable (column name of scalar) 
       whose value is a path to a pickle file
+      - convert_path_common, convert_path_helper: (defaults None) paths
+      used to change a beginning part of pickle file paths (see above)
 
     Yields:
       - identifier: tomo identifier
@@ -713,6 +817,7 @@ def convert_coordinates(
       - identifier: tomo id
       - coords: (ndarray n_points x n_dim) input coordinates, to be converted
       - coord_col_in: column names of input coordinates
+      - coord_cols: column names ofoutput coordinates
       - offsets: (pandas.DataFrame) offsets and shapes of the target 
       subtomo
       - offset_cols: name of columns in the offset file that contain offsets 
@@ -802,5 +907,44 @@ def get_contacts_one(
 
     return coords
 
+def get_vesicle_centers_one(
+        sv_ids, scalar, sv_var='sv_file', convert_path_common=None,
+        convert_path_helper=None):
+    """Get vesicle center coordinates for one tomogram.
 
+    Finds a path to a single tomo vesicles object (scalar[sv_var]) reads 
+    this object and extracts attribute mor.center. This attribute should 
+    contain vesicle centers (vesicle ids indexed array).
+
+    A beginning part of the path is converted using args 
+    convert_path_common and convert_path_helper 
+    (see pyto.particles.SetPath() and pyto.particles.set_path.convert().
+
+    Arguments:
+      - scalar: (pandas.DataFrame) Scalar data object that contains data 
+      for one tomogram only and has attribute sv_var (such as 
+      work.near_sv.scalar_data or work.tether.scalar_data)
+      - sv_ids: vesicle ids
+      - convert_path_common, convert_path_helper: (defaults None) paths
+      used to change a beginning part of pickle file paths (see 
+      tomo_generator doc)
+ 
+   Returns (pandas.DataFrame) Table containing vesicle ids and center 
+    coordinates, with column names ['sv_id', 'center_x', 'center_y', 
+    'center_z'].
+    """
+
+    # get centers
+    sv_pkl_path = scalar[sv_var]
+    sp = SetPath(common=convert_path_common, helper_path=convert_path_helper)
+    sv_pkl_path = sp.convert_path(path=sv_pkl_path)
+    sv_one = pickle.load(open(sv_pkl_path, 'rb'), encoding='latin1')
+    centers = sv_one.mor.center[sv_ids]
+
+    # put in a dataframe
+    id_center = np.concatenate([sv_ids[:, np.newaxis], centers], axis=1)
+    df = pd.DataFrame(
+        id_center, columns=['sv_id', 'center_x', 'center_y', 'center_z'])
+
+    return df
 

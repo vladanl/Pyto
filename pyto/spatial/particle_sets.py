@@ -18,13 +18,29 @@ from . import coloc_functions as col_func
 from pyto.segmentation.labels import Labels
 
 # only for from_pyseg()
+# For some reason importing the same module the second time works, even
+# though importing the first time raises exception (because of dependencies)
+pyseg_import_failed = False
 try:
-    from pyorg import sub
+#    from pyorg import sub
+    from pyorg.sub.star import Star
+except ModuleNotFoundError:
+    try:
+       from pyorg.sub.star import Star 
+    except (ModuleNotFoundError, NameError):
+        pyseg_import_failed = True
+try:  
     from pyorg.globals import unpickle_obj
 except ModuleNotFoundError:
+    try:
+        from pyorg.globals import unpickle_obj
+        unpickle_obj
+    except (ModuleNotFoundError, NameError):
+        pyseg_import_failed = True
+if pyseg_import_failed:
     print(
-        "Warning: Pyseg could not be loaded. Therefore, calling from_pyseg()"
-        + " method of pyto.spatial.ParticleSets will fail, but everything "
+        "Warning: Pyseg could not be loaded. Therefore, calling "
+        + " pyto.spatial.ParticleSetsfrom_pyseg() will fail, but everything "
         + "else should be fine.")
     
 
@@ -700,7 +716,8 @@ class ParticleSets:
             
             # read pickle where data for this particle set is stored
             try:
-                star = sub.Star()
+                #tar = sub.Star()
+                star = Star()
             except NameError:
                 print(
                     "PySeg needs to be available on this system in order "

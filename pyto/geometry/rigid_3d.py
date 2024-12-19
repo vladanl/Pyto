@@ -1500,17 +1500,20 @@ class Rigid3D(Affine):
     def normalize_euler(cls, angles, range='0_2pi', degree=False):
         """Brings Euler angles to a common range.
 
-        Theta is brought to [0, pi].
+        Phi and psi are converted to [0, 2*pi] if arg range is '0_2pi', or 
+        to [-pi, pi] if arg range is '-pi_pi'. Theta is always brought 
+        to [0, pi].
 
-        Phi and psi are converted to [0, 2*pi] if arg range is '0_2pi', or to 
-        [-pi, pi] if arg range is '-pi_pi'
+        That is, all angles are converted modulo 2*pi. If 
+        -pi < theta < 0 (mod 2*pi), angles are converted as:
+            phi, theta, psi -> phi + pi, -theta, psi + pi
 
         Arguments:
           - angles: (phi, theta, psi) Euler angles [rad]
           - range: phi and psi angular range, '0_2pi' or '-pi_pi'
           - degree: flag indicating if angles are in degrees (default False)
 
-        Returns (phi, theta psi): converted angles
+        Returns (phi, theta, psi): converted angles
         """
         
         if degree:

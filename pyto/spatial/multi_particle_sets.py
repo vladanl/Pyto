@@ -173,6 +173,12 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
           - verbose: flag indicating if a statement is printed for every
           file that is written
         """
+
+        # make directory if needed
+        dir_ = os.path.split(path)[0]
+        if len(dir_) > 0:
+            os.makedirs(dir_, exist_ok=True)
+        
         # save tomos and particles
         split_path = path.rsplit('.', maxsplit=1)
         tomos_path = (
@@ -246,8 +252,8 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
     def read_star(
             self, path, mode, tomo_ids=None, tomo_id_mode='munc13',
             pixel_size_nm=None, coord_bin=1., do_origin=True,
-            class_name='', class_number=None, tomos=None,
-            keep_star_coords=True):
+            find_region_shape=True, class_name='', class_number=None,
+            tomos=None, keep_star_coords=True):
         """Makes particles or tomos table from star files.
 
         Arg mode determines whether tomos or particles table is made.
@@ -255,16 +261,29 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
         In tomo mode make the following columns:
           - self.tomo_id_col
           - column for args pixel_size and coord_bin
-          - determines shape of region images
+          - determines shape of region images (if find_region_shape = True)
 
         In particle mode, does the following: 
+          - Converts star column self.micrograph_label (default 
+          'rlnMicrographName') to tomo ids and saves them to 
+          self.tomo_id_col (default 'tomo_id') column (conversion
+          mode specified as arg tomo_id_mode)
           - Attempts to extract particle id from self.image_label column of 
           self.particles and to put it in column self.particle_id_col. If 
           column self.image_label doesn't exist, sets -1 in 
-          self.particle_id_col.
-          - Calculates particle coordinates (column self.orig_coord_cols)
-          from star file coordinate and offset columns (see 
-          self.get_original_coords() for more info)
+          self.particle_id_col (default 'particle_id').
+          - Calculates particle coordinates (column self.orig_coord_cols,
+          defailt 'x_orig', 'y_orig', 'z_orig') from star file coordinate 
+          and offset columns (see self.get_original_coords() for more info)
+          - Column 'class_name' contans the value of arg class_name
+          - Saves star column self.class_label (default 'rlnClassNumber') 
+          as self.particles column 'class_number' if arg class_number
+          is None, otherwise ise the value of arg class_number
+          - Saves star columns 'rlnCoordinateX', 'rlnCoordinateY',
+          'rlnCoordinateZ', 'rlnAngleTilt', 'rlnAngleTiltPrior', 
+          'rlnAnglePsi', 'rlnAnglePsiPrior', 'rlnAngleRot', 'rlnOriginX', 
+          'rlnOriginY', 'rlnOriginZ' as columns of self.particles with same
+          names
 
         Arguments:
           - path: tomos or particles star file path
@@ -283,6 +302,8 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
           needed in mode 'tomo'
           - do_origin: flag indicating if coordinates are adjusted for
           origin shifts (rlnOriginX/Y/Z and rlnOriginX/Y/ZAngst)
+          - find_region_shape: flag indicating if shape of regions is
+          determined (by reading region image data)
           - class_name: name of the classification, needed in mode 'particle'  
           - class_number: class number, needed in mode 'particle'  
           - tomos: tomo star file, needed in mode 'particle' when 
@@ -361,8 +382,10 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
             self.tomo_cols = out_cols
 
             # get region shapes
-            abs_dir = os.path.abspath(os.path.dirname(path))
-            self.get_region_shapes(tomos=table, curr_dir=abs_dir, update=True)
+            if find_region_shape:
+                abs_dir = os.path.abspath(os.path.dirname(path))
+                self.get_region_shapes(
+                    tomos=table, curr_dir=abs_dir, update=True)
             
         # particle star specific: particle ids, calculated coords
         if mode == 'particle':

@@ -26,7 +26,7 @@ from .point_pattern import get_region_coords, exclude, project
 
 
 class MPSAnalysis(abc.ABC):
-    """Abstract class that provides conversion methods.
+    """Abstract class that provides MPS analysis methods.
 
     Meant to be inherited by MultiParticleSets.
     """
@@ -42,11 +42,11 @@ class MPSAnalysis(abc.ABC):
 
         If arg df_2 is None, finds the closest particle within df_1.
 
-        The closest particle is search within subgroups defined by arg 
+        The closest particle is searched within subgroups defined by arg 
         group_col.
 
         If the closest element cannot be determined, both the distance
-        and the indx in the resulting table are set to -1. This can 
+        and the index in the resulting table are set to -1. This can 
         happen because there are no particles in the corresponding group 
         of df_2, or df_2 is None and a group contains only one particle)
 
@@ -443,14 +443,26 @@ class MPSAnalysis(abc.ABC):
             raise ValueError(
                 "Particles table has to have columns that are not specified "
                 + f"in arg group_by {group_by}")
-        comb_tab = (self.particles
-            .groupby(
-                group_by, as_index=False)[other_col].count()
-            .pivot(
-                index=index_col, columns=other_group_cols, values=other_col)
-            .fillna(0)
-            .applymap(int)
-            )
+        try:
+            comb_tab = (self.particles
+                .groupby(
+                    group_by, as_index=False)[other_col].count()
+                .pivot(
+                    index=index_col, columns=other_group_cols, values=other_col)
+                .fillna(0)
+                #.applymap(int)
+                .map(int)
+                )
+        except AttributeError:
+            # pandas version <2.1.0
+            comb_tab = (self.particles
+                .groupby(
+                    group_by, as_index=False)[other_col].count()
+                .pivot(
+                    index=index_col, columns=other_group_cols, values=other_col)
+                .fillna(0)
+                .applymap(int)
+                )
 
         if total:
             comb_tab.loc['Total'] = comb_tab.sum(axis=0)
@@ -508,6 +520,38 @@ class MPSAnalysis(abc.ABC):
             update=False, check=False, check_cols=None, right_check_cols=None):
         """Adds particle classifications from one or more star files.
 
+        Reads star files (arg star_paths) and adds classification info 
+        to the corresponding particles of self.particles. 
+
+        After reading, star files are converted to pandas.DataFrame and
+        added to self.particles using self.add_classification(). See
+        add_classification() docs for more info.
+
+        Arguments:
+          - star_paths: one or more star file paths
+          - unique_cols, left_unique_cols and right_cols: names of the 
+          columns of particles (left) and star files (right) that
+          uniquely specify particles
+          - class_col: column in self.particles to which the new classification
+          is addedd
+          - class_label: column of star files that holds the classification  
+          - class_value: class name used if class_label is None
+          - class_fmt: format of the class names added to self.particles 
+          table (used only if class_label is not None) 
+          - update: if True self.particles is updated, otherwise returns
+          the modified particles table 
+          - check: flag indicating if other column(s) should be checked
+          to have the same values in particles and star file tables 
+          - check_cols: columns that should be checked, used for both tables, 
+          if right_check_cols is None, otherwise only for particles table
+          - right_check_cols: columns of star files that should be 
+          checked 
+          - eps: numerical error limit, used to check if the corresponding 
+          coordinates in particles and classification are equal (used only 
+          if arg check is True)
+
+        Returns: modified self.particles table if update is True, 
+        nothing otherwise
         """
 
         # figure out particles
@@ -561,7 +605,7 @@ class MPSAnalysis(abc.ABC):
         self.particles table. If class_label is None, class_value is used 
         for all particles of classification table.
 
-        If arg check is True, checks wheteher vlues of columns
+        If arg check is True, checks wheteher values of columns
         self.orig_coord_cols are the same for the corresponding particles 
         of tables self.particles and classification.
 
@@ -572,7 +616,7 @@ class MPSAnalysis(abc.ABC):
           is used
           - classification: (pandas.DataFrame) table that contains a 
           classification
-          - unique_cols, left_unique_cols and rignt_cols: names of the 
+          - unique_cols, left_unique_cols and right_cols: names of the 
           columns of particles (left) and classifications (right) that
           uniquely specify particles
           - class_col: column in self.particles to which the new classification
@@ -581,7 +625,7 @@ class MPSAnalysis(abc.ABC):
           classification table class names
           - class_value: class name used if class_label is None
           - class_fmt: format of the class names added to self.particles 
-          table (used only if class_label is not None 
+          table (used only if class_label is not None)
           - update: if True self.particles is updated, otherwise returns
           the modified particles table 
           - check: flag indicating if other column(s) should be checked
@@ -743,7 +787,9 @@ class MPSAnalysis(abc.ABC):
         else:
             return particles
 
-    def check_ids(self, expected, path_col=None):
+    def check_ids(
+            self, expected, path_col=None, update=False,
+            found_col='found_ids', verbose=True):
         """Checks if images contains expected ids.
 
         Arguments:
@@ -755,21 +801,41 @@ class MPSAnalysis(abc.ABC):
             path_col = self.region_particle_col
         expected = np.asarray(expected)
 
+        found_col_exists = False
+        if found_col in self.particles.columns:
+            found_col_exists = True
+
+        # find particles that contain all segments
         all_found = True
+        found_ids = []
         for pind, row in self.particles.iterrows():
+            if found_col_exists and self.particles[found_col].to_numpy()[0]:
+                found_ids.append(False)
+                continue
             path = row[path_col]
             image = pyto.segmentation.Labels.read(path)
             actual = image.extractIds()
-            found = expected == actual
+            this_found = expected == actual
             try:
-                found = found.all()
+                this_found = this_found.all()
             except AttributeError:
-                found = False
-            if not found:
+                this_found = False
+            if not this_found:
                 all_found = False
-                print(f"Particle {path}: Ids found: {actual}, "
-                      + f"expected: {expected} ")
-        if all_found:
+                if verbose:
+                    print(f"Particle {path}: Ids found: {actual}, "
+                          + f"expected: {expected} ")
+            found_ids.append(this_found)
+
+        # update table
+        if update:
+            if found_col_exists:
+                self.particles[found_col] = (
+                    self.particles[found_col] & found_ids)
+            else:
+                self.particles[found_col] = found_ids
+            
+        if all_found and verbose:
             print("All particles have expected ids")
 
     #
@@ -868,14 +934,27 @@ class MPSAnalysis(abc.ABC):
             inst.particles = particles.copy()
             return inst
 
-    def select_by_classes(self, set_name, update=False):
+    def select_by_classes(self, set_name, update=False, check=False):
         """Select particles that belong to specified classes.
 
+        Checks all elements of columns listed in self.classification_cols 
+        in order to find the specified class(es) (arg set_name). 
+
         Arguments:
-          - set_name: name of one or more particle sets (classes)
+          - set_name: (single str or list of strings) name of one or 
+          more particle classes (sets)
+          - update: (default False) indicates whether this object 
+          should be updated
+          - check: flag indicating if it should be checked that 
+          different classification columns (self.classification_cols)
+          do not have common elements (classes, or set names)
+
+        Returns an instance of this class that contains only particles
+        of the specified classes (if update=False). Otherwise updates
+        this instance.
         """
 
-        rules = self.find_classification(set_name=set_name) 
+        rules = self.find_classification(set_name=set_name, check=check) 
         result = self.select(rules=rules, update=update)
 
         return result
