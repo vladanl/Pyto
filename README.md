@@ -26,9 +26,10 @@ In addition, some parts depend on:
 
 + Matplotlib
 + Sklearn
-+ SymPy
 + Skimage
-+ PySeg: make sure Pyto comes before PySeg in PYTHONPATH because PySeg contains an older version of Pyto 
++ Statsmodels
++ SymPy: Currently needed only for development
++ PySeg: Needed only if Pyseg colocalization processing is followed by Pyto. Make sure Pyto comes before PySeg in PYTHONPATH because PySeg contains an older version of Pyto
 
 
 ### Installation ###
@@ -43,6 +44,10 @@ Please start from [Overview](doc/manuals/overview.pdf).
 
 ### Release history ###
 
+* 1.10.0 (18.12.2024), svn r2140)
+	* Added preprocessing for subtomo averaging
+	* Improved particle handling (MultiParticlesets)
+	* The above are needed for the Tether averaging project
 * 1.9.2 (19.03.2024, svn r2102)
   	* Added projection methods for colocalization analysis
 	* Added particle extraction from tomos

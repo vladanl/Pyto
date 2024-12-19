@@ -39,9 +39,10 @@ except ModuleNotFoundError:
         pyseg_import_failed = True
 if pyseg_import_failed:
     print(
-        "Warning: Pyseg could not be loaded. Therefore, calling "
-        + " pyto.spatial.ParticleSetsfrom_pyseg() will fail, but everything "
-        + "else should be fine.")
+        "Info: PySeg could not be loaded. This is needed only if Pyto "
+        + "is used to further process PySeg generated files. In this case, "
+        + "calling pyto.spatial.ParticleSetsfrom_pyseg() will fail. "
+        + "Everything else should be fine.")
     
 
 class ParticleSets:
