@@ -44,7 +44,10 @@ Please start from [Overview](doc/manuals/overview.pdf).
 
 ### Release history ###
 
-* 1.10.0 (18.12.2024), svn r2140)
+* 1.10.1 (07.01.2025, svn r2155)
+  	* Added preprocessing for subtomo averaging example
+	* Put back sources for manuals
+* 1.10.0 (18.12.2024, svn r2140)
 	* Added preprocessing for subtomo averaging
 	* Improved particle handling (MultiParticlesets)
 	* The above are needed for the Tether averaging project
