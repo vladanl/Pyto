@@ -125,8 +125,7 @@ class ExtractMPS(ExtractMPSFilter):
 
     def extract_particles_task(
             self,  name, particle_to_center, reverse, use_priors=True,
-            input_mode='pyseg',
-            mps_path=None,
+            input_mode='tethers_2024', mps_path=None,
             particles_path=None, source_path=None,
             regions_star_path=None, ctf_star_path=None, clean_initial=True,
             randomize_rot=True, expand_particle=False, expand_region=True,
@@ -139,46 +138,60 @@ class ExtractMPS(ExtractMPSFilter):
         """Extracts particles from tomos.
 
         Input data, comprising info about tomograms and particles, can be 
-        specified in different ays depending on arg input_mode:
+        specified in different ways depending on arg input_mode:
           - 'mps': from a MultiParticleSets object specified by arg
           mps_path
-          - 'pyseg': (experts only) from a related pyseg-morse project.
-          In this case, args  particles_path, source_path, 
+          - 'tethers_2024': (experts only) used for tether averaging 2024
+          project because input data was already present for a related 
+          pyseg-morse project. In this case, args particles_path, source_path, 
           regions_star_path, ctf_star_path and clean_initial
-          have to be specified
+          have to be specified.
 
         For input_mode='mps', the MPS object has to contain tomos
         and particles attributes (pandas.DataFrame) as follows:
-          - tomos columns: 
+          - tomos (DataFrame) columns: 
             - 'tomo_id': tomogram identifier, has to be unique 
-            - 'tomo', 'region', 'rlnCtfImage': paths to (greyscale) tomogram, 
-              boundaries (regions) tomogram and ctf, respectively
-            - 'region_offset_x', 'region_offset_y', 'region_offset_z':
-              position of regions with respect to tomo in bin 1
+            - 'tomo': path to (greyscale) tomogram, bin factor given in
+              region_bin column, defines tomo frame 
+            - 'region': path to boundaries (regions), bin_factor given in
+              region_bin column, defines region frame
+            - 'rlnCtfImage': path to ctf corresponding to tomo
+            - region_bin: bin factor of tomo and region images
+            - 'region_offset_x/y/z': position of regions with respect 
+              to tomo (at region_bin)
             - 'pixel_nm': pixel size [nm] 
-            - 'coord_bin', 'region_bin': bin factors for particle 
-              coordinates (particles table) and regions, respectively  
+            - 'coord_bin': bin factor for x/y/z_orig coordinates in
+              particles table (needed if particles columns 'x/y/z_orig'
+              are used)
             - 'region_id': needed?
-          - particles columns:
+          - particles (DataFrames) columns:
             - 'group': experimental group 
             - 'tomo_id': tomogram identifier, same as in tomos
             - 'particle_id': particle id, unique within a tomogram
             - 'class_number', 'class_name': particle class number and name
             (optional)
-            - 'x_orig_reg_frame', 'y_orig_reg_frame', 'z_orig_reg_frame':
-            particle coordinates in regions frame
+            - 'x/y/z_orig' (self.orig_coord_cols): particle coordinates 
+            in tomo frame at region_bin (needed if 'x/y/z_orig_reg_frame' 
+            columns are not present, otherwise ignorred)
+            - 'x/y/z_orig_reg_frame' (self.orig_coord_reg_frame_cols): 
+            particle coordinates in regions frame at region_bin 
             - 'rlnAngleTilt', 'rlnAngleTiltPrior', 'rlnAnglePsi', 
             'rlnAnglePsiPrior', 'rlnAngleRot': particle angles as given
             by relion (active, intrinsic, zyz, Euler angles)
 
-        Particle coordinates are converted from the regions frame to 
-        the (tomo) frame from which particle images are extracted, by
-        the following transformations:
-          - Starts from original particle coordinates in regions frame
-          (before projection on thin region). These are specified in           
-          the MPS objects read from (arg) particle_path (called mps_init). 
-          The coordinates are read from mps_init.particles (Pandas) table, 
-          columns specified by mps_init.orig_coord_reg_frame_cols
+        Particle coordinates (picks) are converted from tomo or regions 
+        frames to particle corners in tomo frame, from which particle 
+        images are extracted, by the following transformations:
+          - (mps mode only): Input particle coords are specified in 
+          regions frame (columns orig_coord_reg_frame_cols) or in
+          tomo frame (columns orig_coord_cols). In the latter case, 
+          coordinates are converted to regions frame.
+          - (tethers_2024 mode only): Input particle coordinates are given 
+          in regions frame (before projection on thin region). These are 
+          specified in the MPS objects read from (arg) particle_path 
+          (called mps_init). The coordinates are read from 
+          mps_init.particles (Pandas) table, columns specified by 
+          mps_init.orig_coord_reg_frame_cols
           - Determines particle center coordinates in regions frame 
           as a displacement from particle position by (arg) particle_to_center
           along the membrane normal in the cytoplasmic direction. The 
@@ -210,10 +223,9 @@ class ExtractMPS(ExtractMPSFilter):
 
         """
 
-
-        if input_mode == 'pyseg':
-            # make mps from pyseg - morse colocalization files
-            mps = self.input_from_pyseg(
+        if input_mode == 'tethers_2024':
+            # make mps from tethers averaging 2024 project files
+            mps = self.input_from_tethers_2024(
                 name=name, particles_path=particles_path,
                 source_path=source_path, regions_star_path=regions_star_path,
                 ctf_star_path=ctf_star_path, reverse=reverse,
@@ -223,6 +235,15 @@ class ExtractMPS(ExtractMPSFilter):
         elif input_mode == 'mps':
             # read data from previously prepared mps and set angles
             mps = MultiParticleSets.read(mps_path, verbose=verbose)
+            if (len(np.intersect1d(
+                    mps.particles.columns.to_numpy(),
+                    mps.orig_coord_reg_frame_cols)) == 0):
+                mps.convert_frame(
+                    init_coord_cols=mps.orig_coord_cols,
+                    final_coord_cols=mps.orig_coord_reg_frame_cols,
+                    shift_final_cols=mps.region_offset_cols,
+                    init_bin_col=mps.coord_bin_col,
+                    final_bin_col=mps.region_bin_col, overwrite=False)
             mps.particles = self.set_normals(
                 mps=mps, mps_coord_cols=mps.orig_coord_reg_frame_cols, 
                 source=None, source_coord_cols=None,
@@ -231,7 +252,7 @@ class ExtractMPS(ExtractMPSFilter):
         else:
             raise ValueError(
                 f"Argument input mode ({input_mode}) was not recognized."
-                + "Currently defined values are 'mps' and 'pyseg'.") 
+                + "Currently defined values are 'mps' and 'tethers_2024'.") 
             
         # randomize rot angle
         if randomize_rot:
@@ -298,6 +319,9 @@ class ExtractMPS(ExtractMPSFilter):
             convert_path_common=convert_path_common, 
             convert_path_helper=convert_path_helper,
             update=True, write=write_particles)
+        if verbose:
+            print(f"\nAll particles:")
+            print(f"Wrote particles to {paths.particles_dir}")
 
         # extract segments
         if morse_regions:
@@ -315,27 +339,32 @@ class ExtractMPS(ExtractMPSFilter):
                 update=True, write=write_regions)
 
         # save particle mps
-        mps.write(path=paths.mps_path_tmp, verbose=True)
+        mps.write(
+            path=paths.mps_path_tmp, verbose=verbose, out_desc="preliminary")
 
         # write star files and the corresponding table
         labels = self.get_labels(mps=mps)
-        combined = self.make_star(
+        self.make_star(
             mps=mps, labels=labels, star_path=paths.star_path,
-            verbose=True, comment=star_comment)
+            verbose=verbose, comment=star_comment, out_desc="all particles")
 
         # make star file for each particle subclass
-        if ((len(self.class_code) > 0) and (len(self.class_names) > 0)
+        if ((len(self.class_code) > 0)
+            and (self.class_names is None or (len(self.class_names) > 0))
             and (mps.class_number_col in mps.particles.columns)
-            and (mps.class_name_col in mps.particles.columns)):    
+            and (mps.class_name_col in mps.particles.columns)):
+            if verbose:
+                print("\nParticle classes:")
             self.split_star(
                 mps=mps,
                 class_names=self.class_names, class_code=self.class_code,
                 labels=self.get_labels(mps), 
-                star_path=paths.star_path, star_comment=star_comment)
+                star_path=paths.star_path, star_comment=star_comment,
+                verbose=verbose, out_desc="particles")
         
     def extract_regions_task(
-            self, mps, scalar, indexed, struct_path_col,
-            region_path_mode, 
+            self, mps, input_mode='presynaptic', scalar=None, indexed=None,
+            struct_path_col=None, region_path_mode=None, 
             convert_path_common=None, convert_path_helper=None,
             path_col=None, offset_cols=None, shape_cols=None, bin_col=None,
             expand=True,
@@ -343,11 +372,23 @@ class ExtractMPS(ExtractMPSFilter):
             fun=None, fun_kwargs={},
             write_regions=True, regions_name='regions',
             name_prefix='seg_', name_suffix='', mps_path=None,
-            star_comment='Regions'):
-        """Extracts regions subtomos from boundary image of structure pickles.
+            star_comment='Regions', verbose=True):
+        """Extracts boundary (regions) or segment particle images (subtomos).
 
-        Structure pickles need to be previously obtined by pyto hiererchical
-        connectivity and saved as SegmentationAnalysis objects.
+        Boundary and segment particles can be extracted from boundary and
+        segment tomos, respectively, of from structure pickles obtained 
+        by presynaptic analysis, depending on arg input_mode.
+
+        Boundary and segments input data is specified depending on 
+        arg input_mode:
+          - 'presynaptic': by pyto presynaptic analysis, where 
+          structure pickles are obtained by pyto hiererchical
+          connectivity and saved as SegmentationAnalysis objects.
+          - 'mps': (experts only) from a MultiParticleSets object passed
+          directly or specified by a path (arg mps in both cases). In this 
+          case, regions tomos (column 'regions' of mps.tomos have to 
+          contain all boundaries, and their ids need to be consistent 
+          with value of arg normalize_kwargs. 
 
         Region coordinates are calculated as:
           - Start with center_init_frames coords calculated by 
@@ -366,24 +407,48 @@ class ExtractMPS(ExtractMPSFilter):
         specified location. The later is meant to write the pickle in the
         original particles tables dir.
 
-        If arg fun is specified, args normalize_bound_fun are mag_fun
-        ignored. To apply a normalization, magnification and another
+        Particle images can be modified using args fun,
+        fun_kwargs and normalize_kwargs. Specifically, if arg fun is 
+        not specified, the following transformations are applied using
+        self.prepare_func() (see this function for more info):
+          - zoom if self.region_bin_factor != 1
+          - boundary ids are normalized using arg normalize_kwargs
+          - dilation if arg dilate is specified and != 0
+          - image dtype is changed if arg dtype is given 
+        In this case arg fun_kwargs is ignored.
+
+        Alternatively, if arg fun is specified, it is applied on all
+        individual particle images. If fun is a single function, it
+        is applied as:
+            fun(particle_data, **fun_kwargs)
+        where particle data is ndarray of image pixel values, and it has
+        to return (a modified) image ndarray. 
+
+        If fun is a list (or tuple) of functions, each of them is 
+        applied in the order specified. In this case, the outpur of the
+        preceeding function is passed as the first argument. Arg 
+        fun_kwargs has to be a list where each element is a dict 
+        containing the remaining arguments of the respective function. 
+        All funcrions have to have the signature described above. 
+        In this case, args normalize_kwargs, dilate and dtype ae ignored.
+
+        For example, to apply a normalization, magnification and another
         function, set args:
           - fun=(normalize_fun, mag_fun, other_fun)
           - fun_kwargs=(normalize_fun_kwargs, mag_fun_kwargs, other_fun_kwargs)
-        Each function has to accept (ndarray) image as the first argument
-        and return (ndarry) a modified image. The functions are applied 
-        in the order they are specified in arg fun.
 
         In 'pkl_segment' mode (arg region_path_mode), all other segments
         that may be present in a particle image are removed before
         applying functions specified by arg fun.
 
         Arguments:
+          - mps: (MultiParticleSets) particles object, or (str) path
+          to saved particle object
 
           - write_regions: flag indicating if region images are written
-          - regions_name: name of the regions, used as the directory name 
-          where region images are saved, if None 'regions' is used
+          - regions_name: name given to the extracted regions (boundaries), 
+          used as the directory name where region images are saved, 
+          if None 'regions' is used
           - name_prefix: part of the region image name before the 
           particle id (default 'seg_')
           - name_suffix: part of the region image name after the 
@@ -395,15 +460,33 @@ class ExtractMPS(ExtractMPSFilter):
 
         """
 
+        # read mps if parh specified
+        if isinstance(mps, str):
+             mps = MultiParticleSets.read(mps, verbose=verbose)
+        
         # setup paths
         paths = Paths(
             name=regions_name, root_template=self.root_template,
             regions=regions_name, size=self.box_size, tables=self.tables_dir)
             
-        # remove region related columns    
-        if self.remove_region_initial:
-            self.remove_region_cols(mps=mps) 
+        # get input data from other sources if needed
+        if input_mode == 'presynaptic':
+            mps = self.input_from_presynaptic(
+                mps=mps, scalar=scalar, indexed=indexed,
+                struct_path_col=struct_path_col,
+                region_path_mode=region_path_mode,
+                convert_path_common=convert_path_common,
+                convert_path_helper=convert_path_helper,
+                path_col=path_col, offset_cols=offset_cols,
+                shape_cols=shape_cols, bin_col=bin_col)
 
+        elif input_mode == 'mps':
+            pass
+        else:
+            raise ValueError(
+                f"Argument input mode ({input_mode}) was not recognized."
+                + "Currently defined values are 'mps' and 'presynaptic'.") 
+         
         # set attributes to mps
         mps.tomo_l_corner_cols = self.tomo_l_corner_cols
         mps.tomo_r_corner_cols = self.tomo_r_corner_cols
@@ -413,17 +496,6 @@ class ExtractMPS(ExtractMPSFilter):
         mps.reg_inside_col = self.reg_inside_col
         mps.tomo_particle_col = self.tomo_particle_col
         mps.region_particle_col = self.region_particle_col 
-
-        # convert coords to regions
-        mps = self.convert_to_struct_region(  
-            mps=mps, scalar=scalar, indexed=indexed,
-            struct_path_col=struct_path_col, image_path_mode=region_path_mode,
-            init_coord_cols=self.init_coord_cols,
-            region_coord_cols=self.center_reg_frame_cols, 
-            convert_path_common=convert_path_common,
-            convert_path_helper=convert_path_helper,
-            region_bin=self.region_bin, path_col=path_col, 
-            offset_cols=offset_cols, shape_cols=shape_cols, bin_col=bin_col)
 
         # find corner coords in regions frame
         particle_size_loc = self.box_size // self.region_bin_factor
@@ -449,7 +521,7 @@ class ExtractMPS(ExtractMPSFilter):
                 print("Warning: Because argument fun is specified, arguments "
                       + f"normalize_kwargs ({normalize_kwargs}), "
                       + f"dilate ({dilate}) "
-                      + f"and dtype ({dtype}) are ignored. ")
+                      + f"and dtype ({out_dtype}) are ignored. ")
 
         # write images
         self.write_particles(
@@ -464,40 +536,58 @@ class ExtractMPS(ExtractMPSFilter):
             convert_path_common=convert_path_common, 
             convert_path_helper=convert_path_helper,
             write=write_regions, update=True)
+        if verbose:
+            print(f"All {regions_name}:")
+            print(f"Wrote {regions_name} ({region_path_mode}) "
+                  + f"to {paths.regions_dir}")
         
         # save mps locally 
-        mps.write(path=paths.mps_path, verbose=True)
+        mps.write(path=paths.mps_path, verbose=verbose, out_desc="preliminary")
 
         # save the same mps also in another place if mps_path is given 
         if mps_path is not None:
-            mps.write(path=mps_path, verbose=True)
+            mps.write(path=mps_path, verbose=verbose, out_desc="preliminary")
 
         #  make star file
         labels = self.get_labels(mps=mps)
         self.make_star(
             mps=mps, labels=labels, star_path=paths.star_path,
-            comment=star_comment, verbose=True)
+            comment=star_comment, verbose=verbose,
+            out_desc=f"all {regions_name}")
         
         # make star file for each particle subclass
-        self.split_star(
-            mps=mps,
-            class_names=self.class_names, class_code=self.class_code,
-            labels=self.get_labels(mps), 
-            star_path=paths.star_path, star_comment=star_comment)
+        if ((len(self.class_code) > 0)
+            and (self.class_names is None or (len(self.class_names) > 0))
+            and (mps.class_number_col in mps.particles.columns)
+            and (mps.class_name_col in mps.particles.columns)):
+            if verbose:
+                print(f"\nIndividual classes of {regions_name}:")
+            self.split_star(
+                mps=mps,
+                class_names=self.class_names, class_code=self.class_code,
+                labels=self.get_labels(mps), 
+                star_path=paths.star_path, star_comment=star_comment,
+                verbose=verbose, out_desc=f"{regions_name}")
 
     def clean_particles_task(
             self, processing_cases, preliminary_tables_dir,
             expected_regions, expected_segments, found_col='found_ids_col',
-            star_comment=''):
+            star_comment='', verbose=True):
         """Removes particles based on regions and segments.
 
+        Reads 
+
+        Arguments:
+          - processing_cases: (list) processing cases to be cleaned
+          - preliminary_tables_dir: directory 
         """
 
         # read regions mps
         paths = Paths(
             name='regions', root_template=self.root_template,
             size=self.box_size, tables=preliminary_tables_dir)
-        mps_regions = MultiParticleSets.read(path=paths.mps_path)
+        mps_regions = MultiParticleSets.read(
+            path=paths.mps_path, verbose=verbose)
         mps_regions.check_ids(
             expected=expected_regions, update=True, found_col=found_col,
             verbose=False)
@@ -506,7 +596,8 @@ class ExtractMPS(ExtractMPSFilter):
         paths = Paths(
             name='segments', root_template=self.root_template,
             size=self.box_size, tables=preliminary_tables_dir)
-        mps_segments = MultiParticleSets.read(path=paths.mps_path)
+        mps_segments = MultiParticleSets.read(
+            path=paths.mps_path, verbose=verbose)
         mps_segments.check_ids(
             expected=expected_segments, update=True, found_col=found_col,
             verbose=False)
@@ -516,14 +607,16 @@ class ExtractMPS(ExtractMPSFilter):
                 & mps_segments.particles[found_col])
 
         # loop over processing cases
-        
         for nam in processing_cases:
+            if verbose:
+                print(f"\nProcessing {nam}: ")
 
             # read mps
             in_paths = Paths(
                 name=nam, root_template=self.root_template,
                 size=self.box_size, tables=preliminary_tables_dir)
-            mps = MultiParticleSets.read(path=in_paths.mps_path)
+            mps = MultiParticleSets.read(
+                path=in_paths.mps_path, verbose=verbose)
 
             # add found column and make clean mps
             if found_col in mps.particles.columns:
@@ -533,32 +626,34 @@ class ExtractMPS(ExtractMPSFilter):
             mps_clean = deepcopy(mps)
             mps_clean.tomos = mps.tomos
             mps_clean.particles = mps.particles[keep]
-        
+
             # save particle mps (all particles but with a flag)
             out_paths = Paths(
                 name=nam, root_template=self.root_template,
                 size=self.box_size, 
                 tables=self.tables_dir)
-            mps.write(path=out_paths.mps_path, verbose=True)
+            mps.write(path=out_paths.mps_path, verbose=verbose)
     
             # write star files and the corresponding table
             labels = self.get_labels(mps=mps_clean)
             combined = self.make_star(
                 mps=mps_clean, labels=labels, star_path=out_paths.star_path,
-                verbose=False, comment=star_comment)
+                verbose=verbose, comment=star_comment)
 
             # make star file for each particle subclass
             self.split_star(
                 mps=mps_clean, labels=labels, 
                 class_names=self.class_names, class_code=self.class_code,
-                star_path=out_paths.star_path, star_comment=star_comment)
+                star_path=out_paths.star_path, star_comment=star_comment,
+                verbose=verbose)
         
-    def input_from_pyseg(
+    def input_from_tethers_2024(
             self, name, particles_path, source_path,
             regions_star_path, ctf_star_path, reverse, use_priors=True,
             clean_initial=True, morse_regions=False, verbose=True):
-        """Generates input data for extract_particles_task from pyseg.
+        """Generates input MPS data from tether averaging 2024 project.
 
+        Used in self.extract_particles_task().
         """
 
         # Read MPS particles and source where particles are already
@@ -601,6 +696,33 @@ class ExtractMPS(ExtractMPSFilter):
 
         return mps
 
+    def input_from_presynaptic(
+            self, mps, scalar, indexed, struct_path_col,
+            region_path_mode,
+            convert_path_common=None, convert_path_helper=None,
+            path_col=None, offset_cols=None, shape_cols=None, bin_col=None):
+        """Extracts input data from pyto presynaptic analysis.
+
+        Used in self.extract_regions_task().
+        """
+
+        # remove region related columns    
+        if self.remove_region_initial:
+            self.remove_region_cols(mps=mps) 
+
+         # convert coords to regions
+        mps = self.convert_to_struct_region(  
+            mps=mps, scalar=scalar, indexed=indexed,
+            struct_path_col=struct_path_col, image_path_mode=region_path_mode,
+            init_coord_cols=self.init_coord_cols,
+            region_coord_cols=self.center_reg_frame_cols, 
+            convert_path_common=convert_path_common,
+            convert_path_helper=convert_path_helper,
+            region_bin=self.region_bin, path_col=path_col, 
+            offset_cols=offset_cols, shape_cols=shape_cols, bin_col=bin_col)
+
+        return mps
+    
     def set_normals(
             self, mps, mps_coord_cols, source=None, source_coord_cols=None,
             reverse=False, use_priors=True):
@@ -636,8 +758,8 @@ class ExtractMPS(ExtractMPSFilter):
         The following applies in both cases.
 
         If arg reverse is True, Euler angles (columns 
-        mps.particle_rotation_labels) 
-        are changed so that they define the opposite direction:
+        mps.particle_rotation_labels) are changed so that they define 
+        the opposite direction:
             - phi, theta, psi -> phi + pi, pi - theta, psi + pi
         In this case, normal vector angles are determined from the reversed 
         Eulers 
@@ -771,11 +893,30 @@ class ExtractMPS(ExtractMPSFilter):
             update=False):
         """Project particles along membrane normals for multiple tomos. 
 
+        Membrane normal angles theta and phi (spherical coordinates) 
+        are read from mps.particles columns self.normal_angle_cols 
+        (default 'normal_theta' and 'normal_phi').
+
+        Particles are projected (along membrane normals) from coordinates
+        specified by mps.particles, columns (arg) coord_cols
+        at distance given by (arg) distance.
+
         Meant to determine particle image centers coordinates as a 
         fixed displacement from particle coords along membrane normals, 
         when membrane normals are given in the relion format 
         ('rlnAngleTiltPrior' and 'rlnAnglePsiPrior').
 
+        Arguments:
+          - mps: (MultiParticleSets) Particles
+          - coord_cols: initial coordinates columns of mps.particles
+          - center_coord_cols: projected coordinates columns of mps.particles
+          - distance: projection distance (pixels)
+          - update: flag indicating whether mps is updated
+
+        Sets projected particle coords in table mps.particles, columns 
+        (arg) center_coord_cols if arg update is True.
+
+        Returns projected particle coords if arg update is False.
         """
 
         if (distance is not None) and (distance != 0): 
@@ -999,7 +1140,6 @@ class ExtractMPS(ExtractMPSFilter):
                 result.tomos[pa_col] = \
                     result.tomos[pa_col].astype('string')
                 
-
         if not update:
             return result
         
@@ -1009,8 +1149,7 @@ class ExtractMPS(ExtractMPSFilter):
             shape_cols=None, column='inside', update=False):
         """Find particle box corners and label those that fit inside.
 
-        Applicable to (greyscale) tomograms or segmentations, depending 
-        on parameters, 
+        Applicable to (greyscale) tomograms, regions and segmentations.
 
         For real particles that are directly extracted from tomo, arg
         box_size is the intended particle size. However, for regions
@@ -1021,10 +1160,21 @@ class ExtractMPS(ExtractMPSFilter):
         should be half of the particle box size.
 
         Arguments:
+          - mps: (MultiParticleSets) particles
+          - image_path_col: column of mps.tomos that contain image paths
+          - coord_cols: columns of mps.particles that contain particle
+          center coords
+          - l_corner_cols, r_corner_cols: columns of mps.particles where
+          the calculated minimum (lower left) and maximum (upper right)
+          box coordinates, respectively, are saved
           - box_size: particle size in the frame of the image from which 
           particles are extracted (in pixels)
           - shape_col: names of columns that contain image shape, if None 
           (default) shape is determined from the header of the image
+          - column: column of mps.particles where it is saved whether
+          particle boxes fit in the tomo
+          - update: flag that determines whether mps.particles is updated,
+          or it is returned (default False)
         """
 
         # center - l corner and center - r corner distances
@@ -1074,7 +1224,7 @@ class ExtractMPS(ExtractMPSFilter):
     def write_particles(
             cls, mps, l_corner_cols, r_corner_cols, image_path_col, dir_,
             expand, select_col=None, 
-            mean=None, std=None, invert_contrast=False, fun=None, fun_kwargs={}, 
+            mean=None, std=None, invert_contrast=False, fun=None, fun_kwargs={},
             image_path_mode='image', name_prefix='particle_', name_suffix='', 
             particle_path_col='particle', convert_path_common=None,
             convert_path_helper=None, update=False, write=True):
@@ -1207,13 +1357,15 @@ class ExtractMPS(ExtractMPSFilter):
             return parts_tab
 
     def make_star(
-            self, mps, labels, star_path=None,
-            comment="From MPS", verbose=False):
+            self, mps, labels, star_path=None, comment="From MPS",
+            verbose=False, out_desc=""):
         """Writes relion particle star file from particles and tomos tables.
 
         Takes data from mps.tomos and mps.attributes to make a DataFrame that 
         contains all required data for a particle star file, and saves this
         as file. Then, writes a star file from this data.
+
+        The output star file contains columns defined in self.get_labels().
 
         Arguments:
           - mps: (MultiParticleSets) particle sets object that contain tomo
@@ -1223,6 +1375,8 @@ class ExtractMPS(ExtractMPSFilter):
           - comment: comment addet to star file
           - verbose: flag indicating whether writting info about writting
           the generated dataframe, passed to pyto.io.PandasIO.write()
+          - out_desc: description of the file that is written, used
+          only if verbose is True 
 
         Returns DataFrame corresponding to the generated star file. 
         """
@@ -1255,13 +1409,15 @@ class ExtractMPS(ExtractMPSFilter):
                     format_=self.label_format, tablename='data', delimiter=' ', 
                     comment=f"# {comment}")
                 if verbose:
-                    print(f"Wrote star file {star_path}.")
+                    print(f"Wrote {out_desc} star file {star_path}")
             except FileNotFoundError:
                 os.makedirs(os.path.dirname(star_path))
                 write_table(
                     starfile=star_path, labels=list(labels.keys()), data=data, 
                     format_=self.label_format, tablename='data', delimiter=' ', 
                     comment=f"# {comment}")                 
+                if verbose:
+                    print(f"Wrote {out_desc} star file {star_path}")
 
             # DataFrame corresponding to the star file
             star_sp = star_path.rsplit('.', 1)
@@ -1269,17 +1425,17 @@ class ExtractMPS(ExtractMPSFilter):
             pyto.io.PandasIO.write(
                 table=combined, base=tab_path, file_formats=['json'],
                 verbose=verbose,
-                out_desc="DataFrame version of particle star file")
+                out_desc=f"DataFrame version of {out_desc} star file")
 
         return combined
 
     def split_star(
             self, mps, class_code, labels, star_path,
-            class_names=None, star_comment=None):
+            class_names=None, star_comment=None, verbose=True, out_desc=""):
         """Makes star files for each subclass separately
 
         Splits particles of (arg) mps based on values of column 
-        mps.class_number_col (od mps.particles) according to subclasses 
+        mps.class_number_col (of mps.particles) according to subclasses 
         defined by (arg) class_code. Only particles that have one of 
         the classes defined by (arg) class_names in the column 
         mps.class_name_col (of mps.particles) are selected for 
@@ -1311,11 +1467,15 @@ class ExtractMPS(ExtractMPSFilter):
                 'All', subclass.capitalize())
             self.make_star(
                 mps=mps_curr, labels=labels, 
-                star_path=star_path_curr, verbose=True,
-                comment=star_comment_curr)
+                star_path=star_path_curr, comment=star_comment_curr,
+                verbose=verbose, out_desc=f"class {subclass} {out_desc}")
 
     def get_labels(self, mps):
-        """Make relion star file labels
+        """Associates relion star file labels to mps columns.
+
+        Returns dictionary where keys are relion particle star file labels
+        and values are the corresponding column names of mps.tomos
+        and mps.particles.
         """
         labels_loc = {
             'rlnMicrographName': mps.tomo_col, 'rlnCtfImage': self.ctf_label, 
@@ -1450,8 +1610,19 @@ class ExtractMPS(ExtractMPSFilter):
     def prepare_func(
             self, zoom_factor=1, zoom_order=0, normalize_kwargs={},
             dilate=None, dtype=None):
-        """Prepare functions and arguments that modify images
-    
+        """Returns function(s) and argument(s) that modify images.
+
+        Returns a list of functions and list of (dict) kwargs that 
+        correspond to the functions, in the following order:
+          - function scipy.ndimage.zoom, kwargs {'zoom': zoom_factor, 
+          'order': zoom_order}, if arg zoom_factor != 1
+          - function self.normalize_bound_ids, kwargs normalize_kwargs,
+          if len(normalize_kwargs) > 0
+          - function scipy.ndimage.grey_dilation, kwargs 
+          {'footprint': skimage.morphology.ball(dilate)}, if arg dilate 
+          is specified and dilate != 0
+          - function numpy.asarray, kwargs{'dtype': dtype}, if arg 
+          dtype is specified
         """
 
         fun = []
@@ -1478,7 +1649,7 @@ class ExtractMPS(ExtractMPSFilter):
             dtype=np.int16):
         """Sets boundary ids to the specified (normalized) values.
 
-        Used for segmeted images such as those showing boundaries, regions
+        Used for segmented images such as those showing boundaries, regions
         or other segments. Makes a new image where pixel values of the 
         initial image (arg data) are replaced as follows: 
           - all values that are >= (arg) min_id_old are replaced by 

@@ -808,6 +808,7 @@ class MPSAnalysis(abc.ABC):
         # find particles that contain all segments
         all_found = True
         found_ids = []
+        expected_set = set(expected)
         for pind, row in self.particles.iterrows():
             if found_col_exists and self.particles[found_col].to_numpy()[0]:
                 found_ids.append(False)
@@ -815,11 +816,11 @@ class MPSAnalysis(abc.ABC):
             path = row[path_col]
             image = pyto.segmentation.Labels.read(path)
             actual = image.extractIds()
-            this_found = expected == actual
-            try:
-                this_found = this_found.all()
-            except AttributeError:
-                this_found = False
+            this_found = expected_set == set(actual)
+            #try:
+            #    this_found = this_found.all()
+            #except AttributeError:
+            #    this_found = False
             if not this_found:
                 all_found = False
                 if verbose:

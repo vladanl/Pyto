@@ -620,7 +620,7 @@ class TestMultiParticleSets(np_test.TestCase):
             [[180, 110, 80],
              [0, 0, 0],
              [50, 50, 50]])
-        desired_shape = [True, True, False, False]
+        desired_shape = np.array([True, True, False, False])
         actual = self.mps.convert(
             tomos=local_tomos_shape, particles=self.particle_origin,
             exclusion=20, exclusion_mode='before_projection',
@@ -642,7 +642,7 @@ class TestMultiParticleSets(np_test.TestCase):
             [[180, 110, 80],
              [0, 0, 0],
              [50, 50, 50]])
-        desired_shape = [True, True, False, False]
+        desired_shape = np.array([True, True, False, False])
         actual = self.mps.convert(
             tomos=local_tomos_shape, particles=self.particle_origin,
             exclusion=20, exclusion_mode='before_projection',
@@ -666,7 +666,7 @@ class TestMultiParticleSets(np_test.TestCase):
             [[180, 100, 80],
              [0, 0, 0],
              [50, 50, 50]])
-        desired_shape = [True, False, False, False]
+        desired_shape = np.array([True, False, False, False])
         actual = self.mps.convert(
             tomos=local_tomos_shape, particles=self.particle_origin,
             exclusion=20, exclusion_mode='before_projection',
@@ -690,7 +690,7 @@ class TestMultiParticleSets(np_test.TestCase):
             [[180, 100, 80],
              [0, 0, 0],
              [50, 50, 50]])
-        desired_shape = [True, False, False, False]
+        desired_shape = np.array([True, False, False, False])
         actual = self.mps.convert(
             tomos=local_tomos_shape, particles=self.particle_origin,
             exclusion=20, exclusion_mode='before_projection',
@@ -724,7 +724,7 @@ class TestMultiParticleSets(np_test.TestCase):
             [[180, 100, 80],
              [0, 0, 0],
              [50, 60, 50]])
-        desired_shape = [True, False, False, False]
+        desired_shape = np.array([True, False, False, False])
         actual = self.mps.convert(
             tomos=local_tomos_shape, particles=self.particle_origin,
             exclusion=30, exclusion_mode='before_projection',
@@ -768,7 +768,73 @@ class TestMultiParticleSets(np_test.TestCase):
             region_offset=self.tomo_off, region_id=region_id,
             exclusion=30, exclusion_mode='after_projection')
         assert_frame_equal(actual, self.particle_final_excl_30nm)
-       
+
+    def test_convert_frame(self):
+        """Tests convert_frame().
+        """
+
+        mps = MultiParticleSets()
+        mps.tomos = self.tomos.copy()
+        shift_final_col = 'shift_final'
+        shift_final_cols = [
+            'region_offset_x', 'region_offset_y', 'region_offset_z']
+        mps.particles = self.particle_origin.copy()
+        final_coord_cols =  ['xx_orig', 'yy_orig', 'zz_orig']
+        desired = np.array([
+            [136, 78, 42],
+            [162, 104, 56],
+            [174, 116, 74],
+            [-39, -36, -30]])
+        mps.convert_frame(
+            init_coord_cols=['x_orig', 'y_orig', 'z_orig'],
+            final_coord_cols=final_coord_cols,
+            shift_final_cols=shift_final_cols,
+            init_bin_col='coord_bin', final_bin_col='region_bin',
+            overwrite=False)
+        np_test.assert_array_equal(
+            mps.particles[final_coord_cols].to_numpy(), desired)
+        np_test.assert_equal(
+            mps.particles[final_coord_cols[0]].dtype, np.dtype(int))
+
+        # no int conversion, overwrite, continues from above
+        desired = np.array([
+            [136, 78, 42],
+            [162, 104, 56],
+            [174, 116, 74],
+            [-39, -36, -30.25]])
+        mps.convert_frame(
+            init_coord_cols=['x_orig', 'y_orig', 'z_orig'],
+            final_coord_cols=final_coord_cols,
+            shift_final_cols=shift_final_cols,
+            init_bin_col='coord_bin', final_bin_col='region_bin',
+            to_int=False, overwrite=True)
+        np_test.assert_array_equal(
+            mps.particles[final_coord_cols].to_numpy(), desired)
+
+        # no int conversion
+        mps = MultiParticleSets()
+        mps.tomos = self.tomos.copy()
+        shift_final_col = 'shift_final'
+        shift_final_cols = [
+            'region_offset_x', 'region_offset_y', 'region_offset_z']
+        mps.particles = self.particle_origin.copy()
+        final_coord_cols =  ['xx_orig', 'yy_orig', 'zz_orig']
+        desired = np.array([
+            [136, 78, 42],
+            [162, 104, 56],
+            [174, 116, 74],
+            [-39, -36, -30.25]])
+        mps.convert_frame(
+            init_coord_cols=['x_orig', 'y_orig', 'z_orig'],
+            final_coord_cols=final_coord_cols,
+            shift_final_cols=shift_final_cols,
+            init_bin_col='coord_bin', final_bin_col='region_bin',
+            overwrite=False, to_int=False)
+        np_test.assert_array_almost_equal(
+            mps.particles[final_coord_cols].to_numpy(), desired)
+        np_test.assert_equal(
+            mps.particles[final_coord_cols[0]].dtype, np.dtype(float))
+            
     def test_from_particle_sets(self):
         """Tests from_particle_sets()
         """
