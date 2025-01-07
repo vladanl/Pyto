@@ -736,16 +736,18 @@ def tomo_generator(
     that the path specified by arg pickle_var have different beginning,
     the path can be adjusted by args convert_path_common and 
     convert_path_helper. For example, if the old path (value of pickle_var) is:
-      old_path/common/the_same_path
+        old_path/common/the_same_path
     arg convert_path_common:
-      common
+        common
     and arg convert_path_helper:
-      new_path/common/whatever_else
+        new_path/common/whatever_else
     the adjust path is (often resulting from os.getcwd()):
-      new_path/common/the_same_path
+        new_path/common/the_same_path
     see also pyto.particles.SetPath doc.
 
     Arguments:
+      - scalar: (pandas.DataFrame) presynaptic analysis scalar data
+      - indexed: (pandas.DataFrame) presynaptic analysis indexed data
       - groups: selected group names, or None for all groups
       - identifierss: selected tomo identifiers, or None for all tomos
       - pickle_var: name of a scalar variable (column name of scalar) 

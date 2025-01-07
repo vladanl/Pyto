@@ -34,7 +34,7 @@ class ExtractMPSFilter(abc.ABC):
     def filter_particles_task(
             self, mps, sigma_nm, name_init, name_filtered,
             fun=sp.ndimage.gaussian_filter, fun_kwargs={}, 
-            star_comment='Gauss low-pass filtered'):
+            verbose=True, star_comment='Gauss low-pass filtered'):
         """Filters particles, saves them and write star files
 
         Arguments:
@@ -56,28 +56,34 @@ class ExtractMPSFilter(abc.ABC):
             particle_col=mps.tomo_particle_col, 
             in_particle_col=self.in_tomo_particle_col, 
             pattern=name_init, replace=name_filtered)
+        if verbose:
+            print("All particles:")
+            print(f"Wrote particles to {paths.root}/{name_filtered}")
         mps_filt.name = paths.name
         mps_filt.in_tomo_particle_col = self.in_tomo_particle_col
 
         # save filtered mps
-        mps_filt.write(path=paths.mps_path, verbose=True)
+        mps_filt.write(path=paths.mps_path, verbose=verbose)
 
         # make star file
         self.make_star(
             mps=mps_filt, labels=self.get_labels(mps_filt),
             star_path=paths.star_path, comment=star_comment, 
-            verbose=True)
+            verbose=verbose)
 
         # make star file for each tether subclass
+        if verbose:
+            print(f"\nIndividual classes of {name_filtered}:")
         self.split_star(
             mps=mps_filt,
             class_names=self.class_names, class_code=self.class_code,
             labels=self.get_labels(mps), 
-            star_path=paths.star_path, star_comment=star_comment)
+            star_path=paths.star_path, star_comment=star_comment,
+            verbose=verbose)
 
     def smooth_regions_task(
             self, region_other, region_ids, name_init, name_smooth=None,
-            name_regions=None, prefix='', star_comment=''):
+            name_regions=None, prefix='', star_comment='', verbose=True):
         """Selectively filters regions of particle images.
         
         Specifically, takes initial particle images (arg name_init)
@@ -152,26 +158,33 @@ class ExtractMPSFilter(abc.ABC):
             region_ids=region_ids, paths=paths_smooth,
             name_regions=name_regions, particle_col=mps_orig.tomo_particle_col, 
             in_particle_col=self.in_tomo_particle_col, prefix=prefix)
-
+        if verbose:
+            print("\nAll particles:")
+            print(f"Wrote particles to {paths_smooth.particles_dir}")
+ 
         # save smooth mps
-        mps_smooth.write(path=paths_smooth.mps_path, verbose=True)
+        mps_smooth.write(path=paths_smooth.mps_path, verbose=verbose)
 
         # make star file
         self.make_star(
             mps=mps_smooth, labels=self.get_labels(mps_smooth),
             star_path=paths_smooth.star_path, comment=star_comment, 
-            verbose=True)
+            verbose=verbose)
 
         # make star file for each tether subclass
+        if verbose:
+            print(f"\nIndividual classes of {name_smooth}:")
         self.split_star(
             mps=mps_smooth, labels=self.get_labels(mps_orig), 
             class_names=self.class_names, class_code=self.class_code,
-            star_path=paths_smooth.star_path, star_comment=star_comment)
+            star_path=paths_smooth.star_path, star_comment=star_comment, 
+            verbose=verbose)
 
     def randomize_task(
-            self, mask, name_init, name_random,  mask_mode='image',
-            name_segment=None, star_comment='Randomized', test=False):
-        """Randomize particle images outside the mask.
+            self, name_init, name_random,  mask, mask_mode='image',
+            name_segment=None, star_comment='Randomized',
+            verbose=True, test=False):
+        """Randomize particle images outside a mask.
 
         Reads particles specified by arg name_init, imposes the specified
         mask(s) to randomize particle pixels outside the mask and
@@ -179,8 +192,8 @@ class ExtractMPSFilter(abc.ABC):
         name_random.
 
         Arg mask_mode specified the form of arg mask, it can be:
-          - 'image': arg mask is an image that is used as a mask for all
-          particles
+          - 'image': arg mask is a single image that is used as a mask for
+          all particles
           - 'path_col': each particle has the corresponding mask (or 
           segment), the mask particle set is specified by arg name_segment
           and arg mask is the name of particles table column
@@ -200,10 +213,11 @@ class ExtractMPSFilter(abc.ABC):
           mask_mode
           - mask_mode: specified the form of arg mask, 'image' (default)
           or 'path_col'
-          - name_segment: name of the particle specific mask (called 
-          segment) particle set (used only for 'path_col' mode)
+          - name_segment: name of the particle set comprising 
+          particle-specific masks (segment), used only for 'path_col' mode
           - star_comment: comment written at the beginning of star files
           - test: if True, instead of randomizing sets pixels to 0
+          (default False)
         """
 
         # read input particles
@@ -224,7 +238,7 @@ class ExtractMPSFilter(abc.ABC):
                 name=name_segment, root_template=self.root_template,
                 size=self.box_size)
             mps_segment = pyto.spatial.MultiParticleSets.read(
-                path=paths_segment.mps_path)
+                path=paths_segment.mps_path, verbose=verbose)
             mps_init.particles.drop(
                 columns=mask, errors='ignore', inplace=True)
             common_cols = [mps_init.tomo_id_col, mps_init.particle_id_col]
@@ -240,23 +254,29 @@ class ExtractMPSFilter(abc.ABC):
             particle_col=mps_init.tomo_particle_col,
             in_particle_col=self.in_tomo_particle_col, 
             pattern=name_init, replace=name_random, test=test)
+        if verbose:
+            print("\nAll particles:")
+            print(f"Wrote particles to {paths_random.particles_dir}")
         mps_rand.name=paths_random.name
         mps_rand.in_tomo_particle_col = self.in_tomo_particle_col
 
         # save filtered mps
-        mps_rand.write(path=paths_random.mps_path, verbose=True)
+        mps_rand.write(path=paths_random.mps_path, verbose=verbose)
 
         # make star file
         self.make_star(
             mps=mps_rand, labels=self.get_labels(mps_rand),
             star_path=paths_random.star_path, comment=star_comment, 
-            verbose=True)
+            verbose=verbose)
 
         # make star file for each tether subclass
+        if verbose:
+            print(f"\nIndividual classes of {name_random}:")
         self.split_star(
             mps=mps_rand, labels=self.get_labels(mps_rand), 
             class_names=self.class_names, class_code=self.class_code,
-            star_path=paths_random.star_path, star_comment=star_comment)
+            star_path=paths_random.star_path, star_comment=star_comment, 
+            verbose=verbose)
          
     @classmethod
     def filter_particles(

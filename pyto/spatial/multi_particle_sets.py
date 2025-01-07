@@ -157,7 +157,7 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
         """
         self.__dict__.update(state)
         
-    def write(self, path, verbose=True, info_fd=None):
+    def write(self, path, verbose=True, out_desc="", info_fd=None):
         """Writes this instance in the form that can be read by read().
 
         Pickles this instance without self.tomos and self.particles dataframes. 
@@ -169,9 +169,14 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
         info about the write formats.
 
         Arguments:
-          - path: common part of the file path
+          - path: common part of the file path expected to have 
+          extension 'pkl'
           - verbose: flag indicating if a statement is printed for every
           file that is written
+          - out_desc: description of the file that is written, used
+          only for the out messages if self.verbose is True 
+          - info_fd: file descriptor for the above write messages
+
         """
 
         # make directory if needed
@@ -185,19 +190,21 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
             f"{split_path[0]}{self.pickle_tomos_suffix}.{split_path[1]}")
         PandasIO.write(
             table=self.tomos, base=tomos_path, file_formats=['pkl', 'json'],
-            verbose=verbose, info_fd=info_fd)
+            verbose=False, info_fd=info_fd)
         parts_path = (
             f"{split_path[0]}{self.pickle_particles_suffix}.{split_path[1]}")
         PandasIO.write(
             table=self.particles, base=parts_path,
-            file_formats=['pkl', 'json'], info_fd=info_fd)
+            file_formats=['pkl', 'json'], verbose=False, info_fd=info_fd)
 
         # pickle the rest (see __getstate__)
         with open(path, 'wb') as fd:
             pickle.dump(self, fd)
+            if verbose:
+                print(f"Pickled {out_desc} MPS object to {path}", file=info_fd)
 
     @classmethod
-    def read(cls, path, verbose=True, info_fd=None):
+    def read(cls, path, verbose=True, out_desc="", info_fd=None):
         """Reads instance of this class from files created by write().
 
         Reads pickled instance of this class that does not contain self.tomos
@@ -209,7 +216,10 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
           - path: common part of the file path
           - verbose: flag indicating if a statement is printed for ever
           file that is read
-        Returns instance of this class.
+          - out_desc: description of the file that is read, used
+          only for the out messages if self.verbose is True 
+          - info_fd: file descriptor for the above read messages
+       Returns instance of this class.
         """
         
         # read the rest
@@ -221,14 +231,17 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
         tomos_path = (
             f"{split_path[0]}{inst.pickle_tomos_suffix}.{split_path[1]}")
         inst.tomos = PandasIO.read(
-            base=tomos_path, file_formats=['pkl', 'json'], verbose=verbose,
+            base=tomos_path, file_formats=['pkl', 'json'], verbose=False,
             info_fd=info_fd)
         parts_path = (
             f"{split_path[0]}{inst.pickle_particles_suffix}.{split_path[1]}")
         inst.particles = PandasIO.read(
-            base=parts_path, file_formats=['pkl', 'json'], verbose=verbose,
+            base=parts_path, file_formats=['pkl', 'json'], verbose=False,
             info_fd=info_fd)
         
+        if verbose:
+            print(f"Read {out_desc} MPS object {path}", file=info_fd)
+
         return inst
 
     def copy(self):
@@ -1005,6 +1018,68 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
 
         return particles
 
+    def convert_frame(
+            self, init_coord_cols, final_coord_cols, shift_final_cols,
+            init_bin_col, final_bin_col, to_int=True, overwrite=False):
+        """Convert coordinates from init to final frame.
+
+        Conversion is done as follows:
+          final_coords = init_coords * init_bin / final_bin - shift_final
+
+        The calculated final frame coordinates are saved in
+        final_coord_cols of self.particles. If arg overwrite is False 
+        and at least one of the final_coord_cols already exists, 
+        ValueError is raised. Otherwise, final_coord_cols columns are 
+        overwritten.
+
+        Arguments:
+          - init_coord_cols: initial coordinate columns
+          - final_coord_cols: final coordinate columns 
+          - shift_final_cols: shift of the final frame with respect to
+          the init frame at final bin
+          - init_bin_col, final_bin_col: initial and final frame bin
+          factors, respectively
+          - to_int: flag indicating whether final coords are rounded 
+          and converted to int
+          - overwrite: flag indicating whether overwriting existing 
+          final_coord_cols is allowed
+        """
+
+        # check if writing new columns is fine
+        if not overwrite:
+            if len(np.intersect1d(
+                    self.particles.columns.to_numpy(), shift_final_cols)) > 0:
+                raise ValueError(
+                    f"At least one of the final columns ({final_coord_cols})"
+                    + "is already present in self.particles and "
+                    + "(arg) overwrite is False.")
+        
+        for _, tomo_row in self.tomos.iterrows():
+
+            # get tomo data and bin
+            tomo_id = tomo_row[self.tomo_id_col]
+            init_bin = tomo_row[init_bin_col]
+            final_bin = tomo_row[final_bin_col]
+            mag_factor = init_bin / final_bin
+            shift_final = tomo_row[shift_final_cols].to_numpy(dtype=float)
+            
+            # extract particles for the current tomo
+            part_one = self.particles[
+                self.particles[self.tomo_id_col]==tomo_id].copy()
+            init_parts = part_one[init_coord_cols].to_numpy(dtype=float)
+            index_one = part_one.index
+
+            # convert and write
+            final_parts = init_parts * mag_factor - shift_final[np.newaxis, :]
+            if to_int:
+                final_parts = np.round(final_parts).astype(int)
+            self.particles.loc[index_one, final_coord_cols] = final_parts
+
+        # convert dtype
+        if to_int:
+            dtype_conv = dict((col, np.dtype(int)) for col in final_coord_cols)
+            self.particles = self.particles.astype(dtype=dtype_conv)
+    
     def project_one(
             self, particles, region_path, region_id, coord_cols=None,
             project_mode='closest', angle_cols=None, line_reverse=False,

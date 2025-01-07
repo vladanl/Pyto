@@ -1703,17 +1703,17 @@ def sort_particles(particles, indices=False, compact=False, type=None):
     else:
         return tuple(result)
 
-def array_data_head(starfile, tablename, top=False, labels=False):
+def array_data_head(
+        starfile, tablename, comments=False, top=False, labels=False):
     """
     Returns header of the specified table in the specified file.
-
-    If arg labels is True, returns only a list of labels (without leading '_').
 
     Arguments:
       - starfile: name of the starfile that contains data
       - tablename: name of the table that contains data
       - top: if True, the top of the file, before the first table is reached,
       is included in the header lines (default False)
+      - labels: if True, returns only a list of labels (without leading '_')
 
     Returns: list of header lines
     """
@@ -1731,11 +1731,10 @@ def array_data_head(starfile, tablename, top=False, labels=False):
     # read file
     for line in open(starfile):
 
-        # skip comments no matter what
+        # comments
         if line.startswith('#'):
-            if top and not a_block_found:
-                if not labels:
-                    head.append(line)
+            if top and not a_block_found and not labels and comments:
+                head.append(line)
             continue
 
         if not block_found:
@@ -2956,9 +2955,9 @@ def update_priors_replace(
     """Updates prior angles and modifies paths in a star file.
 
     Reads the star file specified by arg in_star_path, makes the 
-    manipulations explained below and write sta resulting star file.
+    manipulations explained below and writes the resulting star file.
 
-    If arg update_priors is True, copes values of Tilt and Psi angles
+    If arg update_priors is True, copis values of Tilt and Psi angles
     to TiltPrior and PsiPrior.
 
     If arg pattern is not None, replaces all occurances of (arg)
