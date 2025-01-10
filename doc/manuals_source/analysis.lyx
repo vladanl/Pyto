@@ -1,0 +1,523 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{ae,aecompl}
+
+%% $Id: analysis.lyx 1688 2021-01-16 21:46:09Z vladan $
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family sfdefault
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 0
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 0
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plainnat
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 3cm
+\topmargin 3cm
+\rightmargin 2.5cm
+\bottommargin 3cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Analysis of Multiple Datasets
+\end_layout
+
+\begin_layout Standard
+\align center
+$Revision: 1688 $
+\end_layout
+
+\begin_layout Section
+Summary
+\end_layout
+
+\begin_layout Standard
+This document describes statistical analysis of segments obtained from multiple
+ datasets.
+ 
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+Segment properties obtained form segment analysis from multiple experiments
+ are separated into experimental groups.
+ Experimental groups are typically based on the experimental conditions
+ (such as pharmacological treatments or genetic manipulations), but other
+ criteria can also be used (such as the presence of certain organelle).
+ Thus, each experimental group contains data from several experiments (often
+ 5-10).
+ Segment properties are analyzed within groups and the results (such as
+ means) are then statistically compared between groups.
+ This allows identification of properties that differ significantly between
+ the groups and are then likely to be caused by the experimental conditions.
+\end_layout
+
+\begin_layout Standard
+In this document only the general concepts are presented.
+ For the presynaptic workflow, more detailed description that includes specific
+ parameter values is presented in workflows.pdf.
+ For other applications, the user is still advised to start from the presynaptic
+ workflow and customize the files mentioned there.
+ 
+\end_layout
+
+\begin_layout Subsection
+Terminology
+\end_layout
+
+\begin_layout Itemize
+An experiment (or observation) contains the data obtained by segmentation
+ and analysis of one dataset (one biological object of interest).
+ 
+\end_layout
+
+\begin_layout Itemize
+A group is a collection of experiments obtained under the same experimental
+ conditions (repetitions).
+ These groups correspond directly to the experimental groups used in the
+ standard statistical analysis.
+ A group is typically defined by a specific pharmacological manipulation
+ or genetic background, but it can be also based on biological content (such
+ as containing a specific organelle).
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/scheme_bkg.png
+	lyxscale 20
+	width 16cm
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig: Pyto architecture"
+
+\end_inset
+
+ The Pyto workflow for presynaptic segmentation and analysis.
+ Processing steps are represented by rectangles and data by rhomboids.
+ The upper part shows processing (segmentation and analysis) of individual
+ datasets.
+ It consists of processing steps that perform the hierarchical connectivity
+ segmentation (
+\begin_inset Quotes eld
+\end_inset
+
+Connectors
+\begin_inset Quotes erd
+\end_inset
+
+) and the analysis typically used for the presynaptic terminals (
+\begin_inset Quotes eld
+\end_inset
+
+Connectors
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+Layers
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+Vesicles
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+Clusters
+\begin_inset Quotes erd
+\end_inset
+
+).
+ Results of the processing steps are saved in Python pickle files indicated
+ by the same names.
+ The bottom part represents the statistical analysis of all data.
+ First, all single dataset analysis results are combined and preprocessed
+ and the results are saved in biological structure-specific pickle files
+ (
+\begin_inset Quotes eld
+\end_inset
+
+Connectors
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+Layers
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+Vesicles
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+Clusters
+\begin_inset Quotes erd
+\end_inset
+
+).
+ Second, the data from the structure-specific pickles are combined to allow
+ statistical analysis between datasets organized in experimental groups
+ and the interactive display of this data.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Procedure
+\end_layout
+
+\begin_layout Subsection
+Prerequisites
+\end_layout
+
+\begin_layout Subsubsection
+Individual analysis pickles
+\end_layout
+
+\begin_layout Standard
+All individual datasets have to be segmented and analyzed as explained in
+ the segmentation and analysis guide (segmentation.pdf).
+ This procedure creates pickle files that are dataset and processing step
+ dependent (individual analysis pickles in Fig 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: Pyto architecture"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Subsection
+Creating catalog files
+\end_layout
+
+\begin_layout Standard
+It is recommended to first make unique identifiers for experiments and names
+ for experimental conditions (treatments) first.
+ For example, use 'wt, 'protein-x_ko', 'untreated', 'compound-y' for experimenta
+l conditions and: 'wt_1', 'wt_2', 'protein-x_ko_1', 'untreated_1', 'compound-y_1
+', 'compound-y_4', 'compound-y_5', ...
+ .
+ 
+\end_layout
+
+\begin_layout Standard
+The user has to make catalog files that contain data about experiments (metadata
+).
+ Catalog files are dataset specific, that is each dataset has to have a
+ corresponding catalog file.
+ All catalog files need to reside in the same directory.
+ Typically, catalog files are very simple, they only contain statements
+ of the type 
+\family typewriter
+variable = value
+\family default
+.
+ Ideally, all catalog files should define the same variables.
+ However this is not an absolute requirement, but it may cause errors.
+ 
+\end_layout
+
+\begin_layout Standard
+More precisely, catalog files have to be valid Python files.
+ They are imported by Python 
+\family typewriter
+import 
+\family default
+statement, so they may contain more complicated Python statements.
+ 
+\end_layout
+
+\begin_layout Standard
+In any case, the following variables have to be defined in catalog files:
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+identifier
+\family default
+ (str): unique experiment identifier
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+treatment
+\family default
+ (str): specifies experimental condition.
+ 
+\end_layout
+
+\begin_layout Itemize
+file names of all individual analysis pickles
+\end_layout
+
+\begin_layout Itemize
+
+\family typewriter
+pixel_size
+\family default
+: pixel size in nm
+\end_layout
+
+\begin_layout Itemize
+(optional) arbitrary number of other variables can be defined, such as those
+ that describe tomographic acquisition, processing or biological content
+\end_layout
+
+\begin_layout Subsection
+Statistical analysis of multiple datasets
+\end_layout
+
+\begin_layout Subsubsection
+Generation of the structure-specific pickles
+\end_layout
+
+\begin_layout Standard
+In this step, the analysis data from all individual analysis pickles and
+ the metadata from the corresponding catalogs are combined.
+ This data is internally organized in the experimental groups to facilitate
+ statistical analysis between the groups.
+ 
+\end_layout
+
+\begin_layout Standard
+In addition, new properties are calculated.
+ These include:
+\end_layout
+
+\begin_layout Itemize
+The conversion of properties that are in pixel units to the corresponding
+ properties given in nm (such as lengths, distances, surface area, volume).
+ 
+\end_layout
+
+\begin_layout Itemize
+Combinations between the existing properties.
+ For example, for the presynaptic terminals the number of connectors is
+ calculated for each synaptic vesicle.
+\end_layout
+
+\begin_layout Standard
+All these results are separated according to the structures to which they
+ refer (core) and saved as the structure specific pickles (Fig 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig: Pyto architecture"
+
+\end_inset
+
+).
+ Each of these pickles focuses on one core structure, such as segments or
+ layers, and contains data for all experimental groups.
+\end_layout
+
+\begin_layout Subsubsection
+Interactive statistical analysis
+\end_layout
+
+\begin_layout Standard
+This analysis can be separated in the following steps:
+\end_layout
+
+\begin_layout Itemize
+Loading the individual structure specific pickles
+\end_layout
+
+\begin_layout Itemize
+Further preprocessing
+\end_layout
+
+\begin_layout Itemize
+Execution of predefined functions that statistically analyze data between
+ experimental groups and display the results
+\end_layout
+
+\begin_layout Standard
+These scripts are provided for the analysis of the presynaptic terminal
+ (presynaptic_stats.py) and the synaptic cleft (cleft_stats.py).
+ In these cases the script require only minimal modifications (see workflows.pdf).
+ For other applications these scripts should be used as initial templates,
+ but they might require more extensive modifications.
+\end_layout
+
+\begin_layout Subsection
+Including additional datasets
+\end_layout
+
+\begin_layout Standard
+When a new datasets is added, a corresponding catalog file needs to be created
+ and the complete statistical analysis of multiple datasets needs to be
+ repeated to generate the structure specific pickles that also contain the
+ data from the new dataset.
+ New pickles have to be created also when something is changed in the segmentati
+on and analysis of individual datasets resulting in the modification of
+ one or more individual analysis pickles, as well as when one or more catalogs
+ are modified.
+\end_layout
+
+\begin_layout Section
+Applications
+\end_layout
+
+\begin_layout Standard
+Practical details about of the segmentation and analysis procedure are available
+ for the following specific applications:
+\end_layout
+
+\begin_layout Itemize
+Presynaptic terminal (see workflows.pdf)
+\end_layout
+
+\begin_layout Itemize
+Synaptic cleft (work in progress)
+\end_layout
+
+\begin_layout Section
+Citing
+\end_layout
+
+\begin_layout Standard
+Please consider citing us if you use segmentation and analysis in Pyto:
+\end_layout
+
+\begin_layout Standard
+Lučić V, Fernández-Busnadiego R, Laugks U and Baumeister W, 2016.
+ Hierarchical detection and analysis of macromolecular complexes in cryo-electro
+n tomograms using Pyto software.
+ J Struct Biol.
+ 196(3):503-514.
+ doi: 10.1016/j.jsb.2016.10.004.
+\end_layout
+
+\begin_layout Standard
+Thank you.
+\end_layout
+
+\end_body
+\end_document

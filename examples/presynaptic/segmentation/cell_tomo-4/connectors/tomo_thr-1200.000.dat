@@ -1,0 +1,62 @@
+#
+# Machine: bebop ['Linux', 'x86_64', 'x86_64']
+# Date: Tue Jan 14 18:22:38 2020
+#
+# Input script: connectors.py (Tue Jan 14 18:23:42 2020)  $Revision: 1573 $
+# Working directory: /fs/pool/pool-lucic2/pyto/presynaptic_example_small/segmentation/cell_tomo-4/connectors
+#
+# Image (in): ../3d/tomo.mrc (Tue Jan 14 17:09:39 2020)
+# Boundaries (in): ../viz/labels.mrc (Tue Jan 14 17:11:59 2020)
+# Segmented image (out): tomo_thr-1200.000.mrc (Tue Jan 14 18:22:38 2020)
+# SegmentationAnalysis pickle (out): tomo_thr-1200.000.pkl (Tue Jan 14 18:22:38 2020)
+#
+# Boundary ids: 
+#     [2, 36, 48, 49, 50, 52, 58, 59, 60, 61]
+#
+# Number of boundaries contacted: 2
+# Contact mode: exact
+#
+# Segmentation region: 3
+# Free region size: 0
+# Free region mode: add
+#
+# Structuring element connectivities
+#     - connector formation: 1
+#     - size: 3
+#     - contact detection: 1
+#     - contact counting: 1
+#     - topology: 1
+#
+# Length
+#     - contact mode: b2c
+#     - line mode: mid
+#
+#
+# Distance:
+#   - region(s): 2
+#   - mode: mean
+#
+# Threshold: 1200.000
+#
+#
+# Number of segments: 8
+#
+# Id          Density               Volume Surface  S/V  Length Boundary  Distance    Contacts 
+#      mean    std     min     max                              distance         to            
+  60 760.991 350.880 -589.351 1195.632    553    542  0.980   13.7    4.5     10.2    2   [ 2 48]
+  64 887.270 185.154 546.290 1157.459     23     23  1.000    1.4    1.7      1.4    2   [ 2 49]
+  63 741.331 407.272 -453.673 1198.690     54     54  1.000    8.8    2.8      4.0    2   [ 2 61]
+  57 746.051 350.918 -739.576 1199.807    661    647  0.979    5.0    6.0     16.8    2   [48 60]
+  58 732.837 398.088 -701.525 1194.571    147    144  0.980   12.2    6.0     24.3    2   [48 60]
+  61 713.485 474.768 -814.841 1195.925     24     24  1.000    6.4    6.0     10.4    2   [48 60]
+  62 672.502 398.205 -612.193 1197.631    339    326  0.962    4.4    4.9     15.7    2   [49 61]
+  59 699.943 395.185 -929.085 1197.491   1155   1111  0.962   19.8   19.4     18.6    2   [60 61]
+
+# All segments together:
+#   0 722.486 379.332 -929.085 1199.807   2956   2871  0.971   -1.0   -1.0     -1.0    2 
+
+# Background:
+#    1861.517 710.073 -1524.226 5460.545 764553
+
+# Whole segmentation region:
+#    1857.130 712.596 -1524.226 5460.545 767509

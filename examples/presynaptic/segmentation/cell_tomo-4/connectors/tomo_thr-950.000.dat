@@ -1,0 +1,60 @@
+#
+# Machine: bebop ['Linux', 'x86_64', 'x86_64']
+# Date: Tue Jan 14 18:22:28 2020
+#
+# Input script: connectors.py (Tue Jan 14 18:23:42 2020)  $Revision: 1573 $
+# Working directory: /fs/pool/pool-lucic2/pyto/presynaptic_example_small/segmentation/cell_tomo-4/connectors
+#
+# Image (in): ../3d/tomo.mrc (Tue Jan 14 17:09:39 2020)
+# Boundaries (in): ../viz/labels.mrc (Tue Jan 14 17:11:59 2020)
+# Segmented image (out): tomo_thr-950.000.mrc (Tue Jan 14 18:22:27 2020)
+# SegmentationAnalysis pickle (out): tomo_thr-950.000.pkl (Tue Jan 14 18:22:27 2020)
+#
+# Boundary ids: 
+#     [2, 36, 48, 49, 50, 52, 58, 59, 60, 61]
+#
+# Number of boundaries contacted: 2
+# Contact mode: exact
+#
+# Segmentation region: 3
+# Free region size: 0
+# Free region mode: add
+#
+# Structuring element connectivities
+#     - connector formation: 1
+#     - size: 3
+#     - contact detection: 1
+#     - contact counting: 1
+#     - topology: 1
+#
+# Length
+#     - contact mode: b2c
+#     - line mode: mid
+#
+#
+# Distance:
+#   - region(s): 2
+#   - mode: mean
+#
+# Threshold: 950.000
+#
+#
+# Number of segments: 6
+#
+# Id          Density               Volume Surface  S/V  Length Boundary  Distance    Contacts 
+#      mean    std     min     max                              distance         to            
+  37 754.399 136.515 546.290 929.317      9      9  1.000    1.4    1.7      1.2    2   [ 2 49]
+  32 487.242 326.718 -566.432 946.419    113    113  1.000    5.2    6.0     14.6    2   [48 60]
+  33 517.433 285.751 -201.634 940.488     52     52  1.000    7.3    6.0     14.6    2   [48 60]
+  34 475.152 363.873 -471.423 949.355     30     30  1.000    6.1    4.9     19.9    2   [49 61]
+  35 525.500 295.532 -259.115 949.252     62     61  0.984    4.4    4.9     14.1    2   [49 61]
+  36 452.323 376.228 -612.193 937.114     90     88  0.978    6.1    4.9     17.6    2   [49 61]
+
+# All segments together:
+#   0 495.222 332.991 -612.193 949.355    356    353  0.992   -1.0   -1.0     -1.0    2 
+
+# Background:
+#    1857.762 712.121 -1524.226 5460.545 767153
+
+# Whole segmentation region:
+#    1857.130 712.596 -1524.226 5460.545 767509

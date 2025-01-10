@@ -1,0 +1,75 @@
+#
+# Machine: slava ['Linux', 'x86_64', 'x86_64']
+# Date: Tue Jan 12 16:53:00 2021
+#
+# Input script: cluster.py (Tue Jan 12 16:46:14 2021) $Revision: 1574 $
+# Working directory: /home/vladan/pool/pyto/presynaptic_example_small/segmentation/cell_tomo-4/cluster
+#
+# Connectors: ../connectors/tomo_new_connectors_good.pkl (Tue Jan 14 18:25:42 2020)
+# Boundaries: 
+#     ../viz/labels.mrc (Thu Jan 30 10:58:05 2020)
+# Multi cluster pickle:
+#     tomo_new_connectors_good_cluster.pkl (Tue Jan 12 16:53:00 2021)
+# Output cluster images:
+# Distance files:
+#     tomo_new_connectors_good_bound_distances.pkl (Tue Jan 12 16:53:00 2021)
+#     tomo_new_connectors_good_conn_distances.pkl (Tue Jan 12 16:53:00 2021)
+# Connectivity clustering results:
+#     tomo_new_connectors_good_conn-cluster.dat (Tue Jan 12 16:53:00 2021)
+# Hierarchical clustering of boundaries results:
+#     tomo_new_connectors_good_cluster-bound.dat (Tue Jan 12 16:53:00 2021)
+# Hierarchical clustering of connectors results:
+#     tomo_new_connectors_good_cluster-conn.dat (Tue Jan 12 16:53:00 2021)
+#
+# Boundary ids: 
+#     [36 48 49 50 52 58 59 60 61]
+#
+ Clustered items:
+#   - number of boundaries: 9
+#   - number of connectors: 9
+#
+# Hierarchical boundary clustering parameters:
+#   - clustering method: minimal euclidean distance
+#   - linkage: single
+#   - flat clusters criterion: distance
+#   - flat clusters threshold: [6, 7, 8, 9, 10, 11, 12, 13, 14]
+#   - similarity method: b-flat
+#   - use single-item clusters for similarity: True
+#
+# Hierarchical connector clustering parameters:
+#   - clustering method: minimal euclidean distance
+#   - linkage: single
+#   - flat clusters criterion: distance
+#   - flat clusters threshold: [10, 12, 14, 16, 18, 20, 22, 24, 26, 28]
+#
+# Connectivity clustering results:
+#   - number of clusters: 7
+#
+# Hierarchical boundary clustering results:
+#   - number of clusters: 7
+#   - similarity index:  0.000
+#   - threshold: 6
+#   - rand similarity index:  1.000
+#   - b-flat similarity index:  1.000
+#   - vi similarity index:  0.000
+#
+# Hierarchical connector clustering results:
+#   - number of clusters (some clusters may contain no  boundaries): 2
+#   - similarity index:  0.000
+#   - threshold: 10
+#   - rand similarity index:  1.000
+#   - b-flat similarity index:  1.000
+#   - vi similarity index:  0.000
+#
+# Segment   Connectivity   Hierarchy   Dual Hierarchy Boundary ids
+#    id      cluster id    cluster id    cluster id              
+#
+        1          1             2             4        [49 61]
+        3          2             1             1        [48 60]
+        7          1             2             4        [49 61]
+       12          1             2             4        [49 61]
+       15          2             1             1        [48 60]
+       33          2             1             1        [48 60]
+       58          2             1             1        [48 60]
+       61          2             1             1        [48 60]
+       73          1             2             4        [49 61]

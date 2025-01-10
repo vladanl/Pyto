@@ -1,0 +1,327 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{ae,aecompl}
+
+% $Id: overview.lyx 1687 2021-01-12 17:31:16Z vladan $
+% $Revision: 1687 $
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family sfdefault
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 0
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 0
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plainnat
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 3cm
+\topmargin 3cm
+\rightmargin 2.5cm
+\bottommargin 3cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Pyto overview
+\end_layout
+
+\begin_layout Author
+Vladan Lucic 
+\end_layout
+
+\begin_layout Address
+\align center
+Max Planck Institute of Biochemistry
+\begin_inset Newline newline
+\end_inset
+
+Email: vladan@biochem.mpg.de
+\end_layout
+
+\begin_layout Standard
+\align center
+$Revision: 1687 $
+\end_layout
+
+\begin_layout Section
+Summary
+\end_layout
+
+\begin_layout Standard
+This document covers the installation of pyto package and gives general
+ information about its usage.
+\end_layout
+
+\begin_layout Section
+Installation
+\end_layout
+
+\begin_layout Subsection
+Software requirements
+\end_layout
+
+\begin_layout Itemize
+OS: We work under linux, but pyto should work on other platforms because
+ it was (mostly) written to be platform independent.
+\end_layout
+
+\begin_layout Itemize
+Python 3, also compatible with Python 2.7+ except that new developments might
+ be 3 only
+\end_layout
+
+\begin_layout Itemize
+Numpy, scipy packages 
+\end_layout
+
+\begin_layout Itemize
+Matplotlib: used for plotting graphs
+\end_layout
+
+\begin_layout Itemize
+Pandas: currently used very little, but it's expected to increase in future
+\end_layout
+
+\begin_layout Itemize
+Ipython, Jupyter (optional): standard interactive python shell and notebook
+\end_layout
+
+\begin_layout Itemize
+All of the above can be installed using the Anaconda distribution
+\end_layout
+
+\begin_layout Subsection
+Pyto
+\end_layout
+
+\begin_layout Itemize
+Pyto can be unpacked anywhere in the directory tree
+\end_layout
+
+\begin_layout Itemize
+Add Pyto root directory (../../) to your PYTHONPATH
+\end_layout
+
+\begin_layout Itemize
+To check the installation, start python shell (e.g.
+ ipython) and import pyto, there should be no errors:
+\end_layout
+
+\begin_layout LyX-Code
+>>> import pyto
+\end_layout
+
+\begin_layout Section
+Pyto applications
+\end_layout
+
+\begin_layout Standard
+Pyto package can be used for the following applications:
+\end_layout
+
+\begin_layout Enumerate
+Detection (segmentation) and analysis of pleomorphic molecular complexes
+ bound to larger structures (such as membranes).
+ The detection is performed by the Hierarchical connectivity segmentation.
+ The analysis consists of the determination of various properties of the
+ individual segments (morphology, localization, ...), segment classification
+ based on some of these properties and the statistical analysis between
+ experimental groups.
+ Examples of this application include segmentation and analysis of presynaptic
+ cytomatrix (workflow Presynaptic) and of synaptic adhesion complexes (Cleft
+ analysis, similar to Presynaptic workflow) and of single membrane bound
+ complexes (Single membrane attached complexes workflow) .
+\end_layout
+
+\begin_layout Enumerate
+Correlation between various imaging modes.
+ The goal is to determine the precise location of a structure of interest
+ detected in one imaging mode in another mode.
+ Current applications include correlations between light microscopy and
+ transmission electron microscopy and between light microscopy and scanning
+ electron or focused ion beam microscopy.
+\end_layout
+
+\begin_layout Enumerate
+Alignment and reconstruction related tomography tools (work in progress)
+\end_layout
+
+\begin_layout Section
+Usage
+\end_layout
+
+\begin_layout Standard
+Three usage types envisaged, here listed in the increasing order of difficulty:
+\end_layout
+
+\begin_layout Enumerate
+The most straightforward way to perform a procedure in pyto is to execute
+ the appropriate python scripts (located in pyto/scripts/).
+ 
+\end_layout
+
+\begin_layout Enumerate
+The scripts can be customized by the user.
+ This requires some understanding of Python.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Finally, individual tasks can be executed by using pyto classes and methods.
+ However, this approach requires a solid understanding of Python, Numpy
+ and Scipy packages as well as pyto.
+\end_layout
+
+\begin_layout Section
+Documentation
+\end_layout
+
+\begin_layout Itemize
+Hierarchical connectivity segmentation guide: segmentation.pdf
+\end_layout
+
+\begin_layout Itemize
+Segment analysis guide: analysis.pdf
+\end_layout
+
+\begin_layout Itemize
+Specific segmentation and analysis workflows including parameter settings:
+ workflows.pdf
+\end_layout
+
+\begin_layout Itemize
+Commonly used pyto procedures are implemented in script files (pyto/scripts/).
+ They contain info about the procedures as well as about parameters that
+ need to be specified.
+\end_layout
+
+\begin_layout Itemize
+Correlative microscopy guide: correlation.pdf
+\end_layout
+
+\begin_layout Itemize
+Almost all classes and methods are documented by __doc__ strings.
+ This info is also available in epydoc form.
+ 
+\end_layout
+
+\begin_layout Section
+Citing
+\end_layout
+
+\begin_layout Standard
+Please consider citing us if you use Pyto:
+\end_layout
+
+\begin_layout Standard
+For general use, segmentation and analysis: Lučić V, Fernández-Busnadiego
+ R, Laugks U and Baumeister W, 2016.
+ Hierarchical detection and analysis of macromolecular complexes in cryo-electro
+n tomograms using Pyto software.
+ J Struct Biol.
+ 196(3):503-514.
+ http://dx.doi.org/10.1016/j.jsb.2016.10.004.
+\end_layout
+
+\begin_layout Standard
+For 3D to 2D correlation, please cite: Arnold, J., J.
+ Mahamid, V.
+ Lucic, A.
+ d.
+ Marco, J.-J.
+ Fernandez, Laugks, H.-A.
+ Mayer, Tobias, W.
+ Baumeister, and J.
+ Plitzko, 2016.
+ Site-specific cryo-focused ion beam sample preparation guided by 3-dimensional
+ correlative microscopy.
+ Biophysical Journal 110:860-869.
+ http://dx.doi.org/10.1016/j.bpj.2015.10.053.
+\end_layout
+
+\begin_layout Standard
+For all other correlative work: Fukuda, Y., N.
+ Schrod, M.
+ Schaffer, L.
+ R.
+ Feng, W.
+ Baumeister, and V.
+ Lucic, 2014.
+ Coordinate transformation based cryo-correlative methods for electron tomograph
+y and focused ion beam milling.
+ Ultramicroscopy 143:15– 23.
+ http://dx.doi.org/10.1016/j.ultramic.2013.11.008.
+\end_layout
+
+\begin_layout Standard
+Thank you.
+\end_layout
+
+\end_body
+\end_document

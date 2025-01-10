@@ -1,0 +1,55 @@
+#
+# Machine: bebop ['Linux', 'x86_64', 'x86_64']
+# Date: Tue Jan 14 18:22:11 2020
+#
+# Input script: connectors.py (Tue Jan 14 18:23:42 2020)  $Revision: 1573 $
+# Working directory: /fs/pool/pool-lucic2/pyto/presynaptic_example_small/segmentation/cell_tomo-4/connectors
+#
+# Image (in): ../3d/tomo.mrc (Tue Jan 14 17:09:39 2020)
+# Boundaries (in): ../viz/labels.mrc (Tue Jan 14 17:11:59 2020)
+# Segmented image (out): tomo_thr-500.000.mrc (Tue Jan 14 18:22:11 2020)
+# SegmentationAnalysis pickle (out): tomo_thr-500.000.pkl (Tue Jan 14 18:22:11 2020)
+#
+# Boundary ids: 
+#     [2, 36, 48, 49, 50, 52, 58, 59, 60, 61]
+#
+# Number of boundaries contacted: 2
+# Contact mode: exact
+#
+# Segmentation region: 3
+# Free region size: 0
+# Free region mode: add
+#
+# Structuring element connectivities
+#     - connector formation: 1
+#     - size: 3
+#     - contact detection: 1
+#     - contact counting: 1
+#     - topology: 1
+#
+# Length
+#     - contact mode: b2c
+#     - line mode: mid
+#
+#
+# Distance:
+#   - region(s): 2
+#   - mode: mean
+#
+# Threshold: 500.000
+#
+#
+# Number of segments: 1
+#
+# Id          Density               Volume Surface  S/V  Length Boundary  Distance    Contacts 
+#      mean    std     min     max                              distance         to            
+   1 109.738 307.804 -612.193 499.873     36     35  0.972    6.2    4.9     18.1    2   [49 61]
+
+# All segments together:
+#   0 109.738 307.804 -612.193 499.873     36     35  0.972   -1.0   -1.0     -1.0    2 
+
+# Background:
+#    1857.212 712.509 -1524.226 5460.545 767473
+
+# Whole segmentation region:
+#    1857.130 712.596 -1524.226 5460.545 767509

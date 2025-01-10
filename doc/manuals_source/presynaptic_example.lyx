@@ -1,0 +1,823 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{ae,aecompl}
+
+%% $Id: presynaptic_example.lyx 1695 2021-02-07 10:21:57Z vladan $
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family sfdefault
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 3cm
+\topmargin 3cm
+\rightmargin 2.5cm
+\bottommargin 3cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Presynaptic workflow example
+\end_layout
+
+\begin_layout Standard
+\align center
+$Revision: 1695 $
+\end_layout
+
+\begin_layout Section
+Summary
+\end_layout
+
+\begin_layout Standard
+This example shows a complete presynaptic workflow.
+\end_layout
+
+\begin_layout Section
+Segmentation and analysis of individual datasets (synapses)
+\end_layout
+
+\begin_layout Paragraph*
+Important:
+\end_layout
+
+\begin_layout Standard
+Following this procedure will overwrite many of the files given in this
+ example.
+ It is recommended to execute steps in order and compare the newly generated
+ files with the corresponding example files.
+\end_layout
+
+\begin_layout Subsection
+General info
+\end_layout
+
+\begin_layout Standard
+A more detailed description of the relevant computational methods is given
+ in segmentation.pdf .
+\end_layout
+
+\begin_layout Standard
+All relevant data is in examples/presynaptic_example/segmentation/cell_tomo-4/
+ .
+\end_layout
+
+\begin_layout Standard
+All tasks described below have to be executed, except executing the cluster
+ script.
+\end_layout
+
+\begin_layout Subsection
+Generating a boundary label image file
+\end_layout
+
+\begin_layout Standard
+This step explains how a boundary label file can be generated.
+ Here, synaptic vesicles are labeled in a semi-automated way, while other
+ membranes, cellular structures and organelles are labeled manually.
+\end_layout
+
+\begin_layout Subsubsection
+Prerequisite
+\end_layout
+
+\begin_layout Itemize
+tomogram (3d/tomo.mrc)
+\end_layout
+
+\begin_layout Subsubsection
+Steps - Direct method
+\end_layout
+
+\begin_layout Itemize
+Segment the active zone membrane (viz/disks.raw, label id=2) based on the
+ tomogram
+\end_layout
+
+\begin_layout Itemize
+Segment presynaptic intracellular region (id=3) and cellular structures
+ that should not be used for segmentation (microtubules, mitochondria, non-synap
+tic vesicles; ids = [35, 47, 72, 74, 75]) (save as viz/disks.raw)
+\end_layout
+
+\begin_layout Itemize
+Segment equatorial circles (disks) of synaptic vesicles (ids = [36, 48,
+ 49, 50, 52, 58, 59, 60, 61] (viz/disks.raw) visualized in the tomogram
+\end_layout
+
+\begin_layout Itemize
+It is advisable that none of the labels generated in the previous steps
+ is present on the faces
+\end_layout
+
+\begin_layout Itemize
+Enter parameters in common/tomo_info.py (template pyto/scripts/tomo_info.py),
+ the following label ids are set:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+all_ids: all ids present in the labels file, if a label is present in the
+ file, but is not specified in the list, it will be set to 0
+\end_layout
+
+\begin_layout Itemize
+boundary_ids: label ids for the AZ membrane and synaptic vesicles
+\end_layout
+
+\begin_layout Itemize
+vesicle ids: synaptic vesicle ids
+\end_layout
+
+\begin_layout Itemize
+segmentation_region: label id for the cytoplasm, this is the region where
+ tethers and connectors are detected
+\end_layout
+
+\begin_layout Itemize
+distance_id: id of the AZ membrane
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Run viz/discs_to_balls.py script (template pyto/scripts/discs_to_balls.py)
+ to generate a boundary label file (viz/labels.mrc) where equatorial discs
+ are expanded to full balls
+\end_layout
+
+\begin_layout Subsubsection
+Steps - Iterative method (alternative)
+\end_layout
+
+\begin_layout Itemize
+Segment the active zone membrane (viz/disks_1.raw, label id=2) in the tomogram
+\end_layout
+
+\begin_layout Itemize
+Segment presynaptic intracellular region (id=3) and cellular structures
+ that should not be used for segmentation (microtubules, mitochondria, non-synap
+tic vesicles; ids = [35, 47, 72, 74, 75] (viz/disks_1.raw)
+\end_layout
+
+\begin_layout Itemize
+Segment equatorial circles (disks) of some synaptic vesicles (ids = [36,
+ 48, 49, 50]) in the tomogram and save the segmentation as viz/disks_1.raw
+\end_layout
+
+\begin_layout Itemize
+Enter parameters in viz/discs_to_balls_1.py script (template pyto/scripts/disks_t
+o_balls.py) and run this script to generate viz/labels_1.raw where the labeled
+ disks are expanded to full balls.
+ Check the script to see how the parameters (especially label ids) are set.
+\end_layout
+
+\begin_layout Itemize
+Enter parameters in viz/blank_1.py (template pyto/scripts/blank.py) and run
+ this script to make a tomogram where the labeled synaptic vesicles are
+ clearly marked (3d/tomo_1.mrc).
+ This make easier the further segmentation of synaptic vesicle equatorial
+ disks.
+\end_layout
+
+\begin_layout Itemize
+Segment equatorial circles (disks) of (some) other synaptic vesicles (ids
+ = [52, 58, 59, 60, 61]) based on the blanked tomogram (tomo_1.mrc).
+ Depending on the segmentation program, labels_1.raw may need to be loaded.
+ Save the segmentation as viz/disks_2.raw.
+\end_layout
+
+\begin_layout Itemize
+Enter parameters in viz/discs_to_balls_2.py (template pyto/scripts/discs_to_balls.
+py) script and run this script to generate viz/labels-2.mrc where the newly
+ labeled disks are expanded to full balls.
+ Check the script to see how the parameters (especially label ids) are set.
+\end_layout
+
+\begin_layout Itemize
+Continue with iterating blank and discs_to_balls until the final boundary
+ labels file is generated, where all synaptic vesicles are fully labeled
+\end_layout
+
+\begin_layout Subsubsection
+Results
+\end_layout
+
+\begin_layout Itemize
+Final boundary label image file (viz/labels.mrc, or viz/labels_n.mrc)
+\end_layout
+
+\begin_layout Subsubsection
+Notes
+\end_layout
+
+\begin_layout Standard
+Other membrane segmentation tools and procedures can be used.
+ However, the resulting boundary label file has to be consistent with the
+ one provided here.
+ The most important requirements are:
+\end_layout
+
+\begin_layout Itemize
+Boundary label image has to contain integers
+\end_layout
+
+\begin_layout Itemize
+Value 0 is reserved for the background
+\end_layout
+
+\begin_layout Itemize
+Separate, specific values (ids) need to be used to label the following:
+ the active zone region, presynaptic cytoplasm (segmentation region), synaptic
+ vesicles (each vesicle has to have a unique id) and other organelles and
+ cellular structures.
+ These ids should not appear anywhere else in the label file.
+\end_layout
+
+\begin_layout Itemize
+Labels should not touch tomogram sides
+\end_layout
+
+\begin_layout Standard
+The most common reason for errors is the label values are not assigned properly.
+\end_layout
+
+\begin_layout Subsection
+Setting common parameters
+\end_layout
+
+\begin_layout Standard
+If not done during the previous step, common parameters heve to be entered
+ in common/tomo_info.py (template pyto/scripts/tomo_info.py)
+\end_layout
+
+\begin_layout Subsection
+Regions script
+\end_layout
+
+\begin_layout Standard
+Basic greyscale statistics for the whole tomogram and for the labeled parts
+ are calculated in this step.
+\end_layout
+
+\begin_layout Subsubsection
+Steps
+\end_layout
+
+\begin_layout Itemize
+Run regions/regions.py script (template pyto/scripts/vesicles.py).
+ Typically, no parameters need to be changed from the default values
+\end_layout
+
+\begin_layout Subsubsection
+Results
+\end_layout
+
+\begin_layout Itemize
+The results are stored both in regions/tomo_regions.dat (plain text) and
+ regions/tomo_regions.pkl (Python pickle file).
+ The text file is used to quickly check the results.
+ For more complicated analysis of the results, the pickle file can be loaded
+ into a Python session.
+\end_layout
+
+\begin_layout Subsection
+Vesicles script
+\end_layout
+
+\begin_layout Standard
+Basic greyscale, morphological and localization analysis of synaptic vesicles.
+ Includes separate analyses for vesicle membrane, lumen and the whole vesicles.
+\end_layout
+
+\begin_layout Subsubsection
+Steps
+\end_layout
+
+\begin_layout Itemize
+Enter parameters to regions/regions.py script (template pyto/scripts/vesicles.py).
+ Typically, only membrane thickness (membrane_thick) need to be adjusted
+\end_layout
+
+\begin_layout Itemize
+Execute the vesicles script
+\end_layout
+
+\begin_layout Subsubsection
+Results
+\end_layout
+
+\begin_layout Standard
+Results are saved in the following files (all in regions/):
+\end_layout
+
+\begin_layout Itemize
+tomo_vesicles.dat: All results in a plain text file
+\end_layout
+
+\begin_layout Itemize
+tomo_vesicles.pkl, tomo_mem.pkl, tomo_lum.pkl: Pickle file results for whole
+ vesicles, membranes and lumens, respectively.
+ Used for the analysis of multiple datasets.
+\end_layout
+
+\begin_layout Subsection
+Layers script
+\end_layout
+
+\begin_layout Standard
+Makes layers inside the presynaptic terminals that start at and are parallel
+ to the AZ membrane.
+\end_layout
+
+\begin_layout Subsubsection
+Steps
+\end_layout
+
+\begin_layout Itemize
+Enter parameters to layers/layers.py script (template pyto/scripts/layers.py).
+ Typically, no parameters need to be changed from the defaults
+\end_layout
+
+\begin_layout Itemize
+Execute the layers script
+\end_layout
+
+\begin_layout Subsubsection
+Results
+\end_layout
+
+\begin_layout Standard
+Results are saved in the following files (all in regions/):
+\end_layout
+
+\begin_layout Itemize
+labels_layers.dat: All results in a plain text file, used also for the analysis
+ of multiple datasets.
+\end_layout
+
+\begin_layout Itemize
+layers.mrc: layers image
+\end_layout
+
+\begin_layout Subsection
+Connectors script
+\end_layout
+
+\begin_layout Standard
+Detects, analyzes and classifies tethers that link synaptic vesicles to
+ the active zone membrane and connectors that interlink synaptic vesicles.
+\end_layout
+
+\begin_layout Subsubsection
+Steps
+\end_layout
+
+\begin_layout Itemize
+Enter parameters to connectors/connectors.py script (template pyto/scripts/connec
+tors.py).
+ Typically, the only parameter that need to be changed from the default
+ value relates to the classification by volume (class_3_volumes).
+ The exact values depend on the pixel size and on the expected volume
+\end_layout
+
+\begin_layout Itemize
+Execute the script
+\end_layout
+
+\begin_layout Subsubsection
+Results
+\end_layout
+
+\begin_layout Standard
+Results are saved in the following files (all in connectors/):
+\end_layout
+
+\begin_layout Itemize
+tomo_thr-*.dat: Single threshold results in a plain text file
+\end_layout
+
+\begin_layout Itemize
+tomo_thr-*.pkl: Single threshold results in a pickle file, used for the analysis
+ of multiple datasets.
+\end_layout
+
+\begin_layout Itemize
+tomo_thr-*.mrc: Single threshold segmentation image
+\end_layout
+
+\begin_layout Itemize
+tomo.dat, tomo.pkl, tomo.mrc: Combined results at all thresholds before classificat
+ion in a plain text file, pickle file and as an hierarchical segmentation
+ image, respectively.
+\end_layout
+
+\begin_layout Itemize
+tomo_new_[connectors, tethers]_[small, good, big].[dat, pkl, mrc]: Combined
+ results at all thresholds after classification for all classes obtained
+ as a combination of classification by contacted ids (tethers, connectors)
+ and by volume (small, good, big).
+ The extension determines whether the file is a plain text file, pickle
+ file or segmentation image.
+\end_layout
+
+\begin_layout Subsection
+Clusters script
+\end_layout
+
+\begin_layout Standard
+Clusters vesicles and connectors based on distance (hierarchical clustering)
+ and on connectivity.
+\end_layout
+
+\begin_layout Subsubsection
+Steps
+\end_layout
+
+\begin_layout Itemize
+Enter parameters to connectors/clusters.py script (template pyto/scripts/clusters.
+py).
+ The most important is:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+in_seg_file_name: name of the pickle file generated by the connectors script
+ that contain connectors that are considered for clustering here.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Typically, among other parameters, only those related to hierarchical clustering
+ may need to be changed from the defaults.
+ These are found in the following sections:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Hierarchical clustering of boundaries (vesicles): distance-based clustering
+ of vesicles
+\end_layout
+
+\begin_layout Itemize
+Hierarchical clustering of connectors: distance-based clustering of connectors
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Execute the script
+\end_layout
+
+\begin_layout Subsubsection
+Results
+\end_layout
+
+\begin_layout Standard
+Results are saved in the following files (all in clusters/), the root is
+ typically derived from the in_seg_file_name parameter):
+\end_layout
+
+\begin_layout Itemize
+<root>_cluster_bound.dat: Resulting clusters for different clusterings of
+ boundaries (vesicles) 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Vesicle clusters by connectivity (via connectors)
+\end_layout
+
+\begin_layout Itemize
+Vesicle distance based hierarchical clustering
+\end_layout
+
+\begin_layout Itemize
+Vesicle clusters dual to hierarchical connector clusters, that is vesicle
+ clusters comprising those vesicles that contact connectors within hierarchical
+ clusters 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+<root>_cluster_conn.dat: Resulting clusters for different clusterings of
+ connectors
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Connector clusters by connectivity (via vesicles)
+\end_layout
+
+\begin_layout Itemize
+Connector distance based hierarchical clustering
+\end_layout
+
+\begin_layout Itemize
+Connector clusters dual to hierarchical vesicle clusters, that is connector
+ clusters comprising those connectors that contact vesicles within hierarchical
+ clusters 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+<root>_conn_cluster.dat
+\end_layout
+
+\begin_layout Itemize
+<root>_cluster.pkl
+\end_layout
+
+\begin_layout Standard
+In addition, two other pickle files are generated:
+\end_layout
+
+\begin_layout Itemize
+<root>_bound_distances.plk: distance between all pairs of boundaries (vesicles)
+\end_layout
+
+\begin_layout Itemize
+<root>_conn_distances.pkl: distance between all pairs of connectors
+\end_layout
+
+\begin_layout Standard
+These are meant to be reused when this script is executed multiple times
+ (with different hierarchical clustering parameters, for example), because
+ calculating distances is the most computationally demanding part her.
+ Of course, if vesicles of connectors are changed, the previously calculated
+ distances should not be used.
+\end_layout
+
+\begin_layout Section
+Statistical analysis of multiple datasets
+\end_layout
+
+\begin_layout Subsection
+General info
+\end_layout
+
+\begin_layout Standard
+A more detailed description of the relevant computational methods is given
+ in analysis.pdf .
+\end_layout
+
+\begin_layout Standard
+All relevant data is in examples/presynaptic_example/analysis/ .
+\end_layout
+
+\begin_layout Subsection
+Prerequisite
+\end_layout
+
+\begin_layout Standard
+In this part, results from the segmentation and analysis of individual datasets
+ (above) are used.
+ In order to mimic the real case where multiple datasets are analyzed, the
+ result files obtained by the segmentation and analysis of individual datasets
+ (previous section, files under segmentation/cell_tomo-4/) that are relevant
+ for further processing are simply copied to parallel directories (cell_tomo-2,
+ -6 and -7).
+\end_layout
+
+\begin_layout Subsection
+Making catalogs
+\end_layout
+
+\begin_layout Standard
+Each experiment has to have a corresponding catalog file that contains the
+ location of result files generated by the segmentation and analysis of
+ individual datasets (above).
+\end_layout
+
+\begin_layout Standard
+All catalog files should reside in analysis/catalogs/.
+\end_layout
+
+\begin_layout Subsubsection
+Steps
+\end_layout
+
+\begin_layout Itemize
+Use files from catalog/directory.
+ They are already set for experimental groups (treatments) 'ctrl' and 'treated',
+ and for experiment identifiers 'ctrl_1', 'ctrl_5', 'treated_2' and 'treated_5'
+ (correspond to datasets cell_tomo-4, cell_tomo-7, cell_tomo-2 and cell_tomo-6,
+ in this order).
+ Catalog files are copied from pyto/scripts/presynaptic_catalog.py and have
+ all parameters already set to the values appropriate for this example.
+ These include pixel size, file paths to single dataset result files, and
+ some other properties.
+\end_layout
+
+\begin_layout Subsubsection
+Bach generation of catalog files
+\end_layout
+
+\begin_layout Standard
+Bach generation of catalog files is more complicated, but may save time
+ when a large number of catalogs need to be created.
+\end_layout
+
+\begin_layout Itemize
+Start from the catalog file for one experiment (dataset cell_tomo-4, experiment
+ 'ctrl_1')
+\end_layout
+
+\begin_layout Itemize
+Execute script analysis/work/make_catalog-2.py to create catalog file treated_2.py
+ (for experiment 'treated_2')
+\end_layout
+
+\begin_layout Itemize
+Modify and execute analysis/work/make_catalog-2.py to generate other catalog
+ files.
+ The required modifications can be deduced from the comparison of catalogs
+ ctrl_1.py, treated_2.py and the provided analysis/work/make_catalog-2.py.
+ All modifications are in the parameter section.
+ 
+\end_layout
+
+\begin_layout Subsection
+Making structure-specific pickles
+\end_layout
+
+\begin_layout Standard
+In this task, the results generated by all segmentation and analysis tasks
+ of all individual datasets, as well as the additional dataset-specific
+ information specified in catalogs, are combined to make a set of structure-spec
+ific pickles.
+\end_layout
+
+\begin_layout Subsubsection
+Steps
+\end_layout
+
+\begin_layout Itemize
+Use the provided analysis/work/work.py (copied and edited from pyto/scripts/presy
+naptic_stats.py) 
+\end_layout
+
+\begin_layout Itemize
+All parameters are set already.
+ Specifically, variables identifiers, categories and references were modified
+ to correspond to this example.
+ Other variables are not relevant for this task, but are used at a later
+ point (see below)
+\end_layout
+
+\begin_layout Itemize
+Note: the highest bin limit value in variable layer_distance_bins was changed
+ from the default (250 nm) to 160 nm because the dataset used for this example
+ is smaller in size than the standard synaptic tomograms.
+\end_layout
+
+\begin_layout Itemize
+Execute the following python commands (in ipython, jupyter or related) in
+ analysis/work/ :
+\end_layout
+
+\begin_layout LyX-Code
+> import work 
+\end_layout
+
+\begin_layout LyX-Code
+> from work import * 
+\end_layout
+
+\begin_layout LyX-Code
+> work.main(individual=True, save=True)
+\end_layout
+
+\begin_layout Subsubsection
+Results
+\end_layout
+
+\begin_layout Itemize
+The resulting structure specific pickle files are saved in the same directory.
+\end_layout
+
+\begin_layout Itemize
+Their names are 'sv.pkl', 'tether.pkl', 'conn.pkl','layer.pkl' and 'cluster.pkl',
+ unless they were changed by modifying the corresponding variables in work.py
+ script
+\end_layout
+
+\begin_layout Subsection
+Statistical analysis
+\end_layout
+
+\begin_layout Standard
+Here are instruction for viewing data from all experiments (saved in the
+ structure specific pickles), presenting data in graphs and calculating
+ statistical significance between the experimental groups.
+\end_layout
+
+\begin_layout Standard
+In order to better present the functionality, structure specific pickles
+ from another (real) project are used for in this task.
+\end_layout
+
+\begin_layout Standard
+Files used here are under analysis_big/:
+\end_layout
+
+\begin_layout Itemize
+analysis_big/catalog/: Catalog files
+\end_layout
+
+\begin_layout Itemize
+analysis_big/work/: Structure specific pickles, presynaptic analysis file
+ (work.py) and the analysis notebook (work.ipynb) 
+\end_layout
+
+\begin_layout Subsubsection
+Steps and results
+\end_layout
+
+\begin_layout Standard
+All steps and results (graphs and tables) are shown in the presynaptic analysis
+ notebook (work.ipynb).
+ In short, these consist of:
+\end_layout
+
+\begin_layout Enumerate
+Read and preprocess the data from the structure specific pickles
+\end_layout
+
+\begin_layout Enumerate
+Plot and statistically compare between group properties such as: vesicle
+ location, size and greyscale, connector morphology, localization and the
+ relationship to vesicles, and clustering of vesicles and connectors.
+ 
+\end_layout
+
+\end_body
+\end_document
