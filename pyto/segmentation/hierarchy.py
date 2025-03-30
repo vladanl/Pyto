@@ -13,7 +13,7 @@ from builtins import zip
 from builtins import str
 from builtins import range
 #from past.utils import old_div
-from past.builtins import basestring
+#from past.builtins import basestring
 
 __version__ = "$Revision$"
 
@@ -1117,7 +1117,7 @@ class Hierarchy(Labels):
         # figure out level
         if level is None:
             level = self.findLevel(segment, mode='volume')
-        elif isinstance(level, basestring):
+        elif isinstance(level, str):
             if level == 'top':
                 level = self.topLevel+1
             elif level == 'bottom':

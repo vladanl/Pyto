@@ -10,7 +10,7 @@ from __future__ import absolute_import
 from __future__ import division
 from builtins import str
 from builtins import range
-from past.builtins import basestring
+#from past.builtins import basestring
 #from past.utils import old_div
 
 __version__ = "$Revision$"
@@ -438,7 +438,7 @@ class Rigid3D(Affine):
             einit_loc = einit
         elif isinstance(einit, (np.ndarray, list)):
             einit_loc = einit
-        elif isinstance(einit, basestring) and (einit == 'gl2'):
+        elif isinstance(einit, str) and (einit == 'gl2'):
             gl2 = True
             einit_loc, s_gl22 = cls.approx_gl2_to_ck3(
                 x=x_prime, y=y_prime, xy_axes='dim_point', ret='both')
@@ -454,7 +454,7 @@ class Rigid3D(Affine):
                 sinit_loc = sinit
             elif isinstance(sinit, (float, int)):
                 sinit_loc = sinit
-            elif isinstance(sinit, basestring) and (sinit == 'gl2'):
+            elif isinstance(sinit, str) and (sinit == 'gl2'):
                 if gl2:
                     sinit_loc = s_gl22
                 else:
@@ -1567,7 +1567,50 @@ class Rigid3D(Affine):
             result = 180 * result / np.pi
 
         return result
-   
+
+    @classmethod
+    def euler_to_vector(
+            cls, angles, mode='zxz_ex_active', degree=False,
+            init_vector=[0, 0, 1], xy_axes='point_dim'):
+        """Rotates 3D vector(s) according to Euler angles.
+
+        For default arg init_vector, rotates unit z-axis vector according
+        to the specified Euler angles (arg angles). In this way it provides
+        a spherical coordinates-like representation of input angles.
+
+        For example, to rotate relion angles:
+          euler_to_vector(
+              angles=[rot, tilt, psi], mode='zyz_in_passive', degree=True)
+
+        or to rotate spherical angles:
+          euler_to_vector(
+              angles=[phi, theta, not_used],
+              mode='zyz_ex_active', degree=True)
+        
+        More generally, rotates any 3D vector (one or multiple).
+
+        Arguments:
+          - angles: (phi, theta, psi) Euler angles [rad]
+          - mode: Euler angles convention
+          - init_vector: (np.array, dim Nx3 xy_axes='point_dim', or 3xN if
+          xy_axes='dim_point') one or more 3D vectors
+           - xy_axes: order of axes in matrices representing points, can be
+          'point_dim' (default) or 'dim_point'         
+          - degree: flag indicating if angles are in degrees (default False)
+
+        Returns (ndarray) transformed vectors
+        """
+
+        if degree:
+            angles = np.asarray(angles) * np.pi / 180
+
+        # make rotation matrix and rotate init_vector
+        r = cls.make_r_euler(angles=angles, mode=mode)
+        r3d = cls()
+        result = r3d.transform(np.asarray(init_vector), q=r, xy_axes=xy_axes)
+
+        return np.asarray(result)
+    
     @classmethod
     def euler_to_ck(cls, angles, mode='zxz_ex_active'):
         """

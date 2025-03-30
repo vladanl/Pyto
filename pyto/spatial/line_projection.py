@@ -182,10 +182,10 @@ class LineProjection:
         self.region_id = region_id
         self.region_coords = region_coords
         self.relion = relion
-        if self.relion:
-            self.euler_mode = 'zyz_in_active'
-            self.degree = True
-        else:
+        if not relion:
+        #    self.euler_mode = 'zyz_in_active'
+        #    self.degree = True
+        #else:
             self.euler_mode = euler_mode
             self.degree = degree
         self.spherical = spherical
@@ -198,6 +198,17 @@ class LineProjection:
         self.intersect_mode = intersect_mode
         self.not_found = not_found
 
+    @property
+    def relion(self):
+        """Flag indication whether angles are in relion convention."""
+        return self._relion
+
+    @relion.setter
+    def relion(self, value):
+        self._relion = value
+        self.euler_mode = 'zyz_in_active'
+        self.degree = True
+        
     def project(self, point, angles, distance):
         """Projects a point along a line onto a region.
 
@@ -282,7 +293,7 @@ class LineProjection:
         specified as:
           - [rot, tilt, psi]
           - [tilt, psi]  
-        Returns sperical coordinates (theta, phi):
+        Returns spherical coordinates (theta, phi):
           - [tilt, pi - psi] if 0<tilt<pi and self.reverse is False
           - [-tilt, -psi] if -pi<tilt<0 and self.reverse is False
           - [pi - tilt, -psi] if 0<theta<pi and self.reverse is True
@@ -308,7 +319,7 @@ class LineProjection:
           - [phi, theta, psi]
 
         Requires attributes:
-          - self.relion, or both self_euler_mode and self.degree
+          - self.relion, or both self.euler_mode and self.degree
           - self.reverse
 
         Arguments:

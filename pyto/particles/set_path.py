@@ -83,24 +83,35 @@ class SetPath(object):
     #
 
     def convert_path(self, path):
-        """Converts a path to match a new or different file system organization.
+        """Converts a beginning part of arg  path.
+
+        Typically used to convert paths between different file 
+        system organizations.
+
+        Given common and helper strings, finds common in (arg) path 
+        and in helper. Then it replaces everything before and including 
+        common by the path by everything before and including common in
+        helper.
+
+        The common and helper strings are specified by self.common and
+        self.helper_path.
 
         For example, if the path in the old file system is:
           path = /pre_old/.../common/post/.../name.ext
-        but in the current system the path is:
-          new_path = /pre_new/.../common/post/.../name.ext
-        attributes common (see above) and a helper path need to be set (such 
-        as os.getcwd()):
-          helper_path = /pre_new/.../common/something_else/.../other
-        to get the new_path:
-          sp = SetPath(common='common', helper_path=helper_path)
+        and:
+          common = 'common'
+          helper_path = '/pre_new/.../common/whatever_else/.../other'
+        executing:
+          sp = SetPath(common=common, helper_path=helper_path)
           new_path = sp.convert_path(path)
+        results in:
+          new_path = /pre_new/.../common/post/.../name.ext
 
         Requires self.common and self.helper_path to be set at initialization.
         If self.common is None, returns the unchanged arg path.
 
         Pattern self.common has to be present exactly one time in both path 
-        and self.helper_path.
+        and self.helper_path. Otherwise, ValueError is raised.
 
         Argument:
           - path: path to be converted

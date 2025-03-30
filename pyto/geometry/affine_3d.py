@@ -7,7 +7,7 @@ transformation followed by translation) on points (vectors) in 3D.
 """
 from __future__ import unicode_literals
 from __future__ import absolute_import
-from past.builtins import basestring
+#from past.builtins import basestring
 
 __version__ = "$Revision$"
 
@@ -97,7 +97,7 @@ class Affine3D(Affine):
         Returns: (3x3 ndarray) rotation matrix
         """
 
-        if isinstance(axis, basestring):
+        if isinstance(axis, str):
 
             # rotation about one of the main axes
             if axis == 'x':

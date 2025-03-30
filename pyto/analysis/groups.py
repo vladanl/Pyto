@@ -12,7 +12,7 @@ from builtins import zip
 #from builtins import str
 from builtins import range
 #from past.utils import old_div
-from past.builtins import basestring
+#from past.builtins import basestring
 
 __version__ = "$Revision$"
 
@@ -246,7 +246,7 @@ class Groups(dict):
         Makes an instance of this class from two pandas.DataFrames.
 
         The first column of both data tables (args indexed and
-        scalar) have to contain group names, the column name is specified
+        scalar) has to contain group names, the column name is specified
         by arg group_column.
 
         The second column of both data tables has to contain identifiers,
@@ -463,7 +463,7 @@ class Groups(dict):
         instance are rearanged into new groups according to values of
         the specified property.
 
-        The values of the specified property are used as the groop names of
+        The values of the specified property are used as the group names of
         the new (rearanged) object. If these values are not strings (str type),
         they are converted to strings by str(value).
 
@@ -945,7 +945,7 @@ class Groups(dict):
 
         # check name
         # probably not needed (not in doc string but in test_groups) 01.2019
-        if isinstance(name, basestring):
+        if isinstance(name, str):
             name_list = [name]
         else:
             name_list = name
@@ -1702,7 +1702,7 @@ class Groups(dict):
                 if test is not None:
 
                     # make reference and do inference
-                    if isinstance(reference, basestring):
+                    if isinstance(reference, str):
                         obs_ref = reference
                     elif isinstance(reference, dict):
                         obs_ref = reference[g_name]
@@ -2249,7 +2249,7 @@ class Groups(dict):
         # set output
         if out is None:
             return
-        elif isinstance(out, basestring):
+        elif isinstance(out, str):
             out = open(out)
 
         # print title

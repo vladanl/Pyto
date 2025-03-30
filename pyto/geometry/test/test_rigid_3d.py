@@ -1547,6 +1547,28 @@ class TestRigid3D(np_test.TestCase):
              [ 0.8768882 , -0.52      , -0.03266615],
              [-0.48111026, -0.83266615,  0.34      ]])
 
+    def test_euler_to_vector(self):
+        """Tests euler_to_vector()"""
+
+        # spherical-like angles
+        angles = np.array([0.2, np.pi/2, np.pi/3])
+        actual = Rigid3D.euler_to_vector(angles=angles, mode='zyz_ex_active')
+        np_test.assert_almost_equal(actual, [0.5, np.sqrt(3)/2, 0])
+        
+        # relion angles
+        angles = [0, 90, 60]
+        actual = Rigid3D.euler_to_vector(
+            angles=angles, mode='zyz_in_passive', degree=True)
+        np_test.assert_almost_equal(actual, [-0.5, np.sqrt(3)/2, 0])
+        angles = [40, 90, 60]
+        actual = Rigid3D.euler_to_vector(
+            angles=angles, mode='zyz_in_passive', degree=True)
+        np_test.assert_almost_equal(actual, [-0.5, np.sqrt(3)/2, 0])
+        angles = [40, 90, 30]
+        actual = Rigid3D.euler_to_vector(
+            angles=angles, mode='zyz_in_passive', degree=True)
+        np_test.assert_almost_equal(actual, [-np.sqrt(3)/2, 0.5, 0])
+
     def test_euler_to_ck(self):
         """
         Tests euler_to_ck()

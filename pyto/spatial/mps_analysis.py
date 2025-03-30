@@ -790,7 +790,7 @@ class MPSAnalysis(abc.ABC):
     def check_ids(
             self, expected, path_col=None, update=False,
             found_col='found_ids', verbose=True):
-        """Checks if images contains expected ids.
+        """Checks if images contain expected ids.
 
         Arguments:
           - path_col: column of mps.particles that contain paths, if None
@@ -938,8 +938,16 @@ class MPSAnalysis(abc.ABC):
     def select_by_classes(self, set_name, update=False, check=False):
         """Select particles that belong to specified classes.
 
-        Checks all elements of columns listed in self.classification_cols 
-        in order to find the specified class(es) (arg set_name). 
+        Checks all elements of classification columns (listed in 
+        self.classification_cols in order to find the specified 
+        class(es) (arg set_name). 
+
+        Important: It is advisable that all classes, taken together from 
+        all classifications have unique names (can be enforsed by arg 
+        check=True). This is because in the case specified class name(s) 
+        (arg set_names) exist in multiple classifications (in multiple 
+        classification columns), particles from multiple classifications
+        are returned.
 
         Arguments:
           - set_name: (single str or list of strings) name of one or 
@@ -947,8 +955,8 @@ class MPSAnalysis(abc.ABC):
           - update: (default False) indicates whether this object 
           should be updated
           - check: flag indicating if it should be checked that 
-          different classification columns (self.classification_cols)
-          do not have common elements (classes, or set names)
+          all classes (sets) from all classification columns 
+          (self.classification_cols) have unique names 
 
         Returns an instance of this class that contains only particles
         of the specified classes (if update=False). Otherwise updates

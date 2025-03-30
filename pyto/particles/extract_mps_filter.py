@@ -72,34 +72,38 @@ class ExtractMPSFilter(abc.ABC):
             verbose=verbose)
 
         # make star file for each tether subclass
-        if verbose:
-            print(f"\nIndividual classes of {name_filtered}:")
-        self.split_star(
-            mps=mps_filt,
-            class_names=self.class_names, class_code=self.class_code,
-            labels=self.get_labels(mps), 
-            star_path=paths.star_path, star_comment=star_comment,
-            verbose=verbose)
+        if len(self.class_code) > 0:
+            if verbose:
+                print(f"\nIndividual classes of {name_filtered}:")
+            self.split_star(
+                mps=mps_filt,
+                class_names=self.class_names, class_code=self.class_code,
+                labels=self.get_labels(mps), 
+                star_path=paths.star_path, star_comment=star_comment,
+                verbose=verbose)
 
     def smooth_regions_task(
             self, region_other, region_ids, name_init, name_smooth=None,
             name_regions=None, prefix='', star_comment='', verbose=True):
         """Selectively filters regions of particle images.
         
-        Specifically, takes initial particle images (arg name_init)
-        and replaces certain regions, such as lipid membranes,
-        by the corresponding parts of another particle set, such as a 
-        previously filtered (e.g. smoothed) version of the initial 
-        particles. These regions are particle-dependent and 
-        have to be previously defined (and saved as another particle set), 
+        Takes initial particle images (arg name_init) and replaces 
+        previously defined regions by the corresponding parts of 
+        other particle set(s). The regions are particle-dependent and 
+        have to be previously defined (and saved as another particle set). 
 
-        If arg name-regions is not None, it us used to determine the 
-        region image paths, with the help of arg paths. Otherwise,
-        it is read from column self.region_particle_col of 
-        particles table. 
+        For example, if regions show membranes and the other
+        particle sets are obtined by filtering (e.g. smoothing) the
+        initial particle set, the result is the initial particle set
+        where membranes are selectively filtered.
 
-        The other, replacing, particle image set(s) and the regions that
-        are replaced are specified as follows: If:
+        If arg name_regions is not None, it us used to determine the 
+        region image paths. Otherwise, it is read from column 
+        self.region_particle_col of particles table. 
+
+        Args regio_other and region_ids determined which part of 
+        the initial particle images is replaced by which "other"
+        particle sets. For example, given:
           region_other = {
               'membrane': slightly_filtered_set_name,
               'vesicle': strongly_filtered_set_name}
@@ -172,13 +176,14 @@ class ExtractMPSFilter(abc.ABC):
             verbose=verbose)
 
         # make star file for each tether subclass
-        if verbose:
-            print(f"\nIndividual classes of {name_smooth}:")
-        self.split_star(
-            mps=mps_smooth, labels=self.get_labels(mps_orig), 
-            class_names=self.class_names, class_code=self.class_code,
-            star_path=paths_smooth.star_path, star_comment=star_comment, 
-            verbose=verbose)
+        if len(self.class_code) > 0:
+            if verbose:
+                print(f"\nIndividual classes of {name_smooth}:")
+            self.split_star(
+                mps=mps_smooth, labels=self.get_labels(mps_orig), 
+                class_names=self.class_names, class_code=self.class_code,
+                star_path=paths_smooth.star_path, star_comment=star_comment, 
+                verbose=verbose)
 
     def randomize_task(
             self, name_init, name_random,  mask, mask_mode='image',
@@ -270,13 +275,14 @@ class ExtractMPSFilter(abc.ABC):
             verbose=verbose)
 
         # make star file for each tether subclass
-        if verbose:
-            print(f"\nIndividual classes of {name_random}:")
-        self.split_star(
-            mps=mps_rand, labels=self.get_labels(mps_rand), 
-            class_names=self.class_names, class_code=self.class_code,
-            star_path=paths_random.star_path, star_comment=star_comment, 
-            verbose=verbose)
+        if len(self.class_code) > 0:
+            if verbose:
+                print(f"\nIndividual classes of {name_random}:")
+            self.split_star(
+                mps=mps_rand, labels=self.get_labels(mps_rand), 
+                class_names=self.class_names, class_code=self.class_code,
+                star_path=paths_random.star_path, star_comment=star_comment, 
+                verbose=verbose)
          
     @classmethod
     def filter_particles(

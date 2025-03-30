@@ -103,6 +103,31 @@ class TestExtractMPS(np_test.TestCase):
             use_priors=True)
         assert_frame_equal(part_2, desired, check_dtype=False)
 
+    def test_normalize_bound_ids(self):
+        """Tests normalize_bound_ids.
+        """
+
+        data = np.zeros((2, 10), dtype=int)
+        data[:, 1] = 2
+        data[:, 3] = 4
+        data[0, 5] = 6
+        data[1, 5] = 8
+        data[0, 7] = 10
+        data[1, 7] = 12
+
+        data_cp = data.copy()
+        desired = np.where(data_cp>0, data_cp + 1, 0)
+        desired[desired > 7] = 7
+        actual = ExtractMPS.normalize_bound_ids(
+            data=data_cp, min_id_old=6, id_new=7, id_conversion={2: 3, 4: 5})
+        np_test.assert_array_equal(actual, desired)
+
+        data_cp = data.copy()
+        desired = np.where((data_cp>0) & (data_cp<6), data_cp + 1, 0)
+        actual = ExtractMPS.normalize_bound_ids(
+            data=data_cp, id_conversion={2: 3, 4: 5})
+        np_test.assert_array_equal(actual, desired)
+        
         
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestExtractMPS)

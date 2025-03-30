@@ -6,7 +6,7 @@ Useful functions that can modify or execute many files (scripts) together.
 """
 from __future__ import unicode_literals
 from builtins import str
-from past.builtins import basestring
+#from past.builtins import basestring
 
 __version__ = "$Revision$"
 
@@ -147,7 +147,7 @@ def run_path(path, package=''):
     if package != '':
         package = package + '.'
 
-    if isinstance(path, basestring):
+    if isinstance(path, str):
         all_paths = [path]
     else:
         all_paths = path

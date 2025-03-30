@@ -9,7 +9,7 @@ characterization of the experimental data.
 # $Id$
 """
 from __future__ import unicode_literals
-from past.builtins import basestring
+#from past.builtins import basestring
 from builtins import zip
 from builtins import str
 from builtins import object
@@ -31,7 +31,7 @@ except NameError:
         + "Run test/test_catalog.py to check the importlib related code.")
     import imp
 
-#import numpy
+import numpy as np
 #import scipy
 
 
@@ -160,7 +160,8 @@ class Catalog(object):
         db = {}
         if not isinstance(catalog, list):
             catalog = [catalog]
-
+        identifiers_found = []
+        
         # read properties for all files that match any of the catalogs
         for file_ in os.listdir(dir_):
             for cat in catalog:
@@ -212,6 +213,7 @@ class Catalog(object):
                 if ((identifiers is not None)
                     and (identifier not in identifiers)):
                     continue
+                identifiers_found.append(identifier)
 
                 # read other variables and put in the database
                 for name, value in list(module.__dict__.items()):
@@ -220,7 +222,7 @@ class Catalog(object):
                         continue
 
                     # add (dereferenced, abs) dir to file names
-                    if isinstance(value, basestring):
+                    if isinstance(value, str):
                         other, ext = os.path.splitext(value)
                         if ext in extensions:
                             value = os.path.join(cat_dir, value)
@@ -230,7 +232,18 @@ class Catalog(object):
                     if db.get(name) is None:
                         db[name] = {}
                     db[name][identifier] = value
-
+                    
+        # check if properties and identifiers found
+        if len(list(db.keys())) == 0:
+            raise ValueError("No properties were read from catalogs")
+        if identifiers is not None:
+            not_found = np.setdiff1d(identifiers, identifiers_found)
+            if len(not_found) > 0:
+                logging.warn(
+                    f"Properties of tomo(s) having identifier {not_found} "
+                    + "were not read because the corresponding catalog(s) "
+                    + "file was not found")
+        
         self._db = db
 
     def makeGroups(

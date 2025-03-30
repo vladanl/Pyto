@@ -11,7 +11,7 @@ from __future__ import division
 from builtins import zip
 from builtins import range
 #from past.utils import old_div
-from past.builtins import basestring
+#from past.builtins import basestring
 
 __version__ = "$Revision$"
 
@@ -290,7 +290,7 @@ class Density(Features):
 
         # 
         mode0_consistent = False
-        if isinstance(mode0, basestring) and (mode0 == 'consistent'):
+        if isinstance(mode0, str) and (mode0 == 'consistent'):
             mode0_consistent = True
             mode0 = -1
 

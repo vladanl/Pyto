@@ -371,23 +371,60 @@ class MPSConversion(abc.ABC):
         if these exist. This data is saved as self.tables.
 
         Reads particle data from the specified (path to a) dataframe  
-        (arg particle_df). This (input) dataframe has to contain 
-        
-        Similar to 
+        (arg particle_df). This (input) dataframe has to contain:
+          - coord_cols columns: coordinates in the tomo frame at coord_bin
+          - 
+       
+        Reads tomo data from arg tomo_star. If none, makes a
+        minimal tomo table.
+ 
+        Particle coords are converted to regions frame. If arg project 
+        is True, particles are projected on regions. If arg exclusion is 
+        given, particle distance exclusion is imposed, either before
+        or after the projection (according to arg exclusion_mode, see
+        self.exclude() for more info).
+
+        Similar to (likely superseeds) from_coords_df().
 
         Arguments:
-
+          - particle_df: (pandas.DataFrame) particles table, or path 
+          to a dataframe saved by PandasIO.write() 
           - coord_cols: column names of arg particle_df that contain
           particle coordinates; these are saved in column 
           self.orig_coord_cols of self.particles   
-       
-         - find_region_shape: flag indicating if shape of regions is
+          - tomo_id_col: column that contains tomo id
+          - tomo_star: path to star file that contains tomo info, or 
+          None (default)
+          - tomo_ids: ids of tomos to be used, or None (default) for 
+          all tomos
+          - pixel_size_nm: pixel size [nm], default (None)
+          - coord_bin: bin factor of coordinates
+          - region_offset: position of the origin of the region frame
+          in the tomo frame, as determined in the regions bin
+          - region_bin: bin factor of regions
+          - region_id: region id (label) in region images 
+          - find_region_shape: flag indicating if shape of regions is
           determined if True, region image data is read)
-
+          - col_conversion: (dict)
+          - project: if True (default), particles (coordinates) are
+          projected on regions
+          - exclusion: exclusion distance (>0, in nm) or None (default)
+          for no distance based exclusion
+          - exclusion_mode: 'before_projection' or 'after_projection', 
+          indicate whether exclusion should be aplied on coordinates
+          in columns self.orig_coord_reg_frame_cols (before) or in
+          self.coord_reg_frame_cols (after particles are projected on
+          regions)
+          - remove_outside_region: flag indicating whether coordinates
+          that fall outside region images after conversion are excluded
           - inside_coord_cols: column names of coordinates that are
           tested whether they are inside region image shape, if None 
           set to columns self.orig_coord_reg_frame_cols (particles
           in regions frame before projection to regions)
+          - particle_name: particle name, saced in self.class_name_col
+          column, default ''
+          - out_path: if not None (default), path where this obect 
+          is saved
 
         """
 
@@ -613,7 +650,7 @@ class MPSConversion(abc.ABC):
           tomo_star is None and both convert and project are True
           - region_bin: bin factor of the region images 
           - region offset: offset of region images relative to the initial
-          tomo frame, specified as expalined in set_region_offset() doc.
+          tomo frame, specified as explained in set_region_offset() doc.
           - region_id: region id in region images
           - convert: flag indicating whether coordinates are converted
           to regions frame
@@ -770,4 +807,91 @@ class MPSConversion(abc.ABC):
 
         return tomos
         
-   
+    def from_two_stars(
+            self, tomo_star_path, particle_star_path,
+            region_bin=1, coord_bin=1, pixel_nm=1, tomo_ids=None, 
+            tablename='data_',
+            micrograph_label=None, region_label=None, ctf_label=None,
+            region_offset_xyz=None, coord_labels_xyz=None,
+            coord_origin_labels_xyz=None, coord_angst_labels_xyz=None,
+            tomo_id_mode=None, tomo_id_func=None, tomo_id_kwargs={},
+            class_label=None, class_name=None, class_number=None,
+            out_path=None):
+        """Makes tomo and particle tables from the corresponding star files.
+
+        """
+
+        # set attributes from arguments
+        self.tomo_col = 'tomo'
+        if micrograph_label is not None:
+            self.micrograph_label = micrograph_label
+        if region_label is not None:
+            self.seg_image_label = region_label
+        if ctf_label is not None:
+            self.ctf_label = ctf_label
+        if region_offset_xyz is not None:
+            self.region_origin_labels = region_offset_xyz
+        if region_offset_xyz is not None:
+            self.coord_labels = coord_labels_xyz
+        if coord_labels_xyz is not None:
+            self.origin_labels = coord_origin_labels_xyz
+        if coord_origin_labels_xyz is not None:
+            self.angst_labels = coord_angst_labels_xyz
+        if class_label is not None:
+            self.class_label = class_label
+
+        # read tomo star
+        tomos = self.read_star(
+            path=tomo_star_path, tomo_ids=tomo_ids, mode='tomo',
+            tomo_id_mode=None,
+            tomo_id_func=tomo_id_func, tomo_id_kwargs=tomo_id_kwargs,
+            pixel_size_nm=pixel_nm, coord_bin=coord_bin,
+            tablename=tablename, do_origin=True,
+            find_region_shape=False, keep_all_cols=True)
+
+        # check tomo ids unique
+        if not tomos[self.tomo_id_col].is_unique:
+            raise ValueError(
+                "Tomo ids in tomo table are not unique. Either "
+                + f"{micrograph_label} in tomo star are not unique, "
+                + "or the tomo ids could not be determined properly.")
+
+        # set regions bin and copy columns
+        tomos = self.set_column(
+            tomos=tomos, column=self.region_bin_col, value=region_bin,
+            update=True)
+        tomo_cp = {
+            micrograph_label: self.tomo_col, region_label: self.region_col}
+        for star_label, mps_label in tomo_cp.items():
+            tomos[mps_label] = tomos[star_label]
+
+        # read particle star
+        particles = self.read_star(
+            path=particle_star_path, tomo_ids=tomo_ids, mode='particle', 
+            tomo_id_mode=None, tomo_id_func=tomo_id_func,
+            tomo_id_kwargs=tomo_id_kwargs,
+            tablename=tablename, do_origin=True,
+            class_name=class_name, class_number=class_number,
+            find_region_shape=False, keep_all_cols=True)
+
+        # ToDo: Save original table headings
+        
+        # set pixel size
+        particles = pd.merge(
+            particles, tomos[[self.tomo_id_col, self.pixel_nm_col]], 
+            how='left', on=self.tomo_id_col)
+
+        # get ctf from tomos if not in particles
+        if not ctf_label in particles.columns:
+            if ctf_label in tomos.columns:
+                particles = pd.merge(
+                    particles, tomos[[mps.tomo_id_col, ctf_label]], 
+                    how='left', on=ctf_label)
+
+        # set data attrs
+        self.tomos = tomos
+        self.particles = particles
+
+        # save
+        if out_path is not None:
+            self.write(out_path)

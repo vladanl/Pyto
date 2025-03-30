@@ -13,7 +13,7 @@ from builtins import range
 from builtins import object
 #from past.utils import old_div
 from functools import reduce
-from past.builtins import basestring
+#from past.builtins import basestring
 
 __version__ = "$Revision$"
 
@@ -445,7 +445,7 @@ class Affine(object):
                 + "'point_dim' and 'dim_point'.")
 
         # bring x to reference frame
-        if isinstance(x_ref, basestring) and (x_ref == 'cm'):
+        if isinstance(x_ref, str) and (x_ref == 'cm'):
             x_ref = numpy.mean(x, axis=0)
         elif isinstance(x_ref, (list, tuple, numpy.ndarray)):
             pass
@@ -456,7 +456,7 @@ class Affine(object):
         x_prime = x - x_ref
 
         # bring y to reference frame
-        if isinstance(y_ref, basestring) and (y_ref == 'cm'):
+        if isinstance(y_ref, str) and (y_ref == 'cm'):
             y_ref = numpy.mean(y, axis=0)
         elif isinstance(y_ref, (list, tuple, numpy.ndarray)):
             pass
@@ -686,7 +686,7 @@ class Affine(object):
         parts of the original array may be removed because they are 
         located outside of the returned array (for example when
         the transformation scale >1). To solve this, arg shape can be 
-        specifid to set the shape or the output (transformed) array.
+        specified to set the shape or the output (transformed) array.
 
         Uses transform() method to (inversly) transform the complete index 
         (coordinate) grid corresponding to the given array, or an array
@@ -715,6 +715,12 @@ class Affine(object):
         Rigid3D.recalculate_translation() where the rotation center is
         shifted, but the scaling center remains at 0.
 
+        Specifying arg center when using transformation that involves
+        rotation and scaling may lead to non-intuitive positioning of
+        the resulting array. Understanding this requires familiarity
+        with scipy.ndimage.map_coordinates(). Therefor, it is recommended
+        to do rotation and scalling separately.
+        
         Arguments:
           - array: array (image) to be transformed
           - center: coordinates of the center for the gl transformation, 

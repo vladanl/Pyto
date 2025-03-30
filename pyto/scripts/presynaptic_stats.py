@@ -626,10 +626,11 @@ def main(individual=False, save=False, analyze=False):
         near_non_teth_sv.extractConnected(other=True)
 
     # calculate additional properties for different vesicle objects
-    for xxx_sv in [near_sv, near_teth_sv, near_non_teth_sv, near_teth_conn_sv,
-                   near_non_teth_conn_sv, near_teth_non_conn_sv,
-                   near_non_teth_non_conn_sv,
-                   teth_sv, non_teth_sv]:
+    for xxx_sv in [
+            bulk_sv, near_sv, near_teth_sv, near_non_teth_sv, near_teth_conn_sv,
+            near_non_teth_conn_sv, near_teth_non_conn_sv,
+            near_non_teth_non_conn_sv,
+            teth_sv, non_teth_sv]:
         util.calculateVesicleProperties(
             data=xxx_sv, layer=layer, tether=tether, categories=categories)
 

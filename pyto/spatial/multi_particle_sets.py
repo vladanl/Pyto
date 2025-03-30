@@ -38,7 +38,7 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
 
     Data attributes:
       - tomos: (pandas.DataFrame) tomos, each row specifies one tomo
-      - particless: (pandas.DataFrame) particles, each row specifies one 
+      - particles: (pandas.DataFrame) particles, each row specifies one 
       particle
 
     Methods that convert instance of this class from / to other formats:
@@ -80,6 +80,7 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
         self.seg_image_label = 'psSegImage'
         self.string_pattern = ['Name', 'Image']
         self.image_label = 'rlnImageName'
+        self.ctf_label = 'rlnCtfImage'
         self.region_origin_labels = ['psSegOffX', 'psSegOffY', 'psSegOffZ']
         self.rotation_labels = ['psSegRot', 'psSegTilt', 'psSegPsi']
         self.coord_labels = [
@@ -264,12 +265,22 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
         
     def read_star(
             self, path, mode, tomo_ids=None, tomo_id_mode='munc13',
-            pixel_size_nm=None, coord_bin=1., do_origin=True,
-            find_region_shape=True, class_name='', class_number=None,
-            tomos=None, keep_star_coords=True):
+            tomo_id_func=None, tomo_id_kwargs={},
+            pixel_size_nm=None, coord_bin=1., tablename='data_',
+            do_origin=True, find_region_shape=True,
+            class_name='', class_number=None,
+            tomos=None, keep_star_coords=True, keep_all_cols=False):
         """Makes particles or tomos table from star files.
 
         Arg mode determines whether tomos or particles table is made.
+
+        Tomo ids are determined in both modes from tomo paths (column 
+        self.micrograph_label) in the following order:
+          - If tomo_id_mode is specified, 
+            coloc_functions.get_tomo_id(tomo_path, tomo_id_mode) is used
+          - If tomo_id_func is specified, 
+            tomo_id_func(tomo_path, **tomo_id_kwargs)
+          - Otherwise, the tomo paths are copied to tomo ids
 
         In tomo mode make the following columns:
           - self.tomo_id_col
@@ -285,9 +296,11 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
           self.particles and to put it in column self.particle_id_col. If 
           column self.image_label doesn't exist, sets -1 in 
           self.particle_id_col (default 'particle_id').
-          - Calculates particle coordinates (column self.orig_coord_cols,
-          defailt 'x_orig', 'y_orig', 'z_orig') from star file coordinate 
-          and offset columns (see self.get_original_coords() for more info)
+          - Calculates particle coordinates from star file coordinate 
+          and offset columns ('rlnCoordinateXYZ', 'rlnOriginXYZ' and
+          'rlnOriginXYZAngst', see self.get_original_coords() for more info)
+          and saves them in self.orig_coord_cols columns (defailt
+          'x_orig', 'y_orig', 'z_orig') 
           - Column 'class_name' contans the value of arg class_name
           - Saves star column self.class_label (default 'rlnClassNumber') 
           as self.particles column 'class_number' if arg class_number
@@ -302,9 +315,13 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
           - path: tomos or particles star file path
           - mode: 'tomo' or 'particle', for tomo or particle star files, 
           respectively
-          - tomo_ids: tomo ids
+          - tomo_ids: ids of tomo that should be considered, None for
+          all tomos (default)
           - tomo_id_mode: mode for determining tomo id, passed directly to 
           coloc_functions.get_tomo_id(mode)
+          - tomo_id_func: function that extracts tomo ids from paths, 
+          the first argument has to be tomo path
+          - tomo_id_kwargs: kwargs for tomo_id_func
           - pixel_size_nm: (single number, dict where keys are tomo ids, or 
           pandas.DataFrame having tomo_id column)
           pixel size [nm] of the system in which particle coordinats are given, 
@@ -313,6 +330,7 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
           pandas.DataFrame having tomo_id column) binning
           factor of the system in which particle coordinats are given,
           needed in mode 'tomo'
+          - tablename: name of the table that contains data (default "data_")
           - do_origin: flag indicating if coordinates are adjusted for
           origin shifts (rlnOriginX/Y/Z and rlnOriginX/Y/ZAngst)
           - find_region_shape: flag indicating if shape of regions is
@@ -320,11 +338,13 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
           - class_name: name of the classification, needed in mode 'particle'  
           - class_number: class number, needed in mode 'particle'  
           - tomos: tomo star file, needed in mode 'particle' when 
-          _rlnOriginX/Y/ZAngst labels are present,  has to
+          _rlnOriginX/Y/ZAngst labels are present, has to
           have pixel size (nm) in column self.pixel_nm_col 
           - keep_star_coords: If True, star file coordinates and offsets
           (columns rlnCoordinateX/Y/Z and rlnOriginX/Y/Z or 
           rlnOriginX/Y/ZAngst are saved in the resulting particles table
+          - keep_all_cols: if True, all columns of the star file are 
+          kept (default False)
  
         Sets attributes:
           - self.tomo_cols_all: all tomo column names, contain all 
@@ -344,7 +364,7 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
         #    table = path
         #else:
         table = pd.DataFrame(
-            get_array_data(starfile=path, tablename='data', types=str))
+            get_array_data(starfile=path, tablename=tablename, types=str))
         for col in table.columns:
             if np.any([pat in col for pat in self.string_pattern]):
                 table[col] = table[col].astype(str) 
@@ -354,10 +374,20 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
                 except ValueError:
                     pass
                     
-        # get tomo ids
-        table[self.tomo_id_col] = table[self.micrograph_label].map(
-            lambda x: col_func.get_tomo_id(path=x, mode=tomo_id_mode))
-
+        # add tomo ids
+        self.add_tomo_ids(
+            table=table, path_col=self.micrograph_label,
+            tomo_id_mode=tomo_id_mode,
+            tomo_id_func=tomo_id_func, tomo_id_kwargs=tomo_id_kwargs)
+        #if tomo_id_mode is not None:
+        #    tomo_id_func = col_func.get_tomo_id
+        #    tomo_id_kwargs = {'mode': tomo_id_mode}
+        #if tomo_id_func is not None:
+        #    table[self.tomo_id_col] = table[self.micrograph_label].map(
+        #        lambda x: tomo_id_func(x, **tomo_id_kwargs))
+        #else:
+        #    table[self.tomo_id_col] = table[self.micrograph_label]
+            
         # select tomos
         if tomo_ids is not None:
             table = table[table[self.tomo_id_col].apply(
@@ -378,9 +408,15 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
                 update=True)
 
             # rename region offset
-            col_rename = dict([(old, new) for old, new in zip(
-                self.region_origin_labels, self.region_offset_cols)])
-            table = table.rename(columns=col_rename)
+            #col_rename = dict([(old, new) for old, new in zip(
+            #    self.region_origin_labels, self.region_offset_cols)])
+            col_rename = dict(
+                zip(self.region_origin_labels, self.region_offset_cols))
+            if keep_all_cols:
+                for old, new in col_rename.items():
+                    table[new] = table[old]
+            else:
+                table = table.rename(columns=col_rename)
 
             # rotation columns
             self.tomo_cols_all = table.columns
@@ -446,9 +482,55 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
             self.particle_cols_all = table.columns
             self.particle_cols = out_cols
 
-        table = table[out_cols]
+        if not keep_all_cols:
+            table = table[out_cols]
         return table
 
+    def add_tomo_ids(
+            self, table, path_col=None,
+            tomo_id_mode='munc13', tomo_id_func=None, tomo_id_kwargs={}):
+        """Generates and adds tomo ids to a table.
+
+        Tomo ids can be extracted from any column of arg tables. Often,
+        they are determined from tomo paths. 
+
+        While coloc_functions.get_tomo_id() contains several predefined
+        modes to determine tomo ids (see docs there), a custom
+        defined function can be specified. 
+
+        Tomo ids are determined from column (arg) path_col of table
+        (arg) table, in the following order:
+          - If tomo_id_mode is specified, 
+            coloc_functions.get_tomo_id(tomo_path, tomo_id_mode) is used
+          - If tomo_id_func is specified, 
+            tomo_id_func(tomo_path, **tomo_id_kwargs)
+          - Otherwise, the tomo paths are copied to tomo ids
+
+        The generated tomo ids are added to column self.tomo_id_col.
+
+        Arguments:
+          - table (pandas.DataFrame) table 
+          - path_col: column of tables wrom which tomo ids are determined,
+          if None (default) self.micrograph_label is used 
+          - tomo_id_mode: mode for determining tomo id, passed directly to 
+          coloc_functions.get_tomo_id(mode)
+          - tomo_id_func: function that extracts tomo ids 
+          - tomo_id_kwargs: kwargs for tomo_id_func        
+
+        Modifies table, doesn't return anything
+        """
+        
+        if path_col is None:
+            path_col = self.micrograph_label
+        if tomo_id_mode is not None:
+            tomo_id_func = col_func.get_tomo_id
+            tomo_id_kwargs = {'mode': tomo_id_mode}
+        if tomo_id_func is not None:
+            table[self.tomo_id_col] = table[path_col].map(
+                lambda x: tomo_id_func(x, **tomo_id_kwargs))
+        else:
+            table[self.tomo_id_col] = table[path_col]
+    
     def get_particle_id(self, path):
         """Extracts particle id from subtomo path.
         """
