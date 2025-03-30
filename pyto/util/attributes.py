@@ -6,7 +6,7 @@ Functions related to attribute get/set python built-ins.
 # $Id$
 """
 from __future__ import unicode_literals
-from past.builtins import basestring
+#from past.builtins import basestring
 
 __version__ = "$Revision$"
 
@@ -22,7 +22,7 @@ def getattr_deep(object, name):
     """
     
     # split name in attributes (list)
-    if isinstance(name, basestring):
+    if isinstance(name, str):
         attributes = name.split('.')
     else:
         attributes = name

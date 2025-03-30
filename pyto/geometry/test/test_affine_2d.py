@@ -575,6 +575,44 @@ class TestAffine2D(np_test.TestCase):
         actual = aff.transformArray(array=ar, shape=(6,6))
         desired_in = np.array([[2,4,6], [1,3,5]])
         np_test.assert_almost_equal(actual[3:5,2:5], desired_in)
+
+        # scaling, no shape, grid
+        a1 = np.arange(16).reshape(4,4)
+        r3d = Affine2D(phi=0, scale=0.5)
+        actual_tra, actual_grid = r3d.transformArray(
+            array=a1, center=(2, 2), return_grid=True)
+        desired_tra = np.array(
+            [[ 0,  0,  0,  0],
+             [ 0,  0,  2,  0],
+             [ 0,  8, 10,  0],
+             [ 0,  0,  0,  0]])
+        desired_grid = np.array(
+            [[[-2., -2., -2., -2.],
+              [ 0.,  0.,  0.,  0.],
+              [ 2.,  2.,  2.,  2.],
+              [ 4.,  4.,  4.,  4.]],
+             [[-2.,  0.,  2.,  4.],
+              [-2.,  0.,  2.,  4.],
+              [-2.,  0.,  2.,  4.],
+              [-2.,  0.,  2.,  4.]]])
+        np_test.assert_equal(actual_tra, desired_tra)
+        np_test.assert_equal(actual_grid, desired_grid)
+
+        # scaling, shape, grid
+        a1 = np.arange(16).reshape(4,4).astype(float)
+        r3d = Affine2D(phi=0, scale=0.5)
+        actual_tra, actual_grid = r3d.transformArray(
+            array=a1, return_grid=True, order=1, shape=(2, 2))
+        desired_tra = np.array(
+            [[ 0.,  2.],
+             [ 8., 10.]])
+        desired_grid = np.array(
+            [[[0., 0.],
+              [2., 2.]],
+             [[0., 2.],
+              [0., 2.]]])
+        np_test.assert_equal(actual_tra, desired_tra)
+        np_test.assert_equal(actual_grid, desired_grid)
         
     def testShiftCenter(self):
         """

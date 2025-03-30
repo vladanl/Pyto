@@ -2,11 +2,14 @@
 
 Tools for manipulation starfiles used by Relion and Xmipp
 
+Important: To be used only on star files that contain one table.
+
 Generic starfile functions:
   - get_array_data(): reads data from a star file
   - array_data_generator(): yields data lines from a star file
   - array_data_head(): reads header
   - write_table(): writes a star table
+  - to_pandas(): reads table data from a star file and converts it to pandas
   - sort_particles(): sorts particles by file name and particle number
   - find_file(): finds files whose names match given criteria
   - add_priors(): copies rotations to the corresponding priors
@@ -61,7 +64,7 @@ from builtins import zip
 #from builtins import str
 from builtins import range
 from past.utils import old_div
-from past.builtins import basestring
+#from past.builtins import basestring
 
 __version__ = "$Revision$"
 
@@ -78,6 +81,7 @@ import collections
 import numpy as np
 import scipy as sp
 import matplotlib.pyplot as plt
+import pandas as pd
 
 import pyto
 from pyto.geometry.rigid_3d import Rigid3D
@@ -177,7 +181,7 @@ def extract_class(
         return len(good_names)
 
     # copy header
-    if isinstance(out, basestring):
+    if isinstance(out, str):
         out_fd = open(out, 'w')
     else:
         out_fd = out
@@ -1401,7 +1405,7 @@ def convert_particle_selection(relionstar, xmippinstar, xmippoutstar,
                 print("Particle " + xmipp_compact + " omitted.")
 
     # write out xmipp file
-    if isinstance(xmippoutstar, basestring):
+    if isinstance(xmippoutstar, str):
         xmippoutstar = open(xmippoutstar, 'w')
     for line in out_lines:
         xmippoutstar.write(line)
@@ -1829,7 +1833,7 @@ def write_table(
     str_format = '%s'
 
     # open file if needed
-    if isinstance(starfile, basestring):
+    if isinstance(starfile, str):
         fd = open(starfile, 'wb')
     else:
         fd = starfile
@@ -1874,7 +1878,7 @@ def write_table(
         if isinstance(data, dict):
 
             # figure out format
-            if isinstance(format_, basestring) and (format_ == 'auto'):
+            if isinstance(format_, str) and (format_ == 'auto'):
 
                 # auto: convert string arrays to int or float, if possible
                 fmt = []
@@ -1986,6 +1990,26 @@ def find_file(
         return None
     else:
         return result
+
+def to_pandas(starfile, tablename='data_'):
+    """Reads table from a star file and converts it to pandas.DataFrame
+
+    Reads starfile table and converts it to pandas DataFrame
+
+    Arguments:
+      - starfile: name of the starfile that contains data
+      - tablename: name of the table that contains data
+
+    Returns pandas.DataFrame
+    """
+
+    tab = pd.DataFrame(
+    tab.relion_tools.get_array_data(
+        starfile=starfile, tablename=tablename, types=str))
+    tab.convert_dtypes()
+
+    return tab
+
 
 ##############################################################
 #
@@ -2858,7 +2882,7 @@ def symmetrize_structure(
 
     # read image
     image_obj_found = False
-    if isinstance(structure, basestring):
+    if isinstance(structure, str):
         image_obj = pyto.core.Image.read(structure)
         image_obj_found = True
         array = image_obj.data
@@ -2876,7 +2900,7 @@ def symmetrize_structure(
 
     # read mask
     if mask is not None:
-        if isinstance(mask, basestring):
+        if isinstance(mask, str):
             mask_obj = pyto.core.Image.read(mask)
             mask_array = mask_obj.data
         elif isinstance(mask, pyto.core.Image):

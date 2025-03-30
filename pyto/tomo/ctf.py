@@ -16,7 +16,7 @@ from builtins import str
 from builtins import range
 from builtins import object
 from past.utils import old_div
-from past.builtins import basestring
+#from past.builtins import basestring
 
 __version__ = "$Revision$"
 
@@ -225,7 +225,7 @@ class Ctf(object):
             n_digits = int(np.ceil(np.log10(z_dim)))
             if isinstance(flatten, bool):
                 pass
-            elif isinstance(flatten, basestring) and (flatten == 'auto'):
+            elif isinstance(flatten, str) and (flatten == 'auto'):
                 if z_dim > 1: 
                     flatten = True
                 else:

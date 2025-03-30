@@ -70,6 +70,14 @@ class TestLineProjection(np_test.TestCase):
         actual = lp.find_spherical(angles=relion_angles)
         np_test.assert_array_almost_equal(actual, desired)
 
+        # relion, euler_range='0_2pi'
+        lp = LineProjection(euler_range='0_2pi')
+        lp.relion = True
+        relion_angles = [170, 230]
+        desired = [170, 310]
+        actual = lp.find_spherical(angles=relion_angles)
+        np_test.assert_array_almost_equal(actual, desired)
+
         # relion reverse, euler_range='0_2pi'
         lp = LineProjection(relion=True, reverse=True, euler_range='0_2pi')
         relion_angles = [30, 140]

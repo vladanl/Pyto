@@ -165,14 +165,14 @@ def main():
         topo = pyto.segmentation.Topology(segments=discs, ids=vesicle_ids)
         n_connected = topo.calculateHomologyRank(dim=0)[vesicle_ids]
         if not (n_connected == 1).all():
-            many = topo.ids[numpy.nonzero(n_connected[topo.ids]>1)[0]]
+            many = topo.ids[numpy.nonzero(n_connected > 1)[0]]
             if len(many) > 0:
                 logging.warning(
-                    "The following discs are disconnected: " + str(many))
-            zero = topo.ids[numpy.nonzero(n_connected[topo.ids]<1)[0]]
+                    f"The following discs are disconnected: {many}")
+            zero = topo.ids[numpy.nonzero(n_connected < 1)[0]]
             if len(zero) > 0:
                 logging.warning(
-                    "The following discs do not exist: " + str(zero))
+                    f"The following discs do not exist: {zero}")
 
     # magnify if needed
     if mag_factor > 1: 

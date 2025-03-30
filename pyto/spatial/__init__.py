@@ -22,6 +22,7 @@ from .mps_interconversion import MPSInterconversion
 from .mps_analysis import MPSAnalysis
 from .multi_particle_sets import MultiParticleSets
 from .mps_projection import MPSProjection
+from .visualization import Visualization
 from . import test
 
 #from numpy.testing import Tester

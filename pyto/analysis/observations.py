@@ -13,7 +13,7 @@ from builtins import str
 from builtins import range
 from builtins import object
 #from past.utils import old_div
-from past.builtins import basestring
+#from past.builtins import basestring
 
 __version__ = "$Revision$"
 
@@ -110,7 +110,7 @@ class Observations(object):
                              + " only on objects that have no identifiers.")
 
         # initialize
-        if isinstance(names, basestring):
+        if isinstance(names, str):
             names = [names]
         for nam in names:
             self.properties.add(nam)
@@ -1487,7 +1487,7 @@ class Observations(object):
                     if len(data) > ddof:
                         std = numpy.std(data, ddof=ddof)
                     else:
-                        std = numpy.NaN
+                        std = numpy.nan
                     # nicer but doesn't work
                     #try:
                     #    std = numpy.std(data, ddof=ddof)
@@ -1608,7 +1608,7 @@ class Observations(object):
         with the reference experiment(s). There can be one or more  reference
         experiments.
 
-        In case of paired t-test (test='t_rel') numpy.NaN entries and the
+        In case of paired t-test (test='t_rel') numpy.nan entries and the
         coreresponding reference data (or the other way around) are ignored.
 
         Arguments:
@@ -1700,8 +1700,8 @@ class Observations(object):
             if (len(data) == 0) or (len(ref_data) == 0):
 
                 # no data
-                test_value = numpy.NaN
-                confid = numpy.NaN
+                test_value = numpy.nan
+                confid = numpy.nan
 
             elif test == 't_rel':
 
@@ -1838,7 +1838,7 @@ class Observations(object):
                     if len(x_data) >= 2:
                         test_value, confid = test_method(x_data, y_data)
                     else:
-                        test_value, confid = numpy.NaN, numpy.NaN
+                        test_value, confid = numpy.nan, numpy.nan
                     corr.setValue(property='testValue', identifier=ident,
                                   value=test_value)
                     corr.setValue(property='confidence', identifier=ident,
@@ -1853,8 +1853,8 @@ class Observations(object):
                         a_reg, b_reg, r_reg, p_reg, err_reg = reg
                     else:
                         a_reg, b_reg, r_reg, p_reg, err_reg = (
-                            numpy.NaN, numpy.NaN, numpy.NaN, numpy.NaN,
-                            numpy.NaN)
+                            numpy.nan, numpy.nan, numpy.nan, numpy.nan,
+                            numpy.nan)
                     corr.setValue(property='aRegress', identifier=ident,
                                   value=numpy.array(a_reg))
                     corr.setValue(property='bRegress', identifier=ident,
@@ -2067,7 +2067,7 @@ class Observations(object):
         # set output
         if out is None:
             return
-        elif isinstance(out, basestring):
+        elif isinstance(out, str):
             out = open(out)
 
         # print title

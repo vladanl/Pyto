@@ -8,7 +8,7 @@ segmented images.
 from __future__ import unicode_literals
 from __future__ import absolute_import
 from builtins import object
-from past.builtins import basestring
+#from past.builtins import basestring
 
 __version__ = "$Revision$"
 
@@ -340,7 +340,7 @@ class Features(object):
 
         # set data attribute names
         if names is not None:
-            if isinstance(names, basestring):
+            if isinstance(names, str):
                 names = [names]
         else:
             names = new.dataNames
@@ -401,7 +401,7 @@ class Features(object):
                               "Currently 'add' and 'replace' are implemented.")
 
                 # merge 0 element
-                if isinstance(mode0, basestring):
+                if isinstance(mode0, str):
                     if mode0 == 'add':
                         modified[0] = modified[0] + new_var[0]
                     elif mode0=='replace':

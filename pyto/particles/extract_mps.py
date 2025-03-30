@@ -41,9 +41,9 @@ class ExtractMPS(ExtractMPSFilter):
             normal_source_suffix='_source',
             normal_angle_cols=['normal_theta', 'normal_phi'],
             degree=True, centers_dtype=int,
-            tomo_col='tomo',
-            tomo_id_mode='munc13', path_label='rlnMicrographName',
+            tomo_col='tomo', path_label='rlnMicrographName',
             path_label_morse='psSegImage',
+            tomo_id_mode='munc13', tomo_id_func=None, tomo_id_kwargs={},
             id_source_label=None, ctf_label='rlnCtfImage', check_ctf=False,
             tomo_ids=None, box_size=None,
             label_format=None,            
@@ -73,6 +73,8 @@ class ExtractMPS(ExtractMPSFilter):
         self.tomo_col = tomo_col
 
         self.tomo_id_mode = tomo_id_mode
+        self.tomo_id_func = tomo_id_func
+        self.tomo_id_kwargs = tomo_id_kwargs
         self.path_label = path_label
         self.path_label_morse = path_label_morse
         self.id_source_label = id_source_label
@@ -151,18 +153,18 @@ class ExtractMPS(ExtractMPSFilter):
         and particles attributes (pandas.DataFrame) as follows:
           - tomos (DataFrame) columns: 
             - 'tomo_id': tomogram identifier, has to be unique 
-            - 'tomo': path to (greyscale) tomogram, bin factor given in
-              region_bin column, defines tomo frame 
-            - 'region': path to boundaries (regions), bin_factor given in
-              region_bin column, defines region frame
+            - 'tomo': path to (greyscale) tomogram, defines tomo frame 
+              (bin factor given in region_bin column) 
+            - 'region': path to boundaries (regions), defines region frame
+              (bin_factor given in region_bin column)
             - 'rlnCtfImage': path to ctf corresponding to tomo
             - region_bin: bin factor of tomo and region images
             - 'region_offset_x/y/z': position of regions with respect 
               to tomo (at region_bin)
             - 'pixel_nm': pixel size [nm] 
             - 'coord_bin': bin factor for x/y/z_orig coordinates in
-              particles table (needed if particles columns 'x/y/z_orig'
-              are used)
+              particles table (needed if particles are specified in tomo
+              frame, that is if columns 'x/y/z_orig' are used)
             - 'region_id': needed?
           - particles (DataFrames) columns:
             - 'group': experimental group 
@@ -178,6 +180,13 @@ class ExtractMPS(ExtractMPSFilter):
             - 'rlnAngleTilt', 'rlnAngleTiltPrior', 'rlnAnglePsi', 
             'rlnAnglePsiPrior', 'rlnAngleRot': particle angles as given
             by relion (active, intrinsic, zyz, Euler angles)
+
+        The following two coordinate systems (frames) are used:
+          - tomo frame: full size tomos, bin factor in region_bin column 
+            of mps.tomos dataframe
+          - regions frame: cropped from full so that origin is at 
+            region_offset_x/y/z columns of mps.tomos, bin factor in 
+            region_bin column of mps.tomos dataframe
 
         Particle coordinates (picks) are converted from tomo or regions 
         frames to particle corners in tomo frame, from which particle 
@@ -272,7 +281,7 @@ class ExtractMPS(ExtractMPSFilter):
             mps=mps, init_cols=mps.center_reg_frame_cols, 
             final_cols=mps.center_init_frame_cols, update=True)
 
-        # select tomos and adjust paths
+        # convert paths
         self.convert_paths(
             mps=mps, 
             common=convert_path_common, helper_path=convert_path_helper, 
@@ -343,6 +352,7 @@ class ExtractMPS(ExtractMPSFilter):
             path=paths.mps_path_tmp, verbose=verbose, out_desc="preliminary")
 
         # write star files and the corresponding table
+        # extract labels from actual tables 
         labels = self.get_labels(mps=mps)
         self.make_star(
             mps=mps, labels=labels, star_path=paths.star_path,
@@ -479,9 +489,15 @@ class ExtractMPS(ExtractMPSFilter):
                 convert_path_helper=convert_path_helper,
                 path_col=path_col, offset_cols=offset_cols,
                 shape_cols=shape_cols, bin_col=bin_col)
-
+            shape_cols = mps.region_shape_cols
+            
         elif input_mode == 'mps':
-            pass
+            # convert paths
+            self.convert_paths(
+                mps=mps, 
+                common=convert_path_common, helper_path=convert_path_helper, 
+                path_cols=[self.ctf_label], tomo_path_col=None, 
+                region_path_col=path_col, update=True)
         else:
             raise ValueError(
                 f"Argument input mode ({input_mode}) was not recognized."
@@ -504,7 +520,7 @@ class ExtractMPS(ExtractMPSFilter):
             coord_cols=self.center_reg_frame_cols,
             l_corner_cols=self.reg_l_corner_cols,
             r_corner_cols=self.reg_r_corner_cols, 
-            shape_cols=mps.region_shape_cols, column=self.reg_inside_col,
+            shape_cols=shape_cols, column=self.reg_inside_col,
             update=True)
 
         # prepare image processing functions (magnify, normalize, dilate)
@@ -571,7 +587,7 @@ class ExtractMPS(ExtractMPSFilter):
 
     def clean_particles_task(
             self, processing_cases, preliminary_tables_dir,
-            expected_regions, expected_segments, found_col='found_ids_col',
+            expected_regions, expected_segments=None, found_col='found_ids_col',
             star_comment='', verbose=True):
         """Removes particles based on regions and segments.
 
@@ -587,24 +603,23 @@ class ExtractMPS(ExtractMPSFilter):
             name='regions', root_template=self.root_template,
             size=self.box_size, tables=preliminary_tables_dir)
         mps_regions = MultiParticleSets.read(
-            path=paths.mps_path, verbose=verbose)
+            path=paths.mps_path, verbose=verbose, out_desc="regions")
         mps_regions.check_ids(
             expected=expected_regions, update=True, found_col=found_col,
             verbose=False)
+        keep = mps_regions.particles[found_col]
 
         # read segments mps
-        paths = Paths(
-            name='segments', root_template=self.root_template,
-            size=self.box_size, tables=preliminary_tables_dir)
-        mps_segments = MultiParticleSets.read(
-            path=paths.mps_path, verbose=verbose)
-        mps_segments.check_ids(
-            expected=expected_segments, update=True, found_col=found_col,
-            verbose=False)
-        
-        # combine 
-        keep = (mps_regions.particles[found_col]
-                & mps_segments.particles[found_col])
+        if expected_segments is not None:
+            paths = Paths(
+                name='segments', root_template=self.root_template,
+                size=self.box_size, tables=preliminary_tables_dir)
+            mps_segments = MultiParticleSets.read(
+                path=paths.mps_path, verbose=verbose, out_desc="segments")
+            mps_segments.check_ids(
+                expected=expected_segments, update=True, found_col=found_col,
+                verbose=False)
+            keep = (keep & mps_segments.particles[found_col])
 
         # loop over processing cases
         for nam in processing_cases:
@@ -616,7 +631,7 @@ class ExtractMPS(ExtractMPSFilter):
                 name=nam, root_template=self.root_template,
                 size=self.box_size, tables=preliminary_tables_dir)
             mps = MultiParticleSets.read(
-                path=in_paths.mps_path, verbose=verbose)
+                path=in_paths.mps_path, verbose=verbose, out_desc="particles")
 
             # add found column and make clean mps
             if found_col in mps.particles.columns:
@@ -768,6 +783,18 @@ class ExtractMPS(ExtractMPSFilter):
         one set of Euler angles, that is 
           ('rlnAngleRot', 'rlnAngleTilt', 'rlnAnglePsi'), or 
           ('rlnAngleRot', 'rlnAngleTiltPrior', 'rlnAnglePsiPrior')
+
+        Arguments:
+          - mps: (MultiParticleSets) Tomos and particles dataframes
+          - mps_coord_cols: columns of mps.particles that contain particle
+          coordinates
+          - source: (MuliParticleSets) Another particle set, has to contain
+          coordinates and angles
+          - source_coord_cols: columns of source.particles wrom which
+          angles of mps are determined, has to contain particle 
+          coordinates of the other set, or None if mps contains angles
+          - reverse: (bool) if True, inverse angles
+          - use_priors: (bool) if True, use prior angles
 
         Returns mps.particles with the added columns
         """
@@ -996,6 +1023,11 @@ class ExtractMPS(ExtractMPSFilter):
             path_label=None, update=False):
         """Adds tomo or region image paths to tomos or particles table
 
+        Before adding tomo or region paths, determines and adds tomo ids 
+        using MultiParticleSets.add_tomo_ids() with arguments  
+        self.tomo_id_mode, self.tomo_id_func and self.tomo_id_kwargs
+        (see add_tomo_id() doc for more info).
+
         Arguments:
           - mode: 'tomo' to add tomo paths, or 'particles' to add region paths
           - path_label: if None, self.path_label is used
@@ -1011,9 +1043,13 @@ class ExtractMPS(ExtractMPSFilter):
         # read star that contains segmentation path
         star = pd.DataFrame(get_array_data(
             starfile=star_path, tablename='data', types=str))
-        star[mps.tomo_id_col] = star[id_source_label].map(
-            lambda x: pyto.spatial.coloc_functions.get_tomo_id(
-                path=x, mode=self.tomo_id_mode))
+        mps.add_tomo_ids(
+            table=star, path_col=mps.micrograph_label,
+            tomo_id_mode=self.tomo_id_mode,
+            tomo_id_func=self.tomo_id_func, tomo_id_kwargs=self.tomo_id_kwargs)
+        #star[mps.tomo_id_col] = star[id_source_label].map(
+        #    lambda x: pyto.spatial.coloc_functions.get_tomo_id(
+        #        path=x, mode=self.tomo_id_mode))
         star = star[[mps.tomo_id_col, path_label]].rename(
             columns={path_label: path_col}).copy()
 
@@ -1053,6 +1089,11 @@ class ExtractMPS(ExtractMPSFilter):
 
         The ctf path is added to mps.tomos table, column self.ctf_label.
 
+        Before adding ctf paths, determines and adds tomo ids 
+        using MultiParticleSets.add_tomo_ids() with arguments  
+        self.tomo_id_mode, self.tomo_id_func and self.tomo_id_kwargs
+        (see add_tomo_id() doc for more info).
+
         Arguments:
           - mps:
           - star_path: path to the star file containing ctf path
@@ -1070,9 +1111,13 @@ class ExtractMPS(ExtractMPSFilter):
         labels = template.columns.copy()
 
         # get tomo ids
-        template[mps.tomo_id_col] = template[mps.micrograph_label].map(
-            lambda x: pyto.spatial.coloc_functions.get_tomo_id(
-                path=x, mode=self.tomo_id_mode))
+        mps.add_tomo_ids(
+            table=template, path_col=mps.micrograph_label,
+            tomo_id_mode=self.tomo_id_mode,
+            tomo_id_func=self.tomo_id_func, tomo_id_kwargs=self.tomo_id_kwargs)
+        #template[mps.tomo_id_col] = template[mps.micrograph_label].map(
+        #    lambda x: pyto.spatial.coloc_functions.get_tomo_id(
+        #        path=x, mode=self.tomo_id_mode))
 
         # keep only tomo and ctf paths
         paths_tab = template[
@@ -1104,12 +1149,32 @@ class ExtractMPS(ExtractMPSFilter):
     def convert_paths(
             self, mps, common, helper_path, path_cols=None,
             tomo_path_col=None, region_path_col=None, update=False):
-        """Converts image and segmentation paths to another root
+        """Converts paths to another root in mps tables.
 
-        Used for, but not limited to image and segmentation paths 
+        Converts paths in columns (args) tomo_path_col, region_path_col and 
+        those listed in path_cols in both mps.tomos and mps.particles
+        tables.
 
-        If self.tomo_ids is not None, selects the specified tomos.
+        The conversion replaces everything before (arg) common in a path 
+        by everything before arg helper_path (see SetPath.convert_paths() 
+        for more info).
 
+        If self.tomo_ids is not None, converts paths only for the 
+        specified tomos.
+
+        Arguments:
+          - mps: (MultiParticleSets) object containing tomo and particle info
+          - common: string common to path and arg helper_path
+          - helper_path: replacement string, the part before arg common
+          is used and the part after is ignored
+          - tomo_path_col, region_path_col: columns containing paths 
+          to be converted (typically tomo and segmentation paths)
+          - path_cols: additional columns containing paths to be converted
+          - update: if True, mps is updates, if False a modified MPS
+          object is returned
+
+        Returns (MultipleParticleSets) copied and modified mps object, 
+        only if arg update is False
         """
 
         # select tomos
@@ -1123,23 +1188,46 @@ class ExtractMPS(ExtractMPSFilter):
 
         # convert
         set_path = SetPath(common=common, helper_path=helper_path)
-        if tomo_path_col is not None:
-            result.tomos[tomo_path_col] = result.tomos[tomo_path_col].map(
-                lambda x: set_path.convert_path(x))
-            result.tomos[tomo_path_col] = \
-                result.tomos[tomo_path_col].astype('string')
-        if region_path_col is not None:
-            result.tomos[region_path_col] = result.tomos[region_path_col].map(
-                lambda x: set_path.convert_path(x))        
-            result.tomos[region_path_col] = \
-                result.tomos[region_path_col].astype('string')
+        convert_cols = [
+            col for col in [tomo_path_col, region_path_col] if col is not None]
         if path_cols is not None:
-            for pa_col in path_cols:
-                result.tomos[pa_col] = result.tomos[pa_col].map(
-                    lambda x: set_path.convert_path(x))
-                result.tomos[pa_col] = \
-                    result.tomos[pa_col].astype('string')
-                
+            convert_cols = convert_cols + list(path_cols)
+        for table in [result.tomos, result.particles]:
+            for col in convert_cols:
+                try:
+                    table[col] = table[col].map(
+                        lambda x: set_path.convert_path(x))
+                    table[col] = \
+                        table[col].astype('string')
+                except KeyError:
+                    if col in table.columns:
+                        raise
+                    else:
+                        pass
+            
+        #if tomo_path_col is not None:
+        #    result.tomos[tomo_path_col] = result.tomos[tomo_path_col].map(
+        #        lambda x: set_path.convert_path(x))
+        #    result.tomos[tomo_path_col] = \
+        #        result.tomos[tomo_path_col].astype('string')
+        #if region_path_col is not None:
+        #    result.tomos[region_path_col] = result.tomos[region_path_col].map(
+        #        lambda x: set_path.convert_path(x))        
+        #    result.tomos[region_path_col] = \
+        #        result.tomos[region_path_col].astype('string')
+        #if path_cols is not None:
+        #    for pa_col in path_cols:
+        #        try:
+        #            result.tomos[pa_col] = result.tomos[pa_col].map(
+        #                lambda x: set_path.convert_path(x))
+        #            result.tomos[pa_col] = \
+        #                result.tomos[pa_col].astype('string')
+        #        except KeyError:
+        #            if pa_col in result.tomos.columns:
+        #                raise
+        #            else:
+        #                pass
+                    
         if not update:
             return result
         
@@ -1361,7 +1449,7 @@ class ExtractMPS(ExtractMPSFilter):
             verbose=False, out_desc=""):
         """Writes relion particle star file from particles and tomos tables.
 
-        Takes data from mps.tomos and mps.attributes to make a DataFrame that 
+        Takes data from mps.tomos and mps.particles to make a DataFrame that 
         contains all required data for a particle star file, and saves this
         as file. Then, writes a star file from this data.
 
@@ -1370,7 +1458,8 @@ class ExtractMPS(ExtractMPSFilter):
         Arguments:
           - mps: (MultiParticleSets) particle sets object that contain tomo
           and particle data in attributes tomos and particles, respectively
-          - labels: star file labels, such as self.get_labels(mps)
+          - labels: (dict) keys are star file labels, and values the 
+          corresponding column names, for example self.get_labels(mps)
           - star_path: path to the out star file, or None for not writing
           - comment: comment addet to star file
           - verbose: flag indicating whether writting info about writting
@@ -1406,8 +1495,8 @@ class ExtractMPS(ExtractMPSFilter):
             try:
                 write_table(
                     starfile=star_path, labels=list(labels.keys()), data=data, 
-                    format_=self.label_format, tablename='data', delimiter=' ', 
-                    comment=f"# {comment}")
+                    format_=self.label_format, tablename='data_',
+                    delimiter=' ', comment=f"# {comment}")
                 if verbose:
                     print(f"Wrote {out_desc} star file {star_path}")
             except FileNotFoundError:
@@ -1645,7 +1734,7 @@ class ExtractMPS(ExtractMPSFilter):
             
     @classmethod
     def normalize_bound_ids(
-            cls, data, min_id_old, id_new, id_conversion={},
+            cls, data, min_id_old=None, id_new=None, id_conversion={},
             dtype=np.int16):
         """Sets boundary ids to the specified (normalized) values.
 
@@ -1677,12 +1766,15 @@ class ExtractMPS(ExtractMPSFilter):
           - id_conversion: (dict) 1-1 mapping old_value: new_value
           - dtype: dtype of the final image (default np.int16)
 
-        Returns (ndarray) modified image
+        Returns (ndarray) modified image (arg data is modified)
         """
 
-        new_data = np.where(data>=min_id_old, id_new, 0)
+        if min_id_old is not None:
+            new_data = np.where(data>=min_id_old, id_new, 0)
+        else:
+            new_data = np.zeros_like(data)
         for old, new in id_conversion.items():
-            new_data += np.where(data==old, new, 0)
+            new_data += np.where(data==old, new, 0).astype(data.dtype)
         if dtype is not None:
             new_data = new_data.astype(dtype)
 

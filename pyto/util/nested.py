@@ -6,7 +6,7 @@ Functions dealing with nested lists and related.
 """
 from __future__ import unicode_literals
 from builtins import map
-from past.builtins import basestring
+#from past.builtins import basestring
 
 __version__ = "$Revision$"
 
@@ -34,7 +34,8 @@ def flatten(x):
     result = []
     for el in x:
         #if isinstance(el, (list, tuple)):
-        if hasattr(el, "__iter__") and not isinstance(el, basestring):
+        #if hasattr(el, "__iter__") and not isinstance(el, basestring):
+        if hasattr(el, "__iter__") and not isinstance(el, str):
             result.extend(flatten(el))
         else:
             result.append(el)
@@ -53,12 +54,12 @@ def map(fun, lis):
 
     Arguments:
       - fun: function to be applied
-      - lis: list or other iterable except basestring 
+      - lis: list or other iterable except str
       """
 
     result = []
     for el in lis:
-        if hasattr(el, "__iter__") and not isinstance(el, basestring):
+        if hasattr(el, "__iter__") and not isinstance(el, str):
             result.append(list(map(fun, el)))
         else:
             result.append(fun(el))
@@ -75,12 +76,12 @@ def add(x, lis):
 
     Arguments:
       - x: number to be added
-      - lis: list or other iterable except basestring     
+      - lis: list or other iterable except str     
     """
 
     result = []
     for el in lis:
-        if hasattr(el, "__iter__") and not isinstance(el, basestring):
+        if hasattr(el, "__iter__") and not isinstance(el, str):
             result.append(add(x, el))
         else:
             result.append(el + x)

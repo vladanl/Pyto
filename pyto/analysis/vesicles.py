@@ -11,7 +11,7 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from builtins import zip
 from builtins import range
-from past.builtins import basestring
+#from past.builtins import basestring
 
 __version__ = "$Revision$"
 
@@ -304,15 +304,16 @@ class Vesicles(Groups):
             contact = pyto.segmentation.Contact.recast(contact)
 
             # find index for the current observation
-            for obs_ind, loc_ident in zip(list(range(len(self[categ].identifiers))),
-                                            self[categ].identifiers):
+            for obs_ind, loc_ident in zip(
+                    list(range(len(self[categ].identifiers))),
+                    self[categ].identifiers):
                 if loc_ident == ident:
                     break
 
             # find ids of linked segments
             all_ids = self[categ].ids[obs_ind]
-            linked_ids = contact.findLinkedBoundaries(ids=all_ids, 
-                                                      distance=1, mode='exact')
+            linked_ids = contact.findLinkedBoundaries(
+                ids=all_ids, distance=1, mode='exact')
 
             # make sure that only ids in all_ids are used
             linked_ids = [numpy.intersect1d(l_ids, all_ids) \

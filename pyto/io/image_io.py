@@ -13,7 +13,7 @@ from builtins import str
 from builtins import range
 from builtins import object
 #from past.utils import old_div
-from past.builtins import basestring
+#from past.builtins import basestring
 
 __version__ = "$Revision$"
 
@@ -107,7 +107,7 @@ class ImageIO(object):
 
         # parse arguments
         if file is not None:
-            if isinstance(file, basestring):
+            if isinstance(file, str):
                 self.fileName = file
             elif isinstance(file, file):
                 self.file_ = file
@@ -1346,7 +1346,7 @@ class ImageIO(object):
                 file_ = self.fileName
 
             # find the extension of file_ to determine the format
-            if isinstance(file_, basestring):   # file argument is a file name 
+            if isinstance(file_, str):   # file argument is a file name 
                 splitFileName = os.path.splitext(file_)
                 extension = splitFileName[-1].lstrip('.')
                 self.fileFormat = ImageIO.fileFormats.get(extension)
@@ -1384,7 +1384,7 @@ class ImageIO(object):
             filetypes = io.IOBase
             
         # open the file if not opened already
-        if isinstance(file_, basestring):  # file_ is a string
+        if isinstance(file_, str):  # file_ is a string
             self.fileName = file_
             self.file_ = open(file_, mode)  
 

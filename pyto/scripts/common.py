@@ -9,7 +9,7 @@ Author: Vladan Lucic
 from __future__ import unicode_literals
 from builtins import zip
 #from builtins import str
-from past.builtins import basestring
+#from past.builtins import basestring
 
 __version__ = "$Revision$"
 
@@ -260,7 +260,7 @@ def is_multi_file(file_name):
     Argument:
       - file_name: one file name or a list (tuple) of file names
     """
-    if isinstance(file_name, (str, basestring)):
+    if isinstance(file_name, str):
         return False
     elif isinstance(file_name, (tuple, list)):
         return True

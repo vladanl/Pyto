@@ -11,7 +11,7 @@ of images. This class should not be instantiated
 """
 from builtins import zip
 from builtins import object
-from past.builtins import basestring
+#from past.builtins import basestring
 
 __version__ = u"$Revision$"
 
@@ -478,10 +478,12 @@ class Image(object):
 
         ndim = data.ndim
         try:
-            while (data.base is not None) and (data.base.ndim == ndim):
+            while ((data.base is not None)
+                   and isinstance(data.base, np.ndarray)
+                   and (data.base.ndim == ndim)):
                 data = data.base
         except AttributeError:
-            if isinstance(data.base, basestring):
+            if isinstance(data.base, str):
                 # data.base is a string, happens after unpickling
                 pass
             else:
