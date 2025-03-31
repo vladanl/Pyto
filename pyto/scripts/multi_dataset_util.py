@@ -12,10 +12,10 @@ which as passed as argument pp to all relevant functions.
 This was previously part of presynaptic_stats.py.
 
 # Author: Vladan Lucic (Max Planck Institute for Biochemistry)
-# $Id$
+# $Id: multi_dataset_util.py 2140 2024-12-19 14:11:52Z vladan $
 """
 
-__version__ = "$Revision$"
+__version__ = "$Revision: 2140 $"
 
 import sys
 import os
