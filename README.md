@@ -1,14 +1,24 @@
 
 # Pyto #
 
-### Description ###
+### General description ###
 
-The main purpose of Pyto package is to provide tools for the detection and analysis of pleomorphic membrane-bound molecular complexes in 3D images (tomograms). It is designed for cryo-electron tomograms of neuronal synapses, but it can be used for other biological systems.
+Detection and analysis of macromolecular complexes and proteins in 3D cryo-electron images (tomograms). While it was developed for neuronal synapses, it is applicable to other biological systems.
 
-In addition, Pyto can be used to correlate images obtained from light microscopy and different modes of electron microscopy (transmission and scanning electron microscopy, focused ion beam microscopy). A part of this code is used 
+### Specific tasks ###
+
+* The main purpose is the detection and analysis of pleomorphic membrane-bound molecular complexes cryo-electron  tomograms.
+
+* Correlate images obtained from light microscopy and different modes of electron microscopy (transmission and scanning electron microscopy, focused ion beam microscopy). A part of this code is used
 in [3DCT package for correlative microscopy](https://github.com/coraxx/3DCT.git), which provides GUI.
 
-Finaly, tools that assist general processing of cryo-electron tomograms (frame alignment, 3D reconstruction) are also provided. 
+* Spatial distribution analysis of particles (such as complexes)
+
+* Preprocessing membrane-bound particles (complexes) for subtomogram averaging.
+
+* Mapping complexes to their exact position and angular orientation for visualization.
+
+* Provides tools that assist general processing of cryo-electron tomograms (frame alignment, 3D reconstruction).
 
 
 ### Dependencies: ###
@@ -44,6 +54,10 @@ Please start from [Overview](doc/manuals/overview.pdf).
 
 ### Release history ###
 
+* 1.10.2 (30.03.2025, svn r2181)
+	* Added mapping particle code and example
+	* Fixed some depreciation related issues for python 3.12
+	* Docs improvements, small fixes
 * 1.10.1 (07.01.2025, svn r2155)
   	* Added preprocessing for subtomo averaging example
 	* Put back sources for manuals
