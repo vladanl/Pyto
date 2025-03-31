@@ -664,6 +664,9 @@ def stats(
             return stats, axes
         else:
             return stats, None
+    else:
+        if plot_:
+            return None, axes
 
 def count_histogram(
         data, pp, name='ids', dataNames=None, groups=None, identifiers=None,
