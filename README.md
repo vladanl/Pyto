@@ -40,6 +40,7 @@ In addition, some parts depend on:
 + Statsmodels
 + SymPy: Currently needed only for development
 + PySeg: Needed only if Pyseg colocalization processing is followed by Pyto. Make sure Pyto comes before PySeg in PYTHONPATH because PySeg contains an older version of Pyto
+* PyTorch: Needed only for neural net classification
 
 
 ### Installation ###
@@ -54,6 +55,8 @@ Please start from [Overview](doc/manuals/overview.pdf).
 
 ### Release history ###
 
+* 1.10.3 (7.05.2025, svn 2202)
+	* Added AI tether classification code and example
 * 1.10.2 (30.03.2025, svn r2181)
 	* Added mapping particle code and example
 	* Fixed some depreciation related issues for python 3.12
