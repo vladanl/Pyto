@@ -282,6 +282,14 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
             tomo_id_func(tomo_path, **tomo_id_kwargs)
           - Otherwise, the tomo paths are copied to tomo ids
 
+        Particle ids (particle mode) are determined from self.image_label
+        column values, as follows:
+          - if the values are path-like strings of the form
+          "somepath_pid.extension", pid is extracted
+          - otherwise the values are ised as particle ids
+          - if self.image_label column doesn't exist, particle ids
+          are set to -1.
+
         In tomo mode make the following columns:
           - self.tomo_id_col
           - column for args pixel_size and coord_bin
@@ -292,10 +300,10 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
           'rlnMicrographName') to tomo ids and saves them to 
           self.tomo_id_col (default 'tomo_id') column (conversion
           mode specified as arg tomo_id_mode)
-          - Attempts to extract particle id from self.image_label column of 
-          self.particles and to put it in column self.particle_id_col. If 
-          column self.image_label doesn't exist, sets -1 in 
-          self.particle_id_col (default 'particle_id').
+          - Extracts particle id from self.image_label column of 
+          self.particles and to put it in column self.particle_id_col
+           (default 'particle_id'). If column self.image_label doesn't
+          exist, sets -1 for all particles.
           - Calculates particle coordinates from star file coordinate 
           and offset columns ('rlnCoordinateXYZ', 'rlnOriginXYZ' and
           'rlnOriginXYZAngst', see self.get_original_coords() for more info)
@@ -323,9 +331,9 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
           the first argument has to be tomo path
           - tomo_id_kwargs: kwargs for tomo_id_func
           - pixel_size_nm: (single number, dict where keys are tomo ids, or 
-          pandas.DataFrame having tomo_id column)
-          pixel size [nm] of the system in which particle coordinats are given, 
-          needed in mode 'tomo'
+          pandas.DataFrame having tomo_id column in mode 'tomo', or
+          single number in mode 'particle') pixel size [nm] of
+          the system in which particle coordinats are given
           - coord_bin: (single number, dict where keys are tomo ids, or 
           pandas.DataFrame having tomo_id column) binning
           factor of the system in which particle coordinats are given,
@@ -339,7 +347,8 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
           - class_number: class number, needed in mode 'particle'  
           - tomos: tomo star file, needed in mode 'particle' when 
           _rlnOriginX/Y/ZAngst labels are present, has to
-          have pixel size (nm) in column self.pixel_nm_col 
+          have pixel size (nm) in column self.pixel_nm_col, or arg
+          pixel_size has to be specified as a single number
           - keep_star_coords: If True, star file coordinates and offsets
           (columns rlnCoordinateX/Y/Z and rlnOriginX/Y/Z or 
           rlnOriginX/Y/ZAngst are saved in the resulting particles table
@@ -448,15 +457,23 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
                     table[self.particle_id_col] = -1
                 else:
                     raise
+            except TypeError:
+                table[self.particle_id_col] = table[self.image_label]
             out_cols = [self.tomo_id_col, self.particle_id_col]
 
-            # copy from tomo
+            # copy pixel size from tomo or set from the argument
             if tomos is not None:
                 table[self.pixel_nm_col] = table[[self.tomo_id_col]].merge(
                     tomos[[self.tomo_id_col, self.pixel_nm_col]],
                     on=self.tomo_id_col, how='left')[self.pixel_nm_col]
                 out_cols.append(self.pixel_nm_col)
-
+            else:
+                if isinstance(pixel_size_nm, (dict, pd.DataFrame)):
+                    raise ValueError(
+                        "When arge mode='particle' and tomo=None, arg "
+                        + "mode has to be a single number. ")
+                table[self.pixel_nm_col] = pixel_size_nm
+                
             # calculate coords
             table = self.get_original_coords(table=table, do_origin=do_origin)
             if keep_star_coords:

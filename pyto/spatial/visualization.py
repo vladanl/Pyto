@@ -206,7 +206,10 @@ class Visualization:
                 'rlnAngleRot', 'rlnAngleTiltPrior', 'rlnAnglePsiPrior']
         else:
             star_angles = ['rlnAngleRot', 'rlnAngleTilt', 'rlnAnglePsi']
-    
+
+        # star coords pixel size
+        coord_pixel_nm = map_pixel_nm * coord_bin / map_bin
+            
         # read star
         mps = MultiParticleSets()
         mps.micrograph_label = self.micrograph_star
@@ -214,7 +217,8 @@ class Visualization:
         particles = mps.read_star(
             path=star_path, mode='particle', tomo_id_mode=self.tomo_id_mode,
             tomo_id_func=self.tomo_id_func, tomo_id_kwargs=self.tomo_id_kwargs,
-            tablename=table_name, do_origin=True, class_number=class_number)
+            tablename=table_name, do_origin=True,
+            pixel_size_nm=coord_pixel_nm, class_number=class_number)
 
         # extract coords from star and convert them
         if not isinstance(map_offset, (tuple, list, np.ndarray)):
