@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as readme_fh:
 
 setup(
     name="pyto",
-    version="1.10.1",
+    version="1.10.3",
     author="Vladan Lucic",
     author_email="vladan@biochem.mpg.de",
     description=(
