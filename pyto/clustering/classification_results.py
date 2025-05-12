@@ -15,8 +15,7 @@ import pandas as pd
 import sklearn as sk
 import sklearn.metrics
 from sklearn.metrics import confusion_matrix, f1_score
-#import IPython.core.display as display
-from IPython.core.display import display, HTML
+#from IPython.core.display import display, HTML
 
 import pyto
 from pyto.io.pandas_io import PandasIO
