@@ -371,6 +371,10 @@ class Segment(Labels):
         Finds segments that are disconnected and segments that do not exist
         (id in self.ids but have no elements) and returns their ids.
 
+        Adds attribute:
+          - self.n_parts: (array indexed by id) number of disconnected parts
+          for each segment
+
         Returns dictionary with the following key value pairs:
           - 'many' : (list) ids of disconnected segments
           - 'empty' : (list) ids of non-existing segments
@@ -387,6 +391,8 @@ class Segment(Labels):
 
         # find ids of disconnected segments 
         topo = Topology(segments=self, ids=ids)
+        #self.n_parts = topo.calculateHomologyRank(dim=0)
+        #n_connected = self.n_parts[ids]
         n_connected = topo.calculateHomologyRank(dim=0)[ids]
         self.setProperties({'n_parts': n_connected})
         many = topo.ids[numpy.nonzero(n_connected>1)[0]]
