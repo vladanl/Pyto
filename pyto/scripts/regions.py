@@ -5,9 +5,6 @@ Typically used regions / boundaries that are manually / Amira segmented.
 
 Calculates:
   - greyscale density statistics
-  - surface (membrane) and lumen greyscale density statistics 
-  - distance to a specified region
-  - center and radius (for spherical segments)
 
 This script may be placed anywhere in the directory tree.
 
@@ -44,7 +41,7 @@ and adjust the value if needed, and comment out the other options.
 because they most likely arise from calculating denisty of a 0-volume segment
 and are also a consequence of the changed behavior of scipy. 
 
-$Id$
+$Id: regions.py 2132 2024-12-08 21:09:11Z vladan $
 Author: Vladan Lucic 
 """
 from __future__ import unicode_literals
@@ -52,7 +49,7 @@ from builtins import zip
 #from builtins import str
 from past.builtins import basestring
 
-__version__ = "$Revision$"
+__version__ = "$Revision: 2132 $"
 
 import sys
 import os
@@ -62,7 +59,7 @@ import platform
 import time
 import logging
 
-import numpy
+import numpy as np
 import pyto
 import pyto.scripts.common as common
 
@@ -398,7 +395,7 @@ def read_multi_boundaries(suggest_shape=None):
                clean=True, byteOrder=labels_byte_order, dataType=labels_data_type,
                arrayOrder=labels_array_order, shape=labels_shape)
         bound.add(new=curr_bound, shift=curr_shift, dtype='int16')
-        shifted_vesicle_ids.append(numpy.array(v_ids) + curr_shift)
+        shifted_vesicle_ids.append(np.array(v_ids) + curr_shift)
         if shift is None:
             curr_shift = None
         else:
@@ -487,7 +484,7 @@ def write_res(ves, dist, mem, lum, file_name, ids=None, multi_ves_ids=None):
 
     # check ids
     if ids is None:
-        ids = pyto.util.nested.flatten(multi_ves_ids)
+        ids = [int(x) for x in pyto.util.nested.flatten(multi_ves_ids)]
 
     # machine info
     mach_name, mach_arch = machine_info()
@@ -526,8 +523,13 @@ def write_res(ves, dist, mem, lum, file_name, ids=None, multi_ves_ids=None):
                 os.path.getmtime(labels_file_name)))
         vesicle_lines = ["# Regions: ",
                    "#     " + labels_file_name + " (" + vesicles_time + ")"]
-        region_ids_lines = ["# Region ids: ",
-                       "#     " + str(ids)]
+        region_ids_lines = ["# Region ids: ", "#     " + str(ids)]
+        not_present_ids_lines = [
+            f"# Ids present in all_ids but not in labels file: ",
+            f"(#     {ves.not_present_ids}"]
+        not_listed_ids_lines = [
+            f"# Ids present in labels file but not in all_ids: ",
+            f"(#     {ves.not_listed_ids}"]
 
     # header
     header = ["#",
@@ -550,6 +552,12 @@ def write_res(ves, dist, mem, lum, file_name, ids=None, multi_ves_ids=None):
          "# Working directory: " + os.getcwd(),
          "#"])
     header.extend(region_ids_lines)
+    if not common.is_multi_file(file_name=labels_file_name):
+        print("not multi")
+        header.extend(not_present_ids_lines)
+        header.extend(not_listed_ids_lines)
+    else:
+        print("multi")
     header.extend([\
               "#",
               "# Membrane thickness: " + str(membrane_thick),
@@ -573,12 +581,22 @@ def write_res(ves, dist, mem, lum, file_name, ids=None, multi_ves_ids=None):
             dist_1 += ' %6s  ' % dist_mode
 
     # prepare general results table (starts with id id prependIndex = True)
-    tabHead = ["# Id          Region density               ",
-               "#      mean     std     min     max volume "]
+    tabHead = ["# Id               Region density                 Volume ",
+               "#        mean      std        min         max            "]
     out_vars = [
         ves.density.mean, ves.density.std, ves.density.min, ves.density.max,
         ves.mor.volume]
-    out_format = "%3u  %7.3f %6.3f %7.3f %7.3f %6u "
+    out_format = "%3u %10.3f %10.3f %10.3f %10.3f %8u "
+
+    # N parts
+    try:
+        if ves.n_parts is not None:
+            tabHead[0] += " N parts "
+            tabHead[1] += "          "
+            out_vars += [ves.n_parts]
+            out_format += "    %4u "
+    except AttributeError:
+        pass
 
     # prepare membrane and lumen parts of results table
     if membrane_thick is not None:
@@ -675,6 +693,33 @@ def write_res(ves, dist, mem, lum, file_name, ids=None, multi_ves_ids=None):
     # flush
     file_name.flush()
 
+def check_ids(ids):
+    """Prints warnings if ids present in labels_file differ from those in ids.
+
+    Argument:
+      - ids: ids
+
+    Returns (common_ids, not_present_ids, not_listed_ids):
+      - common_ids: ids that are both in labels_file and (arg) ids
+      - not_present_ids: ids that are in (arg) ids but not in labels_file
+      - not_listed_ids: ids that are in labels_file but not in (arg) ids
+    """
+
+    seg = pyto.segmentation.Segment.read(file=labels_file_name, clean=False)
+    not_present_ids = np.setdiff1d(ids, seg.ids)
+    if len(not_present_ids > 0):
+        logging.warning(
+            f"The following ids are in ids but are not present in the"
+            + f" label_file {not_present_ids}. They will be ignored.")
+    not_listed_ids = np.setdiff1d(seg.ids, ids)
+    if len(not_listed_ids > 0):
+        logging.warning(
+            f"The following ids are present in the label file but not "
+            + f"in ids {not_listed_ids}")
+    common_ids = np.intersect1d(seg.ids, ids)
+
+    return common_ids, not_present_ids, not_listed_ids
+
 
 ################################################################
 #
@@ -687,10 +732,19 @@ def main():
     Main function
     """
 
+    global all_ids, region_ids
+
     # log machine name and architecture
     mach_name, mach_arch = machine_info()
     logging.info('Machine: ' + mach_name + ' ' + mach_arch)
     logging.info('Begin (script ' + __version__ + ')')
+
+    # check if labels file segments are the same as all_ids and
+    # adjust all_ids and region_ids
+    if not common.is_multi_file(labels_file_name):
+        common_ids, not_present_ids, not_listed_ids = check_ids(ids=all_ids)
+        all_ids = common_ids
+        region_ids = np.intersect1d(all_ids, region_ids)
 
     # read image and vesicles
     image = common.read_image(file_name=image_file_name)
@@ -701,6 +755,7 @@ def main():
 
     # analyze vesicles
     logging.info('Starting region analysis')
+    np.seterr(divide='ignore')  # avoid ndimage.standard_deviation() warning
     vesicles = analyze_vesicles(image=image, ves=vesicles, 
                                 ves_ids=flat_region_ids)
 
@@ -719,7 +774,7 @@ def main():
         vesicles.distanceId = distance_id
     else:
         dist = []
-        #dist = numpy.zeros(vesicles.ids.max()+1) - 1
+        #dist = np.zeros(vesicles.ids.max()+1) - 1
 
     # make and analyze membranes and lumens
     if membrane_thick is not None:
@@ -735,11 +790,13 @@ def main():
         vesicles.mor.center += [sl.start for sl in vesicles.inset]
 
     # add attributes and pickle vesicles 
-    vesicles.vesicleIds = numpy.asarray(flat_region_ids)
+    vesicles.vesicleIds = np.asarray(flat_region_ids)
     write_pickle(segment=vesicles, name='regions')
 
     # write results
     res_file = open_results()
+    vesicles.not_present_ids = not_present_ids
+    vesicles.not_listed_ids = not_listed_ids
     write_res(ves=vesicles, dist=dist, mem=mem, lum=lum, file_name=res_file,
               multi_ves_ids=nested_region_ids)
 
