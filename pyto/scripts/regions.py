@@ -41,7 +41,7 @@ and adjust the value if needed, and comment out the other options.
 because they most likely arise from calculating denisty of a 0-volume segment
 and are also a consequence of the changed behavior of scipy. 
 
-$Id$
+$Id: regions.py 2132 2024-12-08 21:09:11Z vladan $
 Author: Vladan Lucic 
 """
 from __future__ import unicode_literals
@@ -49,7 +49,7 @@ from builtins import zip
 #from builtins import str
 from past.builtins import basestring
 
-__version__ = "$Revision$"
+__version__ = "$Revision: 2132 $"
 
 import sys
 import os
