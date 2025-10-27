@@ -20,9 +20,12 @@ import sklearn as sk
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score, cross_val_predict
 from sklearn.metrics import confusion_matrix, f1_score
-#import IPython.core.display as display
-from IPython.core.display import display, HTML
-
+try:
+    from IPython.core.display import display, HTML  # depreciated
+except ImportError:
+    from IPython.display import display, HTML
+    
+    
 import pyto
 from pyto.io.pandas_io import PandasIO
 

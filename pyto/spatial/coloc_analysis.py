@@ -2,8 +2,14 @@
 Generation, preprocessing and analysis of colocalization results
 
 Attributes that hold colocalization data are of the form:
-  - 3-colocalization, all synapses together: pre_tether_post_data
-  - 3-colocalization, individual synapses: pre_tether_post_data_syn
+  - 3-colocalization, all tomos (synapses) together:
+      f"{coloc_name}_{self.join_suffix}"
+  - 3-colocalization, individual tomos (synapses):
+      f"{coloc}name}_{self.individual_suffix}"
+where:
+  - coloc_name: something like "pre_tether_post"
+  - self.join_suffix default is "data"
+  - self.individual_suffix default is "data_syn"
 
 Other attributes:
 
@@ -114,7 +120,7 @@ class ColocAnalysis(ColocTableRead, ColocPyseg):
             group_suffix='data_group', mode=None):
         """
         Sets parameters.
-
+        
         Arguments:
           - dir_: tables directory
           - pick: name of this colocalization project (used if dir_ is None)
@@ -282,7 +288,44 @@ class ColocAnalysis(ColocTableRead, ColocPyseg):
         except (NameError, AttributeError):
             self._names = [name]
             
-        
+    def get_n_total(self):
+        """Gets total particle numnber for each class.
+
+        Goes through all colocalization results and extracts the total
+        number of particles for each particle set. The total number is
+        read from column n_particle-set-name_total of the join table.
+
+        If a particle set exists in multiple colocalizations, the
+        maximal number of total particles is taken. This is because when
+        calculting colocalization, some tomos may be discarded because
+        they don't have any particles of another particle set.
+       
+        Returns pandas.DataFrame where index column contains particle
+        set names and 'N total' the total numbers.
+        """
+
+        # figure out data (colocalization) names
+        try:
+            data_names = self.data_names
+        except AttributeError:
+            data_names = self._names
+        else:
+            if self.data_names is None:
+                data_names = self._names
+
+        all_tabs = []
+        for col_nam in data_names:
+            names = col_func.get_names(col_nam)
+            data = self.get_data(name=col_nam)[0]
+            all_tabs.append(pd.DataFrame(
+                [(nam, data.loc[0, f"n_{nam}_total"]) 
+                 for nam in names], columns=('name', 'N total')))
+
+        n_total = pd.concat(all_tabs, ignore_index=True)
+        n_total = n_total.groupby('name').max().sort_index()
+
+        return (n_total)
+            
     ###########################################################
     #
     # Methods needed to read and preprocess data

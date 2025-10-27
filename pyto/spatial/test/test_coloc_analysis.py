@@ -14,6 +14,7 @@ import unittest
 import numpy as np
 import numpy.testing as np_test
 import pandas as pd
+from pandas.testing import assert_frame_equal
 
 from pyto.spatial.test import common
 from pyto.spatial.coloc_analysis import ColocAnalysis 
@@ -102,6 +103,7 @@ class TestColocAnalysis(np_test.TestCase):
             os.path.dirname(os.path.abspath(__file__)), self.raw_coloc_dir)
         table_path = os.path.join(
             os.path.dirname(os.path.abspath(__file__)), self.table_dir)
+        # generates preprocessed tables
         expected = ColocAnalysis.extract_multi(
             names=names, distances=distances, in_path=in_path, mode='munc13',
             n_sim=n_sim, random_stats=True, p_values=True,
@@ -110,8 +112,11 @@ class TestColocAnalysis(np_test.TestCase):
         actual = ColocAnalysis.read_table_multi(
             dir_=table_path, mode='munc13', suffix='_join.pkl', verbose=False,
             join_suffix='join', individual_suffix='individual')
+        print("It is fine if warnings starting with 'Warning: Colocalization "
+              + "result tables ' were printed above.") 
 
-        # test 
+        # test
+        np_test.assert_equal(actual._names, ['pre_centroids_post'])
         np_test.assert_equal(
             set(actual.pre_centroids_post_join.columns.to_list()),
             set(expected.pre_centroids_post_join.columns.to_list()))
@@ -291,8 +296,7 @@ class TestColocAnalysis(np_test.TestCase):
             0.83333333, 1., 1.]
         np_test.assert_almost_equal(
             data_syn[cond]['p_subcol_combined'].to_numpy(), expected)
-
-        
+   
     def test_add_random_stats(self):
         """
         Tests add_random_stats
@@ -570,6 +574,28 @@ class TestColocAnalysis(np_test.TestCase):
             actual_831_even.round(12).equals(
                 expected_tomo_831_b[cols].set_index('distance').round(12)),
             True)
+
+    def test_get_n_total(self):
+        """Tests get_n_total()
+        """
+
+        names = ['pre_centroids_post']
+        distances = range(5, 31, 5)
+        n_sim = 3
+        in_path = os.path.join(
+            os.path.dirname(os.path.abspath(__file__)), self.raw_coloc_dir)
+        table_path = os.path.join(
+            os.path.dirname(os.path.abspath(__file__)), self.table_dir)
+        col = ColocAnalysis.extract_multi(
+            names=names, distances=distances, in_path=in_path, mode='munc13',
+            n_sim=n_sim, random_stats=True, p_values=True,
+            save=True, force=True, dir_=table_path, verbose=False,
+            join_suffix='join', individual_suffix='individual')
+        expected = pd.DataFrame(
+            {'N total': [1692, 8073, 2324]}, index=['centroids', 'post', 'pre'])
+        expected.index.name = 'name'
+        actual = col.get_n_total()      
+        assert_frame_equal(actual, expected)
         
     def tearDown(self):
         """
@@ -589,7 +615,8 @@ class TestColocAnalysis(np_test.TestCase):
                 os.remove(path)
             except (FileNotFoundError, OSError):
                 print("Tests fine but could not remove " + str(path))       
-          
+
+                
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestColocAnalysis)
     unittest.TextTestRunner(verbosity=2).run(suite)

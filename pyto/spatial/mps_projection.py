@@ -55,6 +55,40 @@ class MPSProjection:
     def project_multi(self, mps, coord_cols, distance, reverse=False):
         """Projects particles along their normals for different widths.
 
+        Projects original particles (points) on a region and calculates
+        coords of the projected points and their distance to the
+        original particles for all particles and tomos, and for
+        all line widths sepfified in self.line_spreads.
+
+        For each original particle coordinates, the projection point is
+        calculated as follows:
+          - Determine direction of the projection line from relion
+          euler angles (columns self.normal_angle_cols in mps.particles)
+          - Determine projection line from the direction and particle
+          localtion
+          - Determine points on the projection line located at the
+          specified distances (arg distance) from the original point
+          - Find the first point on the projection line that intersects
+          the region (regions are tomo specific). Regions are specified
+          by paths to image files (column mps.region_col of mps.tomos)
+          and ids (column mps.region_col of mps.tomos).        
+ 
+        Projected coords are saved in mps.particles columns:
+          x/y/z_{self.linep_cols_base}_{line_width}
+        and distances in:
+          {self.linep_cols_base}_dist_{line_width}
+
+        The core calculations aredone by LineProjection.project().
+        
+        Arguments:
+          - mps: (MultiparticleSets) object containing particle and
+          tomo info
+          - coord_cols: (iterable, length 3) columns of mps.particles
+          that contains original coordinates
+          - distance: (iterable) distances from the original particles
+          along the projection line at which coordinates are calculated  
+          - reverse: flag indicating if the direction of the projection
+          line should be reversed (default False)
         """
 
         for grid_mode in self.line_spreads:
@@ -148,13 +182,27 @@ class MPSProjection:
         """Finds the best projection line width for each tomo.
     
         Combines normal line and distance based projections (see
-        combine_projections()) for multiple line widths, analyses 
-        them (see analyze_projections()) and finds the optimal line 
-        width. 
+        combine_projections()) for all line widths, analyzes 
+        them (see analyze_projections()) and finds the optimal
+        distance (from line projection or distance projection) for
+        each line width. 
 
-        The optimal line width (grid mode) results in the highest 
-        number of uniqe projections.
-    
+        THis info is added tos columns [x, y, z]_linep_[line_width] 
+        and linep_dist_[line_width] to mps.particles.
+        
+        The optimal line width (aka grid mode) for a tomo is the one
+        that resulted in the highest number of uniqe projections.
+
+        Arguments:
+          - mps: (MultiParticleSets) object containing particle and
+          tomo info
+          - distance_cols: columns of mps.particles that contain
+          projection distances (if None, uses mps.coord_reg_frame_cols,
+          default None)
+
+        Returns (pandas.DataFrame) table that shows the summary info
+        for each like width and the best line width (column
+        'best_spread') for each tomo.
         """
 
         if distance_cols is None:
@@ -197,10 +245,11 @@ class MPSProjection:
             self, mps, distance_cols, line_cols, combine_cols=None):
         """Combines line and distance based projections.
     
-        Takes values from line projections (columns line_cols) and replaces 
-        those where projections could not be made (having value not_found)
-        by minimum distance based projections (columns distance cols).
-        Writes these values in combined columns (name combine_cols). 
+        Takes values from line projections (columns line_cols) and in
+        cases where projections could not be made (having value not_found),
+        replaces them by minimum distance based projections (columns
+        distance cols). Writes these values in combined columns (name
+        combine_cols). 
     
         Adds column combine_cols to self.particles. 
         """
@@ -216,7 +265,14 @@ class MPSProjection:
     def analyze_projections(
             self, mps, distance_cols, line_cols, combine_cols, grid_mode):
         """Analyzes combining distance and line projections.
-    
+
+        Arguments:
+          - mps: (MultiParticleSets) object containing particle and
+          tomo info
+          - line_cols: column names of line projected coordinates
+          - combine_cols: column names of combined distance and line
+          projection coordinates
+          - grid_mode: single proection line width [pixels]
         """
     
         mps_groups = mps.particles.groupby(mps.tomo_id_col)
@@ -232,7 +288,8 @@ class MPSProjection:
             # line projection analysis
             mis = np.logical_and.reduce(
                 particles_one[line_cols] == self.not_found, axis=1).sum()
-            uni = np.unique(particles_one[line_cols].to_numpy(), axis=0).shape[0]
+            uni = np.unique(
+                particles_one[line_cols].to_numpy(), axis=0).shape[0]
             if mis > 0:
                 uni = uni - 1
             n_unique.append(uni)
@@ -244,7 +301,8 @@ class MPSProjection:
             n_unique_after.append(uni_after)
         
         # put in dataframe
-        n_same = np.asarray(n_total) - np.asarray(n_missed) - np.asarray(n_unique)
+        n_same = (np.asarray(n_total) - np.asarray(n_missed)
+                  - np.asarray(n_unique))
         n_same_after = np.asarray(n_total) - np.asarray(n_unique_after)
         res = pd.DataFrame(
             {mps.tomo_id_col: tomo_ids, self.total_col: n_total, 
@@ -259,7 +317,9 @@ class MPSProjection:
     def select_projections(self, mps, analysis):
         """Select projections from the best grids mode for each tomo.
     
-        
+         Returns (pandas.DataFrame) table that shows the summary info
+        for each like width and the best line width (column
+        'best_spread') for each tomo.       
         """
     
         # find best grid mode

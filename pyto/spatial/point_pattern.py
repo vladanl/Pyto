@@ -1,29 +1,41 @@
 """
 Functions to make random point patterns.
 
-Currently, the most important usage of this module is to generate a 
-(int coordinate) random point pattern on an arbitrary region with 
-imposing a minimal (exclusion) distance between points:
+Reandom point patterns are specified as int type coordinates on specified
+regions. Regions can be rectangular or arbitrary, defined as an array
+(image) or a list of region coordinates.
+
+The main functionality of this module are the following:
+
+1) Generate random patterns with or without imposing a minimal (exclusion)
+distance between points
 
   random_region(N=N_points, region=region_image, region_id=region_label_id,
                 exclusion=exclusion_distance)
 
-Instead by a region image, a region can be specified by an array of 
-(int) coordinates that comprise the region:
+  Instead of specifying an image, a region can be specified by
+  an array of (int) coordinates that comprise the region:
 
   random_region(N=N_points, region_coords=region_coordinates,
                 exclusion=exclusion_distance)
 
-The central function of this module is:
-   pattern_exclusion()
-which calls a no exclusion pattern generating function as many times as
-needed to generate the specified number of points while imposing exclusion.  
+  To make another point pattern with exclusion:
+    - define a function that generates the desired point pattern without 
+    exclusion
+    - define a function that passes the above function to pattern_exclusion(),
+    which performs exclusion on the pattern produced by the above function
+  Function pattern_exclusion() calls a no exclusion pattern generating
+  function as many times as needed to generate the specified number
+  of points while imposing exclusion.  
 
-To make another point pattern with exclusion, the simplest way is to:
-  - define a function that generates the desired point pattern without 
-  exclusion
-  - define a function that passes the above function to pattern_exclusion(),
-  which performs exclusion on the patter produced by the above function
+2) Generate patterns that partially cluster around (interact with)
+specified cluster centers
+
+  cocluster_region(clusters=cluster_centers, N=N_points, p_cluster, max_dist)
+
+3) Project a pattern on a region specified as an image or by coordinates:
+
+  project(points=point_pattern, region)
 
 # Author: Vladan Lucic 
 # $Id$
@@ -32,6 +44,7 @@ To make another point pattern with exclusion, the simplest way is to:
 __version__ = "$Revision$"
 
 from functools import partial
+import itertools
 
 import numpy as np
 from numpy.random import default_rng
@@ -48,10 +61,14 @@ except ModuleNotFoundError:
 import pyto
 
 
+#
+# Random patterns
+#
+
 def random_rectangle(
         N, rectangle, exclusion=None, metric='euclidean', other=None,
         mode='fine', seed=None, rng=None, max_iter=100, n_factor=2):
-    """Makes a int coordinate random pattern in a n_dim rectangle with exclusion. 
+    """Makes random pattern in n_dim rectangle with exclusion. 
     
     If arg N is a single number, uses random_rectangle_fun() to generate 
     random points on a specified rectangle and pattern_exclusion() to 
@@ -145,12 +162,13 @@ def random_region(
         N, region=None, region_id=None, region_coords=None, exclusion=None,
         metric='euclidean', other=None, mode='fine', shuffle=True,
         seed=None, rng=None, max_iter=100, n_factor=2):
-    """Makes an int coordinate random points pattern on a region with exclusion.
+    """Makes an random point pattern on an arbitrary region with exclusion.
 
     The region can be specified by a label image (args region and region_id),
     or by coordinates of all points of the region (arg region_coords). In the
-    former case, labeled points are converted to coordinates. Random points are 
-    determined by generating 1d random point set on the index of the coordinates. 
+    former case, labeled points are converted to coordinates. Random points 
+    are determined by generating 1d random point set on the index of the
+    coordinates. 
 
     I arg other is given, the generated points cannot be closer than
     arg exclusion to the points specified by arg other.
@@ -159,6 +177,12 @@ def random_region(
     methods generate the specified number of particles having  a correct
     exclusion. For details, see pattern_exclusion() doc.
 
+    Regarding reproducibility:
+      - If shuffle is False and both args rng and seed are None, the
+      result changes
+      - If seed or rng is given, the result is determined by seed,
+      rng and shuffle 
+    
     Arguments:
       - N: number of points to be generated
       - region: (ndarray or pyto.core.Image) label image
@@ -171,6 +195,8 @@ def random_region(
       points, the generated points cannot be closer than (arg) exclusion to 
       the additiona points
       - mode: method to calculate exclusion, 'rough' or 'fine'
+      - shuffle: used only to determine if region coordinates from (arg)
+      region are shuffled (default True) 
       - rng: random number generator, if None a new one is created
       - seed: random number generator seed used in case a new random
       number generator is created here
@@ -208,7 +234,7 @@ def random_region(
     region_coords = get_region_coords(
         region=region, region_id=region_id, region_coords=region_coords,
         shuffle=shuffle, seed=seed, rng=rng)
-    
+   
     # use random by region coordinates
     #n_coords = region_coords.shape[0]
     fun_partial = partial(random_region_fun, coords=region_coords)
@@ -281,7 +307,13 @@ def pattern_exclusion(
     while the fine method does precise exclsion (which takes longer time)
     but overall generates a lower number of particles. Importantly, both 
     methods generate random points that obey the exclusion.
- 
+
+    Regarding reproducibility:
+      - If both args rng and seed are None, the result changes
+      - If rng is not None, the result is determined by the state of rng
+      - If rng is None and seed is not None, the result is predictable,
+      determined by seed
+    
     Arguments:
       - pattern_fun: function that generates a point pattern 
       (takes n_factor*N points and random number generator as arguments)
@@ -292,9 +324,9 @@ def pattern_exclusion(
       the additiona points
       - metric: distance calculation metric
       - mode: method to calculate exclusion, 'rough' or 'fine'
-      - rng: random number generator, if None a new one is created
+      - rng: random number generator, if None (default) a new one is created 
       - seed: random number generator seed used in case a new random
-      number generator is created here
+      number generator is created here (default None)
       - max_iter: max number of iterations, where each iteration comprises
       generating eand excluding points
       - n_factor: (int >= 1) in each iteration n_factor * N new points
@@ -434,16 +466,26 @@ def exclude(points, exclusion, other=None, metric='euclidean', mode='fine'):
     
     return clean
 
+#
+# Interacting patterns
+#
+
 def cocluster_region(
-        clusters, N, p_cluster, region=None, region_id=None,
+        clusters, N, p_cluster=1, mode=None, region=None, region_id=None,
         region_coords=None, max_dist=None, exclusion=None,
         metric='euclidean', shuffle=True, seed=None, rng=None):
     """Generates point patterns that cluster around specified cluster centers.
 
-    First randomly selects points (of arg N total points) that are to 
-    be coclustered (with probability arg p_cluster) and then 
-    randomly (with equal probability) assigns the selected points to one 
-    of the clusters.
+    If mode is '1o1', (arg) N points are randomly assigned to (arg)
+    clusters, one particle per cluster at most. In this case N cannot
+    be larger than the number of clusters and (arg) p_cluster is
+    ignored.
+
+    If mode is None or 'many_to1', each of the N points is randomly
+    assigned to one of the clusters with probability (arg) p_cluster.
+    In this way, more than one point can be assigned to a cluster and
+    the total number of the clustered point is stochastic with
+    expectation value N_total_points x p_cluster.
 
     Points assigned to clusters are randomly placed within the neighborhood 
     of the corresponding cluster centers (arg clusters). The neighborhood
@@ -452,14 +494,16 @@ def cocluster_region(
     (see random_hoods()).
 
     Points not assigned to clusters are randomly distributed on the 
-    whole region.
+    entire (arg) region.
 
     Points in the resulting pattern are distributed so that the minimal
-    distance between then is (arg) exclusion.
+    distance between them is (arg) exclusion.
 
     Arguments:
       - clusters: (ndarray, n_clusters x n_dim) cluster center coordinates
       - N: total number of points
+      - mode: defines how are points assigned to clusters, 'many_to1' (same
+      as None, default) or 'max1'
       - p_cluster: probability that a point belongs to any cluster 
       - region: (ndarray or pyto.core.Image) label image
       - region_id: id of the region in the label image (region)
@@ -469,27 +513,44 @@ def cocluster_region(
       (pixels)
       - exclusion: exclusion distance in pixels
       - metric: distance calculation metric
-      - mode: method to calculate exclusion, 'rough' or 'fine'
-      - rng: random number generator, if None a new one is created
+      - shuffle: flag indicating whether locaition of points assigned
+      to clusters and those that are not assigned are randomly
+      distributed within the neighborhood and the entire region,
+      respectfully (default=True, strongly recommended)
+      - rng: random number generator, if None a new one is created, used
+      only if shuffle=True (default None)
       - seed: random number generator seed used in case a new random
-      number generator is created here
-      - max_iter: max number of iterations, where each iteration comprises
-      generating eand excluding points
-      - n_factor: (int >= 1) in each iteration n_factor * N new points
-      are generated before exclusion
+      number generator is created here, used only if shuffle=True
+      (default None)
     
-    Return: (ndarray n_points x n_dim) coordinates of points  
+    Return: (ndarray n_points x n_dim) coordinates of points, where the
+    points at the beginning are clustered (expected number is N * p_cluster,
+    but the actual number is stochastic) and the remaining points are
+    not clustered.
     """
 
     # figure out the number of points to be generated for each cluster
     clusters = np.asarray(clusters)
     n_clusters, n_dim = clusters.shape
-    n_points_in_cluster = get_n_points_cluster(
-        n_clusters=n_clusters, n_points=N, p_cluster=p_cluster, seed=seed,
-        rng=rng)
+    if (mode is None) or (mode == 'many_to1'):
+        n_points_in_cluster = get_n_points_cluster(
+            n_clusters=n_clusters, n_points=N, p_cluster=p_cluster, seed=seed,
+            rng=rng)
+    elif (mode == 'max1'):
+        n_points_in_cluster = np.zeros(n_clusters, dtype=int)
+        n_points = np.round(N * p_cluster).astype(int).tolist()
+        if n_points > n_clusters:
+            raise ValueError(
+                f"In mode 'max1',  the number of points to cluster {n_points} "
+                + f"cannot be larger than the number of clusters {n_clusters}") 
+        n_points_in_cluster[:n_points] = 1
+        if rng is None:
+            rng = default_rng(seed=seed)
+            rng.shuffle(n_points_in_cluster)
+        
     n_clustered_points = n_points_in_cluster.sum()
     n_random_points = N - n_clustered_points
-
+    
     # get region coords
     region_coords = get_region_coords(
         region=region, region_id=region_id, region_coords=region_coords, 
@@ -497,6 +558,8 @@ def cocluster_region(
 
     # distance based neighborhoods
     if max_dist is not None:
+        # shuffle=True to make deterministic results (although shuffle
+        # used above)
         hood_points = random_hoods(
             clusters=clusters, n_points=n_points_in_cluster,
             region_coords=region_coords, max_dist=max_dist,
@@ -504,7 +567,8 @@ def cocluster_region(
             seed=seed, rng=rng)
         other_points = random_region(
             N=n_random_points, region_coords=region_coords, exclusion=exclusion,
-            other=hood_points, metric=metric, seed=seed, rng=rng)
+            other=hood_points, metric=metric, shuffle=False,
+            seed=seed, rng=rng)
         try:
             points = np.concatenate([hood_points, other_points], axis=0)
         except ValueError:
@@ -528,7 +592,7 @@ def random_hoods(
     """Makes random int point pattern in multiple circular neighborhoods.
 
     Randomly assigns the specified number of points (arg n_points) 
-    to each of the the cluster neighborhoods. Cluster centers are
+    to neighborhoods of cluster centers. Cluster centers are
     specified by arg clusters and the neighborhoods are defined as all
     points of the specified region (arg region_coords) that are located
     up to the specified distance (arg max_dist) to the cluster centers.
@@ -536,6 +600,9 @@ def random_hoods(
     Points in the resulting pattern are distributed so that the minimal
     distance between then is (arg) exclusion.
 
+    If arg shuffle is True, points in neighborhoods are shuffled so
+    that the assigned points are random (recommended).
+    
     Arguments:
       - clusters: (ndarray, n_clusters x n_dim) cluster center coordinates
       - n_points: (1d array of length n_clusters) number of points in 
@@ -547,6 +614,8 @@ def random_hoods(
       - exclusion: exclusion distance in pixels
       - metric: distance calculation metric
       - mode: method to calculate exclusion, 'rough' or 'fine'
+      - shuffle: flag indicating whether neighborhood points are shuffled
+      (default True, recommended)
       - rng: random number generator, if None a new one is created
       - seed: random number generator seed used in case a new random
       number generator is created here
@@ -594,7 +663,7 @@ def get_n_points_cluster(n_clusters, n_points, p_cluster, seed=None, rng=None):
     under the constraints:
       - total number of points is (arg) n_points
       - each point has a probability of (arg) p_cluster to belong to
-    any of the clusters
+    one of the clusters
       - clusters have the same probability
 
     Consequently the total number of points assigned to clusters will
@@ -633,21 +702,143 @@ def get_n_points_cluster(n_clusters, n_points, p_cluster, seed=None, rng=None):
 
     return n_points_cluster
 
+def colocalize_pattern(
+        fixed_pattern, n_colocalize, mode=None,
+        fixed_fraction=1, colocalize_fraction=1,
+        region=None, region_id=1, region_coords=None, max_dist=0,
+        shuffle_fixed=True, shuffle_region=True, rng=None, seed=None):
+    """Makes a point pattern that colocalizes (interact with) a given pattern.
+
+    Generates a colocalized point pattern so that a fraction of the
+    colocalized points colocalizes with a fraction of the fixed points
+    and where all colocalized points are located on the specified region.
+    Procedure:
+      - Selects the specified fraction of the fixed pattern points
+      - Further select points located in the specified region
+      - Places the specified fraction of colocalization points (arg
+      colocalize_fraction) within neighborhoods of the selected fixed
+      pattern points, depending on the arg mode (see below)
+      - Places the remaining colocalization points randomly on the
+      specified region
+
+    If mode is 'max1', at most one point is colocalized with each
+    selected fixed pattern point.
+
+    If mode is 'kd', colocalized fraction is calculated from the
+    equilibrium condition as:
+      fixed_fraction * fixed_pattern.shape[0] / n_colocalize
+    and arg fixed_fraction is ignored. The colocalized fraction should
+    not be >1.
+
+    If mode is None, or 'many_to1', multiple points can be colocalized
+    with any of the selected fixed points. The actual number of
+    colocalized points is stochastic with expectation
+    n_colocalize * colocalize_fraction.
+    
+    If arg shuffle_fixed is True, the selection of fixed points is random.
+    If it is False, the first fixed_fraction * n_fixed_pattern_points
+    are selected. This is useful when the same subset of fixed points has
+    to colocalize with multiple colocalization point sets. In this case,
+    one needs to ensure that the specified fixed_pattern ponts are randomly
+    distributed by a previous reshuffling.
+    
+    Similar to cocluster_region(), but differs from it as follows:
+      - Colocalized points have to be located within the region
+      - Only a fraction of fixed pattern is used for colocalization
+    
+    Arguments:
+      - fixed_pattern: (ndarray n_points x n_dim) fixed point pattern
+      - n_colocalize: number of colocalized points to generate
+      - mode: defines how are points colocalized with the fixed pattern,
+      'many_to1' (same as None, default), 'max1' or 'kd'
+      - fixed_fraction: fraction of the fixed points used for
+      colocalization (default 1)
+      - colocalized_fraction: fraction of the colocalized points that are
+      colocalizized (default 1)
+      - region: (ndarray or pyto.core.Image) label image (default None)
+      - region_id: id of the region in the label image (region) (default 1)
+      - region_coords: (ndarray, n_region_coords x n_dim) coordinates of all 
+      points of a region, used if args region and region_id are not specified
+      (default None)
+      - max_dist: distance (in pixels) that defines colocalization
+      (interaction) neighborhoods (default 0)
+      - shuffle_fixed: flag indicating if fixed_pattern points are
+      randomly shuffled before a fraction of them is selected (default
+      True)
+      - shuffle_region: flag indicating if region coordinates are 
+      randomly shuffled, to ensure random placement within neighborhoods
+      and on the region (default True, strongly recommended)
+      - rng: random number generator for shuffling, if None a new one
+      is created
+      - seed: random number generator seed for shuffling, used in case
+      a new random number generator is created here
+
+    Return: (ndarray n_colocalize x n_dim) colocalized points, where the
+    points at the beginning are colocalized (expected number is
+    n_colocalize * colocalized_fraction, but the actual number is
+    stochastic) and the remaining points are not colocalized.
+    """
+
+    # select points from fixed pattern
+    fixed = select_by_region(
+        pattern=fixed_pattern, region=region, region_id=region_id,
+        region_coords=region_coords, fraction=fixed_fraction,
+        shuffle=shuffle_fixed, seed=seed, rng=rng)
+
+    # setup kd mode
+    if mode == 'kd':
+        n_fixed = fixed_pattern.shape[0]
+        colocalize_fraction = fixed_fraction * n_fixed / n_colocalize
+        if colocalize_fraction > 1:
+            raise ValueError(
+                f"Calculated colocalization fraction {colocalize_fraction} "
+                + f"in 'kd' mode should not be >1. Please adjust arguments "
+                + f"fixed_pattern, n_colocalize and fixed_fraction so that "
+                + f"fixed_pattern.shape[0] * n_fixed / n_colocalize < 1.")
+        mode = 'max1'
+    
+    # generate coclustered
+    coclust = cocluster_region(
+        clusters=fixed, N=n_colocalize, mode=mode,
+        p_cluster=colocalize_fraction,
+        region=region, region_id=region_id, region_coords=region_coords,
+        max_dist=max_dist, exclusion=None,
+        metric='euclidean', shuffle=shuffle_region, seed=seed, rng=rng)
+
+    return coclust
+
+
+#
+# Common
+#
+
 def get_region_coords(
         region=None, region_id=None, region_coords=None, shuffle=True,
         seed=None, rng=None):
     """Extract coordinates of a region.
 
+    If args region and region_id are specified, all points of image
+    (arg) region that have value (arg) region_id are selected and their
+    coordinates are extracted. If arg shuffle is True, the selected
+    points are randomly shuffled. If arg region_coords is given and
+    shuffle is True, region_coords are shuffled, which also changes
+    the value of arg region_coords. 
+
+    Alternatively, if args region and region_id are None, coordinates
+    specified by (arg) region_coords are used. In this case they are
+    only shuffled.
+    
     Arguments:
       - region: (ndarray or pyto.core.Image) label image
       - region_id: id of the region in the label image (region)
       - region_coords: (ndarray, n_region_coords x n_dim) coordinates of all 
       points of a region, used if args region and region_id are not specified
       - shuffle: flag indicating if extracted coordinates should be randomly
-      shuffled
-      - rng: random number generator, if None a new one is created
-      - seed: random number generator seed used in case a new random
-      number generator is created here
+      shuffled (default True)
+      - rng: random number generator for shuffling, if None a new one
+      is created
+      - seed: random number generator seed for shuffling, used in case
+      a new random number generator is created here
  
     Returns: (n_points x n_dim int ndarray) all coordinates of the region. 
     """
@@ -670,11 +861,97 @@ def get_region_coords(
 
     # shuffle region coords
     if shuffle:
+        region_coords = region_coords.copy()
         if rng is None:
             rng = default_rng(seed=seed)
         rng.shuffle(region_coords)
 
     return region_coords
+
+def select_by_region(
+        pattern, region=None, region_id=None, region_coords=None, 
+        fraction=1, shuffle=True, #shuffle_region=True,
+        seed=None, rng=None):
+    """Selects a fraction of a pattern on a region.
+
+    The selection proceeds as follows:
+      - Select (arg) fraction of (arg) pattern points, where
+      np.round(fraction * n_points) are selected.
+      - Further select those that belong to the region (specified by
+      args region and region_id, or by region_coords).
+
+    If shuffle is True (default), the pattern points are first shuffled and 
+    then they are selected from the beginning. This ensures that the selected
+    points are not biased by their order in pattern.
+    
+    If suffle is False, pattern points are selected (by fraction) from
+    the beginning, in the order of pattern_region. This ensures that
+    given the same fraction, the same points are selected. Depending on
+    the usage, it may be important to make sure pattern contains points
+    in a random order.
+
+    If both args region and region_coords are None, selection by region
+    is omitted.
+    
+    Arguments:
+      - pattern: (ndarray n_points x n_dim) point pattern
+      - region: (ndarray or pyto.core.Image) label image
+      - region_id: id of the region in the label image (region)
+      - region_coords: (ndarray, n_region_coords x n_dim) coordinates of all 
+      points of a region, used if args region and region_id are not specified
+      - fraction: fraction of the point pattern that is selected (default 1)
+      - shuffle: flag indicating if the pattern coordinates are
+      randomly shuffled before the selection (recommended unless the order
+      of selected points has to be preseved, default True)
+      - rng: random number generator for shuffling, if None a new one
+      is created
+      - seed: random number generator seed for shuffling, used in case
+      a new random number generator is created here
+
+    Return: (ndarray n_points x n_dim) selected points
+    """
+
+    # figure out region points
+    if region_coords is None:
+        if region is not None:
+            region_coords = get_region_coords(
+                region=region, region_id=region_id, shuffle=False,
+                seed=seed, rng=rng)
+
+    # select fraction
+    if shuffle:
+        pattern = pattern.copy()
+        if rng is None:
+            rng = default_rng(seed=seed)
+        rng.shuffle(pattern)
+    split_ind = int(np.round(pattern.shape[0] * fraction))
+    selected, _ = np.split(pattern, [split_ind], axis=0)
+
+    # select those in region
+    if region_coords is not None:
+        selected = np.asarray(
+            [po for po in selected
+             if np.array([(po == reg).all() for reg in region_coords]).any()])
+    
+    return selected
+
+def get_rectangle_coords(rectangle):
+    """Returns all coordinates of a rectangle.
+
+    Argument:
+      - rectangle: rectangle defined as
+      [[x_min, y_min, ...], [x_max, y_max, ...]
+
+    Returns ndarray (n_points x n_dim) coordinates of the rectangle points 
+    """
+    result = np.asarray(list(
+        itertools.product(
+            *[list(range(low, high)) for low, high in zip(*rectangle)])))
+    return result
+
+#
+# Projected
+#
 
 def project(
         points, region_coords=None, region=None, region_id=None,
@@ -688,7 +965,7 @@ def project(
       - project_mode='closest': Points are projected to their closest
       region points
       - project_mode='line': Points are projected along a specified line
-      and the projection points are obtained as the line - region
+      and the projected points are obtained at the line - region
       intersection point that is the closest to the points.
 
     See the docs in pyto.spatial.LineProjection, including project()

@@ -78,7 +78,7 @@ import platform
 import time
 import logging
 
-import numpy
+import numpy as np
 import pyto
 import pyto.scripts.common as common
 
@@ -445,7 +445,7 @@ def read_multi_boundaries(suggest_shape=None):
             arrayOrder=labels_array_order, shape=shape)
 
         bound.add(new=curr_bound, shift=curr_shift, dtype='int16')
-        shifted_vesicle_ids.append(numpy.array(v_ids) + curr_shift)
+        shifted_vesicle_ids.append(np.array(v_ids) + curr_shift)
         if shift is None:
             curr_shift = None
         else:
@@ -693,6 +693,30 @@ def write_res(ves, dist, mem, lum, file_name, ids=None, multi_ves_ids=None):
     # flush
     file_name.flush()
 
+def check_ids(ids):
+    """Prints warnings if ids present in labels_file differ from those in ids.
+
+    Argument:
+      - ids: ids
+
+    Returns ids that aboth in labels_file and all_ids
+    """
+
+    seg = pyto.segmentation.Segment.read(file=labels_file_name, clean=False)
+    not_present_ids = np.setdiff1d(ids, seg.ids)
+    if len(not_present_ids > 0):
+        logging.warning(
+            f"The following ids are in ids but are not present in the"
+            + f" label_file {not_present_ids}. They will be ignored.")
+    not_listed_ids = np.setdiff1d(seg.ids, ids)
+    if len(not_listed_ids > 0):
+        logging.warning(
+            f"The following ids are present in the label file but not "
+            + f"in ids {not_listed_ids}")
+    common_ids = np.intersect1d(seg.ids, ids)
+
+    return common_ids
+
 
 ################################################################
 #
@@ -705,10 +729,17 @@ def main():
     Main function
     """
 
+    global all_ids, region_ids, vesicle_ids
+
     # log machine name and architecture
     mach_name, mach_arch = machine_info()
     logging.info('Machine: ' + mach_name + ' ' + mach_arch)
     logging.info('Begin (script ' + __version__ + ')')
+
+    # check if all labels file segments in all_ids and adjust global ids
+    if not common.is_multi_file(labels_file_name):
+        all_ids = check_ids(ids=all_ids)
+        vesicle_ids = np.intersect1d(all_ids, vesicle_ids)
 
     # read image and vesicles
     image = common.read_image(file_name=image_file_name)
@@ -719,6 +750,7 @@ def main():
 
     # analyze vesicles
     logging.info('Starting vesicle analysis')
+    np.seterr(divide='ignore')  # avoid ndimage.standard_deviation() warning
     vesicles = analyze_vesicles(image=image, ves=vesicles, 
                                 ves_ids=flat_vesicle_ids)
 
@@ -737,7 +769,7 @@ def main():
         vesicles.distanceId = distance_id
     else:
         dist = []
-        #dist = numpy.zeros(vesicles.ids.max()+1) - 1
+        #dist = np.zeros(vesicles.ids.max()+1) - 1
 
     # make and analyze membranes and lumens
     logging.info('Starting membrane and lumen analysis')
@@ -748,7 +780,7 @@ def main():
     vesicles.mor.center += [sl.start for sl in vesicles.inset]
 
     # add attributes and pickle vesicles 
-    vesicles.vesicleIds = numpy.asarray(flat_vesicle_ids)
+    vesicles.vesicleIds = np.asarray(flat_vesicle_ids)
     write_pickle(segment=vesicles, name='vesicles')
 
     # write results

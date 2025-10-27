@@ -134,7 +134,7 @@ class MPSConversion(abc.ABC):
             
         # read particle star file
         particles_star_df = pd.DataFrame(get_array_data(
-            starfile=particle_star, tablename='data', types=str))
+            starfile=particle_star, tablename=self.tablename, types=str))
 
         # read all particle star files
         particles = pd.DataFrame()
@@ -652,6 +652,8 @@ class MPSConversion(abc.ABC):
           - region offset: offset of region images relative to the initial
           tomo frame, specified as explained in set_region_offset() doc.
           - region_id: region id in region images
+          - do_origin: flag indicating if coordinates are adjusted for
+          origin shifts (rlnOriginX/Y/Z and rlnOriginX/Y/ZAngst)
           - convert: flag indicating whether coordinates are converted
           to regions frame
           - project: flag indicating whether coordinates are projected
@@ -694,7 +696,8 @@ class MPSConversion(abc.ABC):
             # get tomo ids from particle star (read for real later)
             if tomo_ids is None:
                 particles_tmp = pd.DataFrame(get_array_data(
-                    starfile=particle_star, tablename='data', types=str))
+                    starfile=particle_star, tablename=self.tablename,
+                    types=str))
                 particles_tmp[self.tomo_id_col] = (
                     particles_tmp[self.micrograph_label]
                     .map(
@@ -876,6 +879,10 @@ class MPSConversion(abc.ABC):
 
         # ToDo: Save original table headings
         
+        # remove pixel_nm column because pixel not specified in particle star
+        if self.pixel_nm_col in particles.columns:
+            particles.drop(columns=self.pixel_nm_col, inplace=True)
+
         # set pixel size
         particles = pd.merge(
             particles, tomos[[self.tomo_id_col, self.pixel_nm_col]], 

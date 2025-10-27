@@ -97,10 +97,10 @@ class TestExperiment(np_test.TestCase):
         np_test.assert_equal(corr.xData, np.array([]))
         np_test.assert_equal(corr.yData, np.array([]))
         np_test.assert_equal(corr.n, 0)
-        np_test.assert_equal(corr.testValue, np.NaN)
-        np_test.assert_equal(corr.confidence, np.NaN)
-        np_test.assert_equal(corr.aRegress, np.NaN)
-        np_test.assert_equal(corr.bRegress, np.NaN)
+        np_test.assert_equal(corr.testValue, np.nan)
+        np_test.assert_equal(corr.confidence, np.nan)
+        np_test.assert_equal(corr.aRegress, np.nan)
+        np_test.assert_equal(corr.bRegress, np.nan)
         
     def test_choose(self):
         """

@@ -172,7 +172,7 @@ class LineProjection:
           line should be reversed
           - grid_mode: 'nearest' or 'unit', determines conversion from 
           line points (floats) to the Cartesian grid (ints)
-          - intersection_mode: 'first', 'all', determines whether the first
+          - intersect_mode: 'first', 'all', determines whether the first
           or all intersetion points are returned
           - not_found: returned coordinates when in the intersection mode 
           'first' a projection is not found 

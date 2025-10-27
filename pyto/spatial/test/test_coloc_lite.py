@@ -48,6 +48,9 @@ class TestColocLite(np_test.TestCase):
         particles.set_coords(tomo='alpha', set_name='set1', value=np.array([]))
         particles.set_coords(
             tomo='alpha', set_name='set2', value=np.arange(4).reshape(2, 2))
+        particles.set_index(tomo='alpha', set_name='set0', value=[2, 3, 4])
+        particles.set_index(tomo='alpha', set_name='set1', value=[])
+        particles.set_index(tomo='alpha', set_name='set2', value=[20, 21])
         cl = ColocLite()
         actual = cl.make_coord_tabs(
             bare=bare, particles=particles, set_names=['set0', 'set1', 'set2'],

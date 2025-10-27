@@ -174,7 +174,8 @@ class Grey(Image):
             else:
                 values = values_data
             labels, bin_ids = cls.labelByBins(values, [bins])
-            bin_ids = dict([(key, value[0]) for key, value in list(bin_ids.items())])
+            bin_ids = dict(
+                [(key, value[0]) for key, value in list(bin_ids.items())])
             return labels, bin_ids
 
         # make explicit bins and max values for each binning

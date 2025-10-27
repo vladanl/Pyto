@@ -903,7 +903,7 @@ class Groups(dict):
         in an experiment in case arg mode is 'mean' and the data is
         indexed. If True, experiment that has no data is ignored, and the
         identifier of this experiment is not added to idNames. If False,
-        np.NaN is added instead of the mean.
+        np.nan is added instead of the mean.
 
         Arguments:
           - name: name of the data attribute
@@ -1029,7 +1029,7 @@ class Groups(dict):
                             if (value is not None) and (len(value) > 0):
                                 data.append(np.mean(value))
                             elif not removeEmpty:
-                                data.append(np.NaN)
+                                data.append(np.nan)
                         elif mode == 'mean_bin':
                             if (value is not None) and (len(value) > 0):
                                 hist, foo = np.histogram(value, bins)
@@ -1040,7 +1040,7 @@ class Groups(dict):
                                 #    histogram = hist
                                 data.append(frac_value)
                             elif not removeEmpty:
-                                data.append(np.NaN)
+                                data.append(np.nan)
 
                     else:
 
@@ -1117,7 +1117,7 @@ class Groups(dict):
         in an experiment in case arg mode is 'mean' and the data is
         indexed. If True, experiment that has no data is ignored, and the
         identifier of this experiment is not added to idNames. If False,
-        np.NaN is added instead of the mean.
+        np.nan is added instead of the mean.
 
         Arguments:
           - list: list of Groups objects

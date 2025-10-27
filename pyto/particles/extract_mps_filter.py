@@ -98,10 +98,14 @@ class ExtractMPSFilter(abc.ABC):
         where membranes are selectively filtered.
 
         If arg name_regions is not None, it us used to determine the 
-        region image paths. Otherwise, it is read from column 
-        self.region_particle_col of particles table. 
+        region image paths. Otherwise, it is read from initial particles
+        (MultiParticlesSet) object, particles table, column 
+        self.region_particle_col. In the standard use, when the initial
+        object contains the correct region paths, arg name_regions
+        can be left at None. Otherwise, should be set to the name of
+        the regions particles. 
 
-        Args regio_other and region_ids determined which part of 
+        Args region_other and region_ids determined which part of 
         the initial particle images is replaced by which "other"
         particle sets. For example, given:
           region_other = {

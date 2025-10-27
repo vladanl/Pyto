@@ -41,6 +41,9 @@ class ColocOne(ColocCore):
         Sets attributes
 
         Arguments:
+          - full_coloc: if True (default), when 3-colocalization is
+          calculated, also the 2-colocalizations between the first pattern
+          and each of the other patterns is also calculated  
           - columns: Flag 
         """
 
