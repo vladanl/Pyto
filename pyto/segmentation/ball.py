@@ -60,7 +60,8 @@ class Ball(Segment):
         self.data).
 
         First calculates centers and radii of the discs using extractDiscs
-        method. Then uses make method to generate balls and cuts them if needed
+        method, where center of mass is used as disc center. Then uses
+        make method to generate balls and cuts them if needed
         (see extractDiscs and make for details). Finally, the balls are put in
         the self.data array. Elements that belong to discs, but do not belong
         to any of the balls are set to external (expected to be the id of the
@@ -126,9 +127,10 @@ class Ball(Segment):
         and that all disks have their principal axis along one of the
         coordinate axes.
         
-        A center is calculated from a whole disk. A disk radius is calculated as
-        the mean distance between the center and points that lay on the
-        boundary of the corresponding ndim-1 dimensional disk. A ndim-1 disk is
+        A disc center is calculated as a center of mass of the whole disk.
+        A disk radius is calculated as the mean distance between
+        the center and points that lay on the boundary of the
+        corresponding ndim-1 dimensional disk. A ndim-1 disk is
         obtained from a ndim disk by keeping only a slice along axis that
         contains the disk center.
 

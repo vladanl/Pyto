@@ -20,7 +20,6 @@ import numpy as np
 import scipy as sp
 import pandas as pd 
 import matplotlib.pyplot as plt
-from IPython.core.display import HTML
 
 import torch
 from torch.utils.data import DataLoader

@@ -1035,8 +1035,8 @@ class TestGroups(np_test.TestCase):
                              set(['vector', 'ids', 'idNames']))
         np_test.assert_equal(set(obs.identifiers),
                              set(['ga', 'gb', 'gc', 'gd']))
-        np_test.assert_equal(obs.getValue('ga', 'vector'), [2, 3.5, np.NaN])
-        np_test.assert_equal(obs.getValue('gb', 'vector'), [2, np.NaN, 2.5])
+        np_test.assert_equal(obs.getValue('ga', 'vector'), [2, 3.5, np.nan])
+        np_test.assert_equal(obs.getValue('gb', 'vector'), [2, np.nan, 2.5])
         np_test.assert_equal(obs.getValue('gc', 'vector'), [])
         np_test.assert_equal(obs.getValue('gd', 'vector'), [4])
         np_test.assert_equal(obs.getValue('ga', 'ids'), np.array([1,2, 3]))
@@ -1102,7 +1102,7 @@ class TestGroups(np_test.TestCase):
             obs.getValue(identifier='ga', name='frac'), [1/5., 2/3., 0.])
         np_test.assert_equal(
             obs.getValue(identifier='gb', name='frac'),
-            [1/5., 0., 0, np.NaN])
+            [1/5., 0., 0, np.nan])
         np_test.assert_equal(
             obs.getValue('ga', 'idNames'), ['ia1','ia2', 'ia3'])
         np_test.assert_equal(
@@ -2546,9 +2546,9 @@ class TestGroups(np_test.TestCase):
                 desired[1])
         for ident in ['gc', 'gd']:
             np_test.assert_equal(
-                corr.getValue(identifier=ident, property='aRegress'), np.NaN)
+                corr.getValue(identifier=ident, property='aRegress'), np.nan)
             np_test.assert_equal(
-                corr.getValue(identifier=ident, property='bRegress'), np.NaN)
+                corr.getValue(identifier=ident, property='bRegress'), np.nan)
 
         # mode 'mean'
         gs = self.makeInstance()

@@ -18,6 +18,33 @@ import pyto
 def coloc_random(
         distance, N, A, A_over, ndim=2, grid=False, d_factor=1,
         hood_area_factor=1, over_factor=0):
+    """Calculates number of random 2-, 3-, or higher colocalizations.
+ 
+    Takes into account border effects, but nor exclusion distance 
+    between points.
+
+    Arguments:
+      - distance: (single number or a list (ndarray) of numbers) 
+      colocalization distance (in pixels)
+      - N: (list or nparray of length n_sets) Number of points in each set
+      - A: (list or nparray of length n_sets) Area where the points area
+      distributed for each set
+      - A_over: (list or nparray of length n_sets) Overlaps between the 
+      above areas, where A_over[0] is the complete overlap (A{0] and A[1]
+      and ...) and A_over[i] is th overlap between A[0] and A[i]. If 
+      n_sets is 2, it can be specified as a single number
+      - n_dim: (ksi in the manuscript) effective dimensionality for
+      border correction (for 2d area, it is 2 without border correction,
+      and bit smaller than 2 with the correction)
+      - over_factor: (alpha in the manuscript) corrects overlap, 0 without
+      correction (default), small positive with correction
+      - d_factor: (experimental) multiplicative distance factor
+      - hood_area_factor: (experimental) multiplicative neighborhood
+      area factor
+      - grid (experimental): calculate area on the grid
+
+    Returns number of colocalizations, in the same format as arg distance 
+    """
 
     # figure out distance
     d_single = False
@@ -191,12 +218,13 @@ def grid_area_multi_circles(radii, centers, spacing=1, border=False):
     while radii are determined based on the real (inter-)particle distances.
 
     Arguments:
-      - radii: radii: list (array) of circle radii, in spatial units defined by 
-      arg spacing
+      - radii: radii: list (array) of circle radii, in spatial units defined 
+      by arg spacing
       - centers: circle center coordinates, shape (N, 2) where N is the 
       number of circles, in pixels
       - spacing: grid spacing (the same as pixel size) in spatial units
-      - border: flag indicating whether border is incluced in the calulcated area
+      - border: flag indicating whether border is included in the
+      calulcated area
       
     Returns (ndarray) calculated area (in units defined by arg spacing) for 
     all distances.
@@ -218,12 +246,14 @@ def grid_area_multi_circles(radii, centers, spacing=1, border=False):
         x_plus = np.arange(
             np.min(x_centers), np.max(x_centers) + radius + 1, 1)
         x_minus = np.flip(
-            np.arange(np.min(x_centers), np.min(x_centers) - radius - 1, -1))[:-1]
+            np.arange(
+                np.min(x_centers), np.min(x_centers) - radius - 1, -1))[:-1]
         x_range = np.concatenate([x_minus, x_plus])
         y_plus = np.arange(
             np.min(y_centers), np.max(y_centers) + radius + 1, 1)
         y_minus = np.flip(
-            np.arange(np.min(y_centers), np.min(y_centers) - radius - 1, -1))[:-1]
+            np.arange(
+                np.min(y_centers), np.min(y_centers) - radius - 1, -1))[:-1]
         y_range = np.concatenate([y_minus, y_plus])
         xm, ym = np.meshgrid(x_range, y_range)
         

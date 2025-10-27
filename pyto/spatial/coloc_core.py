@@ -43,6 +43,9 @@ class ColocCore:
         (it is effectively set to 2).
 
         Arguments:
+          - full_coloc: if True (default), when 3-colocalization is
+          calculated, also the 2-colocalizations between the first pattern
+          and each of the other patterns is also calculated  
           - mode: coloclization mode, 'less' or 'less_eq'
 
           - suffix: suffix added to the coloclization data attribute names

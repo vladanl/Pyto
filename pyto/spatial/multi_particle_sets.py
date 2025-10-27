@@ -30,9 +30,11 @@ from .line_projection import LineProjection
 from .mps_conversion import MPSConversion
 from .mps_interconversion import MPSInterconversion
 from .mps_analysis import MPSAnalysis
+from .mps_pattern import MPSPattern
 
 
-class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
+class MultiParticleSets(
+        MPSConversion, MPSInterconversion, MPSAnalysis, MPSPattern):
     """
     Read and organize particle sets from multiple regions and classifications.
 
@@ -75,7 +77,8 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
 
         """
 
-        # star file labels 
+        # star file labels
+        self.tablename = 'data'
         self.micrograph_label = 'rlnMicrographName'
         self.seg_image_label = 'psSegImage'
         self.string_pattern = ['Name', 'Image']
@@ -817,10 +820,19 @@ class MultiParticleSets(MPSConversion, MPSInterconversion, MPSAnalysis):
             remove_outside_region=False, inside_coord_cols=None):
         """Converts coords to the region frame and projects them on region.
 
-        Converts particle coordinates from the initial (original) tomo frame
-        to the corresponding region tomo for multiple tomos. Initial and
-        egion tomos can have different bin factors and the region tomos can
-        have coordinate offsets in respect to the original tomos.
+        Does the following conversions for  multiple tomos:
+          - converts particle coordinates from the initial (original)
+            tomo frame (columns self.orig_coord_reg_frame_cols) to the
+            corresponding region tomo frame.
+          - projects particles on the region (if project is True) (saves
+            results to self.coord_reg_frame_cols columns of
+            self.particles table)
+          - converts projected particles back to the initial tomo frame
+            (saves results to self.coord_init_frame_cols columns of
+            self.particles table)
+        Initial and region tomos can have different bin factors and
+        the region tomos can have coordinate offsets in respect to
+        the original tomos.
 
         During the coversion, coordinates are trasformed first according to 
         the bin factors and then to offsets (see convert_one() doc for

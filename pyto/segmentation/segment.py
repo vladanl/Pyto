@@ -388,6 +388,7 @@ class Segment(Labels):
         # find ids of disconnected segments 
         topo = Topology(segments=self, ids=ids)
         n_connected = topo.calculateHomologyRank(dim=0)[ids]
+        self.setProperties({'n_parts': n_connected})
         many = topo.ids[numpy.nonzero(n_connected>1)[0]]
         #empty = topo.ids[numpy.nonzero(n_connected<1)[0]]
  

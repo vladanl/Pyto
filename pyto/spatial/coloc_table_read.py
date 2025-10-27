@@ -41,7 +41,7 @@ class ColocTableRead(abc.ABC):
         Reads preprocessed colocalization results from pickled tables.
 
         Each table is assigned to a variable having the same name as the 
-        table file base name without extension. In this way it is the variable
+        table file base name without extension. In this way, the variable
         and table file names are the same as in extract_multi().
 
         Two variables are set for each name (element of arg names):
@@ -57,7 +57,7 @@ class ColocTableRead(abc.ABC):
           - names: list of colocalization names corresponding to the data 
           to be read, if None all data in tables directory are read  
           - module: module for the created variables
-          - dir_: directory where tables are saved
+          - dir_: directory where tables are located
           - pick: name of this colocalization project (used if dir_ is None)
           - columns: list of columns
           - suffix: (not used anymore, perhap needed for backcompatibility) 
@@ -75,13 +75,22 @@ class ColocTableRead(abc.ABC):
 
         if (dir_ is None) and (pick is None):
             raise ValueError("Either pick or dir_ argument has to be given")
-        obj = cls(
-            dir_=dir_, dir_tables=dir_tables,
-            pick=pick, mode=mode, save_formats=save_formats,
-            join_suffix=join_suffix, individual_suffix=individual_suffix)
-
+        try:
+            # when cls instance of ColocLite
+            obj = cls(
+                dir_=dir_, dir_tables=dir_tables,
+                pick=pick, mode=mode, save_formats=save_formats,
+                join_suffix=join_suffix, individual_suffix=individual_suffix)
+        except TypeError:
+            # when cls instance of ColocAnalysis
+            obj = cls(
+                dir_=dir_, 
+                pick=pick, mode=mode, save_formats=save_formats,
+                join_suffix=join_suffix, individual_suffix=individual_suffix)
+            
         # get colocalization names
         # also warns if tables are found directly in tables/ dir
+        names_direct = False
         if names is None:
             names = [
                 file_ for file_ in os.listdir(obj.tables_dir)
@@ -90,17 +99,19 @@ class ColocTableRead(abc.ABC):
                 file_.split('_' + obj.individual_suffix)[0]
                 for file_ in os.listdir(obj.tables_dir)
                 if obj.individual_suffix in file_]
+            names_direct = np.unique(np.asarray(names_direct)).tolist()
             if len(names) == 0:
                 names = names_direct
+                names_direct = True
                 print(
                     f"Warning: Colocalization result tables should be saved in "
                     + f"directories like "
-                    + f"{os.path.join(obj.tables_dir, names[0])}, "
+                    + f"{os.path.join(obj.tables_dir, 'setX_setY_setZ')}, "
                     + f"and not directly in {obj.tables_dir} directory")
             elif len(names_direct) > 0:
                 print(
-                    f"Warning: Some colocalizatio results are found directly in "
-                    + f"{obj.tables_dir} directory and not in its "
+                    f"Warning: Some colocalizatio results are found directly "
+                    + f"in {obj.tables_dir} directory and not in its "
                     + "subdirectories. These resuts will be ignored.")
         if len(names) == 0:
             print("Warning: no colocalization results found.")
@@ -124,7 +135,7 @@ class ColocTableRead(abc.ABC):
                     + f"as opposed to {obj.tables_dir} directory")
             try:
                 obj._names.extend(names_in_dir)
-            except NameError:
+            except (NameError, AttributeError):
                 obj._names = names_in_dir
             pdio = PandasIO(
                 file_formats=save_formats, verbose=verbose)
@@ -134,7 +145,10 @@ class ColocTableRead(abc.ABC):
                     
                     # joined data
                     obj_name = nam_local + '_' + obj.join_suffix
-                    path = os.path.join(obj.tables_dir, nam, obj_name)
+                    if not names_direct:
+                        path = os.path.join(obj.tables_dir, nam, obj_name)
+                    else:
+                        path = os.path.join(obj.tables_dir, obj_name)
                     data = pdio.read_table(base=path, out_desc=out_desc)
                     if columns is not None:
                         columns_local = [
@@ -144,7 +158,10 @@ class ColocTableRead(abc.ABC):
 
                     # individual tomo data
                     obj_name_syn = nam_local + '_' + obj.individual_suffix
-                    path = os.path.join(obj.tables_dir, nam, obj_name_syn)
+                    if not names_direct:
+                        path = os.path.join(obj.tables_dir, nam, obj_name_syn)
+                    else:
+                        path = os.path.join(obj.tables_dir, obj_name_syn)
                     data_syn = pdio.read_table(base=path)
                     setattr(obj, obj_name_syn, data_syn)
 

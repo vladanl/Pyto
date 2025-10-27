@@ -366,15 +366,15 @@ class TestColocOne(np_test.TestCase):
 
         # normal
         np_test.assert_equal(
-            co.X_Y_Z_data[['n_subcol_random_all']].applymap(
+            co.X_Y_Z_data[['n_subcol_random_all']].map(
                 lambda x: x.shape[0] == n_simul).values.all(), True)
         np_test.assert_array_almost_equal(
             co.X_Y_Z_data[['n_subcol_random_mean']],
-            co.X_Y_Z_data[['n_subcol_random_all']].applymap(
+            co.X_Y_Z_data[['n_subcol_random_all']].map(
                 lambda x: x.mean()).values)
         np_test.assert_array_almost_equal(
             co.X_Y_Z_data[['n_subcol_random_std']],
-            co.X_Y_Z_data[['n_subcol_random_all']].applymap(
+            co.X_Y_Z_data[['n_subcol_random_all']].map(
                 lambda x: x.std(ddof=1)).values)
         np_test.assert_array_almost_equal(
             co.X_Y_Z_data['p_subcol_normal'].values,
@@ -384,15 +384,15 @@ class TestColocOne(np_test.TestCase):
 
         # other
         np_test.assert_equal(
-            co.X_Y_Z_data[['n_subcol_random_alt_all']].applymap(
+            co.X_Y_Z_data[['n_subcol_random_alt_all']].map(
                 lambda x: x.shape[0] == n_simul).values.all(), True)
         np_test.assert_array_almost_equal(
             co.X_Y_Z_data[['n_subcol_random_alt_mean']],
-            co.X_Y_Z_data[['n_subcol_random_alt_all']].applymap(
+            co.X_Y_Z_data[['n_subcol_random_alt_all']].map(
                 lambda x: x.mean()).values)
         np_test.assert_array_almost_equal(
             co.X_Y_Z_data[['n_subcol_random_alt_std']],
-            co.X_Y_Z_data[['n_subcol_random_alt_all']].applymap(
+            co.X_Y_Z_data[['n_subcol_random_alt_all']].map(
                 lambda x: x.std(ddof=1)).values)
         np_test.assert_array_almost_equal(
             co.X_Y_Z_data['p_subcol_other'].values,

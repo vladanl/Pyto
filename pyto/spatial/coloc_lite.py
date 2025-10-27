@@ -45,12 +45,22 @@ class ColocLite(ColocAnalysis):
             mode=None
             ):
         """Sets attributed from args
-
+        
+        The meaning of arg dir is different from the super (ColocAnalysis):
+          - here dir/dir_tables is the same as dir in ColocAnalysis
+          - if None, output is not written 
+        
         Arguments:
+          - full_coloc: if True (default), when 3-colocalization is
+          calculated by self.colocalize(), the 2-colocalizations between
+          the first pattern and each of the other patterns is also calculated  
+          - all_random: If False, the standard two simulation types are 
+          calculated ('normal' when the first pattern is fixed and 'other'
+          where the other patterns are fixed)), if True all sets are
+          randomized simultaneously (default False)
           - mode: colocalization tables format (mode), project dependent,
           for example 'munc13_lite'
-          - dir_: output directory root, if None output is not written to
-          files (meaning changed from the super) 
+          - dir_: output directory root, if None output is not written
           - pick: not used
           - dir_prefix: not used
         """
@@ -79,20 +89,10 @@ class ColocLite(ColocAnalysis):
         # resolve output directory
         self.dir = dir_
         self.dir_suffix = dir_suffix
-        if (dir_ is not None):
-            if dir_suffix is not None:
-                self.dir = dir_ + '_' + dir_suffix
-            self.tables_dir = os.path.join(self.dir, dir_tables)
-            self.coords_dir = os.path.join(self.dir, dir_coords)
-            self.input_particles_dir = os.path.join(
-                self.dir, dir_input_particles)
-            self.kept_particles_dir = os.path.join(self.dir, dir_kept_particles)
-        else:
-            self.dir = None
-            self.tables_dir = None
-            self.coords_dir = None
-            self.input_particles_dir = None
-            self.kept_particles_dir = None
+        self.set_individual_tables(
+            dir_tables=dir_tables, dir_coords=dir_coords,
+            dir_input_particles=dir_input_particles,
+            dir_kept_particles=dir_kept_particles)
             
         # other output related
         self.name_mode = name_mode
@@ -106,6 +106,27 @@ class ColocLite(ColocAnalysis):
 
         #self.data_names = set()
         self.data_names = []
+
+    def set_individual_tables(
+            self, dir_tables, dir_coords, dir_input_particles,
+            dir_kept_particles):
+        """Sets tables, coords and particle dirs.
+        """
+        
+        if (self.dir is not None):
+            if self.dir_suffix is not None:
+                self.dir = self.dir + '_' + self.dir_suffix
+            self.tables_dir = os.path.join(self.dir, dir_tables)
+            self.coords_dir = os.path.join(self.dir, dir_coords)
+            self.input_particles_dir = os.path.join(
+                self.dir, dir_input_particles)
+            self.kept_particles_dir = os.path.join(self.dir, dir_kept_particles)
+        else:
+            self.dir = None
+            self.tables_dir = None
+            self.coords_dir = None
+            self.input_particles_dir = None
+            self.kept_particles_dir = None
         
     def set_simulation_suffixes(self, all_random=False):
         """Set attributes defining random simulation variable suffixes.
@@ -325,7 +346,7 @@ class ColocLite(ColocAnalysis):
           - distance: (list) colocalization distances in nm
           - n_simul: N simulations
           - set_names: (list) particle set names, used only for printing 
-          results, if None the names are derived from arg coloc_name
+          results, if None (default) the names are derived from arg coloc_name
           - hull, hull_expand: not implemented
           - log: path to a log file or an open file
         """
@@ -681,7 +702,8 @@ class ColocLite(ColocAnalysis):
 
         Arguments:
           - bare: (BareColoc) colocalization results
-          - particles: (ParticlesSets) particle coordinates
+          - particles: (ParticlesSets) particle coordinates, has to
+          contain index (see ParticleSets .get/set_index, ._index)
           - set_names: (list) particle set names 
           - tomo: tomo name
           - distance: colocalization distance [nm]

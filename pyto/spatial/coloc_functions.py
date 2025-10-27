@@ -1,6 +1,6 @@
 """
 Contains (some of the) functions used for colocalization analysus
-(module coloc_analysis) that act directly aon individual colocalization
+(module coloc_analysis) that act directly on individual colocalization
 data tables.
 
 # Author: Vladan Lucic (Max Planck Institute for Biochemistry)
@@ -1040,46 +1040,29 @@ def get_fraction_single(
 def make_nice_label(label, sets):
     """Makes nice looking labels for colocalization names. 
 
+    Important: Moved to coloc_plot.py. Left here for backcompatibility.
+    
     Arg label is split in pieces separated by '_' and each piece is 
     substituted by the corresponding value of arg sets.
 
     Arguments:
       - label: (str) typically a colocalization name (e.g. 'pre_tether_post')
-      - sets: (dict) substitution rules in the form of {'old_piece: 'nice_piece'}
+      - sets: (dict) substitution rules in the form of {'old_piece:
+    'nice_piece'}
 
     Returns nice looking label
     """
 
-    # check label only one name 
-    if isinstance(label, (list, tuple)):
-        if len(label) == 1:
-            label = label[0]
-        else:
-            raise ValueError(
-                f"Argument label {label} should contain only one name")
-
-    # if mossible, replace the whole label, otherwise peaces
-    nice = sets.get(label, None)
-    if nice is not None:
-        new_label = nice
-    else:
-        psets = get_layers(label)
-        nice_sets = [sets.get(lay, lay) for lay in psets]
-        new_label = ' - '.join(nice_sets)
-    
-    #first = True
-    #new_label = ''
-    #for lay in psets:
-    #    if not first:
-    #        new_label += ' - '
-    #    new_label += sets.get(lay, lay)
-    #    first = False
-        
-    return new_label
+    print(
+        "Depreciation warning: This function has been moved to coloc_plot.py.") 
+    from . import coloc_plot
+    return coloc_plot.make_nice_label(label=label, sets=sets)
 
 def table_generator(coloc=None, name=None, groups=None, single=False):
     """Generator that makes an iterator over colocalization results.
 
+    Important: Moved to coloc_plot.py. Left here for backcompatibility.
+    
     Each element returned by the iterator contains a label and a 
     coloclization table (pandas.DataFrame) where rows correspond to 
     colocalization distances.
@@ -1127,72 +1110,26 @@ def table_generator(coloc=None, name=None, groups=None, single=False):
     corresponding colocalization data.
     """
 
-    # sanity check
-    if (coloc is None or name is None) and groups is None:
-        raise ValueError(
-            "Argument groups, or both coloc and name need to be specified.")
-        
-    # figire out data arguments
-    if coloc is not None and name is not None and not single:
-        
-        # one coloc name, tomos together
-        if isinstance(name, str):
-            name = [name]
-        data_gen = (
-            (nam, getattr(coloc, nam + '_' + coloc.join_suffix))
-            for nam in name)
-                    
-    elif coloc is not None and name is not None and single:
+    print(
+        "Depreciation warning: This function has been moved to coloc_plot.py.") 
+    from . import coloc_plot
+    return coloc_plot.table_generator(
+        coloc=coloc, name=name, groups=groups, single=single)
 
-        # one coloc name, individual tomos
-        tomos_tab = getattr(coloc, name + '_' + coloc.individual_suffix)
-        data_gen = (
-            (tid, tomos_tab[tomos_tab.id == tid].sort_values(by='distance')) 
-            for tid in tomos_tab['id'].unique())
-                                                              
-    elif groups is not None:
-
-        # multiple coloc objects / tables
-        from .coloc_analysis import ColocAnalysis
-        if np.all(
-            [isinstance(value, pd.DataFrame) 
-             for value in groups.values() if value is not None]):
-            
-            # multiple coloc tables
-            data_gen = groups.items()
-            
-        elif np.all(
-            [isinstance(value, ColocAnalysis)  
-             for value in groups.values() if value is not None]):
-              
-            # multiple coloc objects
-            if name is not None and isinstance(name, str):
-                data_gen = (
-                    (gr, getattr(col, name + '_' + col.join_suffix)) 
-                    for gr, col in groups.items() if col is not None)
-            else:
-                raise ValueError(
-                    "Arg name has to be specified and it has to be a str when "
-                    + "arg groups contains colocalization objects "
-                    + "(ColocAnalysis).")
-                
-        else:
-            raise ValueError("Problem with coloc, names and groups arguments.")
-    else:
-        raise ValueError("Problem with coloc, names and groups arguments.")
-             
-    return data_gen
-            
 def plot_p(
         coloc=None, name=None, groups=None, single=False,
         y_var='p_subcol_combined', tomos=None, sets={}, pp=None, ax=None):
     """Plots p-values for one colocalization. 
 
+    Important: Moved to coloc_plot.py. Left here for backcompatibility.
+    
     """
-    return plot_data(
+    print(
+        "Depreciation warning: This function has been moved to coloc_plot.py.") 
+    from . import coloc_plot
+    return coloc_plot.plot_p(
         coloc=coloc, name=name, groups=groups, single=single,
-        y_var=y_var, tomos=tomos, simulated={}, normalize=None,
-        sets=sets, pp=pp, ax=ax)
+        y_var=y_var, tomos=tomos, sets=sets, pp=pp, ax=ax)
         
 def plot_data(
         coloc=None, name=None, groups=None, single=False,
@@ -1200,6 +1137,8 @@ def plot_data(
         sets={}, pp=None, ax=None):
     """Plots data for one colocalization. 
 
+    Important: Moved to coloc_plot.py. Left here for backcompatibility.
+    
     Args coloc, name, groups and single are used to select colocalization
     data, as explained in table_generator() doc. 
 
@@ -1213,345 +1152,43 @@ def plot_data(
     (see ColocLite() arg all_random and method set_simulation_suffixes().
     """
 
-    # figure out what is plotted
-    join_coloc = False
-    if (coloc is not None) and not single:
-        join_coloc = True        
-    one_coloc = False
-    if (name is not None) and (isinstance(name, str) or len(name) == 1):
-        one_coloc = True
-        n_y_vars = 1
-    if isinstance(y_var, str):
-        y_var_list = [y_var]
-    elif len(y_var) == 1:
-        y_var_list = y_var
-        y_var = y_var_list[0]
-    else:
-        n_y_vars = len(y_var)
-        y_var_list = y_var
-
-    # figure out colors for plotting p (just to keep simulated consistent)
-    p_plot = False
-    p_vars = ['p_subcol_normal', 'p_subcol_other', 'p_subcol_combined']
-    if not set(p_vars).isdisjoint(set(y_var_list)):
-        p_plot = True
-        colors = {'p_subcol_normal': 'C0', 'p_subcol_other': 'C1'}
-        if not set(p_vars).issuperset(y_var_list):
-            raise ValueError(
-                "Arg y_vars cannot contain both p-value and other variables.")
-
-    p_var_all_random = 'p_subcol_solo'
-    if p_var_all_random in y_var_list:
-        p_plot = True
-        colors = {'p_subcol': 'C0'}
-        if len(y_var_list) > 1:
-            raise ValueError(
-                "Arg y_vars cannot contain both p-value and other variables.")
-       
-    # plotting one coloc, with simulations
-    data_simul_plot = False
-    if one_coloc and (n_y_vars == 1) and (len(simulated) > 0):
-        colors = {}
-        if 'normal' in simulated:
-            colors['normal'] = 'C0'
-        if 'alt' in simulated:
-            colors['alt'] = 'C1'
-        if 'other' in simulated:
-            colors['other'] = 'C1'
-        data_simul_plot = True
-            
-    # start plot
-    if ax is None:
-        fig, ax = plt.subplots()
-    x_var = 'distance'
-
-    # get tables according to arguments
-    data_gen = table_generator(
-        coloc=coloc, name=name, groups=groups, single=single)
-
-    # plot, loop over all 
-    for label, table in data_gen:
-
-        # skip if no data or tomo not in the list
-        if table is None:
-            continue
-        if single and (tomos is not None) and (label not in tomos):
-            continue
-
-        # normalization
-        if (normalize is None) or (not normalize):
-            area = 1
-        else:
-            area = np.pi * table.distance**2 
-        
-        label_nice = make_nice_label(label, sets=sets)
-        if n_y_vars == 1:
-
-            #try:
-                #color = pp.color.get(y_var)
-                #color = colors.get(y_var)
-            #except (AttributeError, KeyError):
-                #color = None
-
-            # plot one coloc feature
-            y_var_nice = make_nice_label(y_var, sets=sets)
-            if join_coloc and one_coloc:
-                plot_label = y_var_nice
-            else:
-                plot_label = label_nice
-            if p_plot:
-
-                # plot p-values
-                #if not single or (groups is not None):
-                ax.plot(
-                    x_var, y_var, 'x', data=table, linestyle='-',
-                    label=plot_label)
-
-            elif data_simul_plot:
-
-                # plot data other than p-values with simulations
-                ax.plot(
-                    table[x_var], (table[y_var]/area), 'o', linestyle='',
-                    color="C2", label=y_var_nice)
-                for simul_name, y_simul in simulated.items():
-                    y_simul_var = y_simul + '_mean'
-                    y_simul_err = y_simul + '_std'
-                    ax.errorbar(
-                        table.distance, table[y_simul_var]/area,
-                        yerr=table[y_simul_err]/area, 
-                        fmt='x', color=colors.get(simul_name),
-                        label=f'Simulations {simul_name}')
-
-            else:
-
-                # plot data other than p-values without simulations
-                ax.plot(
-                    table[x_var], table[y_var]/area, 'o', linestyle='',
-                    label=plot_label)
-                
-        else:
-
-            # plot multiple coloc features
-            for y_var_one in y_var:
-                y_var_nice = make_nice_label(y_var_one, sets=sets)
-                if one_coloc:
-                    plot_label = y_var_nice
-                else:
-                    plot_lab = label_nice + " " + y_var_nice
-                try:
-                    #color = pp.color.get(y_var_one)
-                    color = colors.get(y_var_one)
-                except (AttributeError, KeyError):
-                    color = None
-                ax.plot(
-                    x_var, y_var_one, 'x', data=table, linestyle='-',
-                    color=color, label=plot_label)
-                
-        distances = table[x_var].unique()
-
-    # make title
-    #if join_coloc:
-    #    if isinstance(name, str):
-    #        name = [name]
-    #    n_layers = [len(get_layers(nam)) for nam in name]
-    #    if np.all([nl == n_layers[0] for nl in n_layers]):
-    #        title_main = f"{n_layers[0]}-"
-    #    else:
-    #        title_main = ""
-    #elif coloc is not None and single:
-    #    title_main = make_nice_label(name, sets=sets) + ' '
-    #elif groups is not None:
-    #    title_main = make_nice_label(name, sets=sets) + ' '
-    if one_coloc:
-        title_main = make_nice_label(name, sets=sets)
-    elif join_coloc and (n_y_vars == 1):
-        title_main = make_nice_label(y_var, sets=sets)
-    else:
-        title_main = "Multiple colocalizations"
-
-    # p-plot limits
-    if p_plot:
-        ax.plot(
-            [distances[0], distances[-1]], [0.95, 0.95], 'k', linestyle='--')
-        ax.set_ylim(-0.05, 1.05)
-
-    # finish plot
-    ax.legend(loc='best')
-    ax.set_xlabel('Distance [nm]')
-    if p_plot:
-        ax.set_ylabel('1 - p value')
-    elif normalize is None:
-        ax.set_ylabel("Number")
-    else:
-        ax.set_label('Surface density [$1/nm^2$]')
-    ax.set_title(f'{title_main}')        
-       
-    return ax
+    print(
+        "Depreciation warning: This function has been moved to coloc_plot.py.") 
+    from . import coloc_plot
+    return coloc_plot.plot_data(
+        coloc=coloc, name=name, groups=groups, single=single,
+        y_var=y_var, tomos=tomos, simulated=simulated, normalize=normalize,
+        sets=sets, pp=pp, ax=ax)
 
 def plot_32_p(
         name, coloc=None, groups=None, single=False,
         y_var='p_subcol_combined', tomos=None, sets={},
         ax=None, figsize=(15, 3)):
     """
+    Important: Moved to coloc_plot.py. Left here for backcompatibility.
+    
     """
-    return plot_32_data(
+    print(
+        "Depreciation warning: This function has been moved to coloc_plot.py.") 
+    from . import coloc_plot
+    return coloc_plot.plot_32_p(
         name=name, coloc=coloc, groups=groups, single=single,
-        y_var=y_var, tomos=tomos, simulated={}, normalize=None,
-        sets=sets, ax=ax, figsize=figsize)
+        y_var=y_var, tomos=tomos,
+        ax=ax, figsize=figsize)
 
 def plot_32_data(
         name, coloc=None, groups=None, single=False,
         y_var='n_subcol', tomos=None, simulated={}, normalize=None,
         sets={}, ax=None, figsize=(15, 3)):
     """
+    Important: Moved to coloc_plot.py. Left here for backcompatibility.
+    
     """
-
-    # start plot
-    if ax is None:
-        fig, ax = plt.subplots(1, 3, figsize=figsize)
-
-    # plot 3-col
-    plot_data(
-        coloc=coloc, name=name, groups=groups, single=single,
+    print(
+        "Depreciation warning: This function has been moved to coloc_plot.py.") 
+    from . import coloc_plot
+    return coloc_plot.plot_32_data(
+        name=name, coloc=coloc, groups=groups, single=single,
         y_var=y_var, tomos=tomos, simulated=simulated, normalize=normalize,
-        sets=sets, ax=ax[0])
+        sets=sets, ax=ax, figsize=figsize)
 
-    # figure out 2-colocalizations
-    name_0_1, name_0_2 = get_2_names(
-        name=name, order=((0, 1), (0, 2)), by_order=True)
-        
-    # plot 2-colocalizations
-    try:
-        plot_data(
-            coloc=coloc, name=name_0_1, groups=groups, single=single,
-            y_var=y_var, tomos=tomos, simulated=simulated, normalize=normalize,
-            sets=sets, ax=ax[1])
-    except AttributeError:
-        pass
-    try:
-        plot_data(
-            coloc=coloc, name=name_0_2, groups=groups, single=single,
-            y_var=y_var, tomos=tomos, simulated=simulated, normalize=normalize,
-            sets=sets, ax=ax[2])
-    except AttributeError:
-        pass
-
-    return ax
-    
-def plot_data_old(
-        coloc, name, y_var='n_subcol', simulated={}, normalize=None, 
-        suffix='data', mode='_', sets={}, ax=None):
-    """Plots colocalization data.
-
-    Usage:
-
-      1) One or more colocalization names from a colocalization object:
-        - coloc: colocalization object
-        - name: (str or list of strings): one or more colocalization names
-
-      2) One colocalization name from a table:
-        - coloc: (pandas.DafaFrame) data for one coloc
-        - name: (str) name for the coloc
-    """
-    
-    # plot data
-    if ax is None:
-        fig, ax = plt.subplots()
-    multi_names = True
-    if isinstance(name, str):
-        name = [name]
-        multi_names = False
-
-    # figure out colors (just to keep simulated consistent)
-    if ((len(simulated) == 2) and ('normal' in simulated)
-        and (('alt' in simulated) or ('other' in simulated))):
-        colors = {'normal': 'C0', 'alt': 'C1', 'other': 'C1'}
-        n_simul = 2
-    else:
-        n_simul = 0
-        
-    for ind, nam in enumerate(name):
-        
-        # get data and area
-        if isinstance(coloc, pd.DataFrame):
-            data = coloc
-            if multi_names:
-                raise ValueError(
-                    "Because arg coloc is pandas.DataFrame, arg name "
-                    + "can only be a single colocalization name.")
-        else:
-            data = getattr(
-                coloc, make_name(names=[nam], suffix=suffix, mode=mode))
-        if normalize is None:
-            area = 1
-            y_label = "Number"
-        elif normalize == 'circle_area':
-            area = np.pi * data.distance**2 
-            y_label = 'Surface density [$1/nm^2$]'
-            
-        # plot data
-        if multi_names:
-            label = f"Data {make_nice_label(nam, sets)}"
-        else:
-            label = "Data"
-        ax.plot(
-            data.distance, data[y_var]/area, 'o', linestyle='', 
-            color=f"C{ind+n_simul}", label=label)   
-    
-    # plot simulations
-    for lab, y_simul in simulated.items():
-        y_simul_var = y_simul + '_mean'
-        y_simul_err = y_simul + '_std'
-        ax.errorbar(
-            data.distance, data[y_simul_var]/area, yerr=data[y_simul_err]/area, 
-            fmt='x', color=colors.get(lab),
-            label=f'Simulations {make_nice_label(lab, sets)}')
-            
-    # finish plot
-    ax.legend(loc='best')
-    ax.set_xlabel('Distance [nm]')
-    ax.set_ylabel(y_label)
-    ax.set_ylim(-0.02, ax.set_ylim()[1])
-    if multi_names:
-        title = f"{sets.get(y_var, y_var)}"
-    else:
-        title = f"{sets.get(y_var, y_var)} in {make_nice_label(name[0], sets)}"
-    ax.set_title(title)
-    
-    return ax
-
-def plot_32_data_old(
-        name, coloc=None, y_var='n_subcol', simulated={}, normalize=None,
-        suffix='data', mode='_', sets={}, ax=None, figsize=(15, 3)):
-    """
-    """
-
-    # start plot
-    if ax is None:
-        fig, ax = plt.subplots(1, 3, figsize=figsize)
-
-    # plot 3-col
-    plot_data_old(
-        coloc=coloc, name=name, simulated=simulated, normalize=normalize, 
-        y_var=y_var, suffix=suffix, mode=mode, sets=sets, ax=ax[0])
-
-    # figure out 2-colocalizations
-    name_0_1, name_0_2 = get_2_names(
-        name=name, order=((0, 1), (0, 2)), by_order=True)
-        
-    # plot 2-colocalizations
-    try:
-        plot_data_old(
-            coloc=coloc, name=name_0_1, simulated=simulated, normalize=normalize, 
-            y_var=y_var, suffix=suffix, mode=mode, sets=sets, ax=ax[1])
-    except AttributeError:
-        pass
-    try:
-        plot_data_old(
-            coloc=coloc, name=name_0_2, simulated=simulated, normalize=normalize, 
-            y_var=y_var, suffix=suffix, mode=mode, sets=sets, ax=ax[2])
-    except AttributeError:
-        pass
-
-    return ax
-    

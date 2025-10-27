@@ -31,7 +31,7 @@ class MPSInterconversion(abc.ABC):
     def from_mps(
             self, set_name, resolve_fn, psets_module=None,
             tomo_ids=None, discard_tomo_ids=None,
-            subclass_col='subclass_name', ignore_keep=False):
+            subclass_col='subclass_name', ignore_keep=False, info_fd=None):
         """Combines multiple particle sets based on particle sets module.
 
         Reads one or more particles sets (names given by arg set_name) 
@@ -99,6 +99,8 @@ class MPSInterconversion(abc.ABC):
           names are written (default 'subclass_name')
           - ignore_keep: If False (default), only particles where 'keep' 
           column is True are selected, True to ignore 'keep' column
+          - info_fd: if specified, file descriptor where info resulting from resolve_fn
+          call is written (default None)
 
         Sets attributes:
           - tomos: tomo table
@@ -129,10 +131,10 @@ class MPSInterconversion(abc.ABC):
             #mps_local, cl_nam, cl_num = resolve_fn(
             #    set_name=set_na, psets_module=psets_module)
             if psets_module is None: 
-                resolve_result = resolve_fn(set_name=set_na)
+                resolve_result = resolve_fn(set_name=set_na, info_fd=info_fd)
             else:
                 resolve_result = resolve_fn(
-                    set_name=set_na, psets_module=psets_module)
+                    set_name=set_na, psets_module=psets_module, info_fd=info_fd)
             if isinstance(resolve_result, self.__class__):
                 mps_local = resolve_result
                 if discard_tomo_ids is not None:

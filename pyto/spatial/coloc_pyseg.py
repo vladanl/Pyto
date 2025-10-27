@@ -15,6 +15,7 @@ import subprocess
 import pickle
 
 import numpy as np
+import pandas as pd
 
 import pyto
 from pyto.io.pandas_io import PandasIO

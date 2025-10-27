@@ -10,6 +10,7 @@ from __future__ import absolute_import
 __version__ = "$Revision$"
 
 from . import relion_tools
+from .relion_star import RelionStar
 #from multimer import Multimer
 #from phantom import Phantom
 from .set_path import SetPath

@@ -10,6 +10,7 @@ __version__ = "$Revision$"
 import abc
 import os
 import itertools
+from copy import copy, deepcopy
 
 import numpy as np
 import scipy as sp
@@ -286,9 +287,9 @@ class MPSAnalysis(abc.ABC):
         """Keep particles with short projection distance.
 
         Calculates projection distance, that is the distance between
-        projected and non-projected particles (args projected_cols and
-        non_projected_cols, respectively) for each particle. These
-        distances are saved in (arg) project_dist_col.
+        projected and original (non-projected) particles (args
+        projected_cols and non_projected_cols, respectively) for each
+        particle. These distances are saved in (arg) project_dist_col.
 
         If arg project_dist_max is not None, makes a (boolean) Series that
         indicates whether the projection distances are <= than the given 
@@ -334,6 +335,8 @@ class MPSAnalysis(abc.ABC):
         parts[self.project_dist_col] = np.linalg.norm(
             (parts[projected_cols].to_numpy()
              - parts[non_projected_cols].to_numpy()), axis=1)
+
+        # return if max distance not given
         if project_dist_max is None:
             self.particles = parts
             return 
@@ -848,32 +851,35 @@ class MPSAnalysis(abc.ABC):
             rules=None, update=True):
         """Selects tomos and particles from the current instance.
 
-        Selects tomos and particles that have tomo ids (column 
-        self.tomo_id_col), class names (column self.class_name_col)
-        and class numbers (column self.class_number_col) specified by 
-        args tomo_ids, class_names and class_numbers,
-        respectivly. If a selection argument is None, no selection is
-        performed according to that criterion.
+        Selects tomos and particles in two ways:
 
-        Additional selection can be done using arg rules, a dict that
-        contains column names as keys and the values specify the 
-        coresponding column elements.
+          Selection using arg rules: rules a dict that
+          contains column names as keys and column values as (dict) values
 
-        If arg update is False, modifies the current instance so that only the 
+          Selection using other args: It can be based on tomo ids (column 
+          self.tomo_id_col), class names (column self.class_name_col)
+          and class numbers (column self.class_number_col). These are
+          specified by args tomo_ids, class_names and class_numbers,
+          respectivly. Note that in this case the values of the above
+          mentioned attributes is very important.
+
+        The two ways can be combined. If a selection argument is None,
+        no selection is performed according to that criterion.
+
+        If arg update is True, modifies the current instance so that only the 
         selected tomos and particles are retained in self.tomos and 
         self.particles. If arg update is True, the current instance is not 
         modified and a new instance is created where attributes tomos and 
         particles contain only the selected tomos and particles. 
 
+        If arg update is False, returns a new instance of this class where
+        attributes tomos and particles are set. The current instance is
+        not modified.
+
         If the class name and number selection leads to the particle table
         not having any particles from one of the tomos, but this tomo is 
         not explicitly selected out by arg tomo_ids, this tomogram is
         retained in the tomos table.
-
-        If arg update is False, returns a new instance of this class where
-        attributes tomos and particles are set. However, attributes of 
-        this instance (self) that were set after this instance was 
-        created are not passes from self to the returned instance.
 
         Arguments:
           - tomo_ids: (iterable) tomo ids, as given in
@@ -900,7 +906,7 @@ class MPSAnalysis(abc.ABC):
             particles = particles[
                 particles[self.tomo_id_col].isin(tomo_ids)]
 
-        # combine rules and explicit classe
+        # combine rules and explicit class
         rules_default = dict(
             (col, value) for col, value
             in zip([self.class_name_col, self.class_number_col],
@@ -914,23 +920,14 @@ class MPSAnalysis(abc.ABC):
         # select
         for col, value in rules.items():
             particles = particles[particles[col].isin(value)]
-            
-        # class names
-        #if class_names is not None:
-        #    particles = particles[
-        #        particles[self.class_name_col].isin(class_names)]
-            
-        # class numbers
-        #if class_numbers is not None:
-        #    particles = particles[
-        #        particles[self.class_number_col].isin(class_numbers)]
-
+                
         # update this or make another instance
         if update:
             self.tomos = tomos
             self.particles = particles
         else:
-            inst = self.__class__()
+            inst = deepcopy(self)
+            #inst = self.__class__()
             inst.tomos = tomos.copy()
             inst.particles = particles.copy()
             return inst
@@ -963,8 +960,13 @@ class MPSAnalysis(abc.ABC):
         this instance.
         """
 
-        rules = self.find_classification(set_name=set_name, check=check) 
+        rules = self.find_classification(set_name=set_name, check=check)
         result = self.select(rules=rules, update=update)
+
+        # when rules result in no particles no particles should be returned
+        if len(rules) == 0:
+            print("len rules 0")
+            result.particles = result.particles.head(0)
 
         return result
 
