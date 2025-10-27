@@ -55,6 +55,9 @@ Please start from [Overview](doc/manuals/overview.pdf).
 
 ### Release history ###
 
+* 1.11.0 (27.10.2025, svn r2239)
+	* Added colocalization example
+	* Improved colocalization code and docs for pattern generation and reading star files
 * 1.10.3 (7.05.2025, svn 2202)
 	* Added AI tether classification code and example
 * 1.10.2 (30.03.2025, svn r2181)
@@ -113,6 +116,8 @@ Copyright (C) 2010  Vladan Lucic
 Please consider citing us if you use Pyto:
 
 * For general use, segmentation and analysis: Lučić V, Fernández-Busnadiego R, Laugks U and Baumeister W, 2016. Hierarchical detection and analysis of macromolecular complexes in cryo-electron tomograms using Pyto software. J Struct Biol. 196(3):503-514. http://dx.doi.org/10.1016/j.jsb.2016.10.004.
+
+* For colocalization analysis, please cite: Daniel H. Orozco-Borunda, Antonio Martinez-Sanchez, Vladan Lucic, 2025, Spatial organization of assemblies of protein complexes by colocalization analysis BIORXIV/2025/684783.
 
 * For 3D to 2D correlation, please cite: Arnold, J., J. Mahamid, V. Lucic, A. d. Marco, J.-J. Fernandez, Laugks, H.-A. Mayer, Tobias, W. Baumeister, and J. Plitzko, 2016. Site-specific cryo-focused ion beam sample preparation guided by 3-dimensional correlative microscopy. Biophysical Journal 110:860-869. http://dx.doi.org/10.1016/j.bpj.2015.10.053.
 
