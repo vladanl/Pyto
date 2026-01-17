@@ -10,7 +10,9 @@ from . import coloc_functions
 from . import coloc_plot 
 from . import point_pattern
 from . import coloc_theory
-from .line_projection import LineProjection 
+from .line_projection import LineProjection
+from .boundary import BoundaryNormal
+from .boundary import BoundarySmooth
 from .particle_sets import ParticleSets
 from .coloc_table_read import ColocTableRead
 from .coloc_pyseg import ColocPyseg

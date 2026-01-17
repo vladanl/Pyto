@@ -64,7 +64,7 @@ class Neighborhood(Features):
 
         Contacts are defined as parts of segments that are neighbors of 
         the specified region (arg regions and reg_id) according to the
-        specified structure (arg, dilate_structure).
+        specified structure (arg dilate_structure).
 
         Respects inset of both segments and regions.
 
@@ -123,7 +123,8 @@ class Neighborhood(Features):
         Contacts are found using make_contacts(), see the doc string for the 
         contact definition.
 
-        The coordinates are given in reference to the specified frame, as follows:
+        The coordinates are given in reference to the specified frame, as
+        follows:
           - 'abs': absolute, so original image coordinates
           - 'rel': relative, so in the coordinates of the image inset returned
           by make_contacts()
@@ -189,11 +190,11 @@ class Neighborhood(Features):
         Generates neighborhoods of each specified region on each of the 
         segments.
 
-        Regions are specified by args region and region_ids, and segments by ids.
-        A neighborhood of a given region on a segment is defined as a 
-        subset of the segment that contains elements that are at most (arg) 
-        size/2 away from the closest segment element to the region, as long as 
-        the distance to the region is not above (arg) max_distance.
+        Regions are specified by args region and region_ids, and segments
+        by ids. A neighborhood of a given region on a segment is defined
+        as a subset of the segment that contains elements that are at most
+        (arg) size/2 away from the closest segment element to the region,
+        as long as the distance to the region is not above (arg) max_distance.
 
         If multiple elements of segment are at the minimal distance to the
         region, only one of them is selected as the closest element
@@ -244,7 +245,8 @@ class Neighborhood(Features):
         reg_data = regions.data.copy()
 
         # make a working copy of an inset of this instance and clean it
-        self.segments.makeInset(ids=ids, additional=regions, additionalIds=region_ids)
+        self.segments.makeInset(
+            ids=ids, additional=regions, additionalIds=region_ids)
         seg = Segment(data=self.segments.data, ids=ids, copy=True, clean=True)
         seg.inset = self.segments.inset
 

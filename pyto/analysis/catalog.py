@@ -75,7 +75,8 @@ class Catalog(object):
 
         Arguments:
           - catalog: (string or a list of strings) file name(s) of the (all)
-          catalog(s), or regular expression(s) matching all catalogs
+          catalog(s), or regular expression(s) matching all catalog file
+          names
           - dir: directory where catalogs reside
           - type: catalog type (currently 'distributed')
           - identifiers: list of experiment identifiers to be used, identifiers
@@ -102,22 +103,23 @@ class Catalog(object):
         Reads all properties from all specified catalogs.
 
         Currently implemented only for 'distributed' catalog type. In this
-        case, each catalog contains meta-data for one experiment. All catalogs
-        have to reside in the dictionary specified by arg 'dir' (default:
+        case, each catalog is a file (module) that contains meta-data
+        (here called properties) of one experiment. All catalogs have
+        to reside in the dictionary specified by arg 'dir' (default:
         current diectory).
 
-        Catalog can be one or a list of catalog names, where each name is
-        a regular expression. All files in the specified directory that
-        are matched by any of the catalog names is considered to be a catalog
-        and it is read. Regular expression match is done in the search mode,
-        that is a regular expression needs to match the beginning of a catalog
-        file name.
+        Selects all files from directory specified by arg dir whose names
+        match arg catalog, these are here called catalogs. Regular
+        expression match is done in the search mode, that is a regular
+        expression needs to match the beginning of a catalog file name.
 
-        Properties are read only for experiment identifiers specified in arg
-        identifiers. Identifiers that are listed in this arg but not found in
-        the catalog(s) are ignored. Alternatively, if identifiers is None,
-        properties of all experiemnts found in the catalog(s) are read.
-
+        The catalog files are imported as modules and only those that
+        contain variable identifier (experiment identifier) that is
+        listed in arg identifiers are kept. Alternatively, if identifiers
+        is None, properties of all experiemnts found in the catalog(s)
+        are imported. In both cases, all catalog variable are read
+        and saved in this instance (these variables are termed properties).
+        
         Any property value that is a string and ends with one of the elements
         of arg extensions is considered to be a file path and it is converted
         to absolute path.

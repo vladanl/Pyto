@@ -2626,6 +2626,16 @@ class TestGroups(np_test.TestCase):
             gs.ge.getValue(property='n_positive', identifier='ie2'),
             1)
 
+    def test_get_identifier_group(self):
+        """Tests get_identifier_group()
+        """
+
+        grs = self.makeInstance()
+        actual = grs.get_identifier_group(identifier='ib2')
+        np_test.assert_array_equal(actual, ['gb'])
+        actual = grs.get_identifier_group(identifier='id2')
+        np_test.assert_array_equal(actual, [])
+
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestGroups)

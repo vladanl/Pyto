@@ -358,6 +358,46 @@ class LineProjection:
 
         return theta_psi            
 
+    def spherical_to_euler(self, spherical_phi_theta, euler_undet=0):
+        """Converts spherical to Euler angles.
+
+        Important: Rotation matrix generated using the returned Euler
+        angles transforms unit vector defined by the spherical angles
+        to the unit vector along z-axis.
+
+        Opposite from find_spherical().
+
+        Arguments:
+          - spherical_phi_theta: (list) spherical phi and theta angles,
+          in this order, in units according to self.degree flag
+          - euler_undet: value of the Euler angle that is not determined
+          by spherical angles
+
+        Return Euler angles (phi, theta, psi) in convention and units
+        specified by self.euler_mode and self.degree, respectively   
+        """
+
+        if self.degree:
+            spherical_phi_theta = np.asarray(spherical_phi_theta) * np.pi / 180
+        spherical_phi, spherical_theta = spherical_phi_theta
+        if self.reverse:
+            spherical_phi = np.pi + spherical_phi
+            spherical_theta = np.pi - spherical_theta
+
+        # Euler in intrinsic active zyz
+        euler = np.array([euler_undet, -spherical_theta, -spherical_phi])
+
+        # convert to required convention
+        euler_final = Rigid3D.convert_euler(
+            angles=euler, init='zyz_in_active', final=self.euler_mode)
+        euler_final = np.asarray(Rigid3D.normalize_euler(
+            euler_final, range=self.euler_range))
+
+        if self.degree:
+            euler_final = euler_final * 180 / np.pi
+
+        return np.asarray(euler_final)
+        
     def project_along_line(self, theta, phi, distance=1, point=0):
         """Find coordinates of a line at a given distance(s) from a point.
 
