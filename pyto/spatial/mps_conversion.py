@@ -608,8 +608,8 @@ class MPSConversion(abc.ABC):
             return result
     
     def from_star_picks(
-            self, particle_star, tomo_star=None,
-            tomo_ids=None, tomo_id_mode='munc13',
+            self, particle_star, tomo_star=None, tomo_ids=None,
+            tomo_id_mode='munc13', tomo_id_func=None, tomo_id_kwargs={},
             pixel_size_nm=None, coord_bin=None, region_path=None,
             region_offset=None, region_bin=None, region_id=None,
             do_origin=True, convert=True, project=True, exclusion=None,
@@ -635,10 +635,11 @@ class MPSConversion(abc.ABC):
           - tomo_star: path to tomos star file, or (experimental)
           tomos table (pandas.Dataframe) in the form obtained by 
           read_star(path=tomo_star_path, ...)
-          - tomo_id_mode: mode for determining tomo id, needed if both
-          tomo_star and tomo_ids are None to extract tomo ids from
-          particles_star; passed directly to 
-          coloc_functions.get_tomo_id(mode)
+          - tomo_id_mode: mode for determining tomo id from tomo path,
+          passed directly to coloc_functions.get_tomo_id(mode)
+          - tomo_id_func: function that extracts tomo ids from paths, 
+          the first argument has to be tomo path
+          - tomo_id_kwargs: kwargs for tomo_id_func        
           - pixel_size_nm: (single number, dict where keys are tomo ids, or 
           pandas.DataFrame having tomo_id column) pixel size [nm] of the 
           system in which particle coordinats are given
@@ -688,6 +689,8 @@ class MPSConversion(abc.ABC):
                 # read tomo star file
                 tomos = self.read_star(
                     path=tomo_star, mode='tomo', tomo_ids=tomo_ids,
+                    tomo_id_mode=tomo_id_mode, tomo_id_func=tomo_id_func,
+                    tomo_id_kwargs=tomo_id_kwargs,
                     pixel_size_nm=pixel_size_nm, coord_bin=coord_bin)
                 tomo_star_path_exists = True
 
@@ -752,8 +755,9 @@ class MPSConversion(abc.ABC):
 
         # read particles
         particles = self.read_star(
-            path=particle_star, mode='particle', tomos=tomos,
-            tomo_ids=tomo_ids, do_origin=do_origin,
+            path=particle_star, mode='particle', tomos=tomos, tomo_ids=tomo_ids,
+            tomo_id_mode=tomo_id_mode, tomo_id_func=tomo_id_func,
+            tomo_id_kwargs=tomo_id_kwargs, do_origin=do_origin,
             class_name=class_name, class_number=class_number)
         
         # convert, project, exclude, find if inside regions image

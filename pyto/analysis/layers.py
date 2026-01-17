@@ -20,7 +20,7 @@ __version__ = "$Revision$"
 import logging
 from copy import copy, deepcopy
 
-import numpy
+import numpy as np
 #import scipy
 
 import pyto
@@ -286,29 +286,32 @@ class Layers(Groups):
     def rebin(self, bins, pixel=None, categories=None):
         """
         Rebins the data of all observations according to the args bin and pixel.
+
+        Pixel size for each experiment is determined as follows:
+          - if arg pixel is None, and self contains scalar property
+          'pixel_size', these values are used
+          - if arg pixel is None, and self does not contain scalar property
+          'pixel_size', pixel size is set to 1 pixel
+          - arg pixel can be catalog style dict of dicts:
+             {categ_1 : {'id_1':pixel, 'id_2':pixel}, categ_2 {'id_3':pixel}}
+          - arg pixel can be a simple dict: {'id_1':pixel, 'id_2':pixel}
+          - if arg pixel is a catalog style dict of dicts, but the
+          requested category does not exist, pixel size is determined from
+          identifier only, but in this case all ids (across all categories)
+          have to be unique
         
-        If arg pixel is not specified, all indexed properties (arrays) are
+        If pixel size is 1, all indexed properties (arrays) are
         grouped according to the position of the array elements and the
         property values in each group are added together. For example,
-        if arg bin = [0, 2, 4, 6]
-
-        the following property array
-
+        if arg bin = [0, 2, 4, 6], the following property array:
           [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
-
-        is binned to:
-
-         [ 3, 7, 11]
-
-        because the sum of elements at positions 0 and 1 is 1+2, at
-        positions 2 and 3 is 3+4 and so on.
+        is binned to: [ 3, 7, 11] (because the sum of elements at
+        positions 0 and 1 is 1+2, at positions 2 and 3 is 3+4 and so on).
  
-        Alternatively, if arg pixel is specified, it is assumed that each 
-        position in the data array is 1 pixel thick and that bins are given
-        if the length units. That is, in the above example with pixels
-        having length of 0.5, the result is:
-
-         [ 10, 26 ]
+        It is always assumed that each position in the data array is
+        1 pixel thick and that bins are given if the length units.
+        That is, in the above example with pixels size 0.5, the result is:
+        [ 10, 26 ].
           
         When bins are not integers, trapesoidal rule is used to calculate
         rebinned data.
@@ -325,7 +328,8 @@ class Layers(Groups):
         Arguments:
           - bins: new bins in nm, or in pixels in pixel is None
           - pixel: pixel size in nm (dictionary of pixel sizes, such as
-          {categ_1 : {'id_1':pixel, 'id_2':pixel}, categ_2 {'id_3':pixel}}) 
+          {categ_1 : {'id_1':pixel, 'id_2':pixel}, categ_2 {'id_3':pixel}})
+          - categories: list of categories
         """
 
         # set categories
@@ -336,17 +340,43 @@ class Layers(Groups):
         rebinned = self.__class__()
         for categ in categories:
             rebinned[categ] = deepcopy(self[categ])            
-        bins = numpy.asarray(bins, dtype='float')
+        bins = np.asarray(bins, dtype='float')
 
         # calculate properties 
         for categ in categories:
 
             # convert bins from nm to pixels
-            if pixel is None:
-                conversion = numpy.ones(len(self[categ].identifiers))
+            if pixel is None:  # read from scalar data
+                scal = self[categ].scalar_data
+                if 'pixel_size' in scal.columns:
+                    conversion = np.asarray([scal.loc[
+                        scal['identifiers'] == ident, 'pixel_size'].values[0]
+                     for ident in self[categ].identifiers])
+                else:
+                    conversion = np.ones(len(self[categ].identifiers))
             else:
-                conversion = numpy.array(\
-                    [pixel[categ][ident] for ident in self[categ].identifiers])
+                if categ in pixel:  # pixel in catalog style 
+                    conversion = np.array(
+                        [pixel[categ][ident] for ident
+                         in self[categ].identifiers])
+                else:
+                    try:  # pixel a simple dict
+                        conversion = np.array(
+                            [pixel[ident] for ident in self[categ].identifiers])
+                    except KeyError:  # convert catalog pixel to a simple dict
+                        subkeys = []
+                        pixel_ident = {}
+                        for subdict in pixel.values():
+                            subkeys.extend(list(subdict.keys()))
+                            pixel_ident.update(subdict)
+                        if len(subkeys) != len(np.unique(subkeys)):
+                            raise ValueError(
+                                "Cannot determine pixel sizes because arg "
+                                + "pixel does not contain categories and "
+                                + "identifiers are not unique.")               
+                        conversion = np.array(
+                            [pixel_ident[ident] for ident
+                             in self[categ].identifiers])
             pix_bins = [bins / c_one for c_one in conversion] 
             
             # rebin volume and occupied
@@ -369,7 +399,7 @@ class Layers(Groups):
             rebinned[categ].distance = []
             rebinned[categ].distance_nm = []
             for pb in pix_bins:
-                rebinned[categ].ids.append(numpy.arange(1,len(pb)))
+                rebinned[categ].ids.append(np.arange(1,len(pb)))
                 rebinned[categ].distance.append(copy(pb[:-1]))
                 rebinned[categ].distance_nm.append(copy(bins[:-1]))
 

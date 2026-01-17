@@ -31,7 +31,28 @@ class RelionStar:
     def parse(
             self, starfile, tablename, convert=True, check_labels=True,
             verbose=False):
-        """Parses star file.
+        """Reads table from relion-format star file.
+
+        Extracts data from the table specified by arg tablename 
+
+        Sets following attributes:
+          - self.labels: labels of the data table
+          - self.data: (pandas.DataFrame) data table
+          - self.top: lines from top of the star file until the data
+          table block
+          - self.block_head: lines from the block header
+          - self.label_lines: label lines 
+          - self.data_lines: data table lines
+          - self.bottom: lines that come after the data table
+        
+        Arguments:
+          - starfile: path to star file
+          - tablename: table name
+          - convert: flag indicating if the star file table is converted
+          to pandas.DataFrame
+          - check_labels: checks whether lable indices increase uniformly
+          by 1 and raises Value Error if they do not (default True)
+          - verbose: flag indicating if file read info is printed
         """
 
         # initialization

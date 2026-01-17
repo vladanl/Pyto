@@ -42,7 +42,9 @@ class SetPath(object):
     # Initialization
     #
 
-    def __init__(self, catalog_var=None, helper_path=None, common=None):
+    def __init__(
+            self, catalog_var=None, helper_path=None, common=None,
+            tomo_path_var='image_file_name'):
         """
         Sets variables.
 
@@ -55,6 +57,8 @@ class SetPath(object):
           (see convert_path() doc), default value os.pathgetcwd()
           - common: common pattern used to convert paths in this instance 
           (see convert_path() doc)
+          - tomo_path_var: name of the variable that contains tomo path
+          in tomo_info file (default 'image_file_name')
         """
 
         # set attributes from arguments
@@ -69,7 +73,7 @@ class SetPath(object):
 
         # name of the variable in a tomo_info file that contains the name
         # of the tomo file
-        self.tomo_path_var = 'image_file_name'
+        self.tomo_path_var = tomo_path_var
 
         # set vatiable for path conversion
         self.helper_path = helper_path

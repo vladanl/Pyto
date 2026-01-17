@@ -67,7 +67,7 @@ class Visualization:
           and ['x_map_a', 'y_map_a', 'z_map_a'], respectively) 
           - angle_cols: columns containing Euler angles in (arg)
           euler_mode convention (default ['phi', 'theta', 'psi'])
-          - spherical_cols: columns containing spherical aggles 
+          - spherical_cols: columns containing spherical angles 
           (default ['sph_theta', 'sph_phi'])
           - vector_cols: columns containing unit vector in the direction
           of the spherical angles (default ['v_x', 'v_y', 'v_z'])

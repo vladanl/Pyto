@@ -12,10 +12,10 @@ which as passed as argument pp to all relevant functions.
 This was previously part of presynaptic_stats.py.
 
 # Author: Vladan Lucic (Max Planck Institute for Biochemistry)
-# $Id: multi_dataset_util.py 2140 2024-12-19 14:11:52Z vladan $
+# $Id$
 """
 
-__version__ = "$Revision: 2140 $"
+__version__ = "$Revision$"
 
 import sys
 import os
@@ -50,10 +50,10 @@ from pyto.analysis.observations import Observations
 #
 
 def analyze_occupancy(
-        layer, bins, bin_names, pixel_size, pp, groups=None, identifiers=None,
-        test=None, reference=None, ddof=1, out=sys.stdout, outNames=None,
-        plot_=True, plot_type='bar', title='', yerr='sem', confidence='stars',
-        y_label=None):
+        layer, bins, bin_names, pp, pixel_size=None,
+        groups=None, identifiers=None, test=None, reference=None, ddof=1,
+        out=sys.stdout, outNames=None, plot_=True, plot_type='bar',
+        title='', yerr='sem', confidence='stars', y_label=None):
     """
     Statistical analysis of sv occupancy divided in bins according to the
     distance to the AZ.
@@ -63,6 +63,8 @@ def analyze_occupancy(
       - bins: (list) distance bins
       - bin_names: (list) names of distance bins, has to correspond to bins
       - pp: module containing print and plot parameters
+      - pixel_size: pixel size (defaulr None, in which case it is read
+      from layer scalar data
       - groups: list of group names
       - test: statistical inference test type
       - reference: specifies reference data

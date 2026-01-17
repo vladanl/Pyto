@@ -1443,7 +1443,7 @@ class TestRigid3D(np_test.TestCase):
         np_test.assert_almost_equal(res, [1.2+np.pi/2, 1.5, -0.7-np.pi/2])
         res = Rigid3D.convert_euler(
             angles=angles, init='zxz_ex_active', final='zyz_in_active')
-        np_test.assert_almost_equal(res, [-0.7+np.pi/2, 1.5, 1.2-np.pi/2])
+        np_test.assert_almost_equal(res, [-0.7-np.pi/2, 1.5, 1.2+np.pi/2])
         res = Rigid3D.convert_euler(
             angles=angles, init='zxz_ex_active', final='zxz_ex_passive')
         np_test.assert_almost_equal(res, [0.7, -1.5, -1.2])
@@ -1455,7 +1455,16 @@ class TestRigid3D(np_test.TestCase):
         np_test.assert_almost_equal(res, [0.7+np.pi/2, -1.5, -1.2-np.pi/2])
         res = Rigid3D.convert_euler(
             angles=angles, init='zxz_ex_active', final='zyz_in_passive')
-        np_test.assert_almost_equal(res, [-1.2+np.pi/2, -1.5, 0.7-np.pi/2])
+        np_test.assert_almost_equal(res, [-1.2-np.pi/2, -1.5, 0.7+np.pi/2])
+        res = Rigid3D.convert_euler(
+            angles=angles, init='zxz_in_active', final='zxz_ex_active')
+        np_test.assert_almost_equal(res, [-0.7, 1.5, 1.2])
+        res = Rigid3D.convert_euler(
+            angles=angles, init='zyz_ex_active', final='zxz_ex_active')
+        np_test.assert_almost_equal(res, [1.2-np.pi/2, 1.5, -0.7+np.pi/2])
+        res = Rigid3D.convert_euler(
+            angles=angles, init='zyz_in_active', final='zxz_ex_active')
+        np_test.assert_almost_equal(res, [-0.7-np.pi/2, 1.5, 1.2+np.pi/2])
 
         # same initial and final
         angles = [1.2, 1.5, -0.7]
@@ -1466,8 +1475,11 @@ class TestRigid3D(np_test.TestCase):
             angles=angles, init='zxz_in_active', final='zxz_in_active')
         np_test.assert_almost_equal(res, [1.2, 1.5, -0.7])
         res = Rigid3D.convert_euler(
+            angles=angles, init='zyz_ex_active', final='zyz_ex_active')
+        np_test.assert_almost_equal(res, [1.2, 1.5, -0.7])
+        res = Rigid3D.convert_euler(
             angles=angles, init='zyz_in_active', final='zyz_in_active')
-        np_test.assert_almost_equal(res, [1.2+np.pi, 1.5, -0.7-np.pi])
+        np_test.assert_almost_equal(res, [1.2, 1.5, -0.7])
         r_euler = Rigid3D.make_r_euler(angles, mode='zyz_in_active')
         res_angles = Rigid3D.extract_euler(r_euler, mode='zyz_in_active')
         np_test.assert_almost_equal(res_angles, angles)

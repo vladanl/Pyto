@@ -47,7 +47,21 @@ class TestExtractMPS(np_test.TestCase):
             'rlnAngleTiltPrior': [15, 25, 35, 45],
             'rlnAnglePsi': [50, 60, 70, 80],
             'rlnAnglePsiPrior': [54, 64, 74, 84],
-            'rlnAngleRot': [110, 120, 130, 140]}, index=[100, 101, 102, 103])  
+            'rlnAngleRot': [110, 120, 130, 140]}, index=[100, 101, 102, 103])
+        self.source2 = MultiParticleSets()
+        self.source2.tomos = pd.DataFrame()
+        self.source2.particles = pd.DataFrame({
+            'group': 'group_1',
+            'tomo_id': ['alfa', 'alpha', 'bravo', 'bravo', 'bravo'],
+            'particle_id': [11, 12, 21, 22, 222],
+            'xx': [40, 60, 50, 70, 70], 'yy': [140, 160, 150, 170, 170],
+            'zz': [240, 260, 250, 270, 256],
+            'rlnAngleTilt': [10, 20, 30, 40, 41],
+            'rlnAngleTiltPrior': [15, 25, 35, 45, 45],
+            'rlnAnglePsi': [50, 60, 70, 80, 81],
+            'rlnAnglePsiPrior': [54, 64, 74, 84, 84],
+            'rlnAngleRot': [110, 120, 130, 140, 141]},
+            index=[100, 101, 102, 103, 104])
 
     def test_set_normals(self):
         """Test set_normals()
@@ -67,6 +81,13 @@ class TestExtractMPS(np_test.TestCase):
             source_coord_cols=['xx', 'yy', 'zz'], reverse=False,
             use_priors=False)
         assert_frame_equal(part_2, desired, check_dtype=False)
+
+        # same as above but same distance from index 4 to two source points
+        part_2 = self.ex_mps.set_normals(
+            mps=self.mps, source=self.source2, mps_coord_cols=['x', 'y', 'z'],
+            source_coord_cols=['xx', 'yy', 'zz'], reverse=False,
+            use_priors=False)
+        print(part_2[['index_src', 'distance']])
         
         # no reverse, priors
         desired_source['normal_theta'] = [15, 45.]
