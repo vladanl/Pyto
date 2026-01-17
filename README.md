@@ -25,9 +25,9 @@ in [3DCT package for correlative microscopy](https://github.com/coraxx/3DCT.git)
 
 The current version is written in Python 3. The code was originally written in Python 2 and subsequently converted to Python 3.6. While most of the code is currently compatible with Python 2.7, this will not be enforced in future. 
 
-The major dependencies of this package are:
+Major dependencies of this package are:
 
-* NumPy
++ NumPy
 + SciPy
 + Pandas
 + future
@@ -55,6 +55,9 @@ Please start from [Overview](doc/manuals/overview.pdf).
 
 ### Release history ###
 
+* 1.11.1 (17.1.2026, svn r2263)
+	* Added membrane / boundary normal vectors
+	* Improved preprocessing for averaging and handling pixel size in Layers.rebin()
 * 1.11.0 (27.10.2025, svn r2239)
 	* Added colocalization example
 	* Improved colocalization code and docs for pattern generation and reading star files
