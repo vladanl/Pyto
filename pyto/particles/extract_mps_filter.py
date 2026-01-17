@@ -32,7 +32,7 @@ class ExtractMPSFilter(abc.ABC):
         pass            
     
     def filter_particles_task(
-            self, mps, sigma_nm, name_init, name_filtered,
+            self, mps, sigma_nm, name_init, name_filtered, 
             fun=sp.ndimage.gaussian_filter, fun_kwargs={}, 
             verbose=True, star_comment='Gauss low-pass filtered'):
         """Filters particles, saves them and write star files
@@ -67,7 +67,8 @@ class ExtractMPSFilter(abc.ABC):
 
         # make star file
         self.make_star(
-            mps=mps_filt, labels=self.get_labels(mps_filt),
+            mps=mps_filt,
+            labels=self.get_labels(mps_filt, use_priors=self.use_priors),
             star_path=paths.star_path, comment=star_comment, 
             verbose=verbose)
 
@@ -78,7 +79,7 @@ class ExtractMPSFilter(abc.ABC):
             self.split_star(
                 mps=mps_filt,
                 class_names=self.class_names, class_code=self.class_code,
-                labels=self.get_labels(mps), 
+                labels=self.get_labels(mps, use_priors=self.use_priors), 
                 star_path=paths.star_path, star_comment=star_comment,
                 verbose=verbose)
 
@@ -175,7 +176,8 @@ class ExtractMPSFilter(abc.ABC):
 
         # make star file
         self.make_star(
-            mps=mps_smooth, labels=self.get_labels(mps_smooth),
+            mps=mps_smooth,
+            labels=self.get_labels(mps_smooth, use_priors=self.use_priors),
             star_path=paths_smooth.star_path, comment=star_comment, 
             verbose=verbose)
 
@@ -184,7 +186,8 @@ class ExtractMPSFilter(abc.ABC):
             if verbose:
                 print(f"\nIndividual classes of {name_smooth}:")
             self.split_star(
-                mps=mps_smooth, labels=self.get_labels(mps_orig), 
+                mps=mps_smooth,
+                labels=self.get_labels(mps_orig, use_priors=self.use_priors), 
                 class_names=self.class_names, class_code=self.class_code,
                 star_path=paths_smooth.star_path, star_comment=star_comment, 
                 verbose=verbose)
@@ -274,7 +277,8 @@ class ExtractMPSFilter(abc.ABC):
 
         # make star file
         self.make_star(
-            mps=mps_rand, labels=self.get_labels(mps_rand),
+            mps=mps_rand,
+            labels=self.get_labels(mps_rand, use_priors=self.use_priors),
             star_path=paths_random.star_path, comment=star_comment, 
             verbose=verbose)
 
@@ -283,7 +287,8 @@ class ExtractMPSFilter(abc.ABC):
             if verbose:
                 print(f"\nIndividual classes of {name_random}:")
             self.split_star(
-                mps=mps_rand, labels=self.get_labels(mps_rand), 
+                mps=mps_rand,
+                labels=self.get_labels(mps_rand, use_priors=self.use_priors), 
                 class_names=self.class_names, class_code=self.class_code,
                 star_path=paths_random.star_path, star_comment=star_comment, 
                 verbose=verbose)
@@ -304,11 +309,26 @@ class ExtractMPSFilter(abc.ABC):
             lambda x: re.sub(pattern, replace, x[in_particle_col]), 
             axis=1)
 
+        if mps_2.pixel_nm_col in mps_2.particles.columns:
+            pixel_in_part = True
+        elif  mps_2.pixel_nm_col in mps_2.tomos.columns:
+            pixel_in_part = False
+        else:
+            raise ValueError(
+                "Pixel size have to be specified in tomos or "
+                + " particles tables.")
+            
         # loop over particles
         for p_ind, row in mps_2.particles.iterrows():
 
             # convert sigma to pixels
-            pixel_nm = row[mps_2.pixel_nm_col]
+            if pixel_in_part:
+                pixel_nm = row[mps_2.pixel_nm_col]
+            else:
+                tomo_id = row[mps_2.tomo_id_col]
+                tomo_row = mps_2.tomos[
+                    mps_2.tomos[mps_2.tomo_id_col] == tomo_id]
+                pixel_nm = tomo_row[mps_2.pixel_nm_col].values[0]
             if sigma_nm is not None:
                 sigma_pix = sigma_nm / pixel_nm
                 fun_kwargs.update({'sigma': sigma_pix})

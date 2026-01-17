@@ -20,10 +20,14 @@ import numpy as np
 import pandas as pd
 
 import pyto
+from ..core.image import Image
 from ..io.module_io import ModuleIO
 from ..io.pandas_io import PandasIO
 from ..segmentation.neighborhood import Neighborhood
 from ..particles.set_path import SetPath
+from ..spatial.line_projection import LineProjection
+from ..spatial.boundary import BoundaryNormal
+from ..spatial.multi_particle_sets import MultiParticleSets
 
 
 class Presynaptic(object):
@@ -371,6 +375,10 @@ class Presynaptic(object):
 
         return sv_length
 
+    #
+    # Methods that extract info from boundaries and and manipulate images
+    #
+    
     def get_coords(self, indexed, scalar):
     #def __call__(self, indexed, scalar):
         """Returns converted coordinates from multiple tomos.
@@ -716,7 +724,293 @@ class Presynaptic(object):
 
         return inst
 
+    def find_synapse_direction(
+            self, struct, pre_cyto_id, az_id=None, smooth_size=20,
+            spherical_names=['synapse_phi_deg', 'synapse_theta_deg'],
+            wedge_angle_names=['synapse_phi_y', 'synapse_theta_z']):
+        """Determines synapse direction (angles).
 
+        The direction is defined by spherical angles of the vector
+        pointing from post to pre terminal.
+
+        The angles are determined by calculating the normal vector
+        to the presynaptic membrane oriented towards the presynaptic
+        cytoplasm.
+
+        Reguires the following attributes to be set:
+          - self.groups
+          - self.identifiers
+          - self.pickle_var
+          - self.convert_path_common
+          - self.convert_path_helper
+        
+        Arguments:
+          - struct (pyto.analysis.Connections) oject that contains
+        the presynaptic analysis data about connectors or tetehers
+        for all tomos, or path to the pickeled object
+          - pre_cyto_id: id of presynaptic cytoplasm
+          - az_id: id of the active zone membrane, if None (default) it
+          is determined as the smallest boundary if
+          - smooth_size: radius of a region on the active zone membrane
+          used to obtain a weighted average of membrane normal vectors
+        """
+
+        # read structure pickle if needed
+        if isinstance(struct, str):
+            struct = pickle.load(open(struct, 'rb'), encoding='latin1')
+    
+        for generated in pyto.projects.presynaptic.tomo_generator(
+                indexed=struct.indexed_data, scalar=struct.scalar_data,
+                groups=self.groups, identifiers=self.identifiers,
+                pickle_var=self.pickle_var,
+                convert_path_common=self.convert_path_common,
+                convert_path_helper=self.convert_path_helper):
+            ident, scalar_one, indexed_one, data = generated
+            
+            if az_id is None:
+                az_id = np.min(data.boundaryIds)
+
+            # get normal and angles
+            bound = BoundaryNormal(
+                image=data.boundary, segment_id=az_id, external_id=pre_cyto_id,
+                dist_max_segment=smooth_size)
+            bound.find_normal_global()
+
+            # convert angles
+            phi = bound.spherical_phi_deg_global
+            phi_y = np.abs(np.mod(phi, 180) - 90)
+            theta = bound.spherical_theta_deg_global
+            theta_z = 90 - np.abs(np.mod(theta, 180) - 90)
+
+            # add converted angles to struct
+            group_name = struct.get_identifier_group(identifier=ident)
+            if len(group_name) > 1:
+                raise ValueError(
+                    f"Identifier {ident} exists in multiple groups "
+                    + f"({group_name})")
+            else:
+                group_name = group_name[0]
+            if spherical_names is not None:
+                struct[group_name].setValue(
+                    name=spherical_names[0], identifier=ident, value=phi,
+                    indexed=False)
+                struct[group_name].setValue(
+                    name=spherical_names[1], identifier=ident, value=theta,
+                    indexed=False)
+            if wedge_angle_names is not None:
+                struct[group_name].setValue(
+                    name=wedge_angle_names[0], identifier=ident, value=phi_y,
+                    indexed=False)
+                struct[group_name].setValue(
+                    name=wedge_angle_names[1], identifier=ident, value=theta_z,
+                    indexed=False)
+                
+    def make_boundary_angles(
+            self, indexed, scalar, bound_id, cyto_id, dist_max_segment,
+            spherical=False, euler=True, relion=True,
+            euler_mode='zyz_ex_active', degree=False, source_path=None):
+        """Calculate normal vector angles for all boundary points.
+
+        Reguires the following attributes to be set:
+          - identifiers: tomo ids
+          - pickle_var: name of the variable that points to the
+          tether or connector structure pickle
+          - conver_path_common,  convert_path_helper: paths
+          used to change the beginning part of pickle file paths
+
+        Core calculations are done by
+        pyto.spatial.BoundaryNormal.find_normals().
+        
+        Arguments:
+          - scalar: (pandas.DataFrame) scalar properties of all tomos
+          - indexed: (pandas.DataFrame) indexed properties of all tomos
+          - bound_id: id of region from which boundary is extracted
+          - cyto_id: id of region that contacts bound_id region, which
+          determines the side where boundary is extracted
+          - dist_max_segment: length scale at which boundary normal
+          vectors are smoothed
+          - spherical: flag indicating if spherical angles are written
+          in the resulting dataframe (default False)
+          - euler: flag indicating if euler angles are written
+          in the resulting dataframe (default True)
+          - relion: flag indicating if euler angles are calculated
+          in the relion way (euler convention active intrinsic zyz in degrees)
+          (default True)
+          - euler_mode, degree: specifies euler convention and angle units
+          in case relion is False (default 'zyz_ex_active' and False,
+          meaning radians)
+          - source_path: path where the save the resulting MPS object
+          (default None, meaning the object is not saved)
+
+        Returns: (MultiParticleSets) object where attribute particles
+        contains the calculated angles, as the following columns:
+          - tomo_id: tomo identifier
+          - coord-x/y/z: boundary point coordinates
+          - spherical_phi, spherical_theta: spherical coordinates
+          - rlnAngleRot, rlnAngleTilt, rlnAnglePsi: euler angles if in
+          the relion convention
+          - euler_phi, euler_theta, euler_psi: euler angles if not in
+          the relion convention
+        """
+
+        # initialize source dataframe
+        source = MultiParticleSets()
+        source_cols = [source.tomo_id_col, *source.coord_cols]
+        if spherical:
+            source_cols += ['spherical_phi', 'spherical_theta']
+        if euler:
+            if relion:
+                source_cols += ['rlnAngleRot', 'rlnAngleTilt', 'rlnAnglePsi']
+            else:
+                source_cols += ['euler_phi', 'euler_theta', 'euler_psi']
+        source_parts = []
+        lp = pyto.spatial.LineProjection(
+            relion=relion, euler_mode=euler_mode, degree=degree,
+            euler_range='0_2pi')
+
+        for ident, scalar_one, indexed_one, data \
+                in tomo_generator(
+                    indexed=indexed, scalar=scalar, 
+                    identifiers=self.identifiers, pickle_var=self.pickle_var,
+                    convert_path_common=self.convert_path_common, 
+                    convert_path_helper=self.convert_path_helper):
+
+            # heurisctic to find bound_id
+            if bound_id is None:
+                bound_id = np.min(data.boundaryIds)
+
+            # find boundary normals and spherical
+            bound = pyto.spatial.BoundaryNormal(
+                image=data.boundary, segment_id=bound_id, external_id=cyto_id,
+                dist_max_segment=dist_max_segment)
+            bound.find_normals()
+
+            # spherical to euler
+            if euler:
+                euler_angs = np.array([
+                    lp.spherical_to_euler([ph, th]) for ph, th 
+                    in zip(bound.spherical_phi_deg,
+                           bound.spherical_theta_deg)])
+            
+            # put in a dataframe
+            source_data = {
+                source.tomo_id_col: ident,
+                source.coord_cols[0]: bound.points[:, 0],
+                source.coord_cols[1]: bound.points[:, 1],
+                source.coord_cols[2]: bound.points[:, 2]}
+            if spherical:
+                source_data.update({
+                    'spherical_phi': bound.spherical_phi,
+                    'spherical_theta': bound.spherical_theta})
+            if euler:
+                if relion:
+                    source_data.update({
+                        'rlnAngleRot': euler_angs[:, 0],
+                        'rlnAngleTilt': euler_angs[:, 1], 
+                        'rlnAnglePsi': euler_angs[:, 2]})
+                else:
+                     source_data.update({
+                         'euler_phi': euler_angs[:, 0],
+                         'euler_theta': euler_angs[:, 1],
+                         'euler_psi': euler_angs[:, 2]})
+            source_parts.append(pd.DataFrame(source_data.copy()))
+
+        # make source dataframe
+        source.particles = pd.concat(source_parts, ignore_index=True)
+
+        # return or save
+        if source_path is not None:
+            source.tomos = pd.DataFrame()
+            source.write(
+                path=source_path, out_desc='boundary angles source',
+                verbose=True)
+
+        return source.particles
+
+    def make_tomos_df(
+            self, indexed, scalar, coord_bin, region_bin,
+            tomo_bin=None, tomo_path_var='image_file_name',
+            labels_path_var = 'labels_file_name',
+            pixel_size_var='pixel_size', tomo_col='tomo', 
+            convert_path_common=None, convert_path_helper=None):
+        """Makes tomos dataframe from presynaptic analysis data.
+
+        Arguments:
+          - scalar: (pandas.DataFrame) scalar properties of all tomos
+          - indexed: (pandas.DataFrame) indexed properties of all tomos
+          - coord_bin: bin factor of tomos from which tether coords are
+          extracted
+          - tomo_bin: bin factor of tomos used for averaging (default None,
+          in which case coord_bin is used)
+          - region_bin: regions bin factor (usually the same as coord_bin)
+          - tomo_path_var: name of the variable that contains tomo path
+          in tomo_info file (default 'image_file_name')
+          - labels_path_var: name of the variable that contains regions path
+          in tomo_info file (default 'labels_file_name')
+          - pixel_size_var: pixel size column name (default 'pixel_size')
+          - tomo_col: tomo path column name in the output DataFrame
+          (default 'tomo')
+
+        Returns (pandas.DataFrame) table where each row contains info
+        about one tomo (infor is extracted from arguments).       
+        """
+
+        # initialize
+        mps = MultiParticleSets()
+        set_path_tomo = SetPath(
+            common=convert_path_common, helper_path=convert_path_helper,
+            tomo_path_var=tomo_path_var)
+        set_path_regions = SetPath(
+            common=convert_path_common, helper_path=convert_path_helper,
+            tomo_path_var=labels_path_var)
+        if tomo_bin is None:
+            tomo_bin = coord_bin
+        tomos = []
+        tomo_path = []
+        region_path = []
+        region_shape = []
+        pixel_nm = []
+
+        # loop over tomos
+        for ident, scalar_one, indexed_one, data in tomo_generator(
+                indexed=indexed, scalar=scalar, 
+                identifiers=self.identifiers, pickle_var=self.pickle_var,
+                convert_path_common=convert_path_common, 
+                convert_path_helper=convert_path_helper):
+   
+            # read tomo_info
+            tomos.append(ident)
+            pickle_path = scalar_one[self.pickle_var]
+            tomo_path.append(
+                set_path_tomo.get_tomo_path(pickle_path=pickle_path))
+            reg_path = set_path_regions.get_tomo_path(pickle_path=pickle_path)
+            region_path.append(reg_path)
+            region_shape.append(
+                Image.read(file=reg_path, memmap=True).data.shape)
+            pixel_nm.append(scalar_one[pixel_size_var])
+
+        # make dataframe
+        tomos_data = {
+            mps.tomo_id_col: tomos, tomo_col: tomo_path, 
+            mps.region_col: region_path}
+        tomos_data.update(dict((off, 0) for off in mps.region_offset_cols))
+        region_shape = np.array(region_shape).transpose()
+        tomos_data.update(
+            dict((sh_col, reg_shape) for sh_col, reg_shape
+                 in zip(mps.region_shape_cols, region_shape)))
+        tomos_data.update(
+            {mps.pixel_nm_col: pixel_nm, mps.coord_bin_col: coord_bin})
+        try:
+           tomos_data.update({mps.tomo_bin_col: tomo_bin})
+        except AttributeError:
+            tomos_data.update({'tomo_bin_col': tomo_bin})
+        tomos_data.update(
+             {mps.region_id_col: -1, mps.region_bin_col: region_bin})
+        tomos = pd.DataFrame(tomos_data)
+
+        return tomos
+    
+        
 ##########################################################
 #
 # Functions

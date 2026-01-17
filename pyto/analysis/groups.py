@@ -2155,7 +2155,8 @@ class Groups(dict):
             infer['reference'] = ref
             infer = infer[['group', 'reference'] + old_cols]
             try:
-                res = res.append(infer, ignore_index=True, sort=False)
+                #res = res.append(infer, ignore_index=True, sort=False)
+                res = pd.concat([res, infer], ignore_index=True, sort=False)
             except NameError:
                 res = infer
 
@@ -2611,3 +2612,17 @@ class Groups(dict):
             res = np.nan
 
         return res
+
+    def get_identifier_group(self, identifier):
+        """Returns group(s) to which the given identifier belongs.
+
+        Argument:
+          - identifier: (str) experiment identifier
+
+        Returns (list) list of groups
+        """
+
+        res = [group_nam for group_nam, group in self.items()
+               if identifier in group.identifiers]
+        return res
+    

@@ -23,6 +23,7 @@ import pyto
 from ..io.pandas_io import PandasIO
 from pyto.segmentation.labels import Labels
 from pyto.particles.relion_tools import get_array_data
+from ..particles.relion_star import RelionStar
 import pyto.spatial.coloc_functions as col_func
 from .point_pattern import get_region_coords, exclude, project
 from .particle_sets import ParticleSets 
@@ -100,6 +101,7 @@ class MultiParticleSets(
         # dataframe columns
         self.tomo_id_col = 'tomo_id'
         self.coord_bin_col = 'coord_bin'
+        self.tomo_bin_col = 'tomo_bin'
         self.region_col = 'region'
         self.region_id_col = 'region_id'
         self.region_bin_col = 'region_bin'
@@ -328,8 +330,8 @@ class MultiParticleSets(
           respectively
           - tomo_ids: ids of tomo that should be considered, None for
           all tomos (default)
-          - tomo_id_mode: mode for determining tomo id, passed directly to 
-          coloc_functions.get_tomo_id(mode)
+          - tomo_id_mode: mode for determining tomo id from tomo path,
+          passed directly to coloc_functions.get_tomo_id(mode)
           - tomo_id_func: function that extracts tomo ids from paths, 
           the first argument has to be tomo path
           - tomo_id_kwargs: kwargs for tomo_id_func
@@ -372,11 +374,13 @@ class MultiParticleSets(
         """
 
         # read star and convert fields to numbers
-        #if isinstance(path, pd.DataFrame):  # better in add_star_pickles
-        #    table = path
-        #else:
-        table = pd.DataFrame(
-            get_array_data(starfile=path, tablename=tablename, types=str))
+        # old way
+        #table = pd.DataFrame(
+        #    get_array_data(starfile=path, tablename=tablename, types=str))
+        # should be better, to check
+        rs = RelionStar()
+        rs.parse(starfile=path, tablename=tablename, verbose=True)
+        table = rs.data
         for col in table.columns:
             if np.any([pat in col for pat in self.string_pattern]):
                 table[col] = table[col].astype(str) 
@@ -676,14 +680,13 @@ class MultiParticleSets(
 
         First makes pandas.DataFrame that contains only tomo ids 
         (self.tomo_id_col) and the specified column (arg column). If arg 
-        update is True, adds this column to the tomo table (arg tomos).
+        update is False, this table is returned.
 
-        If arg update is True, it returns a dataframe with the 
-        specified column added. That is, it does not add a column
-        to the object specified by arg tomos.
+        If arg update is True, adds the specified column to the specified
+        table (arg tomos) and returns the modified table.
 
         If update is True, arg value is not None and the input value of 
-        arg tomos contains a column named (arg) column, these values are 
+        arg tomos contains a column named (arg) column, this column is 
         overwritten by the values specified by arg value.
 
         Arguments:
@@ -1129,68 +1132,6 @@ class MultiParticleSets(
 
         return particles
 
-    def convert_frame(
-            self, init_coord_cols, final_coord_cols, shift_final_cols,
-            init_bin_col, final_bin_col, to_int=True, overwrite=False):
-        """Convert coordinates from init to final frame.
-
-        Conversion is done as follows:
-          final_coords = init_coords * init_bin / final_bin - shift_final
-
-        The calculated final frame coordinates are saved in
-        final_coord_cols of self.particles. If arg overwrite is False 
-        and at least one of the final_coord_cols already exists, 
-        ValueError is raised. Otherwise, final_coord_cols columns are 
-        overwritten.
-
-        Arguments:
-          - init_coord_cols: initial coordinate columns
-          - final_coord_cols: final coordinate columns 
-          - shift_final_cols: shift of the final frame with respect to
-          the init frame at final bin
-          - init_bin_col, final_bin_col: initial and final frame bin
-          factors, respectively
-          - to_int: flag indicating whether final coords are rounded 
-          and converted to int
-          - overwrite: flag indicating whether overwriting existing 
-          final_coord_cols is allowed
-        """
-
-        # check if writing new columns is fine
-        if not overwrite:
-            if len(np.intersect1d(
-                    self.particles.columns.to_numpy(), shift_final_cols)) > 0:
-                raise ValueError(
-                    f"At least one of the final columns ({final_coord_cols})"
-                    + "is already present in self.particles and "
-                    + "(arg) overwrite is False.")
-        
-        for _, tomo_row in self.tomos.iterrows():
-
-            # get tomo data and bin
-            tomo_id = tomo_row[self.tomo_id_col]
-            init_bin = tomo_row[init_bin_col]
-            final_bin = tomo_row[final_bin_col]
-            mag_factor = init_bin / final_bin
-            shift_final = tomo_row[shift_final_cols].to_numpy(dtype=float)
-            
-            # extract particles for the current tomo
-            part_one = self.particles[
-                self.particles[self.tomo_id_col]==tomo_id].copy()
-            init_parts = part_one[init_coord_cols].to_numpy(dtype=float)
-            index_one = part_one.index
-
-            # convert and write
-            final_parts = init_parts * mag_factor - shift_final[np.newaxis, :]
-            if to_int:
-                final_parts = np.round(final_parts).astype(int)
-            self.particles.loc[index_one, final_coord_cols] = final_parts
-
-        # convert dtype
-        if to_int:
-            dtype_conv = dict((col, np.dtype(int)) for col in final_coord_cols)
-            self.particles = self.particles.astype(dtype=dtype_conv)
-    
     def project_one(
             self, particles, region_path, region_id, coord_cols=None,
             project_mode='closest', angle_cols=None, line_reverse=False,
@@ -1560,3 +1501,110 @@ class MultiParticleSets(
 
         return res
     
+    def convert_frame(
+            self, init_coord_cols, final_coord_cols, init_bin_col,
+            final_bin_col, shift_final_cols=None, shift_final=None,
+            to_int=True, overwrite=False):
+        """Convert coordinates from init to final frame.
+
+        Conversion is done as follows:
+          final_coords = init_coords * init_bin / final_bin - shift_final
+
+        The calculated final frame coordinates are saved in
+        final_coord_cols of self.particles. If arg overwrite is False 
+        and at least one of the final_coord_cols already exists, 
+        ValueError is raised. Otherwise, final_coord_cols columns are 
+        overwritten.
+
+        Uses self.tomo_id_col.
+
+        Arguments:
+          - init_coord_cols: initial coordinate columns
+          - final_coord_cols: columns where final coordinates are written
+          - init_bin_col, final_bin_col: initial and final frame bin
+          factors, respectively
+          - shift_final_cols: column containing shift of the final frame
+          with respect to the init frame at final bin (default None)
+          - shift_final: shift of the final frame with respect to the
+          init frame at final bin, used only of arg shift_final_cols
+          is None (default None)
+          - to_int: flag indicating whether final coords are rounded 
+          and converted to int
+          - overwrite: flag indicating whether overwriting existing 
+          final_coord_cols is allowed
+        """
+
+        # check shift:
+        if (shift_final_cols) is None and (shift_final is None):
+            raise ValueError(
+                "Arg shift_final_cols or shift_final has to be specified.")
+        
+        # check if writing new columns is fine
+        if not overwrite:
+            if len(np.intersect1d(
+                    self.particles.columns.to_numpy(), final_coord_cols)) > 0:
+                raise ValueError(
+                    f"Final coordinate columns ({final_coord_cols})"
+                    + "already exist in self.particles and cannot be "
+                    + "overwritten beacuse (arg) overwrite is False.")
+        
+        for _, tomo_row in self.tomos.iterrows():
+
+            # get tomo data and bin
+            tomo_id = tomo_row[self.tomo_id_col]
+            init_bin = tomo_row[init_bin_col]
+            final_bin = tomo_row[final_bin_col]
+            mag_factor = init_bin / final_bin
+            if shift_final_cols is not None:
+                shift_final = tomo_row[shift_final_cols].to_numpy(dtype=float)
+            
+            # extract particles for the current tomo
+            part_one = self.particles[
+                self.particles[self.tomo_id_col]==tomo_id].copy()
+            init_parts = part_one[init_coord_cols].to_numpy(dtype=float)
+            index_one = part_one.index
+
+            # convert and write
+            final_parts = init_parts * mag_factor - shift_final[np.newaxis, :]
+            if to_int:
+                final_parts = np.round(final_parts).astype(int)
+            self.particles.loc[index_one, final_coord_cols] = final_parts
+
+        # convert dtype
+        if to_int:
+            dtype_conv = dict((col, np.dtype(int)) for col in final_coord_cols)
+            self.particles = self.particles.astype(dtype=dtype_conv)
+    
+    def convert_frame_inverse(
+            self, init_coord_cols, final_coord_cols, shift_cols,
+            init_bin_col, final_bin_col, to_int=True, overwrite=False):
+        """Convert coordinates from init to final frame in the 'inverse' way.
+
+        Conversion is done as follows:
+          final_coords = (init_coords + shift) * init_bin / final_bin
+
+        Therefore this transformation is inverse to that performed by
+        self.convert_frame.
+
+        See self.convert_frame() docs for arguments.
+        """
+
+        # make unique new offset columns
+        new_offset_cols = [
+            f"new_offset_{axis}" for axis in ['x', 'y', 'z']]
+        while len(np.intersect1d(
+            self.tomos.columns.to_numpy(), new_offset_cols)) > 0:
+             new_offset_cols = [f"{new}_x" for new in new_offset_cols]
+        
+        # convert
+        bb = self.tomos[init_bin_col] // self.tomos[final_bin_col]
+        self.tomos[new_offset_cols] = -self.tomos[shift_cols].mul(bb, axis=0)
+        self.convert_frame(
+            init_coord_cols=init_coord_cols, final_coord_cols=final_coord_cols,
+            init_bin_col=init_bin_col, final_bin_col=final_bin_col,
+            shift_final_cols=new_offset_cols,
+            to_int=to_int, overwrite=overwrite)
+
+        # remove new offset columns
+        self.tomos.drop(columns=new_offset_cols, inplace=True)
+        

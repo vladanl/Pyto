@@ -305,6 +305,14 @@ def get_tomo_id(path, mode):
       path = 'dir1/dir2/foo_tomo-tomoid_seg-foo.ext'
       tomo id = tomoid
 
+    mode='suffix':
+      path = 'dir1/dir2/tomoid_seg-foo.ext'
+      tomo_id = tomoid
+    
+    mode='prefix_suffix':
+      path = 'dir1/dir2/xxx_tomoid_yyy.ext'
+      tomo_id = tomoid
+    
     all other cases ('method-1', 'method-1_cr-same', 'method-1_cr-double'
     and 'method-1_cr-double_v2'):
       path = 'dir1/dir2/foo_tomoid1_tomoid2_foo.ext'
@@ -335,6 +343,15 @@ def get_tomo_id(path, mode):
         name = os.path.split(path)[1]
         tomo_id = re.split('tomo-|_seg', name)[1]
 
+    elif mode == 'suffix':
+        name = os.path.split(path)[1]
+        tomo_id = name.rsplit('_', 1)[0]
+            
+    elif mode == 'prefix_suffix':
+        name = os.path.split(path)[1]
+        tmp =  name.split('_', 1)[1]
+        tomo_id = tmp.rsplit('_', 1)[0]
+            
     else:
         raise ValueError(f"Mode {mode} was not understood") 
         

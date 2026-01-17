@@ -96,6 +96,7 @@ import pyto
 from pyto.analysis.groups import Groups
 from pyto.analysis.observations import Observations
 import pyto.scripts.multi_dataset_util as util
+from pyto.projects.presynaptic import Presynaptic
 
 
 # to debug replace INFO by DEBUG
@@ -259,6 +260,11 @@ reference.update(
 radius_bins = numpy.arange(10, 30, 0.5)
 radius_bin_names = [str(low) + '-' + str(up) for low, up
                     in zip(radius_bins[:-1], radius_bins[1:])]
+
+# synapse orientation, used for all synapses
+az_id = 3  # active zone membrane id
+cyto_id = 1  # presynaptic cytosole id
+smooth_size = 20  # smothing radius [pixels]
 
 
 ###########################################################
@@ -503,7 +509,16 @@ def main(individual=False, save=False, analyze=False):
         else:
             clust = None
 
-        # pickle raw?
+        # find synapse angles
+        logging.info("Calculating synapse orientation")
+        presyn = pyto.projects.Presynaptic(
+            identifiers=None, groups=None, pickle_var=tethers_name, 
+            convert_path_common=None, convert_path_helper=None)
+        presyn.find_synapse_direction(
+            struct=tether, pre_cyto_id=cyto_id, az_id=az_id, 
+            smooth_size=smooth_size)
+        
+        logging.info("Preprocessing")
 
         # find sv nearest neighbors
         if clust is not None:
@@ -725,11 +740,12 @@ def main(individual=False, save=False, analyze=False):
         title='SV occupancy', y_label='Fraction of volume occupied by svs')
 
     # min distance to the AZ, fine histogram for proximal svs
-    util.stats(data=near_sv, name='minDistance_nm', bins=fine_length_bins,
-          bin_names=fine_length_bin_names, join='join', groups=categories,
-          identifiers=identifiers, test='chi2', reference=reference,
-          x_label='Distance to the AZ [nm]', y_label='N vesicles',
-          title='Histogram of min distance to the AZ of proximal svs')
+    util.stats(
+        data=near_sv, name='minDistance_nm', bins=fine_length_bins,
+        bin_names=fine_length_bin_names, join='join', pp=pp, groups=categories,
+        identifiers=identifiers, test='chi2', reference=reference,
+        x_label='Distance to the AZ [nm]', y_label='N vesicles',
+        title='Histogram of min distance to the AZ of proximal svs')
 
     # Min distance to the AZ for near svs
     util.stats(
@@ -800,18 +816,18 @@ def main(individual=False, save=False, analyze=False):
         data=[near_teth_conn_sv, near_teth_non_conn_sv,
               near_non_teth_conn_sv, near_non_teth_non_conn_sv],
         dataNames=['t c', 't nc', 'nt c', 'nt nc'], name='radius_nm',
-        join='join', groups=categories, identifiers=identifiers,
+        join='join', pp=pp, groups=categories, identifiers=identifiers,
         reference=reference, test='t', y_label='Radius [nm]',
         title='Radius dependence on connectivity and tethering')
 
     # radius histogram of all groups together
-    plot_histogram(
+    util.plot_histogram(
         data=bulk_sv, name='radius_nm', bins=radius_bins, pp=pp,
         groups=categories, identifiers=identifiers, x_label='Radius [nm]',
         title='Vesicle radius histogram of all groups together')
 
     # radius histogram of one group
-    plot_histogram(
+    util.plot_histogram(
         data=bulk_sv, name='radius_nm', bins=radius_bins, pp=pp, groups='ko_1',
         identifiers=identifiers, x_label='Radius [nm]',
         title='Vesicle radius histogram of ko_1')
@@ -949,14 +965,14 @@ def main(individual=False, save=False, analyze=False):
         title='Fraction of proximal vesicles that are connected')
 
     # connectivity interaction beween wt / tko and w/wo aox
-    connectivity_factorial(
+    util.connectivity_factorial(
         data=near_sv, groups=['snc_wt', 'snc_aox', 'snc_tko', 'snc_aox_tko'],
         identifiers=identifiers)
 
     # n connections per sv
     util.stats(
         data=bulk_sv, name='n_connection', join='join', groups=categories,
-        identifiers=identifiers, reference=reference, test='kruskal',
+        pp=pp, identifiers=identifiers, reference=reference, test='kruskal',
         y_label='N connectors', title='N connectors per vesicle')
 
     # n connections per connected sv
@@ -1081,7 +1097,7 @@ def main(individual=False, save=False, analyze=False):
     # histogram of n tethers for near svs
     util.stats(
         data=near_sv, name='n_tether', bins=[0,1,3,100],
-        bin_names=['0', '1-2', '>2'], join='join', groups=categories,
+        bin_names=['0', '1-2', '>2'], join='join', pp=pp, groups=categories,
         identifiers=identifiers, test='chi2', reference=reference,
         x_label='N tethers', y_label='N svs',
         title='Histogram of number of tethers per proximal sv')
@@ -1095,14 +1111,14 @@ def main(individual=False, save=False, analyze=False):
         title='Histogram of number of tethers per proximal sv')
 
     # correlation between min sv distance to the AZ and n tethers
-    correlation(
+    util.correlation(
         xData=near_teth_sv, xName='minDistance_nm', yName='n_tether',
         join='join', pp=pp, groups=categories, identifiers=identifiers,
         test='r', x_label='Min distance to the AZ [nm]', y_label='N tethers',
         title=('Proximal sv correlation between min distance and n tethers'))
 
     # mean tether length vs n tether (for each sv) correlation for tethered svs
-    correlation(
+    util.correlation(
         xData=near_teth_sv, yName='n_tether', xName='mean_tether_nm',
         pp=pp, groups=categories, identifiers=identifiers, join='join',
         test='r',
@@ -1154,14 +1170,14 @@ def main(individual=False, save=False, analyze=False):
         x_label='Length [nm]', title='Tether length histogram')
 
     # mean tether length vs n tether (for each sv) correlation
-    correlation(
+    util.correlation(
         xData=near_teth_sv, yName='n_tether', xName='mean_tether_nm',
         pp=pp, groups=categories, identifiers=identifiers, join='join',
         test='r', x_label='Mean tether length [nm]', y_label='N tethers',
         title='Correlation between mean tether length (per sv) and N tethers')
 
     # correlation min sv distance to the AZ vs n tether, tethered svs
-    correlation(
+    util.correlation(
         xData=near_teth_sv, yName='n_tether', xName='minDistance_nm',
         pp=pp, groups=categories, identifiers=identifiers, join='join',
         test='r', x_label='Min sv distance [nm]', y_label='N tethers',
@@ -1173,7 +1189,7 @@ def main(individual=False, save=False, analyze=False):
     #
 
     # fraction of tethered and connected
-    count_histogram(
+    util.count_histogram(
         data=[near_teth_conn_sv, near_teth_non_conn_sv,
               near_non_teth_conn_sv, near_non_teth_non_conn_sv],
         dataNames=['t_c', 't_nc', 'nt_c', 'nt_nc'], pp=pp, groups=categories,
@@ -1264,13 +1280,13 @@ def main(individual=False, save=False, analyze=False):
     # tether length
     util.stats_list(
         data=[tether_rrp, tether_non_rrp], dataNames=['rrp', 'non_rrp'],
-        name='length_nm', join='join', groups=categories,
+        name='length_nm', join='join', pp=pp, groups=categories,
         identifiers=identifiers, test='t', reference=reference,
         y_label='Tether length [nm]',
         title='Tether length for proximal vesicles')
 
     # fraction of rrp and non-rrp svs
-    count_histogram(
+    util.count_histogram(
         data=[sv_rrp, sv_non_rrp], dataNames=['rrp', 'non_rrp'],
         pp=pp, groups=categories, identifiers=identifiers,
         test='chi2', reference=reference,
@@ -1294,7 +1310,7 @@ def main(individual=False, save=False, analyze=False):
         title='N connectors per proximal sv')
 
     # fraction of short and long tethers
-    count_histogram(
+    util.count_histogram(
         data=[short_tether, long_tether],
         dataNames=['short_tether', 'long_tether'],
         pp=pp, groups=categories, identifiers=identifiers,

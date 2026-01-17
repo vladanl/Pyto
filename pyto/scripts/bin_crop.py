@@ -6,9 +6,9 @@ Preprocessing for membrane segmentation. Useful for, but not limited to
 preparation for Morse density tracing.
 
 Overall it does the following:
-  - Starting from bin 2 tomo, generates bin 4 and bin 8
-  - Extracts a subtomogram that contains a region of interest, starting
-  from coordinates specified the bin 2, 4, or 8 tomo
+  - From bin 2 tomo, generates bin 4 and bin 8
+  - Starting from a region of interest coordinates specified bin 2, 4, or 8 tomo,
+  extracts a subtomogram that contains the region of interest,
   - Extracts equivalent subtomograms from the other two tomos 
 
 More details are given below:
@@ -29,7 +29,7 @@ Parameters required:
   - rotation, specified by Euler angles
   - box coordinates in the rotated tomogram
 
-2) Slanted rectangle method. Coordinates of the (possibly slanted) box 
+2) (Preferred) Slanted rectangle method. Coordinates of the (possibly slanted) box
 are determined directly from the original tomogram, that is without rotation.
 
 To be precise, the box does not have to have right angles, so it can be

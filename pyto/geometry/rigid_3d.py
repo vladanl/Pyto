@@ -1296,7 +1296,7 @@ class Rigid3D(Affine):
             elif final == 'zyz_ex_active':
                 result = (phi + np.pi / 2, theta, psi - np.pi / 2)
             elif final == 'zyz_in_active':
-                result = (psi + np.pi / 2, theta, phi - np.pi / 2)
+                result = (psi - np.pi / 2, theta, phi + np.pi / 2)
 
             elif final.endswith('_passive'):
 
