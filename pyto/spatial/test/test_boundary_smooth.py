@@ -13,12 +13,12 @@ import numpy as np
 import numpy.testing as np_test
 import scipy as sp
 
-from pyto.spatial.boundary import BoundarySmooth 
+from pyto.spatial.boundary_smooth import BoundarySmooth 
 
 
 class TestBoundarySmooth(np_test.TestCase):
     """
-    Tests BoundaryNormal
+    Tests BoundarySmooth
     """
 
     def setUp(self):

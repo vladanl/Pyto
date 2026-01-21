@@ -26,7 +26,7 @@ from ..io.pandas_io import PandasIO
 from ..segmentation.neighborhood import Neighborhood
 from ..particles.set_path import SetPath
 from ..spatial.line_projection import LineProjection
-from ..spatial.boundary import BoundaryNormal
+from ..spatial.boundary_normal import BoundaryNormal
 from ..spatial.multi_particle_sets import MultiParticleSets
 
 
@@ -743,16 +743,33 @@ class Presynaptic(object):
           - self.pickle_var
           - self.convert_path_common
           - self.convert_path_helper
+
+        Sets the following scalar properties:
+          - synapse_phi, synapse_theta (or arg spherical names):
+          synapse direction in spherical angles
+          - 'synapse_phi_y', 'synapse_theta_z' (or arg wedge_angle_names):
+          spherical angles converted to show relation to the missing
+          wedge. Specifically:
+            - 'synapse_phi_y': absolute value of the angle between
+            spherical phi and the y axis (range 0 - 90 deg)
+            - 'synapse_theta_z': absolute value of the angle between
+            spherical theta and the z axis (range 0 - 90 deg)
         
         Arguments:
           - struct (pyto.analysis.Connections) oject that contains
-        the presynaptic analysis data about connectors or tetehers
-        for all tomos, or path to the pickeled object
+          the presynaptic analysis data about connectors or tetehers
+          for all tomos, or path to the pickeled object
           - pre_cyto_id: id of presynaptic cytoplasm
           - az_id: id of the active zone membrane, if None (default) it
           is determined as the smallest boundary if
           - smooth_size: radius of a region on the active zone membrane
           used to obtain a weighted average of membrane normal vectors
+          - spherical_names: names of properties that hold calculated
+          spherical angles (default ['synapse_phi_deg',
+          'synapse_theta_deg'])
+          - wedge_angle_names: names of properties that hold spherical
+          converted to shpw the relation to the missing wedge (default
+          ['synapse_phi_y', 'synapse_theta_z'])
         """
 
         # read structure pickle if needed

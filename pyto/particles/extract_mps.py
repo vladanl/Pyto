@@ -1973,7 +1973,7 @@ class ExtractMPS(ExtractMPSFilter):
         if zoom == 1:
             return data
         
-        from ..spatial.boundary import BoundarySmooth
+        from ..spatial.boundary_smooth import BoundarySmooth
         bs = BoundarySmooth(
             image=data, segment_id=bound_ids, external_id=external_ids)
         if operations is None:
