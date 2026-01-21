@@ -1,11 +1,11 @@
 """
-Contain classes BoundaryNormal and BoundarySmooth.
+Contains class BoundaryNormal.
 
 # Author: Vladan Lucic
-# $Id$
+# $Id: boundary.py 2268 2026-01-20 17:29:20Z vladan $
 """
 
-__version__ = "$Revision$"
+__version__ = "$Revision: 2268 $"
 
 import numpy as np
 import scipy as sp
@@ -98,11 +98,13 @@ class BoundaryNormal:
         closest to the boundary center of mess.
 
         Results are set as attributes:
-          - self.boundary: boundary image, calculated if self.get_boundary
-          is True
-          - self.point_center: 
-          - self.normals: (ndarray 1 x n_dim) normal vector
-
+          - all attributes set by find_normals() (listed in its doc),
+          not that in this case the shapes/lengths are the same but
+          n_points=1
+          - point_center: (1d ndarray, size n_dim) boundary center coords
+          - spherical coords with suffix '_global' ('spherical_phi_global',
+          ... ) that have the same values, but are single numbers (instead
+          of 1d ndarrays of size 1) 
         """
 
         # make boundary if needed
@@ -117,37 +119,56 @@ class BoundaryNormal:
         self.find_normals(points=points)
 
         # get spherical
-        self.normals_to_spherical(normals=self.normals)
+        self.normals_to_spherical(
+            normals=self.normals, global_=True, suffix='_global')
         
     def find_normals(self, points=None, raw_all_points=True):
-        """Find normal vector at each point based on neighborhood.
+        """Find normal vector to the boundary at all specified points.
 
-        First finds raw normals, that is normals at all boundary pixels
-        if raw_all_points is True, or if not at the specified poiints
-        (arg points), Then the the (vector field of) normals
-        is smoothed by weighted local averaging.
+        First, finds raw normals, that is normals at all boundary pixels
+        that are calculated using neighbors (from self.external_id) of
+        the boundary point. All points are used if raw_all_points is
+        True, otherwise the specified poiints (arg points).
 
-        The raw normals are calculated using self.find_normals_raw(). They
-        are calcuated using parameters slef.alpha, beta=1, gamma=0 (see
+        The neighborhood size is specified by self.dist_max_external()
+        and defined using self.generate_distance_kernels().
+        The raw normals are calculated using self.find_normals_raw().
+        Uses parameters slef.alpha, beta=1, gamma=0 to give relative
+        weights to the neighborhood points (see distance_weighted_sum()).
+
+        Second, the (vector field of) raw normals is smoothed by
+        weighted local averaging over a neighborhood containing
+        boundary points (for which raw normals were calculated).
+        The neighborhood size is specified by self.dist_max_segment
+        and defined using self.generate_distance_kernels(). Uses
+        paramters alpha=1, self.beta and self.gamma
+        to give relative weights to the neighborhood points (see
         distance_weighted_sum()).
-
-        The raw normals field is smoothed using paramters alpha=1,
-        self.beta and self.gamma (see distance_weighted_sum()).
         
         Sets the following attributes:
           - self.boundary: boundary image, calculated if self.get_boundary
           is True
           - points: (ndarray n_points x n_dim) coordinates of boundary pixels
-          - dist_abs: (list indexed by self.points) each element contains
-          absolute distance to all boundary points that are used to
-          calculate the normal vector at the corresponding point 
-          - dist_vector: (lists of three lists, each indexed by self.points)
-          vector distances like self.dist_abs
+          - dist_abs: (list indexed by self.points) each element (1d
+          ndarray of size n_neighbors) contains absolute distance to
+          all neighbors that are used to calculate the normal vector
+          at the corresponding point (neighbors belong to self.external_id)
+          - dist_vector: (lists indexed by self.points, each element
+          is ndarray n_neighbors x n_dim) showing vector distances
+          to neighbors (analoque to self.dist_abs)
           - points_good: (boolean ndarray) shows points used
-          - normals: (ndarray x_points x n_dim) normal vector at each point
+          - normals: (ndarray n_points x n_dim) normal vector at each point
           - spherical_phi, spherical_phi_deg, spherical_theta,
           spherical_theta_deg: (ndarray, length n_points) spherical
           coordinates phi and theta in radians and degrees
+          - additional attributes that have the same names but with
+          suffix '_raw' (points_raw, dist_abs_raw, ...) which contain
+          results originally obtained by find_normal_raw() and then
+          renamed
+
+        Also sets attributes having the same names as the above, but
+        with suffix '_raw' to the raw normal field values (generated
+        by self.find_normals_raw()).
         
         Arguments:
           - points: (ndarray n_points x n_dims) points where normals
@@ -192,9 +213,8 @@ class BoundaryNormal:
         # get contributions to normal vectors
         if points is None:
             points = self.points_raw
-        vector_filter_res = self.vector_filter(
-            distance_abs=normal_abs, distance_vector=normal_vector,
-            #points=self.points_raw, dist_kernel=dist_kernel)
+        vector_filter_res = self.setup_vector_filter(
+            vector_abs=normal_abs, vectors=normal_vector,
             points=points, dist_kernel=dist_kernel)
         self.dist_abs, self.dist_vector, self.points, self.points_good = \
             vector_filter_res
@@ -202,7 +222,7 @@ class BoundaryNormal:
         # smooth normal vectors
         if len(self.points) > 0:
             self.normals = self.distance_weighted_sum(
-                coord=self.dist_vector, dist=self.dist_abs, alpha=1,
+                vectors=self.dist_vector, dist=self.dist_abs, alpha=1,
                 beta=self.beta, gamma=self.gamma, normalize=self.normalize)
             self.normals = np.asarray(self.normals)
         else:
@@ -214,6 +234,11 @@ class BoundaryNormal:
     def find_normals_raw(self, points=None):
         """Find mormal vector at each point based on that point only.
 
+        Sets attributes with the same names as find_normal() (see its
+        doc). The only difference is that dist_abs and dist_vector
+        contain distances from each boundary point to its
+        self.external_id neighbors (as opposed to boundary neighbors).
+        
         Arguments:
           - points: (ndarray n_points x n_dims) points where normals
           are calulated, if None (default) all boundary points are used
@@ -235,7 +260,7 @@ class BoundaryNormal:
             dist_max=self.dist_max_external, n_dim=self.boundary.ndim)
 
         # find all individual distances and vectors that contribute to normals
-        selected_res = self.select_distance_vectors(
+        selected_res = self.find_distance_vectors(
             image=self.boundary, points=self.points_all,
             dist_kernel=dist_kernel, coord_kernel=coord_kernel,
             segment_id=self.external_id)
@@ -245,7 +270,7 @@ class BoundaryNormal:
         # sum up individual and normalize
         if len(self.points) > 0:
             self.normals = self.distance_weighted_sum(
-                coord=self.dist_vector, dist=self.dist_abs, alpha=self.alpha,
+                vectors=self.dist_vector, dist=self.dist_abs, alpha=self.alpha,
                 beta=1, gamma=0, normalize=self.normalize)
             self.normals = np.asarray(self.normals)
         else:
@@ -254,28 +279,46 @@ class BoundaryNormal:
         # convert normals to spherical angles
         self.normals_to_spherical()
         
-    def select_distance_vectors(
-            self, image, points, dist_kernel, coord_kernel, segment_id):
+    def find_distance_vectors(
+            self, points, dist_kernel, coord_kernel, segment_id, image=None):
         """Calculates distances to a segment.
+
+        For each point (arg points) calculates vectors and distances
+        to all points specified by arg segment_id that are within
+        the distance kernel (arg dist_kernel). 
 
         Core calculations for find_normals_raw().
 
+        Arguments:
+          - image: (ndarray) image (default None, in which case
+          self.image is used)
+          - points: (ndarray n_points x n_dims) points where distances
+          are calulated
+          - distance_kernel: (square ndarray in n_dim dimensions, greyscale),
+          distance kernel, as generated by generate_distance_kernels()
+          - coord_kernel: (ndarray in n_dim+1 dimensions, axis 0 size
+          n_dim, other axes square shape, integer) coordinate kernel,
+          as generated by generate_distance_kernels()
+
         Returns:
           - dist_abs: (list of length n points) elements correspond to
-          points, each element is a list containing absolute distances
-          between the point and all neighboring segment_id points 
+          points, each element is a 1d ndarray of length n_neighbors
+          containing absolute distances between the point and all
+          neighboring segment_id points 
           - dist_vector: (list of length n_points) elements correspond to
-          points, each element is 2d nparray (axis 1 length 2) containing
+          points, each element is 2d ndarray (axis 1 length 2) containing
           vectors from the point to the neighboring segment_id points
           - points: (ndarray n_points x n_dims) point coordinates
           - points_good: (boolean ndarray of length n_points: elements
           correspond to points, shows whether at least 1 neighboring
           segment_id point was found
         """
+
+        if image is None:
+            image = self.image
         
         # initialize loop
         radius = (dist_kernel.shape[0] - 1) // 2
-        dist_kernel_full = dist_kernel.ndim * [slice(0, dist_kernel.shape[0])] 
         image_full = [slice(0, x) for x in image.shape]
         im_empty = pyto.grey.Image()
 
@@ -298,13 +341,13 @@ class BoundaryNormal:
             dist_kernel_inset_adj = [
                 slice(im_slice.start - orig, im_slice.stop - orig) 
                 for im_slice, orig in zip(image_inset_adj, image_adj_orig)]
-
+            
             # extract overlaping parts of image and kernels
             bound_one = image[*image_inset_adj]
             dist_kernel_adj = dist_kernel[*dist_kernel_inset_adj]
             coord_kernel_adj = np.asarray(
                 [coord_ke[*dist_kernel_inset_adj] for coord_ke in coord_kernel])
-
+            
             # select distances and coord vectors by distance and segment
             dist_mask = (
                 (bound_one == segment_id) & (dist_kernel_adj >= 0))
@@ -325,16 +368,49 @@ class BoundaryNormal:
         return (dist_abs, dist_vector,
                 np.asarray(points_res), points_good)
 
-    def vector_filter(
-            self, distance_abs, distance_vector, points, dist_kernel):
-        """Filters vector field.
+    def setup_vector_filter(
+            self, vector_abs, vectors, points, dist_kernel):
+        """Selects neighborhood vectors for each point. 
 
+        For each pont (arg points) finds vectors that are located
+        in the neighborhood of the point defined by (arg) dist_kernel.
+        The selected vectors and their corresponding values are then
+        converted from the image representation (args vectors and
+        vector_abs) to the point representation.
+
+        Forms core calculations for find_normals().
+        
+        Arguments:
+          - vector_abs: (ndarray of shape self.boundary.shape) image
+          that contains abs value of vectors at each point
+          where they are calculated (other points should have value
+          self.no_distance_label)
+          - vectors: (list of length n_dim, where each element
+          is ndarray  of shape self.boundary.shape) cartesian coords
+          of vectors at each point where they are calculated
+          (other points should have value 0)
+          - points: (ndarray n_points x n_dim) coordinates of points
+          - dist_kernel: (ndarray) distance kernel that defines the
+          neighborhood (here only the shape and ndim of the kernel is
+          used)
+
+        Returns:
+          - dist_abs: (list of length n points) elements correspond to
+          points, each element is a 1d ndarray of length n_neighbors
+          containing absolute values of vectors that are located in the
+          neighborhood of the point
+          - dist_vector: (list of length n_points) elements correspond to
+          points, each element is 2d ndarray (axis 1 length 2) containing
+          vectors that are located in the neighborhood of the point
+          - points_res: (ndarray n_points x n_dim) coordinates of points
+          for which neighborhood vectors were found
+          - points_good: (boolean ndarray) directly corresponds to arg
+          points, shows for which points neighborhood vectors were found 
         """
         
         # initialize loop
         radius = (dist_kernel.shape[0] - 1) // 2
-        dist_kernel_full = dist_kernel.ndim * [slice(0, dist_kernel.shape[0])] 
-        image_full = [slice(0, x) for x in distance_abs.shape]
+        image_full = [slice(0, x) for x in vector_abs.shape]
         im_empty = pyto.grey.Image()
 
         dist_abs = []
@@ -358,9 +434,9 @@ class BoundaryNormal:
                 for im_slice, orig in zip(image_inset_adj, image_adj_orig)]
 
             # extract overlaping parts of image and kernels
-            distance_absolute_adj = distance_abs[*image_inset_adj]
+            distance_absolute_adj = vector_abs[*image_inset_adj]
             dist_vector_adj =  np.asarray(
-                [dist_vec[*image_inset_adj] for dist_vec in distance_vector])
+                [dist_vec[*image_inset_adj] for dist_vec in vectors])
             kernel_adj = dist_kernel[*kernel_inset_adj]
 
             # select abs and vector distances by existing distances
@@ -370,8 +446,8 @@ class BoundaryNormal:
                 points_good.append(False)
                 continue
             dist_vector_one = np.asarray(
-                [dist_comp[mask]for dist_comp in dist_vector_adj]).transpose()
-
+                [dist_comp[mask] for dist_comp in dist_vector_adj]).transpose()
+            
             # save
             dist_abs.append(dist_abs_one)
             dist_vector.append(dist_vector_one)
@@ -379,7 +455,7 @@ class BoundaryNormal:
             points_good.append(True)
 
         return (dist_abs, dist_vector,
-                np.asarray(points_res), points_good)
+                np.asarray(points_res), np.asarray(points_good))
             
     def extract_boundary(self, image):
         """Extracts boundary of the segment that faces external region.
@@ -417,6 +493,26 @@ class BoundaryNormal:
     def generate_distance_kernels(self, dist_max, n_dim):
         """Makes greyscale distance and coordinate kernels.
 
+        Generates two kernels:
+          - distance kernel: Euclidean distances to the center, up to
+          the max distance (arg dist_max), elements located at
+          larger distance are set to self.no_distance_label
+          - coordinate kernel: Distances to the center for each
+          coordinate separately (for all kernel elements). 
+
+        The kernel size is the smallest possible that contains all
+        distances <= dist_max.
+        
+        Uses self.no_distance_label.
+
+        Arguments:
+          - dist_max: maximal distance for distance kernel
+          - n_dim: number of dimensions
+
+        Returns:
+          - distance_kernel: (square ndarray in n_dim dimensions, greyscale)
+          - coord_kernel: (ndarray in n_dim+1 dimensions, axis 0 size
+          n_dim, other axes square shape, integer)
         """
 
         # make distance structure where all elements show distance
@@ -424,7 +520,7 @@ class BoundaryNormal:
         size = 2 * max_int + 1
         base = np.ones(shape=n_dim*[size], dtype=int)
         center = n_dim * [max_int]
-        base[*center] = self.bkg_id
+        base[*center] = 0
 
         # generate kernels
         dist_kernel = sp.ndimage.distance_transform_edt(base)
@@ -437,12 +533,48 @@ class BoundaryNormal:
         return dist_kernel, coord_kernel
 
     def distance_weighted_sum(
-            self, coord, dist, alpha=0, beta=1, gamma=0, normalize=True):
+            self, vectors, dist, alpha=0, beta=1, gamma=0, normalize=True):
         """Weighted sum of normal vector components.
 
-        If v is vecor at each point the sum is calculated as: 
+        Takes multiple vectors (arg vectors) and averages them according
+        to their associated weights (specified as distances, which are
+        inverse weights, arg dist). The vectors and distances are
+        organized in lists of the same length where elements are
+        independent from each other (they correspond to "points" of
+        an image). The averaging is done for vectors of
+        a single point, for each point separately, resulting in one
+        average vector per point.
+        
+        If v are vectors (arg vectors) and d are distances (arg dist) at
+        a single point, the weighted sum for that point is calculated as
+        (and repeated for each point): 
 
-           sum over neighborgood (v / (beta * |v|^alpha + gamma))
+           normal = sum over neighborhood (v / (beta * d^alpha + gamma))
+
+        Coefficients alpha, beta and gamma can be chosen to represent
+        different weighting. For example:
+          - alpha=0, beta=1, gamma=0: simple sum, no weighting
+          - alpha=2, beta=1, gamma=0: weighting by the inverse square
+          dependence on distance
+          - gamma > 0: regularization factor, used to give the highest
+          weight to vector having associated distances of 0
+
+        Note: This method does not use any attribute nor method of
+        this instance (todo: make class or static method?) 
+        
+        Arguments:
+          - vectors: (list of length n_points): coordinates of vectors
+          from the point to the neighborhood points, where each element
+          is ndarray of shape n_dim x n_neighborhood_points
+          - bist: (list of length n_points): distance to neighborhood
+          points, where each elemet is ndarray of shape
+          n_neighborhood_points
+          - alpha, beta, gamma: parameters
+          - normalization: if True, the calculated normals are normalized
+          to 1
+
+        Returns normals: (ndarray of shape n_points x n_dims) resulting
+        normal vectors for each point
         """
         
         normal = [
@@ -450,7 +582,7 @@ class BoundaryNormal:
                 u_co / (
                     beta * u_di.reshape(u_di.shape[0], -1)**alpha + gamma),
                 axis=0)
-            for u_co, u_di in zip(coord, dist)]
+            for u_co, u_di in zip(vectors, dist)]
         if normalize:
             normal_abs = np.linalg.norm(normal, axis=1)
             normal = normal / normal_abs.reshape(normal_abs.shape[0], -1)
@@ -470,156 +602,50 @@ class BoundaryNormal:
             except AttributeError:
                 pass
 
-    def normals_to_spherical(self, normals=None, suffix=''):
-        """Converts normal (cartesian) to spherical angles.
+    def normals_to_spherical(self, normals=None, global_=False, suffix=''):
+        """Converts normals from cartesian coords to spherical angles.
 
+        If arg global is True, only element 0 of arg normals is
+        converted to spherical coords and the spherical coordinates
+        are saved as single numbers (instead of ndarrays), while
+        other elements are ignored. This is meant for the "global"
+        case where only one normal is calculated for the entire boundary.
+        
+        Sets attributes:
+          - spherical_phi{suffix}, spherical_phi_deg{suffix}
+          - spherical_theta{suffix}, spherical_theta_deg{suffix}
+        If arg global_ is False, all attributes are 1d ndarrays of
+        length n_ponts. Otherwise they are single numbers.
+
+        Attributes:
+          - normals: (ndarray n_points x n_dim) normal vectors (such
+          as self.normal generated by find_normals())
+          - global_: flag indicating whether only the element 0 of normals
+          is converted to spherical (default False)
+          - suffix: suffix added to spherical coordinate variable names
+          (default '', so no suffix)
         """
 
         if normals is None:
             normals = self.normals
             
         normals_vector = Vector(normals)
-        self.__setattr__(f"spherical_phi{suffix}", normals_vector.phi)
-        self.__setattr__(f"spherical_phi_deg{suffix}", normals_vector.phiDeg)
+        if global_:
+            phi = normals_vector.phi[0]
+            phi_deg = normals_vector.phiDeg[0]
+        else:
+            phi = normals_vector.phi
+            phi_deg = normals_vector.phiDeg
+        self.__setattr__(f"spherical_phi{suffix}", phi)
+        self.__setattr__(f"spherical_phi_deg{suffix}", phi_deg)
         
         if self.n_dim == 3:
-            self.__setattr__(f"spherical_theta{suffix}", normals_vector.theta)
-            self.__setattr__(
-                f"spherical_theta_deg{suffix}", normals_vector.thetaDeg)
-
-
-class BoundarySmooth:
-    """BoundarySmooth class.
-
-    Containes method morphology_pipe() that can be used to smooth
-    a segment by binary morphological operations.
-    """
-
-    def __init__(self, image, segment_id, external_id=None, bkg_id=0):
-        """Sets attributes from args.
-
-        Arguments:
-          - image: (ndarray or pyto.segmentation.Labels) image containg
-          the segment that should be smoothed
-          - segment_id: (int) id of the segment that should be smoothed
-          - external_id: (int, lust, tuple) id(s) of one or more segmentes
-          that contacts the smoothed segment (default None)
-          - bkg_id: background id (default 0)
-        """
-
-        # attributes
-        if isinstance(image, pyto.core.Image):
-            self.image = image.data
-        else:
-            self.image = image
-        self.n_dim = self.image.ndim
-        self.segment_id = segment_id
-        self.external_id = external_id
-        self.bkg_id = bkg_id
-
-        self.operation_dict = {'e': 1, 'd': -1}
-
-    def morphology_pipe(self, operations, erosion_border=1, multiply=None):
-        """Applies a series of binary morphological operations.
-
-        Intended to smooth one segment (defined by self.segment_id).
-        Currently implemented for binary erosion in dilation only. Uses
-        scipy.ndimage.binary_erosion() and scipy.ndimage.binary_dilation().
-        
-        Only segment defined by self.segment_id is smoothed. Generally,
-        smoothing assignes some pixels that in the input image belonged
-        to the background or other segment pixels, to the smoothed segment.
-
-        Pixels that are removed from the segment (that is to be smoothed) by
-        smoothing are first assigned to background (self.bkg_id). In
-        cases when in the input image the smoothed and another segment
-        contact each other, smoothing may result in background pixels
-        placed between the smoothed and the other segment. To remedy this,
-        an external segment (defined by self.external_id) is dilated over
-        the background pixels that belong to the segment to be smoothed
-        The extent of this dilation is calculated by the maximal cumulative
-        extent of erosions during smoothing. For examplem it is:
-          - 1 if operations = 'ed'
-          - 0 if operations = 'de'
-          - 2 if operations = 'eeddddee'
-          - 2 if operations = 'ddeeeedd'       
-
-        For example, if an image was expanded by an integer factor (inverse
-        of binning) it is recommended to use the following arg operations:
-          - expansion factor 2: operations = 'deed'
-          - expansion factor 4: operations = 'ddeeeedd'
-        
-        Requred attributes:
-          - image: (np.ndimage or pyto.core.Image) input image
-          - segment_id
-          - bkg_id
-        
-        Arguments:
-          - operations: (str or list of chars) series of morphological
-          operators, currently implemented 'e' for erosion and
-          'd' for dilation, in the order they should be applied
-          - erosion_border: border valus used for erosion (passed directly
-          to scipy.ndimage.binary_erosion(), arg border_value, default 1)
-          - mutiply: if not None, the returned image is obtained by
-          multiplying the processed image by this factor and adding
-          the input image (default None)
-
-        Returns:
-          - If arg multiply is None: processed image
-          - If arg multiply is not None: 
-            multiply * processed_image + image
-        """
-
-        # deal with multiple segment ids
-        multi_segment_id = False
-        if isinstance(self.segment_id, (list, tuple)):
-            multi_segment_id = True
-            image = self.image.copy()
-            for seg_id in self.segment_id:
-                local = self.__class__(
-                    image=image, segment_id=seg_id,
-                    external_id=self.external_id, bkg_id=self.bkg_id)
-                image = local.morphology_pipe(
-                    operations=operations, erosion_border=erosion_border,
-                    multiply=None)
-            if multiply is not None:
-                image = multiply * image + self.image
-            return image
-       
-        # smooth binary
-        image_loc = (self.image == self.segment_id)
-        for op in operations:
-            if op == 'e':
-                image_loc = sp.ndimage.binary_erosion(
-                    image_loc, border_value=erosion_border)
-            elif op == 'd':
-                image_loc = sp.ndimage.binary_dilation(
-                    image_loc, border_value=0)
-        image = self.image.copy()
-        image[image==self.segment_id] = self.bkg_id
-        image[image_loc] = self.segment_id
-
-        # adjust external id
-        if (self.external_id is not None) and (self.external_id != self.bkg_id):
-
-            # prepare
-            n_dilations = np.add.accumulate(
-                [self.operation_dict[op] for op in operations]).max()
-            if isinstance(self.external_id, int):
-                external_ids = [self.external_id]
+            if global_:
+                theta = normals_vector.theta[0]
+                theta_deg = normals_vector.thetaDeg[0]
             else:
-                external_ids = self.external_id
+                theta = normals_vector.theta
+                theta_deg = normals_vector.thetaDeg
+            self.__setattr__(f"spherical_theta{suffix}", theta)
+            self.__setattr__(f"spherical_theta_deg{suffix}", theta_deg)
 
-            # put external id where boundary retracted close to external
-            for _ in range(n_dilations):
-                for ext_id in external_ids:
-                    dilated_ext = sp.ndimage.binary_dilation(
-                        self.image == ext_id, border_value=0)
-                    new_ext = (dilated_ext & (image == self.bkg_id)
-                               & (self.image == self.segment_id))
-                    image[new_ext] = ext_id
-            
-        if (multiply is not None) and not multi_segment_id:
-            image = multiply * image + self.image
-
-        return image
