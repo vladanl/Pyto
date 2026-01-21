@@ -371,6 +371,10 @@ class Segment(Labels):
         Finds segments that are disconnected and segments that do not exist
         (id in self.ids but have no elements) and returns their ids.
 
+        Adds attribute:
+          - self.n_parts: (array indexed by id) number of disconnected parts
+          for each segment
+
         Returns dictionary with the following key value pairs:
           - 'many' : (list) ids of disconnected segments
           - 'empty' : (list) ids of non-existing segments
