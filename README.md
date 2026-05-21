@@ -55,6 +55,8 @@ Please start from [Overview](doc/manuals/overview.pdf).
 
 ### Release history ###
 
+* 1.11.2 (21.5.2026, svn r2285)
+    * Updated colocalization task example
 * 1.11.1 (17.1.2026, svn r2263)
 	* Added membrane / boundary normal vectors
 	* Improved preprocessing for averaging and handling pixel size in Layers.rebin()
