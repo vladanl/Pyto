@@ -279,6 +279,8 @@ class MPSConversion(abc.ABC):
             self.pixel_nm_col: psets.pixel_col
         In addition the following mapping as applied:
             (arg) set_name_col: psets.set_name_col
+        Column added if present in this instance:
+            self.region_id_col: psets.region_id_col 
         These are typically sufficient. 
 
         However, if arg columns is specified, the default dictionary 
@@ -337,11 +339,15 @@ class MPSConversion(abc.ABC):
         else:
             particles_loc = self.particles
         part_cols = [self.tomo_id_col, set_name_col_local] + coord_cols
+        if self.region_id_col in self.particles.columns:
+            columns_default[self.region_id_col] = psets.region_id_col
+            part_cols += self.region_id_col
         part_cols = [col for col in part_cols if col in self.particles.columns]
         #if index:
         #    particles_loc[psets.index] = particles_loc.index
-            #part_cols = [psets.index_col] + part_cols
+            #part_cols = [psets.index_col] + part_cols    
         tomo_cols = [self.tomo_id_col, self.region_col, self.pixel_nm_col]
+
         psets_df = pd.merge(
             particles_loc[part_cols], self.tomos[tomo_cols],
             on=self.tomo_id_col, how='left', sort=False)
@@ -561,11 +567,15 @@ class MPSConversion(abc.ABC):
         return particle_df
 
     def from_patterns(
-            self, patterns, coord_cols, tomo_id, pixel_size_nm=1, update=False):
+            self, patterns, coord_cols, tomo_id, region_id=None,
+            pixel_size_nm=1, update=False):
         """Makes a basic particles table from point patterns for one tomo.
 
+        All patterns have to have to same tomo_id, region_id and pixel size.
+        
         Makes table with following columns:
           - self.tomo_id_col: tomo id
+          - self.region_id_col: region id, if arg region_id is not None
           - self.pixel_nm_col: pixel size 
           - self.class_name_col: pattern name
           - self.subclass_col: pattern_name
@@ -577,6 +587,7 @@ class MPSConversion(abc.ABC):
           same dtype
           - coord_cols: (list) coordinate column names 
           - tomo_id: tomo id
+          - region_id: region id (default None)
           - pixel_size_nm: pixel size in nm (default 1)
           - update: if True, adds the resulting table to self.particles
           (default False)
@@ -589,11 +600,15 @@ class MPSConversion(abc.ABC):
         # particles from patterns
         part_dfs = []
         for name, pat in patterns.items():
-            part_local = pd.DataFrame(
-                {self.tomo_id_col: tomo_id, self.pixel_nm_col: pixel_size_nm,
-                 self.class_name_col: name, self.subclass_col: name, 
-                 **dict(zip(coord_cols, pat.transpose())),
-                 self.keep_col: True})
+            data_dict = {self.tomo_id_col: tomo_id}
+            if region_id is not None:
+                data_dict[self.region_id_col] = region_id
+            data_dict.update({
+                self.pixel_nm_col: pixel_size_nm,
+                self.class_name_col: name, self.subclass_col: name, 
+                **dict(zip(coord_cols, pat.transpose())),
+                self.keep_col: True})
+            part_local = pd.DataFrame(data_dict)
             part_dfs.append(part_local)
         result = pd.concat(part_dfs, ignore_index=True)
 

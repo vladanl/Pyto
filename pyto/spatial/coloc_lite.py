@@ -81,7 +81,8 @@ class ColocLite(ColocAnalysis):
 
         # random
         if rng is None:
-            self.rng = default_rng(seed=seed)
+            rng = default_rng(seed=seed)
+        self.rng = rng
         self.seed = seed
         self.n_factor = n_factor
         self.max_iter_rand = max_iter_rand
@@ -487,7 +488,8 @@ class ColocLite(ColocAnalysis):
                 particles.get_coords(tomo=tomo, set_name=nam, catch=True)
                 for nam in set_names]
             regions = [
-                particles.get_region(tomo=tomo, set_name=nam)
+                mps.get_region(tomo_id=tomo, set_name=nam)
+                #particles.get_region(tomo=tomo, set_name=nam)
                 for nam in set_names]
             co.make_one(
                 patterns=patterns, regions=regions, distance=distance,

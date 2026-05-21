@@ -76,6 +76,7 @@ class ParticleSets:
         self.tomo_col = 'tomo_id'
         self.set_name_col = 'set'
         self.region_path_col = 'region_path'
+        self.region_id_col = 'region_id'
         self.pixel_col = 'pixel_nm'
         self.coord_cols = ['x', 'y', 'z']
         self.coord_col_prefix = 'coord_'
@@ -332,7 +333,7 @@ class ParticleSets:
             self._regions[tomo][set_name] = value
         
     def get_region(self, tomo, set_name, save_from_file=False):
-        """Gets region
+        """Finds the region for the spevified set and tomo.
 
         """
 

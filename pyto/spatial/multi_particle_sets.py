@@ -555,7 +555,7 @@ class MultiParticleSets(
         else:
             table[self.tomo_id_col] = table[path_col]
     
-    def get_particle_id(self, path):
+    def getparticle_id(self, path):
         """Extracts particle id from subtomo path.
         """
         name = os.path.basename(path).split('.')[0]
@@ -811,7 +811,38 @@ class MultiParticleSets(
             res = tomos[[self.tomo_id_col]].copy()
             res[self.region_shape_cols] = shape_np
             return res
+
+    def get_region(self, tomo_id, set_name):
+        """Reads region corresponding to the specified tomo and set.
+
+        """
+
+        # read region
+        region_path = self.tomos.query(
+            f'{self.tomo_id_col} == @tomo_id')[self.region_col].to_numpy()[0]
+        reg_im = Labels.read(file=region_path, memmap=True)
+        reg_data = reg_im.data
         
+        # get region id
+        if self.region_id_col in self.particles:
+            query_str = (
+                f'{self.tomo_id_col} == @tomo_id '
+                + f'& {self.class_name_col} == @set_name')
+            reg_ids = (
+                self.particles.query(query_str)[self.region_id_col].unique())
+            if len(reg_ids) == 0:
+                raise ValueError(
+                    f"There are no particles of set {set_name} "
+                    + f"in tomo {tomo_id}")
+
+            region = np.logical_or.reduce(
+                [reg_data == r_id for r_id in reg_ids])
+
+        else:
+            region = reg_data > 0
+
+        return region
+            
     #
     # Methods that calculate new particle properties
     #

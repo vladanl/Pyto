@@ -744,7 +744,7 @@ class Presynaptic(object):
           - self.convert_path_common
           - self.convert_path_helper
 
-        Sets the following scalar properties:
+        Sets the following scalar properties of (arg) struct object:
           - synapse_phi, synapse_theta (or arg spherical names):
           synapse direction in spherical angles
           - 'synapse_phi_y', 'synapse_theta_z' (or arg wedge_angle_names):

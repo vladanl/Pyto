@@ -654,14 +654,14 @@ class ImageIO(object):
         + numpy.zeros(7, 'int32').tolist() 
         + numpy.zeros(6, 'float32').tolist() 
         + list( mrc['defaultAxisOrder'] ) 
-        + numpy.zeros(3, 'float32').tolist() 
-        + numpy.zeros(2, 'int32').tolist() 
-        + numpy.zeros(1, 'int16').tolist() 
-        + [30*b' '] 
-        + numpy.zeros(4, 'int16').tolist() 
-        + numpy.zeros(6, 'float32').tolist() 
-        + numpy.zeros(6, 'int16').tolist() 
-        + numpy.zeros(12, 'float32').tolist() 
+        + numpy.zeros(3, 'float32').tolist()  # words 20-22, bytes 77-88
+        + numpy.zeros(2, 'int32').tolist()  # words 23-23
+        + numpy.zeros(1, 'int16').tolist()  # bytes 97-98
+        + [30*b' ']  # bytes 99-128, Note: from here on might have changed
+        + numpy.zeros(4, 'int16').tolist()  # bytes -136
+        + numpy.zeros(6, 'float32').tolist()  # bytes -160
+        + numpy.zeros(6, 'int16').tolist()   # bytes -172
+        + numpy.zeros(12, 'float32').tolist()  # bytes -230
         + numpy.zeros(1, 'int32').tolist() 
         + [800*b' '])   
     

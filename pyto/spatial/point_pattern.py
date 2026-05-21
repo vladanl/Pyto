@@ -706,6 +706,7 @@ def colocalize_pattern(
         fixed_pattern, n_colocalize, mode=None,
         fixed_fraction=1, colocalize_fraction=1,
         region=None, region_id=1, region_coords=None, max_dist=0,
+        fixed_region='region', fixed_region_id=1, fixed_region_coords='region', 
         shuffle_fixed=True, shuffle_region=True, rng=None, seed=None):
     """Makes a point pattern that colocalizes (interact with) a given pattern.
 
@@ -714,7 +715,8 @@ def colocalize_pattern(
     and where all colocalized points are located on the specified region.
     Procedure:
       - Selects the specified fraction of the fixed pattern points
-      - Further select points located in the specified region
+      - Select among the selected fixed points those that are located
+      in the specified region
       - Places the specified fraction of colocalization points (arg
       colocalize_fraction) within neighborhoods of the selected fixed
       pattern points, depending on the arg mode (see below)
@@ -753,8 +755,8 @@ def colocalize_pattern(
       'many_to1' (same as None, default), 'max1' or 'kd'
       - fixed_fraction: fraction of the fixed points used for
       colocalization (default 1)
-      - colocalized_fraction: fraction of the colocalized points that are
-      colocalizized (default 1)
+      - colocalized_fraction: fraction of the colocalize pattern points
+      that are actually colocalizized (default 1)
       - region: (ndarray or pyto.core.Image) label image (default None)
       - region_id: id of the region in the label image (region) (default 1)
       - region_coords: (ndarray, n_region_coords x n_dim) coordinates of all 
@@ -779,12 +781,20 @@ def colocalize_pattern(
     stochastic) and the remaining points are not colocalized.
     """
 
+    if (isinstance(fixed_region_coords, str)
+        and (fixed_region_coords == 'region')):
+        fixed_region_coords = region_coords
+    elif isinstance(fixed_region, str) and (fixed_region == 'region'):
+        fixed_region = region
+        fixed_region_id = region_id
+    
     # select points from fixed pattern
     fixed = select_by_region(
-        pattern=fixed_pattern, region=region, region_id=region_id,
-        region_coords=region_coords, fraction=fixed_fraction,
+        pattern=fixed_pattern, region=fixed_region, region_id=fixed_region_id,
+        #region_coords=None, fraction=fixed_fraction,
+        region_coords=fixed_region_coords, fraction=fixed_fraction,
         shuffle=shuffle_fixed, seed=seed, rng=rng)
-
+    
     # setup kd mode
     if mode == 'kd':
         n_fixed = fixed_pattern.shape[0]
@@ -928,6 +938,7 @@ def select_by_region(
     selected, _ = np.split(pattern, [split_ind], axis=0)
 
     # select those in region
+    # xxx ToChange
     if region_coords is not None:
         selected = np.asarray(
             [po for po in selected

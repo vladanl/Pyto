@@ -1404,7 +1404,7 @@ class Image(object):
             filter_fun=ndimage.gaussian_filter, filter_kwds={"sigma": 1},
             update=True):
         """
-        Binns this image (any number of dimensiions) and possibly applies
+        Binns this image (any number of dimensions) and possibly applies
         the specified filter before binning.
 
         Binning function (arg fun) has to take a ndarray and axis as arguments.

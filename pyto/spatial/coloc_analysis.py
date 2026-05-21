@@ -65,7 +65,6 @@ class ColocAnalysis(ColocTableRead, ColocPyseg):
       - name_data: combined data for all tomograms, one row for each distance
       - name_data_syn: data for individual tomograms, one row for each
       combination of tomogram and colocalization distance
-    where name is a colocalization name.
 
     Colocalization names are formed by concatenating particle set names with
     '_' placed between the names, such as (pre_post_tether or setX_setY).
@@ -198,7 +197,7 @@ class ColocAnalysis(ColocTableRead, ColocPyseg):
           particles sets (like ['setX', 'setY']
 
         Returns: 
-          (data_table_all_tomos together, data_table_individual_tomos)
+          (data_table_all_tomos_together, data_table_individual_tomos)
         """
 
         if isinstance(name, (list, tuple)):

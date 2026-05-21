@@ -70,6 +70,7 @@ class MPSPattern(abc.ABC):
             self, fixed_name, n_colocalize, colocalize_name=None,
             mode=None, fixed_fraction=1, colocalize_fraction=1,
             region=None, region_id=1, region_coords=None, max_dist=0,
+            fixed_region=None, fixed_region_id=1, fixed_region_coords='region',
             class_col_read=None, class_col_write=None, coord_cols=None,
             shuffle=True, keep_fixed=False, rng=None, seed=None, update=False):
         """Generates a colocalized (interacting) point pattern.
@@ -142,6 +143,8 @@ class MPSPattern(abc.ABC):
           (interaction) neighborhoods (default 0)
           - shuffle: flag indicating if points are randomly shuffled before
           a fraction is selected (strongly recommended, default True)
+          - keep_fixed: flag indicating if fixed pattern should not
+          be shuffled
           - rng: random number generator for shuffling, if None a new one
           is created
           - seed: random number generator seed for shuffling, used in case
@@ -174,9 +177,10 @@ class MPSPattern(abc.ABC):
         colocalized = point_pattern.colocalize_pattern(
             fixed_pattern=fixed, n_colocalize=n_colocalize,
             mode=mode, fixed_fraction=fixed_fraction,
-            colocalize_fraction=colocalize_fraction,
+            colocalize_fraction=colocalize_fraction, max_dist=max_dist,
             region=region, region_id=region_id, region_coords=region_coords,
-            max_dist=max_dist,
+            fixed_region=fixed_region, fixed_region_id=fixed_region_id,
+            fixed_region_coords=fixed_region_coords,
             shuffle_fixed=shuffle_fixed, shuffle_region=shuffle,
             rng=rng, seed=seed)
 
@@ -187,6 +191,8 @@ class MPSPattern(abc.ABC):
             colocalize_local = fixed_tab.iloc[0].to_dict()
             for ccol in class_col_write:
                 colocalize_local[ccol] = colocalize_name
+            if (region_id is not None) and (region_id > 0):
+                colocalize_local[self.region_id_col] = region_id
             for ax_ind, co_col in enumerate(coord_cols):
                 colocalize_local[co_col] = colocalized[:, ax_ind]
             colocalize_local_tab = pd.DataFrame(colocalize_local)

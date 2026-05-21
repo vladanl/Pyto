@@ -6,14 +6,15 @@ Preprocessing for membrane segmentation. Useful for, but not limited to
 preparation for Morse density tracing.
 
 Overall it does the following:
-  - From bin 2 tomo, generates bin 4 and bin 8
-  - Starting from a region of interest coordinates specified bin 2, 4, or 8 tomo,
-  extracts a subtomogram that contains the region of interest,
+  - Starting from bin 2 tomo, generates bin 4 and bin 8
+  - Extracts a subtomogram that contains a region of interest, starting
+  from coordinates specified the bin 2, 4, or 8 tomo
   - Extracts equivalent subtomograms from the other two tomos 
 
 More details are given below:
 
 The subtomo of interest can be defined by the following methods:
+
 
 1) Rotation and crop method. The tomo is first rotated using an external
 software and then in the rotated tomo the coordinates that define a 
@@ -29,8 +30,10 @@ Parameters required:
   - rotation, specified by Euler angles
   - box coordinates in the rotated tomogram
 
-2) (Preferred) Slanted rectangle method. Coordinates of the (possibly slanted) box
-are determined directly from the original tomogram, that is without rotation.
+
+2) (Preferred) Slanted rectangle method. Coordinates of the (possibly
+slanted) box are determined directly from the original tomogram, that
+is without rotation.
 
 To be precise, the box does not have to have right angles, so it can be
 a 3D parallelogram.
@@ -45,6 +48,7 @@ Parameters required:
   they define a proper (3D) rectangle, in general these will define a  
   (3D) parallelogram
 
+
 3) Subtomo box specified method. Coordinates of the box (crop) that 
 defines the subtomogram.
 
@@ -53,6 +57,7 @@ not generated.
 
 Parameter required: 
   - box coordinates 
+
 
 In all cases a parameter is specified that shows if the box coordinates
 are given in the system where cooridnates start with 1 (as in many 
@@ -101,11 +106,11 @@ from pyto.geometry.parallelogram import Parallelogram
 
 # Euler angles for rotation, order (phi, theta, psi) in degrees
 # uses active extrinsic zxz Euler angles convention
-euler_deg = [0, 0, 25]
+# euler_deg = [0, 0, 25]
 euler_deg = None  # in case method 1 is not used
 
 # box coordinates on the rotated tomo [[x_min, x_max], [y_min, ... ]]
-after_rot_crop = [[199, 263], [97, 148], [94, 132]]
+# after_rot_crop = [[199, 263], [97, 148], [94, 132]]
 after_rot_crop = None  # in case method 1 is not used
 
 # 2) Corners of a (likely) slanted rectangle are given
@@ -132,8 +137,8 @@ simple_crop = None  # in case method 3 is not used
 crop_coord_bin = 8
 
 # If the image viewer used to determine the crop parameters starts numbering
-# pixels (and z slices) from 1 set this variable to 1 (like Tom), if it
-# starts from 0 set it to 0
+# pixels (and z slices) from 1 set this variable to 1 (like Imod, Tom),
+# otherwise, if it starts from 0 set it to 0
 offset = 1
 
 #

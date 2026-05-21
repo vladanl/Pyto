@@ -461,11 +461,15 @@ class Groups(dict):
         """
         Returnes a new instance of this class where the observations of this
         instance are rearanged into new groups according to values of
-        the specified property.
+        the specified property (arg name).
 
         The values of the specified property are used as the group names of
         the new (rearanged) object. If these values are not strings (str type),
         they are converted to strings by str(value).
+
+        If a group doesn't have property (arg) name, or an experiment
+        hase value None or 'None' for that property, they are not included
+        in the returned instance
 
         Arguments:
           - name: name of the property used to distinguish groups
@@ -480,15 +484,21 @@ class Groups(dict):
         # make new instance
         rearranged = self.__class__()
 
-        for categ, ident, exp in self.experiments(categories=categories,
-                                                  identifiers=identifiers):
+        for categ, ident, exp in self.experiments(
+                categories=categories, identifiers=identifiers):
 
             # add experiment to the appropriate group (make group if needed)
-            new_categ = str(exp.getValue(name=name))
+            try:
+                new_categ = str(exp.getValue(name=name))
+            except AttributeError:
+                # current group has no property name
+                continue
+            if (new_categ is None) or (new_categ == 'None'):
+                continue  # current experiment has no value for property name 
             if rearranged.get(new_categ) is None:
                 rearranged[new_categ] = Observations()
-            rearranged[new_categ].addExperiment(experiment=exp,
-                                                identifier=ident)
+            rearranged[new_categ].addExperiment(
+                experiment=exp, identifier=ident)
 
         return rearranged
 

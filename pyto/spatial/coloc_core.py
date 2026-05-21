@@ -89,6 +89,8 @@ class ColocCore:
           pattern coordinates in pixels (thus ints)
           - names: (list of length n_patterns) names of point pattern (particle)
           - distances: list of colocalization distances in nm
+          - region (ndarray): Label image where elements >0 or True designate
+          the region and 0 or False background.
 
         Sets attributes:
           - Attributes pointing to the calculated colocalizations.
@@ -336,6 +338,8 @@ class ColocCore:
           points that define subcolumns
           - distance: single colocalization distance [nm]
           - col_distance: column separation distance [nm]
+          - region (ndarray): Label image where elements >0 or True designate
+          the region and 0 or False background.
 
         Return (n_columns, column_size):
           - n_columns: number of columns

@@ -28,8 +28,9 @@ class BoundarySmooth:
         Arguments:
           - image: (ndarray or pyto.segmentation.Labels) image containg
           the segment that should be smoothed
-          - segment_id: (int) id of the segment that should be smoothed
-          - external_id: (int, lust, tuple) id(s) of one or more segmentes
+          - segment_id: (int, list, tuple) id of the segment that should
+          be smoothed
+          - external_id: (int, list, tuple) id(s) of one or more segmentes
           that contacts the smoothed segment (default None)
           - bkg_id: background id (default 0)
         """

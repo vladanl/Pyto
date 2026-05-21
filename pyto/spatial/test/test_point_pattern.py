@@ -515,6 +515,13 @@ class TestPointPattern(np_test.TestCase):
             shuffle=False)
         np_test.assert_equal(actual, np.array([[1, 2], [2, 5]]))
          
+        # only fraction selection by no region
+        region = np.ones((8, 8), dtype=int)
+        actual = ppattern.select_by_region(
+            pattern=points, region=None, region_coords=None, fraction=0.5,
+            shuffle=False)
+        np_test.assert_equal(actual, np.array([[1, 2], [2, 5]]))
+         
        # both selections
         region = np.ones((6, 5), dtype=int)
         actual = ppattern.select_by_region(
@@ -549,15 +556,20 @@ class TestPointPattern(np_test.TestCase):
              [32, 12, 50],
              [20, 28, 48],
              [25, 40, 45]])
-        
+
+        # all fixed, region='fixed_region'
         region_coords = ppattern.get_rectangle_coords(
             [[10, 10, 40], [30, 50, 70]])
         actual = ppattern.colocalize_pattern(
             fixed_pattern=fixed, n_colocalize=5, region_coords=region_coords)
+        fixed_actual =  np.array([[14, 36, 67], [20, 28, 48], [25, 40, 45]])
         np_test.assert_equal(
-            np.asarray([np.asarray([(act == po).all() for po in fixed]).any()
-                        for act in actual]).all(),
+            np.asarray(
+                [np.asarray([(act == po).all() for po in fixed_actual]).any()
+                 for act in actual]).all(),
             True)
+
+        # fixed and colocalize fractions, region='fixed_region'
         desired = np.array(
             [[25, 40, 45], [25, 40, 45], [14, 36, 67],
              [22, 42, 45], [17, 44, 67], [10, 27, 48]])
@@ -566,6 +578,35 @@ class TestPointPattern(np_test.TestCase):
             fixed_fraction=0.8, colocalize_fraction=0.4, seed=125)
         np_test.assert_equal(actual, desired)
 
+        # fixed region inside region
+        fixed_region_coords = ppattern.get_rectangle_coords(
+            [[20, 10, 40], [30, 40, 70]])
+        actual = ppattern.colocalize_pattern(
+            fixed_pattern=fixed, n_colocalize=3, region_coords=region_coords,
+            fixed_region_coords=fixed_region_coords)
+        desired = np.array([[20, 28, 48], [20, 28, 48], [20, 28, 48]])
+        np_test.assert_equal(actual, desired)
+
+        # fixed region separate from region
+        fixed_flat = np.array(
+            [[14, 36, 40],
+             [32, 12, 40],
+             [20, 28, 40],
+             [25, 40, 40]])
+        flat_region_coords = ppattern.get_rectangle_coords(
+            [[10, 10, 30], [40, 50, 31]])
+        desired = np.array(
+            [[14, 36, 30],
+             [32, 12, 30],
+             [20, 28, 30],
+             [25, 40, 30]])
+        actual = ppattern.colocalize_pattern(
+            fixed_pattern=fixed_flat, n_colocalize=4,
+            region_coords=flat_region_coords,
+            fixed_region_coords=None, max_dist=10)
+        np_test.assert_equal(
+            np.array([act in desired for act in actual]).all(), True)
+        
         # shuffle_fixed False
         desired = np.tile(fixed[0, :], (6, 1))
         actual = ppattern.colocalize_pattern(

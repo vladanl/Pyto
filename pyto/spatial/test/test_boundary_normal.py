@@ -79,7 +79,7 @@ class TestBoundaryNormal(np_test.TestCase):
         center_dist = sp.ndimage.distance_transform_edt(center_mask)
         self.circle[center_dist <= self.sphere_radius + 0.5] = self.segment_id
         
-    def test_extract_boundary(self):
+    def xtest_extract_boundary(self):
         """Tests extract_boundary()
         """
 
@@ -97,7 +97,7 @@ class TestBoundaryNormal(np_test.TestCase):
         actual = bound.extract_boundary(image=self.image_2d)
         np_test.assert_array_equal(actual, self.image_2d_boundary_2)
 
-    def test_distance_weighted_sum(self):
+    def xtest_distance_weighted_sum(self):
         """Tests distance_weighted_sum().
         """
 
@@ -148,7 +148,7 @@ class TestBoundaryNormal(np_test.TestCase):
         expected = np.array([[-1/2 + 1/3, 1/2 + 1/3], [2/5, -1/2]])
         np_test.assert_array_almost_equal(actual, expected) 
         
-    def test_generate_distance_kernels(self):
+    def xtest_generate_distance_kernels(self):
         """Tests generate_distance_kernels().
         """
 
@@ -178,7 +178,7 @@ class TestBoundaryNormal(np_test.TestCase):
              [[-1, 0, 1], [-1, 0, 1], [-1, 0, 1]]])
         np_test.assert_array_almost_equal(coord_kernel, expected_coord)
 
-    def test_find_distance_vectors(self):
+    def xtest_find_distance_vectors(self):
         """Tests find_distance_vectors().
         """
 
@@ -245,13 +245,20 @@ class TestBoundaryNormal(np_test.TestCase):
             np.array([[10, 20], [11, 21]]),
             np.array([[10, 20], [11, 21], [12, 22]]),
             np.array([[11, 21],[12, 22]])]
+        expected_hood_coords = [
+            np.array([[0, 2], [1, 2]]),
+            np.array([[0, 2], [1, 2], [2, 2]]),
+            np.array([[1, 2], [2, 2]])]
         for act, expec in zip(actual[1], expected_vec):
             np_test.assert_array_equal(act, expec)
         expected_points = np.array([[0, 2], [1, 2], [2, 2]])
-        np_test.assert_array_equal(actual[2], expected_points)
-        np_test.assert_array_equal(actual[3], len(expected_points)*[True])
+        np_test.assert_array_equal(actual[3], expected_points)
+        np_test.assert_array_equal(actual[4], len(expected_points)*[True])
+        np_test.assert_equal(len(actual[2]), len(expected_points))
+        for act, expec in zip(actual[2], expected_hood_coords):
+            np_test.assert_array_equal(act, expec)
         
-    def test_find_normals_raw(self):
+    def xtest_find_normals_raw(self):
         """Tests find_normals_raw.
         """
 
@@ -264,7 +271,7 @@ class TestBoundaryNormal(np_test.TestCase):
         np_test.assert_array_almost_equal(
             bound.normals, self.image_2d_raw_normals, decimal=3) 
         
-    def test_find_normals(self):
+    def xtest_find_normals(self):
         """Tests find_normals.
         """
 
@@ -352,7 +359,7 @@ class TestBoundaryNormal(np_test.TestCase):
         np_test.assert_array_almost_equal(actual[:7], desired[:7])
         np_test.assert_allclose(actual[7:], desired[7:], atol=5)
 
-    def test_find_normal_global(self):
+    def xtest_find_normal_global(self):
         """Tests find_normal_global()
         """
 

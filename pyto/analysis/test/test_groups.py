@@ -643,10 +643,30 @@ class TestGroups(np_test.TestCase):
         groups.ga.setValue(identifier='ia5', name='color', value='blue')
         groups.gb.setValue(identifier='ib1', name='color', value='red')
         groups.gb.setValue(identifier='ib2', name='color', value='green')
-        groups.gb.setValue(identifier='ib3', name='color', value='blue')
+        #groups.gb.setValue(identifier='ib3', name='color', value='blue')
+        #groups.gd.setValue(identifier='id6', name='color', value='red')
+
+        # regroup by color, not all groups have the new property 
+        new = groups.regroup(name='color')
+        np_test.assert_equal(set(new.keys()), set(['red', 'blue', 'green']))
+        np_test.assert_equal(set(new.red.identifiers),
+                             set(['ia1', 'ib1']))
+        np_test.assert_equal(set(new.blue.identifiers), set(['ia5']))
+        np_test.assert_equal(set(new.green.identifiers), set(['ia3', 'ib2']))
+
         groups.gd.setValue(identifier='id6', name='color', value='red')
 
-        # regroup by color
+        # regroup by color, not all experiments have the new property 
+        new = groups.regroup(name='color')
+        np_test.assert_equal(set(new.keys()), set(['red', 'blue', 'green']))
+        np_test.assert_equal(set(new.red.identifiers),
+                             set(['ia1', 'ib1', 'id6']))
+        np_test.assert_equal(set(new.blue.identifiers), set(['ia5']))
+        np_test.assert_equal(set(new.green.identifiers), set(['ia3', 'ib2']))
+
+        groups.gb.setValue(identifier='ib3', name='color', value='blue')
+
+        # regroup by color, all have the new property 
         new = groups.regroup(name='color')
         np_test.assert_equal(set(new.keys()), set(['red', 'blue', 'green']))
         np_test.assert_equal(set(new.red.identifiers),

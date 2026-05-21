@@ -2097,7 +2097,7 @@ def convert_synapse_angles(
     vector and the y-axis, but it takes values from 0-90 degrees as follows:
       - 0: pre- or postsynaptic terminal is up (positive y) and the other 
       is down
-      - 90: one terninal is on the right (positive x) and the other on the left 
+      - 90: one terminal is on the right (positive x) and the other on the left 
   
     If the property new_name already exists, it will be overwriten.
 
@@ -2106,6 +2106,12 @@ def convert_synapse_angles(
     read only from the first object and the converted angle property is 
     added to all Groups objects.
 
+    Depreciation note: As of r2257 synapse angles (spherical phi and theta)
+    are automatically determined and converted to wedge-like angles by
+    Presynaptic.find_synapse_direction() (currently during generation
+    of structure specific pickles by presynaptic_stats.main()). This
+    function is left so that the porevious projects can be analyzed.
+    
     Sets:
       - property new_angle
 
