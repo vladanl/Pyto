@@ -123,9 +123,20 @@ def get_transformer_robust(features=None):
     
     return ct, columns
 
-def get_transformer_2(features=None):
-    """
-    All standard
+def get_transformer_standard(features=None):
+    """Robust feature scaling.
+
+    All features are scaled using sklearn.preprocessing.StandardtScaler().
+
+    Argument:
+      - features: (list of features, default None) if specified, keeps only 
+      the specified features
+
+    Returns:
+      - transformer (sk.compose.ColumnTransformer)
+      - list of features
+    
+      All standard
 
     Probably not used
     """
@@ -348,6 +359,25 @@ def get_columns(trans_list):
         lambda x, y: x + y, 
         [item[2] for item in trans_list])
     return cols
+
+def check_data(data, cols, print_rows=False):
+    """
+    Checks data. Reports if nan is found in any of the 
+    specified columns
+
+    Arguments:
+      - data: (pandas.DataFrame) table that is checked
+      - cols: (list) columns checked
+      - print_rows: flag indicating whether rows containing nans are printed
+    """
+    
+    if data[cols].isna().any().any():
+        bad = data[data[cols].isna().any(axis=1)].index
+        print(f"ERROR: The following rows have nan values {bad.to_list()}")
+        if print_rows:
+            print(data.loc[bad, cols])
+    else:
+        print("Looks fine")
 
 
 

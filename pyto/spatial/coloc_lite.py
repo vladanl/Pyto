@@ -348,6 +348,8 @@ class ColocLite(ColocAnalysis):
           - n_simul: N simulations
           - set_names: (list) particle set names, used only for printing 
           results, if None (default) the names are derived from arg coloc_name
+          - exclusion: exclusion distance imposed on the specified (real)
+          particles and on the simulated particles [nm]
           - hull, hull_expand: not implemented
           - log: path to a log file or an open file
         """

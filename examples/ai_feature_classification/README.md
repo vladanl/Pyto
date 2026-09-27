@@ -1,7 +1,7 @@
 
 # Supervised feature-based classification by machine and deep learning #
 
-Optimization, training and inference for supervised classification of structures visualized by cryo-electron tomography by Logistic regression, SVM and Neural nets. In all cases, input is a set of features of the structures, as opposed to images.
+Feature selection, and AI optimization, training and inference for supervised classification of structures visualized by cryo-electron tomography by Logistic regression, SVM and Neural nets. In all cases, input is a set of features of the structures, as opposed to images.
 
 The data provided are features of protein bridges that tether synaptic vesicle to plasma membrane. However, data obtained from other biological systems can be used, provided that the features are appropriately scalled.
 
@@ -11,6 +11,7 @@ Developed for Orozco-Burunda et al, Direct cryo-ET detection of native SNARE and
 
 The workflow is contained in the following notebooks:
 
+* feature_selection.ipynb: Univariate analysis and pairwise distributions needed to select features
 * supervised_ml.ipynb: Logistic regression and SVM (uses scikit-learn)
 * nn_feature_classifier.ipynb: Neural nets (uses Pytorch)
 
