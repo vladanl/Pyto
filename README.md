@@ -55,6 +55,8 @@ Please start from [Overview](doc/manuals/overview.pdf).
 
 ### Release history ###
 
+* 1.11.3 (27.9.2026, svn r2292)
+	* Added feature selection example
 * 1.11.2 (21.5.2026, svn r2285)
     * Updated colocalization task example
 * 1.11.1 (17.1.2026, svn r2263)
